@@ -78,16 +78,29 @@ function BattlePlayer(nPlayer, sChar, oKeyboard){
     this.nLife = GAME.oData.oSettings.nLife;
     this.nKi = 0;
 
+    this.oStatus = {
+        bStun: false,
+        bGuard: false,
+        bReverse: false,
+        nMove: 0
+    };
+
     this.init(sChar, oKeyboard);
 }
 
 Object.assign(
     BattlePlayer.prototype, {
         init: function(sChar, oKeyboard) {
+            this.oLayer = GAME.oOutput.getElement('LAY__Battle_Character_' + this.nPlayer);
             this.oCharacter = GAME.oData.oCharacter[sChar];
             this.oKeyboard = oKeyboard;
         },
-        update: function(){
+        updateInput: function(){
+            // Gestion des INPUTs
+            
+        },
+        updateOutput: function(){
+            // Gestion de OUTPUT
         },
         destroy: function(){
         }
@@ -117,6 +130,7 @@ Object.assign(
                     for( let nIndex = 0; nIndex < GAME.oData.oSettings.nPlayer; nIndex++ ){
                         // Players init
                         let nPlayer = nIndex + 1;
+                        this.createPlayer(nPlayer);
                         const oPlayer = new BattlePlayer(
                             nPlayer,
                             oLastData.aCharacterSelected[nIndex],
@@ -144,15 +158,41 @@ Object.assign(
                     } );
                 },
                 getPattern: function(){
-                    this.oPattern = GAME.oOutput.getElement('LAY__Battle_HUD_');
-                    this.oPattern && this.oContext.remove( this.oPattern );
+                    this.oPattern = {
+                        oHUD: GAME.oOutput.getElement('LAY__Battle_HUD_'),
+                        oPlayer: GAME.oOutput.getElement('LAY__Battle_Character_')
+                    };
+
+                    for( let sPattern in this.oPattern ){
+                        this.oPattern[sPattern] && this.oContext.remove( this.oPattern[sPattern] );
+                    }
                 },
-                createHUDPlayer: function(nPlayer, sChar){
-                    let oLayer = GAME.oOutput.getElement('LAY__Battle_HUD_' + nPlayer);
-                    if( !oLayer && this.oPattern ){
+                createPlayer: function(nPlayer){
+                    let oLayer = GAME.oOutput.getElement('LAY__Battle_Character_' + nPlayer);
+                    if( !oLayer && this.oPattern.oPlayer ){
 
                         // Clone du LAYER
-                        let hLayer = this.oPattern.hElement.cloneNode(true);
+                        let hLayer = this.oPattern.oPlayer.hElement.cloneNode(true);
+                        hLayer.id += nPlayer;
+                        hLayer.classList.remove(GAME.oOutput.oConfig.class.created);
+                        [].forEach.call(
+                            hLayer.querySelectorAll('.--change'),
+                            hElement => {
+                                hElement.id += nPlayer;
+                                hElement.classList.remove('--change', GAME.oOutput.oConfig.class.created);
+                            }
+                        );
+
+                        // Ajout dans le context
+                        this.oContext.add(new GAME.oOutput.OutputLayer(hLayer), '.Battle__Area');
+                    }
+                },
+                createHUDPlayer: function(nPlayer){
+                    let oLayer = GAME.oOutput.getElement('LAY__Battle_HUD_' + nPlayer);
+                    if( !oLayer && this.oPattern.oHUD ){
+
+                        // Clone du LAYER
+                        let hLayer = this.oPattern.oHUD.hElement.cloneNode(true);
                         hLayer.id += nPlayer;
                         hLayer.classList.remove(GAME.oOutput.oConfig.class.created);
                         [].forEach.call(

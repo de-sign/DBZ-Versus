@@ -10,7 +10,7 @@ const url           = require('url');
 const path          = require('path');
 const nunjucks      = require('gulp-nunjucks');
 const gulpif        = require('gulp-if');
-const sourcemaps    = require('gulp-sourcemaps');
+//const sourcemaps    = require('gulp-sourcemaps');
 const concat        = require('gulp-concat');
 const beautify      = require('gulp-beautify');
 const uglify        = require('gulp-uglify');
@@ -126,10 +126,10 @@ module.exports = function(config){
         js: () => {
             return gulp.src(config.paths.src.js + '/' + config.files.src.js)
                 .pipe(plumber(config.plugins.plumber))
-                .pipe(gulpif(config.env.isDevelopment, sourcemaps.init(config.plugins.sourcemaps.js.init)))
+                //.pipe(gulpif(config.env.isDevelopment, sourcemaps.init(config.plugins.sourcemaps.js.init)))
                 .pipe(include(config.plugins.include.js))
                 .pipe(gulpif(config.env.isDevelopment, beautify.js(config.plugins.beautify.js), uglify(config.plugins.uglify)))
-                .pipe(gulpif(config.env.isDevelopment, sourcemaps.write(config.plugins.sourcemaps.js.write)))
+                //.pipe(gulpif(config.env.isDevelopment, sourcemaps.write(config.plugins.sourcemaps.js.write)))
                 .pipe(rename(config.files.dest.js))
                 .pipe(plumber.stop())
                 .pipe(gulp.dest(config.paths.dest.js));
@@ -138,11 +138,11 @@ module.exports = function(config){
         scss: () => {
             return gulp.src(config.paths.src.scss + '/' + config.files.src.scss)
                 .pipe(plumber(config.plugins.plumber))
-                .pipe(gulpif(config.env.isDevelopment, sourcemaps.init(config.plugins.sourcemaps.css.init)))
+                //.pipe(gulpif(config.env.isDevelopment, sourcemaps.init(config.plugins.sourcemaps.css.init)))
                 .pipe(sass())
                 .pipe(rename(config.files.dest.scss))
                 .pipe(gulpif(config.env.isDevelopment, beautify.css(config.plugins.beautify.css), cleanCss(config.plugins.cleanCss)))
-                .pipe(gulpif(config.env.isDevelopment, sourcemaps.write(config.plugins.sourcemaps.css.write)))
+                //.pipe(gulpif(config.env.isDevelopment, sourcemaps.write(config.plugins.sourcemaps.css.write)))
                 .pipe(plumber.stop())
                 .pipe(gulp.dest(config.paths.dest.scss));
         },

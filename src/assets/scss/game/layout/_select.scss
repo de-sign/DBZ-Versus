@@ -5,105 +5,108 @@
 	text-align: center;
 	justify-content: center;
 	padding: 20px;
-}
+    
+    h1 {
+        font-size: 5rem;
+        margin: 0;
+    }
 
-#CTX__Select h1 {
-	font-size: 5rem;
-    margin: 0;
-}
+    /* Player */
+    .Select__Players {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 90px 0;
+        
+        & > * {
+            flex: 1 1 300px;
+            max-width: 300px;
+            text-align: left;
+            order: 0;
+        }
 
-/* Palyer */
-.Select__Players {
-    display: flex;
-	justify-content: center;
-    align-items: center;
-	margin: 90px 0;
-}
+        .Select__Player {
+            
+            &:last-child {
+                text-align: right;
+                order: 2;
 
-.Select__Players > * {
-    flex: 1 1 300px;
-    max-width: 300px;
-    text-align: left;
-    order: 0;
-}
+                & .Select__Player_Character_Sprite {
+                    transform: scaleX(-1) !important;
+                }
+            }
+                
+            &_Character_Sprite {
+                margin: 0 0 25px;
+                display: inline-block;
+            }
+            
+            &_Character_Name {
+                font-size: 2rem;
+                margin: 0;
+            }
 
-.Select__Player:last-child {
-    text-align: right;
-    order: 2;
-}
+            &_Number {
+                font-size: 1.25rem;
+                margin: 0;
+                color: DarkGray;
+            }
+        }
+    }
 
-.Select__Player_Character_Sprite {
-    margin: 0 0 25px;
-    display: inline-block;
-}
+    /* Stage */
+    .Select__Stages {
+        order: 1;
 
-#SPT__Select_Character_2 {
-    transform: scaleX(-1) !important;
-}
+        .Menu__Layer {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            
+            & > * {
+                margin: 0 auto;
+                transform: scale(0.75) !important;
+                opacity: 0.5;
 
-.Select__Player_Character_Name {
-	font-size: 2rem;
-    margin: 0;
-}
+                &.Menu__cursor_0 {
+                    transform: scale(1) !important;
+                    opacity: 1;
+                    position: relative;
+                    z-index: 100;
+                    box-shadow: none !important;
+                    order: 1;
+                    margin: -50px auto;
+                }
+                
+                &.Menu__cursor_prev {
+                    order: 0 !important;
+                }
+                
+                &.Menu__cursor_next {
+                    order: 2 !important;
+                }
+                
+                &.Menu__cursor_hide {
+                    display: none;
+                }
+            }
+        }
+            
+        .Select__Stage_Name {
+            font-size: 1.25rem;
+            margin: 0;
+            color: DarkGray;
+            text-align: center;
+        }
+    }
 
-.Select__Player_Number {
-	font-size: 1.25rem;
-    margin: 0;
-    color: DarkGray;
-}
+    /* Character */
+    .Select__Characters {
+        display: flex;
+        justify-content: center;
 
-/* Stage */
-.Select__Stages {
-    order: 1;
-}
-
-.Select__Stages > .outputLayer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.Select__Stages img {
-    margin: 0 auto;
-    transform: scale(0.75) !important;
-    opacity: 0.5;
-}
-
-.Select__Stages .Menu__cursor_0 {
-    transform: scale(1) !important;
-    opacity: 1;
-    position: relative;
-    z-index: 100;
-    box-shadow: none !important;
-    order: 1;
-    margin: -50px auto;
-}
-
-.Menu__cursor_prev {
-    order: 0 !important;
-}
-
-.Menu__cursor_next {
-    order: 2 !important;
-}
-
-.Menu__cursor_hide {
-    display: none;
-}
-
-.Select__Stage_Name {
-	font-size: 1.25rem;
-    margin: 0;
-    color: DarkGray;
-    text-align: center;
-}
-
-/* Character */
-.Select__Characters {
-    display: flex;
-	justify-content: center;
-}
-
-.Select__Characters img {
-    margin: 5px;
+        img {
+            margin: 5px;
+        }
+    }
 }

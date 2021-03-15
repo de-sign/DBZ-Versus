@@ -4,76 +4,140 @@
     background-position-x: center;
     background-position-y: bottom;
 
-    padding-bottom: 256px;
-}
+    .Battle__HUDs {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
 
-.Battle__HUDs {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 25px 0;
-}
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 25px 0;
 
-.Battle__HUD {
-    order: 0;
-    display: flex;
-    align-items: flex-start;
-}
+        .Battle__HUD {
+            order: 0;
+            display: flex;
+            align-items: flex-start;
+        
+            &:last-child {
+                order: 2;
 
-.Battle__HUD:last-child {
-    order: 2;
-}
+                .Battle__HUD_Sprite {
+                    order: 1;
+                }
 
-.Battle__HUD_Character {
-}
+                .Battle__HUD_Character {
+                    text-align: right;
+                }
 
-.Battle__HUD:last-child .Battle__HUD_Character {
-    text-align: right;
-}
+                .Battle__HUD_Character_Bars {
+                    flex-direction: row;
+                }
+            }
+            
+            &_Character {
+                .Battle__HUD:last-child & {
+                    text-align: right;
+                }
+            
+                &_Name {
+                    font-size: 2rem;
+                    margin: 5px 10px 0;
+                }
+                
+                &_Number {
+                    font-size: 1.25rem;
+                    margin: 0 10px;
+                }
 
-.Battle__HUD:last-child .Battle__HUD_Sprite {
-    order: 1;
-}
+                &_Bars {
+                    display: flex;
+                    flex-direction: row-reverse;
+                    text-align: center;
+                
+                    & > * {
+                        border: 1px solid Black;
+                        width: 14px;
+                        height: 30px;
+                        margin: 5px 1px;
+                    
+                        &.Battle__HUD_Bar_Life {
+                            background-color: #00F040;
+                        }
+                        
+                        &.Battle__HUD_Bar_Ki {
+                            background-color: #6699FF;
+                        }
+                    }
+                }
+            }
+        }
+        
+        .Battle__HUD_Timer {
+            order: 1;
+            font-size: 4rem;
+            height: 30px;
+            line-height: 30px;
+            margin: 0 20px;
+        }
+    }
 
-.Battle__HUD_Name {
-	font-size: 2rem;
-    margin: 5px 10px 0;
-}
+    .Battle__Area {
+        max-width: 1024px;
+        height: 100%;
+        margin: 0 auto;
+        padding-bottom: 256px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
 
-.Battle__HUD_Number {
-	font-size: 1.25rem;
-    margin: 0 10px;
-}
+        &_Blur {
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 88px;
 
-.Battle__HUD_Bars {
-    display: flex;
-    flex-direction: row-reverse;
-    text-align: center;
-}
+            background-repeat: repeat-y;
+            background-position-x: right;
+            background-position-y: bottom;
 
-.Battle__HUD:last-child .Battle__HUD_Bars {
-    flex-direction: row;
-}
+            &::before {
+                content: '';
+                position: absolute;
+                background-color: White;
+                width: 500px;
+                height: 100%;
+            }
 
-.Battle__HUD_Bars > * {
-    border: 1px solid Black;
-    width: 14px;
-    height: 30px;
-    margin: 5px 1px;
-}
+            &.--left {
+                background-image: url('../images/stages/blur/left.png');
+            }
 
-.Battle__HUD_Bar_Life {
-    background-color: #00F040;
-}
+            &.--left,
+            &.--left::before {
+                right: 100%;
+            }
+            
+            &.--right{
+                background-image: url('../images/stages/blur/right.png');
+            }
+            
+            &.--right,
+            &.--right::before {
+                left: 100%;
+            }
+        }
 
-.Battle__HUD_Bar_Ki {
-    background-color: #6699FF;
-}
+        .Battle__Character {
+            margin: 0 128px;
 
-.Battle__HUD_Timer {
-    order: 1;
-	font-size: 4rem;
-    height: 30px;
-    line-height: 30px;
-    margin: 0 20px;
+            &:last-child .Battle__Character_Sprite,
+            &.--reverse .Battle__Character_Sprite {
+                transform: scaleX(-1) !important;
+            }
+        }
+    }
 }
