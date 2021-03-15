@@ -1,0 +1,30 @@
+{
+    "doctype": "html",
+    "lang": "fr",
+    "charset": "UTF8",
+    "url": {
+        "origin": "",
+        "path": ""
+    },
+	"meta": {
+		"title": "DBZ Versus",
+		"description": "DBZ Versus local web game",
+		"viewport": "width=device-width, initial-scale=1.0"
+    },
+    "stylesheet": [],
+    "script": [],
+    "favicon": {
+        "background": "#333333",
+        "theme_color": "#333333",
+        "icons": {
+            "android": false,
+            "appleIcon": false,
+            "appleStartup": false,
+            "coast": false,
+            "favicons": true,
+            "firefox": false,
+            "windows": false,
+            "yandex": false 
+        }
+    }
+}

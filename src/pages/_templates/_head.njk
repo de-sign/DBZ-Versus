@@ -1,0 +1,45 @@
+{% import '_templates/_macro.njk' as FW_macro %}
+{% set FW = FW | fw_assign({ macro: FW_macro }) %}
+
+{% set s_urlRegExp = r/^https?:\/\//i %}
+
+<!-- Balise meta -->
+<meta charset="{{ FW.charset }}">
+<link rel="canonical" href="{{ FW.url.href }}" />
+
+{% if FW.meta %}
+	<title>{{ FW.meta.title }}</title>
+	{% for m_name, m_content in FW.meta %}
+		<meta name="{{ m_name }}" content="{{ m_content }}">
+	{% endfor %}
+{% endif %}
+
+{% if FW.socialMedia %}
+	{% for sm_property, sm_content in FW.socialMedia %}
+		<meta property="{{ sm_property }}" content="{{ sm_content }}">
+	{% endfor %}
+{% endif %}
+
+<!-- CSS -->
+{% if FW.stylesheet %}
+	{% for s_file in FW.stylesheet %}
+		{% if s_urlRegExp.test(s_file) %}
+			<link rel="stylesheet" href="{{ s_file }}" />
+		{% else %}
+			<link rel="stylesheet" href="{{ FW.paths.scss }}/{{ s_file }}" />
+		{% endif %}
+	{% endfor %}
+{% endif %}
+
+<!-- JS -->
+{% if FW.script %}
+	{% for s_file in FW.script %}
+		{% if s_urlRegExp.test(s_file) %}
+			<script src="{{ s_file }}"></script>
+		{% else %}
+			<script src="{{ FW.paths.js }}/{{ s_file }}"></script>
+		{% endif %}
+	{% endfor %}
+{% endif %}
+
+//=include _favicons.njk

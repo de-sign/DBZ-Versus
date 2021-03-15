@@ -1,0 +1,20 @@
+/* https://sass-guidelin.es/fr/#architecture */
+
+/* abstracts */
+@import
+	'game/abstracts/variables';
+
+/* base */
+@import
+	'game/base/typography';
+
+/* layout */
+@import
+	'game/layout/menu',
+	'game/layout/select',
+	'game/layout/battle',
+	'game/layout/settings';
+
+/* components */
+@import
+	'game/components/menu';

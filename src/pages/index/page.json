@@ -1,0 +1,20 @@
+{
+    "url": {
+        "path": "/index.html"
+    },
+    "stylesheet": ["engine.css", "game.css"],
+    "script": ["engine.js", "data.js", "game.js"],
+
+    "template": {
+        "name": "game"
+    },
+
+    "content": {
+        "scenes": [
+            "menu.html",
+            "select.html",
+            "battle.html",
+            "settings.html"
+        ]
+    }
+}

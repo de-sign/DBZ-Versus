@@ -1,0 +1,42 @@
+/* Setting */
+#CTX__Setting {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	justify-content: center;
+	padding: 20px;
+}
+
+#CTX__Setting h1 {
+	font-size: 5rem;
+}
+
+.Setting__Players {
+    display: flex;
+	justify-content: center;
+}
+
+.Setting__Player {
+    flex: 1 1 400px;
+    max-width: 400px;
+    margin: 0 25px;
+}
+
+.Setting__Player_Number {
+	font-size: 2rem;
+}
+
+.Setting__Button {
+    display: flex !important;
+}
+
+.Setting__Button > *:first-child {
+    text-align: left;
+    flex: 1 1 100%;
+}
+
+.Setting__Button > *:last-child {
+    flex: 0 0 auto;
+    color: DarkGray;
+    min-width: 15px;
+}

@@ -1,0 +1,53 @@
+{
+    "name": "DBZ-Versus",
+    "version": "0.1.0",
+    "description": "DBZ Versus local web game",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/de-sign/DBZ-Versus.git"
+    },
+    "author": "Jérémy OUDOT",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/de-sign/DBZ-Versus/issues"
+    },
+    "homepage": "https://github.com/de-sign/DBZ-Versus#readme",
+    "scripts": {
+        "FW-win-test": "SET NODE_ENV=testing & gulp",
+        "FW-win-prod": "SET NODE_ENV=production & gulp",
+        "FW-win-build-dev": "SET NODE_ENV=development & gulp build",
+        "FW-win-build-test": "SET NODE_ENV=testing & gulp build",
+        "FW-win-build-prod": "SET NODE_ENV=production & gulp build",
+        "FW-unix-test": "NODE_ENV=testing gulp",
+        "FW-unix-prod": "NODE_ENV=production gulp",
+        "FW-unix-build-dev": "NODE_ENV=development gulp build",
+        "FW-unix-build-test": "NODE_ENV=testing gulp build",
+        "FW-unix-build-prod": "NODE_ENV=production gulp build"
+    },
+    "devDependencies": {
+        "browser-sync": "^2.26.14",
+        "del": "^6.0.0",
+        "fs": "0.0.1-security",
+        "gulp": "^4.0.2",
+        "gulp-beautify": "^3.0.0",
+        "gulp-clean-css": "^4.3.0",
+        "gulp-concat": "^2.6.1",
+        "gulp-data": "^1.3.1",
+        "gulp-favicons": "^3.0.0",
+        "gulp-htmlmin": "^5.0.1",
+        "gulp-if": "^3.0.0",
+        "gulp-imagemin": "^7.1.0",
+        "gulp-include": "^2.4.1",
+        "gulp-nunjucks": "^5.1.0",
+        "gulp-plumber": "^1.2.1",
+        "gulp-rename": "^2.0.0",
+        "gulp-replace": "^1.0.0",
+        "gulp-sass": "^4.1.0",
+        "gulp-sourcemaps": "^3.0.0",
+        "gulp-uglify": "^3.0.2",
+        "lodash.mergewith": "^4.6.2",
+        "path": "^0.12.7",
+        "uikit": "^3.6.18"
+    },
+    "dependencies": {}
+}

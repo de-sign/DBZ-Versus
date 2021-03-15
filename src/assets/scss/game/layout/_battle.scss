@@ -1,0 +1,79 @@
+/* Battle */
+#CTX__Battle {
+    background-repeat: repeat-x;
+    background-position-x: center;
+    background-position-y: bottom;
+
+    padding-bottom: 256px;
+}
+
+.Battle__HUDs {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 25px 0;
+}
+
+.Battle__HUD {
+    order: 0;
+    display: flex;
+    align-items: flex-start;
+}
+
+.Battle__HUD:last-child {
+    order: 2;
+}
+
+.Battle__HUD_Character {
+}
+
+.Battle__HUD:last-child .Battle__HUD_Character {
+    text-align: right;
+}
+
+.Battle__HUD:last-child .Battle__HUD_Sprite {
+    order: 1;
+}
+
+.Battle__HUD_Name {
+	font-size: 2rem;
+    margin: 5px 10px 0;
+}
+
+.Battle__HUD_Number {
+	font-size: 1.25rem;
+    margin: 0 10px;
+}
+
+.Battle__HUD_Bars {
+    display: flex;
+    flex-direction: row-reverse;
+    text-align: center;
+}
+
+.Battle__HUD:last-child .Battle__HUD_Bars {
+    flex-direction: row;
+}
+
+.Battle__HUD_Bars > * {
+    border: 1px solid Black;
+    width: 14px;
+    height: 30px;
+    margin: 5px 1px;
+}
+
+.Battle__HUD_Bar_Life {
+    background-color: #00F040;
+}
+
+.Battle__HUD_Bar_Ki {
+    background-color: #6699FF;
+}
+
+.Battle__HUD_Timer {
+    order: 1;
+	font-size: 4rem;
+    height: 30px;
+    line-height: 30px;
+    margin: 0 20px;
+}
