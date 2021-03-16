@@ -9,6 +9,7 @@
         top: 0;
         left: 0;
         right: 0;
+        z-index: 1000;
 
         display: flex;
         justify-content: center;
@@ -92,6 +93,7 @@
         display: flex;
         justify-content: center;
         align-items: flex-end;
+        box-shadow: 0 0 0 1px black;
 
         &_Blur {
             display: block;
@@ -132,11 +134,46 @@
         }
 
         .Battle__Character {
-            margin: 0 128px;
+            position: relative;
+            margin: 0px 128px;
+            width: 200px;
+            height: 200px;
+            transform-origin: 98px 182px;
 
-            &:last-child .Battle__Character_Sprite,
-            &.--reverse .Battle__Character_Sprite {
-                transform: scaleX(-1) !important;
+            &.--reverse {
+                transform-origin: 102px 182px;
+
+                .Battle__Character_Sprite {
+                    transform: scaleX(-1) !important;
+                }
+            }
+
+            &_PositionBox,
+            &_HurtBox,
+            &_HitBox {
+                position: absolute;
+                width: 0;
+                height: 0;
+                left: 98px;
+                top: 182px;
+                opacity: 0.5;
+                box-shadow: 0 0 0 1px Black;
+            }
+
+            &_PositionBox {
+                background-color: deepskyblue;
+            }
+
+            &_HurtBox {
+                background-color: Lime;
+            }
+            
+            &.--guard .Battle__Character_HurtBox{
+                background-color: plum;
+            }
+
+            &_HitBox {
+                background-color: red;
             }
         }
     }

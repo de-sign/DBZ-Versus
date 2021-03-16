@@ -7,7 +7,7 @@
 	right: 0;
 	overflow: hidden;
 
-    &.--outputCreated:not(.--outputUsed) {
+    .outputViewport.--outputInitialize &.--outputCreated:not(.--outputUsed) {
         display: none !important;
     }
 }	

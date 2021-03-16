@@ -3,6 +3,7 @@ GAME.oData = {
         oCharacter: {
             sRoot: 'assets/images/characters',
             sFace: 'assets/images/characters/face',
+            sFrames: 'assets/images/characters/frames',
             sPreview: 'assets/images/characters/preview'
         },
         oStage: {
@@ -38,37 +39,17 @@ GAME.oData = {
         ]
     },
     sStartScene: 'MenuScene',
-
-    oCharacter: {
-        GKU: {
-            sCod: 'GKU',
-            sName: 'Son Gokū SSJ'
+    oPositionPoint: {
+        oNormal: {
+            nX: 98,
+            nY: 182
         },
-        BJT: {
-            sCod: 'BJT',
-            sName: 'Bejīta SSJ'
-        },
-        GHT: {
-            sCod: 'GHT',
-            sName: 'Son Gohan SSJT'
-        },
-        GHS: {
-            sCod: 'GHS',
-            sName: 'Son Gohan SNS'
-        },
-        FRZ: {
-            sCod: 'FRZ',
-            sName: 'Furīza'
-        },
-        SRU: {
-            sCod: 'SRU',
-            sName: 'Seru'
-        },
-        BUU: {
-            sCod: 'BUU',
-            sName: 'Majin Buu'
+        oReverse: {
+            nX: 102,
+            nY: 182
         }
     },
+    oCharacter: {},
 
     oStage: {
         GZA: {
@@ -93,3 +74,11 @@ GAME.oData = {
         }
     }
 };
+
+//=include _characters/_GKU.js
+//=include _characters/_BJT.js
+//=include _characters/_GHT.js
+//=include _characters/_GHS.js
+//=include _characters/_FRZ.js
+//=include _characters/_SRU.js
+//=include _characters/_BUU.js

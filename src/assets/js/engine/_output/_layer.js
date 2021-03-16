@@ -1,6 +1,7 @@
 function OutputLayer(hElm) {
     OutputElement.call(this, hElm);
     this.aChildElement = [];
+    this.bUpdateChildPositioning = false;
 }
 Object.assign(
     OutputLayer, {
@@ -9,10 +10,12 @@ Object.assign(
                 constructor: OutputLayer,
 
                 update: function() {
+                    this.bUpdateChildPositioning = false;
                     OutputElement.prototype.update.call(this);
                     this.aChildElement.forEach((oElm) => {
                         oElm.update();
                     });
+                    this.bUpdateChildPositioning && this.updateChildAutoPositioning();
                 },
 
                 add: function(bAppend, oElm, sSlc) {
@@ -29,8 +32,8 @@ Object.assign(
                         if( bAppend ){
                             this.addTickUpdate(() => {
                                 tgt.appendChild(oElm.hElement);
-                                OutputManager.bAutoPositioning && oElm.enableAutoPositioning();
                                 oElm.autoCreateChildElement();
+                                this.bUpdateChildPositioning = OutputManager.bAutoPositioning;
                             });
                         } else {
                             OutputManager.bAutoPositioning && oElm.enableAutoPositioning();
@@ -72,6 +75,10 @@ Object.assign(
                         }
                         this.hElement.classList.remove( OutputManager.oConfig.class.scope );
                     }
+                },
+                updateChildAutoPositioning: function(){
+                    this.enableAutoPositioning();
+                    this.aChildElement.forEach( oElm => oElm.enableAutoPositioning() );
                 }
             }
         )

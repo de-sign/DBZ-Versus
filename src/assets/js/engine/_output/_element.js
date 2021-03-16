@@ -96,6 +96,7 @@ Object.assign(
             },
             enableAutoPositioning: function(){
                 this.bAutoPositioning = true;
+                
                 const lastTrans = this.oStyle.transform;
                 this.hElement.style.transform = '';
                 Object.assign(this.oReferencePosition, this.getCalculatedPosition());

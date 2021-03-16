@@ -58,7 +58,7 @@ function KeyboardController(oBtn) {
     this.oButtons = {};
     this.oKeyMap = {};
     this.aEvents = [];
-    this.nFrameLastPress = 0;
+    this.nFrameLastEvent = 0;
     this.addButtons(oBtn);
 }
 Object.assign(
@@ -85,11 +85,11 @@ Object.assign(
                         typ = pressTyp[oEvent.type];
 
                     if (btn != null && btn.bPressed != typ) {
-                        if( typ ){
-                            this.nFrameLastPress = GAME.oTimer.nFrames;
-                        } else {
+                        if( !typ ){
                             btn.oLastPress = Object.assign({}, btn);
                         }
+                        this.nFrameLastEvent = GAME.oTimer.nFrames;
+                        
                         btn.oEvent = oEvent;
                         btn.nFrameChanged = GAME.oTimer.nFrames;
                         btn.dTimestamp = GAME.oTimer.dUpdate;

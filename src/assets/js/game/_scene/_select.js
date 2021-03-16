@@ -258,7 +258,7 @@ Object.assign(
                     return this.aPlayer[0].oKeyboard && this.aPlayer[1].oKeyboard;
                 },
                 checkPlayerActivation: function(){
-                    if( !this.allPlayerActive() &&  GAME.oInput.getController('IC_2').nFrameLastPress > this.nFrameCreated ){
+                    if( !this.allPlayerActive() &&  GAME.oInput.getController('IC_2').nFrameLastEvent > this.nFrameCreated ){
                         this.aPlayer.forEach( oPlayer => oPlayer.oKeyboard = GAME.oInput.getController('IC_' + oPlayer.nPlayer ) )
                     }
                 },

@@ -18,7 +18,8 @@ const OutputManager = {
         class: {
             scope: '--outputScope',
             created: '--outputCreated',
-            used: '--outputUsed'
+            used: '--outputUsed',
+            init: '--outputInitialize'
         },
 
         HTMLElements: {
@@ -49,6 +50,7 @@ const OutputManager = {
             this.addContext( ctx );
             ctx.hElement.classList.contains( OutputManager.oConfig.class.used ) && this.useContext(id);
         }
+        this.oViewport.hElement.classList.add( OutputManager.oConfig.class.init )
     },
     update: function() {
         this.sContextUsed && this.oContext[this.sContextUsed].update();
