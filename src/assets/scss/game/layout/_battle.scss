@@ -119,7 +119,8 @@
             }
 
             &.--left,
-            &.--left::before {
+            &.--left::before,
+            &.--left .Battle__History {
                 right: 100%;
             }
             
@@ -128,8 +129,41 @@
             }
             
             &.--right,
-            &.--right::before {
+            &.--right::before,
+            &.--right .Battle__History {
                 left: 100%;
+            }
+        }
+
+        .Battle__History {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 175px;
+            display: flex;
+            flex-direction: column-reverse;
+            justify-content: flex-end;
+
+            span {
+                padding: 5px;
+
+                b {
+                    padding: 5px;
+                    color: White;
+                    background-color: Black;
+                    margin: 0 2px;
+                    display: inline-block;
+                    width: 25px;
+                    height: 25px;
+                    line-height: 13px;
+                    border-radius: 50%;
+                    text-align: center;
+                }
+                    
+                i {
+                    color: DarkGray;
+                    padding: 0 5px;
+                }
             }
         }
 

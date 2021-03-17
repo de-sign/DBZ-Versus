@@ -9,6 +9,10 @@ Object.assign(
             Object.create(OutputLayer.prototype), {
                 constructor: OutputViewport,
 
+                update: function(){
+                    OutputElement.prototype.update.call(this);
+                },
+
                 createHTML: undefined,
                 autoCreateChildElement: function(){},
                 setOrigin: function(oOgn) {

@@ -53,6 +53,7 @@ const OutputManager = {
         this.oViewport.hElement.classList.add( OutputManager.oConfig.class.init )
     },
     update: function() {
+        this.oViewport.update();
         this.sContextUsed && this.oContext[this.sContextUsed].update();
     },
 

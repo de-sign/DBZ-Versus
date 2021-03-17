@@ -147,7 +147,42 @@ GAME.oData.oCharacter.GKU = {
             }
         ]
     },
-    oManipulations: {
-
-    }
+    aManipulations: [
+        {
+            sName: 'luncher',
+            sAnimation: 'luncher',
+            nMaxLengthFrame: 1,
+            bLast: true,
+            aButtons: [
+                { DF: false, B: true }
+            ]
+        },
+        {
+            sName: 'tracker',
+            sAnimation: 'tracker',
+            nMaxLengthFrame: 1,
+            bLast: true,
+            aButtons: [
+                { FW: false, A: true }
+            ]
+        },
+        {
+            sName: 'heavy',
+            sAnimation: 'heavy',
+            nMaxLengthFrame: 1,
+            bLast: false,
+            aButtons: [
+                { B: true }
+            ]
+        },
+        {
+            sName: 'light',
+            sAnimation: 'light',
+            nMaxLengthFrame: 1,
+            bLast: false,
+            aButtons: [
+                { A: true }
+            ]
+        }
+    ]
 };

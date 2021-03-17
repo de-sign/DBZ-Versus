@@ -68,6 +68,126 @@ Object.assign(
     }
 );
 
+function BattleTraining(aPlayer){
+    this.aPlayer = null;
+    
+    this.bInit = false;
+    this.aBox = [];
+    this.aHistory = [];
+
+    this.init(aPlayer);
+}
+
+Object.assign(
+    BattleTraining, {
+
+        oSymbolHistory: {
+            oNormal: {
+                DB: '&#8665;',
+                DN: '&#8659;',
+                DF: '&#8664;',
+                BW: '&#8656;',
+                NT: '',
+                FW: '&#8658;',
+                UB: '&#8662;',
+                UP: '&#8657;',
+                UF: '&#8663;',
+                A: 'L',
+                B: 'H',
+                C: 'K'
+            },
+            oReverse: {
+                DB: '&#8664;',
+                DN: '&#8659;',
+                DF: '&#8665;',
+                BW: '&#8658;',
+                NT: '',
+                FW: '&#8656;',
+                UB: '&#8663;',
+                UP: '&#8657;',
+                UF: '&#8662;',
+                A: 'L',
+                B: 'H',
+                C: 'K'
+            }
+        },
+
+        prototype: {
+            init: function(aPlayer){
+                this.aPlayer = aPlayer;
+
+                aPlayer.forEach( oPlayer => {
+                    oPlayer.oLayer.addTickUpdate( () => {
+                        this.aHistory.push( GAME.oOutput.getElement('LAY__Battle_History_' + oPlayer.nPlayer) );
+                        this.aBox.push( {
+                            oPositionBox: GAME.oOutput.getElement('LAY__Battle_Character_PositionBox_' + oPlayer.nPlayer),
+                            oHurtBox: GAME.oOutput.getElement('LAY__Battle_Character_HurtBox_' + oPlayer.nPlayer),
+                            oHitBox: GAME.oOutput.getElement('LAY__Battle_Character_HitBox_' + oPlayer.nPlayer)
+                        } );
+                    } );
+                } );
+            },
+            update: function(){
+                this.aPlayer.forEach( (oPlayer, nIndex) => {
+                    // History
+                    if( this.aHistory.length ){
+                        oPlayer.oInputBuffer.aHistory.forEach( (oHistory, nHistory, aHistory) => {
+                            const aBtn = Object.keys( oHistory.oButtons ),
+                                oSymbol = BattleTraining.oSymbolHistory[ oPlayer.nPlayer == 1 ? 'oNormal' : 'oReverse' ];
+
+                            let oTextHist = this.aHistory[nIndex].aChildElement[nHistory],
+                                sText = '';
+
+                            nIndex || aBtn.unshift( aBtn.pop() );
+                            aBtn.forEach( sBtn => {
+                                if( oSymbol[sBtn] ){
+                                    sText += '<b>' + oSymbol[sBtn] + '</b>';
+                                }
+                            } );
+
+                            if( nHistory == aHistory.length - 1 ){
+                                sText += '<i>' + ( GAME.oTimer.nFrames - oHistory.nFrame + 1 ) + '</i>';
+                            } else {
+                                sText += '<i>' + ( aHistory[ nHistory + 1 ].nFrame - oHistory.nFrame ) + '</i>';
+                            }
+
+                            if( oTextHist ){
+                                oTextHist.setText(sText);
+                            } else {
+                                oTextHist = new GAME.oOutput.OutputText(sText);
+                                this.aHistory[nIndex].add(oTextHist);
+                            }
+                        } );
+                    }
+
+                    // Box
+                    if( this.aBox.length ){
+
+                        const oPositionPoint = GAME.oData.oPositionPoint[ oPlayer.bReverse ? 'oReverse' : 'oNormal' ];
+                        ['oPositionBox', 'oHurtBox', 'oHitBox'].forEach( sBox => {
+                            if( oPlayer.oFrameUsed[sBox] ){
+                                const oBox = oPlayer.getCharacterBox(sBox);
+                                this.aBox[nIndex][sBox].setStyle( {
+                                    display: null,
+                                    left: ( oPositionPoint.nX + oBox.nX ) + 'px',
+                                    top: ( oPositionPoint.nY + oBox.nY ) + 'px',
+                                    width: oBox.nWidth + 'px',
+                                    height: oBox.nHeight + 'px'
+                                } );
+                            } else {
+                                this.aBox[nIndex][sBox].setStyle( { display: 'none' } );
+                            }
+                        } );
+                    }
+                } );
+            },
+            destroy: function(){
+
+            }
+        }
+    }
+);
+
 function BattleInputBuffer(oKeyboard){
     this.oKeyboard = null;
 
@@ -102,7 +222,7 @@ Object.assign(
                 if( this.oKeyboard.nFrameLastEvent == GAME.oTimer.nFrames ){
                     this.updateDirection();
 
-                    this.aHistory.length >= BattleInputBuffer.nLengthHistory && this.aHistory.pop();
+                    this.aHistory.length >= BattleInputBuffer.nLengthHistory && this.aHistory.shift();
                     this.aHistory.push( {
                         nFrame: GAME.oTimer.nFrames,
                         oButtons: this.getButtonsPressed()
@@ -168,22 +288,15 @@ function BattlePlayer(nPlayer, sChar, oKeyboard, bBox){
         bReverse: false
     };
 
-    this.init(sChar, oKeyboard, bBox);
+    this.init(sChar, oKeyboard);
 }
 
 Object.assign(
     BattlePlayer.prototype, {
-        init: function(sChar, oKeyboard, bBox) {
+        init: function(sChar, oKeyboard) {
             this.oLayer = GAME.oOutput.getElement('LAY__Battle_Character_' + this.nPlayer);
             this.oLayer.addTickUpdate( () => {
                 this.oSprite = GAME.oOutput.getElement('SPT__Battle_Character_Sprite_' + this.nPlayer);
-                if( bBox ) {
-                    this.oBox = {
-                        oPositionBox: GAME.oOutput.getElement('LAY__Battle_Character_PositionBox_' + this.nPlayer),
-                        oHurtBox: GAME.oOutput.getElement('LAY__Battle_Character_HurtBox_' + this.nPlayer),
-                        oHitBox: GAME.oOutput.getElement('LAY__Battle_Character_HitBox_' + this.nPlayer)
-                    };
-                }
             } );
             this.oCharacter = GAME.oData.oCharacter[sChar];
             this.oInputBuffer = new BattleInputBuffer( this.oKeyboard = oKeyboard );
@@ -194,7 +307,7 @@ Object.assign(
 
             // Si pas stun par Animation
             if( !this.oStatus.bStun ){
-                const sManip = this.getManipulation();
+                const sManip = this.getManipulations();
                 if( sManip ){
                     // TODO Animation
                 } else {
@@ -243,30 +356,11 @@ Object.assign(
                 zIndex: this.oFrameUsed.nZIndex
             } );
             this.oSprite && this.oSprite.setSource( GAME.oData.oPath.oCharacter.sFrames + '/' + this.oCharacter.sCod + '/' + this.oFrameUsed.sPath );
-
-            // Gestion BOX
-            if( this.oBox ){
-                const oPositionPoint = GAME.oData.oPositionPoint[ this.bReverse ? 'oReverse' : 'oNormal' ];
-                ['oPositionBox', 'oHurtBox', 'oHitBox'].forEach( sBox => {
-                    if( this.oFrameUsed[sBox] ){
-                        const oBox = this.getCharacterBox(sBox);
-                        this.oBox[sBox].setStyle( {
-                            display: null,
-                            left: ( oPositionPoint.nX + oBox.nX ) + 'px',
-                            top: ( oPositionPoint.nY + oBox.nY ) + 'px',
-                            width: oBox.nWidth + 'px',
-                            height: oBox.nHeight + 'px'
-                        } );
-                    } else {
-                        this.oBox[sBox].setStyle( { display: 'none' } );
-                    }
-                } );
-            }
         },
         destroy: function(){
         },
 
-        getManipulation: function(){
+        getManipulations: function(){
             return null; // TODO
         },
         getCharacterBox: function(sBox){
@@ -443,6 +537,7 @@ function BattleScene(){
     this.aHUD = [];
 
     this.oEngine = null;
+    this.oTraining = null;
 }
 
 Object.assign(
@@ -482,12 +577,19 @@ Object.assign(
 
                     // Engine init
                     this.oEngine = new BattleEngine(this.aPlayer, this.oArea);
+
+                    // Training init
+                    if( oLastData.sTypeBattle == 'Training' ){
+                        this.oTraining = new BattleTraining( this.aPlayer );
+                    }
 				},
 				update: function(){
                     this.aPlayer.forEach( oPlayer => oPlayer.updateInput() );
                     this.oEngine.update();
                     this.aPlayer.forEach( oPlayer => oPlayer.updateOutput() );
                     this.aHUD.forEach( oHUD => oHUD.update() );
+
+                    this.oTraining && this.oTraining.update();
 				},
                 destroy: function(){
                 },
