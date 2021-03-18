@@ -12,6 +12,31 @@ GAME.oData = {
             sPreview: 'assets/images/stages/preview'
         }
     },
+    sStartScene: 'MenuScene',
+    oPositionPoint: {
+        oNormal: {
+            nX: 98,
+            nY: 182
+        },
+        oReverse: {
+            nX: 102,
+            nY: 182
+        }
+    },
+    oTypeAnimation: {
+        aAll: ['action', 'movement', 'guard', 'hit'],
+        // undefined: 'action' 
+        stand: 'movement',
+        forward: 'movement',
+        backward: 'movement',
+        // TODO GUARD
+        guard: 'guard',
+        // TODO HIT
+        hit_light: 'hit',
+        hit_heavy: 'hit',
+        hit_luncher: 'hit'
+    },
+    nLengthFreeze: 8,
 
     oSettings: {
         nPlayer: 2,
@@ -38,19 +63,8 @@ GAME.oData = {
             }
         ]
     },
-    sStartScene: 'MenuScene',
-    oPositionPoint: {
-        oNormal: {
-            nX: 98,
-            nY: 182
-        },
-        oReverse: {
-            nX: 102,
-            nY: 182
-        }
-    },
-    oCharacter: {},
 
+    oCharacter: {},
     oStage: {
         GZA: {
             sCod: 'GZA',
