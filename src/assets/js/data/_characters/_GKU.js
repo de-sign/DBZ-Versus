@@ -65,6 +65,38 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 43 * 4
             }
         },
+        jump: {
+            sPath: 'jump.png',
+            nZIndex: 30,
+            oPositionBox: {
+                nX: (-5 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 17 * 4,
+                nHeight: 28 * 4
+            },
+            oHurtBox: {
+                nX: (-14 * 4) - 2,
+                nY: (-43 * 4) - 2,
+                nWidth: 29 * 4,
+                nHeight: 44 * 4
+            }
+        },
+        fall: {
+            sPath: 'fall.png',
+            nZIndex: 30,
+            oPositionBox: {
+                nX: (-5 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 17 * 4,
+                nHeight: 28 * 4
+            },
+            oHurtBox: {
+                nX: (-10 * 4) - 2,
+                nY: (-45 * 4) - 2,
+                nWidth: 23 * 4,
+                nHeight: 46 * 4
+            }
+        },
         // Hurt
         guard: {
             sPath: 'guard.png',
@@ -169,6 +201,44 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 8 * 4
             }
         },
+        light_second: {
+            sPath: 'light_second.png',
+            nZIndex: 30,
+            oPositionBox: {
+                nX: (-7 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 17 * 4,
+                nHeight: 28 * 4
+            },
+            oHurtBox: {
+                nX: (-11 * 4) - 2,
+                nY: (-43 * 4) - 2,
+                nWidth: 32 * 4,
+                nHeight: 44 * 4
+            }
+        },
+        light_second_active: {
+            sPath: 'light_second_active.png',
+            nZIndex: 30,
+            oPositionBox: {
+                nX: (-7 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 17 * 4,
+                nHeight: 28 * 4
+            },
+            oHurtBox: {
+                nX: (-11 * 4) - 2,
+                nY: (-43 * 4) - 2,
+                nWidth: 32 * 4,
+                nHeight: 44 * 4
+            },
+            oHitBox: {
+                nX: (9 * 4) + 2,
+                nY: (-23 * 4) - 2,
+                nWidth: 11 * 4,
+                nHeight: 8 * 4
+            }
+        },
         heavy: {
             sPath: 'heavy.png',
             nZIndex: 30,
@@ -205,6 +275,82 @@ GAME.oData.oCharacter.GKU = {
                 nY: (-25 * 4) - 2,
                 nWidth: 15 * 4,
                 nHeight: 11 * 4
+            }
+        },
+        tracker: {
+            sPath: 'tracker.png',
+            nZIndex: 30,
+            oPositionBox: {
+                nX: (-7 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 15 * 4,
+                nHeight: 28 * 4
+            },
+            oHurtBox: {
+                nX: (-11 * 4) - 2,
+                nY: (-40 * 4) - 2,
+                nWidth: 34 * 4,
+                nHeight: 41 * 4
+            }
+        },
+        tracker_active: {
+            sPath: 'tracker_active.png',
+            nZIndex: 30,
+            oPositionBox: {
+                nX: (-7 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 15 * 4,
+                nHeight: 28 * 4
+            },
+            oHurtBox: {
+                nX: (-11 * 4) - 2,
+                nY: (-40 * 4) - 2,
+                nWidth: 34 * 4,
+                nHeight: 41 * 4
+            },
+            oHitBox: {
+                nX: (7 * 4) + 2,
+                nY: (-22 * 4) - 2,
+                nWidth: 15 * 4,
+                nHeight: 10 * 4
+            }
+        },
+        luncher: {
+            sPath: 'luncher.png',
+            nZIndex: 30,
+            oPositionBox: {
+                nX: (-5 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 17 * 4,
+                nHeight: 28 * 4
+            },
+            oHurtBox: {
+                nX: (-11 * 4) - 2,
+                nY: (-43 * 4) - 2,
+                nWidth: 28 * 4,
+                nHeight: 44 * 4
+            }
+        },
+        luncher_active: {
+            sPath: 'luncher_active.png',
+            nZIndex: 30,
+            oPositionBox: {
+                nX: (-5 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 17 * 4,
+                nHeight: 28 * 4
+            },
+            oHurtBox: {
+                nX: (-11 * 4) - 2,
+                nY: (-43 * 4) - 2,
+                nWidth: 28 * 4,
+                nHeight: 44 * 4
+            },
+            oHitBox: {
+                nX: (6 * 4) + 2,
+                nY: (-38 * 4) - 2,
+                nWidth: 10 * 4,
+                nHeight: 26 * 4
             }
         }
     },
@@ -277,8 +423,8 @@ GAME.oData.oCharacter.GKU = {
             }
         ],
         // Command
+        // 4, 4, 6
         light_first: [
-            // 4, 4, 6
             {
                 nFrame: 2,
                 sFrame: 'blur',
@@ -315,8 +461,46 @@ GAME.oData.oCharacter.GKU = {
                 }
             }
         ],
+        // 4, 4, 6
+        light_second: [
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oStatus: {
+                    bCancel: false
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'light_second',
+                oStatus: {
+                    bCancel: false
+                }
+            },
+            {
+                nFrame: 4,
+                sFrame: 'light_second_active',
+                oStatus: {
+                    bCancel: false
+                }
+            },
+            {
+                nFrame: 4,
+                sFrame: 'light_second',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oStatus: {
+                    bCancel: true
+                }
+            }
+        ],
+        // 6, 4, 8
         heavy: [
-            // 6, 4, 8
             {
                 nFrame: 2,
                 sFrame: 'blur',
@@ -352,6 +536,119 @@ GAME.oData.oCharacter.GKU = {
                     bCancel: true
                 }
             }
+        ],
+        // 8, 6, 10
+        tracker: [
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oStatus: {
+                    bCancel: false
+                }
+            },
+            {
+                nFrame: 4,
+                sFrame: 'forward',
+                oMove: {
+                    nX: 8
+                },
+                oStatus: {
+                    bCancel: false
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'tracker',
+                oMove: {
+                    nX: 8
+                },
+                oStatus: {
+                    bCancel: false
+                }
+            },
+            {
+                nFrame: 6,
+                sFrame: 'tracker_active',
+                oMove: {
+                    nX: 8
+                },
+                oStatus: {
+                    bCancel: false
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'tracker',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 6,
+                sFrame: 'forward',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oStatus: {
+                    bCancel: true
+                }
+            }
+        ],
+        // 10, 8, 12
+        luncher: [
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oStatus: {
+                    bCancel: false
+                }
+            },
+            {
+                nFrame: 6,
+                sFrame: 'jump',
+                oStatus: {
+                    bCancel: false
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'luncher',
+                oStatus: {
+                    bCancel: false
+                }
+            },
+            {
+                nFrame: 8,
+                sFrame: 'luncher_active',
+                oStatus: {
+                    bCancel: false
+                }
+            },
+            {
+                nFrame: 4,
+                sFrame: 'luncher',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 6,
+                sFrame: 'jump',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oStatus: {
+                    bCancel: true
+                }
+            }
         ]
     },
     aCommands: [
@@ -359,15 +656,15 @@ GAME.oData.oCharacter.GKU = {
             sName: 'luncher',
             sAnimation: 'luncher',
             oStun: {
-                nBlock: 10,
-                nHit: 10,
+                nBlock: 8,
+                nHit: 22,
                 sHitAnimation: 'hit_luncher'
             },
             bLast: true,
             oManipulation: {
                 nMaxLengthFrame: 1,
                 aButtons: [
-                    { DF: false, B: true }
+                    { DN: false, B: true }
                 ]
             }
         },
@@ -375,8 +672,8 @@ GAME.oData.oCharacter.GKU = {
             sName: 'tracker',
             sAnimation: 'tracker',
             oStun: {
-                nBlock: 10,
-                nHit: 10,
+                nBlock: 8,
+                nHit: 18,
                 sHitAnimation: 'hit_heavy'
             },
             bLast: true,
@@ -391,8 +688,8 @@ GAME.oData.oCharacter.GKU = {
             sName: 'heavy',
             sAnimation: 'heavy',
             oStun: {
-                nBlock: 10,
-                nHit: 10,
+                nBlock: 6,
+                nHit: 16,
                 sHitAnimation: 'hit_heavy'
             },
             bLast: true,
@@ -408,8 +705,8 @@ GAME.oData.oCharacter.GKU = {
             sAnimation: 'light_first',
             aSelfCancel: ['light_second'],
             oStun: {
-                nBlock: 10,
-                nHit: 10,
+                nBlock: 8,
+                nHit: 13,
                 sHitAnimation: 'hit_light'
             },
             bLast: true,

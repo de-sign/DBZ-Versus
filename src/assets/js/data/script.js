@@ -36,7 +36,7 @@ GAME.oData = {
         hit_heavy: 'hit',
         hit_luncher: 'hit'
     },
-    nLengthFreeze: 8,
+    nLengthFreeze: 6,
 
     oSettings: {
         nPlayer: 2,

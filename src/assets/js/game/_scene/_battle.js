@@ -333,8 +333,9 @@ function BattlePlayer(nPlayer, sChar, oKeyboard, bBox){
     this.oFrameUsed = null;
     this.oAnimation = null;
     this.oCommand = null;
+    this.oGatling = null;
+    
     this.bReverse = false;
-
     this.nLife = GAME.oData.oSettings.nLife;
     this.nKi = 0;
 
@@ -352,6 +353,7 @@ Object.assign(
             this.oInputBuffer = new BattleInputBuffer( this.oKeyboard = oKeyboard );
 
             // init en STAND
+            this.resetGatling();
             this.setAnimation('stand');
         },
         // Gestion des INPUTs
@@ -359,7 +361,7 @@ Object.assign(
             this.oInputBuffer.update(this.oReverse);
 
             // Si pas stun par Animation
-            const nCanAction = this.canAction();
+            const nCanAction = this.canAction(); // 1: MOVEMENT, 2: END ANIM, 3: CANCEL, 4: GATLING
             if( nCanAction ){
 
                 // Gestion MANIP
@@ -368,10 +370,28 @@ Object.assign(
                 for( let nIndex = 0; nIndex < aCommand.length; nIndex++ ){
                     const oCommand = aCommand[nIndex];
                     if( this.canUseCommand(oCommand) ){
-                        this.setCommand(oCommand);
+                        if( nCanAction == 4 ){
+                            this.oGatling.oNextCommand = {
+                                nFrame: GAME.oTimer.nFrames,
+                                oCommand: oCommand
+                            };
+                            this.oFrameUsed = this.getFrameUsed();
+                        } else {
+                            this.setCommand(oCommand);
+                        }
                         bManipFind = true;
                         break;
                     }
+                }
+
+                // Gestion Gatling Buffer
+                if( !bManipFind && this.oGatling.oNextCommand && nCanAction != 4 ){
+                    this.setCommand(this.oGatling.oNextCommand.oCommand);
+                    bManipFind = true;
+                }
+                // Reset GATLING en END ANIM
+                else if( nCanAction == 2 ){
+                    this.resetGatling();
                 }
 
                 // Gestion DIR
@@ -393,6 +413,8 @@ Object.assign(
                             this.setMovement('forward');
                             break;
                     }
+                } else {
+                    this.oFrameUsed = this.getFrameUsed();
                 }
             } else {
                 this.oFrameUsed = this.getFrameUsed();
@@ -400,11 +422,13 @@ Object.assign(
 
             // Deplacement via animation
             if( this.oFrameUsed.oMove ){
-                if( this.oFrameUsed.oMove.nX ){
-                    this.oLayer.oPosition.nX += this.oFrameUsed.oMove.nX * (this.oReverse ? -1 : 1);
-                }
-                if( this.oFrameUsed.oMove.nY ){
-                    this.oLayer.oPosition.nY += this.oFrameUsed.oMove.nY;
+                if( !this.oAnimation.nFrameFreeze || GAME.oTimer.nFrames - this.oAnimation.nFrameFreeze > GAME.oData.nLengthFreeze ){
+                    if( this.oFrameUsed.oMove.nX ){
+                        this.oLayer.oPosition.nX += this.oFrameUsed.oMove.nX * (this.oReverse ? -1 : 1);
+                    }
+                    if( this.oFrameUsed.oMove.nY ){
+                        this.oLayer.oPosition.nY += this.oFrameUsed.oMove.nY;
+                    }
                 }
             }
         },
@@ -450,14 +474,14 @@ Object.assign(
                 nCanAction = 2;
             }
             // Gestion ACTION en HIT
-            else if( this.oCommand && this.oCommand.bHit && this.oFrameUsed.oStatus.bCancel ) {
-                nCanAction = 3;
+            else if( this.oCommand && this.oCommand.bHit ) {
+                nCanAction = this.oFrameUsed.oStatus.bCancel ? 3 : 4;
             }
             return nCanAction;
         },
         canMove: function(nCanAction){
             nCanAction || ( nCanAction = this.canAction() );
-            return nCanAction != 3;
+            return nCanAction < 3;
         },
         getEnterCommands: function(){
             const aCommand = [],
@@ -467,7 +491,7 @@ Object.assign(
                 for( let nIndex = 0; nIndex < this.oCharacter.aCommands.length; nIndex++ ){
                     const oCommand = this.oCharacter.aCommands[nIndex];
                     if( this.oInputBuffer.checkManipulation(nFrameCheck, oCommand.oManipulation) ){
-                        aCommand.push(oCommand);
+                        aCommand.push( Object.assign({ bHit: false }, oCommand) );
                         if( oCommand.bLast ){
                             break;
                         }
@@ -477,9 +501,26 @@ Object.assign(
             return aCommand;
         },
         canUseCommand: function(oCommand){
-            // TODO gestion KI
-            // TODO gestion GATLING
-            return true;
+            let bCanUse = false;
+            // TODO Gestion KI
+            if( true ){
+                // Gestion GATLING
+                if( this.oGatling.oCommandUsed[oCommand.sName] ){
+                    // Gestion REDA CANCEL
+                    if( this.oCommand && this.oCommand.sName == oCommand.sName && oCommand.aSelfCancel ){
+                        for( let nIndex = 0; nIndex < oCommand.aSelfCancel.length; nIndex++ ){
+                            if( !this.oGatling.oCommandUsed[ oCommand.aSelfCancel[nIndex] ] ){
+                                oCommand.sName = oCommand.sAnimation = oCommand.aSelfCancel[nIndex];
+                                oCommand.bHit = false;
+                                bCanUse = true;
+                            }
+                        }
+                    }
+                } else {
+                    bCanUse = true;
+                }
+            }
+            return bCanUse;
         },
         getCharacterBox: function(sBox){
             return this.oFrameUsed[sBox] ?
@@ -492,15 +533,17 @@ Object.assign(
         },
         setAnimation: function(sAnimation){
             let bSet = false;
-            const aFrames = this.oCharacter.oAnimations[sAnimation];
+            const aFrames = this.oCharacter.oAnimations[sAnimation],
+                sType = GAME.oData.oTypeAnimation[sAnimation] || 'action';
+
             if( aFrames ){
-                if( !this.oAnimation || this.oAnimation.sCod != sAnimation ){
+                if( !this.oAnimation || sType == 'guard' || sType == 'hit' || this.oAnimation.sCod != sAnimation ){
                     this.oAnimation = {
                         sCod: sAnimation,
                         nStartFrame: GAME.oTimer.nFrames,
                         aFrames: aFrames,
                         nFramesLength: aFrames.reduce( (nResult, oFrame) => nResult + oFrame.nFrame, 0),
-                        sType: GAME.oData.oTypeAnimation[sAnimation] || 'action',
+                        sType: sType,
                         nFrameFreeze: null
                     };
                 }
@@ -542,16 +585,26 @@ Object.assign(
         setCommand: function(oCommand){
             if( this.setAnimation( oCommand.sAnimation ) ){
                 this.oCommand = Object.assign({}, oCommand);
+                this.oGatling.oCommandUsed[ oCommand.sName ] = true;
+                this.oGatling.oNextCommand = null;
             }
         },
         setMovement: function(sMovement){
+            this.resetGatling();
             this.oCommand = null;
             this.setAnimation( sMovement );
         },
         setHurt: function(sHurt, nFramesLength){
+            this.resetGatling();
             this.oCommand = null;
             this.setAnimation( sHurt );
             this.oAnimation.nFramesLength = nFramesLength;
+        },
+        resetGatling: function(){
+            this.oGatling = {
+                oNextCommand: null,
+                oCommandUsed: {}
+            };
         }
     }
 );
@@ -612,6 +665,8 @@ Object.assign(
                         oHurt.oOpponent.setHurt('guard', oCommand.oStun.nBlock);
                     } else {
                         oHurt.oOpponent.setHurt(oCommand.oStun.sHitAnimation, oCommand.oStun.nHit);
+                        oHurt.oOpponent.nKi++;
+                        oHurt.oOpponent.nLife--;
                     }
                     // Gestion PushBack
                 } );
