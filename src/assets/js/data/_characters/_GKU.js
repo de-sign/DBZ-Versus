@@ -162,6 +162,22 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 43 * 4
             }
         },
+        hit_fall: {
+            sPath: 'hit_fall.png',
+            nZIndex: 10,
+            oPositionBox: {
+                nX: (-7 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 15 * 4,
+                nHeight: 28 * 4
+            },
+            oHurtBox: {
+                nX: (-17 * 4) - 2,
+                nY: (-36 * 4) - 2,
+                nWidth: 39 * 4,
+                nHeight: 32 * 4
+            }
+        },
         // Command
         light_first: {
             sPath: 'light_first.png',
@@ -397,6 +413,25 @@ GAME.oData.oCharacter.GKU = {
                 }
             }
         ],
+        // TODO courbe luncher via MOVE
+        luncher: [
+            {
+                nFrame: 12,
+                sFrame: 'hit_luncher',
+                oMove: {
+                    nX: -8,
+                    nY: 8
+                }
+            },
+            {
+                nFrame: 12,
+                sFrame: 'hit_fall',
+                oMove: {
+                    nX: -8,
+                    nY: -8
+                }
+            }
+        ],
         // Hurt
         guard: [
             {
@@ -416,7 +451,6 @@ GAME.oData.oCharacter.GKU = {
                 sFrame: 'hit_heavy'
             }
         ],
-        // TODO courbe luncher via MOVE
         hit_luncher: [
             {
                 sFrame: 'hit_luncher'
@@ -657,8 +691,11 @@ GAME.oData.oCharacter.GKU = {
             sAnimation: 'luncher',
             oStun: {
                 nBlock: 8,
-                nHit: 22,
-                sHitAnimation: 'hit_luncher'
+                // TODO Gestion LUNCHER
+                // nHit: 22,
+                // sHitAnimation: 'hit_luncher'
+                sHitAnimation: 'luncher' 
+                
             },
             bLast: true,
             oManipulation: {

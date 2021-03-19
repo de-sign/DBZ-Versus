@@ -598,7 +598,7 @@ Object.assign(
             this.resetGatling();
             this.oCommand = null;
             this.setAnimation( sHurt );
-            this.oAnimation.nFramesLength = nFramesLength;
+            nFramesLength && (this.oAnimation.nFramesLength = nFramesLength);
         },
         resetGatling: function(){
             this.oGatling = {

@@ -26,12 +26,15 @@ GAME.oData = {
     oTypeAnimation: {
         aAll: ['action', 'movement', 'guard', 'hit'],
         // undefined: 'action' 
+        // MOVEMENT
         stand: 'movement',
         forward: 'movement',
         backward: 'movement',
-        // TODO GUARD
+        // LUNCHER
+        luncher: 'luncher',
+        // GUARD
         guard: 'guard',
-        // TODO HIT
+        // HIT
         hit_light: 'hit',
         hit_heavy: 'hit',
         hit_luncher: 'hit'
