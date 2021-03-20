@@ -14,5 +14,6 @@ window.addEventListener('load', oEvent => {
 	// Scene
 	GAME.oScene.set( new window[ GAME.oData.sStartScene ]() );
 	// Start
+	// GAME.oTimer.setFPS(6);
 	GAME.start()
 }, false);

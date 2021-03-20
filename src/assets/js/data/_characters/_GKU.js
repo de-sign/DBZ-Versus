@@ -154,13 +154,13 @@ GAME.oData.oCharacter.GKU = {
                 nY: (-27 * 4) - 2,
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
-            },
+            }/*,
             oHurtBox: {
                 nX: (-14 * 4) - 2,
                 nY: (-42 * 4) - 2,
                 nWidth: 30 * 4,
                 nHeight: 43 * 4
-            }
+            }*/
         },
         hit_fall: {
             sPath: 'hit_fall.png',
@@ -413,25 +413,6 @@ GAME.oData.oCharacter.GKU = {
                 }
             }
         ],
-        // TODO courbe luncher via MOVE
-        luncher: [
-            {
-                nFrame: 12,
-                sFrame: 'hit_luncher',
-                oMove: {
-                    nX: -8,
-                    nY: 8
-                }
-            },
-            {
-                nFrame: 12,
-                sFrame: 'hit_fall',
-                oMove: {
-                    nX: -8,
-                    nY: -8
-                }
-            }
-        ],
         // Hurt
         guard: [
             {
@@ -477,7 +458,7 @@ GAME.oData.oCharacter.GKU = {
                 nFrame: 4,
                 sFrame: 'light_first_active',
                 oStatus: {
-                    bCancel: false
+                    bCancel: true
                 }
             },
             {
@@ -515,7 +496,7 @@ GAME.oData.oCharacter.GKU = {
                 nFrame: 4,
                 sFrame: 'light_second_active',
                 oStatus: {
-                    bCancel: false
+                    bCancel: true
                 }
             },
             {
@@ -553,7 +534,7 @@ GAME.oData.oCharacter.GKU = {
                 nFrame: 4,
                 sFrame: 'heavy_active',
                 oStatus: {
-                    bCancel: false
+                    bCancel: true
                 }
             },
             {
@@ -607,7 +588,7 @@ GAME.oData.oCharacter.GKU = {
                     nX: 8
                 },
                 oStatus: {
-                    bCancel: false
+                    bCancel: true
                 }
             },
             {
@@ -659,7 +640,7 @@ GAME.oData.oCharacter.GKU = {
                 nFrame: 8,
                 sFrame: 'luncher_active',
                 oStatus: {
-                    bCancel: false
+                    bCancel: true
                 }
             },
             {
@@ -691,11 +672,9 @@ GAME.oData.oCharacter.GKU = {
             sAnimation: 'luncher',
             oStun: {
                 nBlock: 8,
-                // TODO Gestion LUNCHER
-                // nHit: 22,
-                // sHitAnimation: 'hit_luncher'
-                sHitAnimation: 'luncher' 
-                
+                nHit: 22,
+                bLunch: true,
+                sHitAnimation: 'hit_luncher'
             },
             bLast: true,
             oManipulation: {

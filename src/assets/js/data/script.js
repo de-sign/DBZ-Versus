@@ -24,14 +24,12 @@ GAME.oData = {
         }
     },
     oTypeAnimation: {
-        aAll: ['action', 'movement', 'guard', 'hit'],
+        aAll: ['action', 'movement','guard', 'hit'],
         // undefined: 'action' 
         // MOVEMENT
         stand: 'movement',
         forward: 'movement',
         backward: 'movement',
-        // LUNCHER
-        luncher: 'luncher',
         // GUARD
         guard: 'guard',
         // HIT
@@ -40,6 +38,19 @@ GAME.oData = {
         hit_luncher: 'hit'
     },
     nLengthFreeze: 6,
+    oLuncher: {
+        nLengthFrames: 36,
+        oMove: {
+            nX: -72 * 4,
+            nY: -54 * 4
+        },
+        oFrames: {
+            sLunch: 'hit_luncher',
+            sFall: 'hit_fall',
+            sDown: 'TODO'
+        }
+    },
+    nPushback: 5 * 4,
 
     oSettings: {
         nPlayer: 2,

@@ -630,10 +630,10 @@ Object.assign(
             // Gestion Reverse / Area
             this.aPlayer.forEach( (oPlayer, nIndex) => {
                 const oOpponent = this.aPlayer[ nIndex ? 0 : 1 ];
-                // Gestion Reverse
-                oPlayer.canMove() && this.updateReverse(oPlayer, oOpponent);
                 // Gestion PositionBox / Area
                 aPriority[nIndex] = this.stayInArea(oPlayer) || ( oPlayer.oFrameUsed.oHitBox ? 1 : 0 );
+                // Gestion Reverse
+                oPlayer.canMove() && this.updateReverse(oPlayer, oOpponent);
             } );
             
             // Gestion PositionBox / Player
@@ -649,8 +649,9 @@ Object.assign(
 
                     if( oHitBox && oHurtBox && this.checkCollision(oHitBox, oHurtBox) ){
                         aHurt.push( {
+                            oCommand: oPlayer.oCommand,
                             oPlayer,
-                            oOpponent 
+                            oOpponent
                         } );
                     }
                 }
@@ -659,19 +660,20 @@ Object.assign(
             // Gestion Hurt Freeze
             if( aHurt.length ){
                 aHurt.forEach( oHurt => {
-                    const oCommand = oHurt.oPlayer.oCommand;
-                    oCommand.bHit = true;
+                    oHurt.oCommand.bHit = true;
                     if( oHurt.oOpponent.oFrameUsed.oStatus.bGuard ){
-                        oHurt.oOpponent.setHurt('guard', oCommand.oStun.nBlock);
+                        oHurt.oOpponent.setHurt('guard', oHurt.oCommand.oStun.nBlock);
                     } else {
-                        oHurt.oOpponent.setHurt(oCommand.oStun.sHitAnimation, oCommand.oStun.nHit);
+                        oHurt.oOpponent.setHurt(oHurt.oCommand.oStun.sHitAnimation, oHurt.oCommand.oStun.nHit);
                         oHurt.oOpponent.nKi++;
                         oHurt.oOpponent.nLife--;
                     }
-                    // Gestion PushBack
                 } );
+                
+                // Gestion PushBack
+                this.movePushback(aPriority);
 
-                //Gestion hit freeze
+                // Gestion hit freeze
                 this.aPlayer.forEach( oPlayer => {
                     oPlayer.oAnimation.nFramesLength += GAME.oData.nLengthFreeze;
                     oPlayer.oAnimation.nFrameFreeze = GAME.oTimer.nFrames;
@@ -695,7 +697,7 @@ Object.assign(
                 nLeft = this.oArea.oPosition.nX + (oBoxArea.left - oBoxArea.originX),
                 nRight = this.oArea.oPosition.nX + (oBoxArea.right - oBoxArea.originX);
 
-            let nPriority = 0,
+            let nPriority = oPlayer.oCommand ? 1 : 0,
                 sMove = null;
 
             // Trop à gauche
@@ -750,6 +752,29 @@ Object.assign(
                 else {
                     oPlayer.oLayer.oPosition.nX -= nDiff;
                 }
+            }
+        },
+        movePushback: function(aPriority){
+            let oPlayer = this.aPlayer[0],
+                oOpponent = this.aPlayer[1];
+
+            if( this.aPlayer[0].oReverse ){
+                oPlayer = this.aPlayer[1];
+                oOpponent = this.aPlayer[0];
+            }
+
+            // Separation Egal
+            if( aPriority[0] == aPriority[1] ){
+                oPlayer.oLayer.oPosition.nX -= GAME.oData.nPushback;
+                oOpponent.oLayer.oPosition.nX += GAME.oData.nPushback;
+            }
+            // Movement Opponent
+            else if( aPriority[ oPlayer.nPlayer - 1 ] > aPriority[ oOpponent.nPlayer - 1 ] ) {
+                oOpponent.oLayer.oPosition.nX += GAME.oData.nPushback;
+            }
+            // Movement Player
+            else {
+                oPlayer.oLayer.oPosition.nX -= GAME.oData.nPushback;
             }
         },
         getCharacterCollisionBox: function(oPlayer, sBox){

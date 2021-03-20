@@ -16,16 +16,23 @@ window.GAME = {
         dStart: null,
         dLast: null,
         nFrames: 0,
+        nFramesToSkip: 0,
+        nFramesSkip: 0,
 
         tick: function() {
             if (this.isStarted()) {
-                this.nFrames++;
-                this.dUpdate = Date.now();
-                GAME.update();
-                this.dLastUpdate = Date.now();
-                requestAnimationFrame(() => {
+                if( this.nFramesSkip < this.nFramesToSkip ){
+                    this.nFramesSkip++;
+                } else {
+                    this.nFramesSkip = 0;
+                    this.nFrames++;
+                    this.dUpdate = Date.now();
+                    GAME.update();
+                    this.dLastUpdate = Date.now();
+                }
+                requestAnimationFrame( () => {
                     this.tick();
-                });
+                } );
             }
         },
         run: function() {
@@ -42,6 +49,9 @@ window.GAME = {
         },
         isStarted: function() {
             return this.dStart != null;
+        },
+        setFPS: function(nFps) {
+            this.nFramesToSkip = parseInt(60 / nFps - 1);
         }
     },
 
