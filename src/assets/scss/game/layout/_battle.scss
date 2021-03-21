@@ -235,6 +235,28 @@
             &_HitBox {
                 background-color: red;
             }
+
+            &_Animation {
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%) !important;
+                white-space: nowrap;
+
+                span {
+                    display: inline-block;
+                    width: 4px;
+                    height: 4px;
+                    margin: 1px;
+                    background-color: Lime;
+                    &.--hit {
+                        background-color: Red;
+                    }
+                    &.--freeze {
+                        background-color: deepskyblue;
+                    }
+                }
+            }
         }
     }
 }

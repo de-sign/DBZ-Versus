@@ -74,6 +74,7 @@ function BattleTraining(aPlayer){
     this.bInit = false;
     this.aBox = [];
     this.aHistory = [];
+    this.aAnimation = [];
 
     this.init(aPlayer);
 }
@@ -124,6 +125,10 @@ Object.assign(
                             oHurtBox: GAME.oOutput.getElement('LAY__Battle_Character_HurtBox_' + oPlayer.nPlayer),
                             oHitBox: GAME.oOutput.getElement('LAY__Battle_Character_HitBox_' + oPlayer.nPlayer)
                         } );
+                        this.aAnimation.push( {
+                            oLayer: GAME.oOutput.getElement('LAY__Battle_Character_Animation_' + oPlayer.nPlayer),
+                            oLast: null
+                        } );
                     } );
                 } );
             },
@@ -162,15 +167,13 @@ Object.assign(
 
                     // Box
                     if( this.aBox.length ){
-
-                        const oPositionPoint = GAME.oData.oPositionPoint[ oPlayer.bReverse ? 'oReverse' : 'oNormal' ];
                         ['oPositionBox', 'oHurtBox', 'oHitBox'].forEach( sBox => {
                             const oBox = oPlayer.getCharacterBox(sBox)
                             if( oBox ){
                                 this.aBox[nIndex][sBox].setStyle( {
                                     display: null,
-                                    left: ( oPositionPoint.nX + oBox.nX ) + 'px',
-                                    top: ( oPositionPoint.nY + oBox.nY ) + 'px',
+                                    left: ( GAME.oData.oPositionPoint.nX + oBox.nX ) + 'px',
+                                    top: ( GAME.oData.oPositionPoint.nY + oBox.nY ) + 'px',
                                     width: oBox.nWidth + 'px',
                                     height: oBox.nHeight + 'px'
                                 } );
@@ -178,6 +181,18 @@ Object.assign(
                                 this.aBox[nIndex][sBox].setStyle( { display: 'none' } );
                             }
                         } );
+                    }
+
+                    // Animation
+                    if( this.aAnimation.length ){
+                        const oAnimation = this.aAnimation[nIndex];
+                        if( oPlayer.oAnimation.sType != 'movement' ){
+                            if( oPlayer.oAnimation != oAnimation.oLast ){
+                                oAnimation.oLast = oPlayer.oAnimation;
+                                oAnimation.oLayer.hElement.innerHTML = '';
+                            }
+                            oAnimation.oLayer.hElement.innerHTML += '<span class="' + ( oPlayer.getFrameFreeze() ? '--freeze' : (oPlayer.oFrameUsed.oHitBox ? '--hit' : '') )  + '"></span>'
+                        }
                     }
                 } );
             },
@@ -333,6 +348,7 @@ function BattlePlayer(nPlayer, sChar, oKeyboard, bBox){
     this.oFrameUsed = null;
     this.oAnimation = null;
     this.oCommand = null;
+    this.oLunch = null;
     this.oGatling = null;
     
     this.bReverse = false;
@@ -358,7 +374,7 @@ Object.assign(
         },
         // Gestion des INPUTs
         updateInput: function(){
-            this.oInputBuffer.update(this.oReverse);
+            this.oInputBuffer.update(this.bReverse);
 
             // Si pas stun par Animation
             const nCanAction = this.canAction(); // 1: MOVEMENT, 2: END ANIM, 3: CANCEL, 4: GATLING
@@ -396,22 +412,27 @@ Object.assign(
 
                 // Gestion DIR
                 if( !bManipFind && this.canMove(nCanAction) ){
-                    switch( this.oInputBuffer.getDirection() ){
-                        case 'DB':
-                        case 'DN':
-                        case 'DF':
-                        case 'NT':
-                        case 'UB':
-                        case 'UP':
-                        case 'UF':
-                            this.setMovement('stand');
-                            break;
-                        case 'BW':
-                            this.setMovement('backward');
-                            break;
-                        case 'FW':
-                            this.setMovement('forward');
-                            break;
+                    if( false && this.oLunch ){
+                        this.createLunchAnimation();
+                        this.setHurt('lunch');                        
+                    } else {
+                        switch( this.oInputBuffer.getDirection() ){
+                            case 'DB':
+                            case 'DN':
+                            case 'DF':
+                            case 'NT':
+                            case 'UB':
+                            case 'UP':
+                            case 'UF':
+                                this.setMovement('stand');
+                                break;
+                            case 'BW':
+                                this.setMovement('backward');
+                                break;
+                            case 'FW':
+                                this.setMovement('forward');
+                                break;
+                        }
                     }
                 } else {
                     this.oFrameUsed = this.getFrameUsed();
@@ -421,27 +442,25 @@ Object.assign(
             }
 
             // Deplacement via animation
-            if( this.oFrameUsed.oMove ){
-                if( !this.oAnimation.nFrameFreeze || GAME.oTimer.nFrames - this.oAnimation.nFrameFreeze > GAME.oData.nLengthFreeze ){
-                    if( this.oFrameUsed.oMove.nX ){
-                        this.oLayer.oPosition.nX += this.oFrameUsed.oMove.nX * (this.oReverse ? -1 : 1);
-                    }
-                    if( this.oFrameUsed.oMove.nY ){
-                        this.oLayer.oPosition.nY += this.oFrameUsed.oMove.nY;
-                    }
+            if( this.oFrameUsed.oMove && !this.getFrameFreeze() ){
+                if( this.oFrameUsed.oMove.nX ){
+                    this.oLayer.oPosition.nX += this.oFrameUsed.oMove.nX * (this.bReverse ? -1 : 1);
+                }
+                if( this.oFrameUsed.oMove.nY ){
+                    this.oLayer.oPosition.nY += this.oFrameUsed.oMove.nY;
                 }
             }
         },
         // Gestion de OUTPUT
         updateOutput: function(){
             // Reverse
-            this.oLayer.hElement.classList[ this.oReverse ? 'add' : 'remove' ]('--reverse');
+            this.oLayer.hElement.classList[ this.bReverse ? 'add' : 'remove' ]('--reverse');
             // Animation Freeze on HURT
             if( this.oAnimation.sType == 'guard' || this.oAnimation.sType == 'hit' ){
-                let nFreeze = this.oAnimation.nFrameFreeze ? GAME.oTimer.nFrames - this.oAnimation.nFrameFreeze : 0;
-                if( nFreeze < GAME.oData.nLengthFreeze ){
-                    this.oLayer.hElement.classList.add(nFreeze % 2 ? '--freeze_impair' : '--freeze_pair');
-                    this.oLayer.hElement.classList.remove(nFreeze % 2 ? '--freeze_pair' : '--freeze_impair');
+                let nFreeze = this.getFrameFreeze();
+                if( nFreeze ){
+                    this.oLayer.hElement.classList.add(nFreeze % 2 ? '--freeze_pair' : '--freeze_impair');
+                    this.oLayer.hElement.classList.remove(nFreeze % 2 ? '--freeze_impair' : '--freeze_pair');
                 } else {
                     this.oLayer.hElement.classList.remove('--freeze_pair', '--freeze_impair');
                 }
@@ -475,7 +494,7 @@ Object.assign(
             }
             // Gestion ACTION en HIT
             else if( this.oCommand && this.oCommand.bHit ) {
-                nCanAction = this.oFrameUsed.oStatus.bCancel ? 3 : 4;
+                nCanAction = this.oFrameUsed.oStatus.bCancel && !this.getFrameFreeze() ? 3 : 4;
             }
             return nCanAction;
         },
@@ -527,7 +546,7 @@ Object.assign(
                 Object.assign(
                     {},
                     this.oFrameUsed[sBox],
-                    this.oReverse ? { nX: -(this.oFrameUsed[sBox].nWidth + this.oFrameUsed[sBox].nX - 4) } : {}
+                    this.bReverse ? { nX: -(this.oFrameUsed[sBox].nWidth + this.oFrameUsed[sBox].nX - 4) } : {}
                 ) :
                 null;
         },
@@ -561,17 +580,17 @@ Object.assign(
 
             for( let nIndex = 0; nIndex < this.oAnimation.aFrames.length; nIndex++ ){
                 const oFrame = this.oAnimation.aFrames[nIndex];
+                oFrameUsed = oFrame;
                 if( oFrame.nFrame ){
                     nFrameMax += oFrame.nFrame;
                     if( !bFreeze && this.oAnimation.nFrameFreeze && this.oAnimation.nFrameFreeze < nFrameMax ){
                         nFrameMax += GAME.oData.nLengthFreeze;
+                        bFreeze = true;
                     }
-                    if( nFrameMax >= GAME.oTimer.nFrames ){
-                        oFrameUsed = oFrame;
+                    if( nFrameMax > GAME.oTimer.nFrames ){
                         break;
                     }
                 } else {
-                    oFrameUsed = oFrame;
                     break;
                 }   
             }
@@ -591,6 +610,7 @@ Object.assign(
         },
         setMovement: function(sMovement){
             this.resetGatling();
+            this.oLunch = null;
             this.oCommand = null;
             this.setAnimation( sMovement );
         },
@@ -599,12 +619,67 @@ Object.assign(
             this.oCommand = null;
             this.setAnimation( sHurt );
             nFramesLength && (this.oAnimation.nFramesLength = nFramesLength);
+            if( this.oLunch ){
+                this.oLunch.nFramesGap += GAME.oData.nLengthFreeze + (nFramesLength || 0);
+            }
+        },
+        setLunch: function(){
+            this.oLunch = {
+                nStartFrame: GAME.oTimer.nFrames,
+                nFramesGap: 0
+            };
+            this.createLunchAnimation();
+            this.setHurt('lunch');
         },
         resetGatling: function(){
             this.oGatling = {
                 oNextCommand: null,
                 oCommandUsed: {}
             };
+        },
+        createLunchAnimation: function(){
+            let nLastY = 0,
+                oLastFrame = null;
+            const aAnim = [],
+                nFrameStart = this.oLunch.nStartFrame + this.oLunch.nFramesGap,
+                nPI = Math.PI / GAME.oData.oLuncher.nLengthFrames,
+                nX = GAME.oData.oLuncher.oMove.nX / GAME.oData.oLuncher.nLengthFrames;
+
+            for( let nIndex = 1; nIndex <= GAME.oData.oLuncher.nLengthFrames; nIndex++ ){
+                let nAngle = nPI * nIndex,
+                    nTargetY = Math.round(Math.sin(nAngle) * GAME.oData.oLuncher.oMove.nY),
+                    nY = nTargetY - nLastY,
+                    sFrame = nIndex <= GAME.oData.oLuncher.nLengthFrames / 2 ? 'hit_luncher' : 'hit_fall';
+
+                if( nFrameStart >= GAME.oTimer.nFrames ){
+                    if( oLastFrame && oLastFrame.oMove.nY == nY && oLastFrame.sFrame == sFrame ){
+                        oLastFrame.nFrame++;
+                    } else {
+                        aAnim.push( oLastFrame = {
+                            nFrame: 1,
+                            sFrame,
+                            oMove: {
+                                nX,
+                                nY
+                            }
+                        } );
+                    }
+                }
+                nLastY = nTargetY;
+            }
+            this.oCharacter.oAnimations.lunch = aAnim;
+        },
+        getFrameFreeze: function(){
+            let nFreeze = null;
+            if( this.oAnimation.nFrameFreeze ){
+                nFreeze = GAME.oTimer.nFrames - this.oAnimation.nFrameFreeze;
+                if( nFreeze >= 0 && nFreeze < GAME.oData.nLengthFreeze ){
+                    nFreeze++;
+                } else {
+                    nFreeze = null;
+                }
+            }
+            return nFreeze;
         }
     }
 );
@@ -664,7 +739,11 @@ Object.assign(
                     if( oHurt.oOpponent.oFrameUsed.oStatus.bGuard ){
                         oHurt.oOpponent.setHurt('guard', oHurt.oCommand.oStun.nBlock);
                     } else {
-                        oHurt.oOpponent.setHurt(oHurt.oCommand.oStun.sHitAnimation, oHurt.oCommand.oStun.nHit);
+                        if( oHurt.oCommand.oStun.bLunch && !oHurt.oOpponent.oLunch ) {
+                            oHurt.oOpponent.setLunch();
+                        } else {
+                            oHurt.oOpponent.setHurt(oHurt.oCommand.oStun.sHitAnimation, oHurt.oCommand.oStun.nHit);
+                        }
                         oHurt.oOpponent.nKi++;
                         oHurt.oOpponent.nLife--;
                     }
@@ -685,9 +764,9 @@ Object.assign(
 
         updateReverse: function(oPlayer, oOpponent){
             if( oPlayer.oLayer.oPosition.nX < oOpponent.oLayer.oPosition.nX ){
-                oPlayer.oReverse = false;
+                oPlayer.bReverse = false;
             } else if( oPlayer.oLayer.oPosition.nX > oOpponent.oLayer.oPosition.nX ){
-                oPlayer.oReverse = true;
+                oPlayer.bReverse = true;
             }
         },
         stayInArea: function(oPlayer){
@@ -702,12 +781,12 @@ Object.assign(
 
             // Trop à gauche
             if( nLeft >= oPlayer.oLayer.oPosition.nX + oBoxPlayer.nX ){
-                nPriority = oPlayer.oReverse ? 2 : 3;
+                nPriority = oPlayer.bReverse ? 2 : 3;
                 sMove = 'left';
             }
             // Trop à droite
             else if( nRight <= oPlayer.oLayer.oPosition.nX + ( oBoxPlayer.nX + oBoxPlayer.nWidth ) ){
-                nPriority = oPlayer.oReverse ? 3 : 2;
+                nPriority = oPlayer.bReverse ? 3 : 2;
                 sMove = 'right';
             }
 
@@ -726,7 +805,7 @@ Object.assign(
             let oPlayer = this.aPlayer[0],
                 oOpponent = this.aPlayer[1];
 
-            if( this.aPlayer[0].oReverse ){
+            if( this.aPlayer[0].bReverse ){
                 oPlayer = this.aPlayer[1];
                 oOpponent = this.aPlayer[0];
             }
@@ -758,7 +837,7 @@ Object.assign(
             let oPlayer = this.aPlayer[0],
                 oOpponent = this.aPlayer[1];
 
-            if( this.aPlayer[0].oReverse ){
+            if( this.aPlayer[0].bReverse ){
                 oPlayer = this.aPlayer[1];
                 oOpponent = this.aPlayer[0];
             }

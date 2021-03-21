@@ -672,7 +672,6 @@ GAME.oData.oCharacter.GKU = {
             sAnimation: 'luncher',
             oStun: {
                 nBlock: 8,
-                nHit: 22,
                 bLunch: true,
                 sHitAnimation: 'hit_luncher'
             },
