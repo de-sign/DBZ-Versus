@@ -23,13 +23,16 @@ __[FOX Website](https://fox-website.netlify.app)__ est un framework simple d'uti
 ## TODO
 __Menu__
 * Aide des controles
+
 __Select__
 * Choix de la couleurs
+
 __Battle__
 * Suppression du Timer
 * Fin de match
 * Projectiles
 * Super
+
 __Training__
 * Menu
     * Choix LIFE / KI
@@ -38,6 +41,7 @@ __Training__
     * Affichage avancé
     * Frame Rate
     * Quitter
+    
 __General__
 * Bouton Start
 * Animations
