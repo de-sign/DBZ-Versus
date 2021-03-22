@@ -1,6 +1,7 @@
 # DBZ-Versus
 
 Jeu de versus en 2D basé sur l'univers de __DragonBall__ utilisant les SPRITES du jeu GameBoy Color __Dragon Ball Z : les guerriers légendaires__.
+
 Utilise un moteur de jeu fait maison et FOX Website :
 
 <div align="center">
@@ -9,16 +10,13 @@ Utilise un moteur de jeu fait maison et FOX Website :
     </a>
 </div>
 <div align="center">
-    <h1>
+    <h2>
         FOX Website<br/>
         Simple Node.js project for develop<br/>
         your static website
-    </h1>
+    </h2>
 </div>
 <br/>
-<br/>
-
-__[FOX Website](https://fox-website.netlify.app)__ est un framework simple d'utilisation vous permettant de créer des sites WEB statiques rapidement.
 
 ## TODO
 __Menu__
@@ -41,7 +39,7 @@ __Training__
     * Affichage avancé
     * Frame Rate
     * Quitter
-    
+
 __General__
 * Bouton Start
 * Animations
