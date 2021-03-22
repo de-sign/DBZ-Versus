@@ -1,3 +1,4 @@
+/* ----- BattleHUD ----- */
 function BattleHUD(oPlayer){
     this.oLayer = null;
     this.oPlayer = null;
@@ -68,6 +69,7 @@ Object.assign(
     }
 );
 
+/* ----- BattleTraining ----- */
 function BattleTraining(aPlayer){
     this.aPlayer = null;
     
@@ -126,7 +128,7 @@ Object.assign(
                             oHitBox: GAME.oOutput.getElement('LAY__Battle_Character_HitBox_' + oPlayer.nPlayer)
                         } );
                         this.aAnimation.push( {
-                            oLayer: GAME.oOutput.getElement('LAY__Battle_Character_Animation_' + oPlayer.nPlayer),
+                            oLayer: GAME.oOutput.getElement('LAY__Battle_HUD_Animation_' + oPlayer.nPlayer),
                             oLast: null
                         } );
                     } );
@@ -191,7 +193,17 @@ Object.assign(
                                 oAnimation.oLast = oPlayer.oAnimation;
                                 oAnimation.oLayer.hElement.innerHTML = '';
                             }
-                            oAnimation.oLayer.hElement.innerHTML += '<span class="' + ( oPlayer.getFrameFreeze() ? '--freeze' : (oPlayer.oFrameUsed.oHitBox ? '--hit' : '') )  + '"></span>'
+                            let sClass = '--' + oPlayer.oAnimation.sType;
+                            if( oPlayer.getFrameFreeze() ){
+                                sClass = '--freeze';
+                            } else if( oPlayer.oFrameUsed.oStatus.bGuard ){
+                                sClass = '--guard';
+                            } else if( oPlayer.oFrameUsed.oHitBox ){
+                                sClass = '--damage';
+                            } else if( !oPlayer.oFrameUsed.oHurtBox ){
+                                sClass = '--invulnerable';
+                            }
+                            oAnimation.oLayer.hElement.innerHTML += '<span class="' + sClass + '"></span>'
                         }
                     }
                 } );
@@ -203,6 +215,7 @@ Object.assign(
     }
 );
 
+/* ----- BattleInputBuffer ----- */
 function BattleInputBuffer(oKeyboard){
     this.oKeyboard = null;
 
@@ -336,6 +349,7 @@ Object.assign(
     }
 );
 
+/* ----- BattlePlayer ----- */
 function BattlePlayer(nPlayer, sChar, oKeyboard, bBox){
     this.nPlayer = nPlayer;
     this.oLayer = null;
@@ -377,7 +391,7 @@ Object.assign(
             this.oInputBuffer.update(this.bReverse);
 
             // Si pas stun par Animation
-            const nCanAction = this.canAction(); // 1: MOVEMENT, 2: END ANIM, 3: CANCEL, 4: GATLING
+            const nCanAction = this.canAction(); // 0: OTHER, 1: MOVEMENT, 2: END ANIM, 3: CANCEL, 4: GATLING
             if( nCanAction ){
 
                 // Gestion MANIP
@@ -412,7 +426,7 @@ Object.assign(
 
                 // Gestion DIR
                 if( !bManipFind && this.canMove(nCanAction) ){
-                    if( false && this.oLunch ){
+                    if( this.oLunch ){
                         this.createLunchAnimation();
                         this.setHurt('lunch');                        
                     } else {
@@ -500,11 +514,11 @@ Object.assign(
         },
         canMove: function(nCanAction){
             nCanAction || ( nCanAction = this.canAction() );
-            return nCanAction < 3;
+            return nCanAction && nCanAction < 3;
         },
         getEnterCommands: function(){
             const aCommand = [],
-                nFrameCheck = GAME.oTimer.nFrames; // TODO hit freeze
+                nFrameCheck = GAME.oTimer.nFrames;
 
             if( this.oKeyboard.nFrameLastEvent >= nFrameCheck ){
                 for( let nIndex = 0; nIndex < this.oCharacter.aCommands.length; nIndex++ ){
@@ -573,6 +587,10 @@ Object.assign(
             }
             return bSet;
         },
+        setFreeze: function(nFreeze){
+            this.oAnimation.nFramesLength += nFreeze;
+            this.oAnimation.nFrameFreeze = GAME.oTimer.nFrames + 1;
+        },
         getFrameUsed: function(){
             let nFrameMax = this.oAnimation.nStartFrame,
                 oFrameUsed = null,
@@ -608,25 +626,27 @@ Object.assign(
                 this.oGatling.oNextCommand = null;
             }
         },
+        setDown: function(){
+            this.oLunch = null;
+            this.setMovement('down');
+        },
         setMovement: function(sMovement){
             this.resetGatling();
-            this.oLunch = null;
             this.oCommand = null;
             this.setAnimation( sMovement );
         },
         setHurt: function(sHurt, nFramesLength){
-            this.resetGatling();
-            this.oCommand = null;
-            this.setAnimation( sHurt );
+            this.setMovement(sHurt);
             nFramesLength && (this.oAnimation.nFramesLength = nFramesLength);
-            if( this.oLunch ){
-                this.oLunch.nFramesGap += GAME.oData.nLengthFreeze + (nFramesLength || 0);
+            if( sHurt != 'lunch' && this.oLunch && !this.oLunch.nFrameStartGap ){
+                this.oLunch.nFrameStartGap = GAME.oTimer.nFrames;
             }
         },
         setLunch: function(){
             this.oLunch = {
                 nStartFrame: GAME.oTimer.nFrames,
-                nFramesGap: 0
+                nFramesGap: 0,
+                nFrameStartGap: null
             };
             this.createLunchAnimation();
             this.setHurt('lunch');
@@ -638,31 +658,41 @@ Object.assign(
             };
         },
         createLunchAnimation: function(){
+
+            if( this.oLunch.nFrameStartGap ){
+                this.oLunch.nFramesGap += GAME.oTimer.nFrames - this.oLunch.nFrameStartGap;
+                this.oLunch.nFrameStartGap = null;
+            }
+            
             let nLastY = 0,
                 oLastFrame = null;
             const aAnim = [],
-                nFrameStart = this.oLunch.nStartFrame + this.oLunch.nFramesGap,
-                nPI = Math.PI / GAME.oData.oLuncher.nLengthFrames,
+                nFrameStart = this.oLunch.nStartFrame + ( this.oLunch.nFramesGap ? this.oLunch.nFramesGap + GAME.oData.nLengthFreeze : 0),
+                nDemiLength = (GAME.oData.oLuncher.nLengthFrames - 1) / 2,
                 nX = GAME.oData.oLuncher.oMove.nX / GAME.oData.oLuncher.nLengthFrames;
 
-            for( let nIndex = 1; nIndex <= GAME.oData.oLuncher.nLengthFrames; nIndex++ ){
-                let nAngle = nPI * nIndex,
-                    nTargetY = Math.round(Math.sin(nAngle) * GAME.oData.oLuncher.oMove.nY),
+            // Ajout de 2 FRAMES supplémentaire pour gérer le DOWN
+            for( let nIndex = 1; nIndex <= GAME.oData.oLuncher.nLengthFrames + 2; nIndex++ ){
+                let nParabolX = (nIndex - 1 - nDemiLength) / nDemiLength,
+                    nParabolY = -1 * (nParabolX*nParabolX - 1),
+                    nTargetY = Math.round(nParabolY * GAME.oData.oLuncher.oMove.nY),
                     nY = nTargetY - nLastY,
-                    sFrame = nIndex <= GAME.oData.oLuncher.nLengthFrames / 2 ? 'hit_luncher' : 'hit_fall';
+                    sFrame = 'hit_fall';
+                    
+                if( nIndex <= GAME.oData.oLuncher.nLengthFrames / 2 ){
+                    sFrame = Math.floor(( nIndex - 1 ) / 4) % 2 ? 'hit_luncher_invulnerable' : 'hit_luncher';
+                }
 
-                if( nFrameStart >= GAME.oTimer.nFrames ){
+                if( nFrameStart + nIndex > GAME.oTimer.nFrames ){
                     if( oLastFrame && oLastFrame.oMove.nY == nY && oLastFrame.sFrame == sFrame ){
                         oLastFrame.nFrame++;
                     } else {
                         aAnim.push( oLastFrame = {
                             nFrame: 1,
                             sFrame,
-                            oMove: {
-                                nX,
-                                nY
-                            }
+                            oMove: { nX, nY }
                         } );
+                        sFrame == 'hit_luncher' && ( oLastFrame.oHurtBox = null);
                     }
                 }
                 nLastY = nTargetY;
@@ -684,6 +714,7 @@ Object.assign(
     }
 );
 
+/* ----- BattleEngine ----- */
 function BattleEngine(aPlayer, oArea){
     this.aPlayer = null;
     this.oArea = null;
@@ -754,8 +785,7 @@ Object.assign(
 
                 // Gestion hit freeze
                 this.aPlayer.forEach( oPlayer => {
-                    oPlayer.oAnimation.nFramesLength += GAME.oData.nLengthFreeze;
-                    oPlayer.oAnimation.nFrameFreeze = GAME.oTimer.nFrames;
+                    oPlayer.setFreeze(GAME.oData.nLengthFreeze);
                 } );
             }
         },
@@ -771,10 +801,11 @@ Object.assign(
         },
         stayInArea: function(oPlayer){
             // Check
+            let oBoxPlayer = oPlayer.getCharacterBox('oPositionBox');
             const oBoxArea = this.oArea.getBox(),
-                oBoxPlayer = oPlayer.getCharacterBox('oPositionBox'),
                 nLeft = this.oArea.oPosition.nX + (oBoxArea.left - oBoxArea.originX),
-                nRight = this.oArea.oPosition.nX + (oBoxArea.right - oBoxArea.originX);
+                nRight = this.oArea.oPosition.nX + (oBoxArea.right - oBoxArea.originX),
+                nDown = this.oArea.oPosition.nY + (oBoxArea.bottom - oBoxArea.originY) - GAME.oData.oPositionPoint.nGapY;
 
             let nPriority = oPlayer.oCommand ? 1 : 0,
                 sMove = null;
@@ -797,6 +828,13 @@ Object.assign(
                 case 'right':
                     oPlayer.oLayer.oPosition.nX = nRight - ( oBoxPlayer.nX + oBoxPlayer.nWidth );
                     break;
+            }
+
+            // Trop en bas
+            if( nDown < oPlayer.oLayer.oPosition.nY + ( oBoxPlayer.nY + oBoxPlayer.nHeight ) ){
+                oPlayer.setDown();
+                oBoxPlayer = oPlayer.getCharacterBox('oPositionBox');
+                oPlayer.oLayer.oPosition.nY = nDown - ( oBoxPlayer.nY + oBoxPlayer.nHeight );
             }
 
             return nPriority;
@@ -875,7 +913,7 @@ Object.assign(
     }
 );
 
-/* Battle */
+/* ----- BattleScene ----- */
 function BattleScene(){
 	this.oContext = null;
 	this.oArea = null;

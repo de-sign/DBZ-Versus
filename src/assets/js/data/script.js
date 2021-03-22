@@ -15,7 +15,8 @@ GAME.oData = {
     sStartScene: 'MenuScene',
     oPositionPoint: {
         nX: 98,
-        nY: 182
+        nY: 182,
+        nGapY: 200 - 182 - 2
     },
     oTypeAnimation: {
         aAll: ['action', 'movement','guard', 'hit'],
@@ -30,13 +31,15 @@ GAME.oData = {
         hit_light: 'hit',
         hit_heavy: 'hit',
         hit_luncher: 'hit',
-        lunch: 'hit'
+        lunch: 'hit',
+        // DOWN
+        down: 'down'
     },
     nLengthFreeze: 6,
     oLuncher: {
         nLengthFrames: 36,
         oMove: {
-            nX: -72 * 4,
+            nX: -63 * 4,
             nY: -54 * 4
         },
         oFrames: {

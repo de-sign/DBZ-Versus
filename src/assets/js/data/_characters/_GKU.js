@@ -97,6 +97,16 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 46 * 4
             }
         },
+        teleport_vertical: {
+            sPath: 'teleport_vertical.png',
+            nZIndex: 10,
+            oPositionBox: {
+                nX: (-7 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 15 * 4,
+                nHeight: 28 * 4
+            }
+        },
         // Hurt
         guard: {
             sPath: 'guard.png',
@@ -109,9 +119,9 @@ GAME.oData.oCharacter.GKU = {
             },
             oHurtBox: {
                 nX: (-10 * 4) - 2,
-                nY: (-42 * 4) - 2,
+                nY: (-45 * 4) - 2,
                 nWidth: 23 * 4,
-                nHeight: 43 * 4
+                nHeight: 46 * 4
             }
         },
         hit_light: {
@@ -154,13 +164,23 @@ GAME.oData.oCharacter.GKU = {
                 nY: (-27 * 4) - 2,
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
-            }/*,
+            },
             oHurtBox: {
                 nX: (-14 * 4) - 2,
                 nY: (-42 * 4) - 2,
                 nWidth: 30 * 4,
                 nHeight: 43 * 4
-            }*/
+            }
+        },
+        hit_luncher_invulnerable: {
+            sPath: 'hit_luncher_invulnerable.png',
+            nZIndex: 10,
+            oPositionBox: {
+                nX: (-7 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 15 * 4,
+                nHeight: 28 * 4
+            }
         },
         hit_fall: {
             sPath: 'hit_fall.png',
@@ -169,13 +189,23 @@ GAME.oData.oCharacter.GKU = {
                 nX: (-7 * 4) - 2,
                 nY: (-27 * 4) - 2,
                 nWidth: 15 * 4,
-                nHeight: 28 * 4
+                nHeight: 23 * 4
             },
             oHurtBox: {
                 nX: (-17 * 4) - 2,
                 nY: (-36 * 4) - 2,
                 nWidth: 39 * 4,
                 nHeight: 32 * 4
+            }
+        },
+        down: {
+            sPath: 'down.png',
+            nZIndex: 10,
+            oPositionBox: {
+                nX: (-7 * 4) - 2,
+                nY: (-14 * 4) - 2,
+                nWidth: 15 * 4,
+                nHeight: 15 * 4
             }
         },
         // Command
@@ -437,6 +467,21 @@ GAME.oData.oCharacter.GKU = {
                 sFrame: 'hit_luncher'
             }
         ],
+        down: [
+            {
+                nFrame: 20,
+                sFrame: 'down'
+            },
+            {
+                nFrame: 8,
+                sFrame: 'teleport_vertical'
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oHurtBox: null
+            }
+        ],
         // Command
         // 4, 4, 6
         light_first: [
@@ -672,6 +717,7 @@ GAME.oData.oCharacter.GKU = {
             sAnimation: 'luncher',
             oStun: {
                 nBlock: 8,
+                nHit: 22,
                 bLunch: true,
                 sHitAnimation: 'hit_luncher'
             },

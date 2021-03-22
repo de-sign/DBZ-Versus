@@ -3,6 +3,7 @@
     background-repeat: repeat-x;
     background-position-x: center;
     background-position-y: bottom;
+    padding-bottom: 256px;
 
     .Battle__HUDs {
         position: fixed;
@@ -73,6 +74,37 @@
                     }
                 }
             }
+
+            &_Animation {
+
+                span {
+                    display: inline-block;
+                    width: 4px;
+                    height: 4px;
+                    margin: 1px;
+                    background-color: Lime;
+
+                    &.--freeze {
+                        background-color: deepskyblue;
+                    }
+                    
+                    &.--guard {
+                        background-color: plum;
+                    }
+
+                    &.--damage {
+                        background-color: Red;
+                    }
+
+                    &.--invulnerable {
+                        background-color: White;
+                    }
+
+                    &.--hit {
+                        background-color: orange;
+                    }
+                }
+            }
         }
         
         .Battle__HUD_Timer {
@@ -88,7 +120,6 @@
         max-width: 1024px;
         height: 100%;
         margin: 0 auto;
-        padding-bottom: 256px;
         position: relative;
         display: flex;
         justify-content: center;
@@ -99,7 +130,7 @@
             display: block;
             position: absolute;
             top: 0;
-            bottom: 0;
+            bottom: -256px;
             width: 88px;
 
             background-repeat: repeat-y;
@@ -234,28 +265,6 @@
 
             &_HitBox {
                 background-color: red;
-            }
-
-            &_Animation {
-                position: absolute;
-                top: 100%;
-                left: 50%;
-                transform: translateX(-50%) !important;
-                white-space: nowrap;
-
-                span {
-                    display: inline-block;
-                    width: 4px;
-                    height: 4px;
-                    margin: 1px;
-                    background-color: Lime;
-                    &.--hit {
-                        background-color: Red;
-                    }
-                    &.--freeze {
-                        background-color: deepskyblue;
-                    }
-                }
             }
         }
     }
