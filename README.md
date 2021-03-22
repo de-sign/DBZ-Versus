@@ -3,6 +3,7 @@
 Jeu de versus en 2D basé sur l'univers de __DragonBall__ utilisant les SPRITES du jeu GameBoy Color __Dragon Ball Z : les guerriers légendaires__.
 
 Utilise un moteur de jeu fait maison et FOX Website :
+<br/>
 
 <div align="center">
     <a href="https://fox-website.netlify.app" target="_blank">
@@ -10,12 +11,13 @@ Utilise un moteur de jeu fait maison et FOX Website :
     </a>
 </div>
 <div align="center">
-    <h2>
+    <h1>
         FOX Website<br/>
         Simple Node.js project for develop<br/>
         your static website
-    </h2>
+    </h1>
 </div>
+<br/>
 <br/>
 
 ## TODO
