@@ -125,7 +125,7 @@ Object.assign(
 
                     // Players init
                     this.getPattern();
-                    for( let nPlayer = 0; nPlayer < GAME.oData.oSettings.nPlayer; nPlayer++ ){
+                    for( let nPlayer = 0; nPlayer < GAME.oSettings.nPlayer; nPlayer++ ){
                         this.createLayerPlayer(nPlayer + 1);
                         this.oContext.addTickUpdate( () => {
                             this.aPlayer.push( new SettingPlayer(nPlayer + 1, this.oLastPress) );

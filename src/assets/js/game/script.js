@@ -1,4 +1,5 @@
 //=include _menu.js
+//=include _animation.js
 
 //=include _scene/_menu.js
 //=include _scene/_select.js
@@ -8,11 +9,11 @@
 /* Init */
 window.addEventListener('load', oEvent => {
 	// Input
-	GAME.oData.oSettings.aKeyboard.forEach( oButtons => GAME.oInput.create( oButtons ) );
+	GAME.oSettings.aKeyboard.forEach( oButtons => GAME.oInput.create( oButtons ) );
 	// Output
 	GAME.oOutput.bAutoPositioning = true;
 	// Scene
-	GAME.oScene.set( new window[ GAME.oData.sStartScene ]() );
+	GAME.oScene.set( new window[ GAME.oSettings.sStartScene ]() );
 	// Start
 	// GAME.oTimer.setFPS(6);
 	GAME.start()

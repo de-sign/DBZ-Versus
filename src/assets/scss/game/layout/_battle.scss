@@ -76,6 +76,10 @@
             }
 
             &_Animation {
+                position: absolute;
+                left: 4px;
+                right: 4px;
+                line-height: 5px;
 
                 span {
                     display: inline-block;

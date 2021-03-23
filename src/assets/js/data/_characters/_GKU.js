@@ -172,16 +172,6 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 43 * 4
             }
         },
-        hit_luncher_invulnerable: {
-            sPath: 'hit_luncher_invulnerable.png',
-            nZIndex: 10,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
-            }
-        },
         hit_fall: {
             sPath: 'hit_fall.png',
             nZIndex: 10,
@@ -888,7 +878,7 @@ GAME.oData.oCharacter.GKU = {
             }
         ],
         // Kameha
-        // 16, 18, 26
+        // 46, 36, 26
         kameha: [
             {
                 nFrame: 2,
@@ -896,13 +886,11 @@ GAME.oData.oCharacter.GKU = {
                 oHurtBox: null
             },
             {
-                //nFrame: 30,
-                nFrame: 10,
+                nFrame: 30,
                 sFrame: 'kameha_start'
             },
             {
-                //nFrame: 10,
-                nFrame: 4,
+                nFrame: 10,
                 sFrame: 'kameha_lunch',
                 oHurtBox: null
             },
@@ -917,7 +905,7 @@ GAME.oData.oCharacter.GKU = {
                 oHurtBox: null
             },
             {
-                nFrame: 18,
+                nFrame: 36,
                 sFrame: 'kameha_heavy'
             },
             {
@@ -946,8 +934,8 @@ GAME.oData.oCharacter.GKU = {
             nDamage: 5,
             oStun: {
                 nFreeze: 46,
-                nBlock: 18,
-                nHit: 18,
+                nBlock: 36,
+                nHit: 36,
                 bLunch: true,
                 nPushback: 40 * 4,
                 sHitAnimation: 'hit_heavy'

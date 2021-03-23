@@ -60,7 +60,7 @@ Object.assign(
             }
             
             GAME.oOutput.getElement('SPT__Select_Character_' + this.nPlayer)
-                .setSource( GAME.oData.oPath.oCharacter.sPreview + '/' + this.oMenu.oCharacter.getSelected(this.nCursor).__oData.sCod + '.png' );
+                .setSource( GAME.oSettings.oPath.oCharacter.sPreview + '/' + this.oMenu.oCharacter.getSelected(this.nCursor).__oData.sCod + '.png' );
             GAME.oOutput.getElement('TXT__Select_Character_' + this.nPlayer)
                 .setText( this.oMenu.oCharacter.getSelected(this.nCursor).__oData.sName );
             GAME.oOutput.getElement('TXT__Select_Player_' + this.nPlayer).setText( this.bReady || !this.oKeyboard ? 'Waiting ...' : 'Player #' + this.nPlayer );
@@ -138,7 +138,7 @@ Object.assign(
 
                     // Players init
                     this.getPattern();
-                    for( let nIndex = 0; nIndex < GAME.oData.oSettings.nPlayer; nIndex++ ){
+                    for( let nIndex = 0; nIndex < GAME.oSettings.nPlayer; nIndex++ ){
                         let nPlayer = nIndex + 1;
                         this.createLayerPlayer(nPlayer);
                         this.aPlayer.push( new SelectPlayer(
@@ -209,7 +209,7 @@ Object.assign(
                     const oLayer = GAME.oOutput.getElement('LAY__Select_Character');
                     if( oLayer.aChildElement.length == 0 ){
                         for( let sChar in GAME.oData.oCharacter ){
-                            const oSprite = new GAME.oOutput.OutputSprite(GAME.oData.oPath.oCharacter.sFace + '/' + sChar + '.png' );
+                            const oSprite = new GAME.oOutput.OutputSprite(GAME.oSettings.oPath.oCharacter.sFace + '/' + sChar + '.png' );
                             oSprite.__oData = GAME.oData.oCharacter[sChar];
                             oLayer.add( oSprite );
                         }
@@ -219,7 +219,7 @@ Object.assign(
                     const oLayer = GAME.oOutput.getElement('LAY__Select_Stage');
                     if( oLayer.aChildElement.length == 0 ){
                         for( let sStage in GAME.oData.oStage ){
-                            const oSprite = new GAME.oOutput.OutputSprite(GAME.oData.oPath.oStage.sPreview + '/' + sStage + '.png' );
+                            const oSprite = new GAME.oOutput.OutputSprite(GAME.oSettings.oPath.oStage.sPreview + '/' + sStage + '.png' );
                             oSprite.__oData = GAME.oData.oStage[sStage];
                             oLayer.add( oSprite );
                         }
