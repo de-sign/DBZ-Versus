@@ -1,16 +1,22 @@
 <section id="CTX__Battle" class="outputContext">
-    <div class="Battle__HUDs">
-        <div id="LAY__Battle_HUD_" class="outputLayer Battle__HUD">
-            <img id="SPT__Battle_HUD_Sprite_" class="outputSprite --change Battle__HUD_Sprite" />
-            <div class="Battle__HUD_Character">
-                <div id="LAY__Battle_HUD_Bar_" class="outputLayer --change Battle__HUD_Character_Bars"></div>
-                <h2 id="TXT__Battle_HUD_Name_" class="outputText --change Battle__HUD_Character_Name"></h2>
-                <h3 id="TXT__Battle_HUD_Number_" class="outputText --change Battle__HUD_Character_Number"></h3>
-                <div id="LAY__Battle_HUD_Animation_" class="outputLayer --change Battle__HUD_Animation"></div>
+    <div class="Battle__Interface">
+        <div class="Battle__HUDs">
+            <div id="LAY__Battle_HUD_" class="outputLayer Battle__HUD">
+                <img id="SPT__Battle_HUD_Sprite_" class="outputSprite --change Battle__HUD_Sprite" />
+                <div class="Battle__HUD_Character">
+                    <div id="LAY__Battle_HUD_Bar_" class="outputLayer --change Battle__HUD_Character_Bars"></div>
+                    <h2 id="TXT__Battle_HUD_Name_" class="outputText --change Battle__HUD_Character_Name"></h2>
+                    <h3 id="TXT__Battle_HUD_Number_" class="outputText --change Battle__HUD_Character_Number"></h3>
+                    <div id="LAY__Battle_HUD_Animation_" class="outputLayer --change Battle__HUD_Animation"></div>
+                </div>
             </div>
         </div>
-        <div id="TXT__Battle_Timer" class="outputText Battle__HUD_Timer">∞</div>
+        <div id="LAY__Battle_Info" class="outputLayer Battle__Info">
+            <img id="SPT__Battle_Info_Sprite" class="outputSprite Battle__Info_Sprite" />
+            <span id="TXT__Battle_Info_Text" class="outputText Battle__Info_Text --text-border">
+        </div>
     </div>
+
     <div id="LAY__Battle_Area" class="outputLayer Battle__Area">
         <div class="Battle__Area_Blur --left">
             <div id="LAY__Battle_History_1" class="outputLayer Battle__History"></div>

@@ -1,4 +1,4 @@
 GAME.oData.oCharacter.GHS = {
     sCod: 'GHS',
-    sName: 'Son Gohan SNS'
+    sName: 'Gohan SNS'
 };

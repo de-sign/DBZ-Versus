@@ -69,6 +69,75 @@ Object.assign(
     }
 );
 
+function BattleInfo(oContext){
+    this.oContext = null;
+    this.oImg = null;
+    this.oText = null;
+
+    this.aInfo = [];
+    this.oCurrent = 0;
+
+    this.init(oContext);
+}
+
+Object.assign(
+    BattleInfo,
+    {
+        nLength: 60,
+        
+        prototype: {
+            constructor: BattleInfo,
+            init: function(oContext) {
+                this.oContext = oContext;
+                this.oImg = GAME.oOutput.getElement('SPT__Battle_Info_Sprite');
+                this.oText = GAME.oOutput.getElement('TXT__Battle_Info_Text');
+            },
+            update: function(){
+                if( this.oCurrent ){
+                    if( this.oCurrent.nLength <= BattleInfo.nLength ){
+                        this.oCurrent.nLength++;
+                    } else {
+                        this.hide();
+                    }
+                }
+                this.show();
+            },
+            destroy: function(){
+            },
+
+            add: function(sImg, sText, bFreeze){
+                this.aInfo.push( {
+                    nLength: 1,
+                    sImg,
+                    sText,
+                    bFreeze
+                } );
+            },
+            show: function(){
+                if( !this.oCurrent && this.aInfo.length ){
+                    this.oCurrent = this.aInfo.shift();
+                    if( this.oCurrent.sImg ){
+                        this.oImg.setSource(this.oCurrent.sImg);
+                        this.oImg.setStyle( { display: null } );
+                    } else {
+                        this.oImg.setStyle( { display: 'none' } );
+                    }
+                    this.oText.setText(this.oCurrent.sText);
+                    this.oContext.addTickUpdate( () => {
+                        this.oContext.hElement.classList.add('--info');
+                    } );
+                }
+            },
+            hide: function(){
+                this.oCurrent = null;
+                this.oContext.addTickUpdate( () => {
+                    this.oContext.hElement.classList.remove('--info');
+                } );
+            }
+        }
+    }
+);
+
 /* ----- BattleTraining ----- */
 function BattleTraining(aPlayer){
     this.aPlayer = null;
@@ -349,8 +418,113 @@ Object.assign(
     }
 );
 
+/* ----- BattleGatling ----- */
+function BattleGatling(oInputBuffer, aCommandData){
+    this.oInputBuffer = null;
+    this.aCommandData = null;
+
+    this.oCurrent = null;
+    this.bFreeze = false;
+    this.oNext = null;
+    this.oUsed = {};
+
+    this.init(oInputBuffer, aCommandData);
+}
+
+Object.assign(
+    BattleGatling.prototype, {
+        init: function(oInputBuffer, aCommandData){
+            this.oInputBuffer = oInputBuffer;
+            this.aCommandData = aCommandData;
+        },
+        update: function(nKi, bUse){
+            let bFind = false;
+            const aCommand = this.getEnterCommands();
+
+            for( let nIndex = 0; nIndex < aCommand.length; nIndex++ ){
+                const oCommand = aCommand[nIndex];
+                if( this.canUseCommand(nKi, oCommand) ){
+                    bUse ?
+                        this.use(oCommand) :
+                        this.oNext = oCommand;
+                    bFind = true;
+                    break;
+                }
+            }
+
+            // Gestion Gatling Buffer
+            if( !bFind && this.oNext && bUse ){
+                this.use(this.oNext);
+                bFind = true;
+            }
+
+            return bFind ? this.oCurrent : null;
+
+        },
+        destroy: function(){
+        },
+
+        reset: function(){
+            this.oCurrent = null;
+            this.bFreeze = false;
+            this.oNext = null;
+            this.oUsed = {};
+        },
+        use: function(oCommand){
+            this.oCurrent = Object.assign({ nFrameStart: GAME.oTimer.nFrames }, oCommand);
+            this.bFreeze = false;
+            this.oNext = null;
+            this.oUsed[oCommand.sName] = true;
+        },
+        getEnterCommands: function(){
+            const aCommand = [],
+                nFrameCheck = GAME.oTimer.nFrames;
+
+            if( this.oInputBuffer.oKeyboard.nFrameLastEvent >= nFrameCheck ){
+                for( let nIndex = 0; nIndex < this.aCommandData.length; nIndex++ ){
+                    const oCommand = this.aCommandData[nIndex];
+                    if( this.oInputBuffer.checkManipulation(nFrameCheck, oCommand.oManipulation) ){
+                        aCommand.push( Object.assign({ bHit: false }, oCommand) );
+                        if( oCommand.bLast ){
+                            break;
+                        }
+                    }
+                }
+            }
+            return aCommand;
+        },
+        canUseCommand: function(nKi, oCommand){
+            let bCanUse = false;
+            // Gestion KI
+            if( !oCommand.nCost || nKi >= oCommand.nCost ){
+                // Gestion GATLING
+                if( this.oUsed[oCommand.sName] ){
+                    // Gestion REDA CANCEL
+                    if( this.oCurrent && this.oCurrent.sName == oCommand.sName && oCommand.aSelfCancel ){
+                        for( let nIndex = 0; nIndex < oCommand.aSelfCancel.length; nIndex++ ){
+                            if( !this.oUsed[ oCommand.aSelfCancel[nIndex] ] ){
+                                oCommand.sName = oCommand.sAnimation = oCommand.aSelfCancel[nIndex];
+                                bCanUse = true;
+                            }
+                        }
+                    }
+                } else {
+                    bCanUse = true;
+                }
+            }
+            return bCanUse;
+        },
+        isHit: function(){
+            return this.oCurrent && this.oCurrent.bHit;
+        },
+        needFreeze: function(){
+            return this.oCurrent && this.oCurrent.oStun.nFreeze && !this.bFreeze;
+        }
+    }
+);
+
 /* ----- BattlePlayer ----- */
-function BattlePlayer(nPlayer, sChar, oKeyboard, bBox){
+function BattlePlayer(nPlayer, sChar, oKeyboard){
     this.nPlayer = nPlayer;
     this.oLayer = null;
     this.oSprite = null;
@@ -359,9 +533,7 @@ function BattlePlayer(nPlayer, sChar, oKeyboard, bBox){
     this.oKeyboard = null;
     this.oInputBuffer = null;
 
-    this.nFramesFreeze = 0;
     this.oAnimation = null;
-    this.oCommand = null;
     this.oLunch = null;
     this.oGatling = null;
     
@@ -380,10 +552,11 @@ Object.assign(
                 this.oSprite = GAME.oOutput.getElement('SPT__Battle_Character_Sprite_' + this.nPlayer);
             } );
             this.oCharacter = GAME.oData.oCharacter[sChar];
-            this.oInputBuffer = new BattleInputBuffer( this.oKeyboard = oKeyboard );
+            this.oKeyboard = oKeyboard;
+            this.oInputBuffer = new BattleInputBuffer(this.oKeyboard);
+            this.oGatling = new BattleGatling(this.oInputBuffer, this.oCharacter.aCommands);
 
             // init en STAND
-            this.resetGatling();
             this.createLunchAnimation();
             this.setAnimation('stand', true);
         },
@@ -392,40 +565,16 @@ Object.assign(
             this.oInputBuffer.update(this.bReverse);
 
             // Si pas stun par Animation
-            const nCanAction = this.canAction(); // 0: OTHER, 1: MOVEMENT, 2: END ANIM, 3: CANCEL, 4: GATLING
+            const nCanAction = this.canAction(); // 0: NONE, 1: MOVEMENT, 2: END ANIM, 3: CANCEL, 4: GATLING
             if( nCanAction ){
-
                 // Gestion MANIP
-                let bManipFind = false;
-                const aCommand = this.getEnterCommands();
-                for( let nIndex = 0; nIndex < aCommand.length; nIndex++ ){
-                    const oCommand = aCommand[nIndex];
-                    if( this.canUseCommand(oCommand) ){
-                        if( nCanAction == 4 ){
-                            this.oGatling.oNextCommand = {
-                                nFrame: GAME.oTimer.nFrames,
-                                oCommand: oCommand
-                            };
-                        } else {
-                            this.setCommand(oCommand);
-                        }
-                        bManipFind = true;
-                        break;
-                    }
+                const oCommand = this.oGatling.update(this.nKi, nCanAction != 4);
+                if( oCommand ){
+                    oCommand.nCost && (this.nKi -= oCommand.nCost);
+                    this.setAnimation(oCommand.sAnimation);
                 }
-
-                // Gestion Gatling Buffer
-                if( !bManipFind && this.oGatling.oNextCommand && nCanAction != 4 ){
-                    this.setCommand(this.oGatling.oNextCommand.oCommand);
-                    bManipFind = true;
-                }
-                // Reset GATLING en END ANIM
-                else if( nCanAction == 2 ){
-                    this.resetGatling();
-                }
-
                 // Gestion DIR
-                if( !bManipFind && this.canMove(nCanAction) ){
+                else if( this.canMove(nCanAction) ){
                     if( this.oLunch ){
                         this.oAnimation = this.oLunch;                
                     } else {
@@ -484,35 +633,13 @@ Object.assign(
             this.oLayer.hElement.classList[ this.oAnimation.oFrame.oStatus.bGuard ? 'add' : 'remove' ]('--guard');
             
             // Frame
-            this.oAnimation.oFrame.nZIndex && this.oLayer.setStyle(  {
-                zIndex: this.oAnimation.oFrame.nZIndex
-            } );
+            this.oAnimation.oFrame.nZIndex && this.oLayer.setStyle( { zIndex: this.oAnimation.oFrame.nZIndex } );
             this.oSprite && this.oSprite.setSource( GAME.oSettings.oPath.oCharacter.sFrames + '/' + this.oCharacter.sCod + '/' + this.oAnimation.oFrame.sPath );
         },
         destroy: function(){
         },
 
         // Fonction technique
-        canAction: function(){
-            let nCanAction = 0;
-            // Gestion MOVEMENT
-            if( this.oAnimation.sType == 'movement' ){
-                nCanAction = 1;
-            }
-            // Gestion END ANIMATION
-            else if( this.oAnimation.isEnd() ){
-                nCanAction = 2;
-            }
-            // Gestion ACTION en HIT
-            else if( this.oCommand && this.oCommand.bHit ){
-                nCanAction = this.oAnimation.oFrame.oStatus.bCancel && !this.oAnimation.oFrame.bFreeze ? 3 : 4;
-            }
-            return nCanAction;
-        },
-        canMove: function(nCanAction){
-            nCanAction || ( nCanAction = this.canAction() );
-            return nCanAction && nCanAction < 3;
-        },
         getCharacterBox: function(sBox){
             return this.oAnimation.oFrame[sBox] ?
                 Object.assign(
@@ -555,58 +682,25 @@ Object.assign(
         },
 
         // Fonction INPUT
-        getEnterCommands: function(){
-            const aCommand = [],
-                nFrameCheck = GAME.oTimer.nFrames;
-
-            if( this.oKeyboard.nFrameLastEvent >= nFrameCheck ){
-                for( let nIndex = 0; nIndex < this.oCharacter.aCommands.length; nIndex++ ){
-                    const oCommand = this.oCharacter.aCommands[nIndex];
-                    if( this.oInputBuffer.checkManipulation(nFrameCheck, oCommand.oManipulation) ){
-                        aCommand.push( Object.assign({ bHit: false }, oCommand) );
-                        if( oCommand.bLast ){
-                            break;
-                        }
-                    }
-                }
+        canAction: function(){
+            let nCanAction = 0;
+            // Gestion MOVEMENT
+            if( this.oAnimation.sType == 'movement' ){
+                nCanAction = 1;
             }
-            return aCommand;
-        },
-        canUseCommand: function(oCommand){
-            let bCanUse = false;
-            // Gestion KI
-            if( !oCommand.nCost || this.nKi >= oCommand.nCost ){
-                // Gestion GATLING
-                if( this.oGatling.oCommandUsed[oCommand.sName] ){
-                    // Gestion REDA CANCEL
-                    if( this.oCommand && this.oCommand.sName == oCommand.sName && oCommand.aSelfCancel ){
-                        for( let nIndex = 0; nIndex < oCommand.aSelfCancel.length; nIndex++ ){
-                            if( !this.oGatling.oCommandUsed[ oCommand.aSelfCancel[nIndex] ] ){
-                                oCommand.sName = oCommand.sAnimation = oCommand.aSelfCancel[nIndex];
-                                oCommand.bHit = false;
-                                bCanUse = true;
-                            }
-                        }
-                    }
-                } else {
-                    bCanUse = true;
-                }
+            // Gestion END ANIMATION
+            else if( this.oAnimation.isEnd() ){
+                nCanAction = 2;
             }
-            return bCanUse;
+            // Gestion ACTION en HIT
+            else if( this.oGatling.isHit() ){
+                nCanAction = this.oAnimation.oFrame.oStatus.bCancel && !this.oAnimation.oFrame.bFreeze ? 3 : 4;
+            }
+            return nCanAction;
         },
-        setCommand: function(oCommand){
-            this.setAnimation(oCommand.sAnimation);
-            this.oCommand = Object.assign({ nFrameStart: GAME.oTimer.nFrames }, oCommand);
-            oCommand.nCost && (this.nKi -= oCommand.nCost);
-
-            this.oGatling.oCommandUsed[ oCommand.sName ] = true;
-            this.oGatling.oNextCommand = null;
-        },
-        resetGatling: function(){
-            this.oGatling = {
-                oNextCommand: null,
-                oCommandUsed: {}
-            };
+        canMove: function(nCanAction){
+            nCanAction || ( nCanAction = this.canAction() );
+            return !this.oAnimation.oFrame.bFreeze && nCanAction && nCanAction < 3;
         },
 
         // Fonction OUTPUT
@@ -621,8 +715,7 @@ Object.assign(
             bUpdate && this.oAnimation.update();
         },
         setMovement: function(sMovement, bUpdate){
-            this.resetGatling();
-            this.oCommand = null;
+            this.oGatling.reset();
             this.setAnimation(sMovement, bUpdate);
         },
         setHurt: function(sHurt, nFramesLength, bUpdate){
@@ -673,15 +766,14 @@ Object.assign(
                 aPushback = [];
 
             this.aPlayer.forEach( (oPlayer, nIndex) => {
-                if( oPlayer.oCommand && !oPlayer.oCommand.bHit ){
+                if( !oPlayer.oGatling.isHit() ){
                     const oOpponent = this.aPlayer[ nIndex ? 0 : 1 ],
                         oHitBox = this.getCharacterCollisionBox(oPlayer, 'oHitBox'),
                         oHurtBox = this.getCharacterCollisionBox(oOpponent, 'oHurtBox');
 
                     if( oHitBox && oHurtBox && this.checkCollision(oHitBox, oHurtBox) ){
                         aHurt.push( {
-                            oCommand: oPlayer.oCommand,
-                            oPlayer,
+                            oCommand: oPlayer.oGatling.oCurrent,
                             oOpponent
                         } );
                         aPriority[nIndex]++;
@@ -720,11 +812,17 @@ Object.assign(
                 } );
             }
 
-            // TODO Gestion Super Freeze
+            // Gestion Super Freeze
             for( let nIndex = 0; nIndex < this.aPlayer.length; nIndex++ ){
                 const oPlayer = this.aPlayer[nIndex];
-                if( oPlayer.oCommand && oPlayer.oCommand.oStun.nFreeze && oPlayer.oCommand.nFrameStart == GAME.oTimer.nFrames ){
-                    this.aPlayer[ oPlayer.nPlayer == 1 ? 1 : 0 ].oAnimation.setFreeze(oPlayer.oCommand.oStun.nFreeze, true);
+                if( oPlayer.oGatling.needFreeze() ){
+                    oPlayer.oGatling.bFreeze = true;
+                    this.aPlayer[ oPlayer.nPlayer == 1 ? 1 : 0 ].oAnimation.setFreeze(oPlayer.oGatling.oCurrent.oStun.nFreeze, true);
+                    GAME.oScene.oCurrent.oInfo.add(
+                        GAME.oSettings.oPath.oCharacter.sFace + '/' + oPlayer.oCharacter.sCod + '.png',
+                        oPlayer.oGatling.oCurrent.sName + ' !'
+                    );
+                    break;
                 }
             };
         },
@@ -746,7 +844,7 @@ Object.assign(
                 nRight = this.oArea.oPosition.nX + (oBoxArea.right - oBoxArea.originX),
                 nDown = this.oArea.oPosition.nY + (oBoxArea.bottom - oBoxArea.originY) - GAME.oSettings.oPositionPoint.nGapY;
 
-            let nPriority = oPlayer.oCommand ? 1 : 0,
+            let nPriority = oPlayer.oGatling.oCurrent ? 1 : 0,
                 sMove = null;
 
             // Trop à gauche
@@ -856,6 +954,7 @@ Object.assign(
 /* ----- BattleScene ----- */
 function BattleScene(){
 	this.oContext = null;
+    this.oInfo = null;
 	this.oArea = null;
     
 	this.oPattern = null;
@@ -875,6 +974,7 @@ Object.assign(
                     // oLastData: sStageSelected, sTypeBattle, bAllPlayerActive, aCharacterSelected
 					GAME.oOutput.useContext('CTX__Battle');
 					this.oContext = GAME.oOutput.getElement('CTX__Battle');
+                    this.oInfo = new BattleInfo(this.oContext);
 
 					this.oArea = GAME.oOutput.getElement('LAY__Battle_Area');
                     this.setBackground( oLastData.sStageSelected );
@@ -888,7 +988,7 @@ Object.assign(
                         const oPlayer = new BattlePlayer(
                             nPlayer,
                             oLastData.aCharacterSelected[nIndex],
-                            /*oLastData.bAllPlayerActive ? null : */GAME.oInput.getController('IC_' + nPlayer ),
+                            GAME.oInput.getController('IC_' + nPlayer ),
                             false
                         );
                         this.aPlayer.push(oPlayer);
@@ -915,6 +1015,7 @@ Object.assign(
                     this.aPlayer.forEach( oPlayer => oPlayer.updateOutput() );
                     this.aHUD.forEach( oHUD => oHUD.update() );
 
+                    this.oInfo.update();
                     this.oTraining && this.oTraining.update();
 				},
                 destroy: function(){

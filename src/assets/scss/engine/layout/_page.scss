@@ -1,5 +1,7 @@
 * {
 	box-sizing: border-box;
+	font-weight: normal;
+	line-height: 1.5em;
 }
 
 html {
@@ -9,9 +11,22 @@ html {
 body {
 	background-color: #f7f7f7;
 	height: 100%;
-	font-size: 16px;
-	font-family: Segoe UI;
+	font-size: 10px;
+	font-family: 'Press Start 2P', cursive;
 	color: #333;
 	margin: 0;
 	position: relative;
+}
+
+.--text-border {
+	text-shadow:
+		4px 4px 0 White,
+		4px 0px 0 White,
+		4px -4px 0 White,
+		0px 4px 0 White,
+		0px 0px 0 White,
+		0px -4px 0 White,
+		-4px 4px 0 White,
+		-4px 0px 0 White,
+		-4px -4px 0 White;
 }

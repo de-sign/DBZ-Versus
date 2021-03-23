@@ -100,7 +100,7 @@ Object.assign(
                 this.nFreeze = 0;
             },
             isEnd: function(){
-                return this.nCurrentFrame >= this.nLength;
+                return this.nLength && this.nCurrentFrame >= this.nLength;
             },
             isHurt: function(){
                 return GameAnimation.isTypeHurt(this.sName);

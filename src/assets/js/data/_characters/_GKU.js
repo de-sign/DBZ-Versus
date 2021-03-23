@@ -1,6 +1,6 @@
 GAME.oData.oCharacter.GKU = {
     sCod: 'GKU',
-    sName: 'Son Gokū SSJ',
+    sName: 'Gokū SSJ',
     oFrames: {
         // Movement
         stand: {
@@ -928,7 +928,7 @@ GAME.oData.oCharacter.GKU = {
     },
     aCommands: [
         {
-            sName: 'kameha',
+            sName: 'kamehameha',
             sAnimation: 'kameha',
             nCost: 6,
             nDamage: 5,
