@@ -194,7 +194,7 @@ GAME.oData.oCharacter.GKU = {
             oHurtBox: {
                 nX: (-17 * 4) - 2,
                 nY: (-36 * 4) - 2,
-                nWidth: 39 * 4,
+                nWidth: 37 * 4,
                 nHeight: 32 * 4
             }
         },
@@ -398,7 +398,184 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 10 * 4,
                 nHeight: 26 * 4
             }
+        },
+        // Kameha
+        kameha_start: {
+            sPath: 'kameha_start.png',
+            nZIndex: 30,
+            oPositionBox: {
+                nX: (-7 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 16 * 4,
+                nHeight: 28 * 4
+            }
+        },
+        kameha_lunch: {
+            sPath: 'kameha_lunch.png',
+            nZIndex: 30,
+            oPositionBox: {
+                nX: (-7 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 16 * 4,
+                nHeight: 28 * 4
+            },
+            oHurtBox: {
+                nX: (-11 * 4) - 2,
+                nY: (-42 * 4) - 2,
+                nWidth: 31 * 4,
+                nHeight: 43 * 4
+            }
+        },
+        kameha_light: {
+            sPath: 'kameha_light.png',
+            nZIndex: 30,
+            oPositionBox: {
+                nX: (-7 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 16 * 4,
+                nHeight: 28 * 4
+            },
+            oHurtBox: {
+                nX: (-11 * 4) - 2,
+                nY: (-42 * 4) - 2,
+                nWidth: 31 * 4,
+                nHeight: 43 * 4
+            }/*,
+            oHitBox: {
+                nX: (8 * 4) + 2,
+                nY: (-27 * 4) - 2,
+                nWidth: (300 - 33) * 4,
+                nHeight: 12 * 4
+            }*/
+        },
+        kameha_medium: {
+            sPath: 'kameha_medium.png',
+            nZIndex: 30,
+            oPositionBox: {
+                nX: (-7 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 16 * 4,
+                nHeight: 28 * 4
+            },
+            oHurtBox: {
+                nX: (-11 * 4) - 2,
+                nY: (-42 * 4) - 2,
+                nWidth: 31 * 4,
+                nHeight: 43 * 4
+            }
+        },
+        kameha_heavy: {
+            sPath: 'kameha_heavy.png',
+            nZIndex: 30,
+            oPositionBox: {
+                nX: (-7 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 16 * 4,
+                nHeight: 28 * 4
+            },
+            oHurtBox: {
+                nX: (-11 * 4) - 2,
+                nY: (-42 * 4) - 2,
+                nWidth: 31 * 4,
+                nHeight: 43 * 4
+            },
+            oHitBox: {
+                nX: (8 * 4) + 2,
+                nY: (-34 * 4) - 2,
+                nWidth: (300 - 33) * 4,
+                nHeight: 26 * 4
+            }
         }
+        /*
+        kameha_medium_beam: {
+            sPath: 'kameha_medium.png',
+            nZIndex: 30,
+            oPositionBox: {
+                nX: (-7 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 16 * 4,
+                nHeight: 28 * 4
+            },
+            oHurtBox: {
+                nX: (-11 * 4) - 2,
+                nY: (-42 * 4) - 2,
+                nWidth: 31 * 4,
+                nHeight: 43 * 4
+            },
+            oHitBox: {
+                nX: (8 * 4) + 2,
+                nY: (-27 * 4) - 2,
+                nWidth: (300 - 33) * 4,
+                nHeight: 12 * 4
+            }
+        },
+        kameha_medium_circle: {
+            sPath: 'kameha_medium.png',
+            nZIndex: 30,
+            oPositionBox: {
+                nX: (-7 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 16 * 4,
+                nHeight: 28 * 4
+            },
+            oHurtBox: {
+                nX: (-11 * 4) - 2,
+                nY: (-42 * 4) - 2,
+                nWidth: 31 * 4,
+                nHeight: 43 * 4
+            },
+            oHitBox: {
+                nX: (21 * 4) + 2,
+                nY: (-41 * 4) - 2,
+                nWidth: 42 * 4,
+                nHeight: 40 * 4
+            }
+        },
+        kameha_heavy_beam: {
+            sPath: 'kameha_heavy.png',
+            nZIndex: 30,
+            oPositionBox: {
+                nX: (-7 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 16 * 4,
+                nHeight: 28 * 4
+            },
+            oHurtBox: {
+                nX: (-11 * 4) - 2,
+                nY: (-42 * 4) - 2,
+                nWidth: 31 * 4,
+                nHeight: 43 * 4
+            },
+            oHitBox: {
+                nX: (8 * 4) + 2,
+                nY: (-34 * 4) - 2,
+                nWidth: (300 - 33) * 4,
+                nHeight: 26 * 4
+            }
+        },
+        kameha_heavy_circle: {
+            sPath: 'kameha_heavy.png',
+            nZIndex: 30,
+            oPositionBox: {
+                nX: (-7 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 16 * 4,
+                nHeight: 28 * 4
+            },
+            oHurtBox: {
+                nX: (-11 * 4) - 2,
+                nY: (-42 * 4) - 2,
+                nWidth: 31 * 4,
+                nHeight: 43 * 4
+            },
+            oHitBox: {
+                nX: (19 * 4) + 2,
+                nY: (-50 * 4) - 2,
+                nWidth: 58 * 4,
+                nHeight: 58 * 4
+            }
+        }
+        */
     },
     oAnimations: {
         // Movement
@@ -709,9 +886,82 @@ GAME.oData.oCharacter.GKU = {
                     bCancel: true
                 }
             }
+        ],
+        // Kameha
+        // 16, 18, 26
+        kameha: [
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oHurtBox: null
+            },
+            {
+                //nFrame: 30,
+                nFrame: 10,
+                sFrame: 'kameha_start'
+            },
+            {
+                //nFrame: 10,
+                nFrame: 4,
+                sFrame: 'kameha_lunch',
+                oHurtBox: null
+            },
+            {
+                nFrame: 2,
+                sFrame: 'kameha_light',
+                oHurtBox: null
+            },
+            {
+                nFrame: 2,
+                sFrame: 'kameha_medium',
+                oHurtBox: null
+            },
+            {
+                nFrame: 18,
+                sFrame: 'kameha_heavy'
+            },
+            {
+                nFrame: 2,
+                sFrame: 'kameha_medium'
+            },
+            {
+                nFrame: 2,
+                sFrame: 'kameha_light'
+            },
+            {
+                nFrame: 20,
+                sFrame: 'kameha_lunch'
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur'
+            },
         ]
     },
     aCommands: [
+        {
+            sName: 'kameha',
+            sAnimation: 'kameha',
+            nCost: 6,
+            nDamage: 5,
+            oStun: {
+                nFreeze: 46,
+                nBlock: 18,
+                nHit: 18,
+                bLunch: true,
+                nPushback: 40 * 4,
+                sHitAnimation: 'hit_heavy'
+            },
+            bLast: false,
+            oManipulation: {
+                nMaxLengthFrame: 15,
+                aButtons: [
+                    { DN: false },
+                    { DF: false },
+                    { FW: false, C: true }
+                ]
+            }
+        },
         {
             sName: 'luncher',
             sAnimation: 'luncher',

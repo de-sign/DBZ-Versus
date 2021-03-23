@@ -332,7 +332,7 @@ Object.assign(
                     }
 
                     if( !oManipButtons || ( !bFCheck && !bButtonCheck ) ){
-                        bFChk = true;
+                        bFCheck = true;
                         nIndexButtons--;
                         nIndexHistory++;
                     } else {
@@ -359,6 +359,7 @@ function BattlePlayer(nPlayer, sChar, oKeyboard, bBox){
     this.oKeyboard = null;
     this.oInputBuffer = null;
 
+    this.nFramesFreeze = 0;
     this.oFrameUsed = null;
     this.oAnimation = null;
     this.oCommand = null;
@@ -503,11 +504,11 @@ Object.assign(
                 nCanAction = 1;
             }
             // Gestion END ANIMATION
-            else if( this.oAnimation.nStartFrame + this.oAnimation.nFramesLength <= GAME.oTimer.nFrames){
+            else if( this.oAnimation.nStartFrame + this.oAnimation.nFramesLength <= GAME.oTimer.nFrames ){
                 nCanAction = 2;
             }
             // Gestion ACTION en HIT
-            else if( this.oCommand && this.oCommand.bHit ) {
+            else if( this.oCommand && this.oCommand.bHit ){
                 nCanAction = this.oFrameUsed.oStatus.bCancel && !this.getFrameFreeze() ? 3 : 4;
             }
             return nCanAction;
@@ -535,8 +536,8 @@ Object.assign(
         },
         canUseCommand: function(oCommand){
             let bCanUse = false;
-            // TODO Gestion KI
-            if( true ){
+            // Gestion KI
+            if( !oCommand.nCost || this.nKi >= oCommand.nCost ){
                 // Gestion GATLING
                 if( this.oGatling.oCommandUsed[oCommand.sName] ){
                     // Gestion REDA CANCEL
@@ -587,9 +588,12 @@ Object.assign(
             }
             return bSet;
         },
-        setFreeze: function(nFreeze){
+        setFreeze: function(nFreeze, bLunch){
             this.oAnimation.nFramesLength += nFreeze;
             this.oAnimation.nFrameFreeze = GAME.oTimer.nFrames + 1;
+            if( bLunch && this.oLunch && !this.oLunch.nFrameStartGap ){
+                this.oLunch.nFrameStartGap = GAME.oTimer.nFrames;
+            }
         },
         getFrameUsed: function(){
             let nFrameMax = this.oAnimation.nStartFrame,
@@ -622,6 +626,7 @@ Object.assign(
         setCommand: function(oCommand){
             if( this.setAnimation( oCommand.sAnimation ) ){
                 this.oCommand = Object.assign({}, oCommand);
+                oCommand.nCost && (this.nKi -= oCommand.nCost);
                 this.oGatling.oCommandUsed[ oCommand.sName ] = true;
                 this.oGatling.oNextCommand = null;
             }
@@ -638,9 +643,6 @@ Object.assign(
         setHurt: function(sHurt, nFramesLength){
             this.setMovement(sHurt);
             nFramesLength && (this.oAnimation.nFramesLength = nFramesLength);
-            if( sHurt != 'lunch' && this.oLunch && !this.oLunch.nFrameStartGap ){
-                this.oLunch.nFrameStartGap = GAME.oTimer.nFrames;
-            }
         },
         setLunch: function(){
             this.oLunch = {
@@ -674,7 +676,7 @@ Object.assign(
             // Ajout de 2 FRAMES supplémentaire pour gérer le DOWN
             for( let nIndex = 1; nIndex <= GAME.oData.oLuncher.nLengthFrames + 2; nIndex++ ){
                 let nParabolX = (nIndex - 1 - nDemiLength) / nDemiLength,
-                    nParabolY = -1 * (nParabolX*nParabolX - 1),
+                    nParabolY = -1 * (nParabolX * nParabolX - 1),
                     nTargetY = Math.round(nParabolY * GAME.oData.oLuncher.oMove.nY),
                     nY = nTargetY - nLastY,
                     sFrame = 'hit_fall';
@@ -746,7 +748,10 @@ Object.assign(
             this.moveCollapsedPlayer(aPriority);
 
             // Gestion Hitbox
-            const aHurt = [];
+            let bLunch = false;
+            const aHurt = [],
+                aPushback = [];
+
             this.aPlayer.forEach( (oPlayer, nIndex) => {
                 if( oPlayer.oCommand && !oPlayer.oCommand.bHit ){
                     const oOpponent = this.aPlayer[ nIndex ? 0 : 1 ],
@@ -767,27 +772,40 @@ Object.assign(
             if( aHurt.length ){
                 aHurt.forEach( oHurt => {
                     oHurt.oCommand.bHit = true;
+                    aPushback.push( oHurt.oCommand.oStun.nPushback || GAME.oData.nPushback );
                     if( oHurt.oOpponent.oFrameUsed.oStatus.bGuard ){
                         oHurt.oOpponent.setHurt('guard', oHurt.oCommand.oStun.nBlock);
                     } else {
                         if( oHurt.oCommand.oStun.bLunch && !oHurt.oOpponent.oLunch ) {
                             oHurt.oOpponent.setLunch();
+                            bLunch = true;
                         } else {
                             oHurt.oOpponent.setHurt(oHurt.oCommand.oStun.sHitAnimation, oHurt.oCommand.oStun.nHit);
                         }
-                        oHurt.oOpponent.nKi++;
-                        oHurt.oOpponent.nLife--;
+
+                        let nDamage = oHurt.oCommand.nDamage || 1;
+                        oHurt.oOpponent.nKi += nDamage;
+                        oHurt.oOpponent.nLife -= nDamage;
                     }
                 } );
                 
                 // Gestion PushBack
-                this.movePushback(aPriority);
+                this.movePushback(aPriority, Math.max.apply(Math, aPushback));
 
                 // Gestion hit freeze
                 this.aPlayer.forEach( oPlayer => {
-                    oPlayer.setFreeze(GAME.oData.nLengthFreeze);
+                    oPlayer.setFreeze(GAME.oData.nLengthFreeze, !bLunch);
                 } );
             }
+
+            /* TODO Gestion Super Freeze
+            for( let nIndex = 0; nIndex < this.aPlayer.length; nIndex++ ){
+                const oPlayer = this.aPlayer[nIndex];
+                if( oPlayer.oCommand && oPlayer.oCommand.oStun.nFreeze && oPlayer.oAnimation.nFrameStart == GAME.oTimer.nFrames ){
+                    this.aPlayer[ oPlayer.nPlayer ? 1 : 0 ].setFreeze(oPlayer.oCommand.oStun.nFreeze);
+                }
+            };
+            */
         },
         destroy: function(){
         },
@@ -871,7 +889,7 @@ Object.assign(
                 }
             }
         },
-        movePushback: function(aPriority){
+        movePushback: function(aPriority, nPushback){
             let oPlayer = this.aPlayer[0],
                 oOpponent = this.aPlayer[1];
 
@@ -882,16 +900,16 @@ Object.assign(
 
             // Separation Egal
             if( aPriority[0] == aPriority[1] ){
-                oPlayer.oLayer.oPosition.nX -= GAME.oData.nPushback;
-                oOpponent.oLayer.oPosition.nX += GAME.oData.nPushback;
+                oPlayer.oLayer.oPosition.nX -= nPushback;
+                oOpponent.oLayer.oPosition.nX += nPushback;
             }
             // Movement Opponent
             else if( aPriority[ oPlayer.nPlayer - 1 ] > aPriority[ oOpponent.nPlayer - 1 ] ) {
-                oOpponent.oLayer.oPosition.nX += GAME.oData.nPushback;
+                oOpponent.oLayer.oPosition.nX += nPushback;
             }
             // Movement Player
             else {
-                oPlayer.oLayer.oPosition.nX -= GAME.oData.nPushback;
+                oPlayer.oLayer.oPosition.nX -= nPushback;
             }
         },
         getCharacterCollisionBox: function(oPlayer, sBox){

@@ -132,6 +132,7 @@
             top: 0;
             bottom: -256px;
             width: 88px;
+            z-index: 1000;
 
             background-repeat: repeat-y;
             background-position-x: right;
@@ -206,31 +207,38 @@
             height: 200px;
             transform-origin: 98px 182px;
 
+            &_Sprite {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%) !important;
+                transform-origin: 100px 100px;
+            }
+
             &.--reverse {
                 transform-origin: 102px 182px;
 
                 .Battle__Character_Sprite {
-                    transform: scaleX(-1) !important;
+                    transform: scaleX(-1) translateY(-50%) !important;
                 }
             }
 
             &.--freeze {
                 &_pair {
                     .Battle__Character_Sprite {
-                        transform: translateX(-4px) !important;
+                        transform: translate(-4px, -50%) !important;
                     }
 
                     &.--reverse .Battle__Character_Sprite {
-                        transform: scaleX(-1) translateX(-4px) !important;
+                        transform: scaleX(-1) translate(-4px, -50%) !important;
                     }
                 }
                 &_impair {
                     .Battle__Character_Sprite {
-                        transform: translateX(4px) !important;
+                        transform: translate(4px, -50%) !important;
                     }
 
                     &.--reverse .Battle__Character_Sprite {
-                        transform: scaleX(-1) translateX(4px) !important;
+                        transform: scaleX(-1) translate(4px, -50%) !important;
                     }
                 }
             }
