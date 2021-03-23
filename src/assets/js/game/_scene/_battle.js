@@ -69,6 +69,7 @@ Object.assign(
     }
 );
 
+/* ----- BattleInfo ----- */
 function BattleInfo(oContext){
     this.oContext = null;
     this.oImg = null;
@@ -133,6 +134,37 @@ Object.assign(
                 this.oContext.addTickUpdate( () => {
                     this.oContext.hElement.classList.remove('--info');
                 } );
+            }
+        }
+    }
+);
+
+/* ----- BattleCombo ----- */
+function BattleCombo(aPlayer){
+    this.aPlayer = [];
+
+    this.init(aPlayer);
+}
+
+Object.assign(
+    BattleCombo,
+    {
+        nLength: 60,
+        
+        prototype: {
+            constructor: BattleCombo,
+            init: function(aPlayer) {
+            },
+            update: function(){
+            },
+            destroy: function(){
+            },
+
+            getPattern: function(){
+
+            },
+            createLayer: function(){
+
             }
         }
     }
@@ -536,6 +568,8 @@ function BattlePlayer(nPlayer, sChar, oKeyboard){
     this.oAnimation = null;
     this.oLunch = null;
     this.oGatling = null;
+
+    this.nHit = 0;
     
     this.bReverse = false;
     this.nLife = GAME.oSettings.nLife;
@@ -635,6 +669,8 @@ Object.assign(
             // Frame
             this.oAnimation.oFrame.nZIndex && this.oLayer.setStyle( { zIndex: this.oAnimation.oFrame.nZIndex } );
             this.oSprite && this.oSprite.setSource( GAME.oSettings.oPath.oCharacter.sFrames + '/' + this.oCharacter.sCod + '/' + this.oAnimation.oFrame.sPath );
+
+            this.nHit && console.log(this.nPlayer, this.nHit);
         },
         destroy: function(){
         },
@@ -711,6 +747,9 @@ Object.assign(
                     this.oCharacter.oFrames,
                     this.oCharacter.oAnimations[sAnimation]
                 );
+                if( !this.oAnimation.isHurt() || this.oAnimation.sName == 'guard' ){
+                    this.nHit = 0;
+                }
             }
             bUpdate && this.oAnimation.update();
         },
@@ -800,6 +839,7 @@ Object.assign(
                         let nDamage = oHurt.oCommand.nDamage || 1;
                         oHurt.oOpponent.nKi += nDamage;
                         oHurt.oOpponent.nLife -= nDamage;
+                        oHurt.oOpponent.nHit += nDamage;
                     }
                 } );
                 
@@ -1024,7 +1064,7 @@ Object.assign(
                 setBackground: function(sCod){
                     this.oContext.setStyle( {
                         backgroundColor: GAME.oData.oStage[sCod].sColor,
-                        backgroundImage:'url("' + GAME.oSettings.oPath.oStage.sBackground + '/' + sCod + '.png")'
+                        backgroundImage: 'url("' + GAME.oSettings.oPath.oStage.sBackground + '/' + sCod + '.png")'
                     } );
                 },
                 getPattern: function(){
