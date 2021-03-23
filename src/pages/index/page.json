@@ -11,6 +11,7 @@
 
     "content": {
         "scenes": [
+            "loading.html",
             "menu.html",
             "select.html",
             "battle.html",

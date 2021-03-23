@@ -159,7 +159,8 @@ Object.assign(
                     } else if( this.oStatus.bLeave ) {
                         GAME.oScene.change( new MenuScene() );
                     } else if( this.oStatus.bSubmit ) {
-                        GAME.oScene.change( new BattleScene() );
+                        // GAME.oScene.change( new BattleScene() );
+                        GAME.oScene.change( new LoadingScene() );
                     }
 				},
                 destroy: function(){
