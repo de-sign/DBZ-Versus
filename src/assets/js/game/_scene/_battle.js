@@ -894,7 +894,7 @@ Object.assign(
                         oHurt.oOpponent.nLife -= nDamage;
                         oHurt.oOpponent.nHitting += nDamage;
 
-                        if( this.bDeath && !oHurt.oOpponent.nLife ){
+                        if( this.bDeath && oHurt.oOpponent.nLife < 0 ){
                             oHurt.oOpponent.setHurt('death', null, true);
                         } else {
                             oHurt.oOpponent.setHurt(
@@ -978,7 +978,7 @@ Object.assign(
                 oPlayer.setMovement('down', true);
                 oBoxPlayer = oPlayer.getCharacterBox('oPositionBox');
                 oPlayer.oLayer.oPosition.nY = nDown - ( oBoxPlayer.nY + oBoxPlayer.nHeight );
-                if( this.bDeath && !oPlayer.nLife ){
+                if( this.bDeath && oPlayer.nLife < 0 ){
                     GAME.oScene.oCurrent.endBattle( oPlayer.nPlayer );
                 }
             }
