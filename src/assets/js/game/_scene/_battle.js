@@ -141,7 +141,9 @@ Object.assign(
 
 /* ----- BattleCombo ----- */
 function BattleCombo(aPlayer){
-    this.aPlayer = [];
+    this.aPlayer = null;
+    this.aText = [];
+    this.aLast = [];
 
     this.init(aPlayer);
 }
@@ -154,17 +156,37 @@ Object.assign(
         prototype: {
             constructor: BattleCombo,
             init: function(aPlayer) {
+                this.aPlayer = aPlayer;
+                this.aPlayer.forEach( oPlayer => {
+                    this.aText.push( GAME.oOutput.getElement('TXT__Battle_Combo_Text_' + oPlayer.nPlayer) );
+                    this.aLast.push(0);
+                } );
             },
             update: function(){
+                this.aPlayer.forEach( (oPlayer, nIndex) => {
+                    if( this.aLast[nIndex] != oPlayer.nHitting ){
+                        this[ oPlayer.nHitting > 1 ? 'show' : 'hide' ](nIndex, oPlayer.nHitting);
+                        this.aLast[nIndex] = oPlayer.nHitting;
+                    }
+                } );
             },
             destroy: function(){
             },
 
-            getPattern: function(){
-
+            show: function(nIndex, nHit){
+                const oText = this.aText[nIndex];
+                oText.setText( nHit + ' hits !' );
+                oText.addTickUpdate( () => {
+                    oText.hElement.classList.add('--show');
+                    oText.hElement.classList.remove('--hide');
+                } );
             },
-            createLayer: function(){
-
+            hide: function(nIndex){
+                const oText = this.aText[nIndex];
+                oText.addTickUpdate( () => {
+                    oText.hElement.classList.remove('--show');
+                    oText.hElement.classList.add('--hide');
+                } );
             }
         }
     }
@@ -569,7 +591,7 @@ function BattlePlayer(nPlayer, sChar, oKeyboard){
     this.oLunch = null;
     this.oGatling = null;
 
-    this.nHit = 0;
+    this.nHitting = 0;
     
     this.bReverse = false;
     this.nLife = GAME.oSettings.nLife;
@@ -669,8 +691,6 @@ Object.assign(
             // Frame
             this.oAnimation.oFrame.nZIndex && this.oLayer.setStyle( { zIndex: this.oAnimation.oFrame.nZIndex } );
             this.oSprite && this.oSprite.setSource( GAME.oSettings.oPath.oCharacter.sFrames + '/' + this.oCharacter.sCod + '/' + this.oAnimation.oFrame.sPath );
-
-            this.nHit && console.log(this.nPlayer, this.nHit);
         },
         destroy: function(){
         },
@@ -748,7 +768,7 @@ Object.assign(
                     this.oCharacter.oAnimations[sAnimation]
                 );
                 if( !this.oAnimation.isHurt() || this.oAnimation.sName == 'guard' ){
-                    this.nHit = 0;
+                    this.nHitting = 0;
                 }
             }
             bUpdate && this.oAnimation.update();
@@ -839,7 +859,7 @@ Object.assign(
                         let nDamage = oHurt.oCommand.nDamage || 1;
                         oHurt.oOpponent.nKi += nDamage;
                         oHurt.oOpponent.nLife -= nDamage;
-                        oHurt.oOpponent.nHit += nDamage;
+                        oHurt.oOpponent.nHitting += nDamage;
                     }
                 } );
                 
@@ -1043,6 +1063,7 @@ Object.assign(
 
                     // Engine init
                     this.oEngine = new BattleEngine(this.aPlayer, this.oArea);
+                    this.oCombo = new BattleCombo(this.aPlayer);
 
                     // Training init
                     if( oLastData.sTypeBattle == 'Training' ){
@@ -1053,9 +1074,11 @@ Object.assign(
                     this.aPlayer.forEach( oPlayer => oPlayer.updateInput() );
                     this.oEngine.update();
                     this.aPlayer.forEach( oPlayer => oPlayer.updateOutput() );
-                    this.aHUD.forEach( oHUD => oHUD.update() );
 
                     this.oInfo.update();
+                    this.aHUD.forEach( oHUD => oHUD.update() );
+                    this.oCombo.update();
+                    
                     this.oTraining && this.oTraining.update();
 				},
                 destroy: function(){
