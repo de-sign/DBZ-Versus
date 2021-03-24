@@ -22,6 +22,10 @@ Utilise un moteur de jeu fait maison et FOX Website :
 <br/>
 
 ## TODO
+__Settings__
+* Bouton Start
+* Boutons en Cookies
+
 __Menu__
 * Aide des controles
 
@@ -29,18 +33,29 @@ __Select__
 * Choix de la couleurs
 
 __Battle__
-* Suppression du Timer
+* Début de match
 * Fin de match
 * Projectiles
-* Super
+* Mechaniques de jeu
+    * Choix de relevé
+    * Burst
+    * Guard cancel TP ?
+    * Reject Guard ?
 
 __Training__
 * Menu
-    * Choix LIFE / KI
+    * Ressources
+        * Choix LIFE / KI
+        * Regen auto
     * Dummy ?
+        * Guard
+        * Reversal
+    * Affichage
+        * Historique des Inputs
+        * Boite de collision
+        * Timeline des animations
+        * Frame Rate
     * Command List
-    * Affichage avancé
-    * Frame Rate
     * Quitter
 
 __General__
@@ -52,4 +67,5 @@ __General__
     * GHS
     * GHT
     * SRU
-* Paramètrage des coups
+* Couleurs supplémentaires ( autre personnage ? )
+* Equilibrage du jeu

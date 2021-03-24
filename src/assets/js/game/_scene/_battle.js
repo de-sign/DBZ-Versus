@@ -70,15 +70,16 @@ Object.assign(
 );
 
 /* ----- BattleInfo ----- */
-function BattleInfo(oContext){
+function BattleInfo(oContext, aPlayer){
     this.oContext = null;
+    this.aPlayer = null;
     this.oImg = null;
     this.oText = null;
 
     this.aInfo = [];
     this.oCurrent = 0;
 
-    this.init(oContext);
+    this.init(oContext, aPlayer);
 }
 
 Object.assign(
@@ -88,8 +89,9 @@ Object.assign(
         
         prototype: {
             constructor: BattleInfo,
-            init: function(oContext) {
+            init: function(oContext, aPlayer) {
                 this.oContext = oContext;
+                this.aPlayer = aPlayer;
                 this.oImg = GAME.oOutput.getElement('SPT__Battle_Info_Sprite');
                 this.oText = GAME.oOutput.getElement('TXT__Battle_Info_Text');
             },
@@ -106,12 +108,13 @@ Object.assign(
             destroy: function(){
             },
 
-            add: function(sImg, sText, bFreeze){
+            add: function(sImg, sText, bFreeze, fCallback){
                 this.aInfo.push( {
                     nLength: 1,
                     sImg,
                     sText,
-                    bFreeze
+                    bFreeze,
+                    fCallback
                 } );
             },
             show: function(){
@@ -124,16 +127,22 @@ Object.assign(
                         this.oImg.setStyle( { display: 'none' } );
                     }
                     this.oText.setText(this.oCurrent.sText);
+                    if( this.oCurrent.bFreeze ){
+                        this.aPlayer.forEach( oPlayer => {
+                            oPlayer.oAnimation.setFreeze(BattleInfo.nLength);
+                        } );
+                    }
                     this.oContext.addTickUpdate( () => {
                         this.oContext.hElement.classList.add('--info');
                     } );
                 }
             },
             hide: function(){
-                this.oCurrent = null;
                 this.oContext.addTickUpdate( () => {
                     this.oContext.hElement.classList.remove('--info');
                 } );
+                this.oCurrent.fCallback && this.oCurrent.fCallback();
+                this.oCurrent = null;
             }
         }
     }
@@ -607,12 +616,15 @@ Object.assign(
             this.oLayer.addTickUpdate( () => {
                 this.oSprite = GAME.oOutput.getElement('SPT__Battle_Character_Sprite_' + this.nPlayer);
             } );
+            this.oLayer.oPosition = Object.assign({}, this.oLayer.oReferencePosition);
+
             this.oCharacter = GAME.oData.oCharacter[sChar];
             this.oKeyboard = oKeyboard;
             this.oInputBuffer = new BattleInputBuffer(this.oKeyboard);
             this.oGatling = new BattleGatling(this.oInputBuffer, this.oCharacter.aCommands);
 
             // init en STAND
+            this.createDeathAnimation();
             this.createLunchAnimation();
             this.setAnimation('stand', true);
         },
@@ -705,6 +717,35 @@ Object.assign(
                 ) :
                 null;
         },
+        createDeathAnimation: function(){
+            let nLastY = 0,
+                oLastFrame = null;
+            const aAnim = [],
+                nDemiLength = (GAME.oSettings.oDeath.nLength - 1) / 2,
+                nX = GAME.oSettings.oDeath.oMove.nX / GAME.oSettings.oDeath.nLength;
+
+            // Double le nombre de FRAMES pour gérer le DOWN
+            for( let nIndex = 1; nIndex <= 2 * GAME.oSettings.oDeath.nLength; nIndex++ ){
+                let nParabolX = (nIndex - 1 - nDemiLength) / nDemiLength,
+                    nParabolY = -1 * (nParabolX * nParabolX - 1),
+                    nTargetY = Math.round(nParabolY * GAME.oSettings.oDeath.oMove.nY),
+                    nY = nTargetY - nLastY,
+                    sFrame = nIndex <= GAME.oSettings.oDeath.nLength / 2 ? 'hit_luncher' : 'hit_fall';
+
+                if( oLastFrame && oLastFrame.oMove.nY == nY && oLastFrame.sFrame == sFrame ){
+                    oLastFrame.nFrame++;
+                } else {
+                    aAnim.push( oLastFrame = {
+                        nFrame: 1,
+                        sFrame,
+                        oMove: { nX, nY }
+                    } );
+                    oLastFrame.oHurtBox = null;
+                }
+                nLastY = nTargetY;
+            }
+            this.oCharacter.oAnimations.death = aAnim;
+        },
         createLunchAnimation: function(){
             let nLastY = 0,
                 oLastFrame = null;
@@ -789,18 +830,18 @@ Object.assign(
 );
 
 /* ----- BattleEngine ----- */
-function BattleEngine(aPlayer, oArea){
+function BattleEngine(bDeath, aPlayer, oArea){
+    this.bDeath = false;
     this.aPlayer = null;
     this.oArea = null;
 
-    this.nStartFreeze = null;
-
-    this.init(aPlayer, oArea);
+    this.init(bDeath, aPlayer, oArea);
 }
 
 Object.assign(
     BattleEngine.prototype, {
-        init: function(aPlayer, oArea) {
+        init: function(bDeath, aPlayer, oArea) {
+            this.bDeath = bDeath;
             this.aPlayer = aPlayer;
             this.oArea = oArea;
         },
@@ -848,18 +889,22 @@ Object.assign(
                     if( oHurt.oOpponent.oAnimation.oFrame.oStatus.bGuard ){
                         oHurt.oOpponent.setHurt('guard', oHurt.oCommand.oStun.nBlock, true);
                     } else {
-                        oHurt.oOpponent.setHurt(
-                            oHurt.oCommand.oStun.bLunch && !oHurt.oOpponent.oLunch ?
-                                'lunch' :
-                                oHurt.oCommand.oStun.sHitAnimation,
-                            oHurt.oCommand.oStun.nHit,
-                            true
-                        );
-
                         let nDamage = oHurt.oCommand.nDamage || 1;
                         oHurt.oOpponent.nKi += nDamage;
                         oHurt.oOpponent.nLife -= nDamage;
                         oHurt.oOpponent.nHitting += nDamage;
+
+                        if( this.bDeath && !oHurt.oOpponent.nLife ){
+                            oHurt.oOpponent.setHurt('death', null, true);
+                        } else {
+                            oHurt.oOpponent.setHurt(
+                                oHurt.oCommand.oStun.bLunch && !oHurt.oOpponent.oLunch ?
+                                    'lunch' :
+                                    oHurt.oCommand.oStun.sHitAnimation,
+                                oHurt.oCommand.oStun.nHit,
+                                true
+                            );
+                        }
                     }
                 } );
                 
@@ -868,7 +913,7 @@ Object.assign(
 
                 // Gestion hit freeze
                 this.aPlayer.forEach( oPlayer => {
-                    oPlayer.oAnimation.setFreeze(GAME.oSettings.nFreeze, !bLunch);
+                    oPlayer.oAnimation.setFreeze(GAME.oSettings.nFreeze);
                 } );
             }
 
@@ -877,14 +922,14 @@ Object.assign(
                 const oPlayer = this.aPlayer[nIndex];
                 if( oPlayer.oGatling.needFreeze() ){
                     oPlayer.oGatling.bFreeze = true;
-                    this.aPlayer[ oPlayer.nPlayer == 1 ? 1 : 0 ].oAnimation.setFreeze(oPlayer.oGatling.oCurrent.oStun.nFreeze, true);
+                    this.aPlayer[ oPlayer.nPlayer == 1 ? 1 : 0 ].oAnimation.setFreeze(oPlayer.oGatling.oCurrent.oStun.nFreeze);
                     GAME.oScene.oCurrent.oInfo.add(
                         GAME.oSettings.oPath.oCharacter.sFace + '/' + oPlayer.oCharacter.sCod + '.png',
                         oPlayer.oGatling.oCurrent.sName + ' !'
                     );
                     break;
                 }
-            };
+            }
         },
         destroy: function(){
         },
@@ -933,6 +978,9 @@ Object.assign(
                 oPlayer.setMovement('down', true);
                 oBoxPlayer = oPlayer.getCharacterBox('oPositionBox');
                 oPlayer.oLayer.oPosition.nY = nDown - ( oBoxPlayer.nY + oBoxPlayer.nHeight );
+                if( this.bDeath && !oPlayer.nLife ){
+                    GAME.oScene.oCurrent.endBattle( oPlayer.nPlayer );
+                }
             }
 
             return nPriority;
@@ -1034,7 +1082,6 @@ Object.assign(
                     // oLastData: sStageSelected, sTypeBattle, bAllPlayerActive, aCharacterSelected
 					GAME.oOutput.useContext('CTX__Battle');
 					this.oContext = GAME.oOutput.getElement('CTX__Battle');
-                    this.oInfo = new BattleInfo(this.oContext);
 
 					this.oArea = GAME.oOutput.getElement('LAY__Battle_Area');
                     this.setBackground( oLastData.sStageSelected );
@@ -1062,12 +1109,16 @@ Object.assign(
                     } );
 
                     // Engine init
-                    this.oEngine = new BattleEngine(this.aPlayer, this.oArea);
+                    this.oInfo = new BattleInfo(this.oContext, this.aPlayer);
                     this.oCombo = new BattleCombo(this.aPlayer);
+                    this.oEngine = new BattleEngine(oLastData.sTypeBattle != 'Training', this.aPlayer, this.oArea);
 
                     // Training init
                     if( oLastData.sTypeBattle == 'Training' ){
                         this.oTraining = new BattleTraining( this.aPlayer );
+                    } else {
+                        this.oInfo.add( null, 'Ready ?', true );
+                        this.oInfo.add( null, 'Fight !' );
                     }
 				},
 				update: function(){
@@ -1097,7 +1148,7 @@ Object.assign(
                     };
 
                     for( let sPattern in this.oPattern ){
-                        this.oPattern[sPattern] && this.oPattern[sPattern].oParentElement.remove( this.oPattern[sPattern] );
+                        this.oPattern[sPattern] && this.oPattern[sPattern].oParentElement && this.oPattern[sPattern].oParentElement.remove( this.oPattern[sPattern] );
                     }
                 },
                 createPlayer: function(nPlayer){
@@ -1139,6 +1190,18 @@ Object.assign(
                         // Ajout dans le context
                         this.oContext.add(new GAME.oOutput.OutputLayer(hLayer), '.Battle__HUDs');
                     }
+                },
+
+                endBattle: function(nPlayerDeath){
+                    const oPlayer = this.aPlayer[ nPlayerDeath == 1 ? 1 : 0 ];
+                    this.oInfo.add(
+                        GAME.oSettings.oPath.oCharacter.sFace + '/' + oPlayer.oCharacter.sCod + '.png',
+                        oPlayer.oCharacter.sName + ' win !',
+                        true,
+                        () => {
+                            GAME.oScene.change( new MenuScene() );
+                        }
+                    );
                 }
             }
         )

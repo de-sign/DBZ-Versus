@@ -39,6 +39,17 @@ Object.assign(
                     sFall: 'hit_fall'
                 }
             },
+            oDeath: {
+                nLength: 16,
+                oMove: {
+                    nX: -32 * 4,
+                    nY: -16 * 4
+                },
+                oFrames: {
+                    sLunch: 'hit_luncher',
+                    sFall: 'hit_fall'
+                }
+            },
             nFreeze: 6,
             nPushback: 5 * 4,
             aKeyboard: [
