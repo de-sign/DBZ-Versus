@@ -23,6 +23,7 @@ Utilise un moteur de jeu fait maison et FOX Website :
 
 ## TODO
 __BUG__
+* Historique mal affiché
 * Visibilité des BOXs en mode VERSUS ( point noir au pieds )
 
 __Settings__

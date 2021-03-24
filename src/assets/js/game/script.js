@@ -2,6 +2,8 @@
 //=include _animation.js
 
 //=include _scene/_initialize.js
+//=include _initialize/_settings.js
+
 //=include _scene/_loading.js
 //=include _scene/_menu.js
 //=include _scene/_select.js

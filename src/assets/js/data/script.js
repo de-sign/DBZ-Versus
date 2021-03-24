@@ -18,7 +18,8 @@ Object.assign(
                 }
             },
             nPlayer: 2,
-            sStartScene: 'MenuScene',
+            sStartScene: 'InitializeScene',
+            // sStartScene: 'MenuScene',
             oPositionPoint: {
                 nX: 98,
                 nY: 182,
@@ -49,7 +50,8 @@ Object.assign(
                     RIGHT: 'd',
                     A: 'u',
                     B: 'i',
-                    C: 'o'
+                    C: 'o',
+                    START: 'enter'
                 },
                 {
                     UP: 'ArrowUp',
@@ -58,7 +60,8 @@ Object.assign(
                     RIGHT: 'ArrowRight',
                     A: '1',
                     B: '2',
-                    C: '3'
+                    C: '3',
+                    START: '0'
                 }
             ]
         },
@@ -92,11 +95,9 @@ Object.assign(
 );
 
 //=include _characters/_GKU.js
-/*
 //=include _characters/_BJT.js
 //=include _characters/_GHT.js
 //=include _characters/_GHS.js
 //=include _characters/_FRZ.js
 //=include _characters/_SRU.js
 //=include _characters/_BUU.js
-*/
