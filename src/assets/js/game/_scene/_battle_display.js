@@ -148,10 +148,10 @@ Object.assign(
                 // Hide
                 this.oContext.addTickUpdate( () => {
                     this.oContext.hElement.classList.remove('--info');
+                    // Callback
+                    this.oCurrent.fCallback && this.oCurrent.fCallback();
+                    this.oCurrent = null;
                 } );
-                // Callback
-                this.oCurrent.fCallback && this.oCurrent.fCallback();
-                this.oCurrent = null;
             }
         }
     }

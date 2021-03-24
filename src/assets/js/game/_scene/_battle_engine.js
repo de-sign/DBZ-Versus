@@ -271,7 +271,7 @@ Object.assign(
             this.oLayer.resetPosition();
 
             this.oCharacter = GAME.oData.oCharacter[sChar];
-            this.oInputBuffer = new BattleInputBuffer(this.oKeyboard);
+            this.oInputBuffer = new BattleInputBuffer(oKeyboard);
             this.oGatling = new BattleGatling(this.oInputBuffer, this.oCharacter.aCommands);
 
             // init en STAND
@@ -500,7 +500,7 @@ Object.assign(
                 this.aPlayer.forEach( (oPlayer, nIndex) => {
                     if( !oPlayer.oGatling.isHit() ){
                         const oOpponent = this.aPlayer[ nIndex ? 0 : 1 ];
-                        if( oOpponent.nLife > 0 ){
+                        if( !this.bDeath || oOpponent.nLife > 0 ){
                             const oHitBox = this.getCharacterCollisionBox(oPlayer, 'oHitBox'),
                                 oHurtBox = this.getCharacterCollisionBox(oOpponent, 'oHurtBox');
                             
