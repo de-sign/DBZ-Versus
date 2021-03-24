@@ -153,7 +153,7 @@ Object.assign(
                     };
 
                     for( let sPattern in this.oPattern ){
-                        this.oPattern[sPattern] && this.oContext.remove( this.oPattern[sPattern] );
+                        this.oPattern[sPattern] && this.oContext.delete( this.oPattern[sPattern] );
                     }
                 },
                 createLayerPlayer: function(nPlayer){

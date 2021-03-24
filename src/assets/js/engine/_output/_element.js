@@ -17,6 +17,7 @@ function OutputElement(hElm) {
     this.oPosition = {};
     this.oReferencePosition = {};
 }
+
 Object.assign(
     OutputElement, {
         nId: 0,
@@ -28,6 +29,13 @@ Object.assign(
             this.oInstanceByConstructor[oElm.constructor.name] || ( this.oInstanceByConstructor[oElm.constructor.name] = {} );
             this.oInstance[id] = this.oInstanceByConstructor[oElm.constructor.name][id] = oElm;
             return id;
+        },
+
+        remove: function(oElm) {
+            const id = oElm.sId;
+            delete this.oInstance[id];
+            delete this.oInstanceByConstructor[oElm.constructor.name][id];
+            return oElm;
         },
 
         prototype: {
@@ -81,6 +89,9 @@ Object.assign(
                 oPos.nDistance = Math.sqrt(oPos.nX * oPos.nX + oPos.nY * oPos.nY);
                 oPos.nAngle %= 360;
                 return Object.assign(this.oPosition, oPos);
+            },
+            resetPosition: function(){
+                return Object.assign(this.oPosition, this.oReferencePosition);
             },
             getCalculatedPosition: function(){
                 const box = this.getBox(),

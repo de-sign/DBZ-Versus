@@ -58,6 +58,14 @@ Object.assign(
                         this.remove(oElm);
                     });
                 },
+                delete: function(oElm) {
+                    return OutputElement.remove( this.remove(oElm) );
+                },
+                clean: function() {
+                    this.aChildElement.forEach((oElm) => {
+                        this.delete(oElm);
+                    });
+                },
                 autoCreateChildElement: function() {
                     if( !this.bElementCreate ){
                         this.hElement.classList.add( OutputManager.oConfig.class.scope );

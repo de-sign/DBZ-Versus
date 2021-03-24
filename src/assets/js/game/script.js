@@ -4,6 +4,8 @@
 //=include _scene/_loading.js
 //=include _scene/_menu.js
 //=include _scene/_select.js
+//=include _scene/_battle_display.js
+//=include _scene/_battle_engine.js
 //=include _scene/_battle.js
 //=include _scene/_settings.js
 

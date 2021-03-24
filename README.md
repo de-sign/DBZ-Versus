@@ -33,8 +33,6 @@ __Select__
 * Choix de la couleurs
 
 __Battle__
-* Début de match
-* Fin de match
 * Projectiles
 * Mechaniques de jeu
     * Choix de relevé

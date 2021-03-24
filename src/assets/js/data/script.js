@@ -39,17 +39,6 @@ Object.assign(
                     sFall: 'hit_fall'
                 }
             },
-            oDeath: {
-                nLength: 16,
-                oMove: {
-                    nX: -32 * 4,
-                    nY: -16 * 4
-                },
-                oFrames: {
-                    sLunch: 'hit_luncher',
-                    sFall: 'hit_fall'
-                }
-            },
             nFreeze: 6,
             nPushback: 5 * 4,
             aKeyboard: [
@@ -103,9 +92,11 @@ Object.assign(
 );
 
 //=include _characters/_GKU.js
+/*
 //=include _characters/_BJT.js
 //=include _characters/_GHT.js
 //=include _characters/_GHS.js
 //=include _characters/_FRZ.js
 //=include _characters/_SRU.js
 //=include _characters/_BUU.js
+*/

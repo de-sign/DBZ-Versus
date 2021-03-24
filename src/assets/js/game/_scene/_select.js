@@ -183,7 +183,7 @@ Object.assign(
 
                 getPattern: function(){
                     this.oPattern = GAME.oOutput.getElement('LAY__Select_Player_');
-                    this.oPattern && this.oContext.remove( this.oPattern );
+                    this.oPattern && this.oContext.delete( this.oPattern );
                 },
                 createLayerPlayer: function(nPlayer){
                     let oLayer = GAME.oOutput.getElement('LAY__Select_Player_' + nPlayer);

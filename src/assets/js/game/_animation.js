@@ -31,8 +31,7 @@ Object.assign(
             hit_luncher: 'hit',
             lunch: 'hit',
             // DOWN
-            down: 'down',
-            death: 'down'
+            down: 'down'
         },
         aAllType: ['action', 'movement','guard', 'hit'],
         aTypeHurt: ['guard', 'hit'],
