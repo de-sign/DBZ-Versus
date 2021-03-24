@@ -19,6 +19,7 @@ Object.assign(
                 constructor: BattleScene,
 				init: function( oLastData ){
                     // oLastData: sStageSelected, sTypeBattle, bAllPlayerActive, aCharacterSelected
+                    const bTraining = oLastData.sTypeBattle == 'Training';
 					GAME.oOutput.useContext('CTX__Battle');
 					this.oContext = GAME.oOutput.getElement('CTX__Battle');
 
@@ -34,7 +35,7 @@ Object.assign(
                         const oPlayer = new BattlePlayer(
                             nPlayer,
                             oLastData.aCharacterSelected[nIndex],
-                            GAME.oInput.getController('IC_' + nPlayer ),
+                            bTraining ? GAME.oInput.getController('IC_' + nPlayer ) : null,
                             false
                         );
                         this.aPlayer.push(oPlayer);
@@ -50,16 +51,21 @@ Object.assign(
                     // Engine init
                     this.oInfo = new BattleInfo(this.oContext, this.aPlayer);
                     this.oCombo = new BattleCombo(this.aPlayer);
-                    this.oEngine = new BattleEngine(oLastData.sTypeBattle != 'Training', this.aPlayer, this.oArea);
+                    this.oEngine = new BattleEngine(!bTraining, this.aPlayer, this.oArea);
 
                     // Training init
-                    if( oLastData.sTypeBattle == 'Training' ){
+                    if( bTraining ){
                         this.oTraining = new BattleTraining( this.aPlayer );
                     } else {
                         this.oInfo.add(
                             {
                                 sText: 'Ready ?',
-                                bFreeze: true
+                                bFreeze: true,
+                                fCallback: () => {
+                                    this.aPlayer.forEach( oPlayer => {
+                                        oPlayer.oInputBuffer.init( GAME.oInput.getController('IC_' + oPlayer.nPlayer ) );
+                                    } );
+                                }
                             },
                             {
                                 sText: 'Fight !',
@@ -70,7 +76,7 @@ Object.assign(
 				},
 				update: function(){
                     this.aPlayer.forEach( oPlayer => oPlayer.updateInput() );
-                    this.oEngine.update();
+                    this.endBattle( this.oEngine.update() );
                     this.aPlayer.forEach( oPlayer => oPlayer.updateOutput() );
 
                     this.oInfo.update();
@@ -82,6 +88,20 @@ Object.assign(
                 destroy: function(){
                 },
 
+                endBattle: function(aPlayerWin){
+                    if( aPlayerWin.length ){
+                        this.oInfo.add( {
+                            sText: aPlayerWin.length == 2 ?
+                                'Double KO !' :
+                                aPlayerWin[0].oCharacter.sName + ' win !',
+                            bFreeze: true,
+                            nLength: 120,
+                            fCallback: () => {
+                                GAME.oScene.change( new MenuScene() );
+                            }
+                        } );
+                    }
+                },
                 setBackground: function(sCod){
                     this.oContext.setStyle( {
                         backgroundColor: GAME.oData.oStage[sCod].sColor,
@@ -137,19 +157,6 @@ Object.assign(
                         // Ajout dans le context
                         this.oContext.add(new GAME.oOutput.OutputLayer(hLayer), '.Battle__HUDs');
                     }
-                },
-
-                endBattle: function(nPlayerDeath){
-                    const oPlayer = this.aPlayer[ nPlayerDeath == 1 ? 1 : 0 ];
-                    this.oInfo.add( {
-                        sImg: GAME.oSettings.oPath.oCharacter.sFace + '/' + oPlayer.oCharacter.sCod + '.png',
-                        sText: oPlayer.oCharacter.sName + ' win !',
-                        bFreeze: true,
-                        nLength: 120,
-                        fCallback: () => {
-                            GAME.oScene.change( new MenuScene() );
-                        }
-                    } );
                 }
             }
         )

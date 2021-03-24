@@ -22,15 +22,17 @@ Utilise un moteur de jeu fait maison et FOX Website :
 <br/>
 
 ## TODO
+__BUG__
+* Visibilité des BOXs en mode VERSUS ( point noir au pieds )
+
 __Settings__
-* Bouton Start
 * Boutons en Cookies
 
 __Menu__
 * Aide des controles
 
 __Select__
-* Choix de la couleurs
+* Choix de la couleurs via "C"
 
 __Battle__
 * Projectiles
@@ -57,6 +59,10 @@ __Training__
     * Quitter
 
 __General__
+* Optimisation du jeu
+    * Gestion plus fine d' "AutoPositionning"
+    * Scene d'initialisation
+    * Enlever scene de chargement
 * Bouton Start
 * Animations
     * BJT
@@ -66,4 +72,5 @@ __General__
     * GHT
     * SRU
 * Couleurs supplémentaires ( autre personnage ? )
-* Equilibrage du jeu
+* Faire un script pour paramétrage via fichier EXCEL / CSV ?
+* Paramétrage des coups

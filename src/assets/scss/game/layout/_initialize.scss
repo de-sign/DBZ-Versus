@@ -1,0 +1,17 @@
+/* Initialize */
+#CTX__Initialize {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	justify-content: center;
+	padding: 20px;
+
+    h1 {
+        font-size: 7em;
+    }
+
+    h2 {
+        font-size: 2.5em;
+        color: DarkGray;
+    }
+}

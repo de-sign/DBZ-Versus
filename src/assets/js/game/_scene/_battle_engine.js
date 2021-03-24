@@ -5,6 +5,7 @@ function BattleInputBuffer(oKeyboard){
     this.nDirection = 5;
     this.bReverse = false;
     this.aHistory = [];
+    this.nFrameLastUpdate = 0;
 
     this.init(oKeyboard);
 }
@@ -30,7 +31,8 @@ Object.assign(
             },
             update: function(bReverse){
                 this.bReverse = bReverse;
-                if( this.oKeyboard.nFrameLastEvent == GAME.oTimer.nFrames ){
+                if( this.oKeyboard && this.oKeyboard.nFrameLastEvent == GAME.oTimer.nFrames ){
+                    this.nFrameLastUpdate = GAME.oTimer.nFrames;
                     this.updateDirection();
 
                     this.aHistory.length >= BattleInputBuffer.nLengthHistory && this.aHistory.shift();
@@ -194,7 +196,7 @@ Object.assign(
             const aCommand = [],
                 nFrameCheck = GAME.oTimer.nFrames;
 
-            if( this.oInputBuffer.oKeyboard.nFrameLastEvent >= nFrameCheck ){
+            if( this.oInputBuffer.nFrameLastUpdate == nFrameCheck ){
                 for( let nIndex = 0; nIndex < this.aCommandData.length; nIndex++ ){
                     const oCommand = this.aCommandData[nIndex];
                     if( this.oInputBuffer.checkManipulation(nFrameCheck, oCommand.oManipulation) ){
@@ -244,7 +246,6 @@ function BattlePlayer(nPlayer, sChar, oKeyboard){
     this.oSprite = null;
 
     this.oCharacter = null;
-    this.oKeyboard = null;
     this.oInputBuffer = null;
 
     this.oAnimation = null;
@@ -270,7 +271,6 @@ Object.assign(
             this.oLayer.resetPosition();
 
             this.oCharacter = GAME.oData.oCharacter[sChar];
-            this.oKeyboard = oKeyboard;
             this.oInputBuffer = new BattleInputBuffer(this.oKeyboard);
             this.oGatling = new BattleGatling(this.oInputBuffer, this.oCharacter.aCommands);
 
@@ -467,85 +467,105 @@ Object.assign(
             this.oArea = oArea;
         },
         update: function(){
-            const aPriority = [];
-
-            // Gestion Reverse / Area
-            this.aPlayer.forEach( (oPlayer, nIndex) => {
-                const oOpponent = this.aPlayer[ nIndex ? 0 : 1 ];
-                // Gestion PositionBox / Area
-                aPriority[nIndex] = this.stayInArea(oPlayer);
-                // Gestion Reverse
-                oPlayer.canMove() && this.updateReverse(oPlayer, oOpponent);
-            } );
-            
-            // Gestion PositionBox / Player
-            this.moveCollapsedPlayer(aPriority);
-
-            // Gestion Hitbox
-            let bLunch = false;
-            const aHurt = [],
-                aPushback = [];
-
-            this.aPlayer.forEach( (oPlayer, nIndex) => {
-                if( !oPlayer.oGatling.isHit() ){
-                    const oOpponent = this.aPlayer[ nIndex ? 0 : 1 ],
-                        oHitBox = this.getCharacterCollisionBox(oPlayer, 'oHitBox'),
-                        oHurtBox = this.getCharacterCollisionBox(oOpponent, 'oHurtBox');
-
-                    if( oHitBox && oHurtBox && this.checkCollision(oHitBox, oHurtBox) ){
-                        aHurt.push( {
-                            oCommand: oPlayer.oGatling.oCurrent,
-                            oOpponent
-                        } );
-                        aPriority[nIndex]++;
+            // Gestion Fin de partie
+            const aPlayerWin = [];
+            if( this.bDeath ){
+                this.aPlayer.forEach( (oPlayer, nIndex) => {
+                    if( oPlayer.nLife <= 0 && oPlayer.oAnimation.sType == 'down' ){
+                        aPlayerWin.push( this.aPlayer[ nIndex ? 0 : 1 ] );
                     }
-                }
-            } );
+                } );
+            }
 
-            // Gestion Hurt Freeze
-            if( aHurt.length ){
-                aHurt.forEach( oHurt => {
-                    oHurt.oCommand.bHit = true;
-                    aPushback.push( oHurt.oCommand.oStun.nPushback || GAME.oSettings.nPushback );
-                    if( oHurt.oOpponent.oAnimation.oFrame.oStatus.bGuard ){
-                        oHurt.oOpponent.setHurt('guard', oHurt.oCommand.oStun.nBlock, true);
-                    } else {
-                        const nDamage = oHurt.oCommand.nDamage || 1;
-                        oHurt.oOpponent.nKi += nDamage;
-                        oHurt.oOpponent.nLife -= nDamage;
-                        oHurt.oOpponent.nHitting += nDamage;
+            if( !aPlayerWin.length ){
+                const aPriority = [];
 
-                        const bLunch = (oHurt.oCommand.oStun.bLunch && !oHurt.oOpponent.oLunch ) || ( this.bDeath && oHurt.oOpponent.nLife <= 0 );
-                        oHurt.oOpponent.setHurt(
-                            bLunch ? 'lunch' : oHurt.oCommand.oStun.sHitAnimation,
-                            oHurt.oCommand.oStun.nHit,
-                            true
-                        );
-                    }
+                // Gestion Reverse / Area
+                this.aPlayer.forEach( (oPlayer, nIndex) => {
+                    const oOpponent = this.aPlayer[ nIndex ? 0 : 1 ];
+                    // Gestion PositionBox / Area
+                    aPriority[nIndex] = this.stayInArea(oPlayer);
+                    // Gestion Reverse
+                    oPlayer.canMove() && this.updateReverse(oPlayer, oOpponent);
                 } );
                 
-                // Gestion PushBack
-                this.movePushback(aPriority, Math.max.apply(Math, aPushback));
+                // Gestion PositionBox / Player
+                this.moveCollapsedPlayer(aPriority);
 
-                // Gestion hit freeze
-                this.aPlayer.forEach( oPlayer => {
-                    oPlayer.oAnimation.setFreeze(GAME.oSettings.nFreeze);
+                // Gestion Hitbox
+                let bLunch = false;
+                const aHurt = [],
+                    aPushback = [];
+
+                this.aPlayer.forEach( (oPlayer, nIndex) => {
+                    if( !oPlayer.oGatling.isHit() ){
+                        const oOpponent = this.aPlayer[ nIndex ? 0 : 1 ];
+                        if( oOpponent.nLife > 0 ){
+                            const oHitBox = this.getCharacterCollisionBox(oPlayer, 'oHitBox'),
+                                oHurtBox = this.getCharacterCollisionBox(oOpponent, 'oHurtBox');
+                            
+                            if( oHitBox && oHurtBox && this.checkCollision(oHitBox, oHurtBox) ){
+                                aHurt.push( {
+                                    oCommand: oPlayer.oGatling.oCurrent,
+                                    oPlayer,
+                                    oOpponent
+                                } );
+                                aPriority[nIndex]++;
+                            }
+                        }
+                    }
                 } );
-            }
 
-            // Gestion Super Freeze
-            for( let nIndex = 0; nIndex < this.aPlayer.length; nIndex++ ){
-                const oPlayer = this.aPlayer[nIndex];
-                if( oPlayer.oGatling.needFreeze() ){
-                    oPlayer.oGatling.bFreeze = true;
-                    this.aPlayer[ oPlayer.nPlayer == 1 ? 1 : 0 ].oAnimation.setFreeze(oPlayer.oGatling.oCurrent.oStun.nFreeze);
-                    GAME.oScene.oCurrent.oInfo.add( {
-                        sImg: GAME.oSettings.oPath.oCharacter.sFace + '/' + oPlayer.oCharacter.sCod + '.png',
-                        sText: oPlayer.oGatling.oCurrent.sName + ' !'
+                // Gestion Hurt Freeze
+                if( aHurt.length ){
+                    aHurt.forEach( oHurt => {
+                        oHurt.oCommand.bHit = true;
+                        aPushback.push( oHurt.oCommand.oStun.nPushback || GAME.oSettings.nPushback );
+                        if( oHurt.oOpponent.oAnimation.oFrame.oStatus.bGuard ){
+                            oHurt.oOpponent.setHurt('guard', oHurt.oCommand.oStun.nBlock, true);
+                        } else {
+                            const nDamage = oHurt.oCommand.nDamage || 1;
+                            oHurt.oOpponent.nKi += nDamage;
+                            oHurt.oOpponent.nLife -= nDamage;
+                            oHurt.oOpponent.nHitting += nDamage;
+
+                            const bLunch = oHurt.oCommand.oStun.bLunch && !oHurt.oOpponent.oLunch,
+                                bDeath = this.bDeath && oHurt.oOpponent.nLife <= 0;
+                            oHurt.oOpponent.setHurt(
+                                bLunch || bDeath ? 'lunch' : oHurt.oCommand.oStun.sHitAnimation,
+                                oHurt.oCommand.oStun.nHit,
+                                true
+                            );
+
+                            bDeath && (oHurt.oPlayer.oInputBuffer.oKeyboard = null);
+                        }
                     } );
-                    break;
+                    
+                    // Gestion PushBack
+                    this.movePushback(aPriority, Math.max.apply(Math, aPushback));
+
+                    // Gestion hit freeze
+                    this.aPlayer.forEach( oPlayer => {
+                        oPlayer.oAnimation.setFreeze(GAME.oSettings.nFreeze);
+                    } );
+                }
+
+                // Gestion Super Freeze
+                for( let nIndex = 0; nIndex < this.aPlayer.length; nIndex++ ){
+                    const oPlayer = this.aPlayer[nIndex];
+                    if( oPlayer.oGatling.needFreeze() ){
+                        oPlayer.oGatling.bFreeze = true;
+                        this.aPlayer[ oPlayer.nPlayer == 1 ? 1 : 0 ].oAnimation.setFreeze(oPlayer.oGatling.oCurrent.oStun.nFreeze);
+                        GAME.oScene.oCurrent.oInfo.add( {
+                            sImg: GAME.oSettings.oPath.oCharacter.sFace + '/' + oPlayer.oCharacter.sCod + '.png',
+                            sText: oPlayer.oGatling.oCurrent.sName + ' !'
+                        } );
+                        break;
+                    }
                 }
             }
+
+            return aPlayerWin;
         },
         destroy: function(){
         },
@@ -594,9 +614,6 @@ Object.assign(
                 oPlayer.setMovement('down', true);
                 oBoxPlayer = oPlayer.getCharacterBox('oPositionBox');
                 oPlayer.oLayer.oPosition.nY = nDown - ( oBoxPlayer.nY + oBoxPlayer.nHeight );
-                if( this.bDeath && oPlayer.nLife <= 0 ){
-                    GAME.oScene.oCurrent.endBattle( oPlayer.nPlayer );
-                }
             }
 
             return nPriority;
