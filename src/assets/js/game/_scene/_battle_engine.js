@@ -275,7 +275,6 @@ Object.assign(
             this.oGatling = new BattleGatling(this.oInputBuffer, this.oCharacter.aCommands);
 
             // init en STAND
-            this.createDeathAnimation();
             this.createLunchAnimation();
             this.setAnimation('stand', true);
         },
