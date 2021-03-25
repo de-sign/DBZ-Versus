@@ -107,6 +107,16 @@ Object.assign(
                                     break;
                             }
                         },
+                        B: function(){
+                            switch( this.oCurrentMenu.oLayer.sId ){
+                                case 'LAY__Training_Menu_Principal':
+                                    this.toogleMenuPrincipal(false);
+                                    break;
+                                case 'LAY__Training_Menu_Display':
+                                    this.switchMenu('oPrincipal');
+                                    break;
+                            }
+                        },
                         // Gestion déplacement
                         UP: () => {
                             this.oCurrentMenu.prev();
