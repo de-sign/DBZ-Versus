@@ -43,11 +43,10 @@ Object.assign(
     InitializeScene, {
 
         aStep: [
-            'stepContext_Setting',
-/*
+            'stepContext_Settings',
             'stepContext_Select',
             'stepContext_Battle',
-*/
+
             'stepImage_Stage',
             'stepImage_Face',
             'stepImage_Character'

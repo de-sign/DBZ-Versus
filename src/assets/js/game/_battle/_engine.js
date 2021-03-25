@@ -265,10 +265,10 @@ Object.assign(
     BattlePlayer.prototype, {
         init: function(sChar, oKeyboard) {
             this.oLayer = GAME.oOutput.getElement('LAY__Battle_Character_' + this.nPlayer);
-            this.oLayer.addTickUpdate( () => {
-                this.oSprite = GAME.oOutput.getElement('SPT__Battle_Character_Sprite_' + this.nPlayer);
-            } );
+            this.oSprite = GAME.oOutput.getElement('SPT__Battle_Character_Sprite_' + this.nPlayer);
+            
             this.oLayer.resetPosition();
+            this.oLayer.update();
 
             this.oCharacter = GAME.oData.oCharacter[sChar];
             this.oInputBuffer = new BattleInputBuffer(oKeyboard);
@@ -352,7 +352,7 @@ Object.assign(
             
             // Frame
             this.oAnimation.oFrame.nZIndex && this.oLayer.setStyle( { zIndex: this.oAnimation.oFrame.nZIndex } );
-            this.oSprite && this.oSprite.setSource( GAME.oSettings.oPath.oCharacter.sFrames + '/' + this.oCharacter.sCod + '/' + this.oAnimation.oFrame.sPath );
+            this.oSprite.setSource( GAME.oSettings.oPath.oCharacter.sFrames + '/' + this.oCharacter.sCod + '/' + this.oAnimation.oFrame.sPath );
         },
         destroy: function(){
         },

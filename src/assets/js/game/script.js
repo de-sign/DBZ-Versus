@@ -3,24 +3,26 @@
 
 //=include _scene/_initialize.js
 //=include _initialize/_settings.js
+//=include _initialize/_select.js
+//=include _initialize/_battle.js
+
+//=include _scene/_battle.js
+//=include _battle/_display.js
+//=include _battle/_engine.js
 
 //=include _scene/_loading.js
 //=include _scene/_menu.js
 //=include _scene/_select.js
-//=include _scene/_battle_display.js
-//=include _scene/_battle_engine.js
-//=include _scene/_battle.js
 //=include _scene/_settings.js
+
 
 /* Init */
 window.addEventListener('load', oEvent => {
 	// Input
 	GAME.oSettings.aKeyboard.forEach( oButtons => GAME.oInput.create( oButtons ) );
-	// Output
-	GAME.oOutput.bAutoPositioning = true;
 	// Scene
 	GAME.oScene.set( new window[ GAME.oSettings.sStartScene ]() );
 	// Start
-	// .oTimer.setFPS(6);
+	// GAME.oTimer.setFPS(6);
 	GAME.start();
 }, false);

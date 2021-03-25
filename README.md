@@ -23,8 +23,6 @@ Utilise un moteur de jeu fait maison et FOX Website :
 
 ## TODO
 __BUG__
-* Historique mal affiché
-* Visibilité des BOXs en mode VERSUS ( point noir au pieds )
 
 __Settings__
 * Boutons en Cookies
@@ -37,11 +35,12 @@ __Select__
 
 __Battle__
 * Projectiles
-* Mechaniques de jeu
+* Méchaniques de jeu
     * Choix de relevé
     * Burst
     * Guard cancel TP ?
     * Reject Guard ?
+    * Guard break ?
 
 __Training__
 * Menu
@@ -60,11 +59,8 @@ __Training__
     * Quitter
 
 __General__
-* Optimisation du jeu
-    * Gestion plus fine d' "AutoPositionning"
-    * Scene d'initialisation
-    * Enlever scene de chargement
-* Bouton Start
+* Optimisation du Code
+    * Classe CHARACTER avec pour enfant PLAYER et DUMMY ( et AI ? )
 * Animations
     * BJT
     * BUU

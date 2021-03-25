@@ -104,8 +104,6 @@ Object.assign(
 
 /* Select */
 function SelectScene(){
-	this.oContext = null;
-    this.oPattern = null;
     this.sType = null;
     
     this.oMenu = null;
@@ -121,7 +119,6 @@ Object.assign(
                 constructor: SelectScene,
 				init: function( oLastData ){
 					GAME.oOutput.useContext('CTX__Select');
-					this.oContext = GAME.oOutput.getElement('CTX__Select');
 
                     const aName = [ 'Versus', 'Training' ];
                     GAME.oOutput.getElement('TXT__Select_Name').setText( this.sType = aName[oLastData.nLastIndexMenu] );
@@ -129,18 +126,14 @@ Object.assign(
                     this.nFrameCreated = GAME.oTimer.nFrames;
 
                     // Character List Init
-                    this.createCharacterList();
-                    this.createStageList();
                     this.oMenu = {
                         oCharacter: new GameMenu('LAY__Select_Character', [0, -1]),
                         oStage: new SelectStageMenu('LAY__Select_Stage')
                     };
 
                     // Players init
-                    this.getPattern();
                     for( let nIndex = 0; nIndex < GAME.oSettings.nPlayer; nIndex++ ){
                         let nPlayer = nIndex + 1;
-                        this.createLayerPlayer(nPlayer);
                         this.aPlayer.push( new SelectPlayer(
                             nPlayer,
                             this.sType == 'Training' && nIndex ? null : GAME.oInput.getController('IC_' + nPlayer ),
@@ -181,52 +174,6 @@ Object.assign(
                     } );
                 },
 
-                getPattern: function(){
-                    this.oPattern = GAME.oOutput.getElement('LAY__Select_Player_');
-                    this.oPattern && this.oContext.delete( this.oPattern );
-                },
-                createLayerPlayer: function(nPlayer){
-                    let oLayer = GAME.oOutput.getElement('LAY__Select_Player_' + nPlayer);
-                    if( !oLayer && this.oPattern ){
-
-                        // Clone du LAYER
-                        let hLayer = this.oPattern.hElement.cloneNode(true);
-                        hLayer.id += nPlayer;
-                        hLayer.classList.remove(GAME.oOutput.oConfig.class.created);
-                        [].forEach.call(
-                            hLayer.querySelectorAll('.--change'),
-                            hElement => {
-                                hElement.id += nPlayer;
-                                hElement.classList.remove('--change', GAME.oOutput.oConfig.class.created);
-                            }
-                        );
-                        hLayer.querySelector('.Select__Player_Number').innerHTML += nPlayer;
-
-                        // Ajout dans le context
-                        this.oContext.add(new GAME.oOutput.OutputLayer(hLayer), '.Select__Players');
-                    }
-                },
-                createCharacterList: function(){
-                    const oLayer = GAME.oOutput.getElement('LAY__Select_Character');
-                    if( oLayer.aChildElement.length == 0 ){
-                        for( let sChar in GAME.oData.oCharacter ){
-                            const oSprite = new GAME.oOutput.OutputSprite(GAME.oSettings.oPath.oCharacter.sFace + '/' + sChar + '.png' );
-                            oSprite.__oData = GAME.oData.oCharacter[sChar];
-                            oLayer.add( oSprite );
-                        }
-                    }
-                },
-                createStageList: function(){
-                    const oLayer = GAME.oOutput.getElement('LAY__Select_Stage');
-                    if( oLayer.aChildElement.length == 0 ){
-                        for( let sStage in GAME.oData.oStage ){
-                            const oSprite = new GAME.oOutput.OutputSprite(GAME.oSettings.oPath.oStage.sPreview + '/' + sStage + '.png' );
-                            oSprite.__oData = GAME.oData.oStage[sStage];
-                            oLayer.add( oSprite );
-                        }
-                    }
-                },
-
                 updateStatus: function(){
 
                     this.oStatus = {
@@ -259,7 +206,7 @@ Object.assign(
                     return this.aPlayer[0].oKeyboard && this.aPlayer[1].oKeyboard;
                 },
                 checkPlayerActivation: function(){
-                    if( !this.allPlayerActive() &&  GAME.oInput.getController('IC_2').nFrameLastEvent > this.nFrameCreated ){
+                    if( !this.allPlayerActive() && GAME.oInput.getController('IC_2').nFrameLastEvent > this.nFrameCreated ){
                         this.aPlayer.forEach( oPlayer => oPlayer.oKeyboard = GAME.oInput.getController('IC_' + oPlayer.nPlayer ) )
                     }
                 },

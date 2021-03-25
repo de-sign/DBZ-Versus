@@ -31,6 +31,7 @@
     flex: 1 1 auto;
     display: flex;
     align-items: flex-start;
+    position: relative;
 
     &:last-child {
         justify-content: flex-end;
@@ -90,6 +91,10 @@
         left: 4px;
         right: 4px;
         line-height: 5px;
+
+        .--versus & {
+            display: none;
+        }
 
         span {
             display: inline-block;
@@ -245,20 +250,29 @@
     flex-direction: column-reverse;
     justify-content: flex-end;
 
+    .--versus & {
+        display: none;
+    }
+
     span {
         padding: 5px;
 
         b {
-            padding: 5px;
+            padding: 13px 0 0 8px;
             color: White;
             background-color: Black;
             margin: 0 2px;
             display: inline-block;
             width: 25px;
             height: 25px;
-            line-height: 13px;
+            line-height: 0;
             border-radius: 50%;
-            text-align: center;
+            text-align: left;
+
+            &.--dir {
+                font-family: monospace;
+                font-size: 1.6em;
+            }
         }
             
         i {
@@ -311,6 +325,7 @@
             }
         }
     }
+    
 
     &_PositionBox,
     &_HurtBox,
@@ -322,6 +337,10 @@
         top: 182px;
         opacity: 0.5;
         box-shadow: 0 0 0 1px Black;
+
+        .--versus & {
+            display: none;
+        }
     }
 
     &_PositionBox {
