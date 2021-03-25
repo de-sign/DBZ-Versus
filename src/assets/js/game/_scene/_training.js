@@ -61,7 +61,7 @@ Object.assign(
                     this.bMenu = bMenu == null ? !this.bMenu : bMenu;
                     this.switchMenu('oPrincipal');
                     this.aPlayer.forEach( oPlayer => {
-                        oPlayer.oAnimation[this.bMenu ? 'unFreeze' : 'setFreeze']();
+                        oPlayer.oAnimation[this.bMenu ? 'setFreeze' : 'unFreeze']();
                     } );
                     this.oContext.addTickUpdate( () => {
                         this.oContext.hElement.classList[this.bMenu ? 'add' : 'remove']('--menu');
