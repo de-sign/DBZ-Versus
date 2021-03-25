@@ -43,7 +43,7 @@ __Battle__
     * Guard break ?
 
 __Training__
-* Menu
+* Terminer Menu
     * Ressources
         * Choix LIFE / KI
         * Regen auto
@@ -56,10 +56,10 @@ __Training__
         * Timeline des animations
         * Frame Rate
     * Command List
-    * Quitter
 
 __General__
 * Optimisation du Code
+    * DATA de CHARACTER par defaut pour méchanique universel
     * Classe CHARACTER avec pour enfant PLAYER et DUMMY ( et AI ? )
 * Animations
     * BJT

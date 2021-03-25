@@ -16,9 +16,9 @@ function SettingPlayer(nPlayer, oScenePressed){
 Object.assign(
     SettingPlayer.prototype, {
         init: function(oScenePressed) {
-            this.oLayer = GAME.oOutput.getElement('LAY__Setting_Player_' + this.nPlayer);
+            this.oLayer = GAME.oOutput.getElement('LAY__Settings_Player_' + this.nPlayer);
             this.oKeyboard = GAME.oInput.getController('IC_' + this.nPlayer);
-            this.oMenu = new GameMenu('LAY__Setting_Player_' + this.nPlayer, this.nPlayer == 1 ? 0 : -1);
+            this.oMenu = new GameMenu('LAY__Settings_Player_' + this.nPlayer, this.nPlayer == 1 ? 0 : -1);
             this.oScenePressed = oScenePressed;
         },
         update: function() {
@@ -32,7 +32,7 @@ Object.assign(
                     A: () => {
                         let oMenuSelected = this.oMenu.getSelected();
                         switch( oMenuSelected.sId ){
-                            case 'TXT__Setting_Return_' + this.nPlayer:
+                            case 'TXT__Settings_Return_' + this.nPlayer:
                                 this.bReady = true;
                                 break;
                             default:
@@ -57,7 +57,7 @@ Object.assign(
                 } );
 
                 this.oMenu.update();
-                GAME.oOutput.getElement('TXT__Setting_Return_' + this.nPlayer).setText( this.bReady ? 'Waiting ...' : 'Return' );
+                GAME.oOutput.getElement('TXT__Settings_Return_' + this.nPlayer).setText( this.bReady ? 'Waiting ...' : 'Return' );
             }
         },
         destroy: function() {
@@ -71,7 +71,7 @@ Object.assign(
         },
         updateWaitingButton: function(){
             if( this.oScenePressed.nFrames == GAME.oTimer.nFrames ) {
-                const sNewBtn = this.oWaitingButton.hElement.querySelector('.Setting__Button_Name').innerHTML,
+                const sNewBtn = this.oWaitingButton.hElement.querySelector('.Settings__Button_Name').innerHTML,
                     sLastBtn = this.oKeyboard.oKeyMap[this.oScenePressed.sKey],
                     oBtns = {
                         [sNewBtn]: this.oScenePressed.sKey
@@ -79,7 +79,7 @@ Object.assign(
                     
                 if( sNewBtn != sLastBtn ){
                     if( sLastBtn ){
-                        GAME.oOutput.getElement('LAY__Setting_Button_' + sLastBtn + '_' + this.nPlayer).aChildElement[0].setText( this.oKeyboard.oButtons[sNewBtn].sKey );
+                        GAME.oOutput.getElement('LAY__Settings_Button_' + sLastBtn + '_' + this.nPlayer).aChildElement[0].setText( this.oKeyboard.oButtons[sNewBtn].sKey );
                         oBtns[sLastBtn] = this.oKeyboard.oButtons[sNewBtn].sKey;
                     }
                     this.oKeyboard.updateButtons(oBtns);
@@ -110,7 +110,7 @@ Object.assign(
             Object.create(Scene.prototype), {
                 constructor: SettingScene,
 				init: function(){
-					GAME.oOutput.useContext('CTX__Setting');
+					GAME.oOutput.useContext('CTX__Settings');
 
                     // Gestion Buttons
                     this.oLastPress.fFunction = (oEvent) => {

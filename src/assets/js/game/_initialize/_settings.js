@@ -17,8 +17,8 @@ Object.assign(
 
         getPattern: function(){
             this.oPattern = {
-                oLayer: GAME.oOutput.getElement('LAY__Setting_Player_'),
-                oButton: GAME.oOutput.getElement('LAY__Setting_Button_')
+                oLayer: GAME.oOutput.getElement('LAY__Settings_Player_'),
+                oButton: GAME.oOutput.getElement('LAY__Settings_Button_')
             };
 
             for( let sPattern in this.oPattern ){
@@ -39,7 +39,7 @@ Object.assign(
                     hElement.classList.remove('--change', GAME.oOutput.oConfig.class.created);
                 }
             );
-            hLayer.querySelector('.Setting__Player_Number').innerHTML += nPlayer;
+            hLayer.querySelector('.Settings__Player_Number').innerHTML += nPlayer;
 
             // Clone des BUTTON
             const oKeyboard = GAME.oInput.getController('IC_' + nPlayer);
@@ -47,17 +47,17 @@ Object.assign(
                 let hButton = this.oPattern.oButton.hElement.cloneNode(true);
                 hButton.classList.remove(GAME.oOutput.oConfig.class.created);
                 hButton.id += sBtn + '_' + nPlayer;
-                hButton.querySelector('.Setting__Button_Name').innerHTML = sBtn;
+                hButton.querySelector('.Settings__Button_Name').innerHTML = sBtn;
 
-                let hKey = hButton.querySelector('.Setting__Button_Key');
+                let hKey = hButton.querySelector('.Settings__Button_Key');
                 hKey.classList.remove(GAME.oOutput.oConfig.class.created);
                 hKey.innerHTML = oKeyboard.oButtons[sBtn].sKey;
 
-                hLayer.querySelector('.Setting__Buttons').appendChild(hButton);
+                hLayer.querySelector('.Settings__Buttons').appendChild(hButton);
             }
 
             // Ajout dans le context
-            this.oContext.add(new GAME.oOutput.OutputLayer(hLayer), '.Setting__Players');
+            this.oContext.add(new GAME.oOutput.OutputLayer(hLayer), '.Settings__Players');
             this.oContext.update();
         }
     }

@@ -1,0 +1,165 @@
+// Menu
+.Training__Menu {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.25);
+
+    .--menu & {
+        display: flex;
+    }
+
+    .Menu__Layer {
+        background-color: White;
+        text-align: center;
+        border: 2px solid Black;
+        box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25);
+
+        ul {
+            margin: 25px;
+        }
+    }
+
+    &_Primary {
+        width: 300px;
+    }
+}
+
+// History
+.Training__History {
+    position: absolute;
+    top: 175px;
+    bottom: 0;
+    width: 175px;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+
+    .--versus & {
+        display: none;
+    }
+    
+    .--left & {
+        right: 100%;
+    }
+
+    .--right & {
+        left: 100%;
+        text-align: right;
+    }
+
+    span {
+        padding: 5px;
+
+        b {
+            padding: 13px 0 0 8px;
+            color: White;
+            background-color: Black;
+            margin: 0 2px;
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            line-height: 0;
+            border-radius: 50%;
+            text-align: left;
+
+            &.--dir {
+                font-family: monospace;
+                font-size: 1.6em;
+            }
+        }
+            
+        i {
+            color: DarkGray;
+            padding: 0 5px;
+            font-style: normal;
+        }
+    }
+}
+
+// Box
+.Battle__Character {
+
+    .Training__PositionBox,
+    .Training__HurtBox,
+    .Training__HitBox {
+        position: absolute;
+        width: 0;
+        height: 0;
+        left: 98px;
+        top: 182px;
+        opacity: 0.5;
+        box-shadow: 0 0 0 1px Black;
+        display: none;
+        
+        .--training & {
+            display: block;
+        }
+    }
+    
+    .Training__PositionBox {
+        background-color: deepskyblue;
+    }
+    
+    .Training__HurtBox {
+        background-color: Lime;
+    }
+    
+    &.--guard .Training__HurtBox{
+        background-color: plum;
+    }
+    
+    &.--hit .Training__HurtBox{
+        background-color: orange;
+    }
+    
+    .Training__HitBox {
+        background-color: red;
+    }
+}
+
+// Animation
+.Training__Animation {
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    line-height: 5px;
+
+    .--versus & {
+        display: none;
+    }
+
+    span {
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        margin: 1px;
+        background-color: Lime;
+
+        &.--freeze {
+            background-color: deepskyblue;
+        }
+        
+        &.--guard {
+            background-color: plum;
+        }
+
+        &.--damage {
+            background-color: Red;
+        }
+
+        &.--invulnerable {
+            background-color: White;
+        }
+
+        &.--hit {
+            background-color: orange;
+        }
+    }
+}

@@ -24,7 +24,7 @@ Object.assign(
 				},
 				update: function(){
                     if( this.aLoading.length == this.nLoading ){
-                        GAME.oScene.change( new BattleScene() );
+                        GAME.oScene.change( new window[ this.oData.sTypeBattle + 'Scene' ]() );
                     }
 				},
                 destroy: function(){

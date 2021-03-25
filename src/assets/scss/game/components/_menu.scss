@@ -9,6 +9,10 @@
         margin: 1px auto;
         padding: 10px 25px;
         font-size: 1.5em;
+
+        &.disable {
+            color: lightgrey;
+        }
     }
 
     &.Menu__nb_cursor_1 {

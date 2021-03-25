@@ -6,15 +6,19 @@
 //=include _initialize/_select.js
 //=include _initialize/_battle.js
 
-//=include _scene/_battle.js
+//=include _battle/_scene.js
 //=include _battle/_display.js
+//=include _battle/_player.js
 //=include _battle/_engine.js
+//=include _scene/_versus.js
+
+//=include _battle/_training.js
+//=include _scene/_training.js
 
 //=include _scene/_loading.js
 //=include _scene/_menu.js
 //=include _scene/_select.js
 //=include _scene/_settings.js
-
 
 /* Init */
 window.addEventListener('load', oEvent => {

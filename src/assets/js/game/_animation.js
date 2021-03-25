@@ -8,6 +8,7 @@ function GameAnimation(sName, oFrameData, aStep){
     this.nCurrentFrame = 0;
     this.oFrame = null;
     
+    this.nLastFreeze = 0;
     this.nFreeze = 0;
     this.nLength = 0;
 
@@ -93,7 +94,15 @@ Object.assign(
                 }
             },
             setFreeze: function(nFreeze){
-                this.nFreeze += nFreeze;
+                if( nFreeze ){
+                    this.nFreeze += nFreeze;
+                } else {
+                    this.nLastFreeze = this.nFreeze;
+                    this.nFreeze = -1;
+                }
+            },
+            unFreeze: function(){
+                this.nFreeze = this.nLastFreeze;
             },
             reset: function(){
                 this.nCurrentFrame = 0;

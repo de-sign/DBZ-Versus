@@ -1,5 +1,5 @@
 /* Setting */
-#CTX__Setting {
+#CTX__Settings {
 	display: flex;
 	flex-direction: column;
 	text-align: center;
@@ -10,11 +10,11 @@
         font-size: 7em;
     }
     
-    .Setting__Players {
+    .Settings__Players {
         display: flex;
         justify-content: center;
     
-        .Setting__Player {
+        .Settings__Player {
             flex: 1 1 400px;
             max-width: 400px;
             margin: 0 25px;
@@ -23,7 +23,7 @@
                 font-size: 2.5em;
             }
 
-            .Setting__Button {
+            .Settings__Button {
                 display: flex !important;
             
                 & > *:first-child {
