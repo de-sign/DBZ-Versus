@@ -16,18 +16,36 @@
     }
 
     .Menu__Layer {
+        display: none !important;
+        min-width: 300px;
         background-color: White;
         text-align: center;
         border: 2px solid Black;
         box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25);
 
+        &.--show {
+            display: block !important;
+        }
+
         ul {
             margin: 25px;
         }
     }
-
-    &_Primary {
-        width: 300px;
+    
+    .Training__Button {
+        display: flex !important;
+    
+        & > *:first-child {
+            text-align: left;
+            flex: 1 1 100%;
+        }
+        
+        & > *:last-child {
+            flex: 0 0 auto;
+            color: DarkGray;
+            min-width: 15px;
+            margin-left: 25px;
+        }
     }
 }
 
@@ -37,12 +55,12 @@
     top: 175px;
     bottom: 0;
     width: 175px;
-    display: flex;
     flex-direction: column-reverse;
     justify-content: flex-end;
+    display: none;
 
-    .--versus & {
-        display: none;
+    .--bHistory & {
+        display: flex;
     }
     
     .--left & {
@@ -98,7 +116,7 @@
         box-shadow: 0 0 0 1px Black;
         display: none;
         
-        .--training & {
+        .--bBox & {
             display: block;
         }
     }
@@ -130,9 +148,10 @@
     left: 4px;
     right: 4px;
     line-height: 5px;
-
-    .--versus & {
-        display: none;
+    display: none;
+    
+    .--bAnimation & {
+        display: block;
     }
 
     span {
