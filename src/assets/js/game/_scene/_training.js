@@ -107,7 +107,7 @@ Object.assign(
                                     break;
                             }
                         },
-                        B: function(){
+                        B: () => {
                             switch( this.oCurrentMenu.oLayer.sId ){
                                 case 'LAY__Training_Menu_Principal':
                                     this.toogleMenuPrincipal(false);
