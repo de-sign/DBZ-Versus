@@ -66,6 +66,7 @@ Object.assign(
                     this.oContext.addTickUpdate( () => {
                         this.oContext.hElement.classList[this.bMenu ? 'add' : 'remove']('--menu');
                     } );
+                    this.oTraining.setFrameRate( this.bMenu ? 60 : null );
                 },
                 switchMenu: function(sMenu){
                     const oLast = this.oCurrentMenu;
@@ -101,6 +102,9 @@ Object.assign(
                                     break;
                                 case 'LAY__Training_Menu_Display_Animations':
                                     this.oTraining.oDisplay.toogle('bAnimation');
+                                    break;
+                                case 'LAY__Training_Menu_Display_Framerate':
+                                    this.oTraining.changeFrame();
                                     break;
                                 case 'LAY__Training_Menu_Display_Return':
                                     this.switchMenu('oPrincipal');
@@ -141,6 +145,7 @@ Object.assign(
                                         'Hide'
                                 );
                             }
+                            GAME.oOutput.getElement('LAY__Training_Menu_Display_Framerate').aChildElement[0].setText( this.oTraining.getFrameRate() + 'fps' );
                             break;
                     }
                 }

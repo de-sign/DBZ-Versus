@@ -36,6 +36,7 @@ __Select__
 __Battle__
 * Projectiles
 * Méchaniques de jeu
+    * Guarde avec DB
     * Choix de relevé
     * Burst
     * Guard cancel TP ?
@@ -43,6 +44,7 @@ __Battle__
     * Guard break ?
 
 __Training__
+* Paramétrage en Cookies
 * Terminer Menu
     * Ressources
         * Choix LIFE / KI
@@ -50,11 +52,6 @@ __Training__
     * Dummy ?
         * Guard
         * Reversal
-    * Affichage
-        * Historique des Inputs
-        * Boite de collision
-        * Timeline des animations
-        * Frame Rate
     * Command List
 
 __General__

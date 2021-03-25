@@ -175,12 +175,14 @@ Object.assign(
 /* ----- BattleTraining ----- */
 function BattleTraining(oContext, aPlayer){
     this.oDisplay = null;
+    this.nFrameRate = 0;
 
     this.init(oContext, aPlayer);
 }
 
 Object.assign(
     BattleTraining, {
+        aFrameRate: [ 60, 30, 15, 6 ],
         prototype: {
             constructor: BattleTraining,
             init: function(oContext, aPlayer){
@@ -191,6 +193,16 @@ Object.assign(
             },
             destroy: function(){
                 this.oDisplay.destroy();
+            },
+
+            changeFrame: function(){
+                this.nFrameRate = (this.nFrameRate + 1) % BattleTraining.aFrameRate.length;
+            },
+            setFrameRate: function(nFrameRate){
+                GAME.oTimer.setFPS(nFrameRate || this.getFrameRate());
+            },
+            getFrameRate: function(){
+                return BattleTraining.aFrameRate[ this.nFrameRate ];
             }
         }
     }
