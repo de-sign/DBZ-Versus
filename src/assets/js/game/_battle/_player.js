@@ -297,7 +297,6 @@ Object.assign(
                         this.oAnimation = this.oLunch;                
                     } else {
                         switch( this.oInputBuffer.getDirection() ){
-                            case 'DB':
                             case 'DN':
                             case 'DF':
                             case 'NT':
@@ -305,6 +304,9 @@ Object.assign(
                             case 'UP':
                             case 'UF':
                                 this.setMovement('stand');
+                                break;
+                            case 'DB':
+                                this.setMovement('block');
                                 break;
                             case 'BW':
                                 this.setMovement('backward');

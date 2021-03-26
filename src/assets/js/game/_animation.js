@@ -22,6 +22,7 @@ Object.assign(
             // undefined: 'action' 
             // MOVEMENT
             stand: 'movement',
+            block: 'movement',
             forward: 'movement',
             backward: 'movement',
             // GUARD

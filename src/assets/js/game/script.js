@@ -12,7 +12,9 @@
 //=include _battle/_engine.js
 //=include _scene/_versus.js
 
-//=include _battle/_training.js
+//=include _training/_engine.js
+//=include _training/_parameters.js
+//=include _training/_display.js
 //=include _scene/_training.js
 
 //=include _scene/_loading.js

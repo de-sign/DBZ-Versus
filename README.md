@@ -34,9 +34,9 @@ __Select__
 * Choix de la couleurs via "C"
 
 __Battle__
+* Gestion de HurtBox et HitBox multiple
 * Projectiles
 * Méchaniques de jeu
-    * Guarde avec DB
     * Choix de relevé
     * Burst
     * Guard cancel TP ?
@@ -67,4 +67,13 @@ __General__
     * SRU
 * Couleurs supplémentaires ( autre personnage ? )
 * Faire un script pour paramétrage via fichier EXCEL / CSV ?
-* Paramétrage des coups
+* Paramétrages
+    * HurtBox
+    * HitBox
+    * StartUp
+    * Active
+    * Recovery
+    * Pushback
+    * HitStun
+    * BlockStun
+    * Cost

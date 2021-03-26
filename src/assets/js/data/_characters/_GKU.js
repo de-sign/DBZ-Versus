@@ -574,6 +574,14 @@ GAME.oData.oCharacter.GKU = {
                 sFrame: 'stand'
             }
         ],
+        block: [
+            {
+                sFrame: 'stand',
+                oStatus: {
+                    bGuard: true
+                }
+            }
+        ],
         forward: [
             {
                 nFrame: 2,

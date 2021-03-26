@@ -1,3 +1,4 @@
+/* TrainingScene */
 function TrainingScene() {
     BattleScene.call(this);
 
@@ -26,128 +27,22 @@ Object.assign(
                         }
                     );
 
-                    this.oTraining = new BattleTraining( this.oContext, this.aPlayer );
-                    this.oMenu = {
-                        oPrincipal: new GameMenu('LAY__Training_Menu_Principal'),
-                        // oParameters: null,
-                        oDisplay: new GameMenu('LAY__Training_Menu_Display')
-                    };
+                    this.oTraining = new TrainingEngine(this);
                 },
                 update: function(){
                     this.oKeyboard.ifPressedNow( {
                         START: () => {
-                            this.toogleMenuPrincipal();
+                            this.oTraining.toggle();
                         }
                     } );
 
-                    if( this.bMenu ){
-                        this.controlsMenu();
-                        this.updateMenu();
-                        this.oCurrentMenu.update();
-                    } else {
+                    if( !this.oTraining.isOpen() ){
                         BattleScene.prototype.update.call(this);
-                        this.oTraining.update();
                     }
+                    this.oTraining.update();
                 },
                 destroy: function(){
                     this.oTraining.destroy();
-                    this.toogleMenuPrincipal(false);
-                    for( let sMenu in this.oMenu ){
-                        this.oMenu[sMenu].destroy();
-                    }
-                },
-
-                toogleMenuPrincipal: function(bMenu){
-                    this.bMenu = bMenu == null ? !this.bMenu : bMenu;
-                    this.switchMenu('oPrincipal');
-                    this.aPlayer.forEach( oPlayer => {
-                        oPlayer.oAnimation[this.bMenu ? 'setFreeze' : 'unFreeze']();
-                    } );
-                    this.oContext.addTickUpdate( () => {
-                        this.oContext.hElement.classList[this.bMenu ? 'add' : 'remove']('--menu');
-                    } );
-                    this.oTraining.setFrameRate( this.bMenu ? 60 : null );
-                },
-                switchMenu: function(sMenu){
-                    const oLast = this.oCurrentMenu;
-                    this.oCurrentMenu = this.oMenu[sMenu];
-                    this.oContext.addTickUpdate( () => {
-                        oLast && oLast.oLayer.hElement.classList.remove('--show');
-                        this.oCurrentMenu.oLayer.hElement.classList.add('--show');
-                    } );
-                },
-                controlsMenu: function(){
-                    this.oKeyboard.ifPressedNow( {
-                        // Gestion validation
-                        A: () => {
-                            let oMenuSelected = this.oCurrentMenu.getSelected();
-                            switch( oMenuSelected.sId ){
-                                // Principal
-                                case 'TXT__Training_Menu_Display':
-                                    this.switchMenu('oDisplay');
-                                    break;
-                                case 'TXT__Training_Menu_Continue':
-                                    this.toogleMenuPrincipal();
-                                    break;
-                                case 'TXT__Training_Menu_Quit':
-                                    GAME.oScene.change( new MenuScene() );
-                                    break;
-
-                                // Display
-                                case 'LAY__Training_Menu_Display_Input':
-                                    this.oTraining.oDisplay.toogle('bHistory');
-                                    break;
-                                case 'LAY__Training_Menu_Display_Box':
-                                    this.oTraining.oDisplay.toogle('bBox');
-                                    break;
-                                case 'LAY__Training_Menu_Display_Animations':
-                                    this.oTraining.oDisplay.toogle('bAnimation');
-                                    break;
-                                case 'LAY__Training_Menu_Display_Framerate':
-                                    this.oTraining.changeFrame();
-                                    break;
-                                case 'LAY__Training_Menu_Display_Return':
-                                    this.switchMenu('oPrincipal');
-                                    break;
-                            }
-                        },
-                        B: () => {
-                            switch( this.oCurrentMenu.oLayer.sId ){
-                                case 'LAY__Training_Menu_Principal':
-                                    this.toogleMenuPrincipal(false);
-                                    break;
-                                case 'LAY__Training_Menu_Display':
-                                    this.switchMenu('oPrincipal');
-                                    break;
-                            }
-                        },
-                        // Gestion déplacement
-                        UP: () => {
-                            this.oCurrentMenu.prev();
-                        },
-                        DOWN: () => {
-                            this.oCurrentMenu.next();
-                        }
-                    } );
-                },
-                updateMenu: function(){
-                    const oType = {
-                        bHistory: 'LAY__Training_Menu_Display_Input',
-                        bBox: 'LAY__Training_Menu_Display_Box',
-                        bAnimation: 'LAY__Training_Menu_Display_Animations'
-                    };
-                    switch( this.oCurrentMenu.oLayer.sId ){
-                        case 'LAY__Training_Menu_Display':
-                            for( let sType in oType ){
-                                GAME.oOutput.getElement(oType[sType]).aChildElement[0].setText(
-                                    this.oTraining.oDisplay.oShow[sType] ?
-                                        'Show' : 
-                                        'Hide'
-                                );
-                            }
-                            GAME.oOutput.getElement('LAY__Training_Menu_Display_Framerate').aChildElement[0].setText( this.oTraining.getFrameRate() + 'fps' );
-                            break;
-                    }
                 }
             }
         )

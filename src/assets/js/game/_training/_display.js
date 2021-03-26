@@ -1,23 +1,101 @@
-/* ----- BattleTrainingDisplay ----- */
-function BattleTrainingDisplay(oContext, aPlayer){
-    this.aPlayer = null;
-    
-    this.bInit = false;
-    this.aBox = [];
-    this.aHistory = [];
-    this.aAnimation = [];
-
-    this.oShow = {
-        bHistory: false,
-        bBox: false,
-        bAnimation: false
-    };
-
-    this.init(oContext, aPlayer);
+/* TrainingMenu - Display */
+function TrainingMenuDisplay(){
+    this.oLayer = {};
+    TrainingMenu.apply(this, arguments);
 }
 
 Object.assign(
-    BattleTrainingDisplay, {
+    TrainingMenuDisplay, {
+        prototype: Object.assign(
+            Object.create(TrainingMenu.prototype), {
+                constructor: TrainingMenuDisplay,
+                init: function(){
+                    TrainingMenu.prototype.init.apply(this, arguments);
+                    this.oLayer = {
+                        bHistory: GAME.oOutput.getElement('LAY__Training_Menu_Display_Input'),
+                        bBox: GAME.oOutput.getElement('LAY__Training_Menu_Display_Box'),
+                        bAnimation: GAME.oOutput.getElement('LAY__Training_Menu_Display_Animations'),
+
+                        oFrameRate: GAME.oOutput.getElement('LAY__Training_Menu_Display_Framerate')
+                    };
+                },
+                /*
+                udpate: function(){ },
+                destroy: function(){ },
+                */
+                controls: function(){
+                    let sRedirection = null;
+                    this.oKeyboard.ifPressedNow( {
+                        // Gestion validation
+                        A: () => {
+                            let oMenuSelected = this.oMenu.getSelected();
+                            switch( oMenuSelected.sId ){
+                                case 'LAY__Training_Menu_Display_Input':
+                                    this.oEngine.toogle('bHistory');
+                                    break;
+                                case 'LAY__Training_Menu_Display_Box':
+                                    this.oEngine.toogle('bBox');
+                                    break;
+                                case 'LAY__Training_Menu_Display_Animations':
+                                    this.oEngine.toogle('bAnimation');
+                                    break;
+                                case 'LAY__Training_Menu_Display_Framerate':
+                                    this.oEngine.changeFrame();
+                                    break;
+                                case 'LAY__Training_Menu_Display_Return':
+                                    sRedirection = 'return';
+                                    break;
+                            }
+                        },
+                        B: () => {
+                            sRedirection = 'return';
+                        },
+                        // Gestion déplacement
+                        UP: () => {
+                            this.oMenu.prev();
+                        },
+                        DOWN: () => {
+                            this.oMenu.next();
+                        }
+                    } );
+
+                    return sRedirection;
+                },
+                display: function(){
+                    for( let sType in this.oLayer){
+                        if( sType == 'oFrameRate' ){
+                            this.oLayer[sType].aChildElement[0].setText( this.oEngine.getFrameRate() + 'fps' );
+                        } else {
+                            this.oLayer[sType].aChildElement[0].setText( this.oEngine.oShow[sType] ? 'Show' : 'Hide' );
+                        }
+                    }
+                    
+                }
+            }
+        )
+    }
+);
+
+/* ----- TrainingEngineDisplay ----- */
+function TrainingEngineDisplay(oScene){
+    this.oScene = null;
+    
+    this.aBox = [];
+    this.aHistory = [];
+    this.aAnimation = [];
+    this.nFrameRate = 0;
+
+    this.oShow = {
+        bHistory: true,
+        bBox: true,
+        bAnimation: true
+    };
+
+    this.init(oScene);
+}
+
+Object.assign(
+    TrainingEngineDisplay, {
 
         oSymbolHistory: {
             oNormal: {
@@ -49,13 +127,13 @@ Object.assign(
                 C: 'C'
             }
         },
+        aFrameRate: [ 60, 30, 15, 6 ],
 
         prototype: {
-            init: function(oContext, aPlayer){
-                this.oContext = oContext;
-                this.aPlayer = aPlayer;
+            init: function(oScene){
+                this.oScene = oScene;
 
-                aPlayer.forEach( oPlayer => {
+                oScene.aPlayer.forEach( oPlayer => {
                     this.aHistory.push( GAME.oOutput.getElement('LAY__Training_History_' + oPlayer.nPlayer) );
                     this.aBox.push( {
                         oPositionBox: GAME.oOutput.getElement('LAY__Training_PositionBox_' + oPlayer.nPlayer),
@@ -67,16 +145,40 @@ Object.assign(
                         oLast: null
                     } );
                 } );
+
+                for( let sType in this.oShow ){
+                    if( this.oShow[sType] ){
+                        this.show(sType);
+                    }
+                }
             },
             update: function(){
-                this.aPlayer.forEach( (oPlayer, nIndex) => {
+                this.updateHistory();
+                this.updateBox();
+                this.updateAnimation();
+            },
+            destroy: function(){
+                for( let sType in this.oShow ){
+                    this.hide(sType);
+                }
+                this.oScene.oContext.update();
+            },
 
-                    // History
-                    if( this.oShow.bHistory ){
+            onOpen: function(){
+                this.setFrameRate(60);
+            },
+            onClose: function(){
+                this.setFrameRate();
+            },
+
+            // History
+            updateHistory: function(oPlayer){
+                if( this.oShow.bHistory ){
+                    this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                         oPlayer.oInputBuffer.aHistory.forEach( (oHistory, nHistory, aHistory) => {
                             const aBtn = Object.keys( oHistory.oButtons ),
                                 oBtn = { A: true, B: true, C: true },
-                                oSymbol = BattleTrainingDisplay.oSymbolHistory[ oPlayer.nPlayer == 1 ? 'oNormal' : 'oReverse' ];
+                                oSymbol = TrainingEngineDisplay.oSymbolHistory[ oPlayer.nPlayer == 1 ? 'oNormal' : 'oReverse' ];
                                 
                                 let oTextHist = this.aHistory[nIndex].aChildElement[nHistory],
                                 sText = '',
@@ -103,10 +205,13 @@ Object.assign(
                                 this.aHistory[nIndex].add(oTextHist);
                             }
                         } );
-                    }
-
-                    // Box
-                    if( this.oShow.bBox ){
+                    } );
+                }
+            },
+            // Box
+            updateBox: function(oPlayer){
+                if( this.oShow.bBox ){
+                    this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                         ['oPositionBox', 'oHurtBox', 'oHitBox'].forEach( sBox => {
                             const oBox = oPlayer.getCharacterBox(sBox)
                             if( oBox ){
@@ -121,10 +226,13 @@ Object.assign(
                                 this.aBox[nIndex][sBox].setStyle( { display: 'none' } );
                             }
                         } );
-                    }
-
-                    // Animation
-                    if( this.oShow.bAnimation ){
+                    } );
+                }
+            },
+            // Animation
+            updateAnimation: function(oPlayer){
+                if( this.oShow.bAnimation ){
+                    this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                         const oAnimation = this.aAnimation[nIndex];
                         if( oPlayer.oAnimation.sType != 'movement' ){
                             if( oPlayer.oAnimation != oAnimation.oLast ){
@@ -143,67 +251,36 @@ Object.assign(
                             }
                             oAnimation.oLayer.hElement.innerHTML += '<span class="' + sClass + '"></span>'
                         }
-                    }
-                } );
-            },
-            destroy: function(){
-                for( let sType in this.oShow ){
-                    this.hide(sType);
+                    } );
                 }
-                this.oContext.update();
             },
-
+            // Gestion Affichage
             show: function(sType){
                 this.oShow[sType] = true;
-                this.oContext.addTickUpdate( () => {
-                    this.oContext.hElement.classList.add('--' + sType);
+                this.oScene.oContext.addTickUpdate( () => {
+                    this.oScene.oContext.hElement.classList.add('--' + sType);
                 } );
             },
             hide: function(sType){
                 this.oShow[sType] = false;
-                this.oContext.addTickUpdate( () => {
-                    this.oContext.hElement.classList.remove('--' + sType);
+                this.oScene.oContext.addTickUpdate( () => {
+                    this.oScene.oContext.hElement.classList.remove('--' + sType);
                 } );
             },
             toogle: function(sType){
                 this[ this.oShow[sType] ? 'hide' : 'show' ](sType);
-            }
-        }
-    }
-);
-
-/* ----- BattleTraining ----- */
-function BattleTraining(oContext, aPlayer){
-    this.oDisplay = null;
-    this.nFrameRate = 0;
-
-    this.init(oContext, aPlayer);
-}
-
-Object.assign(
-    BattleTraining, {
-        aFrameRate: [ 60, 30, 15, 6 ],
-        prototype: {
-            constructor: BattleTraining,
-            init: function(oContext, aPlayer){
-                this.oDisplay = new BattleTrainingDisplay(oContext, aPlayer);
-            },
-            update: function(){
-                this.oDisplay.update();
-            },
-            destroy: function(){
-                this.oDisplay.destroy();
             },
 
+            // FrameRate
             changeFrame: function(){
-                this.nFrameRate = (this.nFrameRate + 1) % BattleTraining.aFrameRate.length;
+                this.nFrameRate = (this.nFrameRate + 1) % TrainingEngineDisplay.aFrameRate.length;
             },
             setFrameRate: function(nFrameRate){
                 GAME.oTimer.setFPS(nFrameRate || this.getFrameRate());
             },
             getFrameRate: function(){
-                return BattleTraining.aFrameRate[ this.nFrameRate ];
-            }
+                return TrainingEngineDisplay.aFrameRate[ this.nFrameRate ];
+            },
         }
     }
 );
