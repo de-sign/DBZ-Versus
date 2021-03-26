@@ -19,7 +19,7 @@ const rename        = require('gulp-rename');
 const cleanCss      = require('gulp-clean-css');
 const imagemin      = require('gulp-imagemin');
 const favicons      = require('gulp-favicons');
-const replace      = require('gulp-replace');
+const replace       = require('gulp-replace');
 
 // Export
 module.exports = function(config){
@@ -31,7 +31,7 @@ module.exports = function(config){
 
         favicon: (() => {
             function _getData(file){
-                let FW = JSON.parse(fs.readFileSync(config.paths.src.data + '/website.json'));
+                let FW = require('../' + config.paths.src.data + '/website.json');
 
                 return Object.assign({}, FW.favicon, config.plugins.favicons, {
                     appName: FW.meta.title,
@@ -70,17 +70,27 @@ module.exports = function(config){
         
         html: (() => {
             let FW = null;
+            const fCustomizer = (objValue, srcValue) => {
+                    if(Array.isArray(objValue)){
+                        return srcValue;
+                    }
+                };
+
             function _getData(file){
                 FW = mergeWith(
-                    JSON.parse(fs.readFileSync(config.paths.src.data + '/website.json')),
-                    JSON.parse(fs.readFileSync(path.dirname(file.path) + '/page.json')),
-                    (objValue, srcValue) => {
-                        if(Array.isArray(objValue)){
-                            return srcValue;
-                        }
-                    }
+                    mergeWith(
+                        require('../package.json'),
+                        require('../' + config.paths.src.data + '/website.json'),
+                        fCustomizer
+                    ),
+                    require(path.dirname(file.path) + '/page.json'),
+                    fCustomizer
                 );
                 FW.url = url.parse(FW.url.origin + FW.url.path);
+
+                const date = new Date();
+                FW.date = '' + date.getFullYear() + date.getMonth() + date.getDate();
+                FW.time = '' + date.getHours() + date.getMinutes() + date.getSeconds();
                 
                 let s_root = config.paths.dest.root;
                 FW.paths = {};

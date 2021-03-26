@@ -38,17 +38,14 @@ __Battle__
 * Projectiles
 * Méchaniques de jeu
     * Choix de relevé
-    * Burst
-    * Guard cancel TP ?
+    * Burst ?
+    * Guard Cancel ?
     * Reject Guard ?
     * Guard break ?
 
 __Training__
 * Paramétrage en Cookies
 * Terminer Menu
-    * Ressources
-        * Choix LIFE / KI
-        * Regen auto
     * Dummy ?
         * Guard
         * Reversal
@@ -77,3 +74,4 @@ __General__
     * HitStun
     * BlockStun
     * Cost
+    * Damage
