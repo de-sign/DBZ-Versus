@@ -35,7 +35,7 @@ Object.assign(
             // DOWN
             down: 'down'
         },
-        aAllType: ['action', 'movement','guard', 'hit'],
+        aAllType: ['action', 'movement','guard', 'hit', 'down'],
         aTypeHurt: ['guard', 'hit'],
 
         getType: function(sName){

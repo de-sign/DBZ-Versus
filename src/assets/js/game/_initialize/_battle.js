@@ -19,6 +19,7 @@ Object.assign(
                 this.createPlayer(nPlayer);
                 this.createHUDPlayer(nPlayer);
                 this.createHUDBars(nPlayer);
+                this.createTrainingParameters(nPlayer);
             }
 
             this.oContext.update();
@@ -27,7 +28,8 @@ Object.assign(
         getPattern: function(){
             this.oPattern = {
                 oHUD: GAME.oOutput.getElement('LAY__Battle_HUD_'),
-                oPlayer: GAME.oOutput.getElement('LAY__Battle_Character_')
+                oPlayer: GAME.oOutput.getElement('LAY__Battle_Character_'),
+                oParameters: GAME.oOutput.getElement('LAY__Training_Menu_Parameters_Player')
             };
 
             for( let sPattern in this.oPattern ){
@@ -68,7 +70,6 @@ Object.assign(
             this.oContext.add(new GAME.oOutput.OutputLayer(hLayer), '.Battle__HUDs');
             this.oContext.update();
         },
-
         createHUDBars: function(nPlayer){
             const oLayer = GAME.oOutput.getElement('LAY__Battle_HUD_Bar_' + nPlayer);
             if( oLayer.aChildElement.length != GAME.oSettings.nLife ){
@@ -86,6 +87,32 @@ Object.assign(
                     }
                 }
             }
+        },
+        createTrainingParameters: function(nPlayer){
+            // Clone du LAYER
+            let hLayer = this.oPattern.oParameters.hElement.cloneNode(true);
+            hLayer.removeAttribute('id');
+            hLayer.removeAttribute('class');
+            [].forEach.call(
+                hLayer.querySelectorAll('.--change'),
+                hElement => {
+                    hElement.id && (hElement.id += nPlayer);
+                    hElement.classList.remove('--change', GAME.oOutput.oConfig.class.created);
+                }
+            );
+            hLayer.querySelector('.Training__Menu_Parameters_Number').innerHTML += nPlayer;
+
+            // Ajout dans le context
+            const oLayer = GAME.oOutput.getElement('LAY__Training_Menu_Parameters');
+            oLayer.hElement.insertBefore(
+                hLayer,
+                oLayer.hElement.querySelector('.Training__Menu_Parameters_Return')
+            );
+            if( nPlayer == 2 ){
+                document.getElementById('LAY__Training_Menu_Parameters_Return').classList.remove(GAME.oOutput.oConfig.class.created);
+            }
+            oLayer.autoCreateChildElement();
+            oLayer.update();
         }
     }
 );

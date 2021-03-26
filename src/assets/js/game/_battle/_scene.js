@@ -19,7 +19,7 @@ Object.assign(
 				init: function( oLastData, oOptions ){
                     /*
                         oLastData: sStageSelected, sTypeBattle, bAllPlayerActive, aCharacterSelected
-                        oOptions: bDeath, aKeyboard, sContextClass
+                        oOptions: aKeyboard, sContextClass
                     */
 					GAME.oOutput.useContext('CTX__Battle');
 					this.oContext = GAME.oOutput.getElement('CTX__Battle');
@@ -50,7 +50,7 @@ Object.assign(
                     // Engine init
                     this.oInfo = new BattleInfo(this.oContext, this.aPlayer);
                     this.oCombo = new BattleCombo(this.aPlayer);
-                    this.oEngine = new BattleEngine(oOptions.bDeath, this.aPlayer, this.oArea);
+                    this.oEngine = new BattleEngine(this.aPlayer, this.oArea);
 				},
 				update: function(){
                     this.aPlayer.forEach( oPlayer => oPlayer.updateInput() );

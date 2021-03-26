@@ -22,8 +22,7 @@ Object.assign(
                             aKeyboard: [
                                 this.oKeyboard,
                                 GAME.oInput.getController('IC_2')
-                            ],
-                            bDeath: false
+                            ]
                         }
                     );
 

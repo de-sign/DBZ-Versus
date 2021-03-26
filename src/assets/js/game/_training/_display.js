@@ -69,7 +69,6 @@ Object.assign(
                             this.oLayer[sType].aChildElement[0].setText( this.oEngine.oShow[sType] ? 'Show' : 'Hide' );
                         }
                     }
-                    
                 }
             }
         )

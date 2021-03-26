@@ -14,8 +14,7 @@ Object.assign(
                         oLastData,
                         {
                             sContextClass: '--versus',
-                            aKeyboard: [],
-                            bDeath: true
+                            aKeyboard: []
                         }
                     );
 

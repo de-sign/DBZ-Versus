@@ -1,20 +1,22 @@
 /*  ----- TrainingMenu ----- */
-function TrainingMenu(sLayer, oEngine, oKeyboard){
+function TrainingMenu(sLayer, oEngine, oScene){
     this.oMenu = null;
     this.oEngine = null;
+    this.oScene = null;
     this.oKeyboard = null;
 
-    this.init(sLayer, oEngine, oKeyboard);
+    this.init(sLayer, oEngine, oScene);
 }
 
 Object.assign(
     TrainingMenu, {
         prototype: {
             constructor: TrainingMenu,
-            init: function(sLayer, oEngine, oKeyboard){
+            init: function(sLayer, oEngine, oScene){
                 this.oMenu = new GameMenu(sLayer, 0);
                 this.oEngine = oEngine;
-                this.oKeyboard = oKeyboard;
+                this.oScene = oScene;
+                this.oKeyboard = this.oScene.oKeyboard;
             },
             update: function(){
                 const sRedirection = this.controls();
@@ -58,12 +60,15 @@ Object.assign(
                         A: () => {
                             let oMenuSelected = this.oMenu.getSelected();
                             switch( oMenuSelected.sId ){
+                                case 'TXT__Training_Menu_Parameters':
+                                    sRedirection = 'oParameters';
+                                    break;
                                 case 'TXT__Training_Menu_Display':
                                     sRedirection = 'oDisplay';
                                     break;
                                 case 'TXT__Training_Menu_Continue':
                                 case 'TXT__Training_Menu_Quit':
-                                    sRedirection = 'quit';
+                                    sRedirection = 'close';
                                     break;
                             }
                         },
@@ -103,6 +108,7 @@ Object.assign(
     TrainingEngine, {
         aModule: [
             'Principal',
+            'Parameters',
             'Display'
         ],
 
@@ -113,7 +119,7 @@ Object.assign(
 
                 TrainingEngine.aModule.forEach( sModule => {
                     const oEngine = window['TrainingEngine' + sModule] ? new window['TrainingEngine' + sModule](this.oScene) : null,
-                        oMenu = new window['TrainingMenu' + sModule]('LAY__Training_Menu_' + sModule, oEngine, this.oScene.oKeyboard);
+                        oMenu = new window['TrainingMenu' + sModule]('LAY__Training_Menu_' + sModule, oEngine, this.oScene);
 
                     this.oModule[ oMenu.sCod = 'o' + sModule ] = {
                         oMenu,

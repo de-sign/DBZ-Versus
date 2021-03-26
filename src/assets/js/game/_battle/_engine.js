@@ -1,29 +1,25 @@
 /* ----- BattleEngine ----- */
-function BattleEngine(bDeath, aPlayer, oArea){
-    this.bDeath = false;
+function BattleEngine(aPlayer, oArea){
     this.aPlayer = null;
     this.oArea = null;
 
-    this.init(bDeath, aPlayer, oArea);
+    this.init(aPlayer, oArea);
 }
 
 Object.assign(
     BattleEngine.prototype, {
-        init: function(bDeath, aPlayer, oArea) {
-            this.bDeath = bDeath;
+        init: function(aPlayer, oArea) {
             this.aPlayer = aPlayer;
             this.oArea = oArea;
         },
         update: function(){
             // Gestion Fin de partie
             const aPlayerWin = [];
-            if( this.bDeath ){
-                this.aPlayer.forEach( (oPlayer, nIndex) => {
-                    if( oPlayer.nLife <= 0 && oPlayer.oAnimation.sType == 'down' ){
-                        aPlayerWin.push( this.aPlayer[ nIndex ? 0 : 1 ] );
-                    }
-                } );
-            }
+            this.aPlayer.forEach( (oPlayer, nIndex) => {
+                if( oPlayer.nLife <= 0 && oPlayer.oAnimation.sType == 'down' ){
+                    aPlayerWin.push( this.aPlayer[ nIndex ? 0 : 1 ] );
+                }
+            } );
 
             if( !aPlayerWin.length ){
                 const aPriority = [];
@@ -48,7 +44,7 @@ Object.assign(
                 this.aPlayer.forEach( (oPlayer, nIndex) => {
                     if( !oPlayer.oGatling.isHit() ){
                         const oOpponent = this.aPlayer[ nIndex ? 0 : 1 ];
-                        if( !this.bDeath || oOpponent.nLife > 0 ){
+                        if( oOpponent.nLife > 0 ){
                             const oHitBox = this.getCharacterCollisionBox(oPlayer, 'oHitBox'),
                                 oHurtBox = this.getCharacterCollisionBox(oOpponent, 'oHurtBox');
                             
@@ -78,14 +74,13 @@ Object.assign(
                             oHurt.oOpponent.nHitting += nDamage;
 
                             const bLunch = oHurt.oCommand.oStun.bLunch && !oHurt.oOpponent.oLunch,
-                                bDeath = this.bDeath && oHurt.oOpponent.nLife <= 0;
+                                bDeath = oHurt.oOpponent.nLife <= 0;
+                                
                             oHurt.oOpponent.setHurt(
                                 bLunch || bDeath ? 'lunch' : oHurt.oCommand.oStun.sHitAnimation,
                                 oHurt.oCommand.oStun.nHit,
                                 true
                             );
-
-                            bDeath && (oHurt.oPlayer.oInputBuffer.oKeyboard = null);
                         }
                     } );
                     
