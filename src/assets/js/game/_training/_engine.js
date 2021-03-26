@@ -67,8 +67,10 @@ Object.assign(
                                     sRedirection = 'oDisplay';
                                     break;
                                 case 'TXT__Training_Menu_Continue':
-                                case 'TXT__Training_Menu_Quit':
                                     sRedirection = 'close';
+                                    break;
+                                case 'TXT__Training_Menu_Quit':
+                                    sRedirection = 'quit';
                                     break;
                             }
                         },
@@ -136,6 +138,9 @@ Object.assign(
                             break;
                         case 'close':
                             this.close();
+                            break;
+                        case 'quit':
+                            GAME.oScene.change( new MenuScene() );
                             break;
                         case null:
                             break;

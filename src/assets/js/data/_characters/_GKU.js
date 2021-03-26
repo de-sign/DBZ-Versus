@@ -646,9 +646,15 @@ GAME.oData.oCharacter.GKU = {
             {
                 nFrame: 20,
                 sFrame: 'down'
+            }
+        ],
+        recovery: [
+            {
+                nFrame: 1,
+                sFrame: 'teleport_vertical'
             },
             {
-                nFrame: 8,
+                nFrame: 7,
                 sFrame: 'teleport_vertical'
             },
             {
@@ -657,6 +663,7 @@ GAME.oData.oCharacter.GKU = {
                 oHurtBox: null
             }
         ],
+
         // Command
         // 4, 4, 6
         light_first: [

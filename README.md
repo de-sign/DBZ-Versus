@@ -37,7 +37,6 @@ __Battle__
 * Gestion de HurtBox et HitBox multiple
 * Projectiles
 * Méchaniques de jeu
-    * Choix de relevé
     * Burst ?
     * Guard Cancel ?
     * Reject Guard ?

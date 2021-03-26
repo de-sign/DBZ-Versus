@@ -19,7 +19,6 @@ Object.assign(
             },
             nPlayer: 2,
             sStartScene: 'InitializeScene',
-            // sStartScene: 'MenuScene',
             oPositionPoint: {
                 nX: 98,
                 nY: 182,
@@ -42,6 +41,7 @@ Object.assign(
             },
             nFreeze: 6,
             nPushback: 5 * 4,
+            nRecovery: 8 * 8 * 4,
             aKeyboard: [
                 {
                     UP: 'z',

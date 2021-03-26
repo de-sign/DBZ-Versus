@@ -42,10 +42,12 @@ Object.assign(
 		destroy: function(){
 			const aReturn = [];
 			this.aCursor.forEach( (oCursor, nIndex) => {
-				let oMenu = this.oLayer.aChildElement[oCursor.nIndexCurrent];
-				this.oLayer.addTickUpdate( () => {
-					oMenu.hElement.classList.remove('Menu__cursor_' + nIndex);
-				} );
+				if( oCursor.nIndexCurrent != null ){
+					let oMenu = this.oLayer.aChildElement[oCursor.nIndexCurrent];
+					this.oLayer.addTickUpdate( () => {
+						oMenu.hElement.classList.remove('Menu__cursor_' + nIndex);
+					} );
+				}
 				aReturn.push( oCursor.nIndexCurrent );
 			} );
 			return aReturn;

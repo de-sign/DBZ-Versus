@@ -276,6 +276,7 @@ Object.assign(
 
             // init en STAND
             this.createLunchAnimation();
+            this.createRecoveryAnimation();
             this.setAnimation('stand', true);
         },
         // Gestion des INPUTs
@@ -283,37 +284,51 @@ Object.assign(
             this.oInputBuffer.update(this.bReverse);
 
             // Si pas stun par Animation
-            const nCanAction = this.canAction(); // 0: NONE, 1: MOVEMENT, 2: END ANIM, 3: CANCEL, 4: GATLING
+            const nCanAction = this.canAction(); // 0: NONE, 1: MOVEMENT, 2: END ANIM, 3: RECOVERY, 4: CANCEL, 5: GATLING
             if( nCanAction ){
-                // Gestion MANIP
-                const oCommand = this.oGatling.update(this.nKi, nCanAction != 4);
-                if( oCommand ){
-                    oCommand.nCost && (this.nKi -= oCommand.nCost);
-                    this.setAnimation(oCommand.sAnimation);
-                }
-                // Gestion DIR
-                else if( this.canMove(nCanAction) ){
-                    if( this.oLunch ){
-                        this.oAnimation = this.oLunch;                
-                    } else {
-                        switch( this.oInputBuffer.getDirection() ){
-                            case 'DN':
-                            case 'DF':
-                            case 'NT':
-                            case 'UB':
-                            case 'UP':
-                            case 'UF':
-                                this.setMovement('stand');
-                                break;
-                            case 'DB':
-                                this.setMovement('block');
-                                break;
-                            case 'BW':
-                                this.setMovement('backward');
-                                break;
-                            case 'FW':
-                                this.setMovement('forward');
-                                break;
+                const sDirection = this.oInputBuffer.getDirection();
+
+                // Gestion RECOVERY
+                if( nCanAction == 3 ){
+                    switch( sDirection ){
+                        case 'DB':
+                        case 'BW':
+                            this.setMovement('recovery_backward');
+                            break;
+                        case 'DF':
+                        case 'FW':
+                            this.setMovement('recovery_forward');
+                            break;
+                        default:
+                            this.setMovement('recovery');
+                            break;
+                    }
+                } else {
+                    // Gestion MANIP
+                    const oCommand = this.oGatling.update(this.nKi, nCanAction != 5);
+                    if( oCommand ){
+                        oCommand.nCost && (this.nKi -= oCommand.nCost);
+                        this.setAnimation(oCommand.sAnimation);
+                    }
+                    // Gestion DIR
+                    else if( this.canMove(nCanAction) ){
+                        if( this.oLunch ){
+                            this.oAnimation = this.oLunch;                
+                        } else {
+                            switch( sDirection ){
+                                case 'DB':
+                                    this.setMovement('block');
+                                    break;
+                                case 'BW':
+                                    this.setMovement('backward');
+                                    break;
+                                case 'FW':
+                                    this.setMovement('forward');
+                                    break;
+                                default:
+                                    this.setMovement('stand');
+                                    break;
+                            }
                         }
                     }
                 }
@@ -400,6 +415,19 @@ Object.assign(
             }
             this.oCharacter.oAnimations.lunch = aAnim;
         },
+        createRecoveryAnimation: function(){
+            const aRecovery = this.oCharacter.oAnimations.recovery;
+            ['forward', 'backward'].forEach( sType => {
+                const aAnim = [];
+                aRecovery.forEach( oFrame => {
+                    aAnim.push( Object.assign({}, oFrame) );
+                } );
+                aAnim[0].oMove = {
+                    nX: GAME.oSettings.nRecovery * ( sType == 'forward' ? 1 : -1 )
+                };
+                this.oCharacter.oAnimations['recovery_' + sType] = aAnim;
+            } );
+        },
 
         // Fonction INPUT
         canAction: function(){
@@ -410,11 +438,11 @@ Object.assign(
             }
             // Gestion END ANIMATION
             else if( this.oAnimation.isEnd() ){
-                nCanAction = 2;
+                nCanAction = this.oAnimation.sType == 'down' ? 3 : 2;
             }
             // Gestion ACTION en HIT
             else if( this.oGatling.isHit() ){
-                nCanAction = this.oAnimation.oFrame.oStatus.bCancel && !this.oAnimation.oFrame.bFreeze ? 3 : 4;
+                nCanAction = this.oAnimation.oFrame.oStatus.bCancel && !this.oAnimation.oFrame.bFreeze ? 4 : 5;
             }
             return nCanAction;
         },
