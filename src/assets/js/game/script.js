@@ -1,5 +1,6 @@
-//=include _menu.js
-//=include _animation.js
+//=include _components/_animation.js
+//=include _components/_helper.js
+//=include _components/_menu.js
 
 //=include _scene/_initialize.js
 //=include _initialize/_data.js

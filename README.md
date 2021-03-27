@@ -38,7 +38,6 @@ __Battle__
 * Méchaniques de jeu
     * Burst ?
     * Guard Cancel ?
-    * Reject Guard ?
     * Guard break ?
 
 __Training__
@@ -56,10 +55,16 @@ __General__
     * BJT
     * BUU
     * FRZ
-    * GHS
-    * GHT
+    * GHA
+    * GHC
     * SRU
-* Couleurs supplémentaires ( autre personnage ? )
+* Couleurs supplémentaires
+    * BJT
+    * BUU
+    * FRZ
+    * GHA
+    * GHC
+    * SRU
 * Faire un script pour paramétrage via fichier EXCEL / CSV ?
 * Paramétrages
     * HurtBox

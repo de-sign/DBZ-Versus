@@ -45,6 +45,8 @@ Object.assign(
         aStep: [
             'stepData',
 
+            'stepComponent_Helper',
+
             'stepContext_Settings',
             'stepContext_Select',
             'stepContext_Battle',
@@ -92,6 +94,17 @@ Object.assign(
                         this.oLayer.delete( this.oLayer.aChildElement[0] );
                     }
                     this.oLayer.add( new GAME.oOutput.OutputText(sText) );
+                },
+
+                // Components
+                stepComponent_Helper: function(){
+                    setTimeout(
+                        () => {
+                            this.addStepText( 'Create component Helper' );
+                            GameHelper.init('LAY__Helper');
+                            this.bStepEnd = true;
+                        }
+                    )
                 },
 
                 // Image

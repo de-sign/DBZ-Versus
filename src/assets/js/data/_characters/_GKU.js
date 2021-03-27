@@ -952,95 +952,97 @@ GAME.oData.oCharacter.GKU = {
             },
         ]
     },
-    aCommands: [
-        {
-            sName: 'kamehameha',
-            sAnimation: 'kameha',
-            nCost: 6,
-            nDamage: 5,
-            oStun: {
-                nFreeze: 46,
-                nBlock: 36,
-                nHit: 36,
-                bLunch: true,
-                nPushback: 40 * 4,
-                sHitAnimation: 'hit_heavy'
+    oCommands: {
+        aOffense: [
+            {
+                sName: 'kamehameha',
+                sAnimation: 'kameha',
+                nCost: 6,
+                nDamage: 5,
+                oStun: {
+                    nFreeze: 46,
+                    nBlock: 36,
+                    nHit: 36,
+                    bLunch: true,
+                    nPushback: 48 * 4,
+                    sHitAnimation: 'hit_heavy'
+                },
+                bLast: false,
+                oManipulation: {
+                    nMaxLengthFrame: 15,
+                    aButtons: [
+                        { DN: false },
+                        { DF: false },
+                        { FW: false, C: true }
+                    ]
+                }
             },
-            bLast: false,
-            oManipulation: {
-                nMaxLengthFrame: 15,
-                aButtons: [
-                    { DN: false },
-                    { DF: false },
-                    { FW: false, C: true }
-                ]
-            }
-        },
-        {
-            sName: 'luncher',
-            sAnimation: 'luncher',
-            oStun: {
-                nBlock: 8,
-                nHit: 22,
-                bLunch: true,
-                sHitAnimation: 'hit_luncher'
+            {
+                sName: 'luncher',
+                sAnimation: 'luncher',
+                oStun: {
+                    nBlock: 8,
+                    nHit: 22,
+                    bLunch: true,
+                    sHitAnimation: 'hit_luncher'
+                },
+                bLast: true,
+                oManipulation: {
+                    nMaxLengthFrame: 1,
+                    aButtons: [
+                        { DN: false, B: true }
+                    ]
+                }
             },
-            bLast: true,
-            oManipulation: {
-                nMaxLengthFrame: 1,
-                aButtons: [
-                    { DN: false, B: true }
-                ]
-            }
-        },
-        {
-            sName: 'tracker',
-            sAnimation: 'tracker',
-            oStun: {
-                nBlock: 8,
-                nHit: 18,
-                sHitAnimation: 'hit_heavy'
+            {
+                sName: 'tracker',
+                sAnimation: 'tracker',
+                oStun: {
+                    nBlock: 8,
+                    nHit: 18,
+                    sHitAnimation: 'hit_heavy'
+                },
+                bLast: true,
+                oManipulation: {
+                    nMaxLengthFrame: 1,
+                    aButtons: [
+                        { FW: false, A: true }
+                    ]
+                }
             },
-            bLast: true,
-            oManipulation: {
-                nMaxLengthFrame: 1,
-                aButtons: [
-                    { FW: false, A: true }
-                ]
-            }
-        },
-        {
-            sName: 'heavy',
-            sAnimation: 'heavy',
-            oStun: {
-                nBlock: 6,
-                nHit: 16,
-                sHitAnimation: 'hit_heavy'
+            {
+                sName: 'heavy',
+                sAnimation: 'heavy',
+                oStun: {
+                    nBlock: 6,
+                    nHit: 16,
+                    sHitAnimation: 'hit_heavy'
+                },
+                bLast: true,
+                oManipulation: {
+                    nMaxLengthFrame: 1,
+                    aButtons: [
+                        { B: true }
+                    ]
+                }
             },
-            bLast: true,
-            oManipulation: {
-                nMaxLengthFrame: 1,
-                aButtons: [
-                    { B: true }
-                ]
+            {
+                sName: 'light',
+                sAnimation: 'light_first',
+                aSelfCancel: ['light_second'],
+                oStun: {
+                    nBlock: 8,
+                    nHit: 13,
+                    sHitAnimation: 'hit_light'
+                },
+                bLast: true,
+                oManipulation: {
+                    nMaxLengthFrame: 1,
+                    aButtons: [
+                        { A: true }
+                    ]
+                }
             }
-        },
-        {
-            sName: 'light',
-            sAnimation: 'light_first',
-            aSelfCancel: ['light_second'],
-            oStun: {
-                nBlock: 8,
-                nHit: 13,
-                sHitAnimation: 'hit_light'
-            },
-            bLast: true,
-            oManipulation: {
-                nMaxLengthFrame: 1,
-                aButtons: [
-                    { A: true }
-                ]
-            }
-        }
-    ]
+        ]
+    }
 };

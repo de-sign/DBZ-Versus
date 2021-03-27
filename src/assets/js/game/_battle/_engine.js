@@ -68,19 +68,21 @@ Object.assign(
                         if( oHurt.oOpponent.oAnimation.oFrame.oStatus.bGuard ){
                             oHurt.oOpponent.setHurt('guard', oHurt.oCommand.oStun.nBlock, true);
                         } else {
-                            const nDamage = oHurt.oCommand.nDamage || 1;
+                            const nDamage = oHurt.oCommand.nDamage == null ? 1 : oHurt.oCommand.nDamage;
                             oHurt.oOpponent.nKi += nDamage;
                             oHurt.oOpponent.nLife -= nDamage;
                             oHurt.oOpponent.nHitting += nDamage;
 
-                            const bLunch = oHurt.oCommand.oStun.bLunch && !oHurt.oOpponent.oLunch,
-                                bDeath = oHurt.oOpponent.nLife <= 0;
-                                
-                            oHurt.oOpponent.setHurt(
-                                bLunch || bDeath ? 'lunch' : oHurt.oCommand.oStun.sHitAnimation,
-                                oHurt.oCommand.oStun.nHit,
-                                true
-                            );
+                            if( nDamage ){
+                                const bLunch = oHurt.oCommand.oStun.bLunch && !oHurt.oOpponent.oLunch,
+                                    bDeath = oHurt.oOpponent.nLife <= 0;
+                                    
+                                oHurt.oOpponent.setHurt(
+                                    bLunch || bDeath ? 'lunch' : oHurt.oCommand.oStun.sHitAnimation,
+                                    oHurt.oCommand.oStun.nHit,
+                                    true
+                                );
+                            }
                         }
                     } );
                     

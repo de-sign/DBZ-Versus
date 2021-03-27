@@ -177,6 +177,33 @@ Object.assign(
                             this.oMenu
                         ) );
                     }
+
+                    // Helper
+                    GameHelper.set( [
+                            GAME.oInput.getController('IC_1'),
+                            GAME.oInput.getController('IC_2'),
+                        ],
+                        [ {
+                            aButton: ['LEFT', 'RIGHT'],
+                            sText: 'Select character'
+                        },
+                        {
+                            aButton: ['A'],
+                            sText: 'Validate'
+                        },
+                        {
+                            aButton: ['B'],
+                            sText: 'Return'
+                        },
+                        {
+                            aButton: ['C'],
+                            sText: 'Change color'
+                        },
+                        {
+                            aButton: ['UP', 'DOWN'],
+                            sText: 'Select stage'
+                        } ]
+                    );
 				},
 				update: function(){
                     // Gestion activation P2
@@ -199,8 +226,12 @@ Object.assign(
                     } else if( this.oStatus.bSubmit ) {
                         GAME.oScene.change( new LoadingScene() );
                     }
+
+                    GameHelper.update();
 				},
                 destroy: function(){
+                    GameHelper.destroy();
+
                     for( let sMenu in this.oMenu ){
                         this.oMenu[sMenu].destroy();
                     }

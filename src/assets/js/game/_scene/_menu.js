@@ -18,24 +18,27 @@ Object.assign(
                     this.oKeyboard = GAME.oInput.getController('IC_1');
 
                     this.oMenu = new GameMenu('LAY__Menu', oLastData ? oLastData.nLastIndexMenu : 0);
+                    GameHelper.set(
+                        this.oKeyboard,
+                        [ {
+                            aButton: ['UP', 'DOWN'],
+                            sText: 'Move'
+                        },
+                        {
+                            aButton: ['A', 'START'],
+                            sText: 'Validate'
+                        } ]
+                    );
 				},
 				update: function(){
 
                     this.oKeyboard.ifPressedNow( {
                         // Gestion validation
                         A: () => {
-                            let sMenuSelected = this.oMenu.getSelected().sId;
-                            switch( sMenuSelected ){
-                                case 'TXT__Menu_Versus':
-                                    GAME.oScene.change( new SelectScene() );
-                                    break;
-                                case 'TXT__Menu_Training':
-                                    GAME.oScene.change( new SelectScene() );
-                                    break;
-                                case 'TXT__Menu_Setting':
-                                    GAME.oScene.change( new SettingScene() );
-                                    break;
-                            }
+                            this.changeScene()
+                        },
+                        START: () => {
+                            this.changeScene()
                         },
                         // Gestion déplacement
                         UP: () => {
@@ -47,11 +50,28 @@ Object.assign(
                     } );
 
                     this.oMenu.update();
+                    GameHelper.update();
 				},
                 destroy: function(){
+                    GameHelper.destroy();
                     return {
                         nLastIndexMenu: this.oMenu.destroy()[0]
                     };
+                },
+
+                changeScene: function(){
+                    let sMenuSelected = this.oMenu.getSelected().sId;
+                    switch( sMenuSelected ){
+                        case 'TXT__Menu_Versus':
+                            GAME.oScene.change( new SelectScene() );
+                            break;
+                        case 'TXT__Menu_Training':
+                            GAME.oScene.change( new SelectScene() );
+                            break;
+                        case 'TXT__Menu_Setting':
+                            GAME.oScene.change( new SettingScene() );
+                            break;
+                    }
                 }
             }
         )

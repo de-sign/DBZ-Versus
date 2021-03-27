@@ -14,7 +14,7 @@ Object.assign(
                 this.createAnimations(oChar);
                 this.createLunch(oChar);
                 this.createRecovery(oChar);
-                this.createControls(oChar);
+                this.createCommands(oChar);
             }
         },
 
@@ -100,7 +100,19 @@ Object.assign(
             } );
         },
 
-        createControls: function(oChar){
+        createCommands: function(oChar){
+            const oCommands = {};
+            if( oChar.bActive ){
+                for( let sType in this.oData.oCommands ){
+                    oCommands[sType] = [
+                        ...this.oData.oCommands[sType],
+                        ...(oChar.oCommands[sType] || [])
+                    ];
+                }
+            } else {
+                Object.assign(oCommands, this.oData.oCommands);
+            }
+            oChar.oCommands = oCommands;
         }
     }
 );

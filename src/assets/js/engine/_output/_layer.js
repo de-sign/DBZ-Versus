@@ -47,24 +47,25 @@ Object.assign(
                     if (idx != -1) {
 						this.aChildElement.splice(idx, 1);
 						oElm.oParentElement = null;
-                        this.addTickUpdate(function() {
+                        this.addTickUpdate( () => {
                             oElm.hElement.parentNode.removeChild(oElm.hElement);
-                        });
+                        } );
                     }
                     return oElm;
                 },
                 clear: function() {
-                    this.aChildElement.forEach((oElm) => {
+                    [...this.aChildElement].forEach( oElm => {
+                        aElm.push();
                         this.remove(oElm);
-                    });
+                    } );
                 },
                 delete: function(oElm) {
                     return OutputElement.remove( this.remove(oElm) );
                 },
                 clean: function() {
-                    this.aChildElement.forEach((oElm) => {
+                    [...this.aChildElement].forEach( oElm => {
                         this.delete(oElm);
-                    });
+                    } );
                 },
                 autoCreateChildElement: function() {
                     if( !this.bElementCreate ){

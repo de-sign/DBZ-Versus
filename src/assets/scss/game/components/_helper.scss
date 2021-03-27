@@ -1,0 +1,36 @@
+.Helper__Layer {
+    z-index: 2000;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    display: none;
+    
+    &.--show {
+        display: block;
+    }
+
+    .Helper__Wrapper {
+        display: block;
+        text-align: center;
+        padding: 10px 10px;
+        overflow: hidden;
+        white-space: nowrap;
+        
+        & > .outputLayer {
+            padding: 0 10px;
+            display: inline-block;
+        }
+    }
+
+    .Helper__Button {
+        /*
+        background-color: Black;
+        color: White;
+        */
+        border: 1px solid Black;
+        padding: 5px 10px;
+        margin: 0 10px 0 0;
+    }
+}

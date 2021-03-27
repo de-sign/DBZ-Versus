@@ -122,6 +122,22 @@ GAME.oData.oDefaultCharacter = {
                 nHeight: 46 * 4
             }
         },
+        guard_reject: {
+            sPath: 'guard_reject.png',
+            nZIndex: 10,
+            oPositionBox: {
+                nX: (-7 * 4) - 2,
+                nY: (-27 * 4) - 2,
+                nWidth: 15 * 4,
+                nHeight: 28 * 4
+            },
+            oHitBox: {
+                nX: -1024,
+                nY: (-43 * 4) - 2,
+                nWidth: 2048,
+                nHeight: 44 * 4
+            }
+        },
         hit_light: {
             sPath: 'hit_light.png',
             nZIndex: 10,
@@ -448,6 +464,22 @@ GAME.oData.oDefaultCharacter = {
                 }
             }
         ],
+        guard_reject: [
+            {
+                sFrame: 'blur',
+                nFrame: 2,
+                oHurtBox: null,
+            },
+            {
+                sFrame: 'guard_reject',
+                nFrame: 10
+            },
+            {
+                sFrame: 'blur',
+                nFrame: 2,
+                oHurtBox: null,
+            }
+        ],
         hit_light: [
             {
                 sFrame: 'hit_light'
@@ -484,5 +516,27 @@ GAME.oData.oDefaultCharacter = {
                 oHurtBox: null
             }
         ]
+    },
+    oCommands: {
+        aDefense: [
+            {
+                sName: 'guard_reject',
+                sAnimation: 'guard_reject',
+                bGuard: true,
+                nCost: 3,
+                nDamage: 0,
+                oStun: {
+                    nPushback: 48 * 4
+                },
+                bLast: true,
+                oManipulation: {
+                    nMaxLengthFrame: 1,
+                    aButtons: [
+                        { B: false, C: true }
+                    ]
+                }
+            }
+        ],
+        aOffense: []
     }
 };

@@ -135,41 +135,43 @@ Object.assign(
 );
 
 /* ----- BattleGatling ----- */
-function BattleGatling(oInputBuffer, aCommandData){
+function BattleGatling(oInputBuffer, oCommandData){
     this.oInputBuffer = null;
-    this.aCommandData = null;
+    this.oCommandData = null;
 
     this.oCurrent = null;
     this.bFreeze = false;
     this.oNext = null;
     this.oUsed = {};
 
-    this.init(oInputBuffer, aCommandData);
+    this.init(oInputBuffer, oCommandData);
 }
 
 Object.assign(
     BattleGatling.prototype, {
-        init: function(oInputBuffer, aCommandData){
+        init: function(oInputBuffer, oCommandData){
             this.oInputBuffer = oInputBuffer;
-            this.aCommandData = aCommandData;
+            this.oCommandData = oCommandData;
         },
-        update: function(nKi, bUse){
+        update: function(nKi, oCanAction){
             let bFind = false;
-            const aCommand = this.getEnterCommands();
+            const aCommand = this.getEnterCommands(oCanAction.sCommand);
 
             for( let nIndex = 0; nIndex < aCommand.length; nIndex++ ){
                 const oCommand = aCommand[nIndex];
-                if( this.canUseCommand(nKi, oCommand) ){
-                    bUse ?
-                        this.use(oCommand) :
-                        this.oNext = oCommand;
-                    bFind = true;
-                    break;
+                if( oCommand.bGuard ? oCanAction.bGuard : !oCanAction.bGuard ){
+                    if( this.canUseCommand(nKi, oCommand) ){
+                        oCanAction.bStack ?
+                            this.oNext = oCommand :
+                            this.use(oCommand);
+                        bFind = true;
+                        break;
+                    }
                 }
             }
 
             // Gestion Gatling Buffer
-            if( !bFind && this.oNext && bUse ){
+            if( !bFind && this.oNext && !oCanAction.bStack ){
                 this.use(this.oNext);
                 bFind = true;
             }
@@ -192,13 +194,13 @@ Object.assign(
             this.oNext = null;
             this.oUsed[oCommand.sName] = true;
         },
-        getEnterCommands: function(){
+        getEnterCommands: function(sType){
             const aCommand = [],
                 nFrameCheck = GAME.oTimer.nFrames;
 
             if( this.oInputBuffer.nFrameLastUpdate == nFrameCheck ){
-                for( let nIndex = 0; nIndex < this.aCommandData.length; nIndex++ ){
-                    const oCommand = this.aCommandData[nIndex];
+                for( let nIndex = 0; nIndex < this.oCommandData[sType].length; nIndex++ ){
+                    const oCommand = this.oCommandData[sType][nIndex];
                     if( this.oInputBuffer.checkManipulation(nFrameCheck, oCommand.oManipulation) ){
                         aCommand.push( Object.assign({ bHit: false }, oCommand) );
                         if( oCommand.bLast ){
@@ -276,7 +278,7 @@ Object.assign(
             this.oColor = this.oCharacter.aColor[nColor];
             this.oPath = this.oCharacter.oPath[this.oColor.sCod];
             this.oInputBuffer = new BattleInputBuffer(oKeyboard);
-            this.oGatling = new BattleGatling(this.oInputBuffer, this.oCharacter.aCommands);
+            this.oGatling = new BattleGatling(this.oInputBuffer, this.oCharacter.oCommands);
 
             // init en STAND
             this.setAnimation('stand', true);
@@ -286,12 +288,12 @@ Object.assign(
             this.oInputBuffer.update(this.bReverse);
 
             // Si pas stun par Animation
-            const nCanAction = this.canAction(); // 0: NONE, 1: MOVEMENT, 2: END ANIM, 3: RECOVERY, 4: CANCEL, 5: GATLING
-            if( nCanAction ){
+            const oCanAction = this.canAction();
+            if( oCanAction.sCommand ){
                 const sDirection = this.oInputBuffer.getDirection();
 
                 // Gestion RECOVERY
-                if( nCanAction == 3 ){
+                if( oCanAction.bRecovery ){
                     switch( sDirection ){
                         case 'DB':
                         case 'BW':
@@ -305,18 +307,23 @@ Object.assign(
                             this.setMovement('recovery');
                             break;
                     }
-                } else {
+                }
+                
+                else {
+
                     // Gestion MANIP
-                    const oCommand = this.oGatling.update(this.nKi, nCanAction != 5);
+                    const oCommand = this.oGatling.update(this.nKi, oCanAction);
                     if( oCommand ){
                         oCommand.nCost && (this.nKi -= oCommand.nCost);
                         this.setAnimation(oCommand.sAnimation);
                     }
                     // Gestion DIR
-                    else if( this.canMove(nCanAction) ){
+                    else if( this.canMove() ){
+
                         if( this.oLunch ){
                             this.oAnimation = this.oLunch;                
-                        } else {
+                        }
+                        else {
                             switch( sDirection ){
                                 case 'DB':
                                     this.setMovement('block');
@@ -389,24 +396,77 @@ Object.assign(
 
         // Fonction INPUT
         canAction: function(){
-            let nCanAction = 0;
+            let oCanAction = {
+                sCommand: null,
+                bStack: false,
+                bMove: false,
+                bRecovery: false,
+                bGuard: false,
+                nCode: 0
+            };
+
             // Gestion MOVEMENT
             if( this.oAnimation.sType == 'movement' ){
-                nCanAction = 1;
+                oCanAction = {
+                    sCommand: 'aOffense',
+                    bStack: false,
+                    bMove: true,
+                    bRecovery: false,
+                    bGuard: false,
+                    nCode: 1
+                };
             }
             // Gestion END ANIMATION
             else if( this.oAnimation.isEnd() ){
-                nCanAction = this.oAnimation.sType == 'down' ? 3 : 2;
+                if( this.oAnimation.sType != 'down' ){
+                    oCanAction = {
+                        sCommand: 'aOffense',
+                        bStack: false,
+                        bMove: true,
+                        bRecovery: false,
+                        bGuard: false,
+                        nCode: 2
+                    };
+                } else {
+                    oCanAction = {
+                        sCommand: 'aRecovery',
+                        bStack: false,
+                        bMove: false,
+                        bRecovery: true,
+                        bGuard: false,
+                        nCode: 3
+                    };
+                }
+            }
+            // Gestion HURT
+            else if( this.oAnimation.sType == 'guard' || this.oAnimation.sType == 'hit' ){
+                oCanAction = {
+                    sCommand: 'aDefense',
+                    bStack: false,
+                    bMove: false,
+                    bRecovery: false,
+                    bGuard: this.oAnimation.sType == 'guard',
+                    nCode: 4
+                };
             }
             // Gestion ACTION en HIT
             else if( this.oGatling.isHit() ){
-                nCanAction = this.oAnimation.oFrame.oStatus.bCancel && !this.oAnimation.oFrame.bFreeze ? 4 : 5;
+                const bCancel = this.oAnimation.oFrame.oStatus.bCancel && !this.oAnimation.oFrame.bFreeze;
+                oCanAction = {
+                    sCommand: 'aOffense',
+                    bStack: bCancel ? false : true,
+                    bMove: false,
+                    bRecovery: false,
+                    bGuard: false,
+                    nCode: bCancel ? 5 : 6
+                };
             }
-            return nCanAction;
+            
+            return oCanAction;
         },
-        canMove: function(nCanAction){
-            nCanAction || ( nCanAction = this.canAction() );
-            return !this.oAnimation.oFrame.bFreeze && nCanAction && nCanAction < 3;
+        canMove: function(){
+            oCanAction = this.canAction();
+            return !this.oAnimation.oFrame.bFreeze && oCanAction.bMove;
         },
 
         // Fonction OUTPUT
