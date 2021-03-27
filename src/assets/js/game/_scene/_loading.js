@@ -13,13 +13,13 @@ Object.assign(
             Object.create(Scene.prototype), {
                 constructor: LoadingScene,
 				init: function( oLastData ){
-                    // oLastData: sStageSelected, sTypeBattle, bAllPlayerActive, aCharacterSelected
+                    // oLastData: sStageSelected, sTypeBattle, bAllPlayerActive, aCharacterSelected, aColorSelected
 
 					GAME.oOutput.useContext('CTX__Loading');
 					this.oContext = GAME.oOutput.getElement('CTX__Loading');
 
                     this.loadStage( oLastData.sStageSelected );
-                    this.loadCharacter( oLastData.aCharacterSelected );
+                    this.loadCharacter( oLastData.aCharacterSelected, oLastData.aColorSelected );
                     this.oData = oLastData;
 				},
 				update: function(){
@@ -34,14 +34,12 @@ Object.assign(
                 loadStage: function(sCod){
                     this.add(GAME.oSettings.oPath.oStage.sBackground + '/' + sCod + '.png');
                 },
-                loadCharacter: function(aCharacter){
-                    const aUniqueChar = aCharacter.filter( (item, pos) => {
-                        return aCharacter.indexOf(item) == pos;
-                    } );
-                    aUniqueChar.forEach( sCod => {
-                        const oChar = GAME.oData.oCharacter[sCod];
+                loadCharacter: function(aCharacter, aColor){
+                    aCharacter.forEach( (sChar, nIndex) => {
+                        const oChar = GAME.oData.oCharacter[sCod],
+                            sColor = oChar.aColor[aColor].sCod;
                         for( let sFrame in oChar.oFrames ){
-                            this.add(GAME.oSettings.oPath.oCharacter.sFrames + '/' + oChar.sCod + '/' + oChar.oFrames[sFrame].sPath);
+                            this.add(oChar.oPath[sColor].sFrames + '/' + oChar.oFrames[sFrame].sPath);
                         }
                     } );
                 },
