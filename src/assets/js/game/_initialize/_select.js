@@ -43,7 +43,8 @@ Object.assign(
         },
         createCharacterList: function(){
             for( let sChar in GAME.oData.oCharacter ){
-                const oSprite = new GAME.oOutput.OutputSprite(GAME.oSettings.oPath.oCharacter.sFace + '/' + sChar + '.png' );
+                const oChar = GAME.oData.oCharacter[sChar],
+                    oSprite = new GAME.oOutput.OutputSprite( oChar.oPath[oChar.sColor].sFace );
                 oSprite.__oData = GAME.oData.oCharacter[sChar];
                 GAME.oOutput.getElement('LAY__Select_Character').add( oSprite );
             }

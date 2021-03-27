@@ -1,4 +1,9 @@
 GAME.oData.oCharacter.BJT = {
     sCod: 'BJT',
-    sName: 'Bejīta SSJ'
+    aColor: [
+        {
+            sCod: 'SSJ',
+            sName: 'Bejīta SSJ'
+        }
+    ]
 };

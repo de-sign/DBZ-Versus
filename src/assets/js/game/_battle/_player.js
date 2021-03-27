@@ -240,12 +240,14 @@ Object.assign(
 );
 
 /* ----- BattlePlayer ----- */
-function BattlePlayer(nPlayer, sChar, oKeyboard){
+function BattlePlayer(nPlayer, sChar, nColor, oKeyboard){
     this.nPlayer = nPlayer;
     this.oLayer = null;
     this.oSprite = null;
 
     this.oCharacter = null;
+    this.oColor = null;
+    this.oPath = null;
     this.oInputBuffer = null;
 
     this.oAnimation = null;
@@ -258,12 +260,12 @@ function BattlePlayer(nPlayer, sChar, oKeyboard){
     this.nLife = GAME.oSettings.nLife;
     this.nKi = 0;
 
-    this.init(sChar, oKeyboard);
+    this.init(sChar, nColor, oKeyboard);
 }
 
 Object.assign(
     BattlePlayer.prototype, {
-        init: function(sChar, oKeyboard) {
+        init: function(sChar, nColor, oKeyboard) {
             this.oLayer = GAME.oOutput.getElement('LAY__Battle_Character_' + this.nPlayer);
             this.oSprite = GAME.oOutput.getElement('SPT__Battle_Character_Sprite_' + this.nPlayer);
             
@@ -271,12 +273,12 @@ Object.assign(
             this.oLayer.update();
 
             this.oCharacter = GAME.oData.oCharacter[sChar];
+            this.oColor = this.oCharacter.aColor[nColor];
+            this.oPath = this.oCharacter.oPath[this.oColor.sCod];
             this.oInputBuffer = new BattleInputBuffer(oKeyboard);
             this.oGatling = new BattleGatling(this.oInputBuffer, this.oCharacter.aCommands);
 
             // init en STAND
-            this.createLunchAnimation();
-            this.createRecoveryAnimation();
             this.setAnimation('stand', true);
         },
         // Gestion des INPUTs
@@ -369,7 +371,7 @@ Object.assign(
             
             // Frame
             this.oAnimation.oFrame.nZIndex && this.oLayer.setStyle( { zIndex: this.oAnimation.oFrame.nZIndex } );
-            this.oSprite.setSource( GAME.oSettings.oPath.oCharacter.sFrames + '/' + this.oCharacter.sCod + '/' + this.oAnimation.oFrame.sPath );
+            this.oSprite.setSource( this.oPath.sFrames + '/' + this.oAnimation.oFrame.sPath );
         },
         destroy: function(){
         },
@@ -383,50 +385,6 @@ Object.assign(
                     this.bReverse ? { nX: -(this.oAnimation.oFrame[sBox].nWidth + this.oAnimation.oFrame[sBox].nX - 4) } : {}
                 ) :
                 null;
-        },
-        createLunchAnimation: function(){
-            let nLastY = 0,
-                oLastFrame = null;
-            const aAnim = [],
-                nDemiLength = (GAME.oSettings.oLuncher.nLength - 1) / 2,
-                nX = GAME.oSettings.oLuncher.oMove.nX / GAME.oSettings.oLuncher.nLength;
-
-            // Ajout de 10 FRAMES supplémentaire pour gérer le DOWN
-            for( let nIndex = 1; nIndex <= GAME.oSettings.oLuncher.nLength + 10; nIndex++ ){
-                let nParabolX = (nIndex - 1 - nDemiLength) / nDemiLength,
-                    nParabolY = -1 * (nParabolX * nParabolX - 1),
-                    nTargetY = Math.round(nParabolY * GAME.oSettings.oLuncher.oMove.nY),
-                    nY = nTargetY - nLastY,
-                    sFrame = nIndex <= GAME.oSettings.oLuncher.nLength / 2 ? 'hit_luncher' : 'hit_fall';
-
-                if( oLastFrame && oLastFrame.oMove.nY == nY && oLastFrame.sFrame == sFrame ){
-                    oLastFrame.nFrame++;
-                } else {
-                    aAnim.push( oLastFrame = {
-                        nFrame: 1,
-                        sFrame,
-                        oMove: { nX, nY }
-                    } );
-                    if( GAME.oSettings.oLuncher.nInvulnerable >= nIndex){
-                        oLastFrame.oHurtBox = null;
-                    }
-                }
-                nLastY = nTargetY;
-            }
-            this.oCharacter.oAnimations.lunch = aAnim;
-        },
-        createRecoveryAnimation: function(){
-            const aRecovery = this.oCharacter.oAnimations.recovery;
-            ['forward', 'backward'].forEach( sType => {
-                const aAnim = [];
-                aRecovery.forEach( oFrame => {
-                    aAnim.push( Object.assign({}, oFrame) );
-                } );
-                aAnim[0].oMove = {
-                    nX: GAME.oSettings.nRecovery * ( sType == 'forward' ? 1 : -1 )
-                };
-                this.oCharacter.oAnimations['recovery_' + sType] = aAnim;
-            } );
         },
 
         // Fonction INPUT

@@ -2,6 +2,7 @@
 //=include _animation.js
 
 //=include _scene/_initialize.js
+//=include _initialize/_data.js
 //=include _initialize/_settings.js
 //=include _initialize/_select.js
 //=include _initialize/_battle.js

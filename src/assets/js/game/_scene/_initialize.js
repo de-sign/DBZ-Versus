@@ -43,6 +43,8 @@ Object.assign(
     InitializeScene, {
 
         aStep: [
+            'stepData',
+
             'stepContext_Settings',
             'stepContext_Select',
             'stepContext_Battle',
@@ -102,13 +104,19 @@ Object.assign(
                 stepImage_Face: function(){
                     this.addStepText( 'Loading face characters' );
                     for( let sChar in GAME.oData.oCharacter ){
-                        this.aAssetManager.add( GAME.oSettings.oPath.oCharacter.sFace + '/' + sChar + '.png' );
+                        const oChar = GAME.oData.oCharacter[sChar];
+                        for( let sColor in oChar.oPath ){
+                            this.aAssetManager.add( oChar.oPath[sColor].sFace );
+                        }
                     }
                 },
                 stepImage_Character: function(){
                     this.addStepText( 'Loading preview characters' );
                     for( let sChar in GAME.oData.oCharacter ){
-                        this.aAssetManager.add( GAME.oSettings.oPath.oCharacter.sPreview + '/' + sChar + '.png' );
+                        const oChar = GAME.oData.oCharacter[sChar];
+                        for( let sColor in oChar.oPath ){
+                            this.aAssetManager.add( oChar.oPath[sColor].sPreview );
+                        }
                     }
                 }
             }

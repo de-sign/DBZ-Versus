@@ -40,7 +40,7 @@ Object.assign(
                         this.oInfo.add( {
                             sText: aPlayerWin.length == 2 ?
                                 'Double KO !' :
-                                aPlayerWin[0].oCharacter.sName + ' win !',
+                                aPlayerWin[0].oColor.sName + ' win !',
                             bFreeze: true,
                             nLength: 120,
                             fCallback: () => {

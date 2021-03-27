@@ -9,6 +9,9 @@ function SelectPlayer(nPlayer, oKeyboard, oMenu){
     this.bReady = false;
     this.bLeave = false;
 
+    this.oCharacter = null;
+    this.nColor = 0;
+
     this.init(oKeyboard, oMenu);
 }
 
@@ -18,12 +21,17 @@ Object.assign(
             this.oLayer = GAME.oOutput.getElement('LAY__Select_Player_' + this.nPlayer);
             this.oKeyboard = oKeyboard;
             this.oMenu = oMenu;
+
+            this.oMenu.oCharacter.update();
+            this.oCharacter = this.oMenu.oCharacter.getSelected(this.nCursor).__oData;
         },
-        update: function() {
+        update: function(oLock) {
+            this.checkColor(oLock);
+
             this.oKeyboard && this.oKeyboard.ifPressedNow( {
                 // Gestion validation
                 A: () => {
-                    this.bReady = true;
+                    this.bReady = this.oCharacter.bActive;
                     this.bLeave = false;
                 },
                 B: () => {
@@ -33,16 +41,21 @@ Object.assign(
                         this.bLeave = true;
                     }
                 },
+                C: () => {
+                    this.changeColor(oLock);
+                },
                 // Gestion Select Character
                 LEFT: () => {
                     this.oMenu.oCharacter.prev(this.nCursor);
                     this.bReady = false;
                     this.bLeave = false;
+                    this.nColor = 0;
                 },
                 RIGHT: () => {
                     this.oMenu.oCharacter.next(this.nCursor);
                     this.bReady = false;
                     this.bLeave = false;
+                    this.nColor = 0;
                 },
                 // Gestion Select Stage
                 UP: () => {
@@ -58,12 +71,35 @@ Object.assign(
             for( let sMenu in this.oMenu ){
                 this.oMenu[sMenu].update();
             }
-            
+
+            this.oCharacter = this.oMenu.oCharacter.getSelected(this.nCursor).__oData;
+            const sColor = this.oCharacter.aColor[this.nColor].sCod;
             GAME.oOutput.getElement('SPT__Select_Character_' + this.nPlayer)
-                .setSource( GAME.oSettings.oPath.oCharacter.sPreview + '/' + this.oMenu.oCharacter.getSelected(this.nCursor).__oData.sCod + '.png' );
+                .setSource( this.oCharacter.oPath[sColor].sPreview );
             GAME.oOutput.getElement('TXT__Select_Character_' + this.nPlayer)
-                .setText( this.oMenu.oCharacter.getSelected(this.nCursor).__oData.sName );
-            GAME.oOutput.getElement('TXT__Select_Player_' + this.nPlayer).setText( this.bReady || !this.oKeyboard ? 'Waiting ...' : 'Player #' + this.nPlayer );
+                .setText( this.oCharacter.aColor[this.nColor].sName );
+            GAME.oOutput.getElement('TXT__Select_Player_' + this.nPlayer)
+                .setText(
+                    this.bReady || !this.oKeyboard ?
+                        'Waiting ...' :
+                        this.oCharacter.bActive ?
+                            'Player #' + this.nPlayer :
+                            'Unavailable'
+                );
+        },
+
+        checkColor: function(oLock){
+            if( oLock && this.oCharacter.sCod == oLock.sChar && this.nColor == oLock.nColor ){
+                this.changeColor();
+            }
+        },
+        changeColor: function(oLock){
+            if( this.nColor == this.oCharacter.aColor.length - 1 ){
+                this.nColor = 0;
+            } else {
+                this.nColor++;
+            }
+            this.checkColor(oLock);
         }
     }
 );
@@ -108,6 +144,7 @@ function SelectScene(){
     
     this.oMenu = null;
     this.aPlayer = [];
+    this.aColorLock = [];
 
     this.nFrameCreated = 0;
 }
@@ -144,7 +181,15 @@ Object.assign(
 				update: function(){
                     // Gestion activation P2
                     this.checkPlayerActivation();
-                    this.aPlayer.forEach( oPlayer => oPlayer.update() );
+                    this.aPlayer.forEach( (oPlayer, nIndex) => {
+                        this.aColorLock[nIndex] = oPlayer.bReady ?
+                            {
+                                sChar: oPlayer.oCharacter.sCod,
+                                nColor: oPlayer.nColor
+                            } :
+                            null;
+                    } );
+                    this.aPlayer.forEach( oPlayer => oPlayer.update( this.aColorLock[ oPlayer.nPlayer == 2 ? 0 : 1 ] ) );
                     this.updateStatus();
                     
                     if( this.oStatus.bSwitch ) {
@@ -152,7 +197,6 @@ Object.assign(
                     } else if( this.oStatus.bLeave ) {
                         GAME.oScene.change( new MenuScene() );
                     } else if( this.oStatus.bSubmit ) {
-                        // GAME.oScene.change( new BattleScene() );
                         GAME.oScene.change( new LoadingScene() );
                     }
 				},
@@ -161,16 +205,19 @@ Object.assign(
                         this.oMenu[sMenu].destroy();
                     }
 
-                    const aCharacterSelected = [];
+                    const aCharacterSelected = [],
+                        aColorSelected = [];
                     this.aPlayer.forEach( oPlayer => {
-                        aCharacterSelected.push( this.oMenu.oCharacter.getSelected(oPlayer.nCursor).__oData.sCod )
+                        aCharacterSelected.push( oPlayer.oCharacter.sCod );
+                        aColorSelected.push( oPlayer.nColor );
                     } );
 
                     return Object.assign(GAME.oScene.oLastData, {
                         sStageSelected: this.oMenu.oStage.getSelected().__oData.sCod,
                         sTypeBattle: this.sType,
                         bAllPlayerActive: this.allPlayerActive(),
-                        aCharacterSelected
+                        aCharacterSelected,
+                        aColorSelected
                     } );
                 },
 

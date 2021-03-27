@@ -31,10 +31,9 @@ __Menu__
 * Aide des controles
 
 __Select__
-* Choix de la couleurs via "C"
 
 __Battle__
-* Gestion de HurtBox et HitBox multiple
+* Gestion de HurtBox et HitBox multiple ?
 * Projectiles
 * Méchaniques de jeu
     * Burst ?
@@ -52,7 +51,6 @@ __Training__
 
 __General__
 * Optimisation du Code
-    * DATA de CHARACTER par defaut pour méchanique universel
     * Classe CHARACTER avec pour enfant PLAYER et DUMMY ( et AI ? )
 * Animations
     * BJT

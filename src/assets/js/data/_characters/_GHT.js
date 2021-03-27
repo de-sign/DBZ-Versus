@@ -1,4 +1,9 @@
-GAME.oData.oCharacter.GHT = {
-    sCod: 'GHT',
-    sName: 'Gohan SSJT'
+GAME.oData.oCharacter.GHC = {
+    sCod: 'GHC',
+    aColor: [
+        {
+            sCod: 'GHT',
+            sName: 'Gohan SSJT'
+        }
+    ]
 };

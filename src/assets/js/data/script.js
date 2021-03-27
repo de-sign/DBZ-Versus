@@ -94,6 +94,7 @@ Object.assign(
     }
 );
 
+//=include character.js
 //=include _characters/_GKU.js
 //=include _characters/_BJT.js
 //=include _characters/_GHT.js

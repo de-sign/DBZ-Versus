@@ -1,6 +1,17 @@
 GAME.oData.oCharacter.GKU = {
     sCod: 'GKU',
-    sName: 'Gokū SSJ',
+    bActive: true,
+    aColor: [
+        {
+            sCod: 'SSJ',
+            sName: 'Gokū SSJ'
+        },
+        {
+            sCod: 'TRN',
+            sName: 'Gokū'
+        }
+    ],
+   
     oFrames: {
         // Movement
         stand: {

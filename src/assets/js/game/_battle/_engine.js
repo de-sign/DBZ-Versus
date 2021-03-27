@@ -100,7 +100,7 @@ Object.assign(
                         oPlayer.oGatling.bFreeze = true;
                         this.aPlayer[ oPlayer.nPlayer == 1 ? 1 : 0 ].oAnimation.setFreeze(oPlayer.oGatling.oCurrent.oStun.nFreeze);
                         GAME.oScene.oCurrent.oInfo.add( {
-                            sImg: GAME.oSettings.oPath.oCharacter.sFace + '/' + oPlayer.oCharacter.sCod + '.png',
+                            sImg: oPlayer.oPath.sFace,
                             sText: oPlayer.oGatling.oCurrent.sName + ' !'
                         } );
                         break;

@@ -1,4 +1,9 @@
 GAME.oData.oCharacter.BUU = {
     sCod: 'BUU',
-    sName: 'Majin Buu'
+    aColor: [
+        {
+            sCod: 'MJN',
+            sName: 'Majin Buu'
+        }
+    ]
 };
