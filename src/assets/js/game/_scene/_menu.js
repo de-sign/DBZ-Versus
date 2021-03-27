@@ -25,7 +25,7 @@ Object.assign(
                             sText: 'Move'
                         },
                         {
-                            aButton: ['A', 'START'],
+                            aButton: ['A'],
                             sText: 'Validate'
                         } ]
                     );
@@ -35,10 +35,18 @@ Object.assign(
                     this.oKeyboard.ifPressedNow( {
                         // Gestion validation
                         A: () => {
-                            this.changeScene()
-                        },
-                        START: () => {
-                            this.changeScene()
+                            let sMenuSelected = this.oMenu.getSelected().sId;
+                            switch( sMenuSelected ){
+                                case 'TXT__Menu_Versus':
+                                    GAME.oScene.change( new SelectScene() );
+                                    break;
+                                case 'TXT__Menu_Training':
+                                    GAME.oScene.change( new SelectScene() );
+                                    break;
+                                case 'TXT__Menu_Setting':
+                                    GAME.oScene.change( new SettingScene() );
+                                    break;
+                            }
                         },
                         // Gestion déplacement
                         UP: () => {
@@ -57,21 +65,6 @@ Object.assign(
                     return {
                         nLastIndexMenu: this.oMenu.destroy()[0]
                     };
-                },
-
-                changeScene: function(){
-                    let sMenuSelected = this.oMenu.getSelected().sId;
-                    switch( sMenuSelected ){
-                        case 'TXT__Menu_Versus':
-                            GAME.oScene.change( new SelectScene() );
-                            break;
-                        case 'TXT__Menu_Training':
-                            GAME.oScene.change( new SelectScene() );
-                            break;
-                        case 'TXT__Menu_Setting':
-                            GAME.oScene.change( new SettingScene() );
-                            break;
-                    }
                 }
             }
         )

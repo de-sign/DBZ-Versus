@@ -4,7 +4,7 @@ function GameHelper(){}
 Object.assign(
     GameHelper,
     {
-        nDelay: 120,
+        nDelay: 180,
         
         oLayer: null,
         aKeyboard: null,
@@ -31,6 +31,7 @@ Object.assign(
 		},
 
         set: function(aKeyboard, aText){
+            this.nKeyboard = -1;
             this.aKeyboard = Array.isArray(aKeyboard) ? aKeyboard : [aKeyboard];
             this.aText = aText;
 

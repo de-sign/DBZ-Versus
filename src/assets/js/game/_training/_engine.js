@@ -187,6 +187,8 @@ Object.assign(
                     this.oMenu.oLast && this.oMenu.oLast.oMenu.oLayer.hElement.classList.remove('--show');
                     this.oMenu.oCurrent.oMenu.oLayer.hElement.classList.add('--show');
                 } );
+                
+                GameHelper.set( GameHelper.aKeyboard, TrainingScene.oHelper.aMenu );
             },
             close: function(){
                 const oCurrent = this.oMenu.oCurrent;
@@ -202,9 +204,11 @@ Object.assign(
                     this.oScene.oContext.hElement.classList.remove('--menu');
                 } );
                 this.trigger('onClose');
+                GameHelper.set( GameHelper.aKeyboard, TrainingScene.oHelper.aBattle );
             },
             toggle: function(){
-                this[ this.isOpen() ? 'close' : 'open' ]();
+                const bOpen = this.isOpen();
+                this[ bOpen ? 'close' : 'open' ]();
             },
             isOpen: function(){
                 return this.oMenu.oCurrent ? true : false;

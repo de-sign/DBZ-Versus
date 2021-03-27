@@ -9,6 +9,34 @@ function TrainingScene() {
 
 Object.assign(
     TrainingScene, {
+
+        oHelper: {
+            aBattle: [
+                {
+                    aButton: ['START'],
+                    sText: 'Open menu'
+                }
+            ],
+            aMenu: [
+                {
+                    aButton: ['UP', 'DOWN'],
+                    sText: 'Move'
+                },
+                {
+                    aButton: ['A'],
+                    sText: 'Enter / Change / Validate'
+                },
+                {
+                    aButton: ['B'],
+                    sText: 'Return'
+                },
+                {
+                    aButton: ['START'],
+                    sText: 'Close menu'
+                }
+            ]
+        },
+
         prototype: Object.assign(
             Object.create(BattleScene.prototype), {
                 constructor: TrainingScene,
@@ -27,6 +55,8 @@ Object.assign(
                     );
 
                     this.oTraining = new TrainingEngine(this);
+
+                    GameHelper.set( this.oKeyboard, TrainingScene.oHelper.aBattle );
                 },
                 update: function(){
                     this.oKeyboard.ifPressedNow( {
@@ -39,9 +69,14 @@ Object.assign(
                         BattleScene.prototype.update.call(this);
                     }
                     this.oTraining.update();
+                    GameHelper.update();
                 },
                 destroy: function(){
                     this.oTraining.destroy();
+                    GameHelper.destroy();
+                    return {
+                        nLastIndexMenu: 1
+                    };
                 }
             }
         )

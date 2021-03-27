@@ -24,11 +24,10 @@ Utilise un moteur de jeu fait maison et FOX Website :
 ## TODO
 __BUG__
 
+__Menu__
+
 __Settings__
 * Boutons en Cookies
-
-__Menu__
-* Aide des controles
 
 __Select__
 
@@ -50,6 +49,7 @@ __Training__
 
 __General__
 * Optimisation du Code
+    * Classe WAITING avec pour enfant INITIALIZE et LOADING
     * Classe CHARACTER avec pour enfant PLAYER et DUMMY ( et AI ? )
 * Animations
     * BJT
