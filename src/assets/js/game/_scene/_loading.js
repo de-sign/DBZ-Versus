@@ -37,7 +37,7 @@ Object.assign(
                 loadCharacter: function(aCharacter, aColor){
                     aCharacter.forEach( (sChar, nIndex) => {
                         const oChar = GAME.oData.oCharacter[sChar],
-                            sColor = oChar.aColor[aColor].sCod;
+                            sColor = oChar.aColor[ aColor[nIndex] ].sCod;
                         for( let sFrame in oChar.oFrames ){
                             this.add(oChar.oPath[sColor].sFrames + '/' + oChar.oFrames[sFrame].sPath);
                         }
