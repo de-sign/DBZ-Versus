@@ -401,8 +401,8 @@ GAME.oData.oCharacter.GKU = {
             }
         },
         // Kameha
-        kameha_start: {
-            sPath: 'kameha_start.png',
+        super_first: {
+            sPath: 'super_first.png',
             nZIndex: 30,
             oPositionBox: {
                 nX: (-7 * 4) - 2,
@@ -411,8 +411,8 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 28 * 4
             }
         },
-        kameha_lunch: {
-            sPath: 'kameha_lunch.png',
+        super_second: {
+            sPath: 'super_second.png',
             nZIndex: 30,
             oPositionBox: {
                 nX: (-7 * 4) - 2,
@@ -427,8 +427,8 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 43 * 4
             }
         },
-        kameha_light: {
-            sPath: 'kameha_light.png',
+        super_third: {
+            sPath: 'super_third.png',
             nZIndex: 30,
             oPositionBox: {
                 nX: (-7 * 4) - 2,
@@ -449,8 +449,8 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 12 * 4
             }*/
         },
-        kameha_medium: {
-            sPath: 'kameha_medium.png',
+        super_fourth: {
+            sPath: 'super_fourth.png',
             nZIndex: 30,
             oPositionBox: {
                 nX: (-7 * 4) - 2,
@@ -465,8 +465,8 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 43 * 4
             }
         },
-        kameha_heavy: {
-            sPath: 'kameha_heavy.png',
+        super_fifth: {
+            sPath: 'super_fifth.png',
             nZIndex: 30,
             oPositionBox: {
                 nX: (-7 * 4) - 2,
@@ -488,8 +488,8 @@ GAME.oData.oCharacter.GKU = {
             }
         }
         /*
-        kameha_medium_beam: {
-            sPath: 'kameha_medium.png',
+        super_fourth_beam: {
+            sPath: 'super_fourth.png',
             nZIndex: 30,
             oPositionBox: {
                 nX: (-7 * 4) - 2,
@@ -510,8 +510,8 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 12 * 4
             }
         },
-        kameha_medium_circle: {
-            sPath: 'kameha_medium.png',
+        super_fourth_circle: {
+            sPath: 'super_fourth.png',
             nZIndex: 30,
             oPositionBox: {
                 nX: (-7 * 4) - 2,
@@ -532,8 +532,8 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 40 * 4
             }
         },
-        kameha_heavy_beam: {
-            sPath: 'kameha_heavy.png',
+        super_fifth_beam: {
+            sPath: 'super_fifth.png',
             nZIndex: 30,
             oPositionBox: {
                 nX: (-7 * 4) - 2,
@@ -554,8 +554,8 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 26 * 4
             }
         },
-        kameha_heavy_circle: {
-            sPath: 'kameha_heavy.png',
+        super_fifth_circle: {
+            sPath: 'super_fifth.png',
             nZIndex: 30,
             oPositionBox: {
                 nX: (-7 * 4) - 2,
@@ -905,7 +905,7 @@ GAME.oData.oCharacter.GKU = {
         ],
         // Kameha
         // 46, 36, 26
-        kameha: [
+        super: [
             {
                 nFrame: 2,
                 sFrame: 'blur',
@@ -913,38 +913,38 @@ GAME.oData.oCharacter.GKU = {
             },
             {
                 nFrame: 30,
-                sFrame: 'kameha_start'
+                sFrame: 'super_first'
             },
             {
                 nFrame: 10,
-                sFrame: 'kameha_lunch',
+                sFrame: 'super_second',
                 oHurtBox: null
             },
             {
                 nFrame: 2,
-                sFrame: 'kameha_light',
+                sFrame: 'super_third',
                 oHurtBox: null
             },
             {
                 nFrame: 2,
-                sFrame: 'kameha_medium',
+                sFrame: 'super_fourth',
                 oHurtBox: null
             },
             {
                 nFrame: 36,
-                sFrame: 'kameha_heavy'
+                sFrame: 'super_fifth'
             },
             {
                 nFrame: 2,
-                sFrame: 'kameha_medium'
+                sFrame: 'super_fourth'
             },
             {
                 nFrame: 2,
-                sFrame: 'kameha_light'
+                sFrame: 'super_third'
             },
             {
                 nFrame: 20,
-                sFrame: 'kameha_lunch'
+                sFrame: 'super_second'
             },
             {
                 nFrame: 2,
@@ -956,7 +956,7 @@ GAME.oData.oCharacter.GKU = {
         aOffense: [
             {
                 sName: 'kamehameha',
-                sAnimation: 'kameha',
+                sAnimation: 'super',
                 nCost: 6,
                 nDamage: 5,
                 oStun: {
