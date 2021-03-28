@@ -49,7 +49,6 @@ __Training__
 
 __General__
 * Optimisation du Code
-    * Classe WAITING avec pour enfant INITIALIZE et LOADING
     * Classe CHARACTER avec pour enfant PLAYER et DUMMY ( et AI ? )
 * Animations
     * BJT

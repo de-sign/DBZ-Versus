@@ -133,16 +133,23 @@ Object.assign(
                 this.oScene = oScene;
 
                 oScene.aPlayer.forEach( oPlayer => {
-                    this.aHistory.push( GAME.oOutput.getElement('LAY__Training_History_' + oPlayer.nPlayer) );
+                    const oHistory = GAME.oOutput.getElement('LAY__Training_History_' + oPlayer.nPlayer),
+                        oAnim = GAME.oOutput.getElement('LAY__Training_Animation_' + oPlayer.nPlayer);
+
+                    this.aHistory.push( oHistory );
+                    
                     this.aBox.push( {
                         oPositionBox: GAME.oOutput.getElement('LAY__Training_PositionBox_' + oPlayer.nPlayer),
                         oHurtBox: GAME.oOutput.getElement('LAY__Training_HurtBox_' + oPlayer.nPlayer),
                         oHitBox: GAME.oOutput.getElement('LAY__Training_HitBox_' + oPlayer.nPlayer)
                     } );
                     this.aAnimation.push( {
-                        oLayer: GAME.oOutput.getElement('LAY__Training_Animation_' + oPlayer.nPlayer),
+                        oLayer: oAnim,
                         oLast: null
                     } );
+
+                    oHistory.clean();
+                    oAnim.hElement.innerHTML = '';
                 } );
 
                 for( let sType in this.oShow ){
@@ -248,7 +255,7 @@ Object.assign(
                             } else if( !oPlayer.oAnimation.oFrame.oHurtBox ){
                                 sClass = '--invulnerable';
                             }
-                            oAnimation.oLayer.hElement.innerHTML += '<span class="' + sClass + '"></span>'
+                            oAnimation.oLayer.hElement.innerHTML += '<span class="' + sClass + '"></span>';
                         }
                     } );
                 }

@@ -224,7 +224,7 @@ Object.assign(
                     } else if( this.oStatus.bLeave ) {
                         GAME.oScene.change( new MenuScene() );
                     } else if( this.oStatus.bSubmit ) {
-                        GAME.oScene.change( new LoadingScene() );
+                        GAME.oScene.change( new PreBattleScene() );
                     }
 
                     GameHelper.update();

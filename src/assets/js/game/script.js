@@ -2,11 +2,13 @@
 //=include _components/_helper.js
 //=include _components/_menu.js
 
+//=include _loading/_scene.js
 //=include _scene/_initialize.js
-//=include _initialize/_data.js
-//=include _initialize/_settings.js
-//=include _initialize/_select.js
-//=include _initialize/_battle.js
+//=include _loading/_data.js
+//=include _loading/_settings.js
+//=include _loading/_select.js
+//=include _loading/_battle.js
+//=include _scene/_prebattle.js
 
 //=include _battle/_scene.js
 //=include _battle/_display.js
@@ -19,7 +21,6 @@
 //=include _training/_display.js
 //=include _scene/_training.js
 
-//=include _scene/_loading.js
 //=include _scene/_menu.js
 //=include _scene/_select.js
 //=include _scene/_settings.js
