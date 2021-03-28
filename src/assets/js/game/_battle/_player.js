@@ -385,13 +385,20 @@ Object.assign(
 
         // Fonction technique
         getCharacterBox: function(sBox){
-            return this.oAnimation.oFrame[sBox] ?
-                Object.assign(
-                    {},
-                    this.oAnimation.oFrame[sBox],
-                    this.bReverse ? { nX: -(this.oAnimation.oFrame[sBox].nWidth + this.oAnimation.oFrame[sBox].nX - 4) } : {}
-                ) :
-                null;
+            let aBox = this.oAnimation.oFrame[sBox];
+            if( aBox ){
+                Array.isArray(aBox) || ( aBox = [aBox] );
+                aBox = aBox.map( oBox => {
+                    return Object.assign(
+                        {},
+                        oBox,
+                        this.bReverse ? { nX: -(oBox.nWidth + oBox.nX - 4) } : {}
+                    );
+                } );
+            } else {
+                aBox = [];
+            }
+            return aBox;
         },
 
         // Fonction INPUT

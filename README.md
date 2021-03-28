@@ -32,7 +32,6 @@ __Settings__
 __Select__
 
 __Battle__
-* Gestion de HurtBox et HitBox multiple ?
 * Projectiles
 * Méchaniques de jeu
     * Burst ?

@@ -140,8 +140,8 @@ Object.assign(
                     
                     this.aBox.push( {
                         oPositionBox: GAME.oOutput.getElement('LAY__Training_PositionBox_' + oPlayer.nPlayer),
-                        oHurtBox: GAME.oOutput.getElement('LAY__Training_HurtBox_' + oPlayer.nPlayer),
-                        oHitBox: GAME.oOutput.getElement('LAY__Training_HitBox_' + oPlayer.nPlayer)
+                        aHurtBox: GAME.oOutput.getElement('LAY__Training_HurtBox_' + oPlayer.nPlayer),
+                        aHitBox: GAME.oOutput.getElement('LAY__Training_HitBox_' + oPlayer.nPlayer)
                     } );
                     this.aAnimation.push( {
                         oLayer: oAnim,
@@ -218,23 +218,44 @@ Object.assign(
             updateBox: function(oPlayer){
                 if( this.oShow.bBox ){
                     this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
-                        ['oPositionBox', 'oHurtBox', 'oHitBox'].forEach( sBox => {
-                            const oBox = oPlayer.getCharacterBox(sBox)
-                            if( oBox ){
-                                this.aBox[nIndex][sBox].setStyle( {
-                                    display: null,
-                                    left: ( GAME.oSettings.oPositionPoint.nX + oBox.nX ) + 'px',
-                                    top: ( GAME.oSettings.oPositionPoint.nY + oBox.nY ) + 'px',
-                                    width: oBox.nWidth + 'px',
-                                    height: oBox.nHeight + 'px'
-                                } );
-                            } else {
-                                this.aBox[nIndex][sBox].setStyle( { display: 'none' } );
-                            }
+                        ['oPositionBox', 'aHurtBox', 'aHitBox'].forEach( sBox => {
+                            const aBox = oPlayer.getCharacterBox(sBox),
+                                oLayer = this.aBox[nIndex][sBox],
+                                nMaxElement = Math.max( oLayer.hElement.children.length, aBox.length );
+
+                            oLayer.addTickUpdate( () => {
+                                for( let nElement = 0; nElement < nMaxElement; nElement++ ){
+                                    const oBox = aBox[nElement],
+                                        hElement = this.getBox(oLayer, nElement);
+
+                                    Object.assign(
+                                        hElement.style,
+                                        oBox ? 
+                                            {
+                                                display: null,
+                                                left: ( GAME.oSettings.oPositionPoint.nX + oBox.nX ) + 'px',
+                                                top: ( GAME.oSettings.oPositionPoint.nY + oBox.nY ) + 'px',
+                                                width: oBox.nWidth + 'px',
+                                                height: oBox.nHeight + 'px'
+                                            } :
+                                            {
+                                                display: 'none'
+                                            }
+                                    );
+                                }
+                            } );
                         } );
                     } );
                 }
             },
+            getBox: function(oLayer, nIndex){
+                let hBox = oLayer.hElement.children[nIndex];
+                if( !hBox ){
+                    oLayer.hElement.appendChild( hBox = document.createElement('div') );
+                }
+                return hBox;
+            },
+
             // Animation
             updateAnimation: function(oPlayer){
                 if( this.oShow.bAnimation ){
@@ -250,9 +271,9 @@ Object.assign(
                                 sClass = '--freeze';
                             } else if( oPlayer.oAnimation.oFrame.oStatus.bGuard ){
                                 sClass = '--guard';
-                            } else if( oPlayer.oAnimation.oFrame.oHitBox ){
+                            } else if( oPlayer.oAnimation.oFrame.aHitBox ){
                                 sClass = '--damage';
-                            } else if( !oPlayer.oAnimation.oFrame.oHurtBox ){
+                            } else if( !oPlayer.oAnimation.oFrame.aHurtBox ){
                                 sClass = '--invulnerable';
                             }
                             oAnimation.oLayer.hElement.innerHTML += '<span class="' + sClass + '"></span>';

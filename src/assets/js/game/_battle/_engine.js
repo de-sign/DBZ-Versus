@@ -45,16 +45,23 @@ Object.assign(
                     if( !oPlayer.oGatling.isHit() ){
                         const oOpponent = this.aPlayer[ nIndex ? 0 : 1 ];
                         if( oOpponent.nLife > 0 ){
-                            const oHitBox = this.getCharacterCollisionBox(oPlayer, 'oHitBox'),
-                                oHurtBox = this.getCharacterCollisionBox(oOpponent, 'oHurtBox');
+                            const aHitBox = this.getCharacterCollisionBox(oPlayer, 'aHitBox'),
+                                aHurtBox = this.getCharacterCollisionBox(oOpponent, 'aHurtBox');
                             
-                            if( oHitBox && oHurtBox && this.checkCollision(oHitBox, oHurtBox) ){
-                                aHurt.push( {
-                                    oCommand: oPlayer.oGatling.oCurrent,
-                                    oPlayer,
-                                    oOpponent
-                                } );
-                                aPriority[nIndex]++;
+                            if( aHitBox.length && aHurtBox.length ){
+                                for( let nHitBox = 0; nHitBox < aHitBox.length; nHitBox++ ){
+                                    for( let nHurtBox = 0; nHurtBox < aHurtBox.length; nHurtBox++ ){
+                                        if( this.checkCollision(aHitBox[nHitBox], aHurtBox[nHurtBox]) ){
+                                            aHurt.push( {
+                                                oCommand: oPlayer.oGatling.oCurrent,
+                                                oPlayer,
+                                                oOpponent
+                                            } );
+                                            aPriority[nIndex]++;
+                                            break;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -124,7 +131,7 @@ Object.assign(
         },
         stayInArea: function(oPlayer){
             // Check
-            let oBoxPlayer = oPlayer.getCharacterBox('oPositionBox');
+            let oBoxPlayer = oPlayer.getCharacterBox('oPositionBox')[0];
             const oBoxArea = this.oArea.getBox(),
                 nLeft = this.oArea.oPosition.nX + (oBoxArea.left - oBoxArea.originX),
                 nRight = this.oArea.oPosition.nX + (oBoxArea.right - oBoxArea.originX),
@@ -157,7 +164,7 @@ Object.assign(
             if( nDown < oPlayer.oLayer.oPosition.nY + ( oBoxPlayer.nY + oBoxPlayer.nHeight ) ){
                 oPlayer.oLunch = null;
                 oPlayer.setMovement('down', true);
-                oBoxPlayer = oPlayer.getCharacterBox('oPositionBox');
+                oBoxPlayer = oPlayer.getCharacterBox('oPositionBox')[0];
                 oPlayer.oLayer.oPosition.nY = nDown - ( oBoxPlayer.nY + oBoxPlayer.nHeight );
             }
 
@@ -172,8 +179,8 @@ Object.assign(
                 oOpponent = this.aPlayer[0];
             }
 
-            const oBoxPlayer = this.getCharacterCollisionBox(oPlayer, 'oPositionBox'),
-                oBoxOpponent = this.getCharacterCollisionBox(oOpponent, 'oPositionBox');
+            const oBoxPlayer = this.getCharacterCollisionBox(oPlayer, 'oPositionBox')[0],
+                oBoxOpponent = this.getCharacterCollisionBox(oOpponent, 'oPositionBox')[0];
 
             if( this.checkCollision(oBoxPlayer, oBoxOpponent) ){
                 const nRight = oPlayer.oLayer.oPosition.nX + ( oBoxPlayer.nX + oBoxPlayer.nWidth ),
@@ -219,12 +226,12 @@ Object.assign(
             }
         },
         getCharacterCollisionBox: function(oPlayer, sBox){
-            const oBox = oPlayer.getCharacterBox(sBox);
-            if( oBox ){
+            const aBox = oPlayer.getCharacterBox(sBox);
+            aBox.length && aBox.forEach( oBox => {
                 oBox.nX += oPlayer.oLayer.oPosition.nX;
                 oBox.nY += oPlayer.oLayer.oPosition.nY;
-            }
-            return oBox;
+            } );
+            return aBox;
         },
         checkCollision: function(oBoxA, oBoxB){
             return !(

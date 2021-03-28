@@ -22,7 +22,7 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-13 * 4) - 2,
                 nY: (-45 * 4) - 2,
                 nWidth: 28 * 4,
@@ -37,7 +37,7 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-14 * 4) - 2,
                 nY: (-45 * 4) - 2,
                 nWidth: 30 * 4,
@@ -53,7 +53,7 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-15 * 4) - 2,
                 nY: (-45 * 4) - 2,
                 nWidth: 28 * 4,
@@ -69,7 +69,7 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-13 * 4) - 2,
                 nY: (-42 * 4) - 2,
                 nWidth: 32 * 4,
@@ -85,7 +85,7 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 17 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-14 * 4) - 2,
                 nY: (-43 * 4) - 2,
                 nWidth: 29 * 4,
@@ -101,7 +101,7 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 17 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-10 * 4) - 2,
                 nY: (-45 * 4) - 2,
                 nWidth: 23 * 4,
@@ -128,7 +128,7 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-10 * 4) - 2,
                 nY: (-45 * 4) - 2,
                 nWidth: 23 * 4,
@@ -144,7 +144,7 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-13 * 4) - 2,
                 nY: (-43 * 4) - 2,
                 nWidth: 30 * 4,
@@ -160,7 +160,7 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-15 * 4) - 2,
                 nY: (-38 * 4) - 2,
                 nWidth: 32 * 4,
@@ -176,7 +176,7 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-14 * 4) - 2,
                 nY: (-42 * 4) - 2,
                 nWidth: 30 * 4,
@@ -192,7 +192,7 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 15 * 4,
                 nHeight: 23 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-17 * 4) - 2,
                 nY: (-36 * 4) - 2,
                 nWidth: 37 * 4,
@@ -219,7 +219,7 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 16 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-43 * 4) - 2,
                 nWidth: 31 * 4,
@@ -235,13 +235,13 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 16 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-43 * 4) - 2,
                 nWidth: 31 * 4,
                 nHeight: 44 * 4
             },
-            oHitBox: {
+            aHitBox: {
                 nX: (8 * 4) + 2,
                 nY: (-24 * 4) - 2,
                 nWidth: 11 * 4,
@@ -257,7 +257,7 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 17 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-43 * 4) - 2,
                 nWidth: 32 * 4,
@@ -273,13 +273,13 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 17 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-43 * 4) - 2,
                 nWidth: 32 * 4,
                 nHeight: 44 * 4
             },
-            oHitBox: {
+            aHitBox: {
                 nX: (9 * 4) + 2,
                 nY: (-23 * 4) - 2,
                 nWidth: 11 * 4,
@@ -295,7 +295,7 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 18 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-13 * 4) - 2,
                 nY: (-44 * 4) - 2,
                 nWidth: 39 * 4,
@@ -311,13 +311,13 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 18 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-13 * 4) - 2,
                 nY: (-44 * 4) - 2,
                 nWidth: 39 * 4,
                 nHeight: 45 * 4
             },
-            oHitBox: {
+            aHitBox: {
                 nX: (10 * 4) + 2,
                 nY: (-25 * 4) - 2,
                 nWidth: 15 * 4,
@@ -333,7 +333,7 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-40 * 4) - 2,
                 nWidth: 34 * 4,
@@ -349,13 +349,13 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-40 * 4) - 2,
                 nWidth: 34 * 4,
                 nHeight: 41 * 4
             },
-            oHitBox: {
+            aHitBox: {
                 nX: (7 * 4) + 2,
                 nY: (-22 * 4) - 2,
                 nWidth: 15 * 4,
@@ -371,7 +371,7 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 17 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-43 * 4) - 2,
                 nWidth: 28 * 4,
@@ -387,13 +387,13 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 17 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-43 * 4) - 2,
                 nWidth: 28 * 4,
                 nHeight: 44 * 4
             },
-            oHitBox: {
+            aHitBox: {
                 nX: (6 * 4) + 2,
                 nY: (-38 * 4) - 2,
                 nWidth: 10 * 4,
@@ -420,7 +420,7 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 16 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-42 * 4) - 2,
                 nWidth: 31 * 4,
@@ -436,13 +436,13 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 16 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-42 * 4) - 2,
                 nWidth: 31 * 4,
                 nHeight: 43 * 4
             }/*,
-            oHitBox: {
+            aHitBox: {
                 nX: (8 * 4) + 2,
                 nY: (-27 * 4) - 2,
                 nWidth: (300 - 33) * 4,
@@ -458,7 +458,7 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 16 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-42 * 4) - 2,
                 nWidth: 31 * 4,
@@ -474,13 +474,13 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 16 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-42 * 4) - 2,
                 nWidth: 31 * 4,
                 nHeight: 43 * 4
             },
-            oHitBox: {
+            aHitBox: {
                 nX: (8 * 4) + 2,
                 nY: (-34 * 4) - 2,
                 nWidth: (300 - 33) * 4,
@@ -497,13 +497,13 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 16 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-42 * 4) - 2,
                 nWidth: 31 * 4,
                 nHeight: 43 * 4
             },
-            oHitBox: {
+            aHitBox: {
                 nX: (8 * 4) + 2,
                 nY: (-27 * 4) - 2,
                 nWidth: (300 - 33) * 4,
@@ -519,13 +519,13 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 16 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-42 * 4) - 2,
                 nWidth: 31 * 4,
                 nHeight: 43 * 4
             },
-            oHitBox: {
+            aHitBox: {
                 nX: (21 * 4) + 2,
                 nY: (-41 * 4) - 2,
                 nWidth: 42 * 4,
@@ -541,13 +541,13 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 16 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-42 * 4) - 2,
                 nWidth: 31 * 4,
                 nHeight: 43 * 4
             },
-            oHitBox: {
+            aHitBox: {
                 nX: (8 * 4) + 2,
                 nY: (-34 * 4) - 2,
                 nWidth: (300 - 33) * 4,
@@ -563,13 +563,13 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 16 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-42 * 4) - 2,
                 nWidth: 31 * 4,
                 nHeight: 43 * 4
             },
-            oHitBox: {
+            aHitBox: {
                 nX: (19 * 4) + 2,
                 nY: (-50 * 4) - 2,
                 nWidth: 58 * 4,
@@ -671,7 +671,7 @@ GAME.oData.oCharacter.GKU = {
             {
                 nFrame: 2,
                 sFrame: 'blur',
-                oHurtBox: null
+                aHurtBox: null
             }
         ],
 
@@ -909,7 +909,7 @@ GAME.oData.oCharacter.GKU = {
             {
                 nFrame: 2,
                 sFrame: 'blur',
-                oHurtBox: null
+                aHurtBox: null
             },
             {
                 nFrame: 30,
@@ -918,17 +918,17 @@ GAME.oData.oCharacter.GKU = {
             {
                 nFrame: 10,
                 sFrame: 'super_second',
-                oHurtBox: null
+                aHurtBox: null
             },
             {
                 nFrame: 2,
                 sFrame: 'super_third',
-                oHurtBox: null
+                aHurtBox: null
             },
             {
                 nFrame: 2,
                 sFrame: 'super_fourth',
-                oHurtBox: null
+                aHurtBox: null
             },
             {
                 nFrame: 36,

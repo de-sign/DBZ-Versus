@@ -78,7 +78,7 @@ Object.assign(
                         oMove: { nX, nY }
                     } );
                     if( GAME.oSettings.oLuncher.nInvulnerable >= nIndex){
-                        oLastFrame.oHurtBox = null;
+                        oLastFrame.aHurtBox = null;
                     }
                 }
                 nLastY = nTargetY;

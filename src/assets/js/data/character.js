@@ -9,7 +9,7 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-13 * 4) - 2,
                 nY: (-45 * 4) - 2,
                 nWidth: 28 * 4,
@@ -24,7 +24,7 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-14 * 4) - 2,
                 nY: (-45 * 4) - 2,
                 nWidth: 30 * 4,
@@ -40,7 +40,7 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-15 * 4) - 2,
                 nY: (-45 * 4) - 2,
                 nWidth: 28 * 4,
@@ -56,7 +56,7 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-13 * 4) - 2,
                 nY: (-42 * 4) - 2,
                 nWidth: 32 * 4,
@@ -72,7 +72,7 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 17 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-14 * 4) - 2,
                 nY: (-43 * 4) - 2,
                 nWidth: 29 * 4,
@@ -88,7 +88,7 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 17 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-10 * 4) - 2,
                 nY: (-45 * 4) - 2,
                 nWidth: 23 * 4,
@@ -115,7 +115,7 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-10 * 4) - 2,
                 nY: (-45 * 4) - 2,
                 nWidth: 23 * 4,
@@ -131,7 +131,7 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHitBox: {
+            aHitBox: {
                 nX: -1024,
                 nY: (-43 * 4) - 2,
                 nWidth: 2048,
@@ -147,7 +147,7 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-13 * 4) - 2,
                 nY: (-43 * 4) - 2,
                 nWidth: 30 * 4,
@@ -163,7 +163,7 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-15 * 4) - 2,
                 nY: (-38 * 4) - 2,
                 nWidth: 32 * 4,
@@ -179,7 +179,7 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-14 * 4) - 2,
                 nY: (-42 * 4) - 2,
                 nWidth: 30 * 4,
@@ -195,7 +195,7 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 15 * 4,
                 nHeight: 23 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-17 * 4) - 2,
                 nY: (-36 * 4) - 2,
                 nWidth: 37 * 4,
@@ -222,7 +222,7 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 16 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-43 * 4) - 2,
                 nWidth: 31 * 4,
@@ -238,13 +238,13 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 16 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-43 * 4) - 2,
                 nWidth: 31 * 4,
                 nHeight: 44 * 4
             },
-            oHitBox: {
+            aHitBox: {
                 nX: (8 * 4) + 2,
                 nY: (-24 * 4) - 2,
                 nWidth: 11 * 4,
@@ -260,7 +260,7 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 17 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-43 * 4) - 2,
                 nWidth: 32 * 4,
@@ -276,13 +276,13 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 17 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-43 * 4) - 2,
                 nWidth: 32 * 4,
                 nHeight: 44 * 4
             },
-            oHitBox: {
+            aHitBox: {
                 nX: (9 * 4) + 2,
                 nY: (-23 * 4) - 2,
                 nWidth: 11 * 4,
@@ -298,7 +298,7 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 18 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-13 * 4) - 2,
                 nY: (-44 * 4) - 2,
                 nWidth: 39 * 4,
@@ -314,13 +314,13 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 18 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-13 * 4) - 2,
                 nY: (-44 * 4) - 2,
                 nWidth: 39 * 4,
                 nHeight: 45 * 4
             },
-            oHitBox: {
+            aHitBox: {
                 nX: (10 * 4) + 2,
                 nY: (-25 * 4) - 2,
                 nWidth: 15 * 4,
@@ -336,7 +336,7 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-40 * 4) - 2,
                 nWidth: 34 * 4,
@@ -352,13 +352,13 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 15 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-40 * 4) - 2,
                 nWidth: 34 * 4,
                 nHeight: 41 * 4
             },
-            oHitBox: {
+            aHitBox: {
                 nX: (7 * 4) + 2,
                 nY: (-22 * 4) - 2,
                 nWidth: 15 * 4,
@@ -374,7 +374,7 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 17 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-43 * 4) - 2,
                 nWidth: 28 * 4,
@@ -390,13 +390,13 @@ GAME.oData.oDefaultCharacter = {
                 nWidth: 17 * 4,
                 nHeight: 28 * 4
             },
-            oHurtBox: {
+            aHurtBox: {
                 nX: (-11 * 4) - 2,
                 nY: (-43 * 4) - 2,
                 nWidth: 28 * 4,
                 nHeight: 44 * 4
             },
-            oHitBox: {
+            aHitBox: {
                 nX: (6 * 4) + 2,
                 nY: (-38 * 4) - 2,
                 nWidth: 10 * 4,
@@ -468,7 +468,7 @@ GAME.oData.oDefaultCharacter = {
             {
                 sFrame: 'blur',
                 nFrame: 2,
-                oHurtBox: null,
+                aHurtBox: null,
             },
             {
                 sFrame: 'guard_reject',
@@ -477,7 +477,7 @@ GAME.oData.oDefaultCharacter = {
             {
                 sFrame: 'blur',
                 nFrame: 2,
-                oHurtBox: null,
+                aHurtBox: null,
             }
         ],
         hit_light: [
@@ -513,7 +513,7 @@ GAME.oData.oDefaultCharacter = {
             {
                 nFrame: 2,
                 sFrame: 'blur',
-                oHurtBox: null
+                aHurtBox: null
             }
         ]
     },
