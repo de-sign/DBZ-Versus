@@ -1,406 +1,153 @@
 GAME.oData.oDefaultCharacter = {
     oFrames: {
-        // Movement
+        // Surcharger par "_CHAR.js", complété via "gulp extra"
         stand: {
-            sPath: 'stand.png',
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-13 * 4) - 2,
-                nY: (-45 * 4) - 2,
-                nWidth: 28 * 4,
-                nHeight: 46 * 4
-            }
+            sPath: 'stand.png'
         },
         blur: {
-            sPath: 'blur.png',
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-14 * 4) - 2,
-                nY: (-45 * 4) - 2,
-                nWidth: 30 * 4,
-                nHeight: 46 * 4
-            }
+            sPath: 'blur.png'
         },
         backward: {
             sPath: 'backward.png',
-            nZIndex: 10,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-15 * 4) - 2,
-                nY: (-45 * 4) - 2,
-                nWidth: 28 * 4,
-                nHeight: 46 * 4
-            }
+            nZIndex: 10
         },
         forward: {
             sPath: 'forward.png',
-            nZIndex: 20,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-13 * 4) - 2,
-                nY: (-42 * 4) - 2,
-                nWidth: 32 * 4,
-                nHeight: 43 * 4
-            }
+            nZIndex: 20
         },
         jump: {
             sPath: 'jump.png',
-            nZIndex: 30,
-            oPositionBox: {
-                nX: (-5 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 17 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-14 * 4) - 2,
-                nY: (-43 * 4) - 2,
-                nWidth: 29 * 4,
-                nHeight: 44 * 4
-            }
+            nZIndex: 30
         },
         fall: {
             sPath: 'fall.png',
-            nZIndex: 30,
-            oPositionBox: {
-                nX: (-5 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 17 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-10 * 4) - 2,
-                nY: (-45 * 4) - 2,
-                nWidth: 23 * 4,
-                nHeight: 46 * 4
-            }
+            nZIndex: 30
         },
-        teleport_vertical: {
-            sPath: 'teleport_vertical.png',
-            nZIndex: 10,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
-            }
+        recovery: {
+            sPath: 'recovery.png',
+            nZIndex: 10
         },
         // Hurt
         guard: {
             sPath: 'guard.png',
-            nZIndex: 10,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-10 * 4) - 2,
-                nY: (-45 * 4) - 2,
-                nWidth: 23 * 4,
-                nHeight: 46 * 4
-            }
+            nZIndex: 10
         },
-        guard_reject: {
-            sPath: 'guard_reject.png',
-            nZIndex: 10,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
-            },
+        reflect: {
+            sPath: 'reflect.png',
+            nZIndex: 40,
             aHitBox: {
                 nX: -1024,
-                nY: (-43 * 4) - 2,
+                nY: (-39 * 4) - 2,
                 nWidth: 2048,
-                nHeight: 44 * 4
+                nHeight: 40 * 4
             }
+        },
+        burst: {
+            sPath: 'burst.png',
+            nZIndex: 40
         },
         hit_light: {
             sPath: 'hit_light.png',
-            nZIndex: 10,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-13 * 4) - 2,
-                nY: (-43 * 4) - 2,
-                nWidth: 30 * 4,
-                nHeight: 44 * 4
-            }
+            nZIndex: 10
         },
         hit_heavy: {
             sPath: 'hit_heavy.png',
-            nZIndex: 10,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-15 * 4) - 2,
-                nY: (-38 * 4) - 2,
-                nWidth: 32 * 4,
-                nHeight: 39 * 4
-            }
+            nZIndex: 10
         },
         hit_luncher: {
             sPath: 'hit_luncher.png',
-            nZIndex: 10,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-14 * 4) - 2,
-                nY: (-42 * 4) - 2,
-                nWidth: 30 * 4,
-                nHeight: 43 * 4
-            }
+            nZIndex: 10
         },
         hit_fall: {
             sPath: 'hit_fall.png',
-            nZIndex: 10,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 23 * 4
-            },
-            aHurtBox: {
-                nX: (-17 * 4) - 2,
-                nY: (-36 * 4) - 2,
-                nWidth: 37 * 4,
-                nHeight: 32 * 4
-            }
+            nZIndex: 10
         },
         down: {
             sPath: 'down.png',
-            nZIndex: 10,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-14 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 15 * 4
-            }
+            nZIndex: 10
         },
         // Command
         light_first: {
             sPath: 'light_first.png',
-            nZIndex: 30,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 16 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-43 * 4) - 2,
-                nWidth: 31 * 4,
-                nHeight: 44 * 4
-            }
+            nZIndex: 30
         },
         light_first_active: {
             sPath: 'light_first_active.png',
-            nZIndex: 30,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 16 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-43 * 4) - 2,
-                nWidth: 31 * 4,
-                nHeight: 44 * 4
-            },
-            aHitBox: {
-                nX: (8 * 4) + 2,
-                nY: (-24 * 4) - 2,
-                nWidth: 11 * 4,
-                nHeight: 8 * 4
-            }
+            nZIndex: 30
         },
         light_second: {
             sPath: 'light_second.png',
-            nZIndex: 30,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 17 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-43 * 4) - 2,
-                nWidth: 32 * 4,
-                nHeight: 44 * 4
-            }
+            nZIndex: 30
         },
         light_second_active: {
             sPath: 'light_second_active.png',
-            nZIndex: 30,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 17 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-43 * 4) - 2,
-                nWidth: 32 * 4,
-                nHeight: 44 * 4
-            },
-            aHitBox: {
-                nX: (9 * 4) + 2,
-                nY: (-23 * 4) - 2,
-                nWidth: 11 * 4,
-                nHeight: 8 * 4
-            }
+            nZIndex: 30
+        },
+        light_third: {
+            sPath: 'light_third.png',
+            nZIndex: 30
+        },
+        light_third_active: {
+            sPath: 'light_third_active.png',
+            nZIndex: 30
         },
         heavy: {
             sPath: 'heavy.png',
-            nZIndex: 30,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 18 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-13 * 4) - 2,
-                nY: (-44 * 4) - 2,
-                nWidth: 39 * 4,
-                nHeight: 45 * 4
-            }
+            nZIndex: 30
         },
         heavy_active: {
             sPath: 'heavy_active.png',
-            nZIndex: 30,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 18 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-13 * 4) - 2,
-                nY: (-44 * 4) - 2,
-                nWidth: 39 * 4,
-                nHeight: 45 * 4
-            },
-            aHitBox: {
-                nX: (10 * 4) + 2,
-                nY: (-25 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 11 * 4
-            }
+            nZIndex: 30
         },
         tracker: {
             sPath: 'tracker.png',
-            nZIndex: 30,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-40 * 4) - 2,
-                nWidth: 34 * 4,
-                nHeight: 41 * 4
-            }
+            nZIndex: 30
         },
         tracker_active: {
             sPath: 'tracker_active.png',
-            nZIndex: 30,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-40 * 4) - 2,
-                nWidth: 34 * 4,
-                nHeight: 41 * 4
-            },
-            aHitBox: {
-                nX: (7 * 4) + 2,
-                nY: (-22 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 10 * 4
-            }
+            nZIndex: 30
         },
         luncher: {
             sPath: 'luncher.png',
-            nZIndex: 30,
-            oPositionBox: {
-                nX: (-5 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 17 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-43 * 4) - 2,
-                nWidth: 28 * 4,
-                nHeight: 44 * 4
-            }
+            nZIndex: 30
         },
         luncher_active: {
             sPath: 'luncher_active.png',
+            nZIndex: 30
+        },
+        ki_blast: {
+            sPath: 'ki_blast.png',
+            nZIndex: 30
+        },
+        // Super
+        super_first: {
+            sPath: 'super_first.png',
+            nZIndex: 30
+        },
+        super_second: {
+            sPath: 'super_second.png',
+            nZIndex: 30
+        },
+        super_third: {
+            sPath: 'super_third.png',
+            nZIndex: 30
+        },
+        super_fourth: {
+            sPath: 'super_fourth.png',
+            nZIndex: 30
+        },
+        super_fifth: {
+            sPath: 'super_fifth.png',
             nZIndex: 30,
-            oPositionBox: {
-                nX: (-5 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 17 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-43 * 4) - 2,
-                nWidth: 28 * 4,
-                nHeight: 44 * 4
-            },
             aHitBox: {
-                nX: (6 * 4) + 2,
-                nY: (-38 * 4) - 2,
-                nWidth: 10 * 4,
-                nHeight: 26 * 4
+                nWidth: 1024
+            }
+        },
+        super_sixth: {
+            sPath: 'super_sixth.png',
+            nZIndex: 30,
+            aHitBox: {
+                nWidth: 1024
             }
         }
     },
@@ -464,14 +211,14 @@ GAME.oData.oDefaultCharacter = {
                 }
             }
         ],
-        guard_reject: [
+        reflect: [
             {
                 sFrame: 'blur',
                 nFrame: 2,
                 aHurtBox: null,
             },
             {
-                sFrame: 'guard_reject',
+                sFrame: 'reflect',
                 nFrame: 10
             },
             {
@@ -504,11 +251,11 @@ GAME.oData.oDefaultCharacter = {
         recovery: [
             {
                 nFrame: 1,
-                sFrame: 'teleport_vertical'
+                sFrame: 'recovery'
             },
             {
                 nFrame: 7,
-                sFrame: 'teleport_vertical'
+                sFrame: 'recovery'
             },
             {
                 nFrame: 2,
@@ -520,8 +267,8 @@ GAME.oData.oDefaultCharacter = {
     oCommands: {
         aDefense: [
             {
-                sName: 'guard_reject',
-                sAnimation: 'guard_reject',
+                sName: 'reflect',
+                sAnimation: 'reflect',
                 bGuard: true,
                 nCost: 3,
                 nDamage: 0,

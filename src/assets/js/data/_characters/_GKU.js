@@ -13,668 +13,646 @@ GAME.oData.oCharacter.GKU = {
     ],
    
     oFrames: {
-        // Movement
         stand: {
-            sPath: 'stand.png',
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-13 * 4) - 2,
-                nY: (-45 * 4) - 2,
-                nWidth: 28 * 4,
-                nHeight: 46 * 4
-            }
+            aHurtBox: [{
+                nX: -22,
+                nY: -146,
+                nWidth: 52,
+                nHeight: 60
+            }, {
+                nX: -38,
+                nY: -102,
+                nWidth: 76,
+                nHeight: 104
+            }]
         },
         blur: {
-            sPath: 'blur.png',
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-14 * 4) - 2,
-                nY: (-45 * 4) - 2,
-                nWidth: 30 * 4,
-                nHeight: 46 * 4
-            }
+            aHurtBox: [{
+                nX: -22,
+                nY: -146,
+                nWidth: 52,
+                nHeight: 60
+            }, {
+                nX: -38,
+                nY: -102,
+                nWidth: 76,
+                nHeight: 104
+            }]
         },
         backward: {
-            sPath: 'backward.png',
-            nZIndex: 10,
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-15 * 4) - 2,
-                nY: (-45 * 4) - 2,
-                nWidth: 28 * 4,
-                nHeight: 46 * 4
-            }
+            aHurtBox: [{
+                nX: -38,
+                nY: -146,
+                nWidth: 52,
+                nHeight: 60
+            }, {
+                nX: -26,
+                nY: -98,
+                nWidth: 52,
+                nHeight: 100
+            }]
         },
         forward: {
-            sPath: 'forward.png',
-            nZIndex: 20,
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-13 * 4) - 2,
-                nY: (-42 * 4) - 2,
-                nWidth: 32 * 4,
-                nHeight: 43 * 4
-            }
+            aHurtBox: [{
+                nX: -6,
+                nY: -130,
+                nWidth: 60,
+                nHeight: 56
+            }, {
+                nX: -38,
+                nY: -98,
+                nWidth: 76,
+                nHeight: 100
+            }]
         },
+        forward_inverse: null,
         jump: {
-            sPath: 'jump.png',
-            nZIndex: 30,
             oPositionBox: {
-                nX: (-5 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 17 * 4,
-                nHeight: 28 * 4
+                nX: -22,
+                nY: -110,
+                nWidth: 68,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-14 * 4) - 2,
-                nY: (-43 * 4) - 2,
-                nWidth: 29 * 4,
-                nHeight: 44 * 4
-            }
+            aHurtBox: [{
+                nX: -26,
+                nY: -138,
+                nWidth: 60,
+                nHeight: 84
+            }, {
+                nX: -18,
+                nY: -70,
+                nWidth: 64,
+                nHeight: 72
+            }]
         },
         fall: {
-            sPath: 'fall.png',
-            nZIndex: 30,
             oPositionBox: {
-                nX: (-5 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 17 * 4,
-                nHeight: 28 * 4
+                nX: -22,
+                nY: -110,
+                nWidth: 68,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-10 * 4) - 2,
-                nY: (-45 * 4) - 2,
-                nWidth: 23 * 4,
-                nHeight: 46 * 4
-            }
+            aHurtBox: [{
+                nX: -26,
+                nY: -146,
+                nWidth: 56,
+                nHeight: 60
+            }, {
+                nX: -26,
+                nY: -102,
+                nWidth: 64,
+                nHeight: 104
+            }]
         },
-        teleport_vertical: {
-            sPath: 'teleport_vertical.png',
-            nZIndex: 10,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
-            }
-        },
-        // Hurt
         guard: {
-            sPath: 'guard.png',
-            nZIndex: 10,
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-10 * 4) - 2,
-                nY: (-45 * 4) - 2,
-                nWidth: 23 * 4,
-                nHeight: 46 * 4
+            aHurtBox: [{
+                nX: -22,
+                nY: -146,
+                nWidth: 52,
+                nHeight: 60
+            }, {
+                nX: -34,
+                nY: -102,
+                nWidth: 76,
+                nHeight: 104
+            }]
+        },
+        reflect: {
+            oPositionBox: {
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
+            }
+        },
+        burst: {
+            oPositionBox: {
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
             }
         },
         hit_light: {
-            sPath: 'hit_light.png',
-            nZIndex: 10,
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-13 * 4) - 2,
-                nY: (-43 * 4) - 2,
-                nWidth: 30 * 4,
-                nHeight: 44 * 4
-            }
+            aHurtBox: [{
+                nX: -34,
+                nY: -142,
+                nWidth: 52,
+                nHeight: 60
+            }, {
+                nX: -34,
+                nY: -102,
+                nWidth: 72,
+                nHeight: 104
+            }]
         },
         hit_heavy: {
-            sPath: 'hit_heavy.png',
-            nZIndex: 10,
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 88
             },
-            aHurtBox: {
-                nX: (-15 * 4) - 2,
-                nY: (-38 * 4) - 2,
-                nWidth: 32 * 4,
-                nHeight: 39 * 4
-            }
+            aHurtBox: [{
+                nX: -18,
+                nY: -122,
+                nWidth: 52,
+                nHeight: 60
+            }, {
+                nX: -58,
+                nY: -110,
+                nWidth: 92,
+                nHeight: 84
+            }]
         },
         hit_luncher: {
-            sPath: 'hit_luncher.png',
-            nZIndex: 10,
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-14 * 4) - 2,
-                nY: (-42 * 4) - 2,
-                nWidth: 30 * 4,
-                nHeight: 43 * 4
-            }
+            aHurtBox: [{
+                nX: -22,
+                nY: -146,
+                nWidth: 52,
+                nHeight: 48
+            }, {
+                nX: -22,
+                nY: -102,
+                nWidth: 64,
+                nHeight: 104
+            }]
         },
         hit_fall: {
-            sPath: 'hit_fall.png',
-            nZIndex: 10,
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 23 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 92
             },
-            aHurtBox: {
-                nX: (-17 * 4) - 2,
-                nY: (-36 * 4) - 2,
-                nWidth: 37 * 4,
-                nHeight: 32 * 4
-            }
+            aHurtBox: [{
+                nX: -38,
+                nY: -114,
+                nWidth: 60,
+                nHeight: 52
+            }, {
+                nX: -26,
+                nY: -114,
+                nWidth: 84,
+                nHeight: 92
+            }]
         },
         down: {
-            sPath: 'down.png',
-            nZIndex: 10,
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-14 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 15 * 4
+                nX: -30,
+                nY: -58,
+                nWidth: 60,
+                nHeight: 60
             }
         },
-        // Command
-        light_first: {
-            sPath: 'light_first.png',
-            nZIndex: 30,
+        recovery: {
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 16 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-43 * 4) - 2,
-                nWidth: 31 * 4,
-                nHeight: 44 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
             }
+        },
+        light_first: {
+            oPositionBox: {
+                nX: -30,
+                nY: -110,
+                nWidth: 64,
+                nHeight: 112
+            },
+            aHurtBox: [{
+                nX: -14,
+                nY: -134,
+                nWidth: 60,
+                nHeight: 60
+            }, {
+                nX: -30,
+                nY: -98,
+                nWidth: 56,
+                nHeight: 32
+            }, {
+                nX: 26,
+                nY: -98,
+                nWidth: 60,
+                nHeight: 32
+            }]
         },
         light_first_active: {
-            sPath: 'light_first_active.png',
-            nZIndex: 30,
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 16 * 4,
-                nHeight: 28 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 64,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-43 * 4) - 2,
-                nWidth: 31 * 4,
-                nHeight: 44 * 4
-            },
+            aHurtBox: [{
+                nX: -14,
+                nY: -134,
+                nWidth: 60,
+                nHeight: 60
+            }, {
+                nX: -30,
+                nY: -98,
+                nWidth: 56,
+                nHeight: 32
+            }, {
+                nX: 26,
+                nY: -98,
+                nWidth: 60,
+                nHeight: 32
+            }],
             aHitBox: {
-                nX: (8 * 4) + 2,
-                nY: (-24 * 4) - 2,
-                nWidth: 11 * 4,
-                nHeight: 8 * 4
+                nX: 22,
+                nY: -98,
+                nWidth: 64,
+                nHeight: 32
             }
         },
         light_second: {
-            sPath: 'light_second.png',
-            nZIndex: 30,
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 17 * 4,
-                nHeight: 28 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 68,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-43 * 4) - 2,
-                nWidth: 32 * 4,
-                nHeight: 44 * 4
-            }
+            aHurtBox: [{
+                nX: -14,
+                nY: -134,
+                nWidth: 60,
+                nHeight: 60
+            }, {
+                nX: -30,
+                nY: -98,
+                nWidth: 56,
+                nHeight: 100
+            }, {
+                nX: 26,
+                nY: -94,
+                nWidth: 64,
+                nHeight: 32
+            }]
         },
         light_second_active: {
-            sPath: 'light_second_active.png',
-            nZIndex: 30,
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 17 * 4,
-                nHeight: 28 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 68,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-43 * 4) - 2,
-                nWidth: 32 * 4,
-                nHeight: 44 * 4
-            },
+            aHurtBox: [{
+                nX: -14,
+                nY: -134,
+                nWidth: 60,
+                nHeight: 60
+            }, {
+                nX: -30,
+                nY: -98,
+                nWidth: 56,
+                nHeight: 100
+            }, {
+                nX: 26,
+                nY: -94,
+                nWidth: 64,
+                nHeight: 32
+            }],
             aHitBox: {
-                nX: (9 * 4) + 2,
-                nY: (-23 * 4) - 2,
-                nWidth: 11 * 4,
-                nHeight: 8 * 4
+                nX: 26,
+                nY: -94,
+                nWidth: 64,
+                nHeight: 32
             }
         },
+        light_third: null,
+        light_third_active: null,
         heavy: {
-            sPath: 'heavy.png',
-            nZIndex: 30,
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 18 * 4,
-                nHeight: 28 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 72,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-13 * 4) - 2,
-                nY: (-44 * 4) - 2,
-                nWidth: 39 * 4,
-                nHeight: 45 * 4
-            }
+            aHurtBox: [{
+                nX: -34,
+                nY: -142,
+                nWidth: 60,
+                nHeight: 52
+            }, {
+                nX: -14,
+                nY: -110,
+                nWidth: 48,
+                nHeight: 112
+            }, {
+                nX: 34,
+                nY: -102,
+                nWidth: 76,
+                nHeight: 44
+            }]
         },
         heavy_active: {
-            sPath: 'heavy_active.png',
-            nZIndex: 30,
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 18 * 4,
-                nHeight: 28 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 72,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-13 * 4) - 2,
-                nY: (-44 * 4) - 2,
-                nWidth: 39 * 4,
-                nHeight: 45 * 4
-            },
+            aHurtBox: [{
+                nX: -34,
+                nY: -142,
+                nWidth: 60,
+                nHeight: 52
+            }, {
+                nX: -14,
+                nY: -110,
+                nWidth: 48,
+                nHeight: 112
+            }, {
+                nX: 34,
+                nY: -102,
+                nWidth: 76,
+                nHeight: 44
+            }],
             aHitBox: {
-                nX: (10 * 4) + 2,
-                nY: (-25 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 11 * 4
+                nX: 34,
+                nY: -102,
+                nWidth: 76,
+                nHeight: 44
             }
         },
         tracker: {
-            sPath: 'tracker.png',
-            nZIndex: 30,
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-40 * 4) - 2,
-                nWidth: 34 * 4,
-                nHeight: 41 * 4
-            }
+            aHurtBox: [{
+                nX: 10,
+                nY: -126,
+                nWidth: 52,
+                nHeight: 60
+            }, {
+                nX: -6,
+                nY: -90,
+                nWidth: 100,
+                nHeight: 40
+            }, {
+                nX: -38,
+                nY: -54,
+                nWidth: 76,
+                nHeight: 56
+            }]
         },
         tracker_active: {
-            sPath: 'tracker_active.png',
-            nZIndex: 30,
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 28 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-40 * 4) - 2,
-                nWidth: 34 * 4,
-                nHeight: 41 * 4
-            },
+            aHurtBox: [{
+                nX: 10,
+                nY: -126,
+                nWidth: 52,
+                nHeight: 60
+            }, {
+                nX: -6,
+                nY: -90,
+                nWidth: 100,
+                nHeight: 40
+            }, {
+                nX: -38,
+                nY: -54,
+                nWidth: 76,
+                nHeight: 56
+            }],
             aHitBox: {
-                nX: (7 * 4) + 2,
-                nY: (-22 * 4) - 2,
-                nWidth: 15 * 4,
-                nHeight: 10 * 4
+                nX: 50,
+                nY: -90,
+                nWidth: 48,
+                nHeight: 40
             }
         },
         luncher: {
-            sPath: 'luncher.png',
-            nZIndex: 30,
             oPositionBox: {
-                nX: (-5 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 17 * 4,
-                nHeight: 28 * 4
+                nX: -22,
+                nY: -110,
+                nWidth: 68,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-43 * 4) - 2,
-                nWidth: 28 * 4,
-                nHeight: 44 * 4
-            }
+            aHurtBox: [{
+                nX: 26,
+                nY: -154,
+                nWidth: 44,
+                nHeight: 104
+            }, {
+                nX: -22,
+                nY: -138,
+                nWidth: 60,
+                nHeight: 124
+            }]
         },
         luncher_active: {
-            sPath: 'luncher_active.png',
-            nZIndex: 30,
             oPositionBox: {
-                nX: (-5 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 17 * 4,
-                nHeight: 28 * 4
+                nX: -22,
+                nY: -110,
+                nWidth: 68,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-43 * 4) - 2,
-                nWidth: 28 * 4,
-                nHeight: 44 * 4
-            },
+            aHurtBox: [{
+                nX: 26,
+                nY: -154,
+                nWidth: 44,
+                nHeight: 104
+            }, {
+                nX: -22,
+                nY: -138,
+                nWidth: 60,
+                nHeight: 124
+            }],
             aHitBox: {
-                nX: (6 * 4) + 2,
-                nY: (-38 * 4) - 2,
-                nWidth: 10 * 4,
-                nHeight: 26 * 4
+                nX: 26,
+                nY: -154,
+                nWidth: 44,
+                nHeight: 104
             }
         },
-        // Kameha
-        super_first: {
-            sPath: 'super_first.png',
-            nZIndex: 30,
+        ki_blast: {
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 16 * 4,
-                nHeight: 28 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 64,
+                nHeight: 112
+            },
+            aHurtBox: [{
+                nX: -14,
+                nY: -134,
+                nWidth: 60,
+                nHeight: 64
+            }, {
+                nX: 26,
+                nY: -110,
+                nWidth: 64,
+                nHeight: 40
+            }, {
+                nX: -30,
+                nY: -98,
+                nWidth: 56,
+                nHeight: 100
+            }]
+        },
+        super_first: {
+            oPositionBox: {
+                nX: -30,
+                nY: -110,
+                nWidth: 64,
+                nHeight: 112
             }
         },
         super_second: {
-            sPath: 'super_second.png',
-            nZIndex: 30,
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 16 * 4,
-                nHeight: 28 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 64,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-42 * 4) - 2,
-                nWidth: 31 * 4,
-                nHeight: 43 * 4
-            }
+            aHurtBox: [{
+                nX: -10,
+                nY: -138,
+                nWidth: 60,
+                nHeight: 56
+            }, {
+                nX: -22,
+                nY: -118,
+                nWidth: 104,
+                nHeight: 64
+            }, {
+                nX: -38,
+                nY: -58,
+                nWidth: 84,
+                nHeight: 60
+            }]
         },
         super_third: {
-            sPath: 'super_third.png',
-            nZIndex: 30,
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 16 * 4,
-                nHeight: 28 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 64,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-42 * 4) - 2,
-                nWidth: 31 * 4,
-                nHeight: 43 * 4
-            }/*,
-            aHitBox: {
-                nX: (8 * 4) + 2,
-                nY: (-27 * 4) - 2,
-                nWidth: (300 - 33) * 4,
-                nHeight: 12 * 4
-            }*/
+            aHurtBox: [{
+                nX: -10,
+                nY: -138,
+                nWidth: 60,
+                nHeight: 56
+            }, {
+                nX: -22,
+                nY: -118,
+                nWidth: 104,
+                nHeight: 64
+            }, {
+                nX: -38,
+                nY: -58,
+                nWidth: 84,
+                nHeight: 60
+            }]
         },
         super_fourth: {
-            sPath: 'super_fourth.png',
-            nZIndex: 30,
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 16 * 4,
-                nHeight: 28 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 64,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-42 * 4) - 2,
-                nWidth: 31 * 4,
-                nHeight: 43 * 4
-            }
+            aHurtBox: [{
+                nX: -10,
+                nY: -138,
+                nWidth: 60,
+                nHeight: 56
+            }, {
+                nX: -22,
+                nY: -118,
+                nWidth: 104,
+                nHeight: 64
+            }, {
+                nX: -38,
+                nY: -58,
+                nWidth: 84,
+                nHeight: 60
+            }]
         },
         super_fifth: {
-            sPath: 'super_fifth.png',
-            nZIndex: 30,
             oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 16 * 4,
-                nHeight: 28 * 4
+                nX: -30,
+                nY: -110,
+                nWidth: 64,
+                nHeight: 112
             },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-42 * 4) - 2,
-                nWidth: 31 * 4,
-                nHeight: 43 * 4
-            },
+            aHurtBox: [{
+                nX: -10,
+                nY: -138,
+                nWidth: 60,
+                nHeight: 56
+            }, {
+                nX: -22,
+                nY: -118,
+                nWidth: 104,
+                nHeight: 64
+            }, {
+                nX: -38,
+                nY: -58,
+                nWidth: 84,
+                nHeight: 60
+            }],
             aHitBox: {
-                nX: (8 * 4) + 2,
-                nY: (-34 * 4) - 2,
-                nWidth: (300 - 33) * 4,
-                nHeight: 26 * 4
-            }
-        }
-        /*
-        super_fourth_beam: {
-            sPath: 'super_fourth.png',
-            nZIndex: 30,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 16 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-42 * 4) - 2,
-                nWidth: 31 * 4,
-                nHeight: 43 * 4
-            },
-            aHitBox: {
-                nX: (8 * 4) + 2,
-                nY: (-27 * 4) - 2,
-                nWidth: (300 - 33) * 4,
-                nHeight: 12 * 4
+                nX: 34,
+                nY: -142,
+                nHeight: 112
             }
         },
-        super_fourth_circle: {
-            sPath: 'super_fourth.png',
-            nZIndex: 30,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 16 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-42 * 4) - 2,
-                nWidth: 31 * 4,
-                nHeight: 43 * 4
-            },
-            aHitBox: {
-                nX: (21 * 4) + 2,
-                nY: (-41 * 4) - 2,
-                nWidth: 42 * 4,
-                nHeight: 40 * 4
-            }
-        },
-        super_fifth_beam: {
-            sPath: 'super_fifth.png',
-            nZIndex: 30,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 16 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-42 * 4) - 2,
-                nWidth: 31 * 4,
-                nHeight: 43 * 4
-            },
-            aHitBox: {
-                nX: (8 * 4) + 2,
-                nY: (-34 * 4) - 2,
-                nWidth: (300 - 33) * 4,
-                nHeight: 26 * 4
-            }
-        },
-        super_fifth_circle: {
-            sPath: 'super_fifth.png',
-            nZIndex: 30,
-            oPositionBox: {
-                nX: (-7 * 4) - 2,
-                nY: (-27 * 4) - 2,
-                nWidth: 16 * 4,
-                nHeight: 28 * 4
-            },
-            aHurtBox: {
-                nX: (-11 * 4) - 2,
-                nY: (-42 * 4) - 2,
-                nWidth: 31 * 4,
-                nHeight: 43 * 4
-            },
-            aHitBox: {
-                nX: (19 * 4) + 2,
-                nY: (-50 * 4) - 2,
-                nWidth: 58 * 4,
-                nHeight: 58 * 4
-            }
-        }
-        */
+        super_sixth: null
     },
     oAnimations: {
-        // Movement
-        stand: [
-            {
-                sFrame: 'stand'
-            }
-        ],
-        block: [
-            {
-                sFrame: 'stand',
-                oStatus: {
-                    bGuard: true
-                }
-            }
-        ],
-        forward: [
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oMove: {
-                    nX: 6
-                }
-            },
-            {
-                sFrame: 'forward',
-                oMove: {
-                    nX: 6
-                }
-            }
-        ],
-        backward: [
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oMove: {
-                    nX: -6
-                },
-                oStatus: {
-                    bGuard: true
-                }
-            },
-            {
-                sFrame: 'backward',
-                oMove: {
-                    nX: -6
-                },
-                oStatus: {
-                    bGuard: true
-                }
-            }
-        ],
-        // Hurt
-        guard: [
-            {
-                sFrame: 'guard',
-                oStatus: {
-                    bGuard: true
-                }
-            }
-        ],
-        hit_light: [
-            {
-                sFrame: 'hit_light'
-            }
-        ],
-        hit_heavy: [
-            {
-                sFrame: 'hit_heavy'
-            }
-        ],
-        hit_luncher: [
-            {
-                sFrame: 'hit_luncher'
-            }
-        ],
-        down: [
-            {
-                nFrame: 20,
-                sFrame: 'down'
-            }
-        ],
-        recovery: [
-            {
-                nFrame: 1,
-                sFrame: 'teleport_vertical'
-            },
-            {
-                nFrame: 7,
-                sFrame: 'teleport_vertical'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                aHurtBox: null
-            }
-        ],
-
         // Command
         // 4, 4, 6
         light_first: [

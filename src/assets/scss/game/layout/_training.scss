@@ -114,12 +114,12 @@
         bottom: 0;
         left: 0;
         right: 0;
-        opacity: 0.5;
 
         & > * {
             display: none;
             position: absolute;
-            box-shadow: 0 0 0 1px Black;
+            border: 1px solid Black;
+            background-color: rgba(White, 0.25);
             
             .--bBox &{
                 display: block;
@@ -127,24 +127,29 @@
         }
     }
     
-    .Training__PositionBox > *{
-        background-color: deepskyblue;
+    .Training__PositionBox > * {
+        border-color: Deepskyblue;
+        background-color: rgba(Deepskyblue, 0.25);
     }
     
-    .Training__HurtBox > *{
-        background-color: Lime;
+    .Training__HurtBox > * {
+        border-color: Lime;
+        background-color: rgba(Lime, 0.25);
     }
     
-    &.--guard .Training__HurtBox > *{
-        background-color: plum;
+    &.--guard .Training__HurtBox > * {
+        border-color: Plum;
+        background-color: rgba(Plum, 0.25);
     }
     
-    &.--hit .Training__HurtBox > *{
-        background-color: orange;
+    &.--hit .Training__HurtBox > * {
+        border-color: Orange;
+        background-color: rgba(Orange, 0.25);
     }
     
-    .Training__HitBox > *{
-        background-color: red;
+    .Training__HitBox > * {
+        border-color: Red;
+        background-color: rgba(Red, 0.25);
     }
 }
 

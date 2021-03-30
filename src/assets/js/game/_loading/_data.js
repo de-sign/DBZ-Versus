@@ -18,6 +18,10 @@ Object.assign(
             }
         },
 
+        isPlainObject: function(uData){
+            return Object.prototype.toString.call(uData) === '[object Object]';
+        },
+
         createColor: function(oChar){
             oChar.oPath = {};
             oChar.aColor.forEach( oColor => {
@@ -41,7 +45,14 @@ Object.assign(
                     return aSelf.indexOf(uValue) === nIndex;
                 } )
                 .forEach( sFrame => {
-                    oFrames[sFrame] = Object.assign({}, this.oData.oFrames[sFrame] || {}, oChar.oFrames[sFrame] || {});
+                    if( oChar.oFrames[sFrame] ){
+                        oFrames[sFrame] = Object.assign({}, this.oData.oFrames[sFrame], oChar.oFrames[sFrame] || {});
+                        for( let sProp in oFrames[sFrame] ){
+                            if( this.isPlainObject(this.oData.oFrames[sFrame][sProp]) && this.isPlainObject(oChar.oFrames[sFrame][sProp]) ){
+                                Object.assign(oFrames[sFrame][sProp], this.oData.oFrames[sFrame][sProp], oChar.oFrames[sFrame][sProp]);
+                            }
+                        }
+                    }
                 } );
             } else {
                 Object.assign(oFrames, this.oData.oFrames);
