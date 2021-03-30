@@ -15,6 +15,10 @@ GAME.oData.oDefaultCharacter = {
             sPath: 'forward.png',
             nZIndex: 20
         },
+        forward_inverse: {
+            sPath: 'forward_inverse.png',
+            nZIndex: 20
+        },
         jump: {
             sPath: 'jump.png',
             nZIndex: 30

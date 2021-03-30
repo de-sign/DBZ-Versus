@@ -26,6 +26,7 @@
     },
     "devDependencies": {
         "browser-sync": "^2.26.14",
+        "canvas": "^2.7.0",
         "del": "^6.0.0",
         "fs": "0.0.1-security",
         "gulp": "^4.0.2",

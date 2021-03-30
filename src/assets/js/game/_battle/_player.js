@@ -218,11 +218,12 @@ Object.assign(
                 // Gestion GATLING
                 if( this.oUsed[oCommand.sName] ){
                     // Gestion REDA CANCEL
-                    if( this.oCurrent && this.oCurrent.sName == oCommand.sName && oCommand.aSelfCancel ){
+                    if( this.oCurrent && oCommand.aSelfCancel && ( this.oCurrent.sName == oCommand.sName || oCommand.aSelfCancel.indexOf(this.oCurrent.sName) != -1 ) ){
                         for( let nIndex = 0; nIndex < oCommand.aSelfCancel.length; nIndex++ ){
                             if( !this.oUsed[ oCommand.aSelfCancel[nIndex] ] ){
                                 oCommand.sName = oCommand.sAnimation = oCommand.aSelfCancel[nIndex];
                                 bCanUse = true;
+                                break;
                             }
                         }
                     }

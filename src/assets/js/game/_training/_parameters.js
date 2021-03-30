@@ -104,7 +104,7 @@ Object.assign(
                     this.aParam.push( {
                         nLife: 14,
                         nKi: GAME.oSettings.nLife - 14,
-                        bRegenLife: false,
+                        bRegenLife: true,
                         bRegenKi: true
                     } );
                     this.setLifeKi(nIndex);

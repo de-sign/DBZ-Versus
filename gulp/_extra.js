@@ -3,6 +3,7 @@ const gulp          = require('gulp');
 const path          = require('path');
 const fs            = require('fs');
 const pngjs         = require('png-js');
+const canvas        = require('canvas');
 const plumber       = require('gulp-plumber');
 const beautify      = require('gulp-beautify');
 
@@ -92,26 +93,127 @@ module.exports = function(config){
         }
     );
 
-    const aChar = ['BJT', 'BUU', 'FRZ', 'GHS', 'GHT', 'GKU', 'SRU'],
+    const aChar = ['BJT', 'BUU', 'FRZ', 'GHA', 'GHC', 'GKU', 'SRU'],
+        aColor = [ ['BSJ', 'SSJ'], ['MAJ'], ['FRZ'], ['GHS'], ['GHT'], ['TRN', 'SSJ'], ['PJC'] ],
         aBox = ['oPositionBox', 'aHurtBox', 'aHitBox'],
         nSquare = 50,
+        nExpand = 1200,
+        oRatio = {
+            all: {
+                nWidth: 1,
+                nHeight: 1
+            },
+            super_third: {
+                nWidth: 2,
+                nHeight: 1
+            },
+            super_fourth: {
+                nWidth: 2,
+                nHeight: 1
+            },
+            super_fifth: {
+                nWidth: 3,
+                nHeight: 1.5,
+                nY: -0.25
+            },
+            super_sixth: {
+                nWidth: 3,
+                nHeight: 1.5,
+                nY: -0.25
+            }
+        },
         oPos = { nX: 24, nY: 45 },
         aFrames = [
             ['stand', 'blur', 'backward', 'forward', 'forward_inverse'],
             ['jump', 'fall', null, 'guard', 'reflect', 'burst'],
             ['hit_light', 'hit_heavy', 'hit_luncher', 'hit_fall', 'down', 'recovery'],
-            ['light_first', 'light_second', 'light_third', 'heavy', 'tracker', 'luncher'],
+            ['light_first', 'light_first_active', 'light_second_active', 'light_second', 'light_third', 'light_third_active'],
+            ['heavy', 'heavy_active', 'tracker', 'tracker_active', 'luncher', 'luncher_active'],
             ['ki_blast'],
             ['super_first', 'super_second', 'super_third', null, 'super_fourth'],
             null,
             ['super_fifth', null, null, 'super_sixth']
         ],
-        aFrameActive = ['light_first', 'light_second', 'light_third', 'heavy', 'tracker', 'luncher'],
+        aExpand = ['super_third', 'super_fourth', 'super_fifth', 'super_sixth'],
         oPath = {
             sFrames: 'characters/frames',
             sData: 'data/_extra'
         };
 
+    function getSize(sFrame, nX, nY){
+        const oRatioFrame = oRatio[sFrame] || oRatio.all;
+        return {
+            nSrcX: (nX + (oRatioFrame.nX || 0)) * nSquare,
+            nSrcY: (nY + (oRatioFrame.nY || 0)) * nSquare,
+            nSrcW: oRatioFrame.nWidth * nSquare,
+            nSrcH: oRatioFrame.nHeight * nSquare,
+            nDstW: oRatioFrame.nWidth * nSquare * 4,
+            nDstH: oRatioFrame.nHeight * nSquare * 4
+        };
+    }
+
+    // Creation des FRAMES à partir du FRAMESET
+    function generate(sChar){
+        
+        return function generate(done) {
+            const nIndexChar = aChar.indexOf(sChar),
+                aPromise = [];
+
+            aColor[ nIndexChar ].forEach( sColor => {
+                aPromise.push(
+                    new Promise( (fResolveColor, fRejectColor) => {
+                        const sPath = config.paths.src.images + '/' + oPath.sFrames + '/' + sChar + '/' + sColor,
+                            aPromiseColor = [];
+
+                        canvas.loadImage(sPath + '/__frameset.png').then( oImage => {
+                            aFrames.forEach( (aRow, nY) => {
+                                aRow && aRow.forEach( (sFrame, nX) => {
+                                    if( sFrame ){
+                                        aPromiseColor.push(
+                                            new Promise( (fResolveFrame, fRejectFrame) => {
+
+                                                const bExpand = aExpand.indexOf(sFrame) == -1 ? false : true,
+                                                    oSize = getSize(sFrame, nX, nY),
+                                                    sFilePath = sPath + '/' + sFrame + '.png',
+                                                    oCanvas = canvas.createCanvas(bExpand ? nExpand : oSize.nDstW, oSize.nDstH),
+                                                    oContext = oCanvas.getContext('2d');
+                                                
+                                                oContext.imageSmoothingEnabled  = false;
+                                                oContext.drawImage(oImage, oSize.nSrcX, oSize.nSrcY, oSize.nSrcW, oSize.nSrcH, 0, 0, oSize.nDstW, oSize.nDstH);
+                                                bExpand && oContext.drawImage(oImage, oSize.nSrcX + oSize.nSrcW - 2, oSize.nSrcY, 1, oSize.nSrcH, oSize.nDstW, 0, nExpand - oSize.nDstW, oSize.nDstH);
+
+                                                fs.writeFile(
+                                                    sFilePath,
+                                                    oCanvas.toBuffer('image/png'),
+                                                    oErr => {
+                                                        oErr ? fRejectFrame(oErr) : fResolveFrame(sFilePath);
+                                                    }
+                                                );
+                                            } )
+                                        );
+                                    }
+                                } );
+                            } );
+                        } );
+
+                        Promise.all(aPromiseColor)
+                            .then( () => fResolveColor() )
+                            .catch( oError => fRejectColor(oError) );
+                    } )
+                );
+            } );
+
+            Promise
+                .all(aPromise)
+                .then( () =>  done() )
+                .catch( oError => {
+                    console.log('"' + sChar + '" ' + oError.message);
+                    done();
+                } );
+        };
+    }
+
+    // Creation du JSON à partir des images BOX
     function setFrame(oTarget, oBox, oData){
         oTarget[oBox.sFrame] || ( oTarget[oBox.sFrame] = {} );
         oTarget[oBox.sFrame][oBox.sBox] || ( oTarget[oBox.sFrame][oBox.sBox] = [] );
@@ -121,30 +223,22 @@ module.exports = function(config){
                 nY: oBox.nFrameY * nSquare + oPos.nY
             },
             oBoxFrame = {
-                nX: (oBox.nX - oFramePos.nX) * 4,
-                nY: (oBox.nY - oFramePos.nY) * 4,
+                nX: (oBox.nX - oFramePos.nX) * 4 - 2,
+                nY: (oBox.nY - oFramePos.nY) * 4 - 2,
                 nWidth: oData.nWidth * 4,
                 nHeight: oData.nHeight * 4
             };
         
-        oBoxFrame.nX += oBoxFrame.nX > 0 ? 2 : -2;
-        oBoxFrame.nY += oBoxFrame.nY > 0 ? 2 : -2;
-        
         oTarget[oBox.sFrame][oBox.sBox].push(oBoxFrame);
     }
 
-    function createFrame(oFile, oData, sFrame, bSkipHitBox){
+    function createFrame(oFile, oData, sFrame){
         if( oData ){
             oFile[sFrame] = Object.assign( {}, oData);
-            if( oFile[sFrame] && oFile[sFrame].aHitBox ){
-                if( bSkipHitBox ){
-                    delete oFile[sFrame].aHitBox;
-                }
-                else if ( sFrame.indexOf('super_') == 0 ){
-                    oFile[sFrame].aHitBox.forEach( oHitBox => {
-                        delete oHitBox.nWidth;
-                    } );
-                }
+            if( oFile[sFrame] && oFile[sFrame].aHitBox && sFrame.indexOf('super_') == 0 ){
+                oFile[sFrame].aHitBox.forEach( oHitBox => {
+                    delete oHitBox.nWidth;
+                } );
             }
             for( let sBox in oFile[sFrame] ){
                 if( oFile[sFrame][sBox].length == 1 ){
@@ -163,12 +257,7 @@ module.exports = function(config){
         aFrames.forEach( aRow => {
             aRow && aRow.forEach( sFrame => {
                 if( sFrame ){
-                    if( aFrameActive.indexOf(sFrame) == -1 ){
-                        createFrame(oFile, oData[sFrame], sFrame, false);
-                    } else {
-                        createFrame(oFile, oData[sFrame], sFrame, true);
-                        createFrame(oFile, oData[sFrame], sFrame + '_active');
-                    }
+                    createFrame(oFile, oData[sFrame], sFrame);
                 }
             } );
         } );
@@ -255,9 +344,7 @@ module.exports = function(config){
                 .then(
                     () => {
                         createJSON(sChar, oFrameData).then(
-                            sFilePath => {
-                                done();
-                            },
+                            sFilePath => done(),
                             oError => {
                                 console.log('"' + sChar + '" ' + oError.message);
                                 done();
@@ -289,9 +376,9 @@ module.exports = function(config){
 
     const _extra = {};
     aChar.forEach( sChar => {
-        _extra['extra_' + sChar] = gulp.series( parse(sChar), clean(sChar) );
+        _extra['extra_' + sChar] = gulp.series( generate(sChar), parse(sChar), clean(sChar) );
     } );
-    _extra.global = gulp.series( gulp.parallel.apply(gulp, Object.values(_extra) ), clean() );
+    _extra.global = gulp.parallel.apply(gulp, Object.values(_extra) );
 
     return _extra;
 };

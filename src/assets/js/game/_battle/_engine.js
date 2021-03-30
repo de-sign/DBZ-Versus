@@ -45,6 +45,7 @@ Object.assign(
                     if( !oPlayer.oGatling.isHit() ){
                         const oOpponent = this.aPlayer[ nIndex ? 0 : 1 ];
                         if( oOpponent.nLife > 0 ){
+                            let bHit = false;
                             const aHitBox = this.getCharacterCollisionBox(oPlayer, 'aHitBox'),
                                 aHurtBox = this.getCharacterCollisionBox(oOpponent, 'aHurtBox');
                             
@@ -58,8 +59,12 @@ Object.assign(
                                                 oOpponent
                                             } );
                                             aPriority[nIndex]++;
+                                            bHit = true;
                                             break;
                                         }
+                                    }
+                                    if( bHit ){
+                                        break;
                                     }
                                 }
                             }
