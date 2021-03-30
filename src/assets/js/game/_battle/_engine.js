@@ -81,7 +81,7 @@ Object.assign(
                             oHurt.oOpponent.setHurt('guard', oHurt.oCommand.oStun.nBlock, true);
                         } else {
                             const nDamage = oHurt.oCommand.nDamage == null ? 1 : oHurt.oCommand.nDamage;
-                            oHurt.oOpponent.nKi += nDamage;
+                            oHurt.oOpponent.nKi += 2 * nDamage;
                             oHurt.oOpponent.nLife -= nDamage;
                             oHurt.oOpponent.nHitting += nDamage;
 

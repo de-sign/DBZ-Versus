@@ -127,7 +127,7 @@ module.exports = function(config){
             ['stand', 'blur', 'backward', 'forward', 'forward_inverse'],
             ['jump', 'fall', null, 'guard', 'reflect', 'burst'],
             ['hit_light', 'hit_heavy', 'hit_luncher', 'hit_fall', 'down', 'recovery'],
-            ['light_first', 'light_first_active', 'light_second_active', 'light_second', 'light_third', 'light_third_active'],
+            ['light_first', 'light_first_active', 'light_second', 'light_second_active', 'light_third', 'light_third_active'],
             ['heavy', 'heavy_active', 'tracker', 'tracker_active', 'luncher', 'luncher_active'],
             ['ki_blast'],
             ['super_first', 'super_second', 'super_third', null, 'super_fourth'],

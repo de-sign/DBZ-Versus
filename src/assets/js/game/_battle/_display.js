@@ -4,6 +4,7 @@ function BattleHUD(oPlayer){
     this.oPlayer = null;
 
     this.nLife = 0;
+    this.nHitting = 0;
     this.nKi = 0;
 
     this.init(oPlayer);
@@ -25,18 +26,22 @@ Object.assign(
             } );
         },
         update: function(){
-            if( this.nLife != this.oPlayer.nLife || this.nKi != this.oPlayer.nKi ){
+            if( this.nLife != this.oPlayer.nLife || this.nHitting != this.oPlayer.nHitting || this.nKi != this.oPlayer.nKi ){
                 this.oLayer.addTickUpdate( () => {
                     this.nLife = this.oPlayer.nLife;
+                    this.nHitting = this.oPlayer.nHitting;
                     this.nKi = this.oPlayer.nKi;
                     
                     const oLayer = GAME.oOutput.getElement('LAY__Battle_HUD_Bar_' + this.oPlayer.nPlayer);
                     for( let nIndex = 0; nIndex < oLayer.aChildElement.length; nIndex++ ){
                         const oBar = oLayer.aChildElement[nIndex];
-                        oBar.hElement.classList.remove('Battle__HUD_Bar_Life', 'Battle__HUD_Bar_Ki');
+                        oBar.hElement.classList.remove('Battle__HUD_Bar_Life', 'Battle__HUD_Bar_Lose', 'Battle__HUD_Bar_Ki');
                         if( nIndex < this.nLife ){
                             oBar.hElement.classList.add('Battle__HUD_Bar_Life');
-                        } else if( nIndex >= oLayer.aChildElement.length - this.nKi ){
+                        } else if( nIndex < this.nLife + this.nHitting ){
+                            oBar.hElement.classList.add('Battle__HUD_Bar_Lose');
+                        }
+                        if( nIndex >= oLayer.aChildElement.length - this.nKi ){
                             oBar.hElement.classList.add('Battle__HUD_Bar_Ki');
                         }
                     }

@@ -309,7 +309,7 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 32
             }
         },
-        light_second_active: {
+        light_second: {
             oPositionBox: {
                 nX: -30,
                 nY: -110,
@@ -333,7 +333,7 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 32
             }]
         },
-        light_second: {
+        light_second_active: {
             oPositionBox: {
                 nX: -30,
                 nY: -110,
@@ -937,7 +937,7 @@ GAME.oData.oCharacter.GKU = {
             {
                 sName: 'kamehameha',
                 sAnimation: 'super',
-                nCost: 6,
+                nCost: 12,
                 nDamage: 5,
                 oStun: {
                     nFreeze: 46,

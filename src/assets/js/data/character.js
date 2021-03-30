@@ -274,7 +274,7 @@ GAME.oData.oDefaultCharacter = {
                 sName: 'reflect',
                 sAnimation: 'reflect',
                 bGuard: true,
-                nCost: 3,
+                nCost: 4,
                 nDamage: 0,
                 oStun: {
                     nPushback: 48 * 4

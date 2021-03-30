@@ -26,7 +26,7 @@ Object.assign(
             },
 
             // Game
-            nLife: 20,
+            nLife: 30,
             oLuncher: {
                 nLength: 36,
                 nInvulnerable: 8,

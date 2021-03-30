@@ -58,12 +58,12 @@
         }
     
         &_Name {
-            font-size: 2.5em;
-            margin: 10px 10px 0;
+            font-size: 2.4em;
+            margin: 30px 10px 0;
         }
         
         &_Number {
-            font-size: 1.5em;
+            font-size: 1em;
             margin: 5px 10px 5px;
         }
 
@@ -71,19 +71,82 @@
             display: flex;
             flex-direction: row-reverse;
             text-align: center;
+            border: 2px solid Black;
+            margin: 5px 0;
         
             & > * {
-                border: 1px solid Black;
-                width: 14px;
-                height: 30px;
-                margin: 5px 1px;
+                width: 12px;
+                height: 20px;
+                position: relative;
+
+                &::before {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    bottom: 0;
+                    border-right: 2px solid Black;
+                    border-bottom: 2px solid Black;
+                    height: 4px;
+                    right: -2px;
+                    width: 2px;
+
+                    .Battle__HUD:last-child & {
+                        text-align: right;
+                        border-right: none;
+                        right: auto;
+                        border-left: 2px solid Black;
+                        left: -2px;
+                    }
+                }
             
                 &.Battle__HUD_Bar_Life {
                     background-color: #00F040;
                 }
+            
+                &.Battle__HUD_Bar_Lose {
+                    background-color: Orange;
+                }
                 
                 &.Battle__HUD_Bar_Ki {
-                    background-color: #6699FF;
+
+                    &::after {
+                        content: '';
+                        background-color: #6699FF;
+                        display: block;
+                        position: absolute;
+                        bottom: -18px;
+                        right: 0;
+                        left: -2px;
+                        border-top: 2px solid Black;
+                        border-bottom: 2px solid Black;
+                        height: 10px;
+                    }
+
+                    &:nth-child(2n)::after {
+                        border-left: 2px solid Black;
+                    }
+
+                    &:nth-child(2n+1)::after {
+                        border-right: 2px solid Black;
+                    }
+                }
+
+                .Battle__HUD:last-child &.Battle__HUD_Bar_Ki {
+
+                    &::after {
+                        left: 0;
+                        right: -2px;
+                    }
+
+                    &:nth-child(2n)::after {
+                        border-right: 2px solid Black;
+                        border-left: none;
+                    }
+                    
+                    &:nth-child(2n+1)::after {
+                        border-right: none;
+                        border-left: 2px solid Black;
+                    }
                 }
             }
         }
@@ -111,7 +174,7 @@
 
     &_Text {
         text-transform: capitalize;
-        font-size: 7em;
+        font-size: 4.8em;
     }
 }
 
@@ -122,7 +185,7 @@
 
     &_Text {
         flex: 1 1 auto;
-        font-size: 2.5em;
+        font-size: 2.4em;
         opacity: 0;
         transition: opacity 2s ease;
         padding: 4px;
