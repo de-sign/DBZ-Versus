@@ -760,9 +760,6 @@ GAME.oData.oCharacter.BJT = {
                 sFrame: 'blur',
                 oMove: {
                     nX: 6
-                },
-                oStatus: {
-                    bCancel: false
                 }
             },
             {
@@ -770,9 +767,6 @@ GAME.oData.oCharacter.BJT = {
                 sFrame: 'light_first',
                 oMove: {
                     nX: 6
-                },
-                oStatus: {
-                    bCancel: false
                 }
             },
             {
@@ -801,17 +795,11 @@ GAME.oData.oCharacter.BJT = {
         light_second: [
             {
                 nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: false
-                }
+                sFrame: 'blur'
             },
             {
                 nFrame: 2,
-                sFrame: 'light_second',
-                oStatus: {
-                    bCancel: false
-                }
+                sFrame: 'light_second'
             },
             {
                 nFrame: 4,
@@ -839,17 +827,11 @@ GAME.oData.oCharacter.BJT = {
         light_third: [
             {
                 nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: false
-                }
+                sFrame: 'blur'
             },
             {
                 nFrame: 2,
-                sFrame: 'light_third',
-                oStatus: {
-                    bCancel: false
-                }
+                sFrame: 'light_third'
             },
             {
                 nFrame: 4,
@@ -877,27 +859,18 @@ GAME.oData.oCharacter.BJT = {
         heavy: [
             {
                 nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: false
-                }
+                sFrame: 'blur'
             },
             {
                 nFrame: 4,
                 sFrame: 'forward_inverse',
                 oMove: {
                     nX: -6
-                },
-                oStatus: {
-                    bCancel: false
                 }
             },
             {
                 nFrame: 2,
-                sFrame: 'heavy',
-                oStatus: {
-                    bCancel: false
-                }
+                sFrame: 'heavy'
             },
             {
                 nFrame: 4,
@@ -925,19 +898,13 @@ GAME.oData.oCharacter.BJT = {
         tracker: [
             {
                 nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: false
-                }
+                sFrame: 'blur'
             },
             {
                 nFrame: 4,
                 sFrame: 'forward',
                 oMove: {
                     nX: 8
-                },
-                oStatus: {
-                    bCancel: false
                 }
             },
             {
@@ -945,9 +912,6 @@ GAME.oData.oCharacter.BJT = {
                 sFrame: 'tracker',
                 oMove: {
                     nX: 8
-                },
-                oStatus: {
-                    bCancel: false
                 }
             },
             {
@@ -986,24 +950,15 @@ GAME.oData.oCharacter.BJT = {
         luncher: [
             {
                 nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: false
-                }
+                sFrame: 'blur'
             },
             {
                 nFrame: 6,
-                sFrame: 'jump',
-                oStatus: {
-                    bCancel: false
-                }
+                sFrame: 'jump'
             },
             {
                 nFrame: 2,
-                sFrame: 'luncher',
-                oStatus: {
-                    bCancel: false
-                }
+                sFrame: 'luncher'
             },
             {
                 nFrame: 8,
@@ -1093,7 +1048,8 @@ GAME.oData.oCharacter.BJT = {
                 },
                 sAnimation: 'super',
                 nCost: 12,
-                nDamage: 5,
+                nDamage: 4,
+                nGatlingLevel: 3,
                 oStun: {
                     nFreeze: 46,
                     nBlock: 36,
@@ -1115,6 +1071,7 @@ GAME.oData.oCharacter.BJT = {
             {
                 sName: 'luncher',
                 sAnimation: 'luncher',
+                nGatlingLevel: 1,
                 oStun: {
                     nBlock: 8,
                     nHit: 22,
@@ -1132,6 +1089,7 @@ GAME.oData.oCharacter.BJT = {
             {
                 sName: 'tracker',
                 sAnimation: 'tracker',
+                nGatlingLevel: 1,
                 oStun: {
                     nBlock: 8,
                     nHit: 18,
@@ -1148,6 +1106,7 @@ GAME.oData.oCharacter.BJT = {
             {
                 sName: 'heavy',
                 sAnimation: 'heavy',
+                nGatlingLevel: 1,
                 oStun: {
                     nBlock: 6,
                     nHit: 16,
@@ -1164,6 +1123,7 @@ GAME.oData.oCharacter.BJT = {
             {
                 sName: 'light',
                 sAnimation: 'light_first',
+                nGatlingLevel: 1,
                 aSelfCancel: ['light_second', 'light_third'],
                 oStun: {
                     nBlock: 8,

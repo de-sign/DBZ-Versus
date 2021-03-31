@@ -659,17 +659,11 @@ GAME.oData.oCharacter.GKU = {
         light_first: [
             {
                 nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: false
-                }
+                sFrame: 'blur'
             },
             {
                 nFrame: 2,
-                sFrame: 'light_first',
-                oStatus: {
-                    bCancel: false
-                }
+                sFrame: 'light_first'
             },
             {
                 nFrame: 4,
@@ -697,17 +691,11 @@ GAME.oData.oCharacter.GKU = {
         light_second: [
             {
                 nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: false
-                }
+                sFrame: 'blur'
             },
             {
                 nFrame: 2,
-                sFrame: 'light_second',
-                oStatus: {
-                    bCancel: false
-                }
+                sFrame: 'light_second'
             },
             {
                 nFrame: 4,
@@ -735,17 +723,11 @@ GAME.oData.oCharacter.GKU = {
         heavy: [
             {
                 nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: false
-                }
+                sFrame: 'blur'
             },
             {
                 nFrame: 4,
-                sFrame: 'heavy',
-                oStatus: {
-                    bCancel: false
-                }
+                sFrame: 'heavy'
             },
             {
                 nFrame: 4,
@@ -773,19 +755,13 @@ GAME.oData.oCharacter.GKU = {
         tracker: [
             {
                 nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: false
-                }
+                sFrame: 'blur'
             },
             {
                 nFrame: 4,
                 sFrame: 'forward',
                 oMove: {
                     nX: 8
-                },
-                oStatus: {
-                    bCancel: false
                 }
             },
             {
@@ -793,9 +769,6 @@ GAME.oData.oCharacter.GKU = {
                 sFrame: 'tracker',
                 oMove: {
                     nX: 8
-                },
-                oStatus: {
-                    bCancel: false
                 }
             },
             {
@@ -834,24 +807,15 @@ GAME.oData.oCharacter.GKU = {
         luncher: [
             {
                 nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: false
-                }
+                sFrame: 'blur'
             },
             {
                 nFrame: 6,
-                sFrame: 'jump',
-                oStatus: {
-                    bCancel: false
-                }
+                sFrame: 'jump'
             },
             {
                 nFrame: 2,
-                sFrame: 'luncher',
-                oStatus: {
-                    bCancel: false
-                }
+                sFrame: 'luncher'
             },
             {
                 nFrame: 8,
@@ -938,7 +902,8 @@ GAME.oData.oCharacter.GKU = {
                 sName: 'Chô Kamehameha',
                 sAnimation: 'super',
                 nCost: 12,
-                nDamage: 5,
+                nDamage: 4,
+                nGatlingLevel: 3,
                 oStun: {
                     nFreeze: 46,
                     nBlock: 36,
@@ -960,6 +925,7 @@ GAME.oData.oCharacter.GKU = {
             {
                 sName: 'luncher',
                 sAnimation: 'luncher',
+                nGatlingLevel: 1,
                 oStun: {
                     nBlock: 8,
                     nHit: 22,
@@ -977,6 +943,7 @@ GAME.oData.oCharacter.GKU = {
             {
                 sName: 'tracker',
                 sAnimation: 'tracker',
+                nGatlingLevel: 1,
                 oStun: {
                     nBlock: 8,
                     nHit: 18,
@@ -993,6 +960,7 @@ GAME.oData.oCharacter.GKU = {
             {
                 sName: 'heavy',
                 sAnimation: 'heavy',
+                nGatlingLevel: 1,
                 oStun: {
                     nBlock: 6,
                     nHit: 16,
@@ -1009,6 +977,7 @@ GAME.oData.oCharacter.GKU = {
             {
                 sName: 'light',
                 sAnimation: 'light_first',
+                nGatlingLevel: 1,
                 aSelfCancel: ['light_second'],
                 oStun: {
                     nBlock: 8,

@@ -33,6 +33,7 @@ __Select__
 
 __Battle__
 * Projectiles
+* Pushback sur plusieurs FRAMEs
 * Méchaniques de jeu
     * Burst ?
     * Guard Cancel ?
@@ -40,6 +41,7 @@ __Battle__
 
 __Training__
 * Paramétrage en Cookies
+* Utilisation de Q ou D dans le menu
 * Terminer Menu
     * Dummy ?
         * Guard
@@ -49,25 +51,19 @@ __Training__
 __General__
 * Optimisation du Code
     * Classe CHARACTER avec pour enfant PLAYER et DUMMY ( et AI ? )
-* Animations
+* Nouveaux CHARACTER et COLOR
     * BUU
     * FRZ
     * GHA
     * GHC
-    * SRU
-* Couleurs supplémentaires
-    * BUU
-    * FRZ
-    * GHA
-    * GHC
-    * SRU
-* Faire un script pour paramétrage via fichier EXCEL / CSV ?
+* Faire un script pour paramétrage via fichier EXCEL ( ou CSV ? )
 * Paramétrages
     * HurtBox
     * HitBox
     * StartUp
     * Active
     * Recovery
+    * Cancel
     * Pushback
     * HitStun
     * BlockStun

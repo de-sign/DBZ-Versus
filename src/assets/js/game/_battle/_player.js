@@ -154,17 +154,22 @@ Object.assign(
             this.oCommandData = oCommandData;
         },
         update: function(nKi, oCanAction){
-            let bFind = false;
+            let bFind = false,
+                bUse = false;
             const aCommand = this.getEnterCommands(oCanAction.sCommand);
 
             for( let nIndex = 0; nIndex < aCommand.length; nIndex++ ){
                 const oCommand = aCommand[nIndex];
                 if( oCommand.bGuard ? oCanAction.bGuard : !oCanAction.bGuard ){
                     if( this.canUseCommand(nKi, oCommand) ){
-                        oCanAction.bStack ?
-                            this.oNext = oCommand :
+                        if( oCanAction.bStack ){
+                            this.oNext = oCommand;
+                            bFind = true;
+                        } else {
                             this.use(oCommand);
-                        bFind = true;
+                            bFind = true;
+                            bUse = true;
+                        }
                         break;
                     }
                 }
@@ -173,10 +178,10 @@ Object.assign(
             // Gestion Gatling Buffer
             if( !bFind && this.oNext && !oCanAction.bStack ){
                 this.use(this.oNext);
-                bFind = true;
+                bUse = true;
             }
 
-            return bFind ? this.oCurrent : null;
+            return bUse ? this.oCurrent : null;
 
         },
         destroy: function(){
@@ -227,7 +232,9 @@ Object.assign(
                             }
                         }
                     }
-                } else {
+                }
+                // Gestion LEVEL
+                else if( !this.oCurrent || this.oCurrent.nGatlingLevel <= oCommand.nGatlingLevel ) {
                     bCanUse = true;
                 }
             }
@@ -315,6 +322,7 @@ Object.assign(
                     // Gestion MANIP
                     const oCommand = this.oGatling.update(this.nKi, oCanAction);
                     if( oCommand ){
+                        oCommand.nCost && console.log(oCanAction, oCommand);
                         oCommand.nCost && (this.nKi -= oCommand.nCost);
                         this.setAnimation(oCommand.sAnimation);
                     }

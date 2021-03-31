@@ -94,13 +94,17 @@ module.exports = function(config){
     );
 
     const aChar = ['BJT', 'BUU', 'FRZ', 'GHA', 'GHC', 'GKU', 'SRU'],
-        aColor = [ ['BSJ', 'SSJ'], ['MAJ'], ['FRZ'], ['GHS'], ['GHT'], ['TRN', 'SSJ'], ['PJC'] ],
+        aColor = [ ['BSJ', 'SSJ'], ['MAJ'], ['FRZ'], ['GHS'], ['GHT'], ['TRN', 'SSJ'], ['SRU', 'PFC'] ],
         aBox = ['oPositionBox', 'aHurtBox', 'aHitBox'],
         nSquare = 50,
         nExpand = 1200,
         oRatio = {
             all: {
                 nWidth: 1,
+                nHeight: 1
+            },
+            ki_beam: {
+                nWidth: 2,
                 nHeight: 1
             },
             super_third: {
@@ -129,12 +133,12 @@ module.exports = function(config){
             ['hit_light', 'hit_heavy', 'hit_luncher', 'hit_fall', 'down', 'recovery'],
             ['light_first', 'light_first_active', 'light_second', 'light_second_active', 'light_third', 'light_third_active'],
             ['heavy', 'heavy_active', 'tracker', 'tracker_active', 'luncher', 'luncher_active'],
-            ['ki_blast'],
+            ['ki_blast', 'ki_beam'],
             ['super_first', 'super_second', 'super_third', null, 'super_fourth'],
             null,
             ['super_fifth', null, null, 'super_sixth']
         ],
-        aExpand = ['super_third', 'super_fourth', 'super_fifth', 'super_sixth'],
+        aExpand = ['ki_beam', 'super_third', 'super_fourth', 'super_fifth', 'super_sixth'],
         oPath = {
             sFrames: 'characters/frames',
             sData: 'data/_extra'

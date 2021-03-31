@@ -123,6 +123,13 @@ GAME.oData.oDefaultCharacter = {
             sPath: 'ki_blast.png',
             nZIndex: 30
         },
+        ki_beam: {
+            sPath: 'ki_beam.png',
+            nZIndex: 30,
+            aHitBox: {
+                nWidth: 1024
+            }
+        },
         // Super
         super_first: {
             sPath: 'super_first.png',

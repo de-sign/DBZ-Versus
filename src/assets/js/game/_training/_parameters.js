@@ -79,7 +79,7 @@ Object.assign(
                         const oParam = this.oEngine.aParam[nIndex];
                         for( let sType in oLayer){
                             if( sType.indexOf('bRegen') == -1 ){
-                                oLayer[sType].aChildElement[0].setText( oParam[sType] );
+                                oLayer[sType].aChildElement[0].setText( oParam[sType] / 2 );
                             } else {
                                 oLayer[sType].aChildElement[0].setText( oParam[sType] ? 'Yes' : 'No' );
                             }
@@ -143,9 +143,13 @@ Object.assign(
             },
 
             changeStat: function(nIndex, sStat){
-                const oParam = this.aParam[nIndex];
+                const oParam = this.aParam[nIndex],
+                    oMinStat = {
+                        nLife: 1,
+                        nKi: 0
+                    };
                 sStat = 'n' + sStat;
-                oParam[sStat] = oParam[sStat] == 1 ? GAME.oSettings[sStat] : oParam[sStat] - 1;
+                oParam[sStat] = oParam[sStat] == oMinStat[sStat] ? GAME.oSettings[sStat] : oParam[sStat] - 1;
             },
             setStat: function(nIndex, sStat){
                 const oParam = this.aParam[nIndex];

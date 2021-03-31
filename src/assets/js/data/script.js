@@ -41,7 +41,7 @@ Object.assign(
                 }
             },
             nFreeze: 6,
-            nPushback: 5 * 4,
+            nPushback: 6 * 4,
             nRecovery: 6 * 8 * 4,
             aKeyboard: [
                 {

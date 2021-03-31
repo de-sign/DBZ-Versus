@@ -37,7 +37,8 @@ Object.assign(
                 this.moveCollapsedPlayer(aPriority);
 
                 // Gestion Hitbox
-                let bLunch = false;
+                let bLunch = false,
+                    nDividePushback = -1;
                 const aHurt = [],
                     aPushback = [];
 
@@ -59,6 +60,7 @@ Object.assign(
                                                 oOpponent
                                             } );
                                             aPriority[nIndex]++;
+                                            nDividePushback = nIndex;
                                             bHit = true;
                                             break;
                                         }
@@ -100,7 +102,7 @@ Object.assign(
                     } );
                     
                     // Gestion PushBack
-                    this.movePushback(aPriority, Math.max.apply(Math, aPushback));
+                    this.movePushback(aPriority, Math.max.apply(Math, aPushback), nDividePushback);
 
                     // Gestion hit freeze
                     this.aPlayer.forEach( oPlayer => {
@@ -181,13 +183,10 @@ Object.assign(
             return nPriority;
         },
         moveCollapsedPlayer: function(aPriority){
-            let oPlayer = this.aPlayer[0],
-                oOpponent = this.aPlayer[1];
-
-            if( this.aPlayer[0].bReverse ){
-                oPlayer = this.aPlayer[1];
-                oOpponent = this.aPlayer[0];
-            }
+            const nIndexPlayer = this.aPlayer[0].bReverse ? 1 : 0,
+                nIndexOpponent = nIndexPlayer ? 0 : 1,
+                oPlayer = this.aPlayer[nIndexPlayer],
+                oOpponent = this.aPlayer[nIndexOpponent];
 
             const oBoxPlayer = this.getCharacterCollisionBox(oPlayer, 'oPositionBox')[0],
                 oBoxOpponent = this.getCharacterCollisionBox(oOpponent, 'oPositionBox')[0];
@@ -203,7 +202,7 @@ Object.assign(
                     oOpponent.oLayer.oPosition.nX += nDiff / 2;
                 }
                 // Movement Opponent
-                else if( aPriority[ oPlayer.nPlayer - 1 ] > aPriority[ oOpponent.nPlayer - 1 ] ) {
+                else if( aPriority[nIndexPlayer] > aPriority[nIndexOpponent] ) {
                     oOpponent.oLayer.oPosition.nX += nDiff;
                 }
                 // Movement Player
@@ -212,14 +211,11 @@ Object.assign(
                 }
             }
         },
-        movePushback: function(aPriority, nPushback){
-            let oPlayer = this.aPlayer[0],
-                oOpponent = this.aPlayer[1];
-
-            if( this.aPlayer[0].bReverse ){
-                oPlayer = this.aPlayer[1];
-                oOpponent = this.aPlayer[0];
-            }
+        movePushback: function(aPriority, nPushback, nDividePushback){
+            const nIndexPlayer = this.aPlayer[0].bReverse ? 1 : 0,
+                nIndexOpponent = nIndexPlayer ? 0 : 1,
+                oPlayer = this.aPlayer[nIndexPlayer],
+                oOpponent = this.aPlayer[nIndexOpponent];
 
             // Separation Egal
             if( aPriority[0] == aPriority[1] ){
@@ -227,12 +223,12 @@ Object.assign(
                 oOpponent.oLayer.oPosition.nX += nPushback;
             }
             // Movement Opponent
-            else if( aPriority[ oPlayer.nPlayer - 1 ] > aPriority[ oOpponent.nPlayer - 1 ] ) {
-                oOpponent.oLayer.oPosition.nX += nPushback;
+            else if( aPriority[nIndexPlayer] > aPriority[nIndexOpponent] ) {
+                oOpponent.oLayer.oPosition.nX += nPushback * ( nIndexOpponent == nDividePushback ? 0.5 : 1 );
             }
             // Movement Player
             else {
-                oPlayer.oLayer.oPosition.nX -= nPushback;
+                oPlayer.oLayer.oPosition.nX -= nPushback * ( nIndexPlayer == nDividePushback ? 0.5 : 1 );
             }
         },
         getCharacterCollisionBox: function(oPlayer, sBox){
