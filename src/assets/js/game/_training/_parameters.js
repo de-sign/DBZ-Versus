@@ -29,39 +29,21 @@ Object.assign(
                     this.oKeyboard.ifPressedNow( {
                         // Gestion validation
                         A: () => {
-                            let oMenuSelected = this.oMenu.getSelected();
-                            switch( oMenuSelected.sId ){
-                                case 'LAY__Training_Menu_Parameters_Life_1':
-                                    this.oEngine.changeStat(0, 'Life');
-                                    break;
-                                case 'LAY__Training_Menu_Parameters_Life_2':
-                                    this.oEngine.changeStat(1, 'Life');
-                                    break;
-                                case 'LAY__Training_Menu_Parameters_Ki_1':
-                                    this.oEngine.changeStat(0, 'Ki');
-                                    break;
-                                case 'LAY__Training_Menu_Parameters_Ki_2':
-                                    this.oEngine.changeStat(1, 'Ki');
-                                    break;
-                                case 'LAY__Training_Menu_Parameters_RegenLife_1':
-                                    this.oEngine.changeRegen(0, 'Life');
-                                    break;
-                                case 'LAY__Training_Menu_Parameters_RegenLife_2':
-                                    this.oEngine.changeRegen(1, 'Life');
-                                    break;
-                                case 'LAY__Training_Menu_Parameters_RegenKi_1':
-                                    this.oEngine.changeRegen(0, 'Ki');
-                                    break;
-                                case 'LAY__Training_Menu_Parameters_RegenKi_2':
-                                    this.oEngine.changeRegen(1, 'Ki');
-                                    break;
-                                case 'LAY__Training_Menu_Parameters_Return':
-                                    sRedirection = 'return';
-                                    break;
+                            if( this.oMenu.getSelected().sId == 'LAY__Training_Menu_Parameters_Return' ){
+                                sRedirection = 'return';
+                            } else {
+                                this.change(1);
                             }
                         },
                         B: () => {
                             sRedirection = 'return';
+                        },
+                        // Gestion changement
+                        LEFT: () => {
+                            this.change(-1);
+                        },
+                        RIGHT: () => {
+                            this.change(1);
                         },
                         // Gestion déplacement
                         UP: () => {
@@ -74,14 +56,47 @@ Object.assign(
 
                     return sRedirection;
                 },
+                change: function(nChange){
+                    let oMenuSelected = this.oMenu.getSelected();
+                    switch( oMenuSelected.sId ){
+                        case 'LAY__Training_Menu_Parameters_Life_1':
+                            this.oEngine.changeStat(0, 'Life', nChange);
+                            break;
+                        case 'LAY__Training_Menu_Parameters_Life_2':
+                            this.oEngine.changeStat(1, 'Life', nChange);
+                            break;
+                        case 'LAY__Training_Menu_Parameters_Ki_1':
+                            this.oEngine.changeStat(0, 'Ki', nChange);
+                            break;
+                        case 'LAY__Training_Menu_Parameters_Ki_2':
+                            this.oEngine.changeStat(1, 'Ki', nChange);
+                            break;
+                        case 'LAY__Training_Menu_Parameters_RegenLife_1':
+                            this.oEngine.changeRegen(0, 'Life');
+                            break;
+                        case 'LAY__Training_Menu_Parameters_RegenLife_2':
+                            this.oEngine.changeRegen(1, 'Life');
+                            break;
+                        case 'LAY__Training_Menu_Parameters_RegenKi_1':
+                            this.oEngine.changeRegen(0, 'Ki');
+                            break;
+                        case 'LAY__Training_Menu_Parameters_RegenKi_2':
+                            this.oEngine.changeRegen(1, 'Ki');
+                            break;
+                    }
+                },
                 display: function(){
                     this.aLayer.forEach( (oLayer, nIndex) => {
                         const oParam = this.oEngine.aParam[nIndex];
                         for( let sType in oLayer){
-                            if( sType.indexOf('bRegen') == -1 ){
-                                oLayer[sType].aChildElement[0].setText( oParam[sType] / 2 );
-                            } else {
+                            if( sType.indexOf('bRegen') != -1 ){
                                 oLayer[sType].aChildElement[0].setText( oParam[sType] ? 'Yes' : 'No' );
+                            }
+                            else if( sType == 'nKi' ) {
+                                oLayer[sType].aChildElement[0].setText( oParam[sType] / 2 );
+                            }
+                            else {
+                                oLayer[sType].aChildElement[0].setText( oParam[sType]);
                             }
                         }
                     } );
@@ -142,14 +157,21 @@ Object.assign(
                 } );
             },
 
-            changeStat: function(nIndex, sStat){
+            changeStat: function(nIndex, sStat, nChange){
+                sStat = 'n' + sStat;
                 const oParam = this.aParam[nIndex],
                     oMinStat = {
                         nLife: 1,
                         nKi: 0
                     };
-                sStat = 'n' + sStat;
-                oParam[sStat] = oParam[sStat] == oMinStat[sStat] ? GAME.oSettings[sStat] : oParam[sStat] - 1;
+
+                oParam[sStat] += nChange;
+                if( oParam[sStat] > GAME.oSettings[sStat] ){
+                    oParam[sStat] = oMinStat[sStat];
+                }
+                else if( oParam[sStat] < oMinStat[sStat] ){
+                    oParam[sStat] = GAME.oSettings[sStat];
+                }
             },
             setStat: function(nIndex, sStat){
                 const oParam = this.aParam[nIndex];

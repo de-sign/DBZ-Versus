@@ -27,6 +27,10 @@ Object.assign(
                     sText: 'Enter / Change / Validate'
                 },
                 {
+                    aButton: ['LEFT', 'RIGHT'],
+                    sText: 'Change'
+                },
+                {
                     aButton: ['B'],
                     sText: 'Return'
                 },

@@ -28,27 +28,21 @@ Object.assign(
                     this.oKeyboard.ifPressedNow( {
                         // Gestion validation
                         A: () => {
-                            let oMenuSelected = this.oMenu.getSelected();
-                            switch( oMenuSelected.sId ){
-                                case 'LAY__Training_Menu_Display_Input':
-                                    this.oEngine.toogle('bHistory');
-                                    break;
-                                case 'LAY__Training_Menu_Display_Box':
-                                    this.oEngine.toogle('bBox');
-                                    break;
-                                case 'LAY__Training_Menu_Display_Animations':
-                                    this.oEngine.toogle('bAnimation');
-                                    break;
-                                case 'LAY__Training_Menu_Display_Framerate':
-                                    this.oEngine.changeFrame();
-                                    break;
-                                case 'LAY__Training_Menu_Display_Return':
-                                    sRedirection = 'return';
-                                    break;
+                            if( this.oMenu.getSelected().sId == 'LAY__Training_Menu_Display_Return' ){
+                                sRedirection = 'return';
+                            } else {
+                                this.change(1);
                             }
                         },
                         B: () => {
                             sRedirection = 'return';
+                        },
+                        // Gestion changement
+                        LEFT: () => {
+                            this.change(-1);
+                        },
+                        RIGHT: () => {
+                            this.change(1);
                         },
                         // Gestion déplacement
                         UP: () => {
@@ -60,6 +54,23 @@ Object.assign(
                     } );
 
                     return sRedirection;
+                },
+                change: function(nChange){
+                    let oMenuSelected = this.oMenu.getSelected();
+                    switch( oMenuSelected.sId ){
+                        case 'LAY__Training_Menu_Display_Input':
+                            this.oEngine.toogle('bHistory');
+                            break;
+                        case 'LAY__Training_Menu_Display_Box':
+                            this.oEngine.toogle('bBox');
+                            break;
+                        case 'LAY__Training_Menu_Display_Animations':
+                            this.oEngine.toogle('bAnimation');
+                            break;
+                        case 'LAY__Training_Menu_Display_Framerate':
+                            this.oEngine.changeFrame(nChange);
+                            break;
+                    }
                 },
                 display: function(){
                     for( let sType in this.oLayer){
@@ -299,8 +310,15 @@ Object.assign(
             },
 
             // FrameRate
-            changeFrame: function(){
-                this.nFrameRate = (this.nFrameRate + 1) % TrainingEngineDisplay.aFrameRate.length;
+            changeFrame: function(nChange){
+                    
+                this.nFrameRate += nChange;
+                if( this.nFrameRate >= TrainingEngineDisplay.aFrameRate.length ){
+                    this.nFrameRate = 0;
+                }
+                else if( this.nFrameRate < 0 ){
+                    this.nFrameRate = TrainingEngineDisplay.aFrameRate.length - 1;
+                }
             },
             setFrameRate: function(nFrameRate){
                 GAME.oTimer.setFPS(nFrameRate || this.getFrameRate());
