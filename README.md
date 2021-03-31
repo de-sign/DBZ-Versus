@@ -50,14 +50,12 @@ __General__
 * Optimisation du Code
     * Classe CHARACTER avec pour enfant PLAYER et DUMMY ( et AI ? )
 * Animations
-    * BJT
     * BUU
     * FRZ
     * GHA
     * GHC
     * SRU
 * Couleurs supplémentaires
-    * BJT
     * BUU
     * FRZ
     * GHA

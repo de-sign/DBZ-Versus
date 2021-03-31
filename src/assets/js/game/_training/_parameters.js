@@ -13,7 +13,8 @@ Object.assign(
                     TrainingMenu.prototype.init.apply(this, arguments);
                     this.oScene.aPlayer.forEach( oPlayer => {
                         this.aLayer.push( {
-                            oLifeKi: GAME.oOutput.getElement('LAY__Training_Menu_Parameters_LifeKi_' + oPlayer.nPlayer),
+                            nLife: GAME.oOutput.getElement('LAY__Training_Menu_Parameters_Life_' + oPlayer.nPlayer),
+                            nKi: GAME.oOutput.getElement('LAY__Training_Menu_Parameters_Ki_' + oPlayer.nPlayer),
                             bRegenLife: GAME.oOutput.getElement('LAY__Training_Menu_Parameters_RegenLife_' + oPlayer.nPlayer),
                             bRegenKi: GAME.oOutput.getElement('LAY__Training_Menu_Parameters_RegenKi_' + oPlayer.nPlayer)
                         } );
@@ -30,11 +31,17 @@ Object.assign(
                         A: () => {
                             let oMenuSelected = this.oMenu.getSelected();
                             switch( oMenuSelected.sId ){
-                                case 'LAY__Training_Menu_Parameters_LifeKi_1':
-                                    this.oEngine.changeLifeKi(0);
+                                case 'LAY__Training_Menu_Parameters_Life_1':
+                                    this.oEngine.changeStat(0, 'Life');
                                     break;
-                                case 'LAY__Training_Menu_Parameters_LifeKi_2':
-                                    this.oEngine.changeLifeKi(1);
+                                case 'LAY__Training_Menu_Parameters_Life_2':
+                                    this.oEngine.changeStat(1, 'Life');
+                                    break;
+                                case 'LAY__Training_Menu_Parameters_Ki_1':
+                                    this.oEngine.changeStat(0, 'Ki');
+                                    break;
+                                case 'LAY__Training_Menu_Parameters_Ki_2':
+                                    this.oEngine.changeStat(1, 'Ki');
                                     break;
                                 case 'LAY__Training_Menu_Parameters_RegenLife_1':
                                     this.oEngine.changeRegen(0, 'Life');
@@ -71,8 +78,8 @@ Object.assign(
                     this.aLayer.forEach( (oLayer, nIndex) => {
                         const oParam = this.oEngine.aParam[nIndex];
                         for( let sType in oLayer){
-                            if( sType == 'oLifeKi' ){
-                                oLayer[sType].aChildElement[0].setText( oParam.nLife + ' / ' + oParam.nKi );
+                            if( sType.indexOf('bRegen') == -1 ){
+                                oLayer[sType].aChildElement[0].setText( oParam[sType] );
                             } else {
                                 oLayer[sType].aChildElement[0].setText( oParam[sType] ? 'Yes' : 'No' );
                             }
@@ -102,12 +109,13 @@ Object.assign(
 
                 this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                     this.aParam.push( {
-                        nLife: 14,
-                        nKi: GAME.oSettings.nLife - 14,
+                        nLife: GAME.oSettings.nLife,
+                        nKi: GAME.oSettings.nKi,
                         bRegenLife: true,
                         bRegenKi: true
                     } );
-                    this.setLifeKi(nIndex);
+                    this.setStat(nIndex, 'Life');
+                    this.setStat(nIndex, 'Ki');
                 } );
             },
             update: function(){
@@ -115,14 +123,10 @@ Object.assign(
                     const oParam = this.aParam[nIndex];
                     if( oPlayer.oAnimation.sType == 'movement' && oPlayer.oAnimation.nCurrentFrame == 1 ){
                         if( oPlayer.nLife <= 0 || ( oParam.bRegenLife && oPlayer.nLife < oParam.nLife ) ){
-                            if( oPlayer.nKi > oParam.nKi ){
-                                this.setLifeKi(nIndex);
-                            } else {
-                                oPlayer.nLife = oParam.nLife;
-                            }
+                            this.setStat(nIndex, 'Life');
                         }
                         if( oParam.bRegenKi && oPlayer.nKi < oParam.nKi ){
-                            oPlayer.nKi = oParam.nKi;
+                            this.setStat(nIndex, 'Ki');
                         }
                     }
                 } );
@@ -133,19 +137,20 @@ Object.assign(
             // onOpen: function(){},
             onClose: function(){
                 this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
-                    this.setLifeKi(nIndex);
+                    this.setStat(nIndex, 'Life');
+                    this.setStat(nIndex, 'Ki');
                 } );
             },
 
-            changeLifeKi: function(nIndex){
+            changeStat: function(nIndex, sStat){
                 const oParam = this.aParam[nIndex];
-                oParam.nLife = oParam.nLife == 1 ? GAME.oSettings.nLife : oParam.nLife - 1;
-                oParam.nKi = GAME.oSettings.nLife - oParam.nLife;
+                sStat = 'n' + sStat;
+                oParam[sStat] = oParam[sStat] == 1 ? GAME.oSettings[sStat] : oParam[sStat] - 1;
             },
-            setLifeKi: function(nIndex){
+            setStat: function(nIndex, sStat){
                 const oParam = this.aParam[nIndex];
-                this.oScene.aPlayer[nIndex].nLife = oParam.nLife;
-                this.oScene.aPlayer[nIndex].nKi = oParam.nKi;
+                sStat = 'n' + sStat;
+                this.oScene.aPlayer[nIndex][sStat] = oParam[sStat];
             },
             changeRegen: function(nIndex, sRegen){
                 sRegen = 'bRegen' + sRegen;

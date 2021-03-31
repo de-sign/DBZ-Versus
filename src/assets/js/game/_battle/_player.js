@@ -401,6 +401,9 @@ Object.assign(
             }
             return aBox;
         },
+        addKi: function(nKi){
+            this.nKi = Math.min(this.nKi + nKi, GAME.oSettings.nKi);
+        },
 
         // Fonction INPUT
         canAction: function(){

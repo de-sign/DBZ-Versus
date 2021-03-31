@@ -873,7 +873,7 @@ GAME.oData.oCharacter.BJT = {
                 }
             }
         ],
-        // 6, 4, 8
+        // 8, 4, 8
         heavy: [
             {
                 nFrame: 2,
@@ -900,7 +900,7 @@ GAME.oData.oCharacter.BJT = {
                 }
             },
             {
-                nFrame: 6,
+                nFrame: 4,
                 sFrame: 'heavy_active',
                 oStatus: {
                     bCancel: true
@@ -1087,7 +1087,10 @@ GAME.oData.oCharacter.BJT = {
     oCommands: {
         aOffense: [
             {
-                sName: 'Fainaru Furasshu',
+                oName: {
+                    SSJ: 'Fainaru Furasshu',
+                    BSJ: 'Gyarikku-hō'
+                },
                 sAnimation: 'super',
                 nCost: 12,
                 nDamage: 5,

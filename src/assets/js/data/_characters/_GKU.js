@@ -935,7 +935,7 @@ GAME.oData.oCharacter.GKU = {
     oCommands: {
         aOffense: [
             {
-                sName: 'kamehameha',
+                sName: 'Chô Kamehameha',
                 sAnimation: 'super',
                 nCost: 12,
                 nDamage: 5,

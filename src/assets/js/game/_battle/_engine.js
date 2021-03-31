@@ -81,7 +81,8 @@ Object.assign(
                             oHurt.oOpponent.setHurt('guard', oHurt.oCommand.oStun.nBlock, true);
                         } else {
                             const nDamage = oHurt.oCommand.nDamage == null ? 1 : oHurt.oCommand.nDamage;
-                            oHurt.oOpponent.nKi += 2 * nDamage;
+                            oHurt.oCommand.nCost || ( oHurt.oPlayer.addKi(nDamage) );
+                            oHurt.oOpponent.addKi( 2 * nDamage );
                             oHurt.oOpponent.nLife -= nDamage;
                             oHurt.oOpponent.nHitting += nDamage;
 
@@ -111,11 +112,15 @@ Object.assign(
                 for( let nIndex = 0; nIndex < this.aPlayer.length; nIndex++ ){
                     const oPlayer = this.aPlayer[nIndex];
                     if( oPlayer.oGatling.needFreeze() ){
+                        const sName = oPlayer.oGatling.oCurrent.oName ?
+                            oPlayer.oGatling.oCurrent.oName[ oPlayer.oColor.sCod ] :
+                            oPlayer.oGatling.oCurrent.sName;
+
                         oPlayer.oGatling.bFreeze = true;
                         this.aPlayer[ oPlayer.nPlayer == 1 ? 1 : 0 ].oAnimation.setFreeze(oPlayer.oGatling.oCurrent.oStun.nFreeze);
                         GAME.oScene.oCurrent.oInfo.add( {
                             sImg: oPlayer.oPath.sFace,
-                            sText: oPlayer.oGatling.oCurrent.sName + ' !'
+                            sText: sName + ' !'
                         } );
                         break;
                     }
