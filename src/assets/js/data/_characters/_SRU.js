@@ -918,14 +918,14 @@ GAME.oData.oCharacter.SRU = {
                 }
             }
         ],
-        // 10, 4, 10
-        finger_beam: [
+        // 12, 4, 16
+        death_beam: [
             {
                 nFrame: 2,
                 sFrame: 'blur'
             },
             {
-                nFrame: 8,
+                nFrame: 10,
                 sFrame: 'ki_blast'
             },
             {
@@ -936,7 +936,7 @@ GAME.oData.oCharacter.SRU = {
                 }
             },
             {
-                nFrame: 8,
+                nFrame: 14,
                 sFrame: 'ki_blast',
                 oStatus: {
                     bCancel: true
@@ -1000,6 +1000,7 @@ GAME.oData.oCharacter.SRU = {
     oCommands: {
         aOffense: [
             {
+                sCod: 'super',
                 sName: 'Taiyōkei Hakai Kamehameha',
                 sAnimation: 'super',
                 nCost: 12,
@@ -1024,8 +1025,9 @@ GAME.oData.oCharacter.SRU = {
                 }
             },
             {
-                sName: 'finger_beam',
-                sAnimation: 'finger_beam',
+                sCod: 'death_beam',
+                sName: 'Desubīmu',
+                sAnimation: 'death_beam',
                 nCost: 4,
                 nGatlingLevel: 2,
                 oStun: {
@@ -1042,7 +1044,8 @@ GAME.oData.oCharacter.SRU = {
                 }
             },
             {
-                sName: 'luncher',
+                sCod: 'luncher',
+                sName: 'Luncher',
                 sAnimation: 'luncher',
                 nGatlingLevel: 1,
                 oStun: {
@@ -1060,7 +1063,8 @@ GAME.oData.oCharacter.SRU = {
                 }
             },
             {
-                sName: 'tracker',
+                sCod: 'tracker',
+                sName: 'Tackle',
                 sAnimation: 'tracker',
                 nGatlingLevel: 1,
                 oStun: {
@@ -1078,7 +1082,8 @@ GAME.oData.oCharacter.SRU = {
                 }
             },
             {
-                sName: 'slide',
+                sCod: 'slide',
+                sName: 'Slide',
                 sAnimation: 'slide',
                 nGatlingLevel: 1,
                 oStun: {
@@ -1095,7 +1100,8 @@ GAME.oData.oCharacter.SRU = {
                 }
             },
             {
-                sName: 'heavy',
+                sCod: 'heavy',
+                sName: 'Heavy',
                 sAnimation: 'heavy',
                 nGatlingLevel: 1,
                 oStun: {
@@ -1112,10 +1118,22 @@ GAME.oData.oCharacter.SRU = {
                 }
             },
             {
-                sName: 'light',
+                sCod: 'light',
+                sName: 'Light',
                 sAnimation: 'light_first',
                 nGatlingLevel: 1,
-                aSelfCancel: ['light_second'],
+                oSelfCancel: {
+                    light_second: {
+                        sName: '2nd',
+                        sCod: 'light_second',
+                        sAnimation: 'light_second',
+                        oStun: {
+                            nBlock: 8,
+                            nHit: 13,
+                            sHitAnimation: 'hit_light'
+                        }
+                    }
+                },
                 oStun: {
                     nBlock: 8,
                     nHit: 13,

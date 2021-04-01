@@ -899,6 +899,7 @@ GAME.oData.oCharacter.GKU = {
     oCommands: {
         aOffense: [
             {
+                sCod: 'super',
                 sName: 'Chô Kamehameha',
                 sAnimation: 'super',
                 nCost: 12,
@@ -923,7 +924,8 @@ GAME.oData.oCharacter.GKU = {
                 }
             },
             {
-                sName: 'luncher',
+                sCod: 'luncher',
+                sName: 'Luncher',
                 sAnimation: 'luncher',
                 nGatlingLevel: 1,
                 oStun: {
@@ -941,7 +943,8 @@ GAME.oData.oCharacter.GKU = {
                 }
             },
             {
-                sName: 'tracker',
+                sCod: 'tracker',
+                sName: 'Tracker',
                 sAnimation: 'tracker',
                 nGatlingLevel: 1,
                 oStun: {
@@ -958,7 +961,8 @@ GAME.oData.oCharacter.GKU = {
                 }
             },
             {
-                sName: 'heavy',
+                sCod: 'heavy',
+                sName: 'Heavy',
                 sAnimation: 'heavy',
                 nGatlingLevel: 1,
                 oStun: {
@@ -975,10 +979,22 @@ GAME.oData.oCharacter.GKU = {
                 }
             },
             {
-                sName: 'light',
+                sCod: 'light',
+                sName: 'Light',
                 sAnimation: 'light_first',
                 nGatlingLevel: 1,
-                aSelfCancel: ['light_second'],
+                oSelfCancel: {
+                    light_second: {
+                        sCod: 'light_second',
+                        sName: '2nd',
+                        sAnimation: 'light_second',
+                        oStun: {
+                            nBlock: 8,
+                            nHit: 13,
+                            sHitAnimation: 'hit_light'
+                        }
+                    }
+                },
                 oStun: {
                     nBlock: 8,
                     nHit: 13,

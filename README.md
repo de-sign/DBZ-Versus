@@ -25,13 +25,16 @@ Utilise un moteur de jeu fait maison et FOX Website :
 __BUG__
 
 __Menu__
+* Ajout du ONLINE ? 
 
 __Settings__
 * Boutons en Cookies
 
 __Select__
+* Choix du SIDE
 
 __Battle__
+* Gestion du ONLINE ? ROLLBACK et/ou INPUT DELAY ?
 * Projectiles
 * Pushback sur plusieurs FRAMEs
 * Méchaniques de jeu
@@ -41,7 +44,6 @@ __Battle__
 
 __Training__
 * Paramétrage en Cookies
-* Utilisation de Q ou D dans le menu
 * Terminer Menu
     * Dummy ?
         * Guard
@@ -49,6 +51,7 @@ __Training__
     * Command List
 
 __General__
+* Gestion des GAMEPADs
 * Optimisation du Code
     * Classe CHARACTER avec pour enfant PLAYER et DUMMY ( et AI ? )
 * Nouveaux CHARACTER et COLOR

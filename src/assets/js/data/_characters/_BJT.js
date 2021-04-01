@@ -1042,6 +1042,7 @@ GAME.oData.oCharacter.BJT = {
     oCommands: {
         aOffense: [
             {
+                sCod: 'super',
                 oName: {
                     SSJ: 'Fainaru Furasshu',
                     BSJ: 'Gyarikku-hō'
@@ -1069,7 +1070,8 @@ GAME.oData.oCharacter.BJT = {
                 }
             },
             {
-                sName: 'luncher',
+                sCod: 'luncher',
+                sName: 'Luncher',
                 sAnimation: 'luncher',
                 nGatlingLevel: 1,
                 oStun: {
@@ -1087,7 +1089,8 @@ GAME.oData.oCharacter.BJT = {
                 }
             },
             {
-                sName: 'tracker',
+                sCod: 'tracker',
+                sName: 'Tracker',
                 sAnimation: 'tracker',
                 nGatlingLevel: 1,
                 oStun: {
@@ -1104,7 +1107,8 @@ GAME.oData.oCharacter.BJT = {
                 }
             },
             {
-                sName: 'heavy',
+                sCod: 'heavy',
+                sName: 'Heavy',
                 sAnimation: 'heavy',
                 nGatlingLevel: 1,
                 oStun: {
@@ -1121,10 +1125,32 @@ GAME.oData.oCharacter.BJT = {
                 }
             },
             {
-                sName: 'light',
+                sCod: 'light',
+                sName: 'Light',
                 sAnimation: 'light_first',
                 nGatlingLevel: 1,
-                aSelfCancel: ['light_second', 'light_third'],
+                oSelfCancel: {
+                    light_second: {
+                        sName: '2nd',
+                        sCod: 'light_second',
+                        sAnimation: 'light_second',
+                        oStun: {
+                            nBlock: 8,
+                            nHit: 13,
+                            sHitAnimation: 'hit_light'
+                        }
+                    },
+                    light_third: {
+                        sName: '3rd',
+                        sCod: 'light_third',
+                        sAnimation: 'light_third',
+                        oStun: {
+                            nBlock: 8,
+                            nHit: 13,
+                            sHitAnimation: 'hit_light'
+                        }
+                    }
+                },
                 oStun: {
                     nBlock: 8,
                     nHit: 13,

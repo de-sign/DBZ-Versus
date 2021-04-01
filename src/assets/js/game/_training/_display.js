@@ -195,23 +195,23 @@ Object.assign(
                         oPlayer.oInputBuffer.aHistory.forEach( (oHistory, nHistory, aHistory) => {
                             const aBtn = Object.keys( oHistory.oButtons ),
                                 oBtn = { A: true, B: true, C: true },
-                                oSymbol = TrainingEngineDisplay.oSymbolHistory[ oPlayer.nPlayer == 1 ? 'oNormal' : 'oReverse' ];
+                                oSymbol = TrainingEngineDisplay.oSymbolHistory[ oPlayer.bReverse ? 'oReverse' : 'oNormal' ];
                                 
-                                let oTextHist = this.aHistory[nIndex].aChildElement[nHistory],
+                            let oTextHist = this.aHistory[nIndex].aChildElement[nHistory],
                                 sText = '',
                                 sFrame = '';
-                                
-                                nIndex || aBtn.unshift( aBtn.pop() );
-                                aBtn.forEach( sBtn => {
-                                    if( oSymbol[sBtn] ){
-                                        sText += '<b class="' + ( oBtn[sBtn] ? '--btn' : '--dir' ) +  '">' + oSymbol[sBtn] + '</b>';
-                                    }
-                                } );
-                                
-                                if( nHistory == aHistory.length - 1 ){
-                                    sFrame = '<i>' + ( GAME.oTimer.nFrames - oHistory.nFrame + 1 ) + '</i>';
-                                } else {
-                                    sFrame = '<i>' + ( aHistory[ nHistory + 1 ].nFrame - oHistory.nFrame ) + '</i>';
+                            
+                            nIndex || aBtn.unshift( aBtn.pop() );
+                            aBtn.forEach( sBtn => {
+                                if( oSymbol[sBtn] ){
+                                    sText += '<b class="' + ( oBtn[sBtn] ? '--btn' : '--dir' ) +  '">' + oSymbol[sBtn] + '</b>';
+                                }
+                            } );
+                            
+                            if( nHistory == aHistory.length - 1 ){
+                                sFrame = '<i>' + ( GAME.oTimer.nFrames - oHistory.nFrame + 1 ) + '</i>';
+                            } else {
+                                sFrame = '<i>' + ( aHistory[ nHistory + 1 ].nFrame - oHistory.nFrame ) + '</i>';
                             }
                             nIndex ? (sText = sFrame + sText) : (sText += sFrame);
                             

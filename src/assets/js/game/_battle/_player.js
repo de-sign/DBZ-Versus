@@ -197,7 +197,7 @@ Object.assign(
             this.oCurrent = Object.assign({ nFrameStart: GAME.oTimer.nFrames }, oCommand);
             this.bFreeze = false;
             this.oNext = null;
-            this.oUsed[oCommand.sName] = true;
+            this.oUsed[oCommand.sCod] = true;
         },
         getEnterCommands: function(sType){
             const aCommand = [],
@@ -221,12 +221,13 @@ Object.assign(
             // Gestion KI
             if( !oCommand.nCost || nKi >= oCommand.nCost ){
                 // Gestion GATLING
-                if( this.oUsed[oCommand.sName] ){
+                if( this.oUsed[oCommand.sCod] ){
                     // Gestion REDA CANCEL
-                    if( this.oCurrent && oCommand.aSelfCancel && ( this.oCurrent.sName == oCommand.sName || oCommand.aSelfCancel.indexOf(this.oCurrent.sName) != -1 ) ){
-                        for( let nIndex = 0; nIndex < oCommand.aSelfCancel.length; nIndex++ ){
-                            if( !this.oUsed[ oCommand.aSelfCancel[nIndex] ] ){
-                                oCommand.sName = oCommand.sAnimation = oCommand.aSelfCancel[nIndex];
+                    const aSelfCancel = oCommand.oSelfCancel ? Object.keys(oCommand.oSelfCancel) : [];
+                    if( this.oCurrent && aSelfCancel.length && ( this.oCurrent.sCod == oCommand.sCod || aSelfCancel.indexOf(this.oCurrent.sCod) != -1 ) ){
+                        for( let nIndex = 0; nIndex < aSelfCancel.length; nIndex++ ){
+                            if( !this.oUsed[ aSelfCancel[nIndex] ] ){
+                                Object.assign(oCommand, oCommand.oSelfCancel[ aSelfCancel[nIndex] ]);
                                 bCanUse = true;
                                 break;
                             }
@@ -322,7 +323,6 @@ Object.assign(
                     // Gestion MANIP
                     const oCommand = this.oGatling.update(this.nKi, oCanAction);
                     if( oCommand ){
-                        oCommand.nCost && console.log(oCanAction, oCommand);
                         oCommand.nCost && (this.nKi -= oCommand.nCost);
                         this.setAnimation(oCommand.sAnimation);
                     }
