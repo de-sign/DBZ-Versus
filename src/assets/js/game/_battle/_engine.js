@@ -60,7 +60,7 @@ Object.assign(
                                                 oOpponent
                                             } );
                                             aPriority[nIndex]++;
-                                            nDividePushback = nIndex;
+                                            aPushback[nIndex] = oPlayer.oGatling.oCurrent.oPushback;
                                             bHit = true;
                                             break;
                                         }
@@ -74,11 +74,10 @@ Object.assign(
                     }
                 } );
 
-                // Gestion Hurt Freeze
+                // Gestion Hurt
                 if( aHurt.length ){
                     aHurt.forEach( oHurt => {
                         oHurt.oCommand.bHit = true;
-                        aPushback.push( oHurt.oCommand.oStun.nPushback || GAME.oSettings.nPushback );
                         if( oHurt.oOpponent.oAnimation.oFrame.oStatus.bGuard ){
                             oHurt.oOpponent.setHurt('guard', oHurt.oCommand.oStun.nBlock, true);
                         } else {
@@ -102,11 +101,11 @@ Object.assign(
                     } );
                     
                     // Gestion PushBack
-                    this.movePushback(aPriority, Math.max.apply(Math, aPushback), nDividePushback);
+                    this.movePushback(aPriority, aPushback);
 
                     // Gestion hit freeze
                     this.aPlayer.forEach( oPlayer => {
-                        oPlayer.oAnimation.setFreeze(GAME.oSettings.nFreeze);
+                        oPlayer.setFreeze(GAME.oSettings.nFreeze);
                     } );
                 }
 
@@ -119,7 +118,7 @@ Object.assign(
                             oPlayer.oGatling.oCurrent.sName;
 
                         oPlayer.oGatling.bFreeze = true;
-                        this.aPlayer[ oPlayer.nPlayer == 1 ? 1 : 0 ].oAnimation.setFreeze(oPlayer.oGatling.oCurrent.oStun.nFreeze);
+                        this.aPlayer[ oPlayer.nPlayer == 1 ? 1 : 0 ].setFreeze(oPlayer.oGatling.oCurrent.oStun.nFreeze);
                         GAME.oScene.oCurrent.oInfo.add( {
                             sImg: oPlayer.oPath.sFace,
                             sText: sName + ' !'
@@ -175,7 +174,7 @@ Object.assign(
             // Trop en bas
             if( nDown < oPlayer.oLayer.oPosition.nY + ( oBoxPlayer.nY + oBoxPlayer.nHeight ) ){
                 oPlayer.oLunch = null;
-                oPlayer.setMovement('down', true);
+                oPlayer.setStance('down', true);
                 oBoxPlayer = oPlayer.getCharacterBox('oPositionBox')[0];
                 oPlayer.oLayer.oPosition.nY = nDown - ( oBoxPlayer.nY + oBoxPlayer.nHeight );
             }
@@ -211,24 +210,22 @@ Object.assign(
                 }
             }
         },
-        movePushback: function(aPriority, nPushback, nDividePushback){
-            const nIndexPlayer = this.aPlayer[0].bReverse ? 1 : 0,
-                nIndexOpponent = nIndexPlayer ? 0 : 1,
-                oPlayer = this.aPlayer[nIndexPlayer],
-                oOpponent = this.aPlayer[nIndexOpponent];
+        movePushback: function(aPriority, aPushback){
+            const oPlayer = this.aPlayer[0],
+                oOpponent = this.aPlayer[1];
 
-            // Separation Egal
-            if( aPriority[0] == aPriority[1] ){
-                oPlayer.oLayer.oPosition.nX -= nPushback;
-                oOpponent.oLayer.oPosition.nX += nPushback;
+            // Double touch NEUTRAL
+            if( aPushback[0] && aPushback[1] ){
+                oPlayer.pushBack(aPushback[1]);
+                oOpponent.pushBack(aPushback[0]);
             }
             // Movement Opponent
-            else if( aPriority[nIndexPlayer] > aPriority[nIndexOpponent] ) {
-                oOpponent.oLayer.oPosition.nX += nPushback * ( nIndexOpponent == nDividePushback ? 0.5 : 1 );
+            else if( aPriority[0] > aPriority[1] ) {
+                oOpponent.pushBack(aPushback[0] || aPushback[1], aPushback[1]);
             }
             // Movement Player
             else {
-                oPlayer.oLayer.oPosition.nX -= nPushback * ( nIndexPlayer == nDividePushback ? 0.5 : 1 );
+                oPlayer.pushBack(aPushback[0] || aPushback[1], aPushback[0]);
             }
         },
         getCharacterCollisionBox: function(oPlayer, sBox){

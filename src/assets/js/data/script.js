@@ -41,8 +41,20 @@ Object.assign(
                 }
             },
             nFreeze: 6,
-            nPushback: 6 * 4,
-            nRecovery: 6 * 8 * 4,
+            oPushback: {
+                nLength: 4,
+                nX: -24
+            },
+            oRecovery: {
+                backward: {
+                    nLength: 1,
+                    nX: -192
+                },
+                forward: {
+                    nLength: 1,
+                    nX: 192
+                }
+            },
             aKeyboard: [
                 {
                     UP: 'z',

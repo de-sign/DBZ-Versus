@@ -119,7 +119,7 @@ Object.assign(
                     // Freeze
                     if( this.oCurrent.bFreeze ){
                         this.aPlayer.forEach( oPlayer => {
-                            oPlayer.oAnimation.setFreeze(this.oCurrent.nLength);
+                            oPlayer.setFreeze(this.oCurrent.nLength);
                         } );
                     }
                     // Show

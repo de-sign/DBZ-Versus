@@ -36,7 +36,6 @@ __Select__
 __Battle__
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
 * Projectiles
-* Pushback sur plusieurs FRAMEs
 * Méchaniques de jeu
     * Burst ?
     * Guard Cancel ?

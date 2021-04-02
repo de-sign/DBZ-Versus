@@ -754,43 +754,43 @@ GAME.oData.oCharacter.BJT = {
     oAnimations: {
         // Command
         // 4, 4, 6
-        light_first: [
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oMove: {
-                    nX: 6
-                }
+        light_first: {
+            oMove: {
+                nLength: 4,
+                nX: 24
             },
-            {
-                nFrame: 2,
-                sFrame: 'light_first',
-                oMove: {
-                    nX: 6
+            aFrames: [
+                {
+                    nFrame: 2,
+                    sFrame: 'blur',
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'light_first'
+                },
+                {
+                    nFrame: 4,
+                    sFrame: 'light_first_active',
+                    oStatus: {
+                        bCancel: true
+                    }
+                },
+                {
+                    nFrame: 4,
+                    sFrame: 'light_first',
+                    oStatus: {
+                        bCancel: true
+                    }
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'blur',
+                    oStatus: {
+                        bCancel: true
+                    }
                 }
-            },
-            {
-                nFrame: 4,
-                sFrame: 'light_first_active',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 4,
-                sFrame: 'light_first',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: true
-                }
-            }
-        ],
+            ]
+        },
         // 4, 4, 6
         light_second: [
             {
@@ -856,96 +856,98 @@ GAME.oData.oCharacter.BJT = {
             }
         ],
         // 8, 4, 8
-        heavy: [
-            {
-                nFrame: 2,
-                sFrame: 'blur'
+        heavy: {
+            oMove: {
+                nDelay: 2,
+                nLength: 4,
+                nX: -24
             },
-            {
-                nFrame: 4,
-                sFrame: 'forward_inverse',
-                oMove: {
-                    nX: -6
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'heavy'
-            },
-            {
-                nFrame: 4,
-                sFrame: 'heavy_active',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 6,
-                sFrame: 'heavy',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: true
-                }
-            }
-        ],
-        // 8, 6, 10
-        tracker: [
-            {
-                nFrame: 2,
-                sFrame: 'blur'
-            },
-            {
-                nFrame: 4,
-                sFrame: 'forward',
-                oMove: {
-                    nX: 8
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'tracker',
-                oMove: {
-                    nX: 8
-                }
-            },
-            {
-                nFrame: 6,
-                sFrame: 'tracker_active',
-                oMove: {
-                    nX: 8
+            aFrames: [
+                {
+                    nFrame: 2,
+                    sFrame: 'blur'
                 },
-                oStatus: {
-                    bCancel: true
+                {
+                    nFrame: 4,
+                    sFrame: 'forward_inverse',
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'heavy'
+                },
+                {
+                    nFrame: 4,
+                    sFrame: 'heavy_active',
+                    oStatus: {
+                        bCancel: true
+                    }
+                },
+                {
+                    nFrame: 6,
+                    sFrame: 'heavy',
+                    oStatus: {
+                        bCancel: true
+                    }
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'blur',
+                    oStatus: {
+                        bCancel: true
+                    }
                 }
+            ]
+        },
+        // 8, 6, 10
+        tracker: {
+            oMove: {
+                nDelay: 2,
+                nLength: 12,
+                nX: 96
             },
-            {
-                nFrame: 2,
-                sFrame: 'tracker',
-                oStatus: {
-                    bCancel: true
+            aFrames: [
+                {
+                    nFrame: 2,
+                    sFrame: 'blur'
+                },
+                {
+                    nFrame: 4,
+                    sFrame: 'forward',
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'tracker',
+                },
+                {
+                    nFrame: 6,
+                    sFrame: 'tracker_active',
+                    oStatus: {
+                        bCancel: true
+                    }
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'tracker',
+                    oStatus: {
+                        bCancel: true
+                    }
+                },
+                {
+                    nFrame: 6,
+                    sFrame: 'forward',
+                    oStatus: {
+                        bCancel: true
+                    }
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'blur',
+                    oStatus: {
+                        bCancel: true
+                    }
                 }
-            },
-            {
-                nFrame: 6,
-                sFrame: 'forward',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: true
-                }
-            }
-        ],
+            ]
+        },
         // 10, 8, 12
         luncher: [
             {
@@ -1056,8 +1058,11 @@ GAME.oData.oCharacter.BJT = {
                     nBlock: 36,
                     nHit: 36,
                     bLunch: true,
-                    nPushback: 48 * 4,
                     sHitAnimation: 'hit_heavy'
+                },
+                oPushback: {
+                    nLength: 4,
+                    nX: -192
                 },
                 bLast: false,
                 oManipulation: {

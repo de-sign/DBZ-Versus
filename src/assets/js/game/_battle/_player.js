@@ -250,6 +250,58 @@ Object.assign(
     }
 );
 
+/* ----- BattleMovement ----- */
+function BattleMovement(nDelay, uMove, nLength){
+    GameTimer.call(this);
+    
+    this.aStep = [];
+    this.oMove = null;
+
+    this.init(nDelay, uMove, nLength);
+}
+
+Object.assign(
+    BattleMovement,
+    {
+        empty: function(){
+            return new BattleMovement(-1, []);
+        },
+
+        prototype: Object.assign(
+            Object.create(GameTimer.prototype), {
+                constructor: BattleMovement,
+                init: function(nDelay, uMove, nLength){
+                    if( Array.isArray(uMove) ){
+                        nLength = uMove.length;
+                        this.aStep = uMove;
+                    } else {
+                        if( nLength > 1 ){
+                            // Linear timing function
+                            const oMove = {
+                                nX: uMove.nX / nLength,
+                                nY: uMove.nY / nLength
+                            };
+
+                            for( let nIndex = 0; nIndex < nLength; nIndex++ ){
+                                this.aStep.push(oMove);
+                            }
+                        } else {
+                            this.aStep.push(uMove);
+                        }
+                    }
+
+                    GameTimer.prototype.init.call(this, nLength, nDelay);
+                },
+                update: function(){
+                    const bUpdate = GameTimer.prototype.update.call(this);
+                    this.oMove = bUpdate ? this.aStep[ this.nLength ? this.nTick - 1 : 0 ] : null;
+                    return bUpdate;
+                }
+            }
+        )
+    }
+);
+
 /* ----- BattlePlayer ----- */
 function BattlePlayer(nPlayer, sChar, nColor, oKeyboard){
     this.nPlayer = nPlayer;
@@ -262,6 +314,7 @@ function BattlePlayer(nPlayer, sChar, nColor, oKeyboard){
     this.oInputBuffer = null;
 
     this.oAnimation = null;
+    this.oMovement = null;
     this.oLunch = null;
     this.oGatling = null;
 
@@ -306,14 +359,14 @@ Object.assign(
                     switch( sDirection ){
                         case 'DB':
                         case 'BW':
-                            this.setMovement('recovery_backward');
+                            this.setStance('recovery_backward');
                             break;
                         case 'DF':
                         case 'FW':
-                            this.setMovement('recovery_forward');
+                            this.setStance('recovery_forward');
                             break;
                         default:
-                            this.setMovement('recovery');
+                            this.setStance('recovery');
                             break;
                     }
                 }
@@ -330,21 +383,22 @@ Object.assign(
                     else if( this.canMove() ){
 
                         if( this.oLunch ){
-                            this.oAnimation = this.oLunch;                
+                            this.oAnimation = this.oLunch.oAnimation;
+                            this.oMovement = this.oLunch.oMovement;
                         }
                         else {
                             switch( sDirection ){
                                 case 'DB':
-                                    this.setMovement('block');
+                                    this.setStance('block');
                                     break;
                                 case 'BW':
-                                    this.setMovement('backward');
+                                    this.setStance('backward');
                                     break;
                                 case 'FW':
-                                    this.setMovement('forward');
+                                    this.setStance('forward');
                                     break;
                                 default:
-                                    this.setMovement('stand');
+                                    this.setStance('stand');
                                     break;
                             }
                         }
@@ -352,17 +406,8 @@ Object.assign(
                 }
             }
 
-            this.oAnimation.update();
+            this.updateAnimation();
 
-            // Deplacement via animation
-            if( this.oAnimation.oFrame.oMove && !this.oAnimation.oFrame.bFreeze ){
-                if( this.oAnimation.oFrame.oMove.nX ){
-                    this.oLayer.oPosition.nX += this.oAnimation.oFrame.oMove.nX * (this.bReverse ? -1 : 1);
-                }
-                if( this.oAnimation.oFrame.oMove.nY ){
-                    this.oLayer.oPosition.nY += this.oAnimation.oFrame.oMove.nY;
-                }
-            }
         },
         // Gestion de OUTPUT
         updateOutput: function(){
@@ -411,6 +456,14 @@ Object.assign(
         },
         addKi: function(nKi){
             this.nKi = Math.min(this.nKi + nKi, GAME.oSettings.nKi);
+        },
+        setFreeze: function(nFreeze){
+            this.oAnimation.setFreeze(nFreeze);
+            this.oMovement.setFreeze(nFreeze);
+        },
+        unFreeze: function(){
+            this.oAnimation.unFreeze();
+            this.oMovement.unFreeze();
         },
 
         // Fonction INPUT
@@ -489,30 +542,64 @@ Object.assign(
         },
 
         // Fonction OUTPUT
+        setMovement: function(oMove){
+            this.oMovement = oMove ?
+                new BattleMovement(oMove.nDelay, oMove, oMove.nLength) :
+                BattleMovement.empty();
+        },
+        move: function(){
+            if( this.oMovement.oMove ){
+                if( this.oMovement.oMove.nX ){
+                    this.oLayer.oPosition.nX += this.oMovement.oMove.nX * (this.bReverse ? -1 : 1);
+                }
+                if( this.oMovement.oMove.nY ){
+                    this.oLayer.oPosition.nY += this.oMovement.oMove.nY;
+                }
+            }
+        },
+        pushBack: function(oPushback, bDivide){
+            if( this.oAnimation.sName != 'lunch' ){
+                oPushback = Object.assign({}, oPushback || GAME.oSettings.oPushback);
+                bDivide && (oPushback.nX /= 2);
+                this.setMovement(oPushback);
+                this.oMovement.update();
+                this.move();
+            }
+        },
         setAnimation: function(sAnimation, bUpdate){
             if( !this.oAnimation || GameAnimation.isTypeHurt(sAnimation) || this.oAnimation.sName != sAnimation ){
                 this.oAnimation = new GameAnimation(
                     sAnimation,
                     this.oCharacter.oFrames,
-                    this.oCharacter.oAnimations[sAnimation]
+                    this.oCharacter.oAnimations[sAnimation].aFrames
                 );
                 if( !this.oAnimation.isHurt() || this.oAnimation.sName == 'guard' ){
                     this.nHitting = 0;
                 }
+                this.setMovement( this.oCharacter.oAnimations[sAnimation].oMove );
+                
+                bUpdate && this.updateAnimation();
             }
-            bUpdate && this.oAnimation.update();
         },
-        setMovement: function(sMovement, bUpdate){
+        setStance: function(sMovement, bUpdate){
             this.oGatling.reset();
             this.setAnimation(sMovement, bUpdate);
         },
         setHurt: function(sHurt, nFramesLength, bUpdate){
-            this.setMovement(sHurt, bUpdate);
+            this.setStance(sHurt, bUpdate);
             if( this.oAnimation.sName == 'lunch' ){
-                this.oLunch = this.oAnimation;
+                this.oLunch = {
+                    oAnimation: this.oAnimation,
+                    oMovement: this.oMovement,
+                };
             } else {
                 this.oAnimation.setLength(nFramesLength);
             }
+        },
+        updateAnimation: function(){
+            this.oAnimation.update();
+            this.oMovement.update();
+            this.move();
         }
     }
 );

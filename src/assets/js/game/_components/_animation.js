@@ -1,16 +1,13 @@
 // Animations
 function GameAnimation(sName, oFrameData, aStep){
+    GameTimer.call(this);
+
     this.sName = null;
     this.sType = null;
     this.oFrameData = null;
 
     this.aStep = [];
-    this.nCurrentFrame = 0;
     this.oFrame = null;
-    
-    this.nLastFreeze = 0;
-    this.nFreeze = 0;
-    this.nLength = 0;
 
     this.init(sName, oFrameData, aStep);
 }
@@ -37,7 +34,7 @@ Object.assign(
             down: 'down',
             recovery: 'recovery'
         },
-        aAllType: ['action', 'movement','guard', 'hit', 'down'],
+        aAllType: ['action', 'movement','guard', 'hit', 'down', 'recovery'],
         aTypeHurt: ['guard', 'hit'],
 
         getType: function(sName){
@@ -47,76 +44,55 @@ Object.assign(
             return this.aTypeHurt.indexOf( this.getType(sName) ) != -1;
         },
 
-        prototype: {
-            constructor: GameAnimation,
-            init: function(sName, oFrameData, aStep){
-                this.sName = sName;
-                this.sType = GameAnimation.getType(sName);
-                this.oFrameData = oFrameData;
-                this.aStep = aStep;
-                this.nLength = aStep.reduce( (nResult, oFrame) => nResult + (oFrame.nFrame || 0), 0);
-            },
-            update: function(){
-                let bUpdate = true;
-                if( this.nFreeze ){
-                    this.oFrame.bFreeze = true;
-                    this.nFreeze--;
-                    bUpdate = false;
-                } else {
-                    this.nCurrentFrame++;
+        prototype: Object.assign(
+            Object.create(GameTimer.prototype), {
+                constructor: GameAnimation,
+                init: function(sName, oFrameData, aStep){
+                    GameTimer.prototype.init.call(this, aStep.reduce( (nResult, oFrame) => nResult + (oFrame.nFrame || 0), 0));
 
-                    let nFrameMax = 0,
-                        oFrame = null;
-                    for( let nIndex = 0; nIndex < this.aStep.length; nIndex++ ){
-                        oFrame = this.aStep[nIndex];
-                        if( oFrame.nFrame ){
-                            nFrameMax += oFrame.nFrame;
-                            if( this.nCurrentFrame <= nFrameMax ){
+                    this.sName = sName;
+                    this.sType = GameAnimation.getType(sName);
+                    this.oFrameData = oFrameData;
+                    this.aStep = aStep;
+                },
+                update: function(){
+                    const bUpdate = GameTimer.prototype.update.call(this);
+                    if( bUpdate ){
+                        let nFrameMax = 0,
+                            oFrame = null;
+
+                        for( let nIndex = 0; nIndex < this.aStep.length; nIndex++ ){
+                            oFrame = this.aStep[nIndex];
+                            if( oFrame.nFrame ){
+                                nFrameMax += oFrame.nFrame;
+                                if( this.nTick <= nFrameMax ){
+                                    break;
+                                }
+                            } else {
                                 break;
-                            }
-                        } else {
-                            break;
-                        }   
+                            }   
+                        }
+
+                        this.oFrame = Object.assign(
+                            { oStatus: {} },
+                            this.oFrameData[ oFrame.sFrame ],
+                            oFrame
+                        );
+                    } else {
+                        this.oFrame.bFreeze = true;
                     }
+                    return bUpdate;
+                },
 
-                    this.oFrame = Object.assign(
-                        { oStatus: {} },
-                        this.oFrameData[ oFrame.sFrame ],
-                        oFrame
-                    );
+                setLength: function(nLength){
+                    if( nLength && this.isHurt() ){
+                        this.nLength = nLength;
+                    }
+                },
+                isHurt: function(){
+                    return GameAnimation.isTypeHurt(this.sName);
                 }
-                return bUpdate;
-            },
-            destroy: function(){
-
-            },
-
-            setLength: function(nLength){
-                if( nLength && this.isHurt() ){
-                    this.nLength = nLength;
-                }
-            },
-            setFreeze: function(nFreeze){
-                if( nFreeze ){
-                    this.nFreeze += nFreeze;
-                } else {
-                    this.nLastFreeze = this.nFreeze;
-                    this.nFreeze = -1;
-                }
-            },
-            unFreeze: function(){
-                this.nFreeze = this.nLastFreeze;
-            },
-            reset: function(){
-                this.nCurrentFrame = 0;
-                this.nFreeze = 0;
-            },
-            isEnd: function(){
-                return this.nLength && this.nCurrentFrame >= this.nLength;
-            },
-            isHurt: function(){
-                return GameAnimation.isTypeHurt(this.sName);
             }
-        }
+        )
     }
 );

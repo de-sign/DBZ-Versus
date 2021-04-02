@@ -1,3 +1,4 @@
+//=include _components/_timer.js
 //=include _components/_animation.js
 //=include _components/_helper.js
 //=include _components/_menu.js

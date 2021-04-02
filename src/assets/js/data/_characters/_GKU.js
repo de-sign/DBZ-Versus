@@ -752,57 +752,55 @@ GAME.oData.oCharacter.GKU = {
             }
         ],
         // 8, 6, 10
-        tracker: [
-            {
-                nFrame: 2,
-                sFrame: 'blur'
+        tracker: {
+            oMove: {
+                nDelay: 2,
+                nLength: 12,
+                nX: 96
             },
-            {
-                nFrame: 4,
-                sFrame: 'forward',
-                oMove: {
-                    nX: 8
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'tracker',
-                oMove: {
-                    nX: 8
-                }
-            },
-            {
-                nFrame: 6,
-                sFrame: 'tracker_active',
-                oMove: {
-                    nX: 8
+            aFrames: [
+                {
+                    nFrame: 2,
+                    sFrame: 'blur'
                 },
-                oStatus: {
-                    bCancel: true
+                {
+                    nFrame: 4,
+                    sFrame: 'forward',
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'tracker'
+                },
+                {
+                    nFrame: 6,
+                    sFrame: 'tracker_active',
+                    oStatus: {
+                        bCancel: true
+                    }
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'tracker',
+                    oStatus: {
+                        bCancel: true
+                    }
+                },
+                {
+                    nFrame: 6,
+                    sFrame: 'forward',
+                    oStatus: {
+                        bCancel: true
+                    }
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'blur',
+                    oStatus: {
+                        bCancel: true
+                    }
                 }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'tracker',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 6,
-                sFrame: 'forward',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: true
-                }
-            }
-        ],
+            ]
+        },
         // 10, 8, 12
         luncher: [
             {
@@ -910,8 +908,11 @@ GAME.oData.oCharacter.GKU = {
                     nBlock: 36,
                     nHit: 36,
                     bLunch: true,
-                    nPushback: 48 * 4,
                     sHitAnimation: 'hit_heavy'
+                },
+                oPushback: {
+                    nLength: 4,
+                    nX: -192
                 },
                 bLast: false,
                 oManipulation: {

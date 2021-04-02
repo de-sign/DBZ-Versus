@@ -91,7 +91,7 @@ Object.assign(
                         this.oAnimation = new GameAnimation(
                             sAnimation,
                             this.oEngine.oPlayer.oCharacter.oFrames,
-                            this.oEngine.oPlayer.oCharacter.oAnimations[sAnimation]
+                            this.oEngine.oPlayer.oCharacter.oAnimations[sAnimation].aFrames
                         );
                     }
                 }

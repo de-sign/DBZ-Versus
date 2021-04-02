@@ -177,42 +177,40 @@ GAME.oData.oDefaultCharacter = {
                 }
             }
         ],
-        forward: [
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oMove: {
-                    nX: 6
-                }
+        forward: {
+            oMove: {
+                nX: 6
             },
-            {
-                sFrame: 'forward',
-                oMove: {
-                    nX: 6
-                }
-            }
-        ],
-        backward: [
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oMove: {
-                    nX: -6
+            aFrames: [
+                {
+                    nFrame: 2,
+                    sFrame: 'blur'
                 },
-                oStatus: {
-                    bGuard: true
+                {
+                    sFrame: 'forward'
                 }
+            ]
+        },
+        backward: {
+            oMove: {
+                nX: -6
             },
-            {
-                sFrame: 'backward',
-                oMove: {
-                    nX: -6
+            aFrames: [
+                {
+                    nFrame: 2,
+                    sFrame: 'blur',
+                    oStatus: {
+                        bGuard: true
+                    }
                 },
-                oStatus: {
-                    bGuard: true
+                {
+                    sFrame: 'backward',
+                    oStatus: {
+                        bGuard: true
+                    }
                 }
-            }
-        ],
+            ]
+        },
         // Hurt
         guard: [
             {
@@ -283,8 +281,9 @@ GAME.oData.oDefaultCharacter = {
                 bGuard: true,
                 nCost: 4,
                 nDamage: 0,
-                oStun: {
-                    nPushback: 48 * 4
+                oPushback: {
+                    nLength: 4,
+                    nX: -192
                 },
                 bLast: true,
                 oManipulation: {

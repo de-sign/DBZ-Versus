@@ -177,7 +177,7 @@ Object.assign(
                 else {
                     oMenu = this.oModule.oPrincipal.oMenu;
                     this.oScene.aPlayer.forEach( oPlayer => {
-                        oPlayer.oAnimation.setFreeze();
+                        oPlayer.setFreeze();
                     } );
                     this.oScene.oContext.addTickUpdate( () => {
                         this.oScene.oContext.hElement.classList.add('--menu');
@@ -201,7 +201,7 @@ Object.assign(
                     oCurrent: null
                 };
                 this.oScene.aPlayer.forEach( oPlayer => {
-                    oPlayer.oAnimation.unFreeze();
+                    oPlayer.unFreeze();
                 } );
                 this.oScene.oContext.addTickUpdate( () => {
                     oCurrent.hide();

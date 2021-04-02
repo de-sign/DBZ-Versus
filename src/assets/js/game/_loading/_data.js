@@ -62,6 +62,13 @@ Object.assign(
 
         createAnimations: function(oChar){
             oChar.oAnimations = Object.assign({}, this.oData.oAnimations, oChar.oAnimations);
+            for( let sAnim in oChar.oAnimations ){
+                if( Array.isArray(oChar.oAnimations[sAnim]) ){
+                    oChar.oAnimations[sAnim] = {
+                        aFrames: oChar.oAnimations[sAnim]
+                    };
+                }
+            }
         },
 
         createLunch: function(oChar){
@@ -69,45 +76,55 @@ Object.assign(
                 oLastFrame = null;
 
             const aAnim = [],
+                aMove = [],
                 nDemiLength = (GAME.oSettings.oLuncher.nLength - 1) / 2,
                 nX = GAME.oSettings.oLuncher.oMove.nX / GAME.oSettings.oLuncher.nLength;
 
             // Ajout de 10 FRAMES supplémentaire pour gérer le DOWN
             for( let nIndex = 1; nIndex <= GAME.oSettings.oLuncher.nLength + 10; nIndex++ ){
-                let nParabolX = (nIndex - 1 - nDemiLength) / nDemiLength,
+                const nParabolX = (nIndex - 1 - nDemiLength) / nDemiLength,
                     nParabolY = -1 * (nParabolX * nParabolX - 1),
                     nTargetY = Math.round(nParabolY * GAME.oSettings.oLuncher.oMove.nY),
                     nY = nTargetY - nLastY,
-                    sFrame = nIndex <= GAME.oSettings.oLuncher.nLength / 2 ? 'hit_luncher' : 'hit_fall';
+                    sFrame = nIndex <= GAME.oSettings.oLuncher.nLength / 2 ? 'hit_luncher' : 'hit_fall',
+                    bInvulnerable = GAME.oSettings.oLuncher.nInvulnerable >= nIndex;
 
-                if( oLastFrame && oLastFrame.oMove.nY == nY && oLastFrame.sFrame == sFrame ){
+                if(
+                    oLastFrame
+                    && oLastFrame.sFrame == sFrame
+                    && (bInvulnerable ? !oLastFrame.aHurtBox : oLastFrame.aHurtBox)
+                ){
                     oLastFrame.nFrame++;
                 } else {
                     aAnim.push( oLastFrame = {
                         nFrame: 1,
-                        sFrame,
-                        oMove: { nX, nY }
+                        sFrame
                     } );
-                    if( GAME.oSettings.oLuncher.nInvulnerable >= nIndex){
+                    if( bInvulnerable ){
                         oLastFrame.aHurtBox = null;
                     }
                 }
+                aMove.push( { nX, nY } );
                 nLastY = nTargetY;
             }
-            oChar.oAnimations.lunch = aAnim;
+
+            oChar.oAnimations.lunch = {
+                oMove: aMove,
+                aFrames: aAnim
+            };
         },
 
         createRecovery: function(oChar){
-            const aRecovery = oChar.oAnimations.recovery;
+            const aRecovery = oChar.oAnimations.recovery.aFrames;
             ['forward', 'backward'].forEach( sType => {
                 const aAnim = [];
                 aRecovery.forEach( oFrame => {
                     aAnim.push( Object.assign({}, oFrame) );
                 } );
-                aAnim[0].oMove = {
-                    nX: GAME.oSettings.nRecovery * ( sType == 'forward' ? 1 : -1 )
+                oChar.oAnimations['recovery_' + sType] = {
+                    oMove: GAME.oSettings.oRecovery[sType],
+                    aFrames: aAnim
                 };
-                oChar.oAnimations['recovery_' + sType] = aAnim;
             } );
         },
 
