@@ -34,7 +34,7 @@ __Select__
 * Choix du SIDE
 
 __Battle__
-* Gestion du ONLINE ? ROLLBACK et/ou INPUT DELAY ?
+* Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
 * Projectiles
 * Pushback sur plusieurs FRAMEs
 * Méchaniques de jeu
@@ -45,10 +45,10 @@ __Battle__
 __Training__
 * Paramétrage en Cookies
 * Terminer Menu
+    * Restart
     * Dummy ?
         * Guard
         * Reversal
-    * Command List
 
 __General__
 * Gestion des GAMEPADs

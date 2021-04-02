@@ -50,6 +50,10 @@ Object.assign(
 				}
 				aReturn.push( oCursor.nIndexCurrent );
 			} );
+			this.oLayer.addTickUpdate( () => {
+				this.oLayer.hElement.classList.remove('Menu__Layer', 'Menu__nb_cursor_' + this.aCursor.length);
+			} );
+			this.oLayer.update();
 			return aReturn;
 		},
 

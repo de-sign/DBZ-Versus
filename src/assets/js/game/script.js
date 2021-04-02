@@ -19,6 +19,7 @@
 //=include _training/_engine.js
 //=include _training/_parameters.js
 //=include _training/_display.js
+//=include _training/_list.js
 //=include _scene/_training.js
 
 //=include _scene/_menu.js

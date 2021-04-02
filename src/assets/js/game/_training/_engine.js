@@ -33,7 +33,7 @@ Object.assign(
             },
             display: function(){
             },
-            open: function(){
+            show: function(){
                 this.oMenu.oLayer.hElement.classList.add('--show');
             },
             hide: function(){
@@ -65,6 +65,9 @@ Object.assign(
                                     break;
                                 case 'TXT__Training_Menu_Display':
                                     sRedirection = 'oDisplay';
+                                    break;
+                                case 'TXT__Training_Menu_List':
+                                    sRedirection = 'oList';
                                     break;
                                 case 'TXT__Training_Menu_Continue':
                                     sRedirection = 'close';
@@ -111,7 +114,8 @@ Object.assign(
         aModule: [
             'Principal',
             'Parameters',
-            'Display'
+            'Display',
+            'List'
         ],
 
         prototype: {
@@ -184,8 +188,8 @@ Object.assign(
                 this.oMenu.oLast = this.oMenu.oCurrent;
                 this.oMenu.oCurrent = oMenu;
                 this.oScene.oContext.addTickUpdate( () => {
-                    this.oMenu.oLast && this.oMenu.oLast.oMenu.oLayer.hElement.classList.remove('--show');
-                    this.oMenu.oCurrent.oMenu.oLayer.hElement.classList.add('--show');
+                    this.oMenu.oLast && this.oMenu.oLast.hide();
+                    this.oMenu.oCurrent.show();
                 } );
                 
                 GameHelper.set( GameHelper.aKeyboard, TrainingScene.oHelper.aMenu );
@@ -200,7 +204,7 @@ Object.assign(
                     oPlayer.oAnimation.unFreeze();
                 } );
                 this.oScene.oContext.addTickUpdate( () => {
-                    oCurrent.oMenu.oLayer.hElement.classList.remove('--show');
+                    oCurrent.hide();
                     this.oScene.oContext.hElement.classList.remove('--menu');
                 } );
                 this.trigger('onClose');

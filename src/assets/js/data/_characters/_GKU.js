@@ -979,7 +979,7 @@ GAME.oData.oCharacter.GKU = {
                 }
             },
             {
-                sCod: 'light',
+                sCod: 'light_first',
                 sName: 'Light',
                 sAnimation: 'light_first',
                 nGatlingLevel: 1,

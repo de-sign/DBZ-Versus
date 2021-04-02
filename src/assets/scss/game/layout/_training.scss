@@ -1,3 +1,23 @@
+// Input
+.Training__InputButton {
+    padding: 13px 0 0 8px;
+    color: White;
+    background-color: Black;
+    margin: 0 2px;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    line-height: 0;
+    border-radius: 50%;
+    text-align: left;
+    font-size: 10px;
+
+    &.--dir {
+        font-family: monospace;
+        font-size: 16px;
+    }
+}
+
 // Menu
 .Training__Menu {
     position: fixed;
@@ -15,8 +35,8 @@
         display: flex;
     }
 
-    .Menu__Layer {
-        display: none !important;
+    .Menu__Layer:not(.Training__Menu_List_Character) {
+        display: none;
         min-width: 300px;
         background-color: White;
         text-align: center;
@@ -24,7 +44,7 @@
         box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25);
 
         &.--show {
-            display: block !important;
+            display: block;
         }
 
         ul {
@@ -34,13 +54,16 @@
     
     .Training__Button {
         display: flex !important;
+        align-items: center;
     
-        & > *:first-child {
+        & > *:first-child,
+        & .Training__Button_Label {
             text-align: left;
             flex: 1 1 100%;
         }
         
-        & > *:last-child {
+        & > *:last-child,
+        & .Training__Button_Option {
             flex: 0 0 auto;
             color: DarkGray;
             min-width: 15px;
@@ -50,6 +73,49 @@
 
     &_Parameters {
         min-width: 400px !important; 
+    }
+}
+
+// Command List
+.Training__Menu_List {
+    overflow: hidden;
+    align-items: center;
+
+    &.--show {
+        display: flex !important;
+    }
+
+    &_Character {
+        position: relative;
+        display: none;
+        background-color: rgba(255, 255, 255, 0.75);
+
+        &.--show {
+            display: block;
+        }
+    }
+
+    &_Sprite {
+        margin-left: 25px;
+        position: relative;
+        width: 200px;
+        height: 200px;
+
+        img {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%) !important;
+            transform-origin: 100px 100px;
+        }
+    }
+    
+    &_Ki {
+        width: 60px;
+        margin: 0 25px 0 0 !important;
+    }
+
+    &_Command.--cancel {
+        color: DarkGray;
     }
 }
 
@@ -78,24 +144,6 @@
 
     span {
         padding: 5px;
-
-        b {
-            padding: 13px 0 0 8px;
-            color: White;
-            background-color: Black;
-            margin: 0 2px;
-            display: inline-block;
-            width: 25px;
-            height: 25px;
-            line-height: 0;
-            border-radius: 50%;
-            text-align: left;
-
-            &.--dir {
-                font-family: monospace;
-                font-size: 1.6em;
-            }
-        }
             
         i {
             color: DarkGray;

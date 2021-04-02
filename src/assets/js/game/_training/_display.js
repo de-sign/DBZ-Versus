@@ -204,7 +204,7 @@ Object.assign(
                             nIndex || aBtn.unshift( aBtn.pop() );
                             aBtn.forEach( sBtn => {
                                 if( oSymbol[sBtn] ){
-                                    sText += '<b class="' + ( oBtn[sBtn] ? '--btn' : '--dir' ) +  '">' + oSymbol[sBtn] + '</b>';
+                                    sText += '<b class="Training__InputButton ' + ( oBtn[sBtn] ? '--btn' : '--dir' ) +  '">' + oSymbol[sBtn] + '</b>';
                                 }
                             } );
                             

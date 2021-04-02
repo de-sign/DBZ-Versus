@@ -1064,7 +1064,7 @@ GAME.oData.oCharacter.SRU = {
             },
             {
                 sCod: 'tracker',
-                sName: 'Tackle',
+                sName: 'Shoulder dash',
                 sAnimation: 'tracker',
                 nGatlingLevel: 1,
                 oStun: {
@@ -1118,7 +1118,7 @@ GAME.oData.oCharacter.SRU = {
                 }
             },
             {
-                sCod: 'light',
+                sCod: 'light_first',
                 sName: 'Light',
                 sAnimation: 'light_first',
                 nGatlingLevel: 1,
