@@ -51,10 +51,7 @@ Object.assign(
                         oLastData,
                         {
                             sContextClass: '--training',
-                            aKeyboard: [
-                                this.oKeyboard,
-                                GAME.oInput.getController('IC_2')
-                            ]
+                            aKeyboard: oLastData.aController
                         }
                     );
 

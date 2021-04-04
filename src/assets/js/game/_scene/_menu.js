@@ -38,10 +38,10 @@ Object.assign(
                             let sMenuSelected = this.oMenu.getSelected().sId;
                             switch( sMenuSelected ){
                                 case 'TXT__Menu_Versus':
-                                    GAME.oScene.change( new SelectScene() );
+                                    GAME.oScene.change( new SideScene() );
                                     break;
                                 case 'TXT__Menu_Training':
-                                    GAME.oScene.change( new SelectScene() );
+                                    GAME.oScene.change( new SideScene() );
                                     break;
                                 case 'TXT__Menu_Setting':
                                     GAME.oScene.change( new SettingScene() );

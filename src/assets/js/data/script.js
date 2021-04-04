@@ -15,6 +15,9 @@ Object.assign(
                     sRoot: 'assets/images/stages',
                     sBackground: 'assets/images/stages/background',
                     sPreview: 'assets/images/stages/preview'
+                },
+                oController: {
+                    sRoot: 'assets/images/controllers',
                 }
             },
             nPlayer: 2,

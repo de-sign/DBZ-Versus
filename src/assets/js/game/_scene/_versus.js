@@ -24,8 +24,8 @@ Object.assign(
                             sText: 'Ready ?',
                             bFreeze: true,
                             fCallback: () => {
-                                this.aPlayer.forEach( oPlayer => {
-                                    oPlayer.oInputBuffer.init( GAME.oInput.getController('IC_' + oPlayer.nPlayer ) );
+                                this.aPlayer.forEach( (oPlayer, nIndex) => {
+                                    oPlayer.oInputBuffer.init( oLastData.aController[nIndex] );
                                 } );
                             }
                         },

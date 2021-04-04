@@ -13,6 +13,7 @@
         "scenes": [
             "loading.html",
             "menu.html",
+            "side.html",
             "select.html",
             "battle.html",
             "settings.html"

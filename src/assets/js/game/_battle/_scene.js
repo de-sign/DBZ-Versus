@@ -18,7 +18,7 @@ Object.assign(
                 constructor: BattleScene,
 				init: function( oLastData, oOptions ){
                     /*
-                        oLastData: sStageSelected, sTypeBattle, bAllPlayerActive, aCharacterSelected, aColorSelected
+                        oLastData: sStageSelected, sTypeBattle, aController, aCharacterSelected, aColorSelected
                         oOptions: aKeyboard, sContextClass
                     */
 					GAME.oOutput.useContext('CTX__Battle');

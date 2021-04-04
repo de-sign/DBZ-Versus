@@ -54,7 +54,9 @@ const ControllerManager = {
 };
 
 function KeyboardController(oBtn) {
+    this.sName = 'Keyboard #';
     this.sId = KeyboardController.add(this);
+    this.sType = 'keyboard';
     this.oButtons = {};
     this.oKeyMap = {};
     this.aEvents = [];
@@ -68,6 +70,7 @@ Object.assign(
 
         add: function(oKCtrl) {
             const id = 'IC_' + (++this.nId);
+            oKCtrl.sName += this.nId;
             this.oInstance[id] = oKCtrl;
             return id;
         },

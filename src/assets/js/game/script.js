@@ -7,6 +7,7 @@
 //=include _scene/_initialize.js
 //=include _loading/_data.js
 //=include _loading/_settings.js
+//=include _loading/_side.js
 //=include _loading/_select.js
 //=include _loading/_battle.js
 //=include _scene/_prebattle.js
@@ -24,6 +25,7 @@
 //=include _scene/_training.js
 
 //=include _scene/_menu.js
+//=include _scene/_side.js
 //=include _scene/_select.js
 //=include _scene/_settings.js
 

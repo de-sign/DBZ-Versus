@@ -10,7 +10,7 @@ Object.assign(
             Object.create(LoadingScene.prototype), {
                 constructor: PreBattleScene,
 				init: function( oLastData ){
-                    // oLastData: sStageSelected, sTypeBattle, bAllPlayerActive, aCharacterSelected, aColorSelected
+                    // oLastData: sStageSelected, sTypeBattle, aCharacterSelected, aColorSelected
 
                     LoadingScene.prototype.init.call(
                         this,

@@ -1,25 +1,25 @@
-/* Gestion Player */
-function SettingPlayer(nPlayer, oKeyboard, oPressed){
-    this.nPlayer = nPlayer;
+/* Gestion Controller */
+function SettingController(oController, oPressed, bReady){
     this.oLayer = null;
     this.oMenu = null;
     
-    this.oKeyboard = null;
+    this.oController = null;
     this.oPressed = null;
     this.oWaitingButton = null;
 
-    this.bReady = nPlayer != 1;
+    this.bReady = false;
 
-    this.init(oKeyboard, oPressed);
+    this.init(oController, oPressed, bReady);
 }
 
 Object.assign(
-    SettingPlayer.prototype, {
-        init: function(oKeyboard, oPressed) {
-            this.oLayer = GAME.oOutput.getElement('LAY__Settings_Player_' + this.nPlayer);
-            this.oMenu = new GameMenu('LAY__Settings_Player_' + this.nPlayer, this.nPlayer == 1 ? 0 : -1);
-            this.oKeyboard = oKeyboard;
+    SettingController.prototype, {
+        init: function(oController, oPressed, bReady) {
+            this.oController = oController;
             this.oPressed = oPressed;
+            this.bReady = bReady;
+            this.oLayer = GAME.oOutput.getElement('LAY__Settings_Controller_' + oController.sId);
+            this.oMenu = new GameMenu('LAY__Settings_Controller_' + oController.sId, bReady ? -1 : 0);
         },
         update: function() {
 
@@ -27,12 +27,12 @@ Object.assign(
             if( this.oWaitingButton ){
                 this.updateWaitingButton();
             } else {
-                this.oKeyboard.ifPressedNow( {
+                this.oController.ifPressedNow( {
                     // Gestion validation
                     A: () => {
                         let oMenuSelected = this.oMenu.getSelected();
                         switch( oMenuSelected.sId ){
-                            case 'TXT__Settings_Return_' + this.nPlayer:
+                            case 'TXT__Settings_Return_' + this.oController.sId:
                                 this.bReady = true;
                                 break;
                             default:
@@ -57,7 +57,8 @@ Object.assign(
                 } );
 
                 this.oMenu.update();
-                GAME.oOutput.getElement('TXT__Settings_Return_' + this.nPlayer).setText( this.bReady ? 'Waiting ...' : 'Return' );
+                GAME.oOutput.getElement('TXT__Settings_Return_' + this.oController.sId)
+                    .setText( this.bReady ? 'Ready !' : 'Return' );
             }
         },
         destroy: function() {
@@ -73,18 +74,19 @@ Object.assign(
         updateWaitingButton: function(){
             if( this.oPressed.nFrames == GAME.oTimer.nFrames ) {
                 const sNewBtn = this.oWaitingButton.hElement.querySelector('.Settings__Button_Name').innerHTML,
-                    sLastBtn = this.oKeyboard.oKeyMap[this.oPressed.sKey],
+                    sLastBtn = this.oController.oKeyMap[this.oPressed.sKey],
                     oBtns = {
                         [sNewBtn]: this.oPressed.sKey
                     };
                     
                 if( sNewBtn != sLastBtn ){
                     if( sLastBtn ){
-                        GAME.oOutput.getElement('LAY__Settings_Button_' + sLastBtn + '_' + this.nPlayer).aChildElement[0].setText( this.oKeyboard.oButtons[sNewBtn].sKey );
-                        oBtns[sLastBtn] = this.oKeyboard.oButtons[sNewBtn].sKey;
+                        GAME.oOutput.getElement('LAY__Settings_Button_' + this.oController.sId + '_' + sLastBtn)
+                            .aChildElement[0].setText( this.oController.oButtons[sNewBtn].sKey );
+                        oBtns[sLastBtn] = this.oController.oButtons[sNewBtn].sKey;
                     }
-                    this.oKeyboard.updateButtons(oBtns);
-                    GAME.oInput.updateController(this.oKeyboard);
+                    this.oController.updateButtons(oBtns);
+                    GAME.oInput.updateController(this.oController);
                 }
                     
                 this.oWaitingButton.aChildElement[0].setText( this.oPressed.sKey );
@@ -103,8 +105,7 @@ function SettingScene(){
         fFunction: null
     };
 
-    this.aPlayer = [];
-    this.aKeyboard = [];
+    this.aController = [];
 }
 
 Object.assign(
@@ -146,30 +147,28 @@ Object.assign(
                     };
                     window.addEventListener('keydown', this.oLastPress.fFunction, false);
 
-                    // Players init
-                    for( let nIndex = 0; nIndex < GAME.oSettings.nPlayer; nIndex++ ){
-                        const nPlayer = nIndex + 1,
-                            oKeyboard = GAME.oInput.getController('IC_' + nPlayer);
-                        this.aKeyboard.push( oKeyboard );
-                        this.aPlayer.push( new SettingPlayer(nPlayer, oKeyboard, this.oLastPress) );
+                    // Controller init
+                    for( let sController in ControllerManager.oController ){
+                        const oController = GAME.oInput.getController(sController);
+                        this.aController.push( new SettingController(oController, this.oLastPress, sController != 'IC_1') );
                     }
                     
-                    GameHelper.set( this.aKeyboard, SettingScene.oHelper.aMenu );
+                    GameHelper.set( Object.values(ControllerManager.oController), SettingScene.oHelper.aMenu );
 				},
 				update: function(){
                     let bAllReady = true;
-                    this.aPlayer.forEach( oPlayer => {
-                        oPlayer.update();
-                        bAllReady && ( bAllReady = oPlayer.bReady );
+                    this.aController.forEach( oController => {
+                        oController.update();
+                        bAllReady && ( bAllReady = oController.bReady );
                     } );
-                    bAllReady && GAME.oScene.change( new MenuScene() );
                     GameHelper.update();
+                    bAllReady && GAME.oScene.change( new MenuScene() );
 				},
                 destroy: function(){
-                    this.aPlayer.forEach( oPlayer => oPlayer.destroy() );
+                    this.aController.forEach( oController => oController.destroy() );
                     window.removeEventListener('keydown', this.oLastPress.fFunction, false);
-                    return GAME.oScene.oLastData;
                     GameHelper.destroy();
+                    return GAME.oScene.oLastData;
                 }
             }
         )

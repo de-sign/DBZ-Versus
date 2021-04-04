@@ -19,6 +19,7 @@ Object.assign(
                                 'stepComponent_Helper',
                     
                                 'stepContext_Settings',
+                                'stepContext_Side',
                                 'stepContext_Select',
                                 'stepContext_Battle',
                     

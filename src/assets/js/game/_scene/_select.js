@@ -7,7 +7,8 @@ function SelectPlayer(nPlayer, oKeyboard, oMenu){
     this.oKeyboard = null;
     this.oMenu = null;
     this.bReady = false;
-    this.bLeave = false;
+    this.bReturn = false;
+    this.bQuit = false;
 
     this.oCharacter = null;
     this.nColor = 0;
@@ -32,39 +33,53 @@ Object.assign(
                 // Gestion validation
                 A: () => {
                     this.bReady = this.oCharacter.bActive;
-                    this.bLeave = false;
+                    this.bReturn = false;
+                    this.bQuit = false;
                 },
                 B: () => {
                     if( this.bReady ){
                         this.bReady = false;
                     } else {
-                        this.bLeave = true;
+                        this.bReturn = true;
                     }
+                    this.bQuit = false;
                 },
                 C: () => {
                     this.changeColor(oLock);
+                    this.bReturn = false;
+                    this.bReady = false;
+                    this.bQuit = false;
+                },
+                START: () => {
+                    this.bReturn = false;
+                    this.bReady = false;
+                    this.bQuit = true;
                 },
                 // Gestion Select Character
                 LEFT: () => {
                     this.oMenu.oCharacter.prev(this.nCursor);
                     this.bReady = false;
-                    this.bLeave = false;
+                    this.bReturn = false;
+                    this.bQuit = false;
                     this.nColor = 0;
                 },
                 RIGHT: () => {
                     this.oMenu.oCharacter.next(this.nCursor);
                     this.bReady = false;
-                    this.bLeave = false;
+                    this.bReturn = false;
+                    this.bQuit = false;
                     this.nColor = 0;
                 },
                 // Gestion Select Stage
                 UP: () => {
                     this.oMenu.oStage.prev();
-                    this.bLeave = false;
+                    this.bReturn = false;
+                    this.bQuit = false;
                 },
                 DOWN: () => {
                     this.oMenu.oStage.next();
-                    this.bLeave = false;
+                    this.bReturn = false;
+                    this.bQuit = false;
                 }
             } );
 
@@ -74,18 +89,21 @@ Object.assign(
 
             this.oCharacter = this.oMenu.oCharacter.getSelected(this.nCursor).__oData;
             const sColor = this.oCharacter.aColor[this.nColor].sCod;
+            let sText = 'Player #' + this.nPlayer;
+            if( this.bReady ){
+                sText = 'Ready !';
+            } else if(!this.oKeyboard){
+                sText = 'Waiting ...';
+            } else if( !this.oCharacter.bActive ){
+                sText = 'Unavailable';
+            }  
+
             GAME.oOutput.getElement('SPT__Select_Character_' + this.nPlayer)
                 .setSource( this.oCharacter.oPath[sColor].sPreview );
             GAME.oOutput.getElement('TXT__Select_Character_' + this.nPlayer)
                 .setText( this.oCharacter.aColor[this.nColor].sName );
             GAME.oOutput.getElement('TXT__Select_Player_' + this.nPlayer)
-                .setText(
-                    this.bReady || !this.oKeyboard ?
-                        'Waiting ...' :
-                        this.oCharacter.bActive ?
-                            'Player #' + this.nPlayer :
-                            'Unavailable'
-                );
+                .setText( sText );
         },
 
         checkColor: function(oLock){
@@ -141,10 +159,12 @@ Object.assign(
 /* Select */
 function SelectScene(){
     this.sType = null;
+    this.oData = null;
     
     this.oMenu = null;
     this.aPlayer = [];
     this.aColorLock = [];
+    this.oStatus = {};
 
     this.nFrameCreated = 0;
 }
@@ -155,6 +175,7 @@ Object.assign(
             Object.create(Scene.prototype), {
                 constructor: SelectScene,
 				init: function( oLastData ){
+                    this.oData = oLastData;
 					GAME.oOutput.useContext('CTX__Select');
 
                     const aName = [ 'Versus', 'Training' ];
@@ -167,13 +188,14 @@ Object.assign(
                         oCharacter: new GameMenu('LAY__Select_Character', [0, -1]),
                         oStage: new SelectStageMenu('LAY__Select_Stage')
                     };
+                    this.oMenu.oStage.update(); // Evite le sautillement
 
                     // Players init
                     for( let nIndex = 0; nIndex < GAME.oSettings.nPlayer; nIndex++ ){
                         let nPlayer = nIndex + 1;
                         this.aPlayer.push( new SelectPlayer(
                             nPlayer,
-                            this.sType == 'Training' && nIndex ? null : GAME.oInput.getController('IC_' + nPlayer ),
+                            oLastData.aController[nIndex],
                             this.oMenu
                         ) );
                     }
@@ -193,7 +215,7 @@ Object.assign(
                         },
                         {
                             aButton: ['B'],
-                            sText: 'Return'
+                            sText: 'Cancel / Return'
                         },
                         {
                             aButton: ['C'],
@@ -202,11 +224,15 @@ Object.assign(
                         {
                             aButton: ['UP', 'DOWN'],
                             sText: 'Select stage'
+                        },
+                        {
+                            aButton: ['START'],
+                            sText: 'Quit'
                         } ]
                     );
 				},
 				update: function(){
-                    // Gestion activation P2
+                    // Gestion activation Player
                     this.checkPlayerActivation();
                     this.aPlayer.forEach( (oPlayer, nIndex) => {
                         this.aColorLock[nIndex] = oPlayer.bReady ?
@@ -221,9 +247,11 @@ Object.assign(
                     
                     if( this.oStatus.bSwitch ) {
                         this.switchKeyboard();
-                    } else if( this.oStatus.bLeave ) {
+                    } else if( this.oStatus.bQuit ) {
                         GAME.oScene.change( new MenuScene() );
-                    } else if( this.oStatus.bSubmit ) {
+                    } else if( this.oStatus.bReturn ) {
+                        GAME.oScene.change( new SideScene() );
+                    } else if( this.oStatus.bReady ) {
                         GAME.oScene.change( new PreBattleScene() );
                     }
 
@@ -246,7 +274,7 @@ Object.assign(
                     return Object.assign(GAME.oScene.oLastData, {
                         sStageSelected: this.oMenu.oStage.getSelected().__oData.sCod,
                         sTypeBattle: this.sType,
-                        bAllPlayerActive: this.allPlayerActive(),
+                        aController: this.oData.aController,
                         aCharacterSelected,
                         aColorSelected
                     } );
@@ -255,37 +283,70 @@ Object.assign(
                 updateStatus: function(){
 
                     this.oStatus = {
-                        bLeave: false,
-                        bSubmit: true,
+                        bReturn: false,
+                        bQuit: false,
+                        bReady: true,
                         bSwitch: false
                     };
 
-                    // Seulement si P2 est inactif
+                    // Seulement si un PLAYER est inactif
                     if( !this.allPlayerActive() ){
-                        // Gestion Validation P1
-                        if( this.aPlayer[0].bReady && this.aPlayer[0].oKeyboard ){
+                        const oInfoByState = this.getPlayerInformations();
+
+                        // Gestion Validation PLAYER actif
+                        if( oInfoByState.oActive.oPlayer.bReady && oInfoByState.oActive.oPlayer.oKeyboard ){
                             this.oStatus.bSwitch = true;
                         }
-                        // Gestion Retour P1
-                        else if( this.aPlayer[1].bLeave && this.aPlayer[1].oKeyboard ){
+                        // Gestion changement selection PLAYER actif
+                        else if( oInfoByState.oDisable.oPlayer.bReturn && oInfoByState.oDisable.oPlayer.oKeyboard ){
                             this.oStatus.bSwitch = true;
-                            this.aPlayer[0].bReady = false;
-                            this.aPlayer[1].bLeave = false;
+                            oInfoByState.oActive.oPlayer.bReady = false;
+                            oInfoByState.oDisable.oPlayer.bReturn = false;
+                            oInfoByState.oDisable.oPlayer.bQuit = false;
                         }
                     }
                     
                     this.aPlayer.forEach( oPlayer => {
-                        this.oStatus.bSubmit && ( this.oStatus.bSubmit = oPlayer.bReady );
-                        this.oStatus.bLeave || ( this.oStatus.bLeave = oPlayer.bLeave );
+                        this.oStatus.bReady && ( this.oStatus.bReady = oPlayer.bReady );
+                        this.oStatus.bReturn || ( this.oStatus.bReturn = oPlayer.bReturn );
+                        this.oStatus.bQuit || ( this.oStatus.bQuit = oPlayer.bQuit );
                     } );
                 },
 
+                getPlayerInformations: function(){
+                    const oPlayer = {
+                        oActive: null,
+                        oDisable: null
+                    };
+                    this.oData.aController.forEach( (oController, nIndex) => {
+                        oPlayer[ oController ? 'oActive' : 'oDisable'] = {
+                            oPlayer: this.aPlayer[nIndex],
+                            oOriginalController: oController,
+                            nIndex: nIndex
+                        };
+                    } );
+                    return oPlayer;
+                },
                 allPlayerActive: function(){
-                    return this.aPlayer[0].oKeyboard && this.aPlayer[1].oKeyboard;
+                    let bAllActive = true;
+                    this.oData.aController.forEach( oController => {
+                        !oController && ( bAllActive = false );
+                    } );
+                    return bAllActive;
                 },
                 checkPlayerActivation: function(){
-                    if( !this.allPlayerActive() && GAME.oInput.getController('IC_2').nFrameLastEvent > this.nFrameCreated ){
-                        this.aPlayer.forEach( oPlayer => oPlayer.oKeyboard = GAME.oInput.getController('IC_' + oPlayer.nPlayer ) )
+                    if( !this.allPlayerActive() ){
+                        const oPlayerByState = this.getPlayerInformations();
+                        for( let sController in ControllerManager.oController ){
+                            const oController = GAME.oInput.getController(sController);
+                            if( oPlayerByState.oActive.oOriginalController.sId != oController.sId && oController.nFrameLastEvent > this.nFrameCreated ){
+                                this.oData.aController[ this.oData.aController.indexOf(null) ] = oController;
+                                this.aPlayer.forEach( (oPlayer, nIndex) => {
+                                    oPlayer.oKeyboard = this.oData.aController[nIndex];
+                                } );
+                                break;
+                            }
+                        }
                     }
                 },
                 switchKeyboard: function(){

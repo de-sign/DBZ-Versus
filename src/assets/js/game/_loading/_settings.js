@@ -10,14 +10,14 @@ Object.assign(
         init: function(){
             this.oContext = GAME.oOutput.getElement('CTX__Settings');
             this.getPattern();
-            for( let nPlayer = 0; nPlayer < GAME.oSettings.nPlayer; nPlayer++ ){
-                this.createLayerPlayer(nPlayer + 1);
+            for( let sController in ControllerManager.oController ){
+                this.createController(sController);
             }
         },
 
         getPattern: function(){
             this.oPattern = {
-                oLayer: GAME.oOutput.getElement('LAY__Settings_Player_'),
+                oLayer: GAME.oOutput.getElement('LAY__Settings_Controller_'),
                 oButton: GAME.oOutput.getElement('LAY__Settings_Button_')
             };
 
@@ -26,27 +26,28 @@ Object.assign(
             }
         },
 
-        createLayerPlayer: function(nPlayer){
+        createController: function(sController){
             
+            const oKeyboard = GAME.oInput.getController(sController);
+
             // Clone du LAYER
             let hLayer = this.oPattern.oLayer.hElement.cloneNode(true);
-            hLayer.id += nPlayer;
+            hLayer.id += sController;
             hLayer.classList.remove(GAME.oOutput.oConfig.class.created);
             [].forEach.call(
                 hLayer.querySelectorAll('.--change'),
                 hElement => {
-                    hElement.id += nPlayer;
+                    hElement.id += sController;
                     hElement.classList.remove('--change', GAME.oOutput.oConfig.class.created);
                 }
             );
-            hLayer.querySelector('.Settings__Player_Number').innerHTML += nPlayer;
+            hLayer.querySelector('.Settings__Controller_Number').innerHTML = oKeyboard.sName;
 
             // Clone des BUTTON
-            const oKeyboard = GAME.oInput.getController('IC_' + nPlayer);
             for( let sBtn in oKeyboard.oButtons ){
                 let hButton = this.oPattern.oButton.hElement.cloneNode(true);
                 hButton.classList.remove(GAME.oOutput.oConfig.class.created);
-                hButton.id += sBtn + '_' + nPlayer;
+                hButton.id += sController + '_' + sBtn;
                 hButton.querySelector('.Settings__Button_Name').innerHTML = sBtn;
 
                 let hKey = hButton.querySelector('.Settings__Button_Key');
@@ -57,7 +58,7 @@ Object.assign(
             }
 
             // Ajout dans le context
-            this.oContext.add(new GAME.oOutput.OutputLayer(hLayer), '.Settings__Players');
+            this.oContext.add(new GAME.oOutput.OutputLayer(hLayer), '.Settings__Controllers');
             this.oContext.update();
         }
     }

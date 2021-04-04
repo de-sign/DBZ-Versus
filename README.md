@@ -30,10 +30,12 @@ __Menu__
 __Settings__
 * Boutons en Cookies
 
+__Side__
+
 __Select__
-* Choix du SIDE
 
 __Battle__
+* Séparer la barre de KI de la barre de LIFE
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
 * Projectiles
 * Méchaniques de jeu
