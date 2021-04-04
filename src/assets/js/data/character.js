@@ -281,6 +281,7 @@ GAME.oData.oDefaultCharacter = {
                 bGuard: true,
                 nCost: 4,
                 nDamage: 0,
+                oStun: {},
                 oPushback: {
                     nLength: 4,
                     nX: -192
