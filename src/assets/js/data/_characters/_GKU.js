@@ -898,7 +898,10 @@ GAME.oData.oCharacter.GKU = {
         aOffense: [
             {
                 sCod: 'super',
-                sName: 'Chô Kamehameha',
+                oName: {
+                    SSJ: 'Chô Kamehameha',
+                    TRN: 'Kaiōken Kamehameha'
+                },
                 sAnimation: 'super',
                 nCost: 12,
                 nDamage: 4,

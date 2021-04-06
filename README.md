@@ -52,7 +52,6 @@ __Training__
         * Reversal
 
 __General__
-* Gestion des GAMEPADs
 * Optimisation du Code
     * Classe CHARACTER avec pour enfant PLAYER et DUMMY ( et AI ? )
 * Nouveaux CHARACTER et COLOR

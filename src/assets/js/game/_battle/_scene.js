@@ -19,7 +19,7 @@ Object.assign(
 				init: function( oLastData, oOptions ){
                     /*
                         oLastData: sStageSelected, sTypeBattle, aController, aCharacterSelected, aColorSelected
-                        oOptions: aKeyboard, sContextClass
+                        oOptions: aController, sContextClass
                     */
 					GAME.oOutput.useContext('CTX__Battle');
 					this.oContext = GAME.oOutput.getElement('CTX__Battle');
@@ -36,7 +36,7 @@ Object.assign(
                                 nPlayer,
                                 oLastData.aCharacterSelected[nIndex],
                                 oLastData.aColorSelected[nIndex],
-                                oOptions.aKeyboard[nIndex],
+                                oOptions.aController[nIndex],
                                 false
                             );
                         this.aPlayer.push(oPlayer);

@@ -25,7 +25,9 @@ Object.assign(
                     
                                 'stepImage_Stage',
                                 'stepImage_Face',
-                                'stepImage_Character'
+                                'stepImage_Character',
+
+                                'stepInput_Gamepad'
                             ]
                         }
                     );
@@ -72,6 +74,17 @@ Object.assign(
                             this.oAssetManager.add( oChar.oPath[sColor].sPreview );
                         }
                     }
+                },
+
+                // Gamepad
+                stepInput_Gamepad: function(){
+                    window.addEventListener('gamepadconnected', oEvent => {
+                        if( !GamepadController.oIndexCreate[oEvent.gamepad.index] ){
+                            const oGamepad = GAME.oInput.create('Gamepad', GAME.oSettings.oController.oGamepad, oEvent.gamepad.index );
+                            InitializeSettings.createController(oGamepad.sId);
+                            InitializeSide.createController(oGamepad.sId);
+                        }
+                    }, false);
                 }
             }
         )

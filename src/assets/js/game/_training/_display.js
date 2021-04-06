@@ -25,7 +25,7 @@ Object.assign(
                 */
                 controls: function(){
                     let sRedirection = null;
-                    this.oKeyboard.ifPressedNow( {
+                    this.oScene.oController.ifPressedNow( {
                         // Gestion validation
                         A: () => {
                             if( this.oMenu.getSelected().sId == 'LAY__Training_Menu_Display_Return' ){

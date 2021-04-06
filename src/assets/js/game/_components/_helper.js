@@ -4,21 +4,21 @@ function GameHelper(){}
 Object.assign(
     GameHelper,
     {
-        nDelay: 180,
-        
+        nTimer: 180, 
         oLayer: null,
-        aKeyboard: null,
+        aController: null,
         aText: null,
-        nKeyboard: -1,
-        nFrame: 0,
+        nController: -1,
+        oTimer: new GameTimer(),
 
 		init: function(sLayer){
 			this.oLayer = GAME.oOutput.getElement(sLayer);
             this.oWrapper = this.oLayer.aChildElement[0];
             this.oWrapper.enableAutoPositioning();
+            this.oTimer.init( GameHelper.nTimer );
 		},
 		update: function(){
-            if( this.switchKeyboard() ){
+            if( this.switchController() ){
                 this.aText.forEach( (oText, nIndex) => {
                     this.updateText(nIndex);
                 } );
@@ -26,19 +26,27 @@ Object.assign(
             this.oLayer.update();
 		},
 		destroy: function(){
-            this.nKeyboard = -1;
+            this.nController = -1;
             this.hide();
 		},
 
-        set: function(aKeyboard, aText){
-            this.nKeyboard = -1;
-            this.aKeyboard = Array.isArray(aKeyboard) ? aKeyboard : [aKeyboard];
+        set: function(aController, aText){
+            this.nController = -1;
+            this.aController = Array.isArray(aController) ? aController : [aController];
+            this.setText(aText);
+            this.show();
+        },
+        
+        setText: function(aText){
             this.aText = aText;
-
             this.oWrapper.clean();
             this.aText.forEach( oText => this.createText(oText) );
             this.update();
-            this.show();
+        },
+        addText: function(oText){
+            this.aText.push(oText);
+            this.createText(oText);
+            this.update();
         },
         createText: function(oText){
             const oLayer = new GAME.oOutput.OutputLayer();
@@ -51,26 +59,25 @@ Object.assign(
         updateText: function(nIndex){
             const oLayer = this.oWrapper.aChildElement[nIndex],
                 oText = this.aText[nIndex],
-                oKeyboard = this.aKeyboard[ this.nKeyboard ];
+                oController = this.aController[ this.nController ];
 
             oText.aButton.forEach( (sButton, nButton) => {
                 oLayer.aChildElement[nButton].setText(
-                    oKeyboard.oButtons[sButton].sKey
+                    oController.oButtons[sButton].sKey
                 );
             } );
         },
-        switchKeyboard: function(){
+        switchController: function(){
             let bSwitch = false;
-            if( this.nKeyboard == -1 ){
-                this.nKeyboard = 0;
+            if( this.nController == -1 ){
+                this.nController = 0;
                 bSwitch = true;
             }
-            else if( this.aKeyboard.length > 1 ){
-                if(this.nFrame < this.nDelay){
-                    this.nFrame++;
-                } else {
-                    this.nFrame = 0;
-                    this.nKeyboard = this.nKeyboard == this.aKeyboard.length - 1 ? 0 : this.nKeyboard + 1;
+            else if( this.aController.length > 1 ){
+                this.oTimer.update(this);
+                if( this.oTimer.isEnd() ){
+                    this.oTimer.reset();
+                    this.nController = this.nController == this.aController.length - 1 ? 0 : this.nController + 1;
                     bSwitch = true;
                 }
             }

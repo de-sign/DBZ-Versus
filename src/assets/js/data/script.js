@@ -58,28 +58,46 @@ Object.assign(
                     nX: 192
                 }
             },
-            aKeyboard: [
-                {
-                    UP: 'z',
-                    DOWN: 's',
-                    LEFT: 'q',
-                    RIGHT: 'd',
-                    A: 'u',
-                    B: 'i',
-                    C: 'o',
-                    START: 'enter'
-                },
-                {
-                    UP: 'ArrowUp',
-                    DOWN: 'ArrowDown',
-                    LEFT: 'ArrowLeft',
-                    RIGHT: 'ArrowRight',
-                    A: '1',
-                    B: '2',
-                    C: '3',
-                    START: '0'
+            oController: {
+                aKeyboard: [
+                    {
+                        UP: 'z',
+                        DOWN: 's',
+                        LEFT: 'q',
+                        RIGHT: 'd',
+                        A: 'u',
+                        B: 'i',
+                        C: 'o',
+                        START: 'enter'
+                    },
+                    {
+                        UP: 'ArrowUp',
+                        DOWN: 'ArrowDown',
+                        LEFT: 'ArrowLeft',
+                        RIGHT: 'ArrowRight',
+                        A: '1',
+                        B: '2',
+                        C: '3',
+                        START: '0'
+                    }
+                ],
+                oGamepad: {
+                    /*
+                    UP: 'Axe-1',
+                    DOWN: 'Axe+1',
+                    LEFT: 'Axe-0',
+                    RIGHT: 'Axe+0',
+                    */
+                    UP: 'Button12',
+                    DOWN: 'Button13',
+                    LEFT: 'Button14',
+                    RIGHT: 'Button15',
+                    A: 'Button2',
+                    B: 'Button3',
+                    C: 'Button1',
+                    START: 'Button9'
                 }
-            ]
+            }
         },
 
         oData: {

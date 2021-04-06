@@ -23,49 +23,60 @@ Object.assign(
             this.changeSide('same');
         },
         update: function(aLock){
-            this.checkSide(aLock);
+            const bConnected = this.oController.sType == 'keyboard' || this.oController.oGamepad;
+            if( bConnected ){
+                this.checkSide(aLock);
 
-            this.oController.ifPressedNow( {
-                // Gestion validation
-                A: () => {
-                    if( this.nSide ){
-                        this.bReady = true;
-                    }
-                    this.bReturn = false;
-                    this.bQuit = false;
-                },
-                B: () => {
-                    if( this.nSide ){
-                        this.changeSide();
+                this.oController.ifPressedNow( {
+                    // Gestion validation
+                    A: () => {
+                        if( this.nSide ){
+                            this.bReady = true;
+                        }
+                        this.bReturn = false;
+                        this.bQuit = false;
+                    },
+                    B: () => {
+                        if( this.nSide ){
+                            this.changeSide();
+                            this.bReady = false;
+                        } else {
+                            this.bReturn = true;
+                        }
+                        this.bQuit = false;
+                    },
+                    B: () => {
                         this.bReady = false;
-                    } else {
-                        this.bReturn = true;
+                        this.bReturn = false;
+                        this.bQuit = true;
+                    },
+                    // Gestion Select Player
+                    LEFT: () => {
+                        this.changeSide('left', aLock);
+                        this.bReady = false;
+                        this.bReturn = false;
+                        this.bQuit = false;
+                    },
+                    RIGHT: () => {
+                        this.changeSide('right', aLock);
+                        this.bReady = false;
+                        this.bReturn = false;
+                        this.bQuit = false;
                     }
-                    this.bQuit = false;
-                },
-                B: () => {
-                    this.bReady = false;
-                    this.bReturn = false;
-                    this.bQuit = true;
-                },
-                // Gestion Select Player
-                LEFT: () => {
-                    this.changeSide('left', aLock);
-                    this.bReady = false;
-                    this.bReturn = false;
-                    this.bQuit = false;
-                },
-                RIGHT: () => {
-                    this.changeSide('right', aLock);
-                    this.bReady = false;
-                    this.bReturn = false;
-                    this.bQuit = false;
-                }
-            } );
+                } );
+            }
+            else {
+                this.changeSide();
+                this.bReady = false;
+                this.bReturn = false;
+                this.bQuit = false;
+            }
 
             if( this.bReady && this.nSide ) {
                 GAME.oOutput.getElement('TXT__Side_Player_State_' + this.nSide).setText('Ready !');
             }
+            GAME.oOutput.getElement('TXT__Side_Controller_' + this.oController.sId)
+                .setText(bConnected ? this.oController.sName : 'Disconnected&nbsp;!' );
         },
         destroy: function(){
         },
@@ -157,18 +168,25 @@ Object.assign(
 					GAME.oOutput.useContext('CTX__Side');
 					this.oContext = GAME.oOutput.getElement('CTX__Side');
 
-                    const aName = [ 'Versus', 'Training' ];
-                    GAME.oOutput.getElement('TXT__Side_Name').setText( this.sType = aName[oLastData.nLastIndexMenu] );
-                    
-                    const aController = oLastData.aController ? oLastData.aController.reduce( (aAccu, oCtrl) => [...aAccu, oCtrl && oCtrl.sId], [] ) : [];
+                    const aName = [ 'Versus', 'Training' ],
+                        aController = oLastData.aController ?
+                            oLastData.aController.reduce( (aAccu, oCtrl) => {
+                                return [...aAccu, oCtrl && oCtrl.sId]
+                            }, [] ) :
+                            [];
+
                     for( let sController in ControllerManager.oController ){
                         const nIndex = aController.indexOf(sController);
                         this.aController.push( new SideController(sController, nIndex == -1 ? 0 : nIndex + 1) );
                     }
 
+                    GAME.oOutput.getElement('TXT__Side_Name').setText( this.sType = aName[oLastData.nLastIndexMenu] );
                     GameHelper.set( Object.values(ControllerManager.oController), SideScene.aHelper );
 				},
 				update: function(){
+                    this.addNewController();
+
+                    // Update
                     const aLock = this.getPlayerController();
                     this.aController.forEach( oController => {
                         oController.update(aLock);
@@ -202,6 +220,22 @@ Object.assign(
                     );
                 },
 
+                addNewController: function(){
+                    if( this.aController.length < GAME.oInput.nController ){
+                        const aOldController = this.aController.reduce(
+                            (aAccu, oCtrl) => {
+                                return [...aAccu, oCtrl.oController.sId]
+                            }, []
+                        );
+                        
+                        for( let sController in GAME.oInput.oController ){
+                            if( aOldController.indexOf(sController) == -1 ){
+                                this.aController.push( new SideController(sController) );
+                                GameHelper.aController.push( GAME.oInput.getController(sController) );
+                            }
+                        }
+                    }
+                },
                 getPlayerController: function(bReady){
                     let aLock = [];
                     aLock.length = GAME.oSettings.nPlayer + 1;

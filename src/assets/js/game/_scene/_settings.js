@@ -23,43 +23,55 @@ Object.assign(
         },
         update: function() {
 
-            // Gestion assignation
-            if( this.oWaitingButton ){
-                this.updateWaitingButton();
-            } else {
-                this.oController.ifPressedNow( {
-                    // Gestion validation
-                    A: () => {
-                        let oMenuSelected = this.oMenu.getSelected();
-                        switch( oMenuSelected.sId ){
-                            case 'TXT__Settings_Return_' + this.oController.sId:
-                                this.bReady = true;
-                                break;
-                            default:
-                                this.setWaitingButton(oMenuSelected);
-                                this.bReady = false;
-                                break;
+            const bConnected = this.oController.sType == 'keyboard' || this.oController.oGamepad;
+            if( bConnected ){
+                // Gestion assignation
+                if( this.oWaitingButton ){
+                    this.updateWaitingButton();
+                } else {
+                    this.oController.ifPressedNow( {
+                        // Gestion validation
+                        A: () => {
+                            let oMenuSelected = this.oMenu.getSelected();
+                            switch( oMenuSelected.sId ){
+                                case 'TXT__Settings_Return_' + this.oController.sId:
+                                    this.bReady = true;
+                                    break;
+                                default:
+                                    this.setWaitingButton(oMenuSelected);
+                                    this.bReady = false;
+                                    break;
+                            }
+                        },
+                        B: () => {
+                            this.oMenu.select(-1);
+                            this.bReady = true;
+                        },
+                        // Gestion déplacement
+                        UP: () => {
+                            this.oMenu.prev();
+                            this.bReady = false;
+                        },
+                        DOWN: () => {
+                            this.oMenu.next();
+                            this.bReady = false;
                         }
-                    },
-                    B: () => {
-                        this.oMenu.select(-1);
-                        this.bReady = true;
-                    },
-                    // Gestion déplacement
-                    UP: () => {
-                        this.oMenu.prev();
-                        this.bReady = false;
-                    },
-                    DOWN: () => {
-                        this.oMenu.next();
-                        this.bReady = false;
-                    }
-                } );
-
-                this.oMenu.update();
-                GAME.oOutput.getElement('TXT__Settings_Return_' + this.oController.sId)
-                    .setText( this.bReady ? 'Ready !' : 'Return' );
+                    } );
+                }
             }
+            else {
+                this.oMenu.select(-1);
+                this.oWaitingButton = null;
+                this.bReady = true;
+            }
+
+            this.oMenu.update();
+            GAME.oOutput.getElement('TXT__Settings_Return_' + this.oController.sId)
+                .setText(
+                    bConnected ? 
+                        ( this.bReady ? 'Ready&nbsp;!' : 'Return' ) :
+                        'Disconnected&nbsp;!'
+                );
         },
         destroy: function() {
             this.oMenu.destroy();
@@ -67,16 +79,36 @@ Object.assign(
 
         setWaitingButton: function(oMenuSelected){
             this.oWaitingButton = oMenuSelected;
-            oMenuSelected.aChildElement[0].setText('Press key ...');
-            this.oPressed.nFrames = -1;
-            GameHelper.set(GameHelper.aKeyboard, SettingScene.oHelper.aWaiting);
+            this.oWaitingButton.nFramesChange = GAME.oTimer.nFrames;
+            if( this.oController.sType == 'keyboard' ){
+                this.oPressed.nFrames = -1;
+                oMenuSelected.aChildElement[0].setText('Press key ...');
+            } else {
+                oMenuSelected.aChildElement[0].setText('Press button ...');
+            }
         },
         updateWaitingButton: function(){
-            if( this.oPressed.nFrames == GAME.oTimer.nFrames ) {
+            let sKey = null; 
+            switch( this.oController.sType ){
+                case 'keyboard':
+                    if( this.oPressed.nFrames == GAME.oTimer.nFrames ) {
+                        sKey = this.oPressed.sKey;
+                    }
+                    break;
+                    
+                case 'gamepad':
+                    if( this.oController.nFrameChange > this.oWaitingButton.nFramesChange ) {
+                        const aButtons = this.oController.getAnyButtonsPressed();
+                        sKey = aButtons.length ? aButtons[0].sKey : null;
+                    }
+                    break;
+            }
+
+            if( sKey ){
                 const sNewBtn = this.oWaitingButton.hElement.querySelector('.Settings__Button_Name').innerHTML,
-                    sLastBtn = this.oController.oKeyMap[this.oPressed.sKey],
+                    sLastBtn = this.oController.oKeyMap[sKey],
                     oBtns = {
-                        [sNewBtn]: this.oPressed.sKey
+                        [sNewBtn]: sKey
                     };
                     
                 if( sNewBtn != sLastBtn ){
@@ -89,9 +121,8 @@ Object.assign(
                     GAME.oInput.updateController(this.oController);
                 }
                     
-                this.oWaitingButton.aChildElement[0].setText( this.oPressed.sKey );
+                this.oWaitingButton.aChildElement[0].setText(sKey);
                 this.oWaitingButton = null;
-                GameHelper.set(GameHelper.aKeyboard, SettingScene.oHelper.aMenu);
             }
         }
     }
@@ -111,33 +142,25 @@ function SettingScene(){
 Object.assign(
     SettingScene, {
 
-        oHelper: {
-            aWaiting: [
-                {
-                    aButton: [],
-                    sText: 'Press any key to assign to button'
-                }
-            ],
-            aMenu: [
-                {
-                    aButton: ['UP', 'DOWN'],
-                    sText: 'Move'
-                },
-                {
-                    aButton: ['A'],
-                    sText: 'Validate'
-                },
-                {
-                    aButton: ['B'],
-                    sText: 'Return'
-                }
-            ]
-        },
+        aHelper: [
+            {
+                aButton: ['UP', 'DOWN'],
+                sText: 'Move'
+            },
+            {
+                aButton: ['A'],
+                sText: 'Validate'
+            },
+            {
+                aButton: ['B'],
+                sText: 'Return'
+            }
+        ],
 
         prototype: Object.assign(
             Object.create(Scene.prototype), {
                 constructor: SettingScene,
-				init: function(){
+				init: function(oLastData){
 					GAME.oOutput.useContext('CTX__Settings');
 
                     // Gestion Buttons
@@ -150,12 +173,14 @@ Object.assign(
                     // Controller init
                     for( let sController in ControllerManager.oController ){
                         const oController = GAME.oInput.getController(sController);
-                        this.aController.push( new SettingController(oController, this.oLastPress, sController != 'IC_1') );
+                        this.aController.push( new SettingController(oController, this.oLastPress, oLastData.oController.sId != sController) );
                     }
                     
-                    GameHelper.set( Object.values(ControllerManager.oController), SettingScene.oHelper.aMenu );
+                    GameHelper.set( Object.values(ControllerManager.oController), SettingScene.aHelper );
 				},
 				update: function(){
+                    this.addNewController();
+
                     let bAllReady = true;
                     this.aController.forEach( oController => {
                         oController.update();
@@ -169,6 +194,24 @@ Object.assign(
                     window.removeEventListener('keydown', this.oLastPress.fFunction, false);
                     GameHelper.destroy();
                     return GAME.oScene.oLastData;
+                },
+
+                addNewController: function(){
+                    if( this.aController.length < GAME.oInput.nController ){
+                        const aOldController = this.aController.reduce(
+                            (aAccu, oCtrl) => {
+                                return [...aAccu, oCtrl.oController.sId]
+                            }, []
+                        );
+                        
+                        for( let sController in GAME.oInput.oController ){
+                            if( aOldController.indexOf(sController) == -1 ){
+                                const oController = GAME.oInput.getController(sController);
+                                this.aController.push( new SettingController(oController, this.oLastPress, false) );
+                                GameHelper.aController.push( oController );
+                            }
+                        }
+                    }
                 }
             }
         )

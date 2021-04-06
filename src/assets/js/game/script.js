@@ -32,10 +32,9 @@
 /* Init */
 window.addEventListener('load', oEvent => {
 	// Input
-	GAME.oSettings.aKeyboard.forEach( oButtons => GAME.oInput.create( oButtons ) );
+	GAME.oSettings.oController.aKeyboard.forEach( oButtons => GAME.oInput.create( 'Keyboard', oButtons ) );
 	// Scene
 	GAME.oScene.set( new window[ GAME.oSettings.sStartScene ]() );
 	// Start
-	// GAME.oTimer.setFPS(6);
 	GAME.start();
 }, false);

@@ -1,10 +1,10 @@
 /* Gestion Player */
-function SelectPlayer(nPlayer, oKeyboard, oMenu){
+function SelectPlayer(nPlayer, oController, oMenu){
     this.nPlayer = nPlayer;
     this.nCursor = nPlayer - 1;
     this.oLayer = null;
     
-    this.oKeyboard = null;
+    this.oController = null;
     this.oMenu = null;
     this.bReady = false;
     this.bReturn = false;
@@ -13,14 +13,14 @@ function SelectPlayer(nPlayer, oKeyboard, oMenu){
     this.oCharacter = null;
     this.nColor = 0;
 
-    this.init(oKeyboard, oMenu);
+    this.init(oController, oMenu);
 }
 
 Object.assign(
     SelectPlayer.prototype, {
-        init: function(oKeyboard, oMenu) {
+        init: function(oController, oMenu) {
             this.oLayer = GAME.oOutput.getElement('LAY__Select_Player_' + this.nPlayer);
-            this.oKeyboard = oKeyboard;
+            this.oController = oController;
             this.oMenu = oMenu;
 
             this.oMenu.oCharacter.update();
@@ -29,7 +29,7 @@ Object.assign(
         update: function(oLock) {
             this.checkColor(oLock);
 
-            this.oKeyboard && this.oKeyboard.ifPressedNow( {
+            this.oController && this.oController.ifPressedNow( {
                 // Gestion validation
                 A: () => {
                     this.bReady = this.oCharacter.bActive;
@@ -92,7 +92,7 @@ Object.assign(
             let sText = 'Player #' + this.nPlayer;
             if( this.bReady ){
                 sText = 'Ready !';
-            } else if(!this.oKeyboard){
+            } else if(!this.oController){
                 sText = 'Waiting ...';
             } else if( !this.oCharacter.bActive ){
                 sText = 'Unavailable';
@@ -122,7 +122,7 @@ Object.assign(
     }
 );
 
-/* Stage Menu : One cursor ONLY for 2 Keyboard ! */
+/* Stage Menu : One cursor ONLY for 2 Controller ! */
 function SelectStageMenu(){
     GameMenu.apply(this, arguments);
 }
@@ -171,6 +171,33 @@ function SelectScene(){
 
 Object.assign(
     SelectScene, {
+        aHelper: [
+            {
+                aButton: ['LEFT', 'RIGHT'],
+                sText: 'Select character'
+            },
+            {
+                aButton: ['A'],
+                sText: 'Validate'
+            },
+            {
+                aButton: ['B'],
+                sText: 'Cancel / Return'
+            },
+            {
+                aButton: ['C'],
+                sText: 'Change color'
+            },
+            {
+                aButton: ['UP', 'DOWN'],
+                sText: 'Select stage'
+            },
+            {
+                aButton: ['START'],
+                sText: 'Quit'
+            }
+        ],
+
         prototype: Object.assign(
             Object.create(Scene.prototype), {
                 constructor: SelectScene,
@@ -201,35 +228,11 @@ Object.assign(
                     }
 
                     // Helper
-                    GameHelper.set( [
-                            GAME.oInput.getController('IC_1'),
-                            GAME.oInput.getController('IC_2'),
-                        ],
-                        [ {
-                            aButton: ['LEFT', 'RIGHT'],
-                            sText: 'Select character'
-                        },
-                        {
-                            aButton: ['A'],
-                            sText: 'Validate'
-                        },
-                        {
-                            aButton: ['B'],
-                            sText: 'Cancel / Return'
-                        },
-                        {
-                            aButton: ['C'],
-                            sText: 'Change color'
-                        },
-                        {
-                            aButton: ['UP', 'DOWN'],
-                            sText: 'Select stage'
-                        },
-                        {
-                            aButton: ['START'],
-                            sText: 'Quit'
-                        } ]
-                    );
+                    const aController = [];
+                    oLastData.aController.forEach( oController => {
+                        oController && aController.push(oController);
+                    } );
+                    GameHelper.set( aController, SelectScene.aHelper );
 				},
 				update: function(){
                     // Gestion activation Player
@@ -246,7 +249,7 @@ Object.assign(
                     this.updateStatus();
                     
                     if( this.oStatus.bSwitch ) {
-                        this.switchKeyboard();
+                        this.switchController();
                     } else if( this.oStatus.bQuit ) {
                         GAME.oScene.change( new MenuScene() );
                     } else if( this.oStatus.bReturn ) {
@@ -294,11 +297,11 @@ Object.assign(
                         const oInfoByState = this.getPlayerInformations();
 
                         // Gestion Validation PLAYER actif
-                        if( oInfoByState.oActive.oPlayer.bReady && oInfoByState.oActive.oPlayer.oKeyboard ){
+                        if( oInfoByState.oActive.oPlayer.bReady && oInfoByState.oActive.oPlayer.oController ){
                             this.oStatus.bSwitch = true;
                         }
                         // Gestion changement selection PLAYER actif
-                        else if( oInfoByState.oDisable.oPlayer.bReturn && oInfoByState.oDisable.oPlayer.oKeyboard ){
+                        else if( oInfoByState.oDisable.oPlayer.bReturn && oInfoByState.oDisable.oPlayer.oController ){
                             this.oStatus.bSwitch = true;
                             oInfoByState.oActive.oPlayer.bReady = false;
                             oInfoByState.oDisable.oPlayer.bReturn = false;
@@ -339,20 +342,21 @@ Object.assign(
                         const oPlayerByState = this.getPlayerInformations();
                         for( let sController in ControllerManager.oController ){
                             const oController = GAME.oInput.getController(sController);
-                            if( oPlayerByState.oActive.oOriginalController.sId != oController.sId && oController.nFrameLastEvent > this.nFrameCreated ){
+                            if( oPlayerByState.oActive.oOriginalController.sId != oController.sId && oController.nFrameChange > this.nFrameCreated ){
                                 this.oData.aController[ this.oData.aController.indexOf(null) ] = oController;
                                 this.aPlayer.forEach( (oPlayer, nIndex) => {
-                                    oPlayer.oKeyboard = this.oData.aController[nIndex];
+                                    oPlayer.oController = this.oData.aController[nIndex];
+                                    GameHelper.aController.push(oPlayer.oController);
                                 } );
                                 break;
                             }
                         }
                     }
                 },
-                switchKeyboard: function(){
-                    const oKeyboard = this.aPlayer[0].oKeyboard;
-                    this.aPlayer[0].oKeyboard = this.aPlayer[1].oKeyboard;
-                    this.aPlayer[1].oKeyboard = oKeyboard;
+                switchController: function(){
+                    const oController = this.aPlayer[0].oController;
+                    this.aPlayer[0].oController = this.aPlayer[1].oController;
+                    this.aPlayer[1].oController = oController;
                 }
             }
         )

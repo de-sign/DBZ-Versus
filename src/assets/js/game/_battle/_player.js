@@ -1,13 +1,13 @@
 /* ----- BattleInputBuffer ----- */
-function BattleInputBuffer(oKeyboard){
-    this.oKeyboard = null;
+function BattleInputBuffer(oController){
+    this.oController = null;
 
     this.nDirection = 5;
     this.bReverse = false;
     this.aHistory = [];
     this.nFrameLastUpdate = 0;
 
-    this.init(oKeyboard);
+    this.init(oController);
 }
 
 Object.assign(
@@ -26,12 +26,12 @@ Object.assign(
         },
         prototype: {
             constructor: BattleInputBuffer,
-            init: function(oKeyboard) {
-                this.oKeyboard = oKeyboard;
+            init: function(oController) {
+                this.oController = oController;
             },
             update: function(bReverse){
                 this.bReverse = bReverse;
-                if( this.oKeyboard && this.oKeyboard.nFrameLastEvent == GAME.oTimer.nFrames ){
+                if( this.oController && this.oController.nFrameChange == GAME.oTimer.nFrames ){
                     this.nFrameLastUpdate = GAME.oTimer.nFrames;
                     this.updateDirection();
 
@@ -48,7 +48,7 @@ Object.assign(
             updateDirection: function(){
                 this.nDirection = 5;
                 for (sBtn in BattleInputBuffer.oButtonsDirection) {
-                    if ( this.oKeyboard.oButtons[sBtn].bPressed ) {
+                    if ( this.oController.oButtons[sBtn].bPressed ) {
                         this.nDirection += BattleInputBuffer.oButtonsDirection[sBtn];
                     }
                 }
@@ -58,11 +58,11 @@ Object.assign(
                     aFrameDir = [];
 
                 // Gestion BTN
-                for( let sBtn in this.oKeyboard.oButtons ){
+                for( let sBtn in this.oController.oButtons ){
                     if( BattleInputBuffer.oButtonsDirection[sBtn] ){
-                        aFrameDir.push( this.oKeyboard.oButtons[sBtn].nFrameChanged );
-                    } else if( this.oKeyboard.oButtons[sBtn].bPressed ){
-                        oBtns[sBtn] = this.oKeyboard.oButtons[sBtn].nFrameChanged;
+                        aFrameDir.push( this.oController.oButtons[sBtn].nFrameChanged );
+                    } else if( this.oController.oButtons[sBtn].bPressed ){
+                        oBtns[sBtn] = this.oController.oButtons[sBtn].nFrameChanged;
                     }
                 }
 
@@ -303,7 +303,7 @@ Object.assign(
 );
 
 /* ----- BattlePlayer ----- */
-function BattlePlayer(nPlayer, sChar, nColor, oKeyboard){
+function BattlePlayer(nPlayer, sChar, nColor, oController){
     this.nPlayer = nPlayer;
     this.oLayer = null;
     this.oSprite = null;
@@ -324,12 +324,12 @@ function BattlePlayer(nPlayer, sChar, nColor, oKeyboard){
     this.nLife = GAME.oSettings.nLife;
     this.nKi = 0;
 
-    this.init(sChar, nColor, oKeyboard);
+    this.init(sChar, nColor, oController);
 }
 
 Object.assign(
     BattlePlayer.prototype, {
-        init: function(sChar, nColor, oKeyboard) {
+        init: function(sChar, nColor, oController) {
             this.oLayer = GAME.oOutput.getElement('LAY__Battle_Character_' + this.nPlayer);
             this.oSprite = GAME.oOutput.getElement('SPT__Battle_Character_Sprite_' + this.nPlayer);
             
@@ -339,7 +339,7 @@ Object.assign(
             this.oCharacter = GAME.oData.oCharacter[sChar];
             this.oColor = this.oCharacter.aColor[nColor];
             this.oPath = this.oCharacter.oPath[this.oColor.sCod];
-            this.oInputBuffer = new BattleInputBuffer(oKeyboard);
+            this.oInputBuffer = new BattleInputBuffer(oController);
             this.oGatling = new BattleGatling(this.oInputBuffer, this.oCharacter.oCommands);
 
             // init en STAND

@@ -12,6 +12,7 @@ Object.assign(
         init: function(nLength, nDelay){
             this.nLength = nLength;
             nDelay && ( this.nFreeze = nDelay );
+            this.reset();
         },
         update: function(){
             let bUpdate = true;

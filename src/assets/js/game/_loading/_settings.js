@@ -1,19 +1,11 @@
 function InitializeSettings(){
-	this.oContext = null;
-    this.oPattern = null;
     this.init();
 }
 
 Object.assign(
-    InitializeSettings.prototype, {
+    InitializeSettings, {
 
-        init: function(){
-            this.oContext = GAME.oOutput.getElement('CTX__Settings');
-            this.getPattern();
-            for( let sController in ControllerManager.oController ){
-                this.createController(sController);
-            }
-        },
+        oPattern: null,
 
         getPattern: function(){
             this.oPattern = {
@@ -22,13 +14,14 @@ Object.assign(
             };
 
             for( let sPattern in this.oPattern ){
-                this.oPattern[sPattern] && this.oContext.delete( this.oPattern[sPattern] );
+                this.oPattern[sPattern] && this.oPattern[sPattern].oParentElement.delete( this.oPattern[sPattern] );
             }
         },
 
         createController: function(sController){
-            
-            const oKeyboard = GAME.oInput.getController(sController);
+                
+            const oContext = GAME.oOutput.getElement('CTX__Settings'),
+                oController = GAME.oInput.getController(sController);
 
             // Clone du LAYER
             let hLayer = this.oPattern.oLayer.hElement.cloneNode(true);
@@ -41,10 +34,11 @@ Object.assign(
                     hElement.classList.remove('--change', GAME.oOutput.oConfig.class.created);
                 }
             );
-            hLayer.querySelector('.Settings__Controller_Number').innerHTML = oKeyboard.sName;
+            hLayer.querySelector('.Settings__Controller_Sprite').src = GAME.oSettings.oPath.oController.sRoot + '/' + oController.sType + '.png';
+            hLayer.querySelector('.Settings__Controller_Number').innerHTML = oController.sName;
 
             // Clone des BUTTON
-            for( let sBtn in oKeyboard.oButtons ){
+            for( let sBtn in oController.oButtons ){
                 let hButton = this.oPattern.oButton.hElement.cloneNode(true);
                 hButton.classList.remove(GAME.oOutput.oConfig.class.created);
                 hButton.id += sController + '_' + sBtn;
@@ -52,14 +46,23 @@ Object.assign(
 
                 let hKey = hButton.querySelector('.Settings__Button_Key');
                 hKey.classList.remove(GAME.oOutput.oConfig.class.created);
-                hKey.innerHTML = oKeyboard.oButtons[sBtn].sKey;
+                hKey.innerHTML = oController.oButtons[sBtn].sKey;
 
                 hLayer.querySelector('.Settings__Buttons').appendChild(hButton);
             }
 
             // Ajout dans le context
-            this.oContext.add(new GAME.oOutput.OutputLayer(hLayer), '.Settings__Controllers');
-            this.oContext.update();
+            oContext.add(new GAME.oOutput.OutputLayer(hLayer), '.Settings__Controllers');
+            oContext.update();
+        },
+
+        prototype: {
+            init: function(){
+                InitializeSettings.getPattern();
+                for( let sController in ControllerManager.oController ){
+                    InitializeSettings.createController(sController);
+                }
+            }
         }
     }
 );

@@ -3,7 +3,6 @@ function TrainingMenu(sLayer, oEngine, oScene){
     this.oMenu = null;
     this.oEngine = null;
     this.oScene = null;
-    this.oKeyboard = null;
 
     this.init(sLayer, oEngine, oScene);
 }
@@ -16,7 +15,6 @@ Object.assign(
                 this.oMenu = new GameMenu(sLayer, 0);
                 this.oEngine = oEngine;
                 this.oScene = oScene;
-                this.oKeyboard = this.oScene.oKeyboard;
             },
             update: function(){
                 const sRedirection = this.controls();
@@ -55,7 +53,7 @@ Object.assign(
                 constructor: TrainingMenuPrincipal,
                 controls: function(){
                     let sRedirection = null;
-                    this.oKeyboard.ifPressedNow( {
+                    this.oScene.oController.ifPressedNow( {
                         // Gestion validation
                         A: () => {
                             let oMenuSelected = this.oMenu.getSelected();
@@ -192,7 +190,7 @@ Object.assign(
                     this.oMenu.oCurrent.show();
                 } );
                 
-                GameHelper.set( GameHelper.aKeyboard, TrainingScene.oHelper.aMenu );
+                GameHelper.setText( TrainingScene.oHelper.aMenu );
             },
             close: function(){
                 const oCurrent = this.oMenu.oCurrent;
@@ -208,7 +206,7 @@ Object.assign(
                     this.oScene.oContext.hElement.classList.remove('--menu');
                 } );
                 this.trigger('onClose');
-                GameHelper.set( GameHelper.aKeyboard, TrainingScene.oHelper.aBattle );
+                GameHelper.setText( TrainingScene.oHelper.aBattle );
             },
             toggle: function(){
                 const bOpen = this.isOpen();

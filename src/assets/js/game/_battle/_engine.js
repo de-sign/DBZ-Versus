@@ -121,7 +121,7 @@ Object.assign(
                         this.aPlayer[ oPlayer.nPlayer == 1 ? 1 : 0 ].setFreeze(oPlayer.oGatling.oCurrent.oStun.nFreeze);
                         GAME.oScene.oCurrent.oInfo.add( {
                             sImg: oPlayer.oPath.sFace,
-                            sText: sName + ' !'
+                            sText: sName + '&nbsp;!'
                         } );
                         break;
                     }
