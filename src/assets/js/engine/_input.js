@@ -49,7 +49,7 @@ const ControllerManager = {
         this.addController(oCtrl);
     },
     addEvent: function(oEvent) {
-        const key = oEvent.key.toUpperCase();
+        const key = oEvent.code.toUpperCase();
         if (this.oKeyMap[key]) {
             this.oKeyMap[key].forEach((sId) => {
                 this.oController[sId].addEvent(oEvent);
@@ -93,23 +93,29 @@ Object.assign(
 
             addButtons: function(oBtns) {
                 for (let b in oBtns) {
-                    const key = oBtns[b].toUpperCase();
+                    const oBtn = Object.prototype.toString.call(oBtns[b]) === '[object Object]' ?
+                        oBtns[b] :
+                        {
+                            sKey: oBtns[b],
+                            sText: this.constructor.getButtonText(oBtns[b], this)
+                        };
+
                     this.oButtons[b] = {
-                        sKey: key,
+                        sKey: oBtn.sKey.toUpperCase(),
                         sCod: b,
+                        sText: oBtn.sText,
                         nFrameChanged: null,
                         dTimestamp: 0,
                         bPressed: false,
                         oLastPress: null
                     };
-                    this.oKeyMap[key] = b;
+                    this.oKeyMap[oBtn.sKey.toUpperCase()] = b;
                 }
             },
             removeButtons: function(oBtns) {
                 for (let b in oBtns) {
                     const oBtn = this.oButtons[b];
                     if( oBtn ){
-                        const key = oBtns[b].toUpperCase();
                         delete this.oKeyMap[oBtn.sKey];
                         delete this.oButtons[b];
                     }
@@ -167,6 +173,21 @@ function KeyboardController(oBtn) {
 
 Object.assign(
     KeyboardController, {
+
+        oButtonText: {
+            KEYW: 'W / Z',
+            KEYA: 'A / Q'
+        },
+
+        getButtonText: function(sCode){
+            sCode = sCode.toUpperCase();
+            let sText = this.oButtonText[sCode];
+            if( !sText ){
+                sText = sCode.indexOf('KEY') == -1 ? sCode : sCode.substring(3);
+            }
+            return sText;
+        },
+
         prototype: Object.assign(
             Object.create(Controller.prototype), {
                 constructor: KeyboardController,
@@ -178,7 +199,7 @@ Object.assign(
 
                     let bChange = false;
                     this.aEvents.forEach( oEvent => {
-                        const cod = this.oKeyMap[oEvent.key.toUpperCase()],
+                        const cod = this.oKeyMap[oEvent.code.toUpperCase()],
                             btn = this.oButtons[cod],
                             typ = pressTyp[oEvent.type];
 
@@ -230,6 +251,43 @@ Object.assign(
         oIndexCreate: {}, 
         update: function(){
             this.aGamepad = [...navigator.getGamepads()];
+        },
+
+        oButtonText: {
+            BUTTON0: 'A / CROSS',
+            BUTTON1: 'B / CIRCLE',
+            BUTTON2: 'X / SQUARE',
+            BUTTON3: 'Y / TRIANGLE',
+            BUTTON4: 'LB / L1',
+            BUTTON5: 'RB / R1',
+            BUTTON6: 'LT / L2',
+            BUTTON7: 'RT / R2',
+            BUTTON8: 'VIEW / SELECT',
+            BUTTON9: 'MENU / START',
+            BUTTON10: 'L-CLICK',
+            BUTTON11: 'R-CLICK',
+            BUTTON12: 'PAD-UP',
+            BUTTON13: 'PAD-DOWN',
+            BUTTON14: 'PAD-LEFT',
+            BUTTON15: 'PAD-RIGHT',
+            BUTTON16: 'XBOX / PS',
+            'AXE-0': 'L-LEFT',
+            'AXE+0': 'L-RIGHT',
+            'AXE-1': 'L-UP',
+            'AXE+1': 'L-DOWN',
+            'AXE-2': 'R-LEFT',
+            'AXE+2': 'R-RIGHT',
+            'AXE-3': 'R-UP',
+            'AXE+3': 'R-DOWN',
+        },
+
+        getButtonText: function(sCode, oController) {
+            sCode = sCode.toUpperCase();
+            let sText = null;
+            if( oController.oGamepad.id.toUpperCase().indexOf('CONTROLLER') != -1 ){
+                sText = this.oButtonText[sCode];
+            }
+            return sText || sCode;
         },
 
         prototype: Object.assign(
@@ -320,6 +378,7 @@ Object.assign(
                                     {
                                         sKey,
                                         sCod: null,
+                                        sText: GamepadController.getButtonText(sKey, this),
                                         nFrameChanged: GAME.oTimer.nFrames,
                                         dTimestamp: GAME.oTimer.dUpdate,
                                         bPressed: true,
@@ -340,6 +399,7 @@ Object.assign(
                                     {
                                         sKey,
                                         sCod: null,
+                                        sText: GamepadController.getButtonText(sKey, this),
                                         nFrameChanged: GAME.oTimer.nFrames,
                                         dTimestamp: GAME.oTimer.dUpdate,
                                         bPressed: true,

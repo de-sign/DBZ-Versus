@@ -61,24 +61,24 @@ Object.assign(
             oController: {
                 aKeyboard: [
                     {
-                        UP: 'z',
-                        DOWN: 's',
-                        LEFT: 'q',
-                        RIGHT: 'd',
-                        A: 'u',
-                        B: 'i',
-                        C: 'o',
-                        START: 'enter'
+                        UP: 'KeyW',
+                        DOWN: 'KeyS',
+                        LEFT: 'KeyA',
+                        RIGHT: 'KeyD',
+                        A: 'KeyU',
+                        B: 'KeyI',
+                        C: 'KeyO',
+                        START: 'Enter'
                     },
                     {
                         UP: 'ArrowUp',
                         DOWN: 'ArrowDown',
                         LEFT: 'ArrowLeft',
                         RIGHT: 'ArrowRight',
-                        A: '1',
-                        B: '2',
-                        C: '3',
-                        START: '0'
+                        A: 'Numpad1',
+                        B: 'Numpad2',
+                        C: 'Numpad3',
+                        START: 'Numpad0'
                     }
                 ],
                 oGamepad: {

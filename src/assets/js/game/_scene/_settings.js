@@ -88,40 +88,43 @@ Object.assign(
             }
         },
         updateWaitingButton: function(){
-            let sKey = null; 
+            let oBtn = null;
             switch( this.oController.sType ){
                 case 'keyboard':
                     if( this.oPressed.nFrames == GAME.oTimer.nFrames ) {
-                        sKey = this.oPressed.sKey;
+                        oBtn = {
+                            sKey: this.oPressed.oEvent.code.toUpperCase(),
+                            sText: this.oPressed.oEvent.key.toUpperCase()
+                        };
                     }
                     break;
                     
                 case 'gamepad':
                     if( this.oController.nFrameChange > this.oWaitingButton.nFramesChange ) {
                         const aButtons = this.oController.getAnyButtonsPressed();
-                        sKey = aButtons.length ? aButtons[0].sKey : null;
+                        oBtn = aButtons.length ? aButtons[0] : null;
                     }
                     break;
             }
 
-            if( sKey ){
+            if( oBtn ){
                 const sNewBtn = this.oWaitingButton.hElement.querySelector('.Settings__Button_Name').innerHTML,
-                    sLastBtn = this.oController.oKeyMap[sKey],
+                    sLastBtn = this.oController.oKeyMap[oBtn.sKey],
                     oBtns = {
-                        [sNewBtn]: sKey
+                        [sNewBtn]: oBtn
                     };
                     
                 if( sNewBtn != sLastBtn ){
                     if( sLastBtn ){
                         GAME.oOutput.getElement('LAY__Settings_Button_' + this.oController.sId + '_' + sLastBtn)
-                            .aChildElement[0].setText( this.oController.oButtons[sNewBtn].sKey );
-                        oBtns[sLastBtn] = this.oController.oButtons[sNewBtn].sKey;
+                            .aChildElement[0].setText( this.oController.oButtons[sNewBtn].sText );
+                        oBtns[sLastBtn] = this.oController.oButtons[sNewBtn];
                     }
                     this.oController.updateButtons(oBtns);
                     GAME.oInput.updateController(this.oController);
                 }
                     
-                this.oWaitingButton.aChildElement[0].setText(sKey);
+                this.oWaitingButton.aChildElement[0].setText(oBtn.sText);
                 this.oWaitingButton = null;
             }
         }
@@ -165,7 +168,7 @@ Object.assign(
 
                     // Gestion Buttons
                     this.oLastPress.fFunction = (oEvent) => {
-                        this.oLastPress.sKey = oEvent.key.toUpperCase();
+                        this.oLastPress.oEvent = oEvent;
                         this.oLastPress.nFrames = GAME.oTimer.nFrames + 1;
                     };
                     window.addEventListener('keydown', this.oLastPress.fFunction, false);

@@ -63,7 +63,7 @@ Object.assign(
 
             oText.aButton.forEach( (sButton, nButton) => {
                 oLayer.aChildElement[nButton].setText(
-                    oController.oButtons[sButton].sKey
+                    oController.oButtons[sButton].sText
                 );
             } );
         },

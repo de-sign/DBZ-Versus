@@ -46,7 +46,7 @@ Object.assign(
 
                 let hKey = hButton.querySelector('.Settings__Button_Key');
                 hKey.classList.remove(GAME.oOutput.oConfig.class.created);
-                hKey.innerHTML = oController.oButtons[sBtn].sKey;
+                hKey.innerHTML = oController.oButtons[sBtn].sText;
 
                 hLayer.querySelector('.Settings__Buttons').appendChild(hButton);
             }
