@@ -59,6 +59,7 @@ Object.assign(
                 }
             },
             oController: {
+                aOrderButtons: ['UP', 'DOWN', 'LEFT', 'RIGHT', 'A', 'B', 'C', 'START'],
                 aKeyboard: [
                     {
                         UP: 'KeyW',

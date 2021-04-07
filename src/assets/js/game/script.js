@@ -1,3 +1,4 @@
+//=include _components/_store.js
 //=include _components/_timer.js
 //=include _components/_animation.js
 //=include _components/_helper.js
@@ -31,8 +32,12 @@
 
 /* Init */
 window.addEventListener('load', oEvent => {
+	// Store
+	GameStore.init();
 	// Input
-	GAME.oSettings.oController.aKeyboard.forEach( oButtons => GAME.oInput.create( 'Keyboard', oButtons ) );
+	for( let nPlayer = 0; nPlayer < GAME.oSettings.nPlayer; nPlayer++ ){
+		KeyboardController.recover('IC_' + ( nPlayer + 1 ), GAME.oSettings.oController.aKeyboard[nPlayer]);
+	}
 	// Scene
 	GAME.oScene.set( new window[ GAME.oSettings.sStartScene ]() );
 	// Start

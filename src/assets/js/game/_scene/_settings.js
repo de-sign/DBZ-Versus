@@ -120,10 +120,12 @@ Object.assign(
                             .aChildElement[0].setText( this.oController.oButtons[sNewBtn].sText );
                         oBtns[sLastBtn] = this.oController.oButtons[sNewBtn];
                     }
-                    this.oController.updateButtons(oBtns);
-                    GAME.oInput.updateController(this.oController);
                 }
                     
+                this.oController.updateButtons(oBtns);
+                GAME.oInput.updateController(this.oController);
+                this.oController.store();
+
                 this.oWaitingButton.aChildElement[0].setText(oBtn.sText);
                 this.oWaitingButton = null;
             }

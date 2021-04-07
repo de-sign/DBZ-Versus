@@ -98,6 +98,7 @@ Object.assign(
 function TrainingEngine(oScene){
     this.oScene = null;
 
+    this.aHelperController = [];
     this.oModule = {};
     this.oMenu = {
         oLast: null,
@@ -181,6 +182,9 @@ Object.assign(
                         this.oScene.oContext.hElement.classList.add('--menu');
                     } );
                     this.trigger('onOpen');
+                
+                    this.aHelperController = GameHelper.aController;
+                    GameHelper.set(this.oScene.oController, TrainingScene.oHelper.aMenu );
                 }
 
                 this.oMenu.oLast = this.oMenu.oCurrent;
@@ -189,8 +193,6 @@ Object.assign(
                     this.oMenu.oLast && this.oMenu.oLast.hide();
                     this.oMenu.oCurrent.show();
                 } );
-                
-                GameHelper.setText( TrainingScene.oHelper.aMenu );
             },
             close: function(){
                 const oCurrent = this.oMenu.oCurrent;
@@ -206,7 +208,7 @@ Object.assign(
                     this.oScene.oContext.hElement.classList.remove('--menu');
                 } );
                 this.trigger('onClose');
-                GameHelper.setText( TrainingScene.oHelper.aBattle );
+                GameHelper.set(this.aHelperController, TrainingScene.oHelper.aBattle );
             },
             toggle: function(){
                 const bOpen = this.isOpen();

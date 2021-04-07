@@ -1,4 +1,4 @@
-// Menu
+// Helper
 function GameHelper(){}
 
 Object.assign(

@@ -81,6 +81,34 @@ Object.assign(
             this.oInstance[id] = oKCtrl;
             return id;
         },
+
+        createDataStore: function(oController, oStore){
+            oStore = Object.assign( {
+                sType: oController.sType,
+                sId: oController.sId,
+                oButtons: {}
+            }, oStore || {});
+            
+            for( let sBtn in oController.oButtons ){
+                oStore.oButtons[sBtn] = {
+                    sKey: oController.oButtons[sBtn].sKey,
+                    sText: oController.oButtons[sBtn].sText
+                };
+            }
+
+            return oStore;
+        },
+
+        getDataStore: function(oStore){
+            if( oStore ){
+                const oButtons = {};
+                GAME.oSettings.oController.aOrderButtons.forEach( sBtn => {
+                    oButtons[sBtn] = oStore.oButtons[sBtn];
+                } );
+                oStore.oButtons = oButtons;
+            }
+            return oStore;
+        },
     
         prototype: {
             constructor: Controller,
@@ -188,6 +216,11 @@ Object.assign(
             return sText;
         },
 
+        recover: function(sId, oDefault){
+            const oStore = Controller.getDataStore( GameStore.get(sId) );
+            return GAME.oInput.create( 'Keyboard', oStore ? oStore.oButtons : oDefault );
+        },
+
         prototype: Object.assign(
             Object.create(Controller.prototype), {
                 constructor: KeyboardController,
@@ -228,6 +261,10 @@ Object.assign(
 
                 addEvent: function(oEvent) {
                     this.aEvents.push(oEvent);
+                },
+                store: function(){
+                    const oData = Controller.createDataStore(this);
+                    GameStore.update( this.sId, oData );
                 }
             }
         )
@@ -239,6 +276,7 @@ function GamepadController(oBtn, nIndex) {
     this.sType = 'gamepad';
     this.oGamepad = null;
     this.nIndex = -1;
+    this.nIndexStore = -1;
 
     Controller.apply(this, arguments);
 }
@@ -248,48 +286,100 @@ Object.assign(
 
         nAxePressed: 0.5,
         aGamepad: [],
-        oIndexCreate: {}, 
+        oIndexCreate: {},
+        oIndexRecovered: {},
+
+        oButtonText: {
+            oCommon: {
+                BUTTON10: 'L-CLICK',
+                BUTTON11: 'R-CLICK',
+                BUTTON12: 'PAD-UP',
+                BUTTON13: 'PAD-DOWN',
+                BUTTON14: 'PAD-LEFT',
+                BUTTON15: 'PAD-RIGHT',
+                'AXE-0': 'L-LEFT',
+                'AXE+0': 'L-RIGHT',
+                'AXE-1': 'L-UP',
+                'AXE+1': 'L-DOWN',
+                'AXE-2': 'R-LEFT',
+                'AXE+2': 'R-RIGHT',
+                'AXE-3': 'R-UP',
+                'AXE+3': 'R-DOWN',
+            },
+            
+            XBOX: {
+                BUTTON0: 'A',
+                BUTTON1: 'B',
+                BUTTON2: 'X',
+                BUTTON3: 'Y',
+                BUTTON4: 'LB',
+                BUTTON5: 'RB',
+                BUTTON6: 'LT',
+                BUTTON7: 'RT',
+                BUTTON8: 'VIEW',
+                BUTTON9: 'MENU',
+                BUTTON16: 'XBOX',
+            },
+            CONTROLLER: {
+                BUTTON0: 'CROSS',
+                BUTTON1: 'CIRCLE',
+                BUTTON2: 'SQUARE',
+                BUTTON3: 'TRIANGLE',
+                BUTTON4: 'L1',
+                BUTTON5: 'R1',
+                BUTTON6: 'L2',
+                BUTTON7: 'R2',
+                BUTTON8: 'SELECT',
+                BUTTON9: 'START',
+                BUTTON16: 'PS / HOME',
+            }
+        },
+
         update: function(){
             this.aGamepad = [...navigator.getGamepads()];
         },
 
-        oButtonText: {
-            BUTTON0: 'A / CROSS',
-            BUTTON1: 'B / CIRCLE',
-            BUTTON2: 'X / SQUARE',
-            BUTTON3: 'Y / TRIANGLE',
-            BUTTON4: 'LB / L1',
-            BUTTON5: 'RB / R1',
-            BUTTON6: 'LT / L2',
-            BUTTON7: 'RT / R2',
-            BUTTON8: 'VIEW / SELECT',
-            BUTTON9: 'MENU / START',
-            BUTTON10: 'L-CLICK',
-            BUTTON11: 'R-CLICK',
-            BUTTON12: 'PAD-UP',
-            BUTTON13: 'PAD-DOWN',
-            BUTTON14: 'PAD-LEFT',
-            BUTTON15: 'PAD-RIGHT',
-            BUTTON16: 'XBOX / PS',
-            'AXE-0': 'L-LEFT',
-            'AXE+0': 'L-RIGHT',
-            'AXE-1': 'L-UP',
-            'AXE+1': 'L-DOWN',
-            'AXE-2': 'R-LEFT',
-            'AXE+2': 'R-RIGHT',
-            'AXE-3': 'R-UP',
-            'AXE+3': 'R-DOWN',
+        recover: function(oGamepad, oDefault){
+            const aStore = GameStore.get(oGamepad.id) || [];
+            let oStore = null,
+                nIndexStore = 0;
+                
+            for( ; nIndexStore < aStore.length; nIndexStore++ ){
+                if( aStore[nIndexStore].nIndex == oGamepad.index ){
+                    oStore = aStore[nIndexStore];
+                    this.oIndexRecovered[nIndexStore] = true;
+                    break;
+                }
+            }
+            if( !oStore ){
+                if( aStore[0] && !this.oIndexRecovered[0] ){
+                    oStore = aStore[0];
+                    nIndexStore = 0;
+                } else {
+                    nIndexStore = -1;
+                }
+            }
+
+            const oController = GAME.oInput.create( 'Gamepad', oStore ? Controller.getDataStore(oStore).oButtons : oDefault, oGamepad.index );
+            oController.nIndexStore = nIndexStore;
+            return oController;
         },
 
         getButtonText: function(sCode, oController) {
             sCode = sCode.toUpperCase();
             let sText = null;
-            if( oController.oGamepad.id.toUpperCase().indexOf('CONTROLLER') != -1 ){
-                sText = this.oButtonText[sCode];
+            const sId = oController.oGamepad.id.toUpperCase();
+
+            for( let sController in this.oButtonText ){
+                if( sController != 'oCommon' && sId.indexOf(sController) != -1 ){
+                    const oButtonText = Object.assign({}, this.oButtonText.oCommon, this.oButtonText[sController]);
+                    sText = oButtonText[sCode];
+                    break;
+                }
             }
             return sText || sCode;
         },
-
+        
         prototype: Object.assign(
             Object.create(Controller.prototype), {
                 constructor: GamepadController,
@@ -410,6 +500,23 @@ Object.assign(
                         } );
                     }
                     return aButtons;
+                },
+
+                store: function() {
+                    const aStore = GameStore.get( this.oGamepad.id ) || [],
+                        oData = Controller.createDataStore(this, {
+                            nIndex: this.nIndex,
+                            nIndexStore: this.nIndexStore
+                        } );
+
+                    if( this.nIndexStore == -1 ){
+                        oData.nIndexStore = this.nIndexStore = aStore.length;
+                        aStore.push(oData);
+                    } else {
+                        aStore[this.nIndexStore] = oData;
+                    }
+
+                    GameStore.update( this.oGamepad.id, aStore );
                 }
             }
         )

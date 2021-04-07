@@ -81,7 +81,7 @@ Object.assign(
                     window.addEventListener('gamepadconnected', oEvent => {
                         if( !GamepadController.oIndexCreate[oEvent.gamepad.index] ){
                             if( oEvent.gamepad.mapping == 'standard' ){
-                                const oGamepad = GAME.oInput.create('Gamepad', GAME.oSettings.oController.oGamepad, oEvent.gamepad.index );
+                                const oGamepad = GamepadController.recover( oEvent.gamepad, GAME.oSettings.oController.oGamepad );
                                 InitializeSettings.createController(oGamepad.sId);
                                 InitializeSide.createController(oGamepad.sId);
                                 console.log(oEvent.gamepad.id);

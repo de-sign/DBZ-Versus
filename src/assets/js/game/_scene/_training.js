@@ -74,8 +74,8 @@ Object.assign(
                     this.oData.aController.forEach( oController => {
                         oController && oController.ifPressedNow( {
                             START: () => {
-                                this.oTraining.toggle();
                                 this.oController = oController;
+                                this.oTraining.toggle();
                             }
                         } );
                     } );

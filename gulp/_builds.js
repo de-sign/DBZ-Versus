@@ -89,8 +89,8 @@ module.exports = function(config){
                 FW.url = url.parse(FW.url.origin + FW.url.path);
 
                 const date = new Date();
-                FW.date = '' + date.getFullYear() + date.getMonth() + date.getDate();
-                FW.time = '' + date.getHours() + date.getMinutes() + date.getSeconds();
+                FW.date = '' + date.getFullYear() + ( date.getMonth() + 1 ).toString().padStart(2, '0') + date.getDate().toString().padStart(2, '0');
+                FW.time = '' + date.getHours().toString().padStart(2, '0') + date.getMinutes().toString().padStart(2, '0') + date.getSeconds().toString().padStart(2, '0');
                 
                 let s_root = config.paths.dest.root;
                 FW.paths = {};
