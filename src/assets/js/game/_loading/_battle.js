@@ -35,7 +35,8 @@ Object.assign(
                     const nPlayer = nIndex + 1;
                     this.createPlayer(nPlayer);
                     this.createHUDPlayer(nPlayer);
-                    this.createHUDBars(nPlayer);
+                    this.createHUDLife(nPlayer);
+                    this.createHUDKi(nPlayer);
                     this.createTrainingParameters(nPlayer);
                 }
                 this.createTrainingList();
@@ -90,22 +91,16 @@ Object.assign(
                 this.oContext.add(new GAME.oOutput.OutputLayer(hLayer), '.Battle__HUDs');
                 this.oContext.update();
             },
-            createHUDBars: function(nPlayer){
-                const oLayer = GAME.oOutput.getElement('LAY__Battle_HUD_Bar_' + nPlayer);
-                if( oLayer.aChildElement.length != GAME.oSettings.nLife ){
-                    const nMax = Math.max(oLayer.aChildElement.length, GAME.oSettings.nLife);
-                    for( let nIndex = 0; nIndex < nMax; nIndex++ ){
-                        if( nIndex >= oLayer.aChildElement.length ){
-                            oLayer.add( new GAME.oOutput.OutputText() );
-                        }
-                        else if( nIndex >= GAME.oSettings.nLife ){
-                            oLayer.addTickUpdate(
-                                (oElm => {
-                                    return () => oLayer.delete(oElm);
-                                } )( oLayer.aChildElement[nIndex] )
-                            );
-                        }
-                    }
+            createHUDLife: function(nPlayer){
+                const oLayer = GAME.oOutput.getElement('LAY__Battle_HUD_Life_' + nPlayer);
+                for( let nIndex = 0; nIndex < GAME.oSettings.nLife; nIndex++ ){
+                    oLayer.add( new GAME.oOutput.OutputText() );
+                }
+            },
+            createHUDKi: function(nPlayer){
+                const oLayer = GAME.oOutput.getElement('LAY__Battle_HUD_Ki_' + nPlayer);
+                for( let nIndex = 0; nIndex < GAME.oSettings.nKi; nIndex++ ){
+                    oLayer.add( new GAME.oOutput.OutputText() );
                 }
             },
             createTrainingParameters: function(nPlayer){

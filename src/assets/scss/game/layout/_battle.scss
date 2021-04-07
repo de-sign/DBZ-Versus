@@ -47,8 +47,12 @@
             text-align: right;
         }
 
-        .Battle__HUD_Character_Bars {
+        .Battle__HUD_Character_Life {
             flex-direction: row;
+        }
+
+        .Battle__HUD_Character_Ki {
+            flex-direction: row-reverse;
         }
     }
     
@@ -59,7 +63,7 @@
     
         &_Name {
             font-size: 2.4em;
-            margin: 30px 10px 0;
+            margin: 15px 10px 0;
         }
         
         &_Number {
@@ -67,12 +71,12 @@
             margin: 5px 10px 5px;
         }
 
-        &_Bars {
+        &_Life {
             display: flex;
             flex-direction: row-reverse;
             text-align: center;
             border: 2px solid Black;
-            margin: 5px 0;
+            margin: 5px 0 2px;
             position: relative;
         
             & > * {
@@ -107,46 +111,45 @@
                 &.Battle__HUD_Bar_Lose {
                     background-color: Orange;
                 }
+            }
+        }
+
+        &_Ki {
+            display: flex;
+            flex-direction: row;
+            text-align: center;
+            margin: 1px;
+        
+            & > * {
+                width: 14px;
+                height: 14px;
+                margin: 0 -1px;
                 
                 &.Battle__HUD_Bar_Ki {
+                    background-color: #6699FF;
+                    display: block;
+                    border-top: 2px solid Black;
+                    border-bottom: 2px solid Black;
 
-                    &::after {
-                        content: '';
-                        background-color: #6699FF;
-                        display: block;
-                        position: absolute;
-                        bottom: -18px;
-                        right: 0;
-                        left: -2px;
-                        border-top: 2px solid Black;
-                        border-bottom: 2px solid Black;
-                        height: 10px;
-                    }
-
-                    &:nth-child(2n)::after {
-                        border-left: 2px solid Black;
-                    }
-
-                    &:nth-child(2n+1)::after {
+                    &:nth-child(2n) {
                         border-right: 2px solid Black;
+                    }
+
+                    &:nth-child(2n+1) {
+                        border-left: 2px solid Black;
                     }
                 }
 
                 .Battle__HUD:last-child &.Battle__HUD_Bar_Ki {
-
-                    &::after {
-                        left: 0;
-                        right: -2px;
-                    }
-
-                    &:nth-child(2n)::after {
-                        border-right: 2px solid Black;
-                        border-left: none;
-                    }
                     
-                    &:nth-child(2n+1)::after {
+                    &:nth-child(2n) {
                         border-right: none;
                         border-left: 2px solid Black;
+                    }
+
+                    &:nth-child(2n+1) {
+                        border-right: 2px solid Black;
+                        border-left: none;
                     }
                 }
             }
