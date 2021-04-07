@@ -124,7 +124,7 @@ Object.assign(
 
                 this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                     this.aParam.push( GameStore.get('Parameters_' + nIndex) || {
-                        nLife: GAME.oSettings.nLife,
+                        nLife: GAME.oSettings.oLife.character,
                         nKi: GAME.oSettings.nKi,
                         bRegenLife: true,
                         bRegenKi: true

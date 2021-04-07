@@ -43,7 +43,7 @@ Object.assign(
                     
                     this.addStepText( 'Loading frames ' + oColor.sName );
                     for( let sFrame in oChar.oFrames ){
-                        this.oAssetManager.add(oChar.oPath[oColor.sCod].sFrames + '/' + oChar.oFrames[sFrame].sPath);
+                        this.oAssetManager.add(oColor.oPath.sFrames + '/' + oChar.oFrames[sFrame].sPath);
                     }
                     this.nCharacter++;
                 }

@@ -18,7 +18,7 @@ Object.assign(
 
             this.oLayer.addTickUpdate( () => {
                 GAME.oOutput.getElement('SPT__Battle_HUD_Sprite_' + this.oPlayer.nPlayer)
-                    .setSource( this.oPlayer.oPath.sFace );
+                    .setSource( this.oPlayer.oColor.oPath.sFace );
                 GAME.oOutput.getElement('TXT__Battle_HUD_Name_' + this.oPlayer.nPlayer)
                     .setText( this.oPlayer.oColor.sName );
                 GAME.oOutput.getElement('TXT__Battle_HUD_Number_' + this.oPlayer.nPlayer)

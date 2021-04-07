@@ -93,7 +93,7 @@ Object.assign(
             },
             createHUDLife: function(nPlayer){
                 const oLayer = GAME.oOutput.getElement('LAY__Battle_HUD_Life_' + nPlayer);
-                for( let nIndex = 0; nIndex < GAME.oSettings.nLife; nIndex++ ){
+                for( let nIndex = 0; nIndex < GAME.oSettings.oLife.character; nIndex++ ){
                     oLayer.add( new GAME.oOutput.OutputText() );
                 }
             },

@@ -29,7 +29,11 @@ Object.assign(
             },
 
             // Game
-            nLife: 30,
+            oLife: {
+                character: 30,
+                kikoha: 1,
+                beam: 1
+            },
             nKi: 20,
             oLuncher: {
                 nLength: 36,

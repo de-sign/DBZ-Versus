@@ -23,10 +23,9 @@ Object.assign(
         },
 
         createColor: function(oChar){
-            oChar.oPath = {};
-            oChar.aColor.forEach( oColor => {
-                oChar.sColor || (oChar.sColor = oColor.sCod);
-                oChar.oPath[oColor.sCod] = {
+            oChar.aColor.forEach( (oColor, nIndex) => {
+                oChar.oDefaultColor || (oChar.oDefaultColor = oColor);
+                oColor.oPath = {
                     sFace: 'assets/images/characters/face/' + oChar.sCod + '/' + oColor.sCod + '.png',
                     sFrames: 'assets/images/characters/frames/' + oChar.sCod + '/' + oColor.sCod,
                     sPreview: 'assets/images/characters/preview/' + oChar.sCod + '/' + oColor.sCod + '.png'

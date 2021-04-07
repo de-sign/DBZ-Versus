@@ -88,7 +88,7 @@ Object.assign(
             }
 
             this.oCharacter = this.oMenu.oCharacter.getSelected(this.nCursor).__oData;
-            const sColor = this.oCharacter.aColor[this.nColor].sCod;
+            const oColor = this.oCharacter.aColor[this.nColor];
             let sText = 'Player #' + this.nPlayer;
             if( this.bReady ){
                 sText = 'Ready !';
@@ -99,9 +99,9 @@ Object.assign(
             }  
 
             GAME.oOutput.getElement('SPT__Select_Character_' + this.nPlayer)
-                .setSource( this.oCharacter.oPath[sColor].sPreview );
+                .setSource( oColor.oPath.sPreview );
             GAME.oOutput.getElement('TXT__Select_Character_' + this.nPlayer)
-                .setText( this.oCharacter.aColor[this.nColor].sName );
+                .setText( oColor.sName );
             GAME.oOutput.getElement('TXT__Select_Player_' + this.nPlayer)
                 .setText( sText );
         },

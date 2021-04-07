@@ -15,6 +15,8 @@
 
 //=include _battle/_scene.js
 //=include _battle/_display.js
+//=include _battle/_components.js
+//=include _battle/_entity.js
 //=include _battle/_player.js
 //=include _battle/_engine.js
 //=include _scene/_versus.js

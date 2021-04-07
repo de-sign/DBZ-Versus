@@ -38,7 +38,6 @@ __Select__
 *N/A*
 
 __Battle__
-* Séparer la barre de KI de la barre de LIFE
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
 * Projectiles
 * Méchaniques de jeu
@@ -55,6 +54,7 @@ __Training__
 
 __General__
 * Optimisation du Code
+    * Classe ENTITY zvec pour enfant CHARACTER et KIKOHA ( et BEAM ? )
     * Classe CHARACTER avec pour enfant PLAYER et DUMMY ( et AI ? )
 * Nouveaux CHARACTER et COLOR
     * BUU

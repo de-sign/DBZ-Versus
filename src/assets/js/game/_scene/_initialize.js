@@ -61,18 +61,18 @@ Object.assign(
                     this.addStepText( 'Loading face characters' );
                     for( let sChar in GAME.oData.oCharacter ){
                         const oChar = GAME.oData.oCharacter[sChar];
-                        for( let sColor in oChar.oPath ){
-                            this.oAssetManager.add( oChar.oPath[sColor].sFace );
-                        }
+                        oChar.aColor.forEach( oColor => {
+                            this.oAssetManager.add( oColor.oPath.sFace );
+                        } );
                     }
                 },
                 stepImage_Character: function(){
                     this.addStepText( 'Loading preview characters' );
                     for( let sChar in GAME.oData.oCharacter ){
                         const oChar = GAME.oData.oCharacter[sChar];
-                        for( let sColor in oChar.oPath ){
-                            this.oAssetManager.add( oChar.oPath[sColor].sPreview );
-                        }
+                        oChar.aColor.forEach( oColor => {
+                            this.oAssetManager.add( oColor.oPath.sFace );
+                        } );
                     }
                 },
 
