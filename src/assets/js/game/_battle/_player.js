@@ -20,7 +20,7 @@ function BattlePlayer(nPlayer, sChar, nColor, oController){
     this.nLife = 0;
     this.nKi = 0;
 
-    this.init(sChar, nColor, oController);
+    this.init(nPlayer, sChar, nColor, oController);
 }
 
 Object.assign(
