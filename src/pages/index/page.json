@@ -2,8 +2,8 @@
     "url": {
         "path": "/index.html"
     },
-    "stylesheet": ["engine.css", "game.css"],
-    "script": ["engine.js", "data.js", "game.js"],
+    "stylesheet": ["engine.css?v={{ FW.version }}.{{ FW.date }}.{{ FW.time }}", "game.css?v={{ FW.version }}.{{ FW.date }}.{{ FW.time }}"],
+    "script": ["engine.js?v={{ FW.version }}.{{ FW.date }}.{{ FW.time }}", "data.js?v={{ FW.version }}.{{ FW.date }}.{{ FW.time }}", "game.js?v={{ FW.version }}.{{ FW.date }}.{{ FW.time }}"],
 
     "template": {
         "name": "game"
