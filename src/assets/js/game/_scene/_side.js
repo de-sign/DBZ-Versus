@@ -138,6 +138,8 @@ function SideScene(){
 
     this.aController = [];
     this.aSideLock = [];
+
+    this.nFrameCreated = 0;
 }
 
 Object.assign(
@@ -167,6 +169,8 @@ Object.assign(
                     this.oData = oLastData;
 					GAME.oOutput.useContext('CTX__Side');
 					this.oContext = GAME.oOutput.getElement('CTX__Side');
+
+                    this.nFrameCreated = GAME.oTimer.nFrames;
 
                     const aName = [ 'Versus', 'Training' ],
                         aController = oLastData.aController ?
@@ -250,7 +254,10 @@ Object.assign(
                 },
                 updateStatus: function(){
 
-                    let nReady = 0;
+                    let nReady = 0,
+                        nNeedReady = GAME.oSettings.nPlayer,
+                        nSide = 0;
+
                     this.oStatus = {
                         bReturn: false,
                         bQuit: false,
@@ -261,9 +268,23 @@ Object.assign(
                         oCustomer.bReady && nReady++;
                         this.oStatus.bReturn || ( this.oStatus.bReturn = oCustomer.bReturn );
                         this.oStatus.bQuit || ( this.oStatus.bQuit = oCustomer.bQuit );
+                        oCustomer.nSide && nSide++;
                     } );
 
-                    this.oStatus.bReady = nReady >= ( this.sType == 'Training' ? 1 : GAME.oSettings.nPlayer );
+                    if( this.sType == 'Training' && nSide != nNeedReady ){
+                        let nChange = 0;
+                        for( let sController in GAME.oInput.oController ){
+                            const oController = GAME.oInput.getController(sController);
+                            if( oController.nFrameChange > this.nFrameCreated ){
+                                nChange++;
+                            }
+                        }
+                        if( nChange < nNeedReady ){
+                            nNeedReady = 1;
+                        }
+                    }
+
+                    this.oStatus.bReady = nReady == nNeedReady;
                 }
             }
         )

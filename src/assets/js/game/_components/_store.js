@@ -12,8 +12,9 @@ Object.assign(
             }
         },
         update: function(sKey, uData){
-            this.oData[sKey] = uData;
-            localStorage.setItem( sKey, JSON.stringify(uData) );
+            const sData = JSON.stringify(uData);
+            localStorage.setItem(sKey, sData);
+            this.oData[sKey] = JSON.parse(sData);
         },
         get: function(sKey){
             return this.oData[sKey];

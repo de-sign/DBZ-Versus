@@ -77,7 +77,7 @@ Object.assign(
                         if( sType == 'oFrameRate' ){
                             this.oLayer[sType].aChildElement[0].setText( this.oEngine.getFrameRate() + 'fps' );
                         } else {
-                            this.oLayer[sType].aChildElement[0].setText( this.oEngine.oShow[sType] ? 'Show' : 'Hide' );
+                            this.oLayer[sType].aChildElement[0].setText( this.oEngine.oParameters.oShow[sType] ? 'Show' : 'Hide' );
                         }
                     }
                 }
@@ -93,12 +93,14 @@ function TrainingEngineDisplay(oScene){
     this.aBox = [];
     this.aHistory = [];
     this.aAnimation = [];
-    this.nFrameRate = 0;
 
-    this.oShow = {
-        bHistory: true,
-        bBox: true,
-        bAnimation: true
+    this.oParameters = {
+        nFrameRate: 0,
+        oShow: {
+            bHistory: true,
+            bBox: true,
+            bAnimation: true
+        }
     };
 
     this.init(oScene);
@@ -143,6 +145,8 @@ Object.assign(
             init: function(oScene){
                 this.oScene = oScene;
 
+                Object.assign( this.oParameters, GameStore.get('Display') );
+
                 oScene.aPlayer.forEach( oPlayer => {
                     const oHistory = GAME.oOutput.getElement('LAY__Training_History_' + oPlayer.nPlayer),
                         oAnim = GAME.oOutput.getElement('LAY__Training_Animation_' + oPlayer.nPlayer);
@@ -163,11 +167,12 @@ Object.assign(
                     oAnim.hElement.innerHTML = '';
                 } );
 
-                for( let sType in this.oShow ){
-                    if( this.oShow[sType] ){
+                for( let sType in this.oParameters.oShow ){
+                    if( this.oParameters.oShow[sType] ){
                         this.show(sType);
                     }
                 }
+                this.setFrameRate();
             },
             update: function(){
                 this.updateHistory();
@@ -175,9 +180,10 @@ Object.assign(
                 this.updateAnimation();
             },
             destroy: function(){
-                for( let sType in this.oShow ){
+                for( let sType in this.oParameters.oShow ){
                     this.hide(sType);
                 }
+                this.setFrameRate(60);
                 this.oScene.oContext.update();
             },
 
@@ -190,7 +196,7 @@ Object.assign(
 
             // History
             updateHistory: function(oPlayer){
-                if( this.oShow.bHistory ){
+                if( this.oParameters.oShow.bHistory ){
                     this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                         oPlayer.oInputBuffer.aHistory.forEach( (oHistory, nHistory, aHistory) => {
                             const aBtn = Object.keys( oHistory.oButtons ),
@@ -227,7 +233,7 @@ Object.assign(
             },
             // Box
             updateBox: function(oPlayer){
-                if( this.oShow.bBox ){
+                if( this.oParameters.oShow.bBox ){
                     this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                         ['oPositionBox', 'aHurtBox', 'aHitBox'].forEach( sBox => {
                             const aBox = oPlayer.getCharacterBox(sBox),
@@ -269,7 +275,7 @@ Object.assign(
 
             // Animation
             updateAnimation: function(oPlayer){
-                if( this.oShow.bAnimation ){
+                if( this.oParameters.oShow.bAnimation ){
                     this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                         const oAnimation = this.aAnimation[nIndex];
                         if( oPlayer.oAnimation.sType != 'movement' ){
@@ -294,38 +300,39 @@ Object.assign(
             },
             // Gestion Affichage
             show: function(sType){
-                this.oShow[sType] = true;
+                this.oParameters.oShow[sType] = true;
                 this.oScene.oContext.addTickUpdate( () => {
                     this.oScene.oContext.hElement.classList.add('--' + sType);
                 } );
             },
             hide: function(sType){
-                this.oShow[sType] = false;
+                this.oParameters.oShow[sType] = false;
                 this.oScene.oContext.addTickUpdate( () => {
                     this.oScene.oContext.hElement.classList.remove('--' + sType);
                 } );
             },
             toogle: function(sType){
-                this[ this.oShow[sType] ? 'hide' : 'show' ](sType);
+                this[ this.oParameters.oShow[sType] ? 'hide' : 'show' ](sType);
+                GameStore.update('Display', this.oParameters);
             },
 
             // FrameRate
             changeFrame: function(nChange){
-                    
-                this.nFrameRate += nChange;
-                if( this.nFrameRate >= TrainingEngineDisplay.aFrameRate.length ){
-                    this.nFrameRate = 0;
+                this.oParameters.nFrameRate += nChange;
+                if( this.oParameters.nFrameRate >= TrainingEngineDisplay.aFrameRate.length ){
+                    this.oParameters.nFrameRate = 0;
                 }
-                else if( this.nFrameRate < 0 ){
-                    this.nFrameRate = TrainingEngineDisplay.aFrameRate.length - 1;
+                else if( this.oParameters.nFrameRate < 0 ){
+                    this.oParameters.nFrameRate = TrainingEngineDisplay.aFrameRate.length - 1;
                 }
+                GameStore.update('Display', this.oParameters);
             },
             setFrameRate: function(nFrameRate){
                 GAME.oTimer.setFPS(nFrameRate || this.getFrameRate());
             },
             getFrameRate: function(){
-                return TrainingEngineDisplay.aFrameRate[ this.nFrameRate ];
-            },
+                return TrainingEngineDisplay.aFrameRate[ this.oParameters.nFrameRate ];
+            }
         }
     }
 );

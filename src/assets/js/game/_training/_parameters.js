@@ -123,7 +123,7 @@ Object.assign(
                 this.oScene = oScene;
 
                 this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
-                    this.aParam.push( {
+                    this.aParam.push( GameStore.get('Parameters_' + nIndex) || {
                         nLife: GAME.oSettings.nLife,
                         nKi: GAME.oSettings.nKi,
                         bRegenLife: true,
@@ -172,6 +172,8 @@ Object.assign(
                 else if( oParam[sStat] < oMinStat[sStat] ){
                     oParam[sStat] = GAME.oSettings[sStat];
                 }
+
+                GameStore.update('Parameters_' + nIndex, oParam);
             },
             setStat: function(nIndex, sStat){
                 const oParam = this.aParam[nIndex];
@@ -181,6 +183,8 @@ Object.assign(
             changeRegen: function(nIndex, sRegen){
                 sRegen = 'bRegen' + sRegen;
                 this.aParam[nIndex][sRegen] = !this.aParam[nIndex][sRegen];
+
+                GameStore.update('Parameters_' + nIndex, this.aParam[nIndex]);
             }
         }
     }

@@ -215,7 +215,11 @@ Object.assign(
                         oCharacter: new GameMenu('LAY__Select_Character', [0, -1]),
                         oStage: new SelectStageMenu('LAY__Select_Stage')
                     };
-                    this.oMenu.oStage.update(); // Evite le sautillement
+
+                    // Evite le sautillement
+                    for( let sMenu in this.oMenu ){
+                        this.oMenu[sMenu].update();
+                    }
 
                     // Players init
                     for( let nIndex = 0; nIndex < GAME.oSettings.nPlayer; nIndex++ ){

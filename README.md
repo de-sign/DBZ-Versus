@@ -23,16 +23,19 @@ Utilise un moteur de jeu fait maison et FOX Website :
 
 ## TODO
 __BUG__
+*N/A*
 
 __Menu__
-* Ajout du ONLINE ? 
+* Ajout du ONLINE ?
 
 __Settings__
-* Boutons en Cookies
+*N/A*
 
 __Side__
+*N/A*
 
 __Select__
+*N/A*
 
 __Battle__
 * Séparer la barre de KI de la barre de LIFE
@@ -44,7 +47,6 @@ __Battle__
     * Guard break ?
 
 __Training__
-* Paramétrage en Cookies
 * Terminer Menu
     * Restart
     * Dummy ?
