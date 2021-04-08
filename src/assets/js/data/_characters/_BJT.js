@@ -612,7 +612,7 @@ GAME.oData.oCharacter.BJT = {
                 nHeight: 108
             }]
         },
-        ki_blast: {
+        kikoha: {
             oPositionBox: {
                 nX: -30,
                 nY: -110,
@@ -991,6 +991,26 @@ GAME.oData.oCharacter.BJT = {
                 }
             }
         ],
+        kikoha: [
+            {
+                nFrame: 2,
+                sFrame: 'blur'
+            },
+            {
+                nFrame: 20,
+                sFrame: 'kikoha',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+        ],
         // Final Flash / Garric Canon
         // 46, 36, 26
         super: [
@@ -1071,6 +1091,37 @@ GAME.oData.oCharacter.BJT = {
                         { DN: false },
                         { DF: false },
                         { FW: false, C: true }
+                    ]
+                }
+            },
+            {
+                sCod: 'kikoha',
+                sName: 'Kikoha',
+                sAnimation: 'kikoha',
+                nCost: 4,
+                nGatlingLevel: 2,
+                oEntity: {
+                    sType: 'Kikoha',
+                    oColor: {
+                        SSJ: 1,
+                        BSJ: 2
+                    },
+                    nFrameStart: 10,
+                    oPosition: {
+                        nX: 58,
+                        nY: -28
+                    }
+                },
+                oStun: {
+                    nBlock: 8,
+                    nHit: 16,
+                    sHitAnimation: 'hit_heavy'
+                },
+                bLast: true,
+                oManipulation: {
+                    nMaxLengthFrame: 1,
+                    aButtons: [
+                        { C: true }
                     ]
                 }
             },

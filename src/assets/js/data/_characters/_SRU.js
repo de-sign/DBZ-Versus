@@ -517,7 +517,7 @@ GAME.oData.oCharacter.SRU = {
                 nHeight: 104
             }
         },
-        ki_blast: {
+        kikoha: {
             oPositionBox: {
                 nX: -30,
                 nY: -110,
@@ -929,7 +929,7 @@ GAME.oData.oCharacter.SRU = {
             },
             {
                 nFrame: 10,
-                sFrame: 'ki_blast'
+                sFrame: 'kikoha'
             },
             {
                 nFrame: 4,
@@ -940,7 +940,7 @@ GAME.oData.oCharacter.SRU = {
             },
             {
                 nFrame: 14,
-                sFrame: 'ki_blast',
+                sFrame: 'kikoha',
                 oStatus: {
                     bCancel: true
                 }
@@ -963,19 +963,23 @@ GAME.oData.oCharacter.SRU = {
             },
             {
                 nFrame: 30,
-                sFrame: 'super_first'
+                sFrame: 'super_first',
+                aHurtBox: null
             },
             {
                 nFrame: 10,
-                sFrame: 'super_second'
+                sFrame: 'super_second',
+                aHurtBox: null
             },
             {
                 nFrame: 2,
-                sFrame: 'super_third'
+                sFrame: 'super_third',
+                aHurtBox: null
             },
             {
                 nFrame: 2,
-                sFrame: 'super_fourth'
+                sFrame: 'super_fourth',
+                aHurtBox: null
             },
             {
                 nFrame: 36,

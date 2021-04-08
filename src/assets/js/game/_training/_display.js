@@ -152,12 +152,6 @@ Object.assign(
                         oAnim = GAME.oOutput.getElement('LAY__Training_Animation_' + oPlayer.nPlayer);
 
                     this.aHistory.push( oHistory );
-                    
-                    this.aBox.push( {
-                        oPositionBox: GAME.oOutput.getElement('LAY__Training_PositionBox_' + oPlayer.nPlayer),
-                        aHurtBox: GAME.oOutput.getElement('LAY__Training_HurtBox_' + oPlayer.nPlayer),
-                        aHitBox: GAME.oOutput.getElement('LAY__Training_HitBox_' + oPlayer.nPlayer)
-                    } );
                     this.aAnimation.push( {
                         oLayer: oAnim,
                         oLast: null
@@ -195,7 +189,7 @@ Object.assign(
             },
 
             // History
-            updateHistory: function(oPlayer){
+            updateHistory: function(){
                 if( this.oParameters.oShow.bHistory ){
                     this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                         oPlayer.oInputBuffer.aHistory.forEach( (oHistory, nHistory, aHistory) => {
@@ -232,12 +226,12 @@ Object.assign(
                 }
             },
             // Box
-            updateBox: function(oPlayer){
+            updateBox: function(){
                 if( this.oParameters.oShow.bBox ){
-                    this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
+                    BattleEntity.get().forEach( oEntity => {
                         ['oPositionBox', 'aHurtBox', 'aHitBox'].forEach( sBox => {
-                            const aBox = oPlayer.getCharacterBox(sBox),
-                                oLayer = this.aBox[nIndex][sBox],
+                            const aBox = oEntity.getBox(sBox),
+                                oLayer = GAME.oOutput.getElement('LAY__Training_' + sBox.slice(1) + '_' + oEntity.sId),
                                 nMaxElement = Math.max( oLayer.hElement.children.length, aBox.length );
 
                             oLayer.addTickUpdate( () => {
@@ -250,8 +244,8 @@ Object.assign(
                                         oBox ? 
                                             {
                                                 display: null,
-                                                left: ( GAME.oSettings.oPositionPoint.nX + oBox.nX ) + 'px',
-                                                top: ( GAME.oSettings.oPositionPoint.nY + oBox.nY ) + 'px',
+                                                left: ( oEntity.oPositionPoint.nX + oBox.nX ) + 'px',
+                                                top: ( oEntity.oPositionPoint.nY + oBox.nY ) + 'px',
                                                 width: oBox.nWidth + 'px',
                                                 height: oBox.nHeight + 'px'
                                             } :
@@ -274,7 +268,7 @@ Object.assign(
             },
 
             // Animation
-            updateAnimation: function(oPlayer){
+            updateAnimation: function(){
                 if( this.oParameters.oShow.bAnimation ){
                     this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                         const oAnimation = this.aAnimation[nIndex];

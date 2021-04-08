@@ -119,8 +119,8 @@ GAME.oData.oDefaultCharacter = {
             sPath: 'luncher_active.png',
             nZIndex: 30
         },
-        ki_blast: {
-            sPath: 'ki_blast.png',
+        kikoha: {
+            sPath: 'kikoha.png',
             nZIndex: 30
         },
         ki_beam: {

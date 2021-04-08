@@ -16,6 +16,7 @@ Object.assign(
                 this.createRecovery(oChar);
                 this.createCommands(oChar);
             }
+            this.createKikoha();
         },
 
         isPlainObject: function(uData){
@@ -26,9 +27,9 @@ Object.assign(
             oChar.aColor.forEach( (oColor, nIndex) => {
                 oChar.oDefaultColor || (oChar.oDefaultColor = oColor);
                 oColor.oPath = {
-                    sFace: 'assets/images/characters/face/' + oChar.sCod + '/' + oColor.sCod + '.png',
-                    sFrames: 'assets/images/characters/frames/' + oChar.sCod + '/' + oColor.sCod,
-                    sPreview: 'assets/images/characters/preview/' + oChar.sCod + '/' + oColor.sCod + '.png'
+                    sFace: GAME.oSettings.oPath.oCharacter.sFace + '/' + oChar.sCod + '/' + oColor.sCod + '.png',
+                    sFrames: GAME.oSettings.oPath.oCharacter.sFrames + '/' + oChar.sCod + '/' + oColor.sCod,
+                    sPreview: GAME.oSettings.oPath.oCharacter.sPreview + '/' + oChar.sCod + '/' + oColor.sCod + '.png'
                 };
             } );
         },
@@ -140,6 +141,14 @@ Object.assign(
                 Object.assign(oCommands, this.oData.oCommands);
             }
             oChar.oCommands = oCommands;
+        },
+
+        createKikoha: function(){
+            GAME.oData.oKikoha.aColor.forEach( oColor => {
+                oColor.oPath = {
+                    sFrames: GAME.oSettings.oPath.oKikoha.sRoot + '/' + oColor.sCod
+                };
+            } );
         }
     }
 );

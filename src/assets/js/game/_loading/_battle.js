@@ -31,9 +31,9 @@ Object.assign(
                 this.oArea = GAME.oOutput.getElement('LAY__Battle_Area');
 
                 this.getPattern();
+                BattleEntity.init('LAY__Battle_Entity_');
                 for( let nIndex = 0; nIndex < GAME.oSettings.nPlayer; nIndex++ ){
                     const nPlayer = nIndex + 1;
-                    this.createPlayer(nPlayer);
                     this.createHUDPlayer(nPlayer);
                     this.createHUDLife(nPlayer);
                     this.createHUDKi(nPlayer);
@@ -47,7 +47,6 @@ Object.assign(
             getPattern: function(){
                 this.oPattern = {
                     oHUD: GAME.oOutput.getElement('LAY__Battle_HUD_'),
-                    oPlayer: GAME.oOutput.getElement('LAY__Battle_Character_'),
                     oParameters: GAME.oOutput.getElement('LAY__Training_Menu_Parameters_Player'),
                     oCommand: GAME.oOutput.getElement('LAY__Training_Menu_List_Command_'),
                     oList: GAME.oOutput.getElement('LAY__Training_Menu_List_Character_')
@@ -56,23 +55,6 @@ Object.assign(
                 for( let sPattern in this.oPattern ){
                     this.oPattern[sPattern] && this.oPattern[sPattern].oParentElement.delete( this.oPattern[sPattern] );
                 }
-            },
-            createPlayer: function(nPlayer){
-                // Clone du LAYER
-                let hLayer = this.oPattern.oPlayer.hElement.cloneNode(true);
-                hLayer.id += nPlayer;
-                hLayer.classList.remove(GAME.oOutput.oConfig.class.created);
-                [].forEach.call(
-                    hLayer.querySelectorAll('.--change'),
-                    hElement => {
-                        hElement.id += nPlayer;
-                        hElement.classList.remove('--change', GAME.oOutput.oConfig.class.created);
-                    }
-                );
-
-                // Ajout dans l'arène
-                this.oArea.add(new GAME.oOutput.OutputLayer(hLayer));
-                this.oContext.update();
             },
             createHUDPlayer: function(nPlayer){
                 // Clone du LAYER

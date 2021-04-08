@@ -1,17 +1,23 @@
-function BattleEntity(sType, oData, nColor) {
+function BattleEntity(sType, oData, nColor, bReverse, oParent) {
     this.sType = '';
     this.sId = '';
+    this.oParent = null;
+    this.oCheck = null;
+    this.oPositionPoint = null;
 
     this.oLayer = null;
     this.oSprite = null;
     this.oData = null;
     this.oColor = null;
-
+    
+    this.oHitData = null;
+    this.oDeadTimer = null;
     this.oAnimation = null;
     this.oMovement = null;
 
     this.bReverse = false;
     this.nLife = 0;
+    this.bHit = false;
 
     this.init.apply(this, arguments);
 }
@@ -22,6 +28,32 @@ Object.assign(
         nId: 0,
         oInstance: {},
         oPattern: null,
+        oCheck: {
+            character: {
+                bCollapse: true,
+                bReverse: true,
+                bHit: true,
+                oHurt: {
+                    character: true,
+                    kikoha: true,
+                    beam: true
+                },
+                bLunch: true,
+                bPushback: true
+            },
+            kikoha: {
+                bHit: true,
+                oHurt: {
+                    kikoha: true,
+                    beam: true
+                }
+            },
+            beam: {
+                bHit: true,
+                oHurt: {},
+                bPushback: true
+            }
+        },
 
         add: function(oEntity) {
             const sId = 'BE_' + (++this.nId);
@@ -43,25 +75,50 @@ Object.assign(
 
         prototype: {
             constructor: BattleEntity,
-            init: function(sType, oData, nColor){
-                this.sId = GameEntity.add(this);
+            init: function(sType, oData, nColor, oParent){
+                this.sId = BattleEntity.add(this);
                 this.sType = sType;
-                this.nLife = GAME.oSettings.oLife[sType];
+                this.oCheck = BattleEntity.oCheck[sType];
+                this.oPositionPoint = GAME.oSettings.oPositionPoint[sType];
                 
                 this.oData = oData;
                 this.oColor = oData.aColor[nColor];
+                this.oParent = oParent;
 
+                this.nLife = GAME.oSettings.oLife[sType];
                 this.createLayer();
             },
             update: function(){
-                this.updateAnimation();
+                // Destruction après 1s pour prévention du ROLLBACK
+                if( this.isDead() ) {
+                    this.oDeadTimer.update();
+                    if( this.oDeadTimer.isEnd() ){
+                        this.destroy();
+                    }
+                } else {
+                    // Debut TIMER pour destruction
+                    if( this.nLife <= 0 && this.oAnimation.isEnd() ){
+                        this.die();
+                    } else {
+                        this.updateAnimation();
+                    }
+                }
             },
             destroy: function(){
-                GameEntity.remove(this);
+                BattleEntity.remove(this);
+                this.oLayer.oParentElement.delete(this.oLayer);
+            },
+
+            die: function(){
+                this.oDeadTimer = new GameTimer();
+                this.oDeadTimer.init( GAME.oSettings.nDie );
+                this.oLayer.addTickUpdate( () => {
+                    this.oLayer.hElement.classList.add('--dead');
+                } );
             },
 
             createLayer: function(){
-                let hLayer = this.oPattern.hElement.cloneNode(true);
+                let hLayer = BattleEntity.oPattern.hElement.cloneNode(true);
                 hLayer.id += this.sId;
                 hLayer.classList.add('Battle__' + this.sType[0].toUpperCase() + this.sType.slice(1));
                 hLayer.classList.remove(GAME.oOutput.oConfig.class.created);
@@ -74,43 +131,51 @@ Object.assign(
                 );
                 
                 this.oLayer = new GAME.oOutput.OutputLayer(hLayer);
+                
                 const oArea = GAME.oOutput.getElement('LAY__Battle_Area');
                 oArea.add(this.oLayer);
                 oArea.update();
-
-                this.oLayer.resetPosition();
-                this.oLayer.update();
-                this.oSprite = this.oLayer.aChildElement[0];
+           
+                this.oLayer.enableAutoPositioning();
+                this.oSprite = GAME.oOutput.getElement('SPT__Battle_Entity_Sprite_' + this.sId);
 
                 return this.oLayer;
             },
             render: function(){
-                // Reverse
-                this.oLayer.hElement.classList[ this.bReverse ? 'add' : 'remove' ]('--reverse');
-
-                // Animation Freeze en HURT
-                if( this.oAnimation.isHurt() ){
-                    if( this.oAnimation.oFrame.bFreeze ){
-                        this.oLayer.hElement.classList.remove(this.oAnimation.nFreeze % 2 ? '--freeze_impair' : '--freeze_pair');
-                        this.oLayer.hElement.classList.add(this.oAnimation.nFreeze % 2 ? '--freeze_pair' : '--freeze_impair');
-                    } else {
-                        this.oLayer.hElement.classList.remove('--freeze_pair', '--freeze_impair');
+                if( !this.isDead() ){
+                    // Reverse
+                    this.oLayer.hElement.classList[ this.bReverse ? 'add' : 'remove' ]('--reverse');
+                    
+                    // Animation Freeze en HURT
+                    if( this.oAnimation.isHurt() ){
+                        if( this.oAnimation.oFrame.bFreeze ){
+                            this.oLayer.hElement.classList.remove(this.oAnimation.nFreeze % 2 ? '--freeze_impair' : '--freeze_pair');
+                            this.oLayer.hElement.classList.add(this.oAnimation.nFreeze % 2 ? '--freeze_pair' : '--freeze_impair');
+                        } else {
+                            this.oLayer.hElement.classList.remove('--freeze_pair', '--freeze_impair');
+                        }
                     }
+                    
+                    // Type
+                    if( !this.oLayer.hElement.classList.contains('--' + this.oAnimation.sType) ){
+                        DOMTokenList.prototype.remove.apply( this.oLayer.hElement.classList, GameAnimation.aAllType.map( sType => '--' + sType ) );
+                        this.oLayer.hElement.classList.add('--' + this.oAnimation.sType);
+                    }
+                    this.oLayer.hElement.classList[ this.oAnimation.oFrame.oStatus.bGuard ? 'add' : 'remove' ]('--guard');
+                    
+                    // Frame
+                    this.oAnimation.oFrame.nZIndex && this.oLayer.setStyle( { zIndex: this.oAnimation.oFrame.nZIndex } );
+                    this.oSprite.setSource( this.oColor.oPath.sFrames + '/' + this.oAnimation.oFrame.sPath );
                 }
-    
-                // Type
-                if( !this.oLayer.hElement.classList.contains('--' + this.oAnimation.sType) ){
-                    DOMTokenList.prototype.remove.apply( this.oLayer.hElement.classList, GameAnimation.aAllType.map( sType => '--' + sType ) );
-                    this.oLayer.hElement.classList.add('--' + this.oAnimation.sType);
-                }
-                this.oLayer.hElement.classList[ this.oAnimation.oFrame.oStatus.bGuard ? 'add' : 'remove' ]('--guard');
-                
-                // Frame
-                this.oAnimation.oFrame.nZIndex && this.oLayer.setStyle( { zIndex: this.oAnimation.oFrame.nZIndex } );
-                this.oSprite.setSource( this.oColor.oColor.oPath.sFrames + '/' + this.oAnimation.oFrame.sPath );
             },
             
+            takeHit: function(oEntity){
+                const oData = oEntity.getHitData();
+                this.nLife -= oData.nDamage == null ? 1 : oData.nDamage;
+                oEntity.confirmHit();
+            },
             setAnimation: function(sAnimation, bUpdate){
+                let sSet = false;
                 if( !this.oAnimation || GameAnimation.isTypeHurt(sAnimation) || this.oAnimation.sName != sAnimation ){
                     this.oAnimation = new GameAnimation(
                         sAnimation,
@@ -119,7 +184,10 @@ Object.assign(
                     );
                     this.setMovement( this.oData.oAnimations[sAnimation].oMove );
                     bUpdate && this.updateAnimation();
+                    this.bHit = false;
+                    sSet = true;
                 }
+                return sSet;
             },
             setMovement: function(oMove){
                 this.oMovement = oMove ?
@@ -151,6 +219,16 @@ Object.assign(
                 }
                 return aBox;
             },
+            getHitData: function(){
+                return this.oHitData;
+            },
+
+            isDead: function(){
+                return this.oDeadTimer;
+            },
+            canMove: function(){
+                return this.oCheck.bCollapse;
+            },
 
             updateAnimation: function(){
                 this.oAnimation.update();
@@ -166,7 +244,53 @@ Object.assign(
                         this.oLayer.oPosition.nY += this.oMovement.oMove.nY;
                     }
                 }
+            },
+            confirmHit: function(){
+                this.bHit = true;
+            },
+            pushback: function(oPushback, bDivide){
+                oPushback = Object.assign({}, oPushback || GAME.oSettings.oPushback);
+                bDivide && (oPushback.nX /= 2);
+                this.setMovement(oPushback);
+                this.oMovement.update();
+                this.move();
             }
         }
+    }
+);
+
+/* ----- BattleKikoha ----- */
+function BattleKikoha(nColor, oPosition, bReverse, oHitData, oParent){
+    BattleEntity.apply(this, arguments);
+}
+
+Object.assign(
+    BattleKikoha, {
+        prototype: Object.assign(
+            Object.create(BattleEntity.prototype), {
+                constructor: BattleEntity,
+                init: function(nColor, oPosition, bReverse, oHitData, oParent){
+                    BattleEntity.prototype.init.call(this, 'kikoha', GAME.oData.oKikoha, nColor, oParent);
+                    this.oLayer.setPosition(oPosition);
+                    this.bReverse = bReverse;
+                    this.oHitData = oHitData;
+
+                    this.setAnimation('stand');
+                },
+                /*
+                update: function(){},
+                destroy: function(){}
+                */
+                takeHit: function(oEntity){
+                    oEntity && BattleEntity.prototype.takeHit.call(this, oEntity);
+                    this.setAnimation('hit_light', true);
+                },
+                confirmHit: function(oEntity){
+                    this.oParent.bHit = this.bHit = true;
+                    this.takeHit();
+                    this.nLife--;
+                }
+            }
+        )
     }
 );

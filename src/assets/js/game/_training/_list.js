@@ -59,7 +59,7 @@ Object.assign(
                     return sRedirection;
                 },
                 display: function(){
-                    this.oAnimation && this.oSprite.setSource( this.oEngine.oPlayer.oPath.sFrames + '/' + this.oAnimation.oFrame.sPath );
+                    this.oAnimation && this.oSprite.setSource( this.oEngine.oPlayer.oColor.oPath.sFrames + '/' + this.oAnimation.oFrame.sPath );
                 },
                 show: function(){
                     this.oLastLayer.hElement.classList.add('--show');
@@ -90,8 +90,8 @@ Object.assign(
                     if( !this.oAnimation || this.oAnimation.sName != sAnimation ){
                         this.oAnimation = new GameAnimation(
                             sAnimation,
-                            this.oEngine.oPlayer.oCharacter.oFrames,
-                            this.oEngine.oPlayer.oCharacter.oAnimations[sAnimation].aFrames
+                            this.oEngine.oPlayer.oData.oFrames,
+                            this.oEngine.oPlayer.oData.oAnimations[sAnimation].aFrames
                         );
                     }
                 }
@@ -147,7 +147,7 @@ Object.assign(
                 this.oPlayer = this.oScene.aPlayer[this.nPlayer];
 
                 oMenu.aCursor = [];
-                oMenu.init('LAY__Training_Menu_List_Character_' + this.oPlayer.oCharacter.sCod + '_' + this.oPlayer.oColor.sCod, [0]);
+                oMenu.init('LAY__Training_Menu_List_Character_' + this.oPlayer.oData.sCod + '_' + this.oPlayer.oColor.sCod, [0]);
                 oMenu.update();
                 oMenu.oLayer.addTickUpdate( () => {
                     oLastLayer && oLastLayer.hElement.classList.remove('--show');

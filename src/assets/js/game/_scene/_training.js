@@ -87,6 +87,7 @@ Object.assign(
                     GameHelper.update();
                 },
                 destroy: function(){
+                    BattleScene.prototype.destroy.call(this);
                     this.oTraining.destroy();
                     GameHelper.destroy();
                     return {

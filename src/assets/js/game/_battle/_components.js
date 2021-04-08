@@ -144,6 +144,8 @@ function BattleGatling(oInputBuffer, oCommandData){
     this.oNext = null;
     this.oUsed = {};
 
+    this.oTimerEntity = null;
+
     this.init(oInputBuffer, oCommandData);
 }
 
@@ -184,21 +186,26 @@ Object.assign(
             return bUse ? this.oCurrent : null;
 
         },
-        destroy: function(){
-        },
+        destroy: function(){},
 
         reset: function(){
             this.oCurrent = null;
             this.bFreeze = false;
             this.oNext = null;
             this.oUsed = {};
+            this.oTimerEntity = null;
         },
         use: function(oCommand){
             this.oCurrent = Object.assign({ nFrameStart: GAME.oTimer.nFrames }, oCommand);
             this.bFreeze = false;
             this.oNext = null;
             this.oUsed[oCommand.sCod] = true;
+            if( oCommand.oEntity ){
+                this.oTimerEntity = new GameTimer();
+                this.oTimerEntity.init( oCommand.oEntity.nFrameStart );
+            }
         },
+
         getEnterCommands: function(sType){
             const aCommand = [],
                 nFrameCheck = GAME.oTimer.nFrames;
@@ -207,7 +214,7 @@ Object.assign(
                 for( let nIndex = 0; nIndex < this.oCommandData[sType].length; nIndex++ ){
                     const oCommand = this.oCommandData[sType][nIndex];
                     if( this.oInputBuffer.checkManipulation(nFrameCheck, oCommand.oManipulation) ){
-                        aCommand.push( Object.assign({ bHit: false }, oCommand) );
+                        aCommand.push( Object.assign({}, oCommand) );
                         if( oCommand.bLast ){
                             break;
                         }
@@ -216,6 +223,18 @@ Object.assign(
             }
             return aCommand;
         },
+        getEntity: function(){
+            let oEntity = null;
+            if( this.oCurrent && this.oCurrent.oEntity && this.oTimerEntity ){
+                this.oTimerEntity.update(this);
+                if( this.oTimerEntity.isEnd() ){
+                    this.oTimerEntity = null;
+                    oEntity = this.oCurrent.oEntity;
+                }
+            }
+            return oEntity;
+        },
+
         canUseCommand: function(nKi, oCommand){
             let bCanUse = false;
             // Gestion KI
@@ -240,9 +259,6 @@ Object.assign(
                 }
             }
             return bCanUse;
-        },
-        isHit: function(){
-            return this.oCurrent && this.oCurrent.bHit;
         },
         needFreeze: function(){
             return this.oCurrent && this.oCurrent.oStun.nFreeze && !this.bFreeze;

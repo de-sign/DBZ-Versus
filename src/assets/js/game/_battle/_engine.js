@@ -22,92 +22,31 @@ Object.assign(
             } );
 
             if( !aPlayerWin.length ){
-                const aPriority = [];
+                const aEntity = BattleEntity.get().filter( oEntity => !oEntity.isDead() ),
+                    oCollapse = {};
 
                 // Gestion Reverse / Area
-                this.aPlayer.forEach( (oPlayer, nIndex) => {
-                    const oOpponent = this.aPlayer[ nIndex ? 0 : 1 ];
+                aEntity.forEach( (oEntity, nIndex) => {
                     // Gestion PositionBox / Area
-                    aPriority[nIndex] = this.stayInArea(oPlayer);
+                    if( oEntity.oCheck.bCollapse ){
+                        oCollapse[oEntity.sId] = {
+                            nIndex,
+                            oEntity,
+                            nPriority: this.stayInArea(oEntity)
+                        };
+                    }
                     // Gestion Reverse
-                    oPlayer.canMove() && this.updateReverse(oPlayer, oOpponent);
-                } );
-                
-                // Gestion PositionBox / Player
-                this.moveCollapsedPlayer(aPriority);
-
-                // Gestion Hitbox
-                let bLunch = false,
-                    nDividePushback = -1;
-                const aHurt = [],
-                    aPushback = [];
-
-                this.aPlayer.forEach( (oPlayer, nIndex) => {
-                    if( !oPlayer.oGatling.isHit() ){
-                        const oOpponent = this.aPlayer[ nIndex ? 0 : 1 ];
-                        if( oOpponent.nLife > 0 ){
-                            let bHit = false;
-                            const aHitBox = this.getCharacterCollisionBox(oPlayer, 'aHitBox'),
-                                aHurtBox = this.getCharacterCollisionBox(oOpponent, 'aHurtBox');
-                            
-                            if( aHitBox.length && aHurtBox.length ){
-                                for( let nHitBox = 0; nHitBox < aHitBox.length; nHitBox++ ){
-                                    for( let nHurtBox = 0; nHurtBox < aHurtBox.length; nHurtBox++ ){
-                                        if( this.checkCollision(aHitBox[nHitBox], aHurtBox[nHurtBox]) ){
-                                            aHurt.push( {
-                                                oCommand: oPlayer.oGatling.oCurrent,
-                                                oPlayer,
-                                                oOpponent
-                                            } );
-                                            aPriority[nIndex]++;
-                                            aPushback[nIndex] = oPlayer.oGatling.oCurrent.oPushback;
-                                            bHit = true;
-                                            break;
-                                        }
-                                    }
-                                    if( bHit ){
-                                        break;
-                                    }
-                                }
-                            }
-                        }
+                    if( oEntity.oCheck.bReverse ){
+                        const oReferent = this.aPlayer[ (oEntity.oParent || oEntity).nPlayer == 1 ? 1 : 0 ];
+                        oEntity.canMove() && this.updateReverse(oEntity, oReferent);
                     }
                 } );
+                
+                // Gestion PositionBox / Entity
+                this.moveCollapsed(oCollapse);
 
-                // Gestion Hurt
-                if( aHurt.length ){
-                    aHurt.forEach( oHurt => {
-                        oHurt.oCommand.bHit = true;
-                        if( oHurt.oOpponent.oAnimation.oFrame.oStatus.bGuard ){
-                            oHurt.oOpponent.setHurt('guard', oHurt.oCommand.oStun.nBlock, true);
-                        } else {
-                            const nDamage = oHurt.oCommand.nDamage == null ? 1 : oHurt.oCommand.nDamage;
-                            oHurt.oCommand.nCost || ( oHurt.oPlayer.addKi(nDamage) );
-                            oHurt.oOpponent.addKi( 2 * nDamage );
-                            oHurt.oOpponent.nLife -= nDamage;
-                            oHurt.oOpponent.nHitting += nDamage;
-
-                            if( nDamage ){
-                                const bLunch = oHurt.oCommand.oStun.bLunch && !oHurt.oOpponent.oLunch,
-                                    bDeath = oHurt.oOpponent.nLife <= 0;
-                                    
-                                oHurt.oOpponent.setHurt(
-                                    bLunch || bDeath ? 'lunch' : oHurt.oCommand.oStun.sHitAnimation,
-                                    oHurt.oCommand.oStun.nHit,
-                                    true
-                                );
-                            }
-                        }
-                    } );
-                    
-                    // Gestion PushBack
-                    this.movePushback(aPriority, aPushback);
-
-                    // Gestion hit freeze
-                    this.aPlayer.forEach( oPlayer => {
-                        oPlayer.setFreeze(GAME.oSettings.nFreeze);
-                    } );
-                }
+                // Gestion Hitbox
+                this.checkHit(aEntity, oCollapse);
 
                 // Gestion Super Freeze
                 for( let nIndex = 0; nIndex < this.aPlayer.length; nIndex++ ){
@@ -118,7 +57,9 @@ Object.assign(
                             oPlayer.oGatling.oCurrent.sName;
 
                         oPlayer.oGatling.bFreeze = true;
-                        this.aPlayer[ oPlayer.nPlayer == 1 ? 1 : 0 ].setFreeze(oPlayer.oGatling.oCurrent.oStun.nFreeze);
+                        aEntity.forEach( oEntity => {
+                            oEntity.sId != oPlayer.sId && oEntity.setFreeze(oPlayer.oGatling.oCurrent.oStun.nFreeze);
+                        } );
                         GAME.oScene.oCurrent.oInfo.add( {
                             sImg: oPlayer.oColor.oPath.sFace,
                             sText: sName + '&nbsp;!'
@@ -130,112 +71,20 @@ Object.assign(
 
             return aPlayerWin;
         },
-        destroy: function(){
-        },
-
-        updateReverse: function(oPlayer, oOpponent){
-            if( oPlayer.oLayer.oPosition.nX < oOpponent.oLayer.oPosition.nX ){
-                oPlayer.bReverse = false;
-            } else if( oPlayer.oLayer.oPosition.nX > oOpponent.oLayer.oPosition.nX ){
-                oPlayer.bReverse = true;
-            }
-        },
-        stayInArea: function(oPlayer){
-            // Check
-            let oBoxPlayer = oPlayer.getCharacterBox('oPositionBox')[0];
-            const oBoxArea = this.oArea.getBox(),
-                nLeft = this.oArea.oPosition.nX + (oBoxArea.left - oBoxArea.originX),
-                nRight = this.oArea.oPosition.nX + (oBoxArea.right - oBoxArea.originX),
-                nDown = this.oArea.oPosition.nY + (oBoxArea.bottom - oBoxArea.originY) - GAME.oSettings.oPositionPoint.nGapY;
-
-            let nPriority = oPlayer.oGatling.oCurrent ? 1 : 0,
-                sMove = null;
-
-            // Trop à gauche
-            if( nLeft >= oPlayer.oLayer.oPosition.nX + oBoxPlayer.nX ){
-                nPriority = oPlayer.bReverse ? 3 : 4;
-                sMove = 'left';
-            }
-            // Trop à droite
-            else if( nRight <= oPlayer.oLayer.oPosition.nX + ( oBoxPlayer.nX + oBoxPlayer.nWidth ) ){
-                nPriority = oPlayer.bReverse ? 4 : 3;
-                sMove = 'right';
-            }
-
-            switch( sMove ){
-                case 'left':
-                    oPlayer.oLayer.oPosition.nX = nLeft - oBoxPlayer.nX;
-                    break;
-                case 'right':
-                    oPlayer.oLayer.oPosition.nX = nRight - ( oBoxPlayer.nX + oBoxPlayer.nWidth );
-                    break;
-            }
-
-            // Trop en bas
-            if( nDown < oPlayer.oLayer.oPosition.nY + ( oBoxPlayer.nY + oBoxPlayer.nHeight ) ){
-                oPlayer.oLunch = null;
-                oPlayer.setStance('down', true);
-                oBoxPlayer = oPlayer.getCharacterBox('oPositionBox')[0];
-                oPlayer.oLayer.oPosition.nY = nDown - ( oBoxPlayer.nY + oBoxPlayer.nHeight );
-            }
-
-            return nPriority;
-        },
-        moveCollapsedPlayer: function(aPriority){
-            const nIndexPlayer = this.aPlayer[0].bReverse ? 1 : 0,
-                nIndexOpponent = nIndexPlayer ? 0 : 1,
-                oPlayer = this.aPlayer[nIndexPlayer],
-                oOpponent = this.aPlayer[nIndexOpponent];
-
-            const oBoxPlayer = this.getCharacterCollisionBox(oPlayer, 'oPositionBox')[0],
-                oBoxOpponent = this.getCharacterCollisionBox(oOpponent, 'oPositionBox')[0];
-
-            if( this.checkCollision(oBoxPlayer, oBoxOpponent) ){
-                const nRight = oPlayer.oLayer.oPosition.nX + ( oBoxPlayer.nX + oBoxPlayer.nWidth ),
-                    nLeft = oPlayer.oLayer.oPosition.nX + oBoxOpponent.nX,
-                    nDiff = nRight - nLeft;
-
-                // Separation Egal
-                if( aPriority[0] == aPriority[1] ){
-                    oPlayer.oLayer.oPosition.nX -= nDiff / 2;
-                    oOpponent.oLayer.oPosition.nX += nDiff / 2;
-                }
-                // Movement Opponent
-                else if( aPriority[nIndexPlayer] > aPriority[nIndexOpponent] ) {
-                    oOpponent.oLayer.oPosition.nX += nDiff;
-                }
-                // Movement Player
-                else {
-                    oPlayer.oLayer.oPosition.nX -= nDiff;
-                }
-            }
-        },
-        movePushback: function(aPriority, aPushback){
-            const oPlayer = this.aPlayer[0],
-                oOpponent = this.aPlayer[1];
-
-            // Double touch NEUTRAL
-            if( aPushback[0] && aPushback[1] ){
-                oPlayer.pushBack(aPushback[1]);
-                oOpponent.pushBack(aPushback[0]);
-            }
-            // Movement Opponent
-            else if( aPriority[0] > aPriority[1] ) {
-                oOpponent.pushBack(aPushback[0] || aPushback[1], aPushback[1]);
-            }
-            // Movement Player
-            else {
-                oPlayer.pushBack(aPushback[0] || aPushback[1], aPushback[0]);
-            }
-        },
-        getCharacterCollisionBox: function(oPlayer, sBox){
-            const aBox = oPlayer.getCharacterBox(sBox);
+        destroy: function(){},
+        
+        getCollisionBox: function(oPlayer, sBox){
+            const aBox = oPlayer.getBox(sBox);
             aBox.length && aBox.forEach( oBox => {
                 oBox.nX += oPlayer.oLayer.oPosition.nX;
                 oBox.nY += oPlayer.oLayer.oPosition.nY;
             } );
             return aBox;
         },
+        getOrientation: function(oEntityA, oEntityB){
+            return Math.min( Math.max(oEntityA.oLayer.oPosition.nX - oEntityB.oLayer.oPosition.nX, -1), 1);
+        },
+
         checkCollision: function(oBoxA, oBoxB){
             return !(
                 (oBoxB.nX >= oBoxA.nX + oBoxA.nWidth)     // trop à droite
@@ -243,6 +92,197 @@ Object.assign(
 	            || (oBoxB.nY >= oBoxA.nY + oBoxA.nHeight) // trop en bas
 	            || (oBoxB.nY + oBoxB.nHeight <= oBoxA.nY) // trop en haut
             );
+        },
+        hasSameParent: function(oEntityA, oEntityB){
+            return (oEntityA.oParent || oEntityA).sId == (oEntityB.oParent || oEntityB).sId;
+        },
+
+        // REVERSE en fonction d'un point
+        updateReverse: function(oEntity, oReferent){
+            switch( this.getOrientation(oEntity, oReferent) ){
+                case -1:
+                    oEntity.bReverse = false;
+                    break;
+                case 1:
+                    oEntity.bReverse = true;
+                    break;
+            }
+        },
+        // ENTITY dans AREA : LEFT, RIGHT et DOWN
+        stayInArea: function(oEntity){
+            // Check
+            let oBoxEntity = oEntity.getBox('oPositionBox')[0],
+                nPriority = oEntity.canMove() ? 0 : 1,
+                sMove = null;
+                
+            const oBoxArea = this.oArea.getBox(),
+                nLeft = this.oArea.oPosition.nX + (oBoxArea.left - oBoxArea.originX),
+                nRight = this.oArea.oPosition.nX + (oBoxArea.right - oBoxArea.originX);
+
+            // Trop à gauche
+            if( nLeft >= oEntity.oLayer.oPosition.nX + oBoxEntity.nX ){
+                nPriority = oEntity.bReverse ? 3 : 4;
+                sMove = 'left';
+            }
+            // Trop à droite
+            else if( nRight <= oEntity.oLayer.oPosition.nX + ( oBoxEntity.nX + oBoxEntity.nWidth ) ){
+                nPriority = oEntity.bReverse ? 4 : 3;
+                sMove = 'right';
+            }
+
+            switch( sMove ){
+                case 'left':
+                    oEntity.oLayer.oPosition.nX = nLeft - oBoxEntity.nX;
+                    break;
+                case 'right':
+                    oEntity.oLayer.oPosition.nX = nRight - ( oBoxEntity.nX + oBoxEntity.nWidth );
+                    break;
+            }
+
+            // Trop en bas
+            if( oEntity.oCheck.bLunch ){
+                const nDown = this.oArea.oPosition.nY + (oBoxArea.bottom - oBoxArea.originY) - oEntity.oPositionPoint.nGapY;
+                if( nDown < oEntity.oLayer.oPosition.nY + ( oBoxEntity.nY + oBoxEntity.nHeight ) ){
+                    oBoxEntity = oEntity.getBox('oPositionBox')[0];
+                    oEntity.oLayer.oPosition.nY = nDown - ( oBoxEntity.nY + oBoxEntity.nHeight );
+                    oEntity.oLunch = null;
+                    oEntity.setStance('down', true);
+                }
+            }
+
+            return nPriority;
+        },
+        // ENTITY entre elle
+        moveCollapsed: function(oCollapse){
+
+            const oCheck = {};
+            for( let sIdA in oCollapse ){
+                for( let sIdB in oCollapse ){
+                    if( sIdA != sIdB ){
+                        const oCollapseA = oCollapse[sIdA],
+                            oCollapseB = oCollapse[sIdB],
+                            sCheck = oCollapseA.nIndex < oCollapseB.nIndex ?
+                                oCollapseA.nIndex + '_' + oCollapseB.nIndex :
+                                oCollapseB.nIndex + '_' + oCollapseA.nIndex;
+                        
+                        if( !oCheck[sCheck] && !this.hasSameParent(oCollapseA.oEntity, oCollapseB.oEntity) ){
+
+                            let oLeft = oCollapseA,
+                                oRight = oCollapseB;
+                            if( this.getOrientation(oCollapseA.oEntity, oCollapseB.oEntity) > 0 ){
+                                oLeft = oCollapseB;
+                                oRight = oCollapseA;
+                            }
+
+                            const oBoxLeft = this.getCollisionBox(oLeft.oEntity, 'oPositionBox')[0],
+                                oBoxRight = this.getCollisionBox(oRight.oEntity, 'oPositionBox')[0];
+
+                            if( this.checkCollision(oBoxLeft, oBoxRight) ){
+                                const nRight = oLeft.oEntity.oLayer.oPosition.nX + ( oBoxLeft.nX + oBoxLeft.nWidth ),
+                                    nLeft = oLeft.oEntity.oLayer.oPosition.nX + oBoxRight.nX,
+                                    nDiff = nRight - nLeft;
+
+                                // Separation Egal
+                                if( oLeft.nPriority == oRight.nPriority ){
+                                    oLeft.oEntity.oLayer.oPosition.nX -= nDiff / 2;
+                                    oRight.oEntity.oLayer.oPosition.nX += nDiff / 2;
+                                }
+                                // Movement RIGHT
+                                else if( oLeft.nPriority > oRight.nPriority ) {
+                                    oRight.oEntity.oLayer.oPosition.nX += nDiff;
+                                }
+                                // Movement LEFT
+                                else {
+                                    oLeft.oEntity.oLayer.oPosition.nX -= nDiff;
+                                }
+                            }
+
+                            oCheck[sCheck] = true;
+                        }
+                    }
+                }
+            }
+        },
+
+        // HIT et HURT entre les ENTITY
+        checkHit: function(aEntity, oCollapse){
+            const aHurt = [],
+                aPushback = [];
+
+            // Gestion HIT
+            aEntity.forEach( oEntityHit => {
+                if( oEntityHit.oCheck.bHit && !oEntityHit.bHit ){
+                    aEntity.forEach( oEntityHurt => {
+                        if(
+                            !this.hasSameParent(oEntityHit, oEntityHurt)
+                            && oEntityHurt.oCheck.oHurt[ oEntityHit.sType ]
+                            && oEntityHurt.nLife > 0
+                        ){
+                            let bHit = false;
+                            const aHitBox = this.getCollisionBox(oEntityHit, 'aHitBox'),
+                                aHurtBox = this.getCollisionBox(oEntityHurt, 'aHurtBox');
+                            if( aHitBox.length && aHurtBox.length ){
+                                for( let nHitBox = 0; nHitBox < aHitBox.length; nHitBox++ ){
+                                    for( let nHurtBox = 0; nHurtBox < aHurtBox.length; nHurtBox++ ){
+                                        if( this.checkCollision(aHitBox[nHitBox], aHurtBox[nHurtBox]) ){
+                                            // HURT
+                                            aHurt.push( {
+                                                oEntityHit,
+                                                oEntityHurt
+                                            } );
+                                            // PUSHBACK
+                                            aPushback.push( {
+                                                oPriority: {
+                                                    nHit: oCollapse[oEntityHit.sId] ? oCollapse[oEntityHit.sId].nPriority + 1 : 1,
+                                                    nHurt: oCollapse[oEntityHurt.sId] ? oCollapse[oEntityHurt.sId].nPriority : 0
+                                                },
+                                                oEntityHit,
+                                                oEntityHurt,
+                                                oData: oEntityHit.getHitData().oPushback
+                                            } );
+                                            bHit = true;
+                                            break;
+                                        }
+                                    }
+                                    if( bHit ){
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    } );
+                }
+            } );
+
+            if( aHurt.length ){
+                // Gestion Hurt
+                aHurt.forEach( oHurt => oHurt.oEntityHurt.takeHit(oHurt.oEntityHit) );
+                // Gestion PushBack
+                this.movePushback(aPushback, oCollapse);
+                // Gestion hit freeze
+                aEntity.forEach( oEntity => {
+                    oEntity.setFreeze(GAME.oSettings.nFreeze);
+                } );
+            }
+        },
+
+        movePushback: function(aPushback, oCollapse){
+            aPushback.forEach( oPushback => {
+                // Movement Opponent
+                if( oPushback.oPriority.nHit > oPushback.oPriority.nHurt ) {
+                    if( oPushback.oEntityHurt.oCheck.bPushback ){
+                        oPushback.oEntityHurt.pushBack(oPushback.oData, false);
+                        const oParent = oPushback.oEntityHurt.oParent;
+                        oParent && oParent.pushBack(oPushback.oData, false);
+                    }
+                }
+                // Movement Player
+                else if( oPushback.oEntityHit.oCheck.bPushback ){
+                    oPushback.oEntityHit.pushBack(oPushback.oData, true);
+                    const oParent = oPushback.oEntityHit.oParent;
+                    oParent && oParent.pushBack(oPushback.oData, true);
+                }
+            } );
         }
     }
 );

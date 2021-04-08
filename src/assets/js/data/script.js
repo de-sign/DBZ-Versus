@@ -4,12 +4,17 @@ Object.assign(
         oSettings: {
             
             // Technique
+            nPlayer: 2,
+            sStartScene: 'InitializeScene',
             oPath: {
                 oCharacter: {
                     sRoot: 'assets/images/characters',
                     sFace: 'assets/images/characters/face',
                     sFrames: 'assets/images/characters/frames',
                     sPreview: 'assets/images/characters/preview'
+                },
+                oKikoha: {
+                    sRoot: 'assets/images/kikoha'
                 },
                 oStage: {
                     sRoot: 'assets/images/stages',
@@ -20,20 +25,37 @@ Object.assign(
                     sRoot: 'assets/images/controllers',
                 }
             },
-            nPlayer: 2,
-            sStartScene: 'InitializeScene',
             oPositionPoint: {
-                nX: 98,
-                nY: 182,
-                nGapY: 200 - 182 - 2
+                character: {
+                    nX: 98,
+                    nY: 182,
+                    nGapY: 200 - 182 - 2
+                },
+                kikoha: {
+                    nX: 64,
+                    nY: 126
+                },
+                beam: {
+                    nX: 98,
+                    nY: 182
+                }
             },
 
             // Game
+            nDistance: 256,
+            nFreeze: 6,
+            oPushback: {
+                nLength: 4,
+                nX: -24
+            },
+            // ENTITY
+            nDie: 60,
             oLife: {
                 character: 30,
                 kikoha: 1,
-                beam: 1
+                beam: 0
             },
+            // CHARACTER
             nKi: 20,
             oLuncher: {
                 nLength: 36,
@@ -47,11 +69,6 @@ Object.assign(
                     sFall: 'hit_fall'
                 }
             },
-            nFreeze: 6,
-            oPushback: {
-                nLength: 4,
-                nX: -24
-            },
             oRecovery: {
                 backward: {
                     nLength: 1,
@@ -62,6 +79,7 @@ Object.assign(
                     nX: 192
                 }
             },
+            // INPUT
             oController: {
                 aOrderButtons: ['UP', 'DOWN', 'LEFT', 'RIGHT', 'A', 'B', 'C', 'START'],
                 aKeyboard: [
@@ -133,6 +151,7 @@ Object.assign(
     }
 );
 
+//=include kikoha.js
 //=include character.js
 //=include _characters/_GKU.js
 //=include _characters/_BJT.js

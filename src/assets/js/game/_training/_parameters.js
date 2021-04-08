@@ -163,14 +163,18 @@ Object.assign(
                     oMinStat = {
                         nLife: 1,
                         nKi: 0
+                    },
+                    oMaxStat = {
+                        nLife: GAME.oSettings.oLife.character,
+                        nKi: GAME.oSettings.nKi
                     };
 
                 oParam[sStat] += nChange;
-                if( oParam[sStat] > GAME.oSettings[sStat] ){
+                if( oParam[sStat] > oMaxStat[sStat] ){
                     oParam[sStat] = oMinStat[sStat];
                 }
                 else if( oParam[sStat] < oMinStat[sStat] ){
-                    oParam[sStat] = GAME.oSettings[sStat];
+                    oParam[sStat] = oMaxStat[sStat];
                 }
 
                 GameStore.update('Parameters_' + nIndex, oParam);

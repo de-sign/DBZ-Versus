@@ -270,46 +270,62 @@
     }
 }
 
-.Battle__Character {
-    position: relative;
-    margin: 0px 128px;
-    width: 200px;
-    height: 200px;
-    transform-origin: 98px 182px;
+.Battle__Entity {
+    position: absolute;
 
+    &.--dead {
+        display: none;
+    }
+    
     &_Sprite {
         position: absolute;
         top: 50%;
+        transform-origin: 50% 50%;
         transform: translateY(-50%) !important;
-        transform-origin: 100px 100px;
-    }
-
-    &.--reverse {
-        transform-origin: 102px 182px;
-
-        .Battle__Character_Sprite {
+        
+        .--reverse & {
             transform: scaleX(-1) translateY(-50%) !important;
         }
     }
-
+    
     #CTX__Battle:not(.--info) &.--freeze {
+
         &_pair {
-            .Battle__Character_Sprite {
+            .Battle__Entity_Sprite {
                 transform: translate(-4px, -50%) !important;
             }
-
-            &.--reverse .Battle__Character_Sprite {
+            
+            &.--reverse .Battle__Entity_Sprite {
                 transform: scaleX(-1) translate(-4px, -50%) !important;
             }
         }
+
         &_impair {
-            .Battle__Character_Sprite {
+            .Battle__Entity_Sprite {
                 transform: translate(4px, -50%) !important;
             }
-
-            &.--reverse .Battle__Character_Sprite {
+            
+            &.--reverse .Battle__Entity_Sprite {
                 transform: scaleX(-1) translate(4px, -50%) !important;
             }
         }
     }
+}
+
+.Battle__Character {
+    width: 200px;
+    height: 200px;
+    transform-origin: 98px 182px;
+    
+    /* WAITING BEAM via ENTITY */
+    .Battle__Entity_Sprite {
+        transform-origin: 100px 100px;
+    }
+}
+
+.Battle__Kikoha {
+    width: 128px;
+    height: 128px;
+    transform-origin: 64px 126px;
+    z-index: 100;
 }

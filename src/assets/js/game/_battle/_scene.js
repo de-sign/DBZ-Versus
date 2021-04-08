@@ -26,6 +26,7 @@ Object.assign(
                     this.oContext.hElement.classList.add( oOptions.sContextClass );
 
 					this.oArea = GAME.oOutput.getElement('LAY__Battle_Area');
+                    this.oArea.enableAutoPositioning();
                     this.setBackground( oLastData.sStageSelected );
 
                     for( let nIndex = 0; nIndex < GAME.oSettings.nPlayer; nIndex++ ){
@@ -39,14 +40,12 @@ Object.assign(
                                 oOptions.aController[nIndex],
                                 false
                             );
+                        oPlayer.oLayer.oPosition.nX += GAME.oSettings.nDistance * (nIndex ? 1 : -1)
                         this.aPlayer.push(oPlayer);
                         
                         // HUD init
                         this.aHUD.push( new BattleHUD(oPlayer) );
                     }
-
-                    // Optimisation AUTO POSITIONING
-                    this.oArea.updateChildAutoPositioning();
 
                     // Engine init
                     this.oInfo = new BattleInfo(this.oContext, this.aPlayer);
@@ -54,15 +53,16 @@ Object.assign(
                     this.oEngine = new BattleEngine(this.aPlayer, this.oArea);
 				},
 				update: function(){
-                    this.aPlayer.forEach( oPlayer => oPlayer.updateInput() );
+                    BattleEntity.get().forEach( oEntity => oEntity.update() );
                     this.endBattle( this.oEngine.update() );
-                    this.aPlayer.forEach( oPlayer => oPlayer.updateOutput() );
+                    BattleEntity.get().forEach( oEntity => oEntity.render() );
 
                     this.oInfo.update();
                     this.aHUD.forEach( oHUD => oHUD.update() );
                     this.oCombo.update();
 				},
                 destroy: function(){
+                    BattleEntity.get().forEach( oEntity => oEntity.destroy() );
                 },
 
                 endBattle: function(aPlayerWin){
