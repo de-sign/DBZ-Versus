@@ -932,14 +932,14 @@ GAME.oData.oCharacter.SRU = {
                 sFrame: 'kikoha'
             },
             {
-                nFrame: 4,
+                nFrame: 8,
                 sFrame: 'ki_beam',
                 oStatus: {
                     bCancel: true
                 }
             },
             {
-                nFrame: 14,
+                nFrame: 10,
                 sFrame: 'kikoha',
                 oStatus: {
                     bCancel: true
@@ -972,26 +972,13 @@ GAME.oData.oCharacter.SRU = {
                 aHurtBox: null
             },
             {
-                nFrame: 2,
+                nFrame: 4,
                 sFrame: 'super_third',
                 aHurtBox: null
             },
             {
-                nFrame: 2,
-                sFrame: 'super_fourth',
-                aHurtBox: null
-            },
-            {
-                nFrame: 36,
+                nFrame: 40,
                 sFrame: 'super_fifth'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'super_fourth'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'super_third'
             },
             {
                 nFrame: 20,
@@ -1013,6 +1000,16 @@ GAME.oData.oCharacter.SRU = {
                 nCost: 12,
                 nDamage: 4,
                 nGatlingLevel: 3,
+                oEntity: {
+                    sType: 'Beam',
+                    sAnimation: 'circle',
+                    nColor: 0,
+                    nFrameStart: 43,
+                    oPosition: {
+                        nX: 0,
+                        nY: 0
+                    }
+                },
                 oStun: {
                     nFreeze: 46,
                     nBlock: 36,
@@ -1040,6 +1037,16 @@ GAME.oData.oCharacter.SRU = {
                 sAnimation: 'death_beam',
                 nCost: 4,
                 nGatlingLevel: 2,
+                oEntity: {
+                    sType: 'Beam',
+                    sAnimation: 'beam',
+                    nColor: 0,
+                    nFrameStart: 11,
+                    oPosition: {
+                        nX: 0,
+                        nY: 0
+                    }
+                },
                 oStun: {
                     nBlock: 8,
                     nHit: 18,

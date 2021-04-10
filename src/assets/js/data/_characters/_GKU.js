@@ -596,61 +596,7 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 84,
                 nHeight: 60
             }]
-        },
-        super_fourth: {
-            oPositionBox: {
-                nX: -30,
-                nY: -110,
-                nWidth: 64,
-                nHeight: 112
-            },
-            aHurtBox: [{
-                nX: -10,
-                nY: -138,
-                nWidth: 60,
-                nHeight: 56
-            }, {
-                nX: -22,
-                nY: -118,
-                nWidth: 104,
-                nHeight: 64
-            }, {
-                nX: -38,
-                nY: -58,
-                nWidth: 84,
-                nHeight: 60
-            }]
-        },
-        super_fifth: {
-            oPositionBox: {
-                nX: -30,
-                nY: -110,
-                nWidth: 64,
-                nHeight: 112
-            },
-            aHurtBox: [{
-                nX: -10,
-                nY: -138,
-                nWidth: 60,
-                nHeight: 56
-            }, {
-                nX: -22,
-                nY: -118,
-                nWidth: 104,
-                nHeight: 64
-            }, {
-                nX: -38,
-                nY: -58,
-                nWidth: 84,
-                nHeight: 60
-            }],
-            aHitBox: {
-                nX: 30,
-                nY: -142,
-                nHeight: 112
-            }
-        },
-        super_sixth: null
+        }
     },
 
     oAnimations: {
@@ -874,7 +820,8 @@ GAME.oData.oCharacter.GKU = {
             },
             {
                 nFrame: 30,
-                sFrame: 'super_first'
+                sFrame: 'super_first',
+                aHurtBox: null
             },
             {
                 nFrame: 10,
@@ -882,25 +829,12 @@ GAME.oData.oCharacter.GKU = {
                 aHurtBox: null
             },
             {
-                nFrame: 2,
+                nFrame: 4,
                 sFrame: 'super_third',
                 aHurtBox: null
             },
             {
-                nFrame: 2,
-                sFrame: 'super_fourth',
-                aHurtBox: null
-            },
-            {
-                nFrame: 36,
-                sFrame: 'super_fifth'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'super_fourth'
-            },
-            {
-                nFrame: 2,
+                nFrame: 40,
                 sFrame: 'super_third'
             },
             {
@@ -926,6 +860,16 @@ GAME.oData.oCharacter.GKU = {
                 nCost: 12,
                 nDamage: 4,
                 nGatlingLevel: 3,
+                oEntity: {
+                    sType: 'Beam',
+                    sAnimation: 'circle',
+                    nColor: 0,
+                    nFrameStart: 43,
+                    oPosition: {
+                        nX: 0,
+                        nY: 0
+                    }
+                },
                 oStun: {
                     nFreeze: 46,
                     nBlock: 36,
@@ -954,7 +898,8 @@ GAME.oData.oCharacter.GKU = {
                 nCost: 4,
                 nGatlingLevel: 2,
                 oEntity: {
-                    sType: 'Kikoha',
+                    sType: 'Projectile',
+                    sAnimation: 'kikoha',
                     nColor: 0,
                     nFrameStart: 10,
                     oPosition: {

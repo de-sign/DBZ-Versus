@@ -1,4 +1,4 @@
-GAME.oData.oDefaultCharacter = {
+GAME.oData.oEntity.oCharacter = {
     oFrames: {
         // Surcharger par "_CHAR.js", complété via "gulp extra"
         stand: {
@@ -133,33 +133,19 @@ GAME.oData.oDefaultCharacter = {
         // Super
         super_first: {
             sPath: 'super_first.png',
-            nZIndex: 30
+            nZIndex: 80
         },
         super_second: {
             sPath: 'super_second.png',
-            nZIndex: 30
+            nZIndex: 80
         },
         super_third: {
             sPath: 'super_third.png',
-            nZIndex: 30
+            nZIndex: 80
         },
         super_fourth: {
             sPath: 'super_fourth.png',
-            nZIndex: 30
-        },
-        super_fifth: {
-            sPath: 'super_fifth.png',
-            nZIndex: 30,
-            aHitBox: {
-                nWidth: 1024
-            }
-        },
-        super_sixth: {
-            sPath: 'super_sixth.png',
-            nZIndex: 30,
-            aHitBox: {
-                nWidth: 1024
-            }
+            nZIndex: 80
         }
     },
     oAnimations: {

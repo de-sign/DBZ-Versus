@@ -323,9 +323,20 @@
     }
 }
 
-.Battle__Kikoha {
+.Battle__Projectile {
     width: 128px;
     height: 128px;
     transform-origin: 64px 126px;
-    z-index: 100;
+    z-index: 50;
+}
+
+.Battle__Beam {
+    width: 200px;
+    height: 300px;
+    transform-origin: 98px 232px;
+    z-index: 70;
+    
+    .Battle__Entity_Sprite {
+        transform-origin: 100px 150px;
+    }
 }

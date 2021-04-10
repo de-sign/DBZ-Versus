@@ -708,11 +708,6 @@ GAME.oData.oCharacter.BJT = {
                 nWidth: 64,
                 nHeight: 112
             },
-            aHitBox: {
-                nX: 30,
-                nY: -142,
-                nHeight: 88
-            },
             aHurtBox: [{
                 nX: -38,
                 nY: -138,
@@ -1039,7 +1034,16 @@ GAME.oData.oCharacter.BJT = {
                 aHurtBox: null
             },
             {
-                nFrame: 36,
+                nFrame: 2,
+                sFrame: 'super_fifth',
+                aHurtBox: null
+            },
+            {
+                nFrame: 32,
+                sFrame: 'super_sixth'
+            },
+            {
+                nFrame: 2,
                 sFrame: 'super_fifth'
             },
             {
@@ -1073,6 +1077,22 @@ GAME.oData.oCharacter.BJT = {
                 nCost: 12,
                 nDamage: 4,
                 nGatlingLevel: 3,
+                oEntity: {
+                    sType: 'Beam',
+                    oAnimation: {
+                        SSJ: 'big_triangle',
+                        BSJ: 'triangle'
+                    },
+                    oColor: {
+                        SSJ: 1,
+                        BSJ: 2
+                    },
+                    nFrameStart: 43,
+                    oPosition: {
+                        nX: 0,
+                        nY: 0
+                    }
+                },
                 oStun: {
                     nFreeze: 46,
                     nBlock: 36,
@@ -1101,7 +1121,8 @@ GAME.oData.oCharacter.BJT = {
                 nCost: 4,
                 nGatlingLevel: 2,
                 oEntity: {
-                    sType: 'Kikoha',
+                    sType: 'Projectile',
+                    sAnimation: 'kikoha',
                     oColor: {
                         SSJ: 1,
                         BSJ: 2

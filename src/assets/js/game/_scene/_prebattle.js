@@ -19,7 +19,8 @@ Object.assign(
                             aStep: [
                                 'stepImage_Stage',
                                 'stepImage_Character',
-                                'stepImage_Character'
+                                'stepImage_Character',
+                                'stepImage_Entity'
                             ]
                         }
                     );
@@ -45,6 +46,25 @@ Object.assign(
                         this.oAssetManager.add(oColor.oPath.sFrames + '/' + oChar.oFrames[sFrame].sPath);
                     }
                     this.nCharacter++;
+                },
+                stepImage_Entity: function(){
+                    this.addStepText( 'Loading frames Entity' );
+                    this.oData.aCharacterSelected.forEach( (sChar, nIndex) => {
+                        const oChar = GAME.oData.oCharacter[sChar],
+                            oColor = oChar.aColor[ this.oData.aColorSelected[nIndex] ];
+
+                        oChar.oCommands.aOffense.forEach( oCommand => {
+                            if( oCommand.oEntity ){
+                                const oEntity = GAME.oData['o' + oCommand.oEntity.sType][oCommand.oEntity.sCod],
+                                    nColor = oCommand.oEntity.oColor ? oCommand.oEntity.oColor[ oColor.sCod ] : oCommand.oEntity.nColor,
+                                    oColorEntity = oEntity.aColor[nColor];
+
+                                for( let sFrame in oEntity.oFrames ){
+                                    this.oAssetManager.add(oColorEntity.oPath.sFrames + '/' + oEntity.oFrames[sFrame].sPath);
+                                }
+                            }
+                        } );
+                    } );
                 }
             }
         )

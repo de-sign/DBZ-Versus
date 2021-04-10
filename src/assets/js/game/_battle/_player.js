@@ -100,11 +100,12 @@ Object.assign(
                     this.nKi = Math.min(this.nKi + nKi, GAME.oSettings.nKi);
                 },
                 takeHit: function(oEntity){
+                    const oData = oEntity.getHitData();
                     if( this.oAnimation.oFrame.oStatus.bGuard ){
-                        this.setHurt('guard', oHurt.oCommand.oStun.nBlock, true);
+                        this.setHurt('guard', oData.oStun.nBlock, true);
+                        oEntity.confirmHit(oData, true);
                     } else {
-                        const oData = oEntity.getHitData(),
-                            nDamage = oData.nDamage == null ? 1 : oData.nDamage;
+                        const nDamage = oData.nDamage == null ? 1 : oData.nDamage;
 
                         if( nDamage ){
                             this.nLife -= nDamage;
@@ -120,14 +121,13 @@ Object.assign(
                                 true
                             );
                         }
-                        oEntity.confirmHit();
+                        oEntity.confirmHit(oData);
                     }
                 },
-                confirmHit: function(){
-                    const oData = this.oGatling.oCurrent,
-                        nDamage = oData.nDamage == null ? 1 : oData.nDamage;
-                    this.bHit = true;
-                    this.oGatling.oCurrent.nCost || this.addKi(nDamage);
+                confirmHit: function(oData, bGuard){
+                    BattleEntity.prototype.confirmHit.call(this, oData, bGuard);
+                    const nDamage = oData.nDamage == null ? 1 : oData.nDamage;
+                    bGuard || oData.nCost || this.addKi(nDamage);
                 },
 
                 // Fonction INPUT
@@ -208,7 +208,7 @@ Object.assign(
                 // Fonction OUTPUT
                 pushBack: function(oPushback, bDivide){
                     if( this.oAnimation.sName != 'lunch' ){
-                        BattleEntity.prototype.pushback.call(this, oPushback, bDivide);
+                        BattleEntity.prototype.pushBack.call(this, oPushback, bDivide);
                     }
                 },
                 setAnimation: function(sAnimation, bUpdate){
@@ -239,7 +239,9 @@ Object.assign(
                     const oCommandEntity = this.oGatling.getEntity();
                     if( oCommandEntity ){
                         const oEntity = new window['Battle' + oCommandEntity.sType](
+                            oCommandEntity.sCod || 'ALL',
                             oCommandEntity.oColor ? oCommandEntity.oColor[this.oColor.sCod] : oCommandEntity.nColor,
+                            oCommandEntity.oAnimation ? oCommandEntity.oAnimation[this.oColor.sCod] : oCommandEntity.sAnimation,
                             {
                                 nX: this.oLayer.oPosition.nX + oCommandEntity.oPosition.nX * (this.bReverse ? -1 : 1),
                                 nY: this.oLayer.oPosition.nY + oCommandEntity.oPosition.nY

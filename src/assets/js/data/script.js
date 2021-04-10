@@ -13,8 +13,13 @@ Object.assign(
                     sFrames: 'assets/images/characters/frames',
                     sPreview: 'assets/images/characters/preview'
                 },
-                oKikoha: {
-                    sRoot: 'assets/images/kikoha'
+                oProjectile: {
+                    sRoot: 'assets/images/projectiles',
+                    sFrames: 'assets/images/projectiles'
+                },
+                oBeam: {
+                    sRoot: 'assets/images/beams',
+                    sFrames: 'assets/images/beams'
                 },
                 oStage: {
                     sRoot: 'assets/images/stages',
@@ -23,6 +28,7 @@ Object.assign(
                 },
                 oController: {
                     sRoot: 'assets/images/controllers',
+                    sFrames: 'assets/images/controllers'
                 }
             },
             oPositionPoint: {
@@ -31,13 +37,13 @@ Object.assign(
                     nY: 182,
                     nGapY: 200 - 182 - 2
                 },
-                kikoha: {
+                projectile: {
                     nX: 64,
                     nY: 126
                 },
                 beam: {
                     nX: 98,
-                    nY: 182
+                    nY: 232
                 }
             },
 
@@ -52,7 +58,7 @@ Object.assign(
             nDie: 60,
             oLife: {
                 character: 30,
-                kikoha: 1,
+                projectile: 1,
                 beam: 0
             },
             // CHARACTER
@@ -124,7 +130,10 @@ Object.assign(
         },
 
         oData: {
+            oEntity: {},
             oCharacter: {},
+            oProjectile: {},
+            oBeam: {},
             oStage: {
                 GZA: {
                     sCod: 'GZA',
@@ -151,7 +160,12 @@ Object.assign(
     }
 );
 
-//=include kikoha.js
+//=include projectile.js
+//=include _projectiles/_KKA.js
+
+//=include beam.js
+//=include _beams/_KMH.js
+
 //=include character.js
 //=include _characters/_GKU.js
 //=include _characters/_BJT.js

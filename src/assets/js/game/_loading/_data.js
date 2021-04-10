@@ -6,66 +6,83 @@ Object.assign(
     InitializeData.prototype, {
 
         init: function(){
-            this.oData = GAME.oData.oDefaultCharacter;
-            for( let sChar in GAME.oData.oCharacter ){
-                const oChar = GAME.oData.oCharacter[sChar];
-                this.createColor(oChar);
-                this.createFrames(oChar);
-                this.createAnimations(oChar);
-                this.createLunch(oChar);
-                this.createRecovery(oChar);
-                this.createCommands(oChar);
+            this.oData = GAME.oData.oEntity;
+            for( let sType in this.oData ){
+                for( let sCod in GAME.oData[sType] ){
+                    const oEntity = GAME.oData[sType][sCod];
+    
+                    this.createColor(sType, oEntity);
+                    this.createFrames(sType, oEntity);
+                    this.createAnimations(sType, oEntity);
+
+                    if( sType == 'oCharacter' ){
+                        this.createLunch(oEntity);
+                        this.createRecovery(oEntity);
+                        this.createCommands(oEntity);
+                    }
+                }
             }
-            this.createKikoha();
         },
 
         isPlainObject: function(uData){
             return Object.prototype.toString.call(uData) === '[object Object]';
         },
 
-        createColor: function(oChar){
-            oChar.aColor.forEach( (oColor, nIndex) => {
-                oChar.oDefaultColor || (oChar.oDefaultColor = oColor);
+        // ENTITY
+        createColor: function(sType, oEntity){
+            oEntity.aColor.forEach( (oColor, nIndex) => {
+                oEntity.oDefaultColor || (oEntity.oDefaultColor = oColor);
                 oColor.oPath = {
-                    sFace: GAME.oSettings.oPath.oCharacter.sFace + '/' + oChar.sCod + '/' + oColor.sCod + '.png',
-                    sFrames: GAME.oSettings.oPath.oCharacter.sFrames + '/' + oChar.sCod + '/' + oColor.sCod,
-                    sPreview: GAME.oSettings.oPath.oCharacter.sPreview + '/' + oChar.sCod + '/' + oColor.sCod + '.png'
+                    sFrames: GAME.oSettings.oPath[sType].sFrames ?
+                        GAME.oSettings.oPath[sType].sFrames + '/' + oEntity.sCod + '/' + oColor.sCod :
+                        null,
+                    sFace: GAME.oSettings.oPath[sType].sFace ?
+                        GAME.oSettings.oPath[sType].sFace + '/' + oEntity.sCod + '/' + oColor.sCod + '.png' :
+                        null,
+                    sPreview: GAME.oSettings.oPath[sType].sPreview ?
+                        GAME.oSettings.oPath[sType].sPreview + '/' + oEntity.sCod + '/' + oColor.sCod + '.png' :
+                        null
                 };
             } );
         },
 
-        createFrames: function(oChar){
+        createFrames: function(sType, oEntity){
             const oFrames = {};
-            if( oChar.bActive ){
+            if( oEntity.bActive ){
                 [
-                    ...Object.keys(this.oData.oFrames),
-                    ...Object.keys(oChar.oFrames)
+                    ...Object.keys(this.oData[sType].oFrames),
+                    ...Object.keys(oEntity.oFrames)
                 ]
                 .filter( (uValue, nIndex, aSelf) => {
                     return aSelf.indexOf(uValue) === nIndex;
                 } )
                 .forEach( sFrame => {
-                    if( oChar.oFrames[sFrame] ){
-                        oFrames[sFrame] = Object.assign({}, this.oData.oFrames[sFrame], oChar.oFrames[sFrame] || {});
+                    if( oEntity.oFrames[sFrame] != null ){
+                        oFrames[sFrame] = Object.assign({}, this.oData[sType].oFrames[sFrame], oEntity.oFrames[sFrame] || {});
                         for( let sProp in oFrames[sFrame] ){
-                            if( this.isPlainObject(this.oData.oFrames[sFrame][sProp]) && this.isPlainObject(oChar.oFrames[sFrame][sProp]) ){
-                                Object.assign(oFrames[sFrame][sProp], this.oData.oFrames[sFrame][sProp], oChar.oFrames[sFrame][sProp]);
+                            if( this.isPlainObject(this.oData[sType].oFrames[sFrame][sProp]) ){
+                                if( this.isPlainObject(oEntity.oFrames[sFrame][sProp]) ){
+                                    Object.assign(oFrames[sFrame][sProp], this.oData[sType].oFrames[sFrame][sProp], oEntity.oFrames[sFrame][sProp]);
+                                }
+                                else if( this.oData[sType].oFrames[sFrame][sProp].bDelete && oEntity.oFrames[sFrame][sProp] == null ){
+                                    delete oFrames[sFrame][sProp];
+                                }
                             }
                         }
                     }
                 } );
             } else {
-                Object.assign(oFrames, this.oData.oFrames);
+                Object.assign(oFrames, this.oData[sType].oFrames);
             }
-            oChar.oFrames = oFrames;
+            oEntity.oFrames = oFrames;
         },
 
-        createAnimations: function(oChar){
-            oChar.oAnimations = Object.assign({}, this.oData.oAnimations, oChar.oAnimations);
-            for( let sAnim in oChar.oAnimations ){
-                if( Array.isArray(oChar.oAnimations[sAnim]) ){
-                    oChar.oAnimations[sAnim] = {
-                        aFrames: oChar.oAnimations[sAnim]
+        createAnimations: function(sType, oEntity){
+            oEntity.oAnimations = Object.assign({}, this.oData[sType].oAnimations, oEntity.oAnimations);
+            for( let sAnim in oEntity.oAnimations ){
+                if( Array.isArray(oEntity.oAnimations[sAnim]) ){
+                    oEntity.oAnimations[sAnim] = {
+                        aFrames: oEntity.oAnimations[sAnim]
                     };
                 }
             }
@@ -114,6 +131,7 @@ Object.assign(
             };
         },
 
+        // CHARACTER
         createRecovery: function(oChar){
             const aRecovery = oChar.oAnimations.recovery.aFrames;
             ['forward', 'backward'].forEach( sType => {
@@ -131,24 +149,16 @@ Object.assign(
         createCommands: function(oChar){
             const oCommands = {};
             if( oChar.bActive ){
-                for( let sType in this.oData.oCommands ){
+                for( let sType in this.oData.oCharacter.oCommands ){
                     oCommands[sType] = [
-                        ...this.oData.oCommands[sType],
+                        ...this.oData.oCharacter.oCommands[sType],
                         ...(oChar.oCommands[sType] || [])
                     ];
                 }
             } else {
-                Object.assign(oCommands, this.oData.oCommands);
+                Object.assign(oCommands, this.oData.oCharacter.oCommands);
             }
             oChar.oCommands = oCommands;
-        },
-
-        createKikoha: function(){
-            GAME.oData.oKikoha.aColor.forEach( oColor => {
-                oColor.oPath = {
-                    sFrames: GAME.oSettings.oPath.oKikoha.sRoot + '/' + oColor.sCod
-                };
-            } );
         }
     }
 );
@@ -156,7 +166,7 @@ Object.assign(
 InitializeScene.prototype.stepData = function(){
     setTimeout(
         () => {
-            this.addStepText( 'Create data Character' );
+            this.addStepText( 'Create data Entity' );
             new InitializeData();
             this.bStepEnd = true;
         }

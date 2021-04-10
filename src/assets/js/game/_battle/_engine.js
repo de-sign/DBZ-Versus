@@ -233,7 +233,7 @@ Object.assign(
                                             // PUSHBACK
                                             aPushback.push( {
                                                 oPriority: {
-                                                    nHit: oCollapse[oEntityHit.sId] ? oCollapse[oEntityHit.sId].nPriority + 1 : 1,
+                                                    nHit: oCollapse[oEntityHit.sId] ? oCollapse[oEntityHit.sId].nPriority + 1 : 2,
                                                     nHurt: oCollapse[oEntityHurt.sId] ? oCollapse[oEntityHurt.sId].nPriority : 0
                                                 },
                                                 oEntityHit,
@@ -270,17 +270,23 @@ Object.assign(
             aPushback.forEach( oPushback => {
                 // Movement Opponent
                 if( oPushback.oPriority.nHit > oPushback.oPriority.nHurt ) {
-                    if( oPushback.oEntityHurt.oCheck.bPushback ){
+                    if( oPushback.oEntityHurt.oCheck.oPushback.bSelf ){
                         oPushback.oEntityHurt.pushBack(oPushback.oData, false);
+                    }
+                    if( oPushback.oEntityHurt.oCheck.oPushback.bParent ){
                         const oParent = oPushback.oEntityHurt.oParent;
                         oParent && oParent.pushBack(oPushback.oData, false);
                     }
                 }
                 // Movement Player
-                else if( oPushback.oEntityHit.oCheck.bPushback ){
-                    oPushback.oEntityHit.pushBack(oPushback.oData, true);
-                    const oParent = oPushback.oEntityHit.oParent;
-                    oParent && oParent.pushBack(oPushback.oData, true);
+                else {
+                    if( oPushback.oEntityHit.oCheck.oPushback.bSelf ){
+                        oPushback.oEntityHit.pushBack(oPushback.oData, true);
+                    }
+                    if( oPushback.oEntityHit.oCheck.oPushback.bParent ){
+                        const oParent = oPushback.oEntityHit.oParent;
+                        oParent && oParent.pushBack(oPushback.oData, true);
+                    }
                 }
             } );
         }

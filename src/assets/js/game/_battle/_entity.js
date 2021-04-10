@@ -35,23 +35,31 @@ Object.assign(
                 bHit: true,
                 oHurt: {
                     character: true,
-                    kikoha: true,
+                    projectile: true,
                     beam: true
                 },
                 bLunch: true,
-                bPushback: true
-            },
-            kikoha: {
-                bHit: true,
-                oHurt: {
-                    kikoha: true,
-                    beam: true
+                oPushback: {
+                    bSelf: true,
+                    bParent: false
                 }
             },
+            projectile: {
+                bHit: true,
+                oHurt: {
+                    projectile: true,
+                    beam: true
+                },
+                oPushback: {}
+            },
             beam: {
+                bCollapse: true,
                 bHit: true,
                 oHurt: {},
-                bPushback: true
+                oPushback: {
+                    bSelf: true,
+                    bParent: true
+                }
             }
         },
 
@@ -172,7 +180,7 @@ Object.assign(
             takeHit: function(oEntity){
                 const oData = oEntity.getHitData();
                 this.nLife -= oData.nDamage == null ? 1 : oData.nDamage;
-                oEntity.confirmHit();
+                oEntity.confirmHit(oData);
             },
             setAnimation: function(sAnimation, bUpdate){
                 let sSet = false;
@@ -227,7 +235,7 @@ Object.assign(
                 return this.oDeadTimer;
             },
             canMove: function(){
-                return this.oCheck.bCollapse;
+                return this.oCheck.bCollapse && this.oCheck.bReverse;
             },
 
             updateAnimation: function(){
@@ -245,37 +253,40 @@ Object.assign(
                     }
                 }
             },
-            confirmHit: function(){
+            confirmHit: function(oData, bGuard){
                 this.bHit = true;
+                this.oParent && this.oParent.confirmHit(oData, bGuard);
             },
-            pushback: function(oPushback, bDivide){
+            pushBack: function(oPushback, bDivide){
                 oPushback = Object.assign({}, oPushback || GAME.oSettings.oPushback);
                 bDivide && (oPushback.nX /= 2);
                 this.setMovement(oPushback);
+                /*
                 this.oMovement.update();
                 this.move();
+                */
             }
         }
     }
 );
 
-/* ----- BattleKikoha ----- */
-function BattleKikoha(nColor, oPosition, bReverse, oHitData, oParent){
+/* ----- BattleProjectile ----- */
+function BattleProjectile(sCod, nColor, sAnimation, oPosition, bReverse, oHitData, oParent){
     BattleEntity.apply(this, arguments);
 }
 
 Object.assign(
-    BattleKikoha, {
+    BattleProjectile, {
         prototype: Object.assign(
             Object.create(BattleEntity.prototype), {
                 constructor: BattleEntity,
-                init: function(nColor, oPosition, bReverse, oHitData, oParent){
-                    BattleEntity.prototype.init.call(this, 'kikoha', GAME.oData.oKikoha, nColor, oParent);
+                init: function(sCod, nColor, sAnimation, oPosition, bReverse, oHitData, oParent){
+                    BattleEntity.prototype.init.call(this, 'projectile', GAME.oData.oProjectile[sCod], nColor, oParent);
                     this.oLayer.setPosition(oPosition);
                     this.bReverse = bReverse;
                     this.oHitData = oHitData;
 
-                    this.setAnimation('stand');
+                    this.setAnimation(sAnimation);
                 },
                 /*
                 update: function(){},
@@ -285,11 +296,38 @@ Object.assign(
                     oEntity && BattleEntity.prototype.takeHit.call(this, oEntity);
                     this.setAnimation('hit_light', true);
                 },
-                confirmHit: function(oEntity){
-                    this.oParent.bHit = this.bHit = true;
+                confirmHit: function(oData, bGuard){
+                    BattleEntity.prototype.confirmHit.call(this, oData, bGuard);
                     this.takeHit();
                     this.nLife--;
                 }
+            }
+        )
+    }
+);
+
+/* ----- BattleBeam ----- */
+function BattleBeam(sCod, nColor, sAnimation, oPosition, bReverse, oHitData, oParent){
+    BattleEntity.apply(this, arguments);
+}
+
+Object.assign(
+    BattleBeam, {
+        prototype: Object.assign(
+            Object.create(BattleEntity.prototype), {
+                constructor: BattleEntity,
+                init: function(sCod, nColor, sAnimation, oPosition, bReverse, oHitData, oParent){
+                    BattleEntity.prototype.init.call(this, 'beam', GAME.oData.oBeam[sCod], nColor, oParent);
+                    this.oLayer.setPosition(oPosition);
+                    this.bReverse = bReverse;
+                    this.oHitData = oHitData;
+
+                    this.setAnimation(sAnimation);
+                },
+                /*
+                update: function(){},
+                destroy: function(){}
+                */
             }
         )
     }
