@@ -76,7 +76,7 @@ Object.assign(
                         }
                         else if( !this.oAnimation.nLength || this.oAnimation.isEnd() ){
                             if( this.oAnimation.sName == 'stand' ){
-                                this.setAnimation(oMenu.__oData.sAnimation);
+                                this.setAnimation(oMenu.__oData.sListAnimation || oMenu.__oData.sAnimation);
                             } else {
                                 this.setAnimation('stand');
                                 this.oAnimation.nLength = 60;

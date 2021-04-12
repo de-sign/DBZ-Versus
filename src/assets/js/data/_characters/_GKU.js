@@ -596,7 +596,10 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 84,
                 nHeight: 60
             }]
-        }
+        },
+        list_first: false,
+        list_second: false,
+        list_third: false
     },
 
     oAnimations: {
@@ -844,7 +847,7 @@ GAME.oData.oCharacter.GKU = {
             {
                 nFrame: 2,
                 sFrame: 'blur'
-            },
+            }
         ]
     },
 
@@ -857,6 +860,7 @@ GAME.oData.oCharacter.GKU = {
                     TRN: 'Kaiōken Kamehameha'
                 },
                 sAnimation: 'super',
+                sListAnimation: 'super_list',
                 nCost: 12,
                 nDamage: 4,
                 nGatlingLevel: 3,

@@ -116,11 +116,13 @@ GAME.oData.oBeam.ALL = {
         circle: [
             {
                 nFrame: 2,
-                sFrame: 'beam'
+                sFrame: 'beam',
+                aHitBox: null
             },
             {
                 nFrame: 2,
-                sFrame: 'circle_first'
+                sFrame: 'circle_first',
+                aHitBox: null
             },
             {
                 nFrame: 36,
@@ -139,11 +141,13 @@ GAME.oData.oBeam.ALL = {
         triangle: [
             {
                 nFrame: 2,
-                sFrame: 'beam'
+                sFrame: 'beam',
+                aHitBox: null
             },
             {
                 nFrame: 2,
-                sFrame: 'triangle_first'
+                sFrame: 'triangle_first',
+                aHitBox: null
             },
             {
                 nFrame: 36,
@@ -161,15 +165,18 @@ GAME.oData.oBeam.ALL = {
         big_triangle: [
             {
                 nFrame: 2,
-                sFrame: 'beam'
+                sFrame: 'beam',
+                aHitBox: null
             },
             {
                 nFrame: 2,
-                sFrame: 'triangle_first'
+                sFrame: 'triangle_first',
+                aHitBox: null
             },
             {
-                nFrame: 22,
-                sFrame: 'triangle_second'
+                nFrame: 2,
+                sFrame: 'triangle_second',
+                aHitBox: null
             },
             {
                 nFrame: 32,

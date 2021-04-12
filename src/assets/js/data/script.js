@@ -161,10 +161,10 @@ Object.assign(
 );
 
 //=include projectile.js
-//=include _projectiles/_KKA.js
+//=include _projectiles/_ALL.js
 
 //=include beam.js
-//=include _beams/_KMH.js
+//=include _beams/_ALL.js
 
 //=include character.js
 //=include _characters/_GKU.js

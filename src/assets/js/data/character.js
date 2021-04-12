@@ -121,11 +121,11 @@ GAME.oData.oEntity.oCharacter = {
         },
         kikoha: {
             sPath: 'kikoha.png',
-            nZIndex: 30
+            nZIndex: 80
         },
         ki_beam: {
             sPath: 'ki_beam.png',
-            nZIndex: 30,
+            nZIndex: 80,
             aHitBox: {
                 nWidth: 1024
             }
@@ -146,6 +146,22 @@ GAME.oData.oEntity.oCharacter = {
         super_fourth: {
             sPath: 'super_fourth.png',
             nZIndex: 80
+        },
+        // Command List
+        list_first: {
+            sPath: 'list_first.png'
+        },
+        list_second: {
+            sPath: 'list_second.png'
+        },
+        list_third: {
+            sPath: 'list_third.png'
+        },
+        list_fourth: {
+            sPath: 'list_fourth.png'
+        },
+        list_beam: {
+            sPath: 'list_beam.png'
         }
     },
     oAnimations: {
@@ -257,6 +273,53 @@ GAME.oData.oEntity.oCharacter = {
                 sFrame: 'blur',
                 aHurtBox: null
             }
+        ],
+        // List
+        super_list: [
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                aHurtBox: null
+            },
+            {
+                nFrame: 30,
+                sFrame: 'super_first'
+            },
+            {
+                nFrame: 10,
+                sFrame: 'super_second',
+                aHurtBox: null
+            },
+            {
+                nFrame: 2,
+                sFrame: 'list_first',
+                aHurtBox: null
+            },
+            {
+                nFrame: 2,
+                sFrame: 'list_second',
+                aHurtBox: null
+            },
+            {
+                nFrame: 36,
+                sFrame: 'list_third'
+            },
+            {
+                nFrame: 2,
+                sFrame: 'list_second'
+            },
+            {
+                nFrame: 2,
+                sFrame: 'list_first'
+            },
+            {
+                nFrame: 20,
+                sFrame: 'super_second'
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur'
+            },
         ]
     },
     oCommands: {

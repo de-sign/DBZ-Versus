@@ -617,60 +617,10 @@ GAME.oData.oCharacter.SRU = {
                 nHeight: 60
             }]
         },
-        super_fourth: {
-            oPositionBox: {
-                nX: -30,
-                nY: -110,
-                nWidth: 64,
-                nHeight: 112
-            },
-            aHurtBox: [{
-                nX: -10,
-                nY: -138,
-                nWidth: 60,
-                nHeight: 56
-            }, {
-                nX: -22,
-                nY: -118,
-                nWidth: 104,
-                nHeight: 64
-            }, {
-                nX: -38,
-                nY: -58,
-                nWidth: 84,
-                nHeight: 60
-            }]
-        },
-        super_fifth: {
-            oPositionBox: {
-                nX: -30,
-                nY: -110,
-                nWidth: 64,
-                nHeight: 112
-            },
-            aHurtBox: [{
-                nX: -10,
-                nY: -138,
-                nWidth: 60,
-                nHeight: 56
-            }, {
-                nX: -22,
-                nY: -118,
-                nWidth: 104,
-                nHeight: 64
-            }, {
-                nX: -38,
-                nY: -58,
-                nWidth: 84,
-                nHeight: 60
-            }],
-            aHitBox: {
-                nX: 30,
-                nY: -142,
-                nHeight: 112
-            }
-        },
-        super_sixth: null
+        list_first: false,
+        list_second: false,
+        list_third: false,
+        list_beam: false
     },
 
     oAnimations: {
@@ -978,7 +928,7 @@ GAME.oData.oCharacter.SRU = {
             },
             {
                 nFrame: 40,
-                sFrame: 'super_fifth'
+                sFrame: 'super_third'
             },
             {
                 nFrame: 20,
@@ -988,7 +938,30 @@ GAME.oData.oCharacter.SRU = {
                 nFrame: 2,
                 sFrame: 'blur'
             },
-        ]
+        ],
+        // 12, 4, 16
+        death_beam_list: [
+            {
+                nFrame: 2,
+                sFrame: 'blur'
+            },
+            {
+                nFrame: 10,
+                sFrame: 'kikoha'
+            },
+            {
+                nFrame: 8,
+                sFrame: 'list_beam'
+            },
+            {
+                nFrame: 10,
+                sFrame: 'kikoha'
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur'
+            }
+        ],
     },
 
     oCommands: {
@@ -997,6 +970,7 @@ GAME.oData.oCharacter.SRU = {
                 sCod: 'super',
                 sName: 'Taiyōkei Hakai Kamehameha',
                 sAnimation: 'super',
+                sListAnimation: 'super_list',
                 nCost: 12,
                 nDamage: 4,
                 nGatlingLevel: 3,
@@ -1035,16 +1009,17 @@ GAME.oData.oCharacter.SRU = {
                 sCod: 'death_beam',
                 sName: 'Desubīmu',
                 sAnimation: 'death_beam',
+                sListAnimation: 'death_beam_list',
                 nCost: 4,
                 nGatlingLevel: 2,
                 oEntity: {
                     sType: 'Beam',
                     sAnimation: 'beam',
                     nColor: 0,
-                    nFrameStart: 11,
+                    nFrameStart: 13,
                     oPosition: {
-                        nX: 0,
-                        nY: 0
+                        nX: 16,
+                        nY: -12
                     }
                 },
                 oStun: {

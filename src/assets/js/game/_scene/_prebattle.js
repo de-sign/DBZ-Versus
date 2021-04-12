@@ -55,7 +55,7 @@ Object.assign(
 
                         oChar.oCommands.aOffense.forEach( oCommand => {
                             if( oCommand.oEntity ){
-                                const oEntity = GAME.oData['o' + oCommand.oEntity.sType][oCommand.oEntity.sCod],
+                                const oEntity = GAME.oData['o' + oCommand.oEntity.sType][oCommand.oEntity.sCod || 'ALL'],
                                     nColor = oCommand.oEntity.oColor ? oCommand.oEntity.oColor[ oColor.sCod ] : oCommand.oEntity.nColor,
                                     oColorEntity = oEntity.aColor[nColor];
 

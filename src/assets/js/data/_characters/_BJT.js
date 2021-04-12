@@ -682,68 +682,10 @@ GAME.oData.oCharacter.BJT = {
                 nHeight: 40
             }]
         },
-        super_fourth: {
-            oPositionBox: {
-                nX: -30,
-                nY: -110,
-                nWidth: 64,
-                nHeight: 112
-            },
-            aHurtBox: [{
-                nX: -38,
-                nY: -138,
-                nWidth: 68,
-                nHeight: 140
-            }, {
-                nX: -38,
-                nY: -118,
-                nWidth: 68,
-                nHeight: 40
-            }]
-        },
-        super_fifth: {
-            oPositionBox: {
-                nX: -30,
-                nY: -110,
-                nWidth: 64,
-                nHeight: 112
-            },
-            aHurtBox: [{
-                nX: -38,
-                nY: -138,
-                nWidth: 68,
-                nHeight: 140
-            }, {
-                nX: -38,
-                nY: -118,
-                nWidth: 68,
-                nHeight: 40
-            }]
-        },
-        super_sixth: {
-            oPositionBox: {
-                nX: -30,
-                nY: -110,
-                nWidth: 64,
-                nHeight: 112
-            },
-            aHitBox: {
-                nX: 30,
-                nY: -142,
-                nHeight: 88
-            },
-            aHurtBox: [{
-                nX: -38,
-                nY: -138,
-                nWidth: 68,
-                nHeight: 140
-            }, {
-                nX: -38,
-                nY: -118,
-                nWidth: 68,
-                nHeight: 40
-            }]
-        }
+        list_first: false,
+        list_second: false,
+        list_third: false,
+        list_fourth: false
     },
 
     oAnimations: {
@@ -1024,35 +966,70 @@ GAME.oData.oCharacter.BJT = {
                 aHurtBox: null
             },
             {
-                nFrame: 2,
+                nFrame: 4,
                 sFrame: 'super_third',
                 aHurtBox: null
             },
             {
+                nFrame: 40,
+                sFrame: 'super_third'
+            },
+            {
+                nFrame: 20,
+                sFrame: 'super_second'
+            },
+            {
                 nFrame: 2,
-                sFrame: 'super_fourth',
+                sFrame: 'blur'
+            }
+        ],
+        // List
+        super_list: [
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                aHurtBox: null
+            },
+            {
+                nFrame: 30,
+                sFrame: 'super_first'
+            },
+            {
+                nFrame: 10,
+                sFrame: 'super_second',
                 aHurtBox: null
             },
             {
                 nFrame: 2,
-                sFrame: 'super_fifth',
+                sFrame: 'list_first',
+                aHurtBox: null
+            },
+            {
+                nFrame: 2,
+                sFrame: 'list_second',
+                aHurtBox: null
+            },
+            {
+                nFrame: 2,
+                sFrame: 'list_third',
                 aHurtBox: null
             },
             {
                 nFrame: 32,
-                sFrame: 'super_sixth'
+                sFrame: 'list_fourth'
             },
             {
                 nFrame: 2,
-                sFrame: 'super_fifth'
+                sFrame: 'list_third',
+                aHurtBox: null
             },
             {
                 nFrame: 2,
-                sFrame: 'super_fourth'
+                sFrame: 'list_second'
             },
             {
                 nFrame: 2,
-                sFrame: 'super_third'
+                sFrame: 'list_first'
             },
             {
                 nFrame: 20,
@@ -1074,6 +1051,7 @@ GAME.oData.oCharacter.BJT = {
                     BSJ: 'Gyarikku-hō'
                 },
                 sAnimation: 'super',
+                sListAnimation: 'super_list',
                 nCost: 12,
                 nDamage: 4,
                 nGatlingLevel: 3,
@@ -1089,8 +1067,8 @@ GAME.oData.oCharacter.BJT = {
                     },
                     nFrameStart: 43,
                     oPosition: {
-                        nX: 0,
-                        nY: 0
+                        nX: -24,
+                        nY: -12
                     }
                 },
                 oStun: {
