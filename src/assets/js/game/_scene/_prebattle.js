@@ -38,29 +38,23 @@ Object.assign(
                     this.oAssetManager.add( GAME.oSettings.oPath.oStage.sBackground + '/' + this.oData.sStageSelected + '.png' );
                 },
                 stepImage_Character: function(){
-                    const oChar = GAME.oData.oCharacter[ this.oData.aCharacterSelected[this.nCharacter] ],
-                        oColor = oChar.aColor[ this.oData.aColorSelected[this.nCharacter] ];
-                    
-                    this.addStepText( 'Loading frames ' + oColor.sName );
+                    const oChar = GAME.oData.oCharacter[ this.oData.aCharacterSelected[this.nCharacter] ][ this.oData.aColorSelected[this.nCharacter] ];
+                    this.addStepText( 'Loading frames ' + oChar.sName );
                     for( let sFrame in oChar.oFrames ){
-                        this.oAssetManager.add(oColor.oPath.sFrames + '/' + oChar.oFrames[sFrame].sPath);
+                        this.oAssetManager.add(oChar.oPath.sFrames + '/' + oChar.oFrames[sFrame].sPath);
                     }
                     this.nCharacter++;
                 },
                 stepImage_Entity: function(){
                     this.addStepText( 'Loading frames Entity' );
                     this.oData.aCharacterSelected.forEach( (sChar, nIndex) => {
-                        const oChar = GAME.oData.oCharacter[sChar],
-                            oColor = oChar.aColor[ this.oData.aColorSelected[nIndex] ];
+                        const oChar = GAME.oData.oCharacter[sChar][ this.oData.aColorSelected[nIndex] ];
 
                         oChar.oCommands.aOffense.forEach( oCommand => {
                             if( oCommand.oEntity ){
-                                const oEntity = GAME.oData['o' + oCommand.oEntity.sType][oCommand.oEntity.sCod || 'ALL'],
-                                    nColor = oCommand.oEntity.oColor ? oCommand.oEntity.oColor[ oColor.sCod ] : oCommand.oEntity.nColor,
-                                    oColorEntity = oEntity.aColor[nColor];
-
+                                const oEntity = GAME.oData['o' + oCommand.oEntity.sType][oCommand.oEntity.sEntity || 'ALL'][oChar.sEntityColor];
                                 for( let sFrame in oEntity.oFrames ){
-                                    this.oAssetManager.add(oColorEntity.oPath.sFrames + '/' + oEntity.oFrames[sFrame].sPath);
+                                    this.oAssetManager.add(oEntity.oPath.sFrames + '/' + oEntity.oFrames[sFrame].sPath);
                                 }
                             }
                         } );

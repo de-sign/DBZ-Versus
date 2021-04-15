@@ -1,14 +1,16 @@
 GAME.oData.oCharacter.GKU = {
-    sCod: 'GKU',
+    sEntity: 'GKU',
     bActive: true,
     aColor: [
         {
-            sCod: 'SSJ',
-            sName: 'Gokū SSJ'
+            sColor: 'SSJ',
+            sName: 'Gokū SSJ',
+            sEntityColor: 'BLU'
         },
         {
-            sCod: 'TRN',
-            sName: 'Gokū'
+            sColor: 'TRN',
+            sName: 'Gokū',
+            sEntityColor: 'BLU'
         }
     ],
    
@@ -854,11 +856,9 @@ GAME.oData.oCharacter.GKU = {
     oCommands: {
         aOffense: [
             {
+                sFilter: 'SSJ',
                 sCod: 'super',
-                oName: {
-                    SSJ: 'Chô Kamehameha',
-                    TRN: 'Kaiōken Kamehameha'
-                },
+                sName: 'Chô Kamehameha',
                 sAnimation: 'super',
                 sListAnimation: 'super_list',
                 nCost: 12,
@@ -867,7 +867,45 @@ GAME.oData.oCharacter.GKU = {
                 oEntity: {
                     sType: 'Beam',
                     sAnimation: 'circle',
-                    nColor: 0,
+                    nFrameStart: 43,
+                    oPosition: {
+                        nX: 0,
+                        nY: 0
+                    }
+                },
+                oStun: {
+                    nFreeze: 46,
+                    nBlock: 36,
+                    nHit: 36,
+                    bLunch: true,
+                    sHitAnimation: 'hit_heavy'
+                },
+                oPushback: {
+                    nLength: 4,
+                    nX: -192
+                },
+                bLast: false,
+                oManipulation: {
+                    nMaxLengthFrame: 15,
+                    aButtons: [
+                        { DN: false },
+                        { DF: false },
+                        { FW: false, C: true }
+                    ]
+                }
+            },
+            {
+                sFilter: 'TRN',
+                sCod: 'super',
+                sName: 'Kaiōken Kamehameha',
+                sAnimation: 'super',
+                sListAnimation: 'super_list',
+                nCost: 12,
+                nDamage: 4,
+                nGatlingLevel: 3,
+                oEntity: {
+                    sType: 'Beam',
+                    sAnimation: 'circle',
                     nFrameStart: 43,
                     oPosition: {
                         nX: 0,
@@ -904,7 +942,6 @@ GAME.oData.oCharacter.GKU = {
                 oEntity: {
                     sType: 'Projectile',
                     sAnimation: 'kikoha',
-                    nColor: 0,
                     nFrameStart: 10,
                     oPosition: {
                         nX: 58,

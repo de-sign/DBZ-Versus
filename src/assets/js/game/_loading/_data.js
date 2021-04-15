@@ -11,15 +11,14 @@ Object.assign(
                 for( let sCod in GAME.oData[sType] ){
                     const oEntity = GAME.oData[sType][sCod];
     
-                    this.createColor(sType, oEntity);
                     this.createFrames(sType, oEntity);
                     this.createAnimations(sType, oEntity);
-
                     if( sType == 'oCharacter' ){
                         this.createLunch(oEntity);
                         this.createRecovery(oEntity);
                         this.createCommands(oEntity);
                     }
+                    this.createColor(sType, oEntity);
                 }
             }
         },
@@ -29,23 +28,6 @@ Object.assign(
         },
 
         // ENTITY
-        createColor: function(sType, oEntity){
-            oEntity.aColor.forEach( (oColor, nIndex) => {
-                oEntity.oDefaultColor || (oEntity.oDefaultColor = oColor);
-                oColor.oPath = {
-                    sFrames: GAME.oSettings.oPath[sType].sFrames ?
-                        GAME.oSettings.oPath[sType].sFrames + '/' + oEntity.sCod + '/' + oColor.sCod :
-                        null,
-                    sFace: GAME.oSettings.oPath[sType].sFace ?
-                        GAME.oSettings.oPath[sType].sFace + '/' + oEntity.sCod + '/' + oColor.sCod + '.png' :
-                        null,
-                    sPreview: GAME.oSettings.oPath[sType].sPreview ?
-                        GAME.oSettings.oPath[sType].sPreview + '/' + oEntity.sCod + '/' + oColor.sCod + '.png' :
-                        null
-                };
-            } );
-        },
-
         createFrames: function(sType, oEntity){
             const oFrames = {};
             if( oEntity.bActive ){
@@ -87,7 +69,70 @@ Object.assign(
                 }
             }
         },
+        
+        createColor: function(sType, oEntity){
+            oEntity.aColor.forEach( (oColor, nIndex) => {
+                // DUPLICATE
+                const oEntityColor = oEntity[ oColor.sColor ] = Object.assign(
+                    {
+                        sCod: oEntity.sEntity + '_' + oColor.sColor,
+                        sEntity: oEntity.sEntity,
+                        oPath: {
+                            sFrames: GAME.oSettings.oPath[sType].sFrames + '/' + oEntity.sEntity + '/' + oColor.sColor
+                        }
+                    },
+                    oColor
+                );
 
+                // DEFAULT
+                oEntity.sDefaultColor || (oEntity.sDefaultColor = oColor.sColor);
+
+                // PATH
+                if( GAME.oSettings.oPath[sType].sFace ){
+                    oEntityColor.oPath.sFace = GAME.oSettings.oPath[sType].sFace + '/' + oEntity.sEntity + '/' + oColor.sColor + '.png'
+                }
+                if( GAME.oSettings.oPath[sType].sPreview ){
+                    oEntityColor.oPath.sPreview = GAME.oSettings.oPath[sType].sPreview + '/' + oEntity.sEntity + '/' + oColor.sColor + '.png'
+                }
+                
+                // FRAMES
+                oEntityColor.oFrames = {};
+                for( let sFrame in oEntity.oFrames ){
+                    const oFrame = oEntity.oFrames[sFrame];
+                    if( !oFrame.sFilter || oFrame.sFilter == oColor.sColor ){
+                        oEntityColor.oFrames[sFrame] = oFrame;
+                    }
+                }
+
+                // ANIMATIONS
+                oEntityColor.oAnimations = {};
+                for( let sAnim in oEntity.oAnimations ){
+                    const oAnim = oEntity.oAnimations[sAnim];
+                    if( !oAnim.sFilter || oAnim.sFilter == oColor.sColor ){
+                        oEntityColor.oAnimations[sAnim] = oAnim;
+                    }
+                }
+
+                // COMMANDS
+                if( oEntity.oCommands ){
+                    oEntityColor.oCommands = {};
+                    for( let sTypeCMD in oEntity.oCommands ){
+                        oEntityColor.oCommands[sTypeCMD] = [];
+                        oEntity.oCommands[sTypeCMD].forEach( oCommand => {
+                            if( !oCommand.sFilter || oCommand.sFilter == oColor.sColor ){
+                                oEntityColor.oCommands[sTypeCMD].push(oCommand);
+                            }
+                        } );
+                    }
+                }
+            } );
+
+            delete oEntity.oFrames;
+            delete oEntity.oAnimations;
+            delete oEntity.oCommands;
+        },
+
+        // CHARACTER
         createLunch: function(oChar){
             let nLastY = 0,
                 oLastFrame = null;
@@ -131,7 +176,6 @@ Object.assign(
             };
         },
 
-        // CHARACTER
         createRecovery: function(oChar){
             const aRecovery = oChar.oAnimations.recovery.aFrames;
             ['forward', 'backward'].forEach( sType => {

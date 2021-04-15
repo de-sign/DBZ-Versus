@@ -37,10 +37,10 @@ Object.assign(
                                 nPlayer,
                                 oLastData.aCharacterSelected[nIndex],
                                 oLastData.aColorSelected[nIndex],
-                                oOptions.aController[nIndex],
-                                false
+                                { nX: GAME.oSettings.nDistance },
+                                !!nIndex,
+                                oOptions.aController[nIndex]
                             );
-                        oPlayer.oLayer.oPosition.nX += GAME.oSettings.nDistance * (nIndex ? 1 : -1)
                         this.aPlayer.push(oPlayer);
                         
                         // HUD init

@@ -114,27 +114,28 @@ Object.assign(
             createTrainingList: function(){
                 for( let sChar in GAME.oData.oCharacter ){
                     const oChar = GAME.oData.oCharacter[sChar];
-                    if( oChar.oCommands.aOffense && oChar.oCommands.aOffense.length ){
-                        
-                        oChar.aColor.forEach( oColor => {
+                    oChar.aColor.forEach( oColor => {
+
+                        const oCharColor = oChar[oColor.sColor];
+                        if( oCharColor.oCommands.aOffense && oCharColor.oCommands.aOffense.length ){
 
                             // Clone du LAYER CHAR
                             const hLayer = this.oPattern.oList.hElement.cloneNode(true);
-                            hLayer.id += sChar + '_' + oColor.sCod;
+                            hLayer.id += oCharColor.sCod;
                             hLayer.classList.remove(GAME.oOutput.oConfig.class.created);
-                            hLayer.querySelector('.Training__Menu_List_Name').innerHTML = oColor.sName;
+                            hLayer.querySelector('.Training__Menu_List_Name').innerHTML = oCharColor.sName;
                             [].forEach.call(
                                 hLayer.querySelectorAll('.--change'),
                                 hElement => {
-                                    hElement.id += sChar + '_' + oColor.sCod;
+                                    hElement.id += oCharColor.sCod;
                                     hElement.classList.remove('--change', GAME.oOutput.oConfig.class.created);
                                 }
                             );
                             const oLayer = new GAME.oOutput.OutputLayer(hLayer);
 
-                            for( let nIndex = oChar.oCommands.aOffense.length - 1; nIndex >= 0; nIndex-- ){
+                            for( let nIndex = oCharColor.oCommands.aOffense.length - 1; nIndex >= 0; nIndex-- ){
                                 // Clone du LAYER COMMAND
-                                const aCommand = [oChar.oCommands.aOffense[nIndex]];
+                                const aCommand = [oCharColor.oCommands.aOffense[nIndex]];
                                 if( aCommand[0].oSelfCancel ){
                                     for( let sCommand in aCommand[0].oSelfCancel ){
                                         aCommand.push( Object.assign({}, aCommand[0], aCommand[0].oSelfCancel[sCommand]) );
@@ -142,7 +143,7 @@ Object.assign(
                                 }
 
                                 aCommand.forEach( (oCommand, nDeep) => {
-                                    const oListCommand = this.createCommandList(oCommand, nDeep, oColor.sCod);
+                                    const oListCommand = this.createCommandList(oCommand, nDeep);
                                     oListCommand.__oData = oCommand;
                                     oLayer.add(oListCommand, '.Training__Menu_List_Character_Command');
                                 } );
@@ -150,12 +151,12 @@ Object.assign(
 
                           // Ajout au menu
                             GAME.oOutput.getElement('LAY__Training_Menu_List').add(oLayer);
-                        } );
-                    }
+                        }
+                    } );
                     this.oContext.update();
                 }
             },
-            createCommandList: function(oCommand, nDeep, sColor){
+            createCommandList: function(oCommand, nDeep){
                 const oBtn = { A: true, B: true, C: true },
                     hCommand = this.oPattern.oCommand.hElement.cloneNode(true);
 
@@ -165,7 +166,7 @@ Object.assign(
                 hCommand.querySelector('.Training__Menu_List_Ki').innerHTML = oCommand.nCost ? ( oCommand.nCost / 2 ) + ' Ki' : '';
 
                 const hListCommand = hCommand.querySelector('.Training__Menu_List_Command');
-                let sName = oCommand.oName ? oCommand.oName[sColor] : oCommand.sName;
+                let sName = oCommand.sName;
                 if( nDeep ){
                     sName = '- ' + sName;
                     for( let nIndexDeep = 0; nIndexDeep < nDeep; nIndexDeep++ ){

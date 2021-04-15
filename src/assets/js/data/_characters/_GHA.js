@@ -1,8 +1,8 @@
 GAME.oData.oCharacter.GHA = {
-    sCod: 'GHA',
+    sEntity: 'GHA',
     aColor: [
         {
-            sCod: 'GHS',
+            sColor: 'GHS',
             sName: 'Gohan SNS'
         }
     ]

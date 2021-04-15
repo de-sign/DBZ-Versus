@@ -1,8 +1,8 @@
 GAME.oData.oCharacter.BUU = {
-    sCod: 'BUU',
+    sEntity: 'BUU',
     aColor: [
         {
-            sCod: 'MJN',
+            sColor: 'MJN',
             sName: 'Majin Buu'
         }
     ]

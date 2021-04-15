@@ -1,17 +1,17 @@
 GAME.oData.oProjectile.ALL = {
-    sCod: 'ALL',
+    sEntity: 'ALL',
     bActive: true,
     aColor: [
         {
-            sCod: 'BLU',
+            sColor: 'BLU',
             sName: 'Blue kikoha'
         },
         {
-            sCod: 'ORG',
+            sColor: 'ORG',
             sName: 'Orange kikoha'
         },
         {
-            sCod: 'PRP',
+            sColor: 'PRP',
             sName: 'Purple kikoha'
         }
     ],

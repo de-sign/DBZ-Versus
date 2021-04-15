@@ -1,8 +1,8 @@
 GAME.oData.oCharacter.FRZ = {
-    sCod: 'FRZ',
+    sEntity: 'FRZ',
     aColor: [
         {
-            sCod: 'FRZ',
+            sColor: 'FRZ',
             sName: 'Furīza'
         }
     ]

@@ -1,14 +1,16 @@
 GAME.oData.oCharacter.BJT = {
-    sCod: 'BJT',
+    sEntity: 'BJT',
     bActive: true,
     aColor: [
         {
-            sCod: 'SSJ',
-            sName: 'Bejīta SSJ'
+            sColor: 'SSJ',
+            sName: 'Bejīta SSJ',
+            sEntityColor: 'ORG'
         },
         {
-            sCod: 'BSJ',
-            sName: 'Bejīta'
+            sColor: 'BSJ',
+            sName: 'Bejīta',
+            sEntityColor: 'PRP'
         }
     ],
 
@@ -1045,11 +1047,9 @@ GAME.oData.oCharacter.BJT = {
     oCommands: {
         aOffense: [
             {
+                sFilter: 'SSJ',
                 sCod: 'super',
-                oName: {
-                    SSJ: 'Fainaru Furasshu',
-                    BSJ: 'Gyarikku-hō'
-                },
+                sName: 'Fainaru Furasshu',
                 sAnimation: 'super',
                 sListAnimation: 'super_list',
                 nCost: 12,
@@ -1057,17 +1057,49 @@ GAME.oData.oCharacter.BJT = {
                 nGatlingLevel: 3,
                 oEntity: {
                     sType: 'Beam',
-                    oAnimation: {
-                        SSJ: 'big_triangle',
-                        BSJ: 'triangle'
-                    },
-                    oColor: {
-                        SSJ: 1,
-                        BSJ: 2
-                    },
+                    sAnimation: 'big_triangle',
                     nFrameStart: 43,
                     oPosition: {
-                        nX: -24,
+                        nX: -32,
+                        nY: -12
+                    }
+                },
+                oStun: {
+                    nFreeze: 46,
+                    nBlock: 36,
+                    nHit: 36,
+                    bLunch: true,
+                    sHitAnimation: 'hit_heavy'
+                },
+                oPushback: {
+                    nLength: 4,
+                    nX: -192
+                },
+                bLast: false,
+                oManipulation: {
+                    nMaxLengthFrame: 15,
+                    aButtons: [
+                        { DN: false },
+                        { DF: false },
+                        { FW: false, C: true }
+                    ]
+                }
+            },
+            {
+                sFilter: 'BSJ',
+                sCod: 'super',
+                sName: 'Gyarikku-hō',
+                sAnimation: 'super',
+                sListAnimation: 'super_list',
+                nCost: 12,
+                nDamage: 4,
+                nGatlingLevel: 3,
+                oEntity: {
+                    sType: 'Beam',
+                    sAnimation: 'triangle',
+                    nFrameStart: 43,
+                    oPosition: {
+                        nX: -12,
                         nY: -12
                     }
                 },
@@ -1101,10 +1133,6 @@ GAME.oData.oCharacter.BJT = {
                 oEntity: {
                     sType: 'Projectile',
                     sAnimation: 'kikoha',
-                    oColor: {
-                        SSJ: 1,
-                        BSJ: 2
-                    },
                     nFrameStart: 10,
                     oPosition: {
                         nX: 58,

@@ -1,4 +1,4 @@
-function BattleEntity(sType, oData, nColor, bReverse, oParent) {
+function BattleEntity(sType, oData, oPosition, bReverse, oParent) {
     this.sType = '';
     this.sId = '';
     this.oParent = null;
@@ -8,7 +8,6 @@ function BattleEntity(sType, oData, nColor, bReverse, oParent) {
     this.oLayer = null;
     this.oSprite = null;
     this.oData = null;
-    this.oColor = null;
     
     this.oHitData = null;
     this.oDeadTimer = null;
@@ -83,18 +82,19 @@ Object.assign(
 
         prototype: {
             constructor: BattleEntity,
-            init: function(sType, oData, nColor, oParent){
+            init: function(sType, oData, oPosition, bReverse, oParent){
                 this.sId = BattleEntity.add(this);
                 this.sType = sType;
                 this.oCheck = BattleEntity.oCheck[sType];
                 this.oPositionPoint = GAME.oSettings.oPositionPoint[sType];
                 
                 this.oData = oData;
-                this.oColor = oData.aColor[nColor];
+                this.bReverse = bReverse;
                 this.oParent = oParent;
 
                 this.nLife = GAME.oSettings.oLife[sType];
                 this.createLayer();
+                this.moveLayer(oPosition || {});
             },
             update: function(){
                 // Destruction après 1s pour prévention du ROLLBACK
@@ -149,6 +149,25 @@ Object.assign(
 
                 return this.oLayer;
             },
+            moveLayer: function(oPosition){
+                const oPos = Object.assign({}, this.oParent ? this.oParent.oLayer.oPosition : this.oLayer.oPosition );
+                if( this.oParent ){
+                    if( oPosition.nX ){
+                        oPos.nX += oPosition.nX * (this.bReverse ? -1 : 1);
+                    }
+                    if( oPosition.nY ){
+                        oPos.nY += oPosition.nY;
+                    }
+                } else {
+                    if( oPosition.nX ){
+                        oPos.nX += oPosition.nX * (this.bReverse ? 1 : -1);
+                    }
+                    if( oPosition.nY ){
+                        oPos.nY += oPosition.nY;
+                    }
+                }
+                this.oLayer.setPosition(oPos);
+            },
             render: function(){
                 if( !this.isDead() ){
                     // Reverse
@@ -173,12 +192,11 @@ Object.assign(
                     
                     // Frame
                     this.oAnimation.oFrame.nZIndex && this.oLayer.setStyle( { zIndex: this.oAnimation.oFrame.nZIndex } );
-                    this.oSprite.setSource( this.oColor.oPath.sFrames + '/' + this.oAnimation.oFrame.sPath );
+                    this.oSprite.setSource( this.oData.oPath.sFrames + '/' + this.oAnimation.oFrame.sPath );
                 }
             },
             
-            takeHit: function(oEntity){
-                const oData = oEntity.getHitData();
+            takeHit: function(oEntity, oData){
                 this.nLife -= oData.nDamage == null ? 1 : oData.nDamage;
                 oEntity.confirmHit(oData);
             },
@@ -271,7 +289,7 @@ Object.assign(
 );
 
 /* ----- BattleProjectile ----- */
-function BattleProjectile(sCod, nColor, sAnimation, oPosition, bReverse, oHitData, oParent){
+function BattleProjectile(sEntity, sColor, sAnimation, oPosition, bReverse, oHitData, oParent){
     BattleEntity.apply(this, arguments);
 }
 
@@ -280,9 +298,8 @@ Object.assign(
         prototype: Object.assign(
             Object.create(BattleEntity.prototype), {
                 constructor: BattleEntity,
-                init: function(sCod, nColor, sAnimation, oPosition, bReverse, oHitData, oParent){
-                    BattleEntity.prototype.init.call(this, 'projectile', GAME.oData.oProjectile[sCod], nColor, oParent);
-                    this.oLayer.setPosition(oPosition);
+                init: function(sEntity, sColor, sAnimation, oPosition, bReverse, oHitData, oParent){
+                    BattleEntity.prototype.init.call(this, 'projectile', GAME.oData.oProjectile[sEntity][sColor], oPosition, bReverse, oParent);
                     this.bReverse = bReverse;
                     this.oHitData = oHitData;
 
@@ -292,8 +309,8 @@ Object.assign(
                 update: function(){},
                 destroy: function(){}
                 */
-                takeHit: function(oEntity){
-                    oEntity && BattleEntity.prototype.takeHit.call(this, oEntity);
+                takeHit: function(oEntity, oData){
+                    oEntity && BattleEntity.prototype.takeHit.call(this, oEntity, oData);
                     this.setAnimation('hit_light', true);
                 },
                 confirmHit: function(oData, bGuard){
@@ -307,7 +324,7 @@ Object.assign(
 );
 
 /* ----- BattleBeam ----- */
-function BattleBeam(sCod, nColor, sAnimation, oPosition, bReverse, oHitData, oParent){
+function BattleBeam(sEntity, sColor, sAnimation, oPosition, bReverse, oHitData, oParent){
     BattleEntity.apply(this, arguments);
 }
 
@@ -316,18 +333,37 @@ Object.assign(
         prototype: Object.assign(
             Object.create(BattleEntity.prototype), {
                 constructor: BattleEntity,
-                init: function(sCod, nColor, sAnimation, oPosition, bReverse, oHitData, oParent){
-                    BattleEntity.prototype.init.call(this, 'beam', GAME.oData.oBeam[sCod], nColor, oParent);
-                    this.oLayer.setPosition(oPosition);
+                init: function(sEntity, sColor, sAnimation, oPosition, bReverse, oHitData, oParent){
+                    BattleEntity.prototype.init.call(this, 'beam', GAME.oData.oBeam[sEntity][sColor], oPosition, bReverse, oParent);
                     this.bReverse = bReverse;
                     this.oHitData = oHitData;
 
-                    this.setAnimation(sAnimation);
+                    this.generateAnimation(sAnimation, oPosition);
+                    this.setAnimation(sAnimation + '_' + this.sId);
                 },
                 /*
                 update: function(){},
-                destroy: function(){}
                 */
+                destroy: function(){
+                    delete this.oData.oAnimations[ this.oAnimation.sName ];
+                },
+                // Animations UNIQUE afin de ne pas sortir de l'écran en cas de PUSHBACK
+                generateAnimation: function(sAnimation, oPosition){
+                    const oPositionBox = Object.assign( {}, this.oParent.oAnimation.oFrame.oPositionBox ),
+                        oAnim = Object.assign( {}, this.oData.oAnimations[sAnimation], { aFrames: [] } );
+
+                    if( oPosition.nX ){
+                        oPositionBox.nX -= oPosition.nX;
+                    }
+                    if( oPosition.nY ){
+                        oPositionBox.nY -= oPosition.nY;
+                    }
+
+                    this.oData.oAnimations[sAnimation].aFrames.forEach( oFrame => {
+                        oAnim.aFrames.push( Object.assign( {}, oFrame, { oPositionBox } ) );
+                    } );
+                    this.oData.oAnimations[ sAnimation + '_' + this.sId ] = oAnim;
+                }
             }
         )
     }

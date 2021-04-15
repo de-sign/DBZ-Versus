@@ -1,14 +1,16 @@
 GAME.oData.oCharacter.SRU = {
-    sCod: 'SRU',
+    sEntity: 'SRU',
     bActive: true,
     aColor: [
         {
-            sCod: 'PFC',
-            sName: 'Perfect Seru'
+            sColor: 'PFC',
+            sName: 'Perfect Seru',
+            sEntityColor: 'BLU'
         },
         {
-            sCod: 'SRU',
-            sName: 'Seru'
+            sColor: 'SRU',
+            sName: 'Seru',
+            sEntityColor: 'BLU'
         }
     ],
 
@@ -553,13 +555,7 @@ GAME.oData.oCharacter.SRU = {
                 nY: -98,
                 nWidth: 56,
                 nHeight: 100
-            }],
-            aHitBox: {
-                nX: 22,
-                nY: -114,
-                nWidth: 280,
-                nHeight: 28
-            }
+            }]
         },
         super_first: {
             oPositionBox: {
@@ -977,7 +973,6 @@ GAME.oData.oCharacter.SRU = {
                 oEntity: {
                     sType: 'Beam',
                     sAnimation: 'circle',
-                    nColor: 0,
                     nFrameStart: 43,
                     oPosition: {
                         nX: 0,
@@ -1015,7 +1010,6 @@ GAME.oData.oCharacter.SRU = {
                 oEntity: {
                     sType: 'Beam',
                     sAnimation: 'beam',
-                    nColor: 0,
                     nFrameStart: 13,
                     oPosition: {
                         nX: 16,

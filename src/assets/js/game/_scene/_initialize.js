@@ -62,7 +62,7 @@ Object.assign(
                     for( let sChar in GAME.oData.oCharacter ){
                         const oChar = GAME.oData.oCharacter[sChar];
                         oChar.aColor.forEach( oColor => {
-                            this.oAssetManager.add( oColor.oPath.sFace );
+                            this.oAssetManager.add( oChar[oColor.sColor].oPath.sFace );
                         } );
                     }
                 },
@@ -71,7 +71,7 @@ Object.assign(
                     for( let sChar in GAME.oData.oCharacter ){
                         const oChar = GAME.oData.oCharacter[sChar];
                         oChar.aColor.forEach( oColor => {
-                            this.oAssetManager.add( oColor.oPath.sFace );
+                            this.oAssetManager.add( oChar[oColor.sColor].oPath.sFace );
                         } );
                     }
                 },

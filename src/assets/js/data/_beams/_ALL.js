@@ -1,29 +1,23 @@
 GAME.oData.oBeam.ALL = {
-    sCod: 'ALL',
+    sEntity: 'ALL',
     bActive: true,
     aColor: [
         {
-            sCod: 'BLU',
+            sColor: 'BLU',
             sName: 'Blue beams'
         },
         {
-            sCod: 'ORG',
+            sColor: 'ORG',
             sName: 'Orange beams'
         },
         {
-            sCod: 'PRP',
+            sColor: 'PRP',
             sName: 'Purple beams'
         }
     ],
 
     oFrames: {
         beam: {
-            oPositionBox: {
-                nX: -30,
-                nY: -110,
-                nWidth: 64,
-                nHeight: 112
-            },
             aHitBox:  {
                 nX: 30,
                 nY: -98,
@@ -33,12 +27,6 @@ GAME.oData.oBeam.ALL = {
         },
 
         circle_first: {
-            oPositionBox: {
-                nX: -30,
-                nY: -110,
-                nWidth: 64,
-                nHeight: 112
-            },
             aHitBox:  {
                 nX: 30,
                 nY: -110,
@@ -47,12 +35,6 @@ GAME.oData.oBeam.ALL = {
             }
         },
         circle_second: {
-            oPositionBox: {
-                nX: -30,
-                nY: -110,
-                nWidth: 64,
-                nHeight: 112
-            },
             aHitBox: {
                 nX: 30,
                 nY: -142,
@@ -62,12 +44,6 @@ GAME.oData.oBeam.ALL = {
         },
 
         triangle_first: {
-            oPositionBox: {
-                nX: -30,
-                nY: -110,
-                nWidth: 64,
-                nHeight: 112
-            },
             aHitBox:  {
                 nX: 30,
                 nY: -118,
@@ -76,12 +52,6 @@ GAME.oData.oBeam.ALL = {
             }
         },
         triangle_second: {
-            oPositionBox: {
-                nX: -30,
-                nY: -110,
-                nWidth: 64,
-                nHeight: 112
-            },
             aHitBox: {
                 nX: 30,
                 nY: -126,
@@ -90,12 +60,6 @@ GAME.oData.oBeam.ALL = {
             }
         },
         triangle_third: {
-            oPositionBox: {
-                nX: -30,
-                nY: -110,
-                nWidth: 64,
-                nHeight: 112
-            },
             aHitBox: {
                 nX: 30,
                 nY: -142,

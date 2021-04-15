@@ -125,10 +125,7 @@ GAME.oData.oEntity.oCharacter = {
         },
         ki_beam: {
             sPath: 'ki_beam.png',
-            nZIndex: 80,
-            aHitBox: {
-                nWidth: 1024
-            }
+            nZIndex: 80
         },
         // Super
         super_first: {

@@ -52,17 +52,13 @@ Object.assign(
                 for( let nIndex = 0; nIndex < this.aPlayer.length; nIndex++ ){
                     const oPlayer = this.aPlayer[nIndex];
                     if( oPlayer.oGatling.needFreeze() ){
-                        const sName = oPlayer.oGatling.oCurrent.oName ?
-                            oPlayer.oGatling.oCurrent.oName[ oPlayer.oColor.sCod ] :
-                            oPlayer.oGatling.oCurrent.sName;
-
                         oPlayer.oGatling.bFreeze = true;
                         aEntity.forEach( oEntity => {
                             oEntity.sId != oPlayer.sId && oEntity.setFreeze(oPlayer.oGatling.oCurrent.oStun.nFreeze);
                         } );
                         GAME.oScene.oCurrent.oInfo.add( {
-                            sImg: oPlayer.oColor.oPath.sFace,
-                            sText: sName + '&nbsp;!'
+                            sImg: oPlayer.oData.oPath.sFace,
+                            sText: oPlayer.oGatling.oCurrent.sName + '&nbsp;!'
                         } );
                         break;
                     }
@@ -228,7 +224,8 @@ Object.assign(
                                             // HURT
                                             aHurt.push( {
                                                 oEntityHit,
-                                                oEntityHurt
+                                                oEntityHurt,
+                                                oData: oEntityHit.getHitData()
                                             } );
                                             // PUSHBACK
                                             aPushback.push( {
@@ -256,7 +253,7 @@ Object.assign(
 
             if( aHurt.length ){
                 // Gestion Hurt
-                aHurt.forEach( oHurt => oHurt.oEntityHurt.takeHit(oHurt.oEntityHit) );
+                aHurt.forEach( oHurt => oHurt.oEntityHurt.takeHit(oHurt.oEntityHit, oHurt.oData) );
                 // Gestion PushBack
                 this.movePushback(aPushback, oCollapse);
                 // Gestion hit freeze

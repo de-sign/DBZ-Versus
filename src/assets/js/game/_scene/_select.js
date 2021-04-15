@@ -88,7 +88,7 @@ Object.assign(
             }
 
             this.oCharacter = this.oMenu.oCharacter.getSelected(this.nCursor).__oData;
-            const oColor = this.oCharacter.aColor[this.nColor];
+            const oCharColor = this.oCharacter[ this.oCharacter.aColor[this.nColor].sColor ];
             let sText = 'Player #' + this.nPlayer;
             if( this.bReady ){
                 sText = 'Ready !';
@@ -99,15 +99,15 @@ Object.assign(
             }  
 
             GAME.oOutput.getElement('SPT__Select_Character_' + this.nPlayer)
-                .setSource( oColor.oPath.sPreview );
+                .setSource( oCharColor.oPath.sPreview );
             GAME.oOutput.getElement('TXT__Select_Character_' + this.nPlayer)
-                .setText( oColor.sName );
+                .setText( oCharColor.sName );
             GAME.oOutput.getElement('TXT__Select_Player_' + this.nPlayer)
                 .setText( sText );
         },
 
         checkColor: function(oLock){
-            if( oLock && this.oCharacter.sCod == oLock.sChar && this.nColor == oLock.nColor ){
+            if( oLock && this.oCharacter.sEntity == oLock.sChar && this.nColor == oLock.nColor ){
                 this.changeColor();
             }
         },
@@ -244,7 +244,7 @@ Object.assign(
                     this.aPlayer.forEach( (oPlayer, nIndex) => {
                         this.aColorLock[nIndex] = oPlayer.bReady ?
                             {
-                                sChar: oPlayer.oCharacter.sCod,
+                                sChar: oPlayer.oCharacter.sEntity,
                                 nColor: oPlayer.nColor
                             } :
                             null;
@@ -274,8 +274,8 @@ Object.assign(
                     const aCharacterSelected = [],
                         aColorSelected = [];
                     this.aPlayer.forEach( oPlayer => {
-                        aCharacterSelected.push( oPlayer.oCharacter.sCod );
-                        aColorSelected.push( oPlayer.nColor );
+                        aCharacterSelected.push( oPlayer.oCharacter.sEntity );
+                        aColorSelected.push( oPlayer.oCharacter.aColor[oPlayer.nColor].sColor );
                     } );
 
                     return Object.assign(GAME.oScene.oLastData, {

@@ -1,5 +1,5 @@
 /* ----- BattlePlayer ----- */
-function BattlePlayer(nPlayer, sChar, nColor, oController){
+function BattlePlayer(nPlayer, sChar, sColor, oPosition, bReverse, oController){
     this.nPlayer = null;
 
     this.oInputBuffer = null;
@@ -17,8 +17,8 @@ Object.assign(
         prototype: Object.assign(
             Object.create(BattleEntity.prototype), {
                 constructor: BattlePlayer,
-                init: function(nPlayer, sChar, nColor, oController) {
-                    BattleEntity.prototype.init.call(this, 'character', GAME.oData.oCharacter[sChar], nColor);
+                init: function(nPlayer, sChar, sColor, oPosition, bReverse, oController) {
+                    BattleEntity.prototype.init.call(this, 'character', GAME.oData.oCharacter[sChar][sColor], oPosition, bReverse);
 
                     this.nPlayer = nPlayer;
                     this.oInputBuffer = new BattleInputBuffer(oController);
@@ -99,8 +99,7 @@ Object.assign(
                 addKi: function(nKi){
                     this.nKi = Math.min(this.nKi + nKi, GAME.oSettings.nKi);
                 },
-                takeHit: function(oEntity){
-                    const oData = oEntity.getHitData();
+                takeHit: function(oEntity, oData){
                     if( this.oAnimation.oFrame.oStatus.bGuard ){
                         this.setHurt('guard', oData.oStun.nBlock, true);
                         oEntity.confirmHit(oData, true);
@@ -240,12 +239,9 @@ Object.assign(
                     if( oCommandEntity ){
                         const oEntity = new window['Battle' + oCommandEntity.sType](
                             oCommandEntity.sCod || 'ALL',
-                            oCommandEntity.oColor ? oCommandEntity.oColor[this.oColor.sCod] : oCommandEntity.nColor,
-                            oCommandEntity.oAnimation ? oCommandEntity.oAnimation[this.oColor.sCod] : oCommandEntity.sAnimation,
-                            {
-                                nX: this.oLayer.oPosition.nX + oCommandEntity.oPosition.nX * (this.bReverse ? -1 : 1),
-                                nY: this.oLayer.oPosition.nY + oCommandEntity.oPosition.nY
-                            },
+                            oCommandEntity.sColor || this.oData.sEntityColor,
+                            oCommandEntity.sAnimation,
+                            oCommandEntity.oPosition,
                             this.bReverse,
                             this.oGatling.oCurrent,
                             this

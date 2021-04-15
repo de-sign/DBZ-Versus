@@ -24,6 +24,7 @@ Utilise un moteur de jeu fait maison et FOX Website :
 ## TODO
 __BUG__
 * Problème de OUTPUT DELETE avec les enfants ?
+* Problème lors de CANCEL BEAM par un autre
 
 __Menu__
 * Ajout du ONLINE ?
@@ -54,7 +55,6 @@ __Training__
 
 __General__
 * Optimisation du Code
-    * Gestion COMMAND en fonction de la COLOR
     * Multi-ENTITY dans une COMMAND possible
     * Classe PLAYER avec pour enfant LOCAL et DUMMY ( et AI ? )
 * Nouveaux CHARACTER et COLOR

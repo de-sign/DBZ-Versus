@@ -44,7 +44,8 @@ Object.assign(
         createCharacterList: function(){
             for( let sChar in GAME.oData.oCharacter ){
                 const oChar = GAME.oData.oCharacter[sChar],
-                    oSprite = new GAME.oOutput.OutputSprite( oChar.oDefaultColor.oPath.sFace );
+                    oDefaultColor = oChar[oChar.sDefaultColor],
+                    oSprite = new GAME.oOutput.OutputSprite( oDefaultColor.oPath.sFace );
                 oSprite.__oData = oChar;
                 GAME.oOutput.getElement('LAY__Select_Character').add( oSprite );
             }
