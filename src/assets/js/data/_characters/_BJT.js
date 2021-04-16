@@ -1055,10 +1055,11 @@ GAME.oData.oCharacter.BJT = {
                 nCost: 12,
                 nDamage: 4,
                 nGatlingLevel: 3,
-                oEntity: {
+                aEntity: {
                     sType: 'Beam',
                     sAnimation: 'big_triangle',
                     nFrameStart: 43,
+                    bLink: true,
                     oPosition: {
                         nX: -32,
                         nY: -12
@@ -1094,7 +1095,7 @@ GAME.oData.oCharacter.BJT = {
                 nCost: 12,
                 nDamage: 4,
                 nGatlingLevel: 3,
-                oEntity: {
+                aEntity: {
                     sType: 'Beam',
                     sAnimation: 'triangle',
                     nFrameStart: 43,
@@ -1130,7 +1131,7 @@ GAME.oData.oCharacter.BJT = {
                 sAnimation: 'kikoha',
                 nCost: 4,
                 nGatlingLevel: 2,
-                oEntity: {
+                aEntity: {
                     sType: 'Projectile',
                     sAnimation: 'kikoha',
                     nFrameStart: 10,

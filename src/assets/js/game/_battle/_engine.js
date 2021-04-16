@@ -49,20 +49,7 @@ Object.assign(
                 this.checkHit(aEntity, oCollapse);
 
                 // Gestion Super Freeze
-                for( let nIndex = 0; nIndex < this.aPlayer.length; nIndex++ ){
-                    const oPlayer = this.aPlayer[nIndex];
-                    if( oPlayer.oGatling.needFreeze() ){
-                        oPlayer.oGatling.bFreeze = true;
-                        aEntity.forEach( oEntity => {
-                            oEntity.sId != oPlayer.sId && oEntity.setFreeze(oPlayer.oGatling.oCurrent.oStun.nFreeze);
-                        } );
-                        GAME.oScene.oCurrent.oInfo.add( {
-                            sImg: oPlayer.oData.oPath.sFace,
-                            sText: oPlayer.oGatling.oCurrent.sName + '&nbsp;!'
-                        } );
-                        break;
-                    }
-                }
+                this.commandFreeze(aEntity);
             }
 
             return aPlayerWin;
@@ -83,7 +70,9 @@ Object.assign(
 
         checkCollision: function(oBoxA, oBoxB){
             return !(
-                (oBoxB.nX >= oBoxA.nX + oBoxA.nWidth)     // trop à droite
+                !oBoxA
+                || !oBoxB
+                || (oBoxB.nX >= oBoxA.nX + oBoxA.nWidth)     // trop à droite
 	            || (oBoxB.nX + oBoxB.nWidth <= oBoxA.nX) // trop à gauche
 	            || (oBoxB.nY >= oBoxA.nY + oBoxA.nHeight) // trop en bas
 	            || (oBoxB.nY + oBoxB.nHeight <= oBoxA.nY) // trop en haut
@@ -115,34 +104,36 @@ Object.assign(
                 nLeft = this.oArea.oPosition.nX + (oBoxArea.left - oBoxArea.originX),
                 nRight = this.oArea.oPosition.nX + (oBoxArea.right - oBoxArea.originX);
 
-            // Trop à gauche
-            if( nLeft >= oEntity.oLayer.oPosition.nX + oBoxEntity.nX ){
-                nPriority = oEntity.bReverse ? 3 : 4;
-                sMove = 'left';
-            }
-            // Trop à droite
-            else if( nRight <= oEntity.oLayer.oPosition.nX + ( oBoxEntity.nX + oBoxEntity.nWidth ) ){
-                nPriority = oEntity.bReverse ? 4 : 3;
-                sMove = 'right';
-            }
+            if( oBoxEntity ){
+                // Trop à gauche
+                if( nLeft >= oEntity.oLayer.oPosition.nX + oBoxEntity.nX ){
+                    nPriority = oEntity.bReverse ? 3 : 4;
+                    sMove = 'left';
+                }
+                // Trop à droite
+                else if( nRight <= oEntity.oLayer.oPosition.nX + ( oBoxEntity.nX + oBoxEntity.nWidth ) ){
+                    nPriority = oEntity.bReverse ? 4 : 3;
+                    sMove = 'right';
+                }
 
-            switch( sMove ){
-                case 'left':
-                    oEntity.oLayer.oPosition.nX = nLeft - oBoxEntity.nX;
-                    break;
-                case 'right':
-                    oEntity.oLayer.oPosition.nX = nRight - ( oBoxEntity.nX + oBoxEntity.nWidth );
-                    break;
-            }
+                switch( sMove ){
+                    case 'left':
+                        oEntity.oLayer.oPosition.nX = nLeft - oBoxEntity.nX;
+                        break;
+                    case 'right':
+                        oEntity.oLayer.oPosition.nX = nRight - ( oBoxEntity.nX + oBoxEntity.nWidth );
+                        break;
+                }
 
-            // Trop en bas
-            if( oEntity.oCheck.bLunch ){
-                const nDown = this.oArea.oPosition.nY + (oBoxArea.bottom - oBoxArea.originY) - oEntity.oPositionPoint.nGapY;
-                if( nDown < oEntity.oLayer.oPosition.nY + ( oBoxEntity.nY + oBoxEntity.nHeight ) ){
-                    oBoxEntity = oEntity.getBox('oPositionBox')[0];
-                    oEntity.oLayer.oPosition.nY = nDown - ( oBoxEntity.nY + oBoxEntity.nHeight );
-                    oEntity.oLunch = null;
-                    oEntity.setStance('down', true);
+                // Trop en bas
+                if( oEntity.oCheck.bLunch ){
+                    const nDown = this.oArea.oPosition.nY + (oBoxArea.bottom - oBoxArea.originY) - oEntity.oPositionPoint.nGapY;
+                    if( nDown < oEntity.oLayer.oPosition.nY + ( oBoxEntity.nY + oBoxEntity.nHeight ) ){
+                        oBoxEntity = oEntity.getBox('oPositionBox')[0];
+                        oEntity.oLayer.oPosition.nY = nDown - ( oBoxEntity.nY + oBoxEntity.nHeight );
+                        oEntity.oLunch = null;
+                        oEntity.setStance('down', true);
+                    }
                 }
             }
 
@@ -265,27 +256,60 @@ Object.assign(
 
         movePushback: function(aPushback, oCollapse){
             aPushback.forEach( oPushback => {
-                // Movement Opponent
-                if( oPushback.oPriority.nHit > oPushback.oPriority.nHurt ) {
-                    if( oPushback.oEntityHurt.oCheck.oPushback.bSelf ){
-                        oPushback.oEntityHurt.pushBack(oPushback.oData, false);
-                    }
-                    if( oPushback.oEntityHurt.oCheck.oPushback.bParent ){
-                        const oParent = oPushback.oEntityHurt.oParent;
-                        oParent && oParent.pushBack(oPushback.oData, false);
-                    }
-                }
-                // Movement Player
-                else {
-                    if( oPushback.oEntityHit.oCheck.oPushback.bSelf ){
-                        oPushback.oEntityHit.pushBack(oPushback.oData, true);
-                    }
-                    if( oPushback.oEntityHit.oCheck.oPushback.bParent ){
-                        const oParent = oPushback.oEntityHit.oParent;
-                        oParent && oParent.pushBack(oPushback.oData, true);
-                    }
-                }
+                const bDivide = oPushback.oPriority.nHit < oPushback.oPriority.nHurt;
+                this.pushbackEntity(
+                    bDivide ? oPushback.oEntityHit : oPushback.oEntityHurt,
+                    oPushback.oData,
+                    bDivide
+                );
             } );
+        },
+        pushbackEntity: function(oEntity, oData, bDivide){
+            if( oEntity.isLinked() ){
+                oEntity.oParent.oCheck.bPushback && oEntity.oParent.pushBack(oData, bDivide);
+                for( let sType in oEntity.oParent.oLink ){
+                    oEntity.oParent.oLink[sType].forEach( oLinkEntity => {
+                        oLinkEntity.oCheck.bPushback && oLinkEntity.pushBack(oData, bDivide);
+                    } );
+                }
+            }
+            else if( oEntity.oCheck.bPushback ){
+                oEntity.pushBack(oData, bDivide);
+            }
+        },
+
+        commandFreeze: function(aEntity){
+            for( let nIndex = 0; nIndex < this.aPlayer.length; nIndex++ ){
+                const oPlayer = this.aPlayer[nIndex];
+                if( oPlayer.oGatling.needFreeze() ){
+                    oPlayer.oGatling.bFreeze = true;
+
+                    // Limit Entity
+                    if( oPlayer.oGatling.oCurrent.aEntity ){
+                        const oLimit = {};
+                        oPlayer.oGatling.oCurrent.aEntity.forEach( oCommandEntity => {
+                            oLimit[oCommandEntity.sType] || (oLimit[oCommandEntity.sType] = 0);
+                            oLimit[oCommandEntity.sType]++;
+                        } );
+
+                        for( let sType in oLimit ){
+                            oPlayer.checkLink(sType.toLowerCase(), oLimit[sType]);
+                        }
+                    }
+
+                    // Freeze
+                    aEntity.forEach( oEntity => {
+                        oEntity.sId != oPlayer.sId && oEntity.setFreeze(oPlayer.oGatling.oCurrent.oStun.nFreeze);
+                    } );
+
+                    // Texte
+                    GAME.oScene.oCurrent.oInfo.add( {
+                        sImg: oPlayer.oData.oPath.sFace,
+                        sText: oPlayer.oGatling.oCurrent.sName + '&nbsp;!'
+                    } );
+                    break;
+                }
+            }
         }
     }
 );

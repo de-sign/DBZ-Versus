@@ -42,8 +42,7 @@ Object.assign(
                     } );
                 }
             },
-            destroy: function(){
-            },
+            destroy: function(){},
 
             updateDirection: function(){
                 this.nDirection = 5;
@@ -143,8 +142,7 @@ function BattleGatling(oInputBuffer, oCommandData){
     this.bFreeze = false;
     this.oNext = null;
     this.oUsed = {};
-
-    this.oTimerEntity = null;
+    this.aTimerEntity = [];
 
     this.init(oInputBuffer, oCommandData);
 }
@@ -193,16 +191,20 @@ Object.assign(
             this.bFreeze = false;
             this.oNext = null;
             this.oUsed = {};
-            this.oTimerEntity = null;
+            this.aTimerEntity = [];
         },
         use: function(oCommand){
             this.oCurrent = Object.assign({ nFrameStart: GAME.oTimer.nFrames }, oCommand);
             this.bFreeze = false;
             this.oNext = null;
             this.oUsed[oCommand.sCod] = true;
-            if( oCommand.oEntity ){
-                this.oTimerEntity = new GameTimer();
-                this.oTimerEntity.init( oCommand.oEntity.nFrameStart );
+            if( oCommand.aEntity ){
+                this.aTimerEntity = [];
+                oCommand.aEntity.forEach( oEntity => {
+                    const oTimer = new GameTimer();
+                    oTimer.init( oEntity.nFrameStart );
+                    this.aTimerEntity.push(oTimer);
+                } );
             }
         },
 
@@ -224,15 +226,19 @@ Object.assign(
             return aCommand;
         },
         getEntity: function(){
-            let oEntity = null;
-            if( this.oCurrent && this.oCurrent.oEntity && this.oTimerEntity ){
-                this.oTimerEntity.update(this);
-                if( this.oTimerEntity.isEnd() ){
-                    this.oTimerEntity = null;
-                    oEntity = this.oCurrent.oEntity;
-                }
+            let aEntity = [];
+            if( this.oCurrent && this.oCurrent.aEntity && this.aTimerEntity.length ){
+                this.aTimerEntity.forEach( (oTimer, nIndex) => {
+                    if( oTimer ){
+                        oTimer.update(this);
+                        if( oTimer.isEnd() ){
+                            aEntity.push( this.oCurrent.aEntity[nIndex] );
+                            this.aTimerEntity[nIndex] = null;
+                        }
+                    }
+                } );
             }
-            return oEntity;
+            return aEntity;
         },
 
         canUseCommand: function(nKi, oCommand){

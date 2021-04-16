@@ -24,22 +24,20 @@ Utilise un moteur de jeu fait maison et FOX Website :
 ## TODO
 __BUG__
 * Problème de OUTPUT DELETE avec les enfants ?
-* Problème lors de CANCEL BEAM par un autre
 
 __Menu__
 * Ajout du ONLINE ?
 
 __Settings__
-*N/A*
+<br/>*N/A*
 
 __Side__
-*N/A*
+<br/>*N/A*
 
 __Select__
-*N/A*
+<br/>*N/A*
 
 __Battle__
-* ENTITY CHARACTER pour effet SUPER ou ASSIST
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
 * Méchaniques de jeu
     * Burst ?
@@ -55,7 +53,6 @@ __Training__
 
 __General__
 * Optimisation du Code
-    * Multi-ENTITY dans une COMMAND possible
     * Classe PLAYER avec pour enfant LOCAL et DUMMY ( et AI ? )
 * Nouveaux CHARACTER et COLOR
     * BUU

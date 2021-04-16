@@ -2,6 +2,11 @@ function BattleEntity(sType, oData, oPosition, bReverse, oParent) {
     this.sType = '';
     this.sId = '';
     this.oParent = null;
+    this.oLink = {
+        beam: [],
+        character: [],
+        projectile: []
+    };
     this.oCheck = null;
     this.oPositionPoint = null;
 
@@ -38,28 +43,26 @@ Object.assign(
                     beam: true
                 },
                 bLunch: true,
-                oPushback: {
-                    bSelf: true,
-                    bParent: false
-                }
+                bPushback: true
             },
             projectile: {
                 bHit: true,
                 oHurt: {
                     projectile: true,
                     beam: true
-                },
-                oPushback: {}
+                }
             },
             beam: {
                 bCollapse: true,
                 bHit: true,
                 oHurt: {},
-                oPushback: {
-                    bSelf: true,
-                    bParent: true
-                }
+                bPushback: true
             }
+        },
+        oLink: {
+            character: 4,
+            projectile: 3,
+            beam: 1
         },
 
         add: function(oEntity) {
@@ -114,9 +117,29 @@ Object.assign(
             },
             destroy: function(){
                 BattleEntity.remove(this);
+                this.oParent && this.oParent.remove(this);
                 this.oLayer.oParentElement.delete(this.oLayer);
             },
 
+            add: function(oEntity){
+                this.oLink[oEntity.sType].push(oEntity);
+                this.checkLink(oEntity.sType, 0);
+            },
+            remove: function(oEntity){
+                const nIndex = this.oLink[oEntity.sType].indexOf(oEntity);
+                if( nIndex != -1 ){
+                    this.oLink[oEntity.sType].splice(nIndex, 1);
+                }
+            },
+            checkLink: function(sType, nModify){
+                const nSplice = this.oLink[sType].length + nModify - BattleEntity.oLink[sType];
+                if( nSplice > 0 ){
+                    this.oLink[sType].splice(0, nSplice).forEach( oLinkEntity => oLinkEntity.die() );
+                }
+            },
+            isLinked: function(){
+                return this.oParent && this.oParent.oLink[this.sType].indexOf(this) != -1;
+            },
             die: function(){
                 this.oDeadTimer = new GameTimer();
                 this.oDeadTimer.init( GAME.oSettings.nDie );
@@ -279,10 +302,6 @@ Object.assign(
                 oPushback = Object.assign({}, oPushback || GAME.oSettings.oPushback);
                 bDivide && (oPushback.nX /= 2);
                 this.setMovement(oPushback);
-                /*
-                this.oMovement.update();
-                this.move();
-                */
             }
         }
     }
@@ -346,6 +365,7 @@ Object.assign(
                 */
                 destroy: function(){
                     delete this.oData.oAnimations[ this.oAnimation.sName ];
+                    BattleEntity.prototype.destroy.call(this);
                 },
                 // Animations UNIQUE afin de ne pas sortir de l'écran en cas de PUSHBACK
                 generateAnimation: function(sAnimation, oPosition){
@@ -363,6 +383,65 @@ Object.assign(
                         oAnim.aFrames.push( Object.assign( {}, oFrame, { oPositionBox } ) );
                     } );
                     this.oData.oAnimations[ sAnimation + '_' + this.sId ] = oAnim;
+                }
+            }
+        )
+    }
+);
+
+/* ----- BattleCharacter ----- */
+function BattleCharacter(sEntity, sColor, sAnimation, oPosition, bReverse, oHitData, oParent){
+    this.bCustomAnimation = false;
+    BattleEntity.apply(this, arguments);
+}
+
+Object.assign(
+    BattleCharacter, {
+        prototype: Object.assign(
+            Object.create(BattleEntity.prototype), {
+                constructor: BattleEntity,
+                init: function(sEntity, sColor, sAnimation, oPosition, bReverse, oHitData, oParent){
+                    BattleEntity.prototype.init.call(this, 'character', GAME.oData.oCharacter[sEntity][sColor], oPosition, bReverse, oParent);
+                    this.bReverse = bReverse;
+                    this.oHitData = oHitData;
+
+                    this.bCustomAnimation = this.generateAnimation(sAnimation, oPosition);
+                    this.setAnimation(sAnimation + ( this.bCustomAnimation ? '_' + this.sId : '' ) );
+                },
+                /*
+                update: function(){},
+                */
+                destroy: function(){
+                    if( this.bCustomAnimation ){
+                        delete this.oData.oAnimations[ this.oAnimation.sName ];
+                    }
+                    BattleEntity.prototype.destroy.call(this);
+                },
+                // Animations UNIQUE afin de ne pas sortir de l'écran en cas de PUSHBACK
+                generateAnimation: function(sAnimation, oPosition){
+                    let bGenerate = false;
+                    const oPositionBox = Object.assign( {}, this.oParent.oAnimation.oFrame.oPositionBox ),
+                        oAnim = Object.assign( {}, this.oData.oAnimations[sAnimation], { aFrames: [] } );
+
+                    if( oPosition.nX ){
+                        oPositionBox.nX -= oPosition.nX;
+                    }
+                    if( oPosition.nY ){
+                        oPositionBox.nY -= oPosition.nY;
+                    }
+
+                    this.oData.oAnimations[sAnimation].aFrames.forEach( oFrame => {
+                        if( !oFrame.oPositionBox ){
+                            oAnim.aFrames.push( Object.assign( {}, oFrame, { oPositionBox } ) );
+                            bGenerate = true;
+                        }
+                    } );
+
+                    if( bGenerate ){
+                        this.oData.oAnimations[ sAnimation + '_' + this.sId ] = oAnim;
+                    }
+
+                    return bGenerate;
                 }
             }
         )

@@ -20,6 +20,7 @@ Object.assign(
                 init: function(nPlayer, sChar, sColor, oPosition, bReverse, oController) {
                     BattleEntity.prototype.init.call(this, 'character', GAME.oData.oCharacter[sChar][sColor], oPosition, bReverse);
 
+                    this.nLife = GAME.oSettings.oLife.player;
                     this.nPlayer = nPlayer;
                     this.oInputBuffer = new BattleInputBuffer(oController);
                     this.oGatling = new BattleGatling(this.oInputBuffer, this.oData.oCommands);
@@ -235,10 +236,10 @@ Object.assign(
                 },
 
                 updateAnimation: function(){
-                    const oCommandEntity = this.oGatling.getEntity();
-                    if( oCommandEntity ){
+                    const aCommandEntity = this.oGatling.getEntity();
+                    aCommandEntity.length && aCommandEntity.forEach( oCommandEntity => {
                         const oEntity = new window['Battle' + oCommandEntity.sType](
-                            oCommandEntity.sCod || 'ALL',
+                            oCommandEntity.sEntity || 'ALL',
                             oCommandEntity.sColor || this.oData.sEntityColor,
                             oCommandEntity.sAnimation,
                             oCommandEntity.oPosition,
@@ -246,9 +247,10 @@ Object.assign(
                             this.oGatling.oCurrent,
                             this
                         );
+                        oCommandEntity.bLink && this.add(oEntity);
                         // Pour ne pas perdre une FRAME dans la LOOP
                         oEntity.update();
-                    }
+                    } );
                     BattleEntity.prototype.updateAnimation.call(this);
                 }
             }

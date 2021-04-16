@@ -57,7 +57,8 @@ Object.assign(
             // ENTITY
             nDie: 60,
             oLife: {
-                character: 30,
+                player: 30,
+                character: 0,
                 projectile: 1,
                 beam: 0
             },

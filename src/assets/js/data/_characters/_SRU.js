@@ -970,15 +970,30 @@ GAME.oData.oCharacter.SRU = {
                 nCost: 12,
                 nDamage: 4,
                 nGatlingLevel: 3,
-                oEntity: {
-                    sType: 'Beam',
-                    sAnimation: 'circle',
-                    nFrameStart: 43,
-                    oPosition: {
-                        nX: 0,
-                        nY: 0
+                aEntity: [
+                    {
+                        sType: 'Beam',
+                        sAnimation: 'circle',
+                        nFrameStart: 43,
+                        bLink: true,
+                        oPosition: {
+                            nX: 0,
+                            nY: 0
+                        }
+                    },
+                    {
+                        sType: 'Character',
+                        sEntity: 'GKU',
+                        sColor: 'SSJ',
+                        sAnimation: 'test',
+                        nFrameStart: 13,
+                        bLink: true,
+                        oPosition: {
+                            nX: -80,
+                            nY: 0
+                        }
                     }
-                },
+                ],
                 oStun: {
                     nFreeze: 46,
                     nBlock: 36,
@@ -1007,10 +1022,11 @@ GAME.oData.oCharacter.SRU = {
                 sListAnimation: 'death_beam_list',
                 nCost: 4,
                 nGatlingLevel: 2,
-                oEntity: {
+                aEntity: {
                     sType: 'Beam',
                     sAnimation: 'beam',
                     nFrameStart: 13,
+                    bLink: true,
                     oPosition: {
                         nX: 16,
                         nY: -12

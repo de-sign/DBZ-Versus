@@ -198,6 +198,11 @@ Object.assign(
                         ...this.oData.oCharacter.oCommands[sType],
                         ...(oChar.oCommands[sType] || [])
                     ];
+                    oCommands[sType].forEach( oCommand => {
+                        if( oCommand.aEntity && !Array.isArray(oCommand.aEntity) ){
+                            oCommand.aEntity = [oCommand.aEntity];
+                        }
+                    } );
                 }
             } else {
                 Object.assign(oCommands, this.oData.oCharacter.oCommands);

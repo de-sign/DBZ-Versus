@@ -605,6 +605,54 @@ GAME.oData.oCharacter.GKU = {
     },
 
     oAnimations: {
+        test: [
+            {
+                nFrame: 8,
+                sFrame: 'burst',
+                oPositionBox: null
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oPositionBox: null,
+                aHurtBox: null
+            },
+            {
+                nFrame: 10,
+                sFrame: 'super_first',
+                oPositionBox: null,
+                aHurtBox: null
+            },
+            {
+                nFrame: 10,
+                sFrame: 'super_second',
+                oPositionBox: null,
+                aHurtBox: null
+            },
+            {
+                nFrame: 44,
+                sFrame: 'super_third',
+                oPositionBox: null,
+                aHurtBox: null
+            },
+            {
+                nFrame: 10,
+                sFrame: 'super_second',
+                oPositionBox: null,
+                aHurtBox: null
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oPositionBox: null,
+                aHurtBox: null
+            },
+            {
+                nFrame: 8,
+                sFrame: 'burst',
+                oPositionBox: null
+            }
+        ],
         // Command
         // 4, 4, 6
         light_first: [
@@ -864,10 +912,11 @@ GAME.oData.oCharacter.GKU = {
                 nCost: 12,
                 nDamage: 4,
                 nGatlingLevel: 3,
-                oEntity: {
+                aEntity: {
                     sType: 'Beam',
                     sAnimation: 'circle',
                     nFrameStart: 43,
+                    bLink: true,
                     oPosition: {
                         nX: 0,
                         nY: 0
@@ -903,10 +952,11 @@ GAME.oData.oCharacter.GKU = {
                 nCost: 12,
                 nDamage: 4,
                 nGatlingLevel: 3,
-                oEntity: {
+                aEntity: {
                     sType: 'Beam',
                     sAnimation: 'circle',
                     nFrameStart: 43,
+                    bLink: true,
                     oPosition: {
                         nX: 0,
                         nY: 0
@@ -939,7 +989,7 @@ GAME.oData.oCharacter.GKU = {
                 sAnimation: 'kikoha',
                 nCost: 4,
                 nGatlingLevel: 2,
-                oEntity: {
+                aEntity: {
                     sType: 'Projectile',
                     sAnimation: 'kikoha',
                     nFrameStart: 10,
