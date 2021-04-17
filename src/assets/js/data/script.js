@@ -46,9 +46,69 @@ Object.assign(
                     nY: 232
                 }
             },
+            oSide: {
+                nDefault: 2,
+                aSide: [
+                    {
+                        sName: 'Left',
+                        fPosition: (oArea, nIndex) => {
+                            const oBoxArea = oArea.getBox(),
+                                nLeft = oArea.oPosition.nX + (oBoxArea.left - oBoxArea.originX);
+
+                            return {
+                                nX: nIndex ? nLeft + 88 : -nLeft - 32
+                            };
+                        }
+                    },
+                    {
+                        sName: 'Left reverse',
+                        fPosition: (oArea, nIndex) => {
+                            const oBoxArea = oArea.getBox(),
+                                nLeft = oArea.oPosition.nX + (oBoxArea.left - oBoxArea.originX);
+
+                            return {
+                                nX: nIndex ? nLeft + 32 : -nLeft - 88 
+                            };
+                        }
+                    },
+                    {
+                        sName: 'Middle',
+                        fPosition: () => {
+                            return { nX: 192 };
+                        }
+                    },
+                    {
+                        sName: 'Middle reverse',
+                        fPosition: () => {
+                            return { nX: -192 };
+                        }
+                    },
+                    {
+                        sName: 'Right',
+                        fPosition: (oArea, nIndex) => {
+                            const oBoxArea = oArea.getBox(),
+                                nRight = oArea.oPosition.nX + (oBoxArea.right - oBoxArea.originX);
+
+                                return {
+                                    nX: nIndex ? nRight - 32 : -nRight + 88
+                                };
+                        }
+                    },
+                    {
+                        sName: 'Right reverse',
+                        fPosition: (oArea, nIndex) => {
+                            const oBoxArea = oArea.getBox(),
+                                nRight = oArea.oPosition.nX + (oBoxArea.right - oBoxArea.originX);
+
+                                return {
+                                    nX: nIndex ? nRight - 88 : -nRight + 32
+                                };
+                        }
+                    }
+                ]
+            },
 
             // Game
-            nDistance: 256,
             nFreeze: 6,
             oPushback: {
                 nLength: 4,

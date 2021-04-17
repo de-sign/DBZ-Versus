@@ -37,7 +37,7 @@ Object.assign(
                                 nPlayer,
                                 oLastData.aCharacterSelected[nIndex],
                                 oLastData.aColorSelected[nIndex],
-                                { nX: GAME.oSettings.nDistance },
+                                GAME.oSettings.oSide.aSide[ GAME.oSettings.oSide.nDefault ].fPosition(this.oArea, nIndex),
                                 !!nIndex,
                                 oOptions.aController[nIndex]
                             );

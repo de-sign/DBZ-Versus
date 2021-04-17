@@ -46,7 +46,6 @@ __Battle__
 
 __Training__
 * Terminer Menu
-    * Restart
     * Dummy ?
         * Guard
         * Reversal

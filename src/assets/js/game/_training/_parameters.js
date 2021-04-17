@@ -11,6 +11,11 @@ Object.assign(
                 constructor: TrainingMenuParameters,
                 init: function(){
                     TrainingMenu.prototype.init.apply(this, arguments);
+
+                    this.aLayer.push( {
+                        nSide: GAME.oOutput.getElement('LAY__Training_Menu_Parameters_Side')
+                    } );
+
                     this.oScene.aPlayer.forEach( oPlayer => {
                         this.aLayer.push( {
                             nLife: GAME.oOutput.getElement('LAY__Training_Menu_Parameters_Life_' + oPlayer.nPlayer),
@@ -31,6 +36,8 @@ Object.assign(
                         A: () => {
                             if( this.oMenu.getSelected().sId == 'LAY__Training_Menu_Parameters_Return' ){
                                 sRedirection = 'return';
+                            } else if( this.oMenu.getSelected().sId == 'LAY__Training_Menu_Parameters_Side' ){
+                                sRedirection = 'restart';
                             } else {
                                 this.change(1);
                             }
@@ -60,28 +67,31 @@ Object.assign(
                     let oMenuSelected = this.oMenu.getSelected();
                     switch( oMenuSelected.sId ){
                         case 'LAY__Training_Menu_Parameters_Life_1':
-                            this.oEngine.changeStat(0, 'Life', nChange);
-                            break;
-                        case 'LAY__Training_Menu_Parameters_Life_2':
                             this.oEngine.changeStat(1, 'Life', nChange);
                             break;
-                        case 'LAY__Training_Menu_Parameters_Ki_1':
-                            this.oEngine.changeStat(0, 'Ki', nChange);
+                        case 'LAY__Training_Menu_Parameters_Life_2':
+                            this.oEngine.changeStat(2, 'Life', nChange);
                             break;
-                        case 'LAY__Training_Menu_Parameters_Ki_2':
+                        case 'LAY__Training_Menu_Parameters_Ki_1':
                             this.oEngine.changeStat(1, 'Ki', nChange);
                             break;
-                        case 'LAY__Training_Menu_Parameters_RegenLife_1':
-                            this.oEngine.changeRegen(0, 'Life');
+                        case 'LAY__Training_Menu_Parameters_Ki_2':
+                            this.oEngine.changeStat(2, 'Ki', nChange);
                             break;
-                        case 'LAY__Training_Menu_Parameters_RegenLife_2':
+                        case 'LAY__Training_Menu_Parameters_RegenLife_1':
                             this.oEngine.changeRegen(1, 'Life');
                             break;
+                        case 'LAY__Training_Menu_Parameters_RegenLife_2':
+                            this.oEngine.changeRegen(2, 'Life');
+                            break;
                         case 'LAY__Training_Menu_Parameters_RegenKi_1':
-                            this.oEngine.changeRegen(0, 'Ki');
+                            this.oEngine.changeRegen(1, 'Ki');
                             break;
                         case 'LAY__Training_Menu_Parameters_RegenKi_2':
-                            this.oEngine.changeRegen(1, 'Ki');
+                            this.oEngine.changeRegen(2, 'Ki');
+                            break;
+                        case 'LAY__Training_Menu_Parameters_Side':
+                            this.oEngine.changeSide(nChange);
                             break;
                     }
                 },
@@ -95,8 +105,11 @@ Object.assign(
                             else if( sType == 'nKi' ) {
                                 oLayer[sType].aChildElement[0].setText( oParam[sType] / 2 );
                             }
-                            else {
-                                oLayer[sType].aChildElement[0].setText( oParam[sType]);
+                            else if( sType == 'nLife' ) {
+                                oLayer[sType].aChildElement[0].setText( oParam[sType] );
+                            }
+                            else if( sType == 'nSide' ) {
+                                oLayer[sType].aChildElement[0].setText( GAME.oSettings.oSide.aSide[oParam[sType]].sName );
                             }
                         }
                     } );
@@ -122,19 +135,27 @@ Object.assign(
             init: function(oScene){
                 this.oScene = oScene;
 
+                this.aParam.push( GameStore.get('Parameters') || {
+                    nSide: GAME.oSettings.oSide.nDefault
+                } );
+
                 this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
+                    nIndex++;
                     this.aParam.push( GameStore.get('Parameters_' + nIndex) || {
-                        nLife: GAME.oSettings.oLife.character,
+                        nLife: GAME.oSettings.oLife.player,
                         nKi: GAME.oSettings.nKi,
                         bRegenLife: true,
                         bRegenKi: true
                     } );
                     this.setStat(nIndex, 'Life');
                     this.setStat(nIndex, 'Ki');
+
+                    this.setPosition(nIndex - 1);
                 } );
             },
             update: function(){
                 this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
+                    nIndex++;
                     const oParam = this.aParam[nIndex];
                     if( oPlayer.oAnimation.sType == 'movement' && oPlayer.oAnimation.nTick == 1 ){
                         if( oPlayer.nLife <= 0 || ( oParam.bRegenLife && oPlayer.nLife < oParam.nLife ) ){
@@ -149,12 +170,13 @@ Object.assign(
             destroy: function(){
             },
 
+            onInit: function(){
+                this.oScene.oTraining.restart = this.restart.bind(this);
+            },
             // onOpen: function(){},
             onClose: function(){
-                this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
-                    this.setStat(nIndex, 'Life');
-                    this.setStat(nIndex, 'Ki');
-                } );
+                this.oScene.bRestart && this.restart();
+                this.oScene.bRestart = false;
             },
 
             changeStat: function(nIndex, sStat, nChange){
@@ -165,7 +187,7 @@ Object.assign(
                         nKi: 0
                     },
                     oMaxStat = {
-                        nLife: GAME.oSettings.oLife.character,
+                        nLife: GAME.oSettings.oLife.player,
                         nKi: GAME.oSettings.nKi
                     };
 
@@ -182,13 +204,56 @@ Object.assign(
             setStat: function(nIndex, sStat){
                 const oParam = this.aParam[nIndex];
                 sStat = 'n' + sStat;
-                this.oScene.aPlayer[nIndex][sStat] = oParam[sStat];
+                this.oScene.aPlayer[nIndex - 1][sStat] = oParam[sStat];
             },
+
             changeRegen: function(nIndex, sRegen){
                 sRegen = 'bRegen' + sRegen;
                 this.aParam[nIndex][sRegen] = !this.aParam[nIndex][sRegen];
 
                 GameStore.update('Parameters_' + nIndex, this.aParam[nIndex]);
+            },
+
+            changeSide: function(nChange){
+                const oParam = this.aParam[0];
+                oParam.nSide += nChange;
+
+                if( oParam.nSide >= GAME.oSettings.oSide.aSide.length ){
+                    oParam.nSide = 0;
+                }
+                else if( oParam.nSide < 0 ){
+                    oParam.nSide = GAME.oSettings.oSide.aSide.length - 1;
+                }
+
+                GameStore.update('Parameters', oParam);
+            },
+            setPosition: function(nIndex){
+                const oPlayer = this.oScene.aPlayer[nIndex];
+                oPlayer.bReverse = oPlayer.nPlayer == 2;
+                oPlayer.oLayer.resetPosition();
+                oPlayer.moveLayer( GAME.oSettings.oSide.aSide[ this.aParam[0].nSide ].fPosition(this.oScene.oArea, nIndex) );
+            },
+
+            restart: function(){
+                // Entity
+                BattleEntity.get().forEach( oEntity => {
+                    if( oEntity.constructor != BattlePlayer ){
+                        oEntity.destroy();
+                    }
+                } );
+
+                this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
+                    nIndex++;
+
+                    // Bars
+                    this.setStat(nIndex, 'Life');
+                    this.setStat(nIndex, 'Ki');
+
+                    // Perso
+                    oPlayer.oLunch = null;
+                    oPlayer.setStance('stand', true);
+                    this.setPosition(nIndex - 1);
+                } );
             }
         }
     }

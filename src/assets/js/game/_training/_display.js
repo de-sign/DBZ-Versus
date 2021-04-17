@@ -181,6 +181,7 @@ Object.assign(
                 this.oScene.oContext.update();
             },
 
+            // onInit: function(){}
             onOpen: function(){
                 this.setFrameRate(60);
             },

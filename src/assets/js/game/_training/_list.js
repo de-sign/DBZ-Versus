@@ -121,7 +121,8 @@ Object.assign(
             },
             destroy: function(){
             },
-
+            
+            // onInit: function(){}
             onOpen: function(){
                 if( this.nPlayer == -1 ){
                     this.change(1);

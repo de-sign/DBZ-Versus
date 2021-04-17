@@ -8,6 +8,7 @@ function TrainingScene() {
     this.oCurrentMenu = null;
     this.oMenu = {};
     this.bMenu = false;
+    this.bRestart = false;
 }
 
 Object.assign(
@@ -18,6 +19,10 @@ Object.assign(
                 {
                     aButton: ['START'],
                     sText: 'Open menu'
+                },
+                {
+                    aButton: ['UP', 'START'],
+                    sText: 'Restart'
                 }
             ],
             aMenu: [
@@ -67,6 +72,8 @@ Object.assign(
                         }, []
                     );
                     GameHelper.set( aController, TrainingScene.oHelper.aBattle );
+
+                    this.oTraining.trigger('onInit');
                 },
                 update: function(){
                     this.addNewController();
@@ -74,8 +81,12 @@ Object.assign(
                     this.oData.aController.forEach( oController => {
                         oController && oController.ifPressedNow( {
                             START: () => {
-                                this.oController = oController;
-                                this.oTraining.toggle();
+                                if( oController.isPressed('UP') ){
+                                    this.oTraining.restart();
+                                } else {
+                                    this.oController = oController;
+                                    this.oTraining.toggle();
+                                }
                             }
                         } );
                     } );

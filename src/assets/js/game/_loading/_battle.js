@@ -103,10 +103,15 @@ Object.assign(
                 const oLayer = GAME.oOutput.getElement('LAY__Training_Menu_Parameters');
                 oLayer.hElement.insertBefore(
                     hLayer,
-                    oLayer.hElement.querySelector('.Training__Menu_Parameters_Return')
+                    oLayer.hElement.querySelector('.Training__Menu_Parameters_All')
                 );
                 if( nPlayer == 2 ){
-                    document.getElementById('LAY__Training_Menu_Parameters_Return').classList.remove(GAME.oOutput.oConfig.class.created);
+                    [].forEach.call(
+                        oLayer.hElement.querySelectorAll('.--uncreate'),
+                        hElement => {
+                            hElement.classList.remove('--uncreate', GAME.oOutput.oConfig.class.created);
+                        }
+                    );
                 }
                 oLayer.autoCreateChildElement();
                 oLayer.update();

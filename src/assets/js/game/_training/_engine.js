@@ -67,6 +67,9 @@ Object.assign(
                                 case 'TXT__Training_Menu_List':
                                     sRedirection = 'oList';
                                     break;
+                                case 'TXT__Training_Menu_Restart':
+                                    sRedirection = 'restart';
+                                    break;
                                 case 'TXT__Training_Menu_Continue':
                                     sRedirection = 'close';
                                     break;
@@ -138,6 +141,10 @@ Object.assign(
                     switch( sRedir ){
                         case 'return':
                             this.open(this.oMenu.oLast.sCod);
+                            break;
+                        case 'restart':
+                            this.oScene.bRestart = true;
+                            this.close();
                             break;
                         case 'close':
                             this.close();
