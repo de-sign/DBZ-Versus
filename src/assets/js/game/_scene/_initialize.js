@@ -12,7 +12,7 @@ Object.assign(
                         this,
                         oLastData,
                         {
-                            sRedirection: 'Menu',
+                            sRedirection: 'Title',
                             aStep: [
                                 'stepData',
                     

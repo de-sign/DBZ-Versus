@@ -39,6 +39,7 @@ __Select__
 
 __Battle__
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
+* Effet pour différencer HIT et GUARD
 * Méchaniques de jeu
     * Burst ?
     * Guard Cancel ?
@@ -51,6 +52,16 @@ __Training__
         * Reversal
 
 __General__
+* Gestion de l'AUDIO
+    * BGM
+        * Menu
+        * Battle
+    * SFX
+        * Menu
+            * Move
+            * Validate
+        * Hit
+        * Guard
 * Optimisation du Code
     * Classe PLAYER avec pour enfant LOCAL et DUMMY ( et AI ? )
 * Nouveaux CHARACTER et COLOR

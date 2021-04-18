@@ -29,6 +29,11 @@ Object.assign(
                 oController: {
                     sRoot: 'assets/images/controllers',
                     sFrames: 'assets/images/controllers'
+                },
+                oAudio: {
+                    sRoot: 'assets/audios',
+                    sBGM: 'assets/audios/BGM',
+                    sSFX: 'assets/audios/SFX'
                 }
             },
             oPositionPoint: {

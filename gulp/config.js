@@ -38,6 +38,7 @@ Object.assign(exports, {
             images: `${src.assets}/images`,
             favicon: `${src.assets}/favicon`,
             fonts: `${src.assets}/fonts`,
+            audios: `${src.assets}/audios`,
             videos: `${src.assets}/videos`
         }),
         dest: Object.assign(dest, {
@@ -48,6 +49,7 @@ Object.assign(exports, {
             images: `${dest.assets}/images`,
             favicon: `${dest.assets}/favicons`,
             fonts: `${dest.assets}/fonts`,
+            audios: `${dest.assets}/audios`,
             videos: `${dest.assets}/videos`
         })
     },
@@ -68,6 +70,7 @@ Object.assign(exports, {
             images: '**/*.*',
             favicon: '*.*',
             fonts: '**/*.*',
+            audios: '**/*.*',
             videos: '**/*.*'
         },
         src: {
@@ -78,6 +81,7 @@ Object.assign(exports, {
             images: '**/*.*',
             favicon: '*.*',
             fonts: '**/*.*',
+            audios: '**/*.*',
             videos: '**/*.*'
         },
         dest: {

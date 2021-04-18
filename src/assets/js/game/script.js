@@ -27,6 +27,7 @@
 //=include _training/_list.js
 //=include _scene/_training.js
 
+//=include _scene/_title.js
 //=include _scene/_menu.js
 //=include _scene/_side.js
 //=include _scene/_select.js

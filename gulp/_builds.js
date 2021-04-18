@@ -164,6 +164,11 @@ module.exports = function(config){
                 .pipe(gulp.dest(config.paths.dest.images));
         },
         
+        audios: () => {
+            return gulp.src(config.paths.src.audios + '/' + config.files.src.audios)
+                .pipe(gulp.dest(config.paths.dest.audios));
+        },
+        
         videos: () => {
             return gulp.src(config.paths.src.videos + '/' + config.files.src.videos)
                 .pipe(gulp.dest(config.paths.dest.videos));
@@ -178,7 +183,7 @@ module.exports = function(config){
     Object.assign(_builds, {
         templates: gulp.series(_builds.njk, _builds.html),
         scripts: gulp.parallel(_builds.js),
-        styles: gulp.parallel(_builds.scss, _builds.images, _builds.fonts, _builds.videos)
+        styles: gulp.parallel(_builds.scss, _builds.images, _builds.fonts, _builds.audios, _builds.videos)
     });
     _builds.global = gulp.series(_builds.clean, _builds.favicon, _builds.templates, gulp.parallel(_builds.scripts, _builds.styles));
 
