@@ -32,7 +32,11 @@ Object.assign(
                         }
                     }
 
-                    bPress && GAME.oScene.change( new MenuScene() );
+                    if( bPress ){
+                        GAME.oOutput.oAudio.resume();
+                        GAME.oOutput.getChannel('OA_SFX').play('validate');
+                        GAME.oScene.change( new MenuScene() );
+                    }
 				},
                 destroy: function(){}
             }

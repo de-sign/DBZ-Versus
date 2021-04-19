@@ -47,6 +47,7 @@ Object.assign(
                                 GAME.oScene.change( new MenuScene() );
                             }
                         } );
+                        GAME.oOutput.getChannel('OA_BGM').play('victory', true, false);
                     }
                 }
             }

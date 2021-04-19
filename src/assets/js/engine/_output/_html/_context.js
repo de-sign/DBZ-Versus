@@ -1,11 +1,11 @@
-function OutputContext(hElm) {
+function OutputHTMLContext(hElm) {
     OutputLayer.call(this, hElm);
 }
 Object.assign(
-    OutputContext, {
+    OutputHTMLContext, {
         prototype: Object.assign(
             Object.create(OutputLayer.prototype), {
-                constructor: OutputContext,
+                constructor: OutputHTMLContext,
 
                 use: function() {
                     this.hElement.classList.add( OutputManager.oConfig.class.used );

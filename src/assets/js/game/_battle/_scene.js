@@ -28,6 +28,7 @@ Object.assign(
 					this.oArea = GAME.oOutput.getElement('LAY__Battle_Area');
                     this.oArea.enableAutoPositioning();
                     this.setBackground( oLastData.sStageSelected );
+                    GAME.oOutput.getChannel('OA_BGM').play(oLastData.sStageSelected, false, true);
 
                     for( let nIndex = 0; nIndex < GAME.oSettings.nPlayer; nIndex++ ){
                         

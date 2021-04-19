@@ -20,12 +20,40 @@ Object.assign(
         destroy: function(){
         },
 
-        add: function(sSrc){
-            let oImg = new Image;
-            this.aLoading.push(oImg);
+        add: function(sType, sSrc, fCallback){
+            let oAsset = null,
+                sEvent = '';
+            const fListener = () => {
+                if( fCallback ){
+                    fCallback(oAsset).then( () => this.nLoading++ );
+                } else {
+                    this.nLoading++;
+                }
+                oAsset.removeEventListener(sEvent, fListener, false);
+            };
 
-            oImg.addEventListener('load', () => this.nLoading++, false);
-            oImg.src = sSrc;
+            switch( sType ){
+                case 'image':
+                    oAsset = new Image();
+                    sEvent = 'load';
+                    oAsset.src = sSrc;
+                    break;
+                case 'audio':
+                    oAsset = new Audio();
+                    sEvent = 'canplaythrough';
+                    oAsset.src = sSrc;
+                    break;
+                default:
+                    oAsset = new XMLHttpRequest();
+                    oAsset.open('GET', sSrc, true);
+                    oAsset.responseType = sType;
+                    sEvent = 'load';
+                    oAsset.send();
+                    break;
+            }
+
+            this.aLoading.push(oAsset);
+            oAsset.addEventListener(sEvent, fListener, false);
         }
     }
 );
@@ -80,7 +108,7 @@ Object.assign(
                         this.sCurrent = null;
                     }
 
-                    this.oAssetManager.update();
+                    this.sCurrent && this.oAssetManager.update();
 				},
                 destroy: function(){
                     return this.oData;

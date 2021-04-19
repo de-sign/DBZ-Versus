@@ -23,12 +23,16 @@ Utilise un moteur de jeu fait maison et FOX Website :
 
 ## TODO
 __BUG__
-* Problème de OUTPUT DELETE avec les enfants ?
+* Problème de OUTPUT DELETE avec les enfants
+* Problème CROSS DOWN dans le coin
 
 __Menu__
 * Ajout du ONLINE ?
 
-__Settings__
+__Setting__
+<br/>*N/A*
+
+__Input__
 <br/>*N/A*
 
 __Side__
@@ -40,6 +44,7 @@ __Select__
 __Battle__
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
 * Effet pour différencer HIT et GUARD
+* Animation de début et fin de match 
 * Méchaniques de jeu
     * Burst ?
     * Guard Cancel ?
@@ -52,16 +57,6 @@ __Training__
         * Reversal
 
 __General__
-* Gestion de l'AUDIO
-    * BGM
-        * Menu
-        * Battle
-    * SFX
-        * Menu
-            * Move
-            * Validate
-        * Hit
-        * Guard
 * Optimisation du Code
     * Classe PLAYER avec pour enfant LOCAL et DUMMY ( et AI ? )
 * Nouveaux CHARACTER et COLOR

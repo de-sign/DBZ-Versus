@@ -137,27 +137,34 @@ Object.assign(
             },
             update: function(){
                 if( this.oMenu.oCurrent ) {
+                    let sSFX = null;
                     const sRedir = this.oMenu.oCurrent.update();
                     switch( sRedir ){
                         case 'return':
+                            sSFX = 'cancel';
                             this.open(this.oMenu.oLast.sCod);
                             break;
                         case 'restart':
+                            sSFX = 'validate';
                             this.oScene.bRestart = true;
                             this.close();
                             break;
                         case 'close':
+                            sSFX = 'cancel';
                             this.close();
                             break;
                         case 'quit':
+                            sSFX = 'cancel';
                             GAME.oScene.change( new MenuScene() );
                             break;
                         case null:
                             break;
                         default:
+                            sSFX = 'validate';
                             this.open(sRedir);
                             break;
                     }
+                    sSFX && GAME.oOutput.getChannel('OA_SFX').play(sSFX);
                 }
                 else {
                     for( let sModule in this.oModule ){
@@ -192,6 +199,7 @@ Object.assign(
                 
                     this.aHelperController = GameHelper.aController;
                     GameHelper.set(this.oScene.oController, TrainingScene.oHelper.aMenu );
+                    GAME.oOutput.getChannel('OA_SFX').play('validate');
                 }
 
                 this.oMenu.oLast = this.oMenu.oCurrent;

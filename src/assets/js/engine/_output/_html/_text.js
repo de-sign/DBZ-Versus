@@ -1,17 +1,17 @@
 function OutputText(sTxt, oHCfg) {
     sTxt || (sTxt = '');
     if (typeof sTxt === 'string') {
-        OutputElement.call(this, oHCfg);
+        OutputHTMLElement.call(this, oHCfg);
         this.setText(sTxt);
     } else {
-        OutputElement.call(this, sTxt);
+        OutputHTMLElement.call(this, sTxt);
         this.setText(sTxt.innerHTML);
     }
 }
 Object.assign(
     OutputText, {
         prototype: Object.assign(
-            Object.create(OutputElement.prototype), {
+            Object.create(OutputHTMLElement.prototype), {
                 constructor: OutputText,
 
                 setText: function(sTxt) {

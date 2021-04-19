@@ -973,6 +973,7 @@ GAME.oData.oCharacter.SRU = {
                 aEntity: [
                     {
                         sType: 'Beam',
+                        sSFX: 'beam',
                         sAnimation: 'circle',
                         nFrameStart: 43,
                         bLink: true,
@@ -1024,6 +1025,7 @@ GAME.oData.oCharacter.SRU = {
                 nGatlingLevel: 2,
                 aEntity: {
                     sType: 'Beam',
+                    sSFX: 'projectile',
                     sAnimation: 'beam',
                     nFrameStart: 13,
                     bLink: true,

@@ -29,59 +29,69 @@ Object.assign(
         update: function(oLock) {
             this.checkColor(oLock);
 
-            this.oController && this.oController.ifPressedNow( {
-                // Gestion validation
-                A: () => {
-                    this.bReady = this.oCharacter.bActive;
-                    this.bReturn = false;
-                    this.bQuit = false;
-                },
-                B: () => {
-                    if( this.bReady ){
+            if( this.oController ){
+                let sSFX = false;
+                
+                this.oController.ifPressedNow( {
+                    // Gestion validation
+                    A: () => {
+                        sSFX = 'validate';
+                        this.bReady = this.oCharacter.bActive;
+                        this.bReturn = false;
+                        this.bQuit = false;
+                    },
+                    B: () => {
+                        sSFX = 'cancel';
+                        if( this.bReady ){
+                            this.bReady = false;
+                        } else {
+                            this.bReturn = true;
+                        }
+                        this.bQuit = false;
+                    },
+                    C: () => {
+                        sSFX = 'move';
+                        this.changeColor(oLock);
+                        this.bReturn = false;
                         this.bReady = false;
-                    } else {
-                        this.bReturn = true;
+                        this.bQuit = false;
+                    },
+                    START: () => {
+                        sSFX = 'cancel';
+                        this.bReturn = false;
+                        this.bReady = false;
+                        this.bQuit = true;
+                    },
+                    // Gestion Select Character
+                    LEFT: () => {
+                        this.oMenu.oCharacter.prev(this.nCursor);
+                        this.bReady = false;
+                        this.bReturn = false;
+                        this.bQuit = false;
+                        this.nColor = 0;
+                    },
+                    RIGHT: () => {
+                        this.oMenu.oCharacter.next(this.nCursor);
+                        this.bReady = false;
+                        this.bReturn = false;
+                        this.bQuit = false;
+                        this.nColor = 0;
+                    },
+                    // Gestion Select Stage
+                    UP: () => {
+                        this.oMenu.oStage.prev();
+                        this.bReturn = false;
+                        this.bQuit = false;
+                    },
+                    DOWN: () => {
+                        this.oMenu.oStage.next();
+                        this.bReturn = false;
+                        this.bQuit = false;
                     }
-                    this.bQuit = false;
-                },
-                C: () => {
-                    this.changeColor(oLock);
-                    this.bReturn = false;
-                    this.bReady = false;
-                    this.bQuit = false;
-                },
-                START: () => {
-                    this.bReturn = false;
-                    this.bReady = false;
-                    this.bQuit = true;
-                },
-                // Gestion Select Character
-                LEFT: () => {
-                    this.oMenu.oCharacter.prev(this.nCursor);
-                    this.bReady = false;
-                    this.bReturn = false;
-                    this.bQuit = false;
-                    this.nColor = 0;
-                },
-                RIGHT: () => {
-                    this.oMenu.oCharacter.next(this.nCursor);
-                    this.bReady = false;
-                    this.bReturn = false;
-                    this.bQuit = false;
-                    this.nColor = 0;
-                },
-                // Gestion Select Stage
-                UP: () => {
-                    this.oMenu.oStage.prev();
-                    this.bReturn = false;
-                    this.bQuit = false;
-                },
-                DOWN: () => {
-                    this.oMenu.oStage.next();
-                    this.bReturn = false;
-                    this.bQuit = false;
-                }
-            } );
+                } );
+
+                sSFX && GAME.oOutput.getChannel('OA_SFX').play(sSFX);
+            }
 
             for( let sMenu in this.oMenu ){
                 this.oMenu[sMenu].update();

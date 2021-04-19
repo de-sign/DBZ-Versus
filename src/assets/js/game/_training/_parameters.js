@@ -94,6 +94,7 @@ Object.assign(
                             this.oEngine.changeSide(nChange);
                             break;
                     }
+                    GAME.oOutput.getChannel('OA_SFX').play('validate');
                 },
                 display: function(){
                     this.aLayer.forEach( (oLayer, nIndex) => {

@@ -2,11 +2,17 @@
 //=include _scene.js
 
 //=include _output/_element.js
-//=include _output/_layer.js
-//=include _output/_viewport.js
-//=include _output/_context.js
-//=include _output/_text.js
-//=include _output/_sprite.js
+//=include _output/_audio/_element.js
+//=include _output/_audio/_context.js
+//=include _output/_audio/_channel.js
+//=include _output/_audio/_audio.js
+//=include _output/_audio/_buffer.js
+//=include _output/_html/_element.js
+//=include _output/_html/_layer.js
+//=include _output/_html/_viewport.js
+//=include _output/_html/_context.js
+//=include _output/_html/_text.js
+//=include _output/_html/_sprite.js
 //=include _output.js
 
 window.GAME = {

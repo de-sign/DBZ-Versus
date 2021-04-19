@@ -914,6 +914,7 @@ GAME.oData.oCharacter.GKU = {
                 nGatlingLevel: 3,
                 aEntity: {
                     sType: 'Beam',
+                    sSFX: 'beam',
                     sAnimation: 'circle',
                     nFrameStart: 43,
                     bLink: true,
@@ -954,6 +955,7 @@ GAME.oData.oCharacter.GKU = {
                 nGatlingLevel: 3,
                 aEntity: {
                     sType: 'Beam',
+                    sSFX: 'beam',
                     sAnimation: 'circle',
                     nFrameStart: 43,
                     bLink: true,
@@ -991,6 +993,7 @@ GAME.oData.oCharacter.GKU = {
                 nGatlingLevel: 2,
                 aEntity: {
                     sType: 'Projectile',
+                    sSFX: 'projectile',
                     sAnimation: 'kikoha',
                     nFrameStart: 10,
                     oPosition: {

@@ -1,9 +1,6 @@
 /* Menu */
 function MenuScene(){
 	this.oContext = null;
-	this.aTextMenu = null;
-    this.oController = null;
-    
     this.oMenu = null;
 }
 
@@ -28,6 +25,8 @@ Object.assign(
                             sText: 'Validate'
                         } ]
                     );
+
+                    GAME.oOutput.getChannel('OA_BGM').play('menu', false, true);
 				},
 				update: function(){
                     this.addNewController();
@@ -37,8 +36,8 @@ Object.assign(
                         oController.ifPressedNow( {
                             // Gestion validation
                             A: () => {
-                                this.oController = oController;
                                 let sMenuSelected = this.oMenu.getSelected().sId;
+                                GAME.oOutput.getChannel('OA_SFX').play('validate');
                                 switch( sMenuSelected ){
                                     case 'TXT__Menu_Versus':
                                         GAME.oScene.change( new SideScene() );
@@ -67,8 +66,7 @@ Object.assign(
                 destroy: function(){
                     GameHelper.destroy();
                     return {
-                        nLastIndexMenu: this.oMenu.destroy()[0],
-                        oController: this.oController
+                        nLastIndexMenu: this.oMenu.destroy()[0]
                     };
                 },
 

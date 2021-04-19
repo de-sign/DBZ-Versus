@@ -25,11 +25,13 @@ Object.assign(
         update: function(aLock){
             const bConnected = this.oController.sType == 'keyboard' || this.oController.oGamepad;
             if( bConnected ){
+                let sSFX = null
                 this.checkSide(aLock);
 
                 this.oController.ifPressedNow( {
                     // Gestion validation
                     A: () => {
+                        sSFX = 'validate';
                         if( this.nSide ){
                             this.bReady = true;
                         }
@@ -37,6 +39,7 @@ Object.assign(
                         this.bQuit = false;
                     },
                     B: () => {
+                        sSFX = 'cancel';
                         if( this.nSide ){
                             this.changeSide();
                             this.bReady = false;
@@ -45,25 +48,24 @@ Object.assign(
                         }
                         this.bQuit = false;
                     },
-                    B: () => {
-                        this.bReady = false;
-                        this.bReturn = false;
-                        this.bQuit = true;
-                    },
                     // Gestion Select Player
                     LEFT: () => {
+                        sSFX = 'move';
                         this.changeSide('left', aLock);
                         this.bReady = false;
                         this.bReturn = false;
                         this.bQuit = false;
                     },
                     RIGHT: () => {
+                        sSFX = 'move';
                         this.changeSide('right', aLock);
                         this.bReady = false;
                         this.bReturn = false;
                         this.bQuit = false;
                     }
                 } );
+                
+                sSFX && GAME.oOutput.getChannel('OA_SFX').play(sSFX);
             }
             else {
                 this.changeSide();

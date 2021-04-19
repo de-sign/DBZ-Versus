@@ -112,45 +112,6 @@ Object.assign(
                     }
                 ]
             },
-
-            // Game
-            nFreeze: 6,
-            oPushback: {
-                nLength: 4,
-                nX: -24
-            },
-            // ENTITY
-            nDie: 60,
-            oLife: {
-                player: 30,
-                character: 0,
-                projectile: 1,
-                beam: 0
-            },
-            // CHARACTER
-            nKi: 20,
-            oLuncher: {
-                nLength: 36,
-                nInvulnerable: 8,
-                oMove: {
-                    nX: -63 * 4,
-                    nY: -54 * 4
-                },
-                oFrames: {
-                    sLunch: 'hit_luncher',
-                    sFall: 'hit_fall'
-                }
-            },
-            oRecovery: {
-                backward: {
-                    nLength: 1,
-                    nX: -192
-                },
-                forward: {
-                    nLength: 1,
-                    nX: 192
-                }
-            },
             // INPUT
             oController: {
                 aOrderButtons: ['UP', 'DOWN', 'LEFT', 'RIGHT', 'A', 'B', 'C', 'START'],
@@ -191,6 +152,60 @@ Object.assign(
                     B: 'Button3',
                     C: 'Button1',
                     START: 'Button9'
+                }
+            },
+            // OUTPUT
+            oAudio: {
+                oChannel: {
+                    BGM: 5,
+                    SFX: 5
+                },
+                oInitialize: {
+                    BGM: ['menu'],
+                    SFX: ['move', 'validate', 'cancel']
+                },
+                oPreBattle: {
+                    BGM: ['victory'/* BGM of STAGE */],
+                    SFX: ['hit', 'guard', 'recovery', 'beam', 'projectile']
+                }
+            },
+
+            // Game
+            nFreeze: 6,
+            oPushback: {
+                nLength: 4,
+                nX: -24
+            },
+            // ENTITY
+            nDie: 60,
+            oLife: {
+                player: 30,
+                character: 0,
+                projectile: 1,
+                beam: 0
+            },
+            // CHARACTER
+            nKi: 20,
+            oLuncher: {
+                nLength: 36,
+                nInvulnerable: 8,
+                oMove: {
+                    nX: -63 * 4,
+                    nY: -54 * 4
+                },
+                oFrames: {
+                    sLunch: 'hit_luncher',
+                    sFall: 'hit_fall'
+                }
+            },
+            oRecovery: {
+                backward: {
+                    nLength: 1,
+                    nX: -192
+                },
+                forward: {
+                    nLength: 1,
+                    nX: 192
                 }
             }
         },

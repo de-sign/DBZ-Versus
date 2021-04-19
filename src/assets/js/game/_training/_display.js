@@ -71,6 +71,7 @@ Object.assign(
                             this.oEngine.changeFrame(nChange);
                             break;
                     }
+                    GAME.oOutput.getChannel('OA_SFX').play('validate');
                 },
                 display: function(){
                     for( let sType in this.oLayer){

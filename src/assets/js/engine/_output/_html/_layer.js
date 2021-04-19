@@ -1,16 +1,16 @@
 function OutputLayer(hElm) {
-    OutputElement.call(this, hElm);
     this.aChildElement = [];
+    OutputHTMLElement.call(this, hElm);
 }
 Object.assign(
     OutputLayer, {
         prototype: Object.assign(
-            Object.create(OutputElement.prototype), {
+            Object.create(OutputHTMLElement.prototype), {
                 constructor: OutputLayer,
 
                 update: function() {
                     this.bUpdateChildPositioning = false;
-                    OutputElement.prototype.update.call(this);
+                    OutputHTMLElement.prototype.update.call(this);
                     this.aChildElement.forEach((oElm) => {
                         oElm.update();
                     });

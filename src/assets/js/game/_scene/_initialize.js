@@ -18,16 +18,18 @@ Object.assign(
                     
                                 'stepComponent_Helper',
                     
-                                'stepContext_Settings',
                                 'stepContext_Side',
                                 'stepContext_Select',
                                 'stepContext_Battle',
+                                'stepContext_Setting',
+                                'stepContext_Input',
                     
                                 'stepImage_Stage',
                                 'stepImage_Face',
                                 'stepImage_Character',
 
-                                'stepInput_Gamepad'
+                                'stepInput_Gamepad',
+                                'stepOutput_Audio'
                             ]
                         }
                     );
@@ -54,7 +56,7 @@ Object.assign(
                 stepImage_Stage: function(){
                     this.addStepText( 'Loading preview stages' );
                     for( let sStage in GAME.oData.oStage ){
-                        this.oAssetManager.add( GAME.oSettings.oPath.oStage.sPreview + '/' + sStage + '.png' );
+                        this.oAssetManager.add('image', GAME.oSettings.oPath.oStage.sPreview + '/' + sStage + '.png' );
                     }
                 },
                 stepImage_Face: function(){
@@ -62,7 +64,7 @@ Object.assign(
                     for( let sChar in GAME.oData.oCharacter ){
                         const oChar = GAME.oData.oCharacter[sChar];
                         oChar.aColor.forEach( oColor => {
-                            this.oAssetManager.add( oChar[oColor.sColor].oPath.sFace );
+                            this.oAssetManager.add('image', oChar[oColor.sColor].oPath.sFace );
                         } );
                     }
                 },
@@ -71,7 +73,7 @@ Object.assign(
                     for( let sChar in GAME.oData.oCharacter ){
                         const oChar = GAME.oData.oCharacter[sChar];
                         oChar.aColor.forEach( oColor => {
-                            this.oAssetManager.add( oChar[oColor.sColor].oPath.sFace );
+                            this.oAssetManager.add('image', oChar[oColor.sColor].oPath.sFace );
                         } );
                     }
                 },
@@ -91,6 +93,48 @@ Object.assign(
                             }
                         }
                     }, false);
+                },
+
+                // BGM et SFX
+                stepOutput_Audio: function(){
+                    this.addStepText( 'Loading audio' );
+                    for( let sChannel in GAME.oSettings.oAudio.oInitialize ){
+                        const aAudio = GAME.oSettings.oAudio.oInitialize[sChannel],
+                            oChannel = GAME.oOutput.getChannel('OA_' + sChannel);
+
+                        aAudio.forEach( sAudio => {
+                            switch( sChannel ){
+                                case 'BGM':
+                                    this.oAssetManager.add(
+                                        'audio',
+                                        GAME.oSettings.oPath.oAudio[ 's' + sChannel ] + '/' + sAudio + '.mp3',
+                                        oAudio => {
+                                            oChannel.add( new GAME.oOutput.OutputSourceAudio(sAudio, oAudio) );
+                                            return Promise.resolve();
+                                        }
+                                    );
+                                    break;
+                                case 'SFX':
+                                    this.oAssetManager.add(
+                                        'arraybuffer',
+                                        GAME.oSettings.oPath.oAudio[ 's' + sChannel ] + '/' + sAudio + '.mp3',
+                                        oEvent => {
+                                            return new Promise( fResolve => {
+                                                GAME.oOutput.OutputAudioElement.oAudioContext.decodeAudioData(
+                                                    oEvent.response, 
+                                                    oBuffer => {
+                                                        oChannel.add( new GAME.oOutput.OutputSourceBuffer(sAudio, oBuffer) );
+                                                        fResolve();
+                                                    },
+                                                    () => fResolve()
+                                                );
+                                            } );
+                                        }
+                                    );
+                                    break;
+                            }
+                        } );
+                    }
                 }
             }
         )

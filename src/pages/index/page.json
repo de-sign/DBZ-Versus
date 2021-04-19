@@ -17,7 +17,8 @@
             "side.html",
             "select.html",
             "battle.html",
-            "settings.html"
+            "setting.html",
+            "input.html"
         ]
     }
 }

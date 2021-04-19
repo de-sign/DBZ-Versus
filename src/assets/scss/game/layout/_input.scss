@@ -1,5 +1,5 @@
-/* Setting */
-#CTX__Settings {
+/* Input */
+#CTX__Input {
 	display: flex;
 	flex-direction: column;
 	text-align: center;
@@ -10,11 +10,11 @@
         font-size: 7em;
     }
     
-    .Settings__Controllers {
+    .Input__Controllers {
         display: flex;
         justify-content: center;
     
-        .Settings__Controller {
+        .Input__Controller {
             flex: 1 1 400px;
             max-width: 400px;
             margin: 0 25px;
@@ -23,7 +23,7 @@
                 font-size: 2.4em;
             }
 
-            .Settings__Button {
+            .Input__Button {
                 display: flex !important;
             
                 & > *:first-child {

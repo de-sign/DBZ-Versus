@@ -1,5 +1,5 @@
 /* Gestion Controller */
-function SettingController(oController, oPressed, bReady){
+function InputController(oController, oPressed, bReady){
     this.oLayer = null;
     this.oMenu = null;
     
@@ -13,37 +13,41 @@ function SettingController(oController, oPressed, bReady){
 }
 
 Object.assign(
-    SettingController.prototype, {
+    InputController.prototype, {
         init: function(oController, oPressed, bReady) {
             this.oController = oController;
             this.oPressed = oPressed;
             this.bReady = bReady;
-            this.oLayer = GAME.oOutput.getElement('LAY__Settings_Controller_' + oController.sId);
-            this.oMenu = new GameMenu('LAY__Settings_Controller_' + oController.sId, bReady ? -1 : 0);
+            this.oLayer = GAME.oOutput.getElement('LAY__Input_Controller_' + oController.sId);
+            this.oMenu = new GameMenu('LAY__Input_Controller_' + oController.sId, bReady ? -1 : 0);
         },
         update: function() {
 
             const bConnected = this.oController.sType == 'keyboard' || this.oController.oGamepad;
             if( bConnected ){
+                let sSFX = null;
                 // Gestion assignation
                 if( this.oWaitingButton ){
-                    this.updateWaitingButton();
+                    this.updateWaitingButton() && (sSFX = 'validate');
                 } else {
                     this.oController.ifPressedNow( {
                         // Gestion validation
                         A: () => {
                             let oMenuSelected = this.oMenu.getSelected();
                             switch( oMenuSelected.sId ){
-                                case 'TXT__Settings_Return_' + this.oController.sId:
+                                case 'TXT__Input_Return_' + this.oController.sId:
+                                    sSFX = 'cancel';
                                     this.bReady = true;
                                     break;
                                 default:
+                                    sSFX = 'validate';
                                     this.setWaitingButton(oMenuSelected);
                                     this.bReady = false;
                                     break;
                             }
                         },
                         B: () => {
+                            sSFX = 'cancel';
                             this.oMenu.select(-1);
                             this.bReady = true;
                         },
@@ -58,6 +62,7 @@ Object.assign(
                         }
                     } );
                 }
+                sSFX && GAME.oOutput.getChannel('OA_SFX').play(sSFX);
             }
             else {
                 this.oMenu.select(-1);
@@ -66,7 +71,7 @@ Object.assign(
             }
 
             this.oMenu.update();
-            GAME.oOutput.getElement('TXT__Settings_Return_' + this.oController.sId)
+            GAME.oOutput.getElement('TXT__Input_Return_' + this.oController.sId)
                 .setText(
                     bConnected ? 
                         ( this.bReady ? 'Ready&nbsp;!' : 'Return' ) :
@@ -108,7 +113,7 @@ Object.assign(
             }
 
             if( oBtn ){
-                const sNewBtn = this.oWaitingButton.hElement.querySelector('.Settings__Button_Name').innerHTML,
+                const sNewBtn = this.oWaitingButton.hElement.querySelector('.Input__Button_Name').innerHTML,
                     sLastBtn = this.oController.oKeyMap[oBtn.sKey],
                     oBtns = {
                         [sNewBtn]: oBtn
@@ -116,7 +121,7 @@ Object.assign(
                     
                 if( sNewBtn != sLastBtn ){
                     if( sLastBtn ){
-                        GAME.oOutput.getElement('LAY__Settings_Button_' + this.oController.sId + '_' + sLastBtn)
+                        GAME.oOutput.getElement('LAY__Input_Button_' + this.oController.sId + '_' + sLastBtn)
                             .aChildElement[0].setText( this.oController.oButtons[sNewBtn].sText );
                         oBtns[sLastBtn] = this.oController.oButtons[sNewBtn];
                     }
@@ -129,12 +134,13 @@ Object.assign(
                 this.oWaitingButton.aChildElement[0].setText(oBtn.sText);
                 this.oWaitingButton = null;
             }
+            return oBtn;
         }
     }
 );
 
-/* Setting */
-function SettingScene(){
+/* Input */
+function InputScene(){
     this.oLastPress = {
         nFrames: -1,
         sKey: null,
@@ -145,7 +151,7 @@ function SettingScene(){
 }
 
 Object.assign(
-    SettingScene, {
+    InputScene, {
 
         aHelper: [
             {
@@ -164,9 +170,9 @@ Object.assign(
 
         prototype: Object.assign(
             Object.create(Scene.prototype), {
-                constructor: SettingScene,
+                constructor: InputScene,
 				init: function(oLastData){
-					GAME.oOutput.useContext('CTX__Settings');
+					GAME.oOutput.useContext('CTX__Input');
 
                     // Gestion Buttons
                     this.oLastPress.fFunction = (oEvent) => {
@@ -178,10 +184,10 @@ Object.assign(
                     // Controller init
                     for( let sController in ControllerManager.oController ){
                         const oController = GAME.oInput.getController(sController);
-                        this.aController.push( new SettingController(oController, this.oLastPress, oLastData.oController.sId != sController) );
+                        this.aController.push( new InputController(oController, this.oLastPress, oLastData.oController.sId != sController) );
                     }
                     
-                    GameHelper.set( Object.values(ControllerManager.oController), SettingScene.aHelper );
+                    GameHelper.set( Object.values(ControllerManager.oController), InputScene.aHelper );
 				},
 				update: function(){
                     this.addNewController();
@@ -192,7 +198,7 @@ Object.assign(
                         bAllReady && ( bAllReady = oController.bReady );
                     } );
                     GameHelper.update();
-                    bAllReady && GAME.oScene.change( new MenuScene() );
+                    bAllReady && GAME.oScene.change( new SettingScene() );
 				},
                 destroy: function(){
                     this.aController.forEach( oController => oController.destroy() );
@@ -212,7 +218,7 @@ Object.assign(
                         for( let sController in GAME.oInput.oController ){
                             if( aOldController.indexOf(sController) == -1 ){
                                 const oController = GAME.oInput.getController(sController);
-                                this.aController.push( new SettingController(oController, this.oLastPress, false) );
+                                this.aController.push( new InputController(oController, this.oLastPress, false) );
                                 GameHelper.aController.push( oController );
                             }
                         }

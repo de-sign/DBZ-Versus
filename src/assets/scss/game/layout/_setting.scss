@@ -1,0 +1,41 @@
+/* Setting */
+#CTX__Setting {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	justify-content: center;
+	padding: 20px;
+
+    h1 {
+        font-size: 7em;
+
+        span {
+            display: block;
+            font-size: 10px;
+            color: DarkGray;
+        }
+    }
+
+    ul {
+        width: 400px;
+    }
+    
+    .Setting__Button {
+        display: flex !important;
+        align-items: center;
+    
+        & > *:first-child,
+        & .Setting__Button_Label {
+            text-align: left;
+            flex: 1 1 100%;
+        }
+        
+        & > *:last-child,
+        & .Setting__Button_Option {
+            flex: 0 0 auto;
+            color: DarkGray;
+            min-width: 15px;
+            margin-left: 25px;
+        }
+    }
+}

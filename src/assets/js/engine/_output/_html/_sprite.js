@@ -1,10 +1,10 @@
 function OutputSprite(sSrc, oHCfg) {
     sSrc = sSrc || '';
     if (typeof sSrc === 'string') {
-        OutputElement.call(this, oHCfg);
+        OutputHTMLElement.call(this, oHCfg);
         this.setSource(sSrc);
     } else {
-        OutputElement.call(this, sSrc);
+        OutputHTMLElement.call(this, sSrc);
         this.setSource(sSrc.src);
     }
 }
@@ -12,7 +12,7 @@ function OutputSprite(sSrc, oHCfg) {
 Object.assign(
     OutputSprite, {
         prototype: Object.assign(
-            Object.create(OutputElement.prototype), {
+            Object.create(OutputHTMLElement.prototype), {
                 constructor: OutputSprite,
 
                 setSource: function(sSrc){

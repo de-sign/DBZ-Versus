@@ -7,10 +7,11 @@
 //=include _loading/_scene.js
 //=include _scene/_initialize.js
 //=include _loading/_data.js
-//=include _loading/_settings.js
 //=include _loading/_side.js
 //=include _loading/_select.js
 //=include _loading/_battle.js
+//=include _loading/_setting.js
+//=include _loading/_input.js
 //=include _scene/_prebattle.js
 
 //=include _battle/_scene.js
@@ -31,7 +32,8 @@
 //=include _scene/_menu.js
 //=include _scene/_side.js
 //=include _scene/_select.js
-//=include _scene/_settings.js
+//=include _scene/_setting.js
+//=include _scene/_input.js
 
 /* Init */
 window.addEventListener('load', oEvent => {
@@ -40,6 +42,10 @@ window.addEventListener('load', oEvent => {
 	// Input
 	for( let nPlayer = 0; nPlayer < GAME.oSettings.nPlayer; nPlayer++ ){
 		KeyboardController.recover('IC_' + ( nPlayer + 1 ), GAME.oSettings.oController.aKeyboard[nPlayer]);
+	}
+	// Output
+	for( let sChannel in GAME.oSettings.oAudio.oChannel ){
+		GAME.oOutput.oAudio.add( new GAME.oOutput.OutputChannel('OA_' + sChannel, GAME.oSettings.oAudio.oChannel[sChannel]) );
 	}
 	// Scene
 	GAME.oScene.set( new window[ GAME.oSettings.sStartScene ]() );

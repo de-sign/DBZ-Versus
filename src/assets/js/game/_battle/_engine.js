@@ -244,7 +244,10 @@ Object.assign(
 
             if( aHurt.length ){
                 // Gestion Hurt
-                aHurt.forEach( oHurt => oHurt.oEntityHurt.takeHit(oHurt.oEntityHit, oHurt.oData) );
+                aHurt.forEach( oHurt => {
+                   const sSFX = oHurt.oEntityHurt.takeHit(oHurt.oEntityHit, oHurt.oData);
+                   GAME.oOutput.getChannel('OA_SFX').play(sSFX);
+                } );
                 // Gestion PushBack
                 this.movePushback(aPushback, oCollapse);
                 // Gestion hit freeze
