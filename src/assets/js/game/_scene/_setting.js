@@ -49,7 +49,7 @@ Object.assign(
                     oController.ifPressedNow( {
                         // Gestion validation
                         A: () => {
-                            sSFX = 'validate';
+                            sSFX = 'ADO__Validate';
                             GAME.oScene.oCurrent.oController = oController;
                             const sMenuSelected = this.oMenu.getSelected().sId;
                             switch( sMenuSelected ){
@@ -58,7 +58,7 @@ Object.assign(
                                     break;
                                 case 'TXT__Setting_Return':
                                     GAME.oScene.change( new MenuScene() );
-                                    sSFX = 'cancel';
+                                    sSFX = 'ADO__Cancel';
                                     break;
                                 default:
                                     this.change(1);
@@ -66,16 +66,16 @@ Object.assign(
                             }
                         },
                         B: () => {
-                            sSFX = 'cancel';
+                            sSFX = 'ADO__Cancel';
                             GAME.oScene.oCurrent.oController = oController;
                             GAME.oScene.change( new MenuScene() );
                         },
                         // Gestion changement
                         LEFT: () => {
-                            this.change(-1) && (sSFX = 'validate');
+                            this.change(-1) && (sSFX = 'ADO__Validate');
                         },
                         RIGHT: () => {
-                            this.change(1) && (sSFX = 'validate');
+                            this.change(1) && (sSFX = 'ADO__Validate');
                         },
                         // Gestion déplacement
                         UP: () => {
@@ -86,7 +86,7 @@ Object.assign(
                         }
                     } );
                 }
-                sSFX && GAME.oOutput.getChannel('OA_SFX').play(sSFX);
+                sSFX && GAME.oOutput.getChannel('CHN__SFX').play(sSFX);
             },
             display: function(){
                 for( let sChannel in this.oLayer ){
@@ -130,8 +130,7 @@ Object.assign(
             Object.create(Scene.prototype), {
                 constructor: SettingScene,
 				init: function( oLastData ){
-					GAME.oOutput.useContext('CTX__Setting');
-					this.oContext = GAME.oOutput.getElement('CTX__Setting');
+					this.oContext = GAME.oOutput.oViewport.useContext('CTX__Setting');
                     this.oData = oLastData;
 
                     this.oMenu = new SettingMenu(oLastData ? oLastData.nLastIndexSetting : 0);

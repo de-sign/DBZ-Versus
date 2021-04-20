@@ -1,6 +1,6 @@
 # DBZ-Versus
 
-Jeu de versus en 2D basé sur l'univers de __DragonBall__ utilisant les SPRITES du jeu GameBoy Color __Dragon Ball Z : les guerriers légendaires__.
+Jeu de versus en 2D basé sur l'univers de __DragonBall__ utilisant les ASSETS du jeu GameBoy Color __Dragon Ball Z : les guerriers légendaires__.
 
 Utilise un moteur de jeu fait maison et FOX Website :
 
@@ -23,8 +23,7 @@ Utilise un moteur de jeu fait maison et FOX Website :
 
 ## TODO
 __BUG__
-* Problème de OUTPUT DELETE avec les enfants
-* Problème CROSS DOWN dans le coin
+<br/>*N/A*
 
 __Menu__
 * Ajout du ONLINE ?
@@ -43,7 +42,7 @@ __Select__
 
 __Battle__
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
-* Effet pour différencer HIT et GUARD
+* Effet visuel pour différencer HIT et GUARD ?
 * Animation de début et fin de match 
 * Méchaniques de jeu
     * Burst ?

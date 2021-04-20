@@ -31,7 +31,7 @@ Object.assign(
                 this.oController.ifPressedNow( {
                     // Gestion validation
                     A: () => {
-                        sSFX = 'validate';
+                        sSFX = 'ADO__Validate';
                         if( this.nSide ){
                             this.bReady = true;
                         }
@@ -39,7 +39,7 @@ Object.assign(
                         this.bQuit = false;
                     },
                     B: () => {
-                        sSFX = 'cancel';
+                        sSFX = 'ADO__Cancel';
                         if( this.nSide ){
                             this.changeSide();
                             this.bReady = false;
@@ -50,14 +50,14 @@ Object.assign(
                     },
                     // Gestion Select Player
                     LEFT: () => {
-                        sSFX = 'move';
+                        sSFX = 'ADO__Move';
                         this.changeSide('left', aLock);
                         this.bReady = false;
                         this.bReturn = false;
                         this.bQuit = false;
                     },
                     RIGHT: () => {
-                        sSFX = 'move';
+                        sSFX = 'ADO__Move';
                         this.changeSide('right', aLock);
                         this.bReady = false;
                         this.bReturn = false;
@@ -65,7 +65,7 @@ Object.assign(
                     }
                 } );
                 
-                sSFX && GAME.oOutput.getChannel('OA_SFX').play(sSFX);
+                sSFX && GAME.oOutput.getChannel('CHN__SFX').play(sSFX);
             }
             else {
                 this.changeSide();
@@ -169,8 +169,7 @@ Object.assign(
                 constructor: SideScene,
 				init: function( oLastData ){
                     this.oData = oLastData;
-					GAME.oOutput.useContext('CTX__Side');
-					this.oContext = GAME.oOutput.getElement('CTX__Side');
+					this.oContext = GAME.oOutput.oViewport.useContext('CTX__Side');
 
                     this.nFrameCreated = GAME.oTimer.nFrames;
 

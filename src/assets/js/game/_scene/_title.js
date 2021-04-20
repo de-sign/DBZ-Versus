@@ -12,8 +12,7 @@ Object.assign(
             Object.create(Scene.prototype), {
                 constructor: TitleScene,
 				init: function( oLastData ){
-					GAME.oOutput.useContext('CTX__Title');
-					this.oContext = GAME.oOutput.getElement('CTX__Title');
+					this.oContext = GAME.oOutput.oViewport.useContext('CTX__Title');
 
                     this.nController = GAME.oInput.nController;
                     this.nFrameCreated = GAME.oTimer.nFrames;
@@ -34,7 +33,7 @@ Object.assign(
 
                     if( bPress ){
                         GAME.oOutput.oAudio.resume();
-                        GAME.oOutput.getChannel('OA_SFX').play('validate');
+                        GAME.oOutput.getChannel('CHN__SFX').play('ADO__Validate');
                         GAME.oScene.change( new MenuScene() );
                     }
 				},

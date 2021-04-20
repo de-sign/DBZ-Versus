@@ -35,13 +35,13 @@ Object.assign(
                 this.oController.ifPressedNow( {
                     // Gestion validation
                     A: () => {
-                        sSFX = 'validate';
+                        sSFX = 'ADO__Validate';
                         this.bReady = this.oCharacter.bActive;
                         this.bReturn = false;
                         this.bQuit = false;
                     },
                     B: () => {
-                        sSFX = 'cancel';
+                        sSFX = 'ADO__Cancel';
                         if( this.bReady ){
                             this.bReady = false;
                         } else {
@@ -50,14 +50,14 @@ Object.assign(
                         this.bQuit = false;
                     },
                     C: () => {
-                        sSFX = 'move';
+                        sSFX = 'ADO__Move';
                         this.changeColor(oLock);
                         this.bReturn = false;
                         this.bReady = false;
                         this.bQuit = false;
                     },
                     START: () => {
-                        sSFX = 'cancel';
+                        sSFX = 'ADO__Cancel';
                         this.bReturn = false;
                         this.bReady = false;
                         this.bQuit = true;
@@ -90,7 +90,7 @@ Object.assign(
                     }
                 } );
 
-                sSFX && GAME.oOutput.getChannel('OA_SFX').play(sSFX);
+                sSFX && GAME.oOutput.getChannel('CHN__SFX').play(sSFX);
             }
 
             for( let sMenu in this.oMenu ){
@@ -168,6 +168,7 @@ Object.assign(
 
 /* Select */
 function SelectScene(){
+    this.oContext = null;
     this.sType = null;
     this.oData = null;
     
@@ -213,7 +214,7 @@ Object.assign(
                 constructor: SelectScene,
 				init: function( oLastData ){
                     this.oData = oLastData;
-					GAME.oOutput.useContext('CTX__Select');
+					this.oContext = GAME.oOutput.oViewport.useContext('CTX__Select');
 
                     const aName = [ 'Versus', 'Training' ];
                     GAME.oOutput.getElement('TXT__Select_Name').setText( this.sType = aName[oLastData.nLastIndexMenu] );

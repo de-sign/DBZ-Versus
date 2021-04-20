@@ -158,15 +158,15 @@ Object.assign(
             oAudio: {
                 oChannel: {
                     BGM: 5,
-                    SFX: 5
+                    SFX: 10
                 },
                 oInitialize: {
-                    BGM: ['menu'],
-                    SFX: ['move', 'validate', 'cancel']
+                    BGM: ['Menu'],
+                    SFX: ['Move', 'Validate', 'Cancel']
                 },
                 oPreBattle: {
-                    BGM: ['victory'/* BGM of STAGE */],
-                    SFX: ['hit', 'guard', 'recovery', 'beam', 'projectile']
+                    BGM: ['Victory'/* BGM of STAGE */],
+                    SFX: ['Hit', 'Guard', 'Recovery', 'Beam', 'Projectile']
                 }
             },
 
@@ -181,7 +181,7 @@ Object.assign(
             oLife: {
                 player: 30,
                 character: 0,
-                projectile: 1,
+                projectile: 0,
                 beam: 0
             },
             // CHARACTER

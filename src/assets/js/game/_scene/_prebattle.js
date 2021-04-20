@@ -67,7 +67,7 @@ Object.assign(
                 stepOutput_Audio: function(){
                     this.addStepText( 'Loading audio' );
                     for( let sChannel in GAME.oSettings.oAudio.oPreBattle ){
-                        const oChannel = GAME.oOutput.getChannel('OA_' + sChannel),
+                        const oChannel = GAME.oOutput.getChannel('CHN__' + sChannel),
                             aAudio = [...GAME.oSettings.oAudio.oPreBattle[sChannel]];
                             
                         if( sChannel == 'BGM' ){
@@ -81,7 +81,7 @@ Object.assign(
                                         'audio',
                                         GAME.oSettings.oPath.oAudio[ 's' + sChannel ] + '/' + sAudio + '.mp3',
                                         oAudio => {
-                                            oChannel.add( new GAME.oOutput.OutputSourceAudio(sAudio, oAudio) );
+                                            oChannel.add( new GAME.oOutput.OutputSourceAudio('ADO__' + sAudio, oAudio) );
                                             return Promise.resolve();
                                         }
                                     );
@@ -95,7 +95,7 @@ Object.assign(
                                                 GAME.oOutput.OutputAudioElement.oAudioContext.decodeAudioData(
                                                     oEvent.response, 
                                                     oBuffer => {
-                                                        oChannel.add( new GAME.oOutput.OutputSourceBuffer(sAudio, oBuffer) );
+                                                        oChannel.add( new GAME.oOutput.OutputSourceBuffer('ADO__' + sAudio, oBuffer) );
                                                         fResolve();
                                                     },
                                                     () => fResolve()

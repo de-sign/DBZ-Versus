@@ -21,14 +21,13 @@ Object.assign(
                         oLastData: sStageSelected, sTypeBattle, aController, aCharacterSelected, aColorSelected
                         oOptions: aController, sContextClass
                     */
-					GAME.oOutput.useContext('CTX__Battle');
-					this.oContext = GAME.oOutput.getElement('CTX__Battle');
+					this.oContext = GAME.oOutput.oViewport.useContext('CTX__Battle');
                     this.oContext.hElement.classList.add( oOptions.sContextClass );
 
 					this.oArea = GAME.oOutput.getElement('LAY__Battle_Area');
                     this.oArea.enableAutoPositioning();
                     this.setBackground( oLastData.sStageSelected );
-                    GAME.oOutput.getChannel('OA_BGM').play(oLastData.sStageSelected, false, true);
+                    GAME.oOutput.getChannel('CHN__BGM').play('ADO__' + oLastData.sStageSelected, false, true);
 
                     for( let nIndex = 0; nIndex < GAME.oSettings.nPlayer; nIndex++ ){
                         

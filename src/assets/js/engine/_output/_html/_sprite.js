@@ -16,7 +16,9 @@ Object.assign(
                 constructor: OutputSprite,
 
                 setSource: function(sSrc){
-                    this.hElement.src = this.sSource = sSrc;
+                    if( this.sSource != sSrc ){
+                        this.hElement.src = this.sSource = sSrc;
+                    }
                 }
             }
         )

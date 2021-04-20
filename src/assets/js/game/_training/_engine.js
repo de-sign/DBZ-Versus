@@ -141,30 +141,30 @@ Object.assign(
                     const sRedir = this.oMenu.oCurrent.update();
                     switch( sRedir ){
                         case 'return':
-                            sSFX = 'cancel';
+                            sSFX = 'ADO__Cancel';
                             this.open(this.oMenu.oLast.sCod);
                             break;
                         case 'restart':
-                            sSFX = 'validate';
+                            sSFX = 'ADO__Validate';
                             this.oScene.bRestart = true;
                             this.close();
                             break;
                         case 'close':
-                            sSFX = 'cancel';
+                            sSFX = 'ADO__Cancel';
                             this.close();
                             break;
                         case 'quit':
-                            sSFX = 'cancel';
+                            sSFX = 'ADO__Cancel';
                             GAME.oScene.change( new MenuScene() );
                             break;
                         case null:
                             break;
                         default:
-                            sSFX = 'validate';
+                            sSFX = 'ADO__Validate';
                             this.open(sRedir);
                             break;
                     }
-                    sSFX && GAME.oOutput.getChannel('OA_SFX').play(sSFX);
+                    sSFX && GAME.oOutput.getChannel('CHN__SFX').play(sSFX);
                 }
                 else {
                     for( let sModule in this.oModule ){
@@ -199,7 +199,7 @@ Object.assign(
                 
                     this.aHelperController = GameHelper.aController;
                     GameHelper.set(this.oScene.oController, TrainingScene.oHelper.aMenu );
-                    GAME.oOutput.getChannel('OA_SFX').play('validate');
+                    GAME.oOutput.getChannel('CHN__SFX').play('ADO__Validate');
                 }
 
                 this.oMenu.oLast = this.oMenu.oCurrent;

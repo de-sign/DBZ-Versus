@@ -51,15 +51,17 @@ Object.assign(
                         bRestart = false;
                     }
 
-                    this.addTickUpdate( () => {
-                        const sLast = this.use(sCod);
-                        if( sLast || bRestart ){
-                            sLast && this.oSource[sLast].pause();
-                            this.oSource[this.sCurrentSource].play(bLoop);
-                        } else {
-                            this.oSource[this.sCurrentSource].resume();
-                        }
-                    } );
+                    if( this.oSource[sCod] ){
+                        this.addTickUpdate( () => {
+                            const sLast = this.use(sCod);
+                            if( sLast || bRestart ){
+                                sLast && this.oSource[sLast].pause();
+                                this.oSource[this.sCurrentSource].play(bLoop);
+                            } else {
+                                this.oSource[this.sCurrentSource].resume();
+                            }
+                        } );
+                    }
                 },
                 pause: function(){
                     this.addTickUpdate( () => {

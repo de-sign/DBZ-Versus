@@ -80,14 +80,14 @@ Object.assign(
 			nCursor || ( nCursor = 0 );
 			if( this.aCursor[nCursor] ){
 				this.select( nCursor, this.aCursor[nCursor].nIndexCurrent + 1 );
-				GAME.oOutput.getChannel('OA_SFX').play('move');
+				GAME.oOutput.getChannel('CHN__SFX').play('ADO__Move');
 			}
 		},
 		prev: function(nCursor){
 			nCursor || ( nCursor = 0 );
 			if( this.aCursor[nCursor] ){
 				this.select( nCursor, this.aCursor[nCursor].nIndexCurrent - 1 );
-				GAME.oOutput.getChannel('OA_SFX').play('move');
+				GAME.oOutput.getChannel('CHN__SFX').play('ADO__Move');
 			}
 		},
 		getSelected: function(nCursor){

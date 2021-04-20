@@ -25,20 +25,23 @@ Object.assign(
                 const aEntity = BattleEntity.get().filter( oEntity => !oEntity.isDead() ),
                     oCollapse = {};
 
-                // Gestion Reverse / Area
+                // Gestion PositionBox / Area
                 aEntity.forEach( (oEntity, nIndex) => {
-                    // Gestion PositionBox / Area
                     if( oEntity.oCheck.bCollapse ){
+                        const oReferent = this.aPlayer[ (oEntity.oParent || oEntity).nPlayer == 1 ? 1 : 0 ];
                         oCollapse[oEntity.sId] = {
                             nIndex,
                             oEntity,
+                            nOrientation: this.getOrientation(oEntity, oReferent),
                             nPriority: this.stayInArea(oEntity)
                         };
                     }
-                    // Gestion Reverse
-                    if( oEntity.oCheck.bReverse ){
-                        const oReferent = this.aPlayer[ (oEntity.oParent || oEntity).nPlayer == 1 ? 1 : 0 ];
-                        oEntity.canMove() && this.updateReverse(oEntity, oReferent);
+                } );
+
+                // Gestion Reverse
+                aEntity.forEach( (oEntity, nIndex) => {
+                    if( oEntity.oCheck.bReverse && oEntity.canMove() && oCollapse[oEntity.sId] ){
+                        oEntity.bReverse = oCollapse[oEntity.sId].nOrientation == 1;
                     }
                 } );
                 
@@ -81,18 +84,7 @@ Object.assign(
         hasSameParent: function(oEntityA, oEntityB){
             return (oEntityA.oParent || oEntityA).sId == (oEntityB.oParent || oEntityB).sId;
         },
-
-        // REVERSE en fonction d'un point
-        updateReverse: function(oEntity, oReferent){
-            switch( this.getOrientation(oEntity, oReferent) ){
-                case -1:
-                    oEntity.bReverse = false;
-                    break;
-                case 1:
-                    oEntity.bReverse = true;
-                    break;
-            }
-        },
+        
         // ENTITY dans AREA : LEFT, RIGHT et DOWN
         stayInArea: function(oEntity){
             // Check
@@ -156,7 +148,7 @@ Object.assign(
 
                             let oLeft = oCollapseA,
                                 oRight = oCollapseB;
-                            if( this.getOrientation(oCollapseA.oEntity, oCollapseB.oEntity) > 0 ){
+                            if( oCollapseA.nOrientation > 0 ){
                                 oLeft = oCollapseB;
                                 oRight = oCollapseA;
                             }
@@ -246,7 +238,7 @@ Object.assign(
                 // Gestion Hurt
                 aHurt.forEach( oHurt => {
                    const sSFX = oHurt.oEntityHurt.takeHit(oHurt.oEntityHit, oHurt.oData);
-                   GAME.oOutput.getChannel('OA_SFX').play(sSFX);
+                   GAME.oOutput.getChannel('CHN__SFX').play(sSFX);
                 } );
                 // Gestion PushBack
                 this.movePushback(aPushback, oCollapse);

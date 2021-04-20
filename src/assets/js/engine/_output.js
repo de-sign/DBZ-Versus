@@ -1,10 +1,7 @@
 // Output
 const OutputManager = {
-    oContext: {},
-    sContextUsed: null,
     oViewport: null,
     oAudio: new OutputAudioContext(),
-	bAutoPositioning: false,
     oConfig: {
         selectors: {
             OutputViewport: '.outputViewport',
@@ -44,48 +41,28 @@ const OutputManager = {
     },
 
     init: function() {
-        // HTML
-        this.oViewport = new OutputManager.OutputViewport( document.querySelector( OutputManager.oConfig.selectors.OutputViewport ) );
-        OutputManager.OutputLayer.prototype.autoCreateChildElement.call(this.oViewport);
-        for( let id in OutputManager.OutputElement.oInstanceByConstructor.OutputHTMLContext ){
-            const ctx = OutputManager.OutputElement.oInstanceByConstructor.OutputHTMLContext[id];
-            this.addContext( ctx );
-            ctx.hElement.classList.contains( OutputManager.oConfig.class.used ) && this.useContext(id);
+        this.oViewport = new OutputViewport( document.querySelector( this.oConfig.selectors.OutputViewport ) );
+        this.oViewport.autoCreateChildElement();
+        for( let id in OutputElement.oInstanceByConstructor.OutputHTMLContext ){
+            const oCtx = OutputElement.oInstanceByConstructor.OutputHTMLContext[id];
+            this.oViewport.add(oCtx);
+            oCtx.hElement.classList.contains( this.oConfig.class.used ) && this.oViewport.useContext(id);
         }
-        this.oViewport.hElement.classList.add( OutputManager.oConfig.class.init );
+        this.oViewport.hElement.classList.add( this.oConfig.class.init );
     },
     update: function() {
         this.oViewport.update();
-        this.sContextUsed && this.oContext[this.sContextUsed].update();
         this.oAudio.update();
     },
 
-    addContext: function(oCtx) {
-        return this.oContext[oCtx.sId] = oCtx;
-    },
-    getContext: function(sCod) {
-        return this.oContext[sCod || this.sContextUsed];
-    },
-    useContext: function(sCod) {
-        if( sCod != 'CTX__Audio' ){
-            let ctx = this.oContext[this.sContextUsed];
-            ctx && ctx.unuse();
-            ctx = this.oContext[sCod];
-            if (ctx) {
-                this.sContextUsed = sCod;
-                ctx.use();
-            } else {
-                this.sContextUsed = null;
-            }
-        }
-    },
-
     getElement: function(sCod){
-        return this.OutputElement.oInstance[sCod];
+        return OutputElement.oInstance[sCod];
     },
-
     getChannel: function(sCod){
         return this.oAudio.oChannel[sCod];
+    },
+    getContext: function(sCod) {
+        return this.oViewport.getContext(sCod);
     }
 };
 

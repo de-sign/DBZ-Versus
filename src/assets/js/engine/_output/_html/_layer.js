@@ -9,11 +9,10 @@ Object.assign(
                 constructor: OutputLayer,
 
                 update: function() {
-                    this.bUpdateChildPositioning = false;
                     OutputHTMLElement.prototype.update.call(this);
-                    this.aChildElement.forEach((oElm) => {
+                    this.aChildElement.forEach( oElm => {
                         oElm.update();
-                    });
+                    } );
                 },
 
                 add: function(bAppend, oElm, sSlc) {
@@ -28,22 +27,12 @@ Object.assign(
 						this.aChildElement.push(oElm);
 						oElm.oParentElement = this;
                         if( bAppend ){
-                            this.addTickUpdate(() => {
+                            this.addTickUpdate( () => {
                                 tgt.appendChild(oElm.hElement);
                                 oElm.autoCreateChildElement();
-                                /*
-                                if( OutputManager.bAutoPositioning || this.bAutoPositioning) {
-                                    oElm.enableAutoPositioning();
-                                }
-                                */
-                            });
+                            } );
                         } else {
                             oElm.autoCreateChildElement();
-                            /*
-                            if( OutputManager.bAutoPositioning || this.bAutoPositioning) {
-                                oElm.enableAutoPositioning();
-                            }
-                            */
                         }
                     }
                     return oElm;
@@ -61,18 +50,20 @@ Object.assign(
                 },
                 clear: function() {
                     [...this.aChildElement].forEach( oElm => {
-                        aElm.push();
                         this.remove(oElm);
                     } );
                 },
                 delete: function(oElm) {
-                    return OutputElement.remove( this.remove(oElm) );
+                    OutputElement.remove( this.remove(oElm) );
+                    oElm.clean && oElm.clean();
+                    return oElm;
                 },
                 clean: function() {
                     [...this.aChildElement].forEach( oElm => {
                         this.delete(oElm);
                     } );
                 },
+                
                 autoCreateChildElement: function() {
                     if( !this.bElementCreate ){
                         this.hElement.classList.add( OutputManager.oConfig.class.scope );
@@ -90,10 +81,6 @@ Object.assign(
                         }
                         this.hElement.classList.remove( OutputManager.oConfig.class.scope );
                     }
-                },
-                updateChildAutoPositioning: function(){
-                    this.enableAutoPositioning();
-                    this.aChildElement.forEach( oElm => oElm.enableAutoPositioning() );
                 }
             }
         )

@@ -12,9 +12,12 @@ Object.assign(
         oInstanceByConstructor: {},
 
         add: function(oElm) {
-            oElm.sId = oElm.sId || 'OE_' + (++this.nId);
-            this.oInstanceByConstructor[oElm.constructor.name] || ( this.oInstanceByConstructor[oElm.constructor.name] = {} );
-            this.oInstance[oElm.sId] = this.oInstanceByConstructor[oElm.constructor.name][oElm.sId] = oElm;
+            if( oElm.sId ){
+                this.oInstanceByConstructor[oElm.constructor.name] || ( this.oInstanceByConstructor[oElm.constructor.name] = {} );
+                this.oInstance[oElm.sId] = this.oInstanceByConstructor[oElm.constructor.name][oElm.sId] = oElm;
+            } else {
+                oElm.sId = 'OE_' + (++this.nId);
+            }
             return oElm;
         },
 

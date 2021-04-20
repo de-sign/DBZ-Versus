@@ -10,8 +10,7 @@ Object.assign(
             Object.create(Scene.prototype), {
                 constructor: MenuScene,
 				init: function( oLastData ){
-					GAME.oOutput.useContext('CTX__Menu');
-					this.oContext = GAME.oOutput.getElement('CTX__Menu');
+					this.oContext = GAME.oOutput.oViewport.useContext('CTX__Menu');
 
                     this.oMenu = new GameMenu('LAY__Menu', oLastData ? oLastData.nLastIndexMenu : 0);
                     GameHelper.set(
@@ -26,7 +25,7 @@ Object.assign(
                         } ]
                     );
 
-                    GAME.oOutput.getChannel('OA_BGM').play('menu', false, true);
+                    GAME.oOutput.getChannel('CHN__BGM').play('ADO__Menu', false, true);
 				},
 				update: function(){
                     this.addNewController();
@@ -37,7 +36,7 @@ Object.assign(
                             // Gestion validation
                             A: () => {
                                 let sMenuSelected = this.oMenu.getSelected().sId;
-                                GAME.oOutput.getChannel('OA_SFX').play('validate');
+                                GAME.oOutput.getChannel('CHN__SFX').play('ADO__Validate');
                                 switch( sMenuSelected ){
                                     case 'TXT__Menu_Versus':
                                         GAME.oScene.change( new SideScene() );

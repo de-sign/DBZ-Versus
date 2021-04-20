@@ -28,7 +28,7 @@ Object.assign(
                 let sSFX = null;
                 // Gestion assignation
                 if( this.oWaitingButton ){
-                    this.updateWaitingButton() && (sSFX = 'validate');
+                    this.updateWaitingButton() && (sSFX = 'ADO__Validate');
                 } else {
                     this.oController.ifPressedNow( {
                         // Gestion validation
@@ -36,18 +36,18 @@ Object.assign(
                             let oMenuSelected = this.oMenu.getSelected();
                             switch( oMenuSelected.sId ){
                                 case 'TXT__Input_Return_' + this.oController.sId:
-                                    sSFX = 'cancel';
+                                    sSFX = 'ADO__Cancel';
                                     this.bReady = true;
                                     break;
                                 default:
-                                    sSFX = 'validate';
+                                    sSFX = 'ADO__Validate';
                                     this.setWaitingButton(oMenuSelected);
                                     this.bReady = false;
                                     break;
                             }
                         },
                         B: () => {
-                            sSFX = 'cancel';
+                            sSFX = 'ADO__Cancel';
                             this.oMenu.select(-1);
                             this.bReady = true;
                         },
@@ -62,7 +62,7 @@ Object.assign(
                         }
                     } );
                 }
-                sSFX && GAME.oOutput.getChannel('OA_SFX').play(sSFX);
+                sSFX && GAME.oOutput.getChannel('CHN__SFX').play(sSFX);
             }
             else {
                 this.oMenu.select(-1);
@@ -141,6 +141,7 @@ Object.assign(
 
 /* Input */
 function InputScene(){
+    this.oContext = null;
     this.oLastPress = {
         nFrames: -1,
         sKey: null,
@@ -172,7 +173,7 @@ Object.assign(
             Object.create(Scene.prototype), {
                 constructor: InputScene,
 				init: function(oLastData){
-					GAME.oOutput.useContext('CTX__Input');
+					this.oContext = GAME.oOutput.oViewport.useContext('CTX__Input');
 
                     // Gestion Buttons
                     this.oLastPress.fFunction = (oEvent) => {

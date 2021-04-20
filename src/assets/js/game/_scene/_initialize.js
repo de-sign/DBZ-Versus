@@ -95,12 +95,13 @@ Object.assign(
                     }, false);
                 },
 
-                // BGM et SFX
+                // Gestion AUDIO
                 stepOutput_Audio: function(){
                     this.addStepText( 'Loading audio' );
+                    // LOADING BGM & SFX
                     for( let sChannel in GAME.oSettings.oAudio.oInitialize ){
                         const aAudio = GAME.oSettings.oAudio.oInitialize[sChannel],
-                            oChannel = GAME.oOutput.getChannel('OA_' + sChannel);
+                            oChannel = GAME.oOutput.getChannel('CHN__' + sChannel);
 
                         aAudio.forEach( sAudio => {
                             switch( sChannel ){
@@ -109,7 +110,7 @@ Object.assign(
                                         'audio',
                                         GAME.oSettings.oPath.oAudio[ 's' + sChannel ] + '/' + sAudio + '.mp3',
                                         oAudio => {
-                                            oChannel.add( new GAME.oOutput.OutputSourceAudio(sAudio, oAudio) );
+                                            oChannel.add( new GAME.oOutput.OutputSourceAudio('ADO__' + sAudio, oAudio) );
                                             return Promise.resolve();
                                         }
                                     );
@@ -123,7 +124,7 @@ Object.assign(
                                                 GAME.oOutput.OutputAudioElement.oAudioContext.decodeAudioData(
                                                     oEvent.response, 
                                                     oBuffer => {
-                                                        oChannel.add( new GAME.oOutput.OutputSourceBuffer(sAudio, oBuffer) );
+                                                        oChannel.add( new GAME.oOutput.OutputSourceBuffer('ADO__' + sAudio, oBuffer) );
                                                         fResolve();
                                                     },
                                                     () => fResolve()
@@ -135,6 +136,16 @@ Object.assign(
                             }
                         } );
                     }
+                    // Gestion BLUR / FOCUS
+                    window.addEventListener('visibilitychange', () => {
+                        const oChannel = GAME.oOutput.getChannel('CHN__BGM');
+                        if( document.visibilityState == 'visible' ){
+                            oChannel.play();
+                        } else {
+                            oChannel.pause();
+                            oChannel.update();
+                        }
+                    }, false);
                 }
             }
         )

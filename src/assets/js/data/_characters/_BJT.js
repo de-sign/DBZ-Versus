@@ -1057,7 +1057,7 @@ GAME.oData.oCharacter.BJT = {
                 nGatlingLevel: 3,
                 aEntity: {
                     sType: 'Beam',
-                    sSFX: 'beam',
+                    sSFX: 'ADO__Beam',
                     sAnimation: 'big_triangle',
                     nFrameStart: 43,
                     bLink: true,
@@ -1098,9 +1098,10 @@ GAME.oData.oCharacter.BJT = {
                 nGatlingLevel: 3,
                 aEntity: {
                     sType: 'Beam',
-                    sSFX: 'beam',
+                    sSFX: 'ADO__Beam',
                     sAnimation: 'triangle',
                     nFrameStart: 43,
+                    bLink: true,
                     oPosition: {
                         nX: -12,
                         nY: -12
@@ -1135,7 +1136,7 @@ GAME.oData.oCharacter.BJT = {
                 nGatlingLevel: 2,
                 aEntity: {
                     sType: 'Projectile',
-                    sSFX: 'projectile',
+                    sSFX: 'ADO__Projectile',
                     sAnimation: 'kikoha',
                     nFrameStart: 10,
                     oPosition: {

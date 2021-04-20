@@ -33,7 +33,7 @@ Object.assign(
                     hElement.classList.remove('--change', GAME.oOutput.oConfig.class.created);
                 }
             );
-            hLayer.querySelector('.Setting__Channel_Name').innerHTML = sChannel.substring(3) + ' volume';
+            hLayer.querySelector('.Setting__Channel_Name').innerHTML = sChannel.substring(4) + ' volume';
 
             // Ajout dans le context
             const oLayer = new GAME.oOutput.OutputLayer(hLayer);

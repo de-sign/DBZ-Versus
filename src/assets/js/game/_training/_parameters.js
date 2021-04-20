@@ -94,7 +94,7 @@ Object.assign(
                             this.oEngine.changeSide(nChange);
                             break;
                     }
-                    GAME.oOutput.getChannel('OA_SFX').play('validate');
+                    GAME.oOutput.getChannel('CHN__SFX').play('ADO__Validate');
                 },
                 display: function(){
                     this.aLayer.forEach( (oLayer, nIndex) => {

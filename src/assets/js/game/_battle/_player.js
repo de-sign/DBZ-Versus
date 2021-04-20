@@ -52,7 +52,7 @@ Object.assign(
                                     this.setStance('recovery');
                                     break;
                             }
-                            GAME.oOutput.getChannel('OA_SFX').play('recovery');
+                            GAME.oOutput.getChannel('CHN__SFX').play('ADO__Recovery');
                         }
                         
                         else {
@@ -102,11 +102,11 @@ Object.assign(
                     this.nKi = Math.min(this.nKi + nKi, GAME.oSettings.nKi);
                 },
                 takeHit: function(oEntity, oData){
-                    let sType = '';
+                    let sSFX = '';
                     if( this.oAnimation.oFrame.oStatus.bGuard ){
                         this.setHurt('guard', oData.oStun.nBlock, true);
                         oEntity.confirmHit(oData, true);
-                        sType = 'guard';
+                        sSFX = 'ADO__Guard';
                     } else {
                         const nDamage = oData.nDamage == null ? 1 : oData.nDamage;
 
@@ -125,9 +125,9 @@ Object.assign(
                             );
                         }
                         oEntity.confirmHit(oData);
-                        sType = 'hit';
+                        sSFX = 'ADO__Hit';
                     }
-                    return sType;
+                    return sSFX;
                 },
                 confirmHit: function(oData, bGuard){
                     BattleEntity.prototype.confirmHit.call(this, oData, bGuard);
@@ -255,7 +255,7 @@ Object.assign(
                         oCommandEntity.bLink && this.add(oEntity);
                         // Pour ne pas perdre une FRAME dans la LOOP
                         oEntity.update();
-                        oCommandEntity.sSFX && GAME.oOutput.getChannel('OA_SFX').play(oCommandEntity.sSFX);
+                        oCommandEntity.sSFX && GAME.oOutput.getChannel('CHN__SFX').play(oCommandEntity.sSFX);
                     } );
                     BattleEntity.prototype.updateAnimation.call(this);
                 }

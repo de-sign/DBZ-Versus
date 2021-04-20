@@ -45,7 +45,7 @@ window.addEventListener('load', oEvent => {
 	}
 	// Output
 	for( let sChannel in GAME.oSettings.oAudio.oChannel ){
-		GAME.oOutput.oAudio.add( new GAME.oOutput.OutputChannel('OA_' + sChannel, GAME.oSettings.oAudio.oChannel[sChannel]) );
+		GAME.oOutput.oAudio.add( new GAME.oOutput.OutputChannel('CHN__' + sChannel, GAME.oSettings.oAudio.oChannel[sChannel]) );
 	}
 	// Scene
 	GAME.oScene.set( new window[ GAME.oSettings.sStartScene ]() );

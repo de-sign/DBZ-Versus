@@ -154,7 +154,7 @@ Object.assign(
                     oLastLayer && oLastLayer.hElement.classList.remove('--show');
                     oMenu.oLayer.hElement.classList.add('--show');
                 } );
-                GAME.oOutput.getChannel('OA_SFX').play('validate');
+                GAME.oOutput.getChannel('CHN__SFX').play('ADO__Validate');
             },
             getMenu: function(){
                 return this.oScene.oTraining.oModule.oList.oMenu.oMenu;

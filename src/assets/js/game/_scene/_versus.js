@@ -47,7 +47,7 @@ Object.assign(
                                 GAME.oScene.change( new MenuScene() );
                             }
                         } );
-                        GAME.oOutput.getChannel('OA_BGM').play('victory', true, false);
+                        GAME.oOutput.getChannel('CHN__BGM').play('ADO__Victory', true, false);
                     }
                 }
             }

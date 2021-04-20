@@ -79,8 +79,7 @@ Object.assign(
             Object.create(Scene.prototype), {
                 constructor: LoadingScene,
 				init: function( oLastData, oOptions ){
-					GAME.oOutput.useContext('CTX__Loading');
-					this.oContext = GAME.oOutput.getElement('CTX__Loading');
+					this.oContext = GAME.oOutput.oViewport.useContext('CTX__Loading');
 					this.oLayer = GAME.oOutput.getElement('LAY__LoadingStep');
                     this.oLayer.clean();
 
