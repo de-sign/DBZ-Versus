@@ -330,11 +330,11 @@ Object.assign(
                 */
                 takeHit: function(oEntity, oData){
                     oEntity && BattleEntity.prototype.takeHit.call(this, oEntity, oData);
-                    this.setAnimation('hit_light', true);
+                    this.setAnimation(oData.oStun.sHitAnimation, true);
                 },
                 confirmHit: function(oData, bGuard){
                     BattleEntity.prototype.confirmHit.call(this, oData, bGuard);
-                    this.takeHit();
+                    this.takeHit(null, oData);
                     this.nLife--;
                 }
             }

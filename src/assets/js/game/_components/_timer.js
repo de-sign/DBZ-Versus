@@ -11,8 +11,8 @@ Object.assign(
         constructor: GameTimer,
         init: function(nLength, nDelay){
             this.nLength = nLength;
-            nDelay && ( this.nFreeze = nDelay );
             this.reset();
+            nDelay && ( this.nFreeze = nDelay );
         },
         update: function(){
             let bUpdate = true;

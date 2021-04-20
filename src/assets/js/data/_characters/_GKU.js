@@ -865,7 +865,7 @@ GAME.oData.oCharacter.GKU = {
         ],
         // Kameha
         // 46, 36, 26
-        super: [
+        super_SSJ: [
             {
                 nFrame: 2,
                 sFrame: 'blur',
@@ -898,6 +898,36 @@ GAME.oData.oCharacter.GKU = {
                 nFrame: 2,
                 sFrame: 'blur'
             }
+        ],
+        super_TRN: [
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                aHurtBox: null
+            },
+            {
+                nFrame: 30,
+                sFrame: 'super_first',
+                aHurtBox: null
+            },
+            {
+                nFrame: 10,
+                sFrame: 'super_second',
+                aHurtBox: null
+            },
+            {
+                nFrame: 4,
+                sFrame: 'super_third',
+                aHurtBox: null
+            },
+            {
+                nFrame: 60,
+                sFrame: 'super_third'
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur'
+            }
         ]
     },
 
@@ -907,7 +937,7 @@ GAME.oData.oCharacter.GKU = {
                 sFilter: 'SSJ',
                 sCod: 'super',
                 sName: 'Chô Kamehameha',
-                sAnimation: 'super',
+                sAnimation: 'super_SSJ',
                 sListAnimation: 'super_list',
                 nCost: 12,
                 nDamage: 4,
@@ -947,21 +977,19 @@ GAME.oData.oCharacter.GKU = {
             {
                 sFilter: 'TRN',
                 sCod: 'super',
-                sName: 'Kaiōken Kamehameha',
-                sAnimation: 'super',
-                sListAnimation: 'super_list',
+                sName: 'Genki-dama',
+                sAnimation: 'super_TRN',
                 nCost: 12,
                 nDamage: 4,
                 nGatlingLevel: 3,
                 aEntity: {
-                    sType: 'Beam',
+                    sType: 'Projectile',
                     sSFX: 'ADO__Beam',
-                    sAnimation: 'circle',
-                    nFrameStart: 43,
-                    bLink: true,
+                    sAnimation: 'ball',
+                    nFrameStart: 13,
                     oPosition: {
                         nX: 0,
-                        nY: 0
+                        nY: -256
                     }
                 },
                 oStun: {
@@ -1004,7 +1032,7 @@ GAME.oData.oCharacter.GKU = {
                 oStun: {
                     nBlock: 8,
                     nHit: 16,
-                    sHitAnimation: 'hit_heavy'
+                    sHitAnimation: 'hit_light'
                 },
                 bLast: true,
                 oManipulation: {

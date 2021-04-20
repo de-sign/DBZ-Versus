@@ -35,7 +35,52 @@ GAME.oData.oProjectile.ALL = {
                 }
             ]
         },
-        hit_light: false
+
+        death_first: {
+            aHitBox: [
+                {
+                    nX: -38,
+                    nY: -94,
+                    nWidth: 72,
+                    nHeight: 72
+                }
+            ]
+        },
+        death_second: {
+            aHitBox: [
+                {
+                    nX: -70,
+                    nY: -130,
+                    nWidth: 136,
+                    nHeight: 136
+                }
+            ]
+        },
+
+        ball_first: {
+            aHitBox: [
+                {
+                    nX: -52,
+                    nY: -114,
+                    nWidth: 104,
+                    nHeight: 104
+                }
+            ]
+        },
+        ball_second: {
+            aHitBox: [
+                {
+                    nX: -98,
+                    nY: -158,
+                    nWidth: 196,
+                    nHeight: 196
+                }
+            ]
+        },
+
+
+        hit_light: false,
+        hit_heavy: false
     },
     
     oAnimations: {
@@ -46,6 +91,54 @@ GAME.oData.oProjectile.ALL = {
             aFrames: [
                 {
                     sFrame: 'kikoha',
+                    nFrame: 90
+                }
+            ]
+        },
+
+        death: {
+            oMove: {
+                nDelay: 30,
+                nX: 16,
+                nY: 4
+            },
+            aFrames: [
+                {
+                    sFrame: 'death_first',
+                    nFrame: 15,
+                    aHitBox: null
+                },
+                {
+                    sFrame: 'death_second',
+                    nFrame: 15,
+                    aHitBox: null
+                },
+                {
+                    sFrame: 'death_second',
+                    nFrame: 105
+                }
+            ]
+        },
+
+        ball: {
+            oMove: {
+                nDelay: 30,
+                nX: 16,
+                nY: 6
+            },
+            aFrames: [
+                {
+                    sFrame: 'ball_first',
+                    nFrame: 15,
+                    aHitBox: null
+                },
+                {
+                    sFrame: 'ball_second',
+                    nFrame: 15,
+                    aHitBox: null
+                },
+                {
+                    sFrame: 'ball_second',
                     nFrame: 90
                 }
             ]

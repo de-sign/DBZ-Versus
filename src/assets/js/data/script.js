@@ -43,8 +43,8 @@ Object.assign(
                     nGapY: 200 - 182 - 2
                 },
                 projectile: {
-                    nX: 64,
-                    nY: 126
+                    nX: 128,
+                    nY: 190
                 },
                 beam: {
                     nX: 98,

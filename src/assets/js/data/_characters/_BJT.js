@@ -1147,7 +1147,7 @@ GAME.oData.oCharacter.BJT = {
                 oStun: {
                     nBlock: 8,
                     nHit: 16,
-                    sHitAnimation: 'hit_heavy'
+                    sHitAnimation: 'hit_light'
                 },
                 bLast: true,
                 oManipulation: {
