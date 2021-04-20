@@ -114,8 +114,12 @@
         margin: 0 25px 0 0 !important;
     }
 
-    &_Command.--cancel {
-        color: DarkGray;
+    &_Command {
+        min-width: 300px;
+
+        &.--cancel {
+            color: DarkGray;
+        }
     }
 }
 
