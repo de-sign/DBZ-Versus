@@ -40,9 +40,9 @@ Object.assign(
                 } )
                 .forEach( sFrame => {
                     if( oEntity.oFrames[sFrame] != null ){
-                        oFrames[sFrame] = Object.assign({}, this.oData[sType].oFrames[sFrame], oEntity.oFrames[sFrame] || {});
+                        oFrames[sFrame] = Object.assign({}, this.oData[sType].oFrames[sFrame] || {}, oEntity.oFrames[sFrame] || {});
                         for( let sProp in oFrames[sFrame] ){
-                            if( this.isPlainObject(this.oData[sType].oFrames[sFrame][sProp]) ){
+                            if( this.oData[sType].oFrames[sFrame] && this.isPlainObject(this.oData[sType].oFrames[sFrame][sProp]) ){
                                 if( this.isPlainObject(oEntity.oFrames[sFrame][sProp]) ){
                                     Object.assign(oFrames[sFrame][sProp], this.oData[sType].oFrames[sFrame][sProp], oEntity.oFrames[sFrame][sProp]);
                                 }

@@ -695,6 +695,7 @@ GAME.oData.oCharacter.BJT = {
         // 4, 4, 6
         light_first: {
             oMove: {
+                nDelay: 2,
                 nLength: 4,
                 nX: 24
             },

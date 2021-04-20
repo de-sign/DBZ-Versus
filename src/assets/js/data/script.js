@@ -250,8 +250,7 @@ Object.assign(
 //=include character.js
 //=include _characters/_GKU.js
 //=include _characters/_BJT.js
-//=include _characters/_GHA.js
-//=include _characters/_GHC.js
+//=include _characters/_GHN.js
 //=include _characters/_FRZ.js
 //=include _characters/_SRU.js
 //=include _characters/_BUU.js

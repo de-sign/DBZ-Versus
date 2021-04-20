@@ -93,8 +93,8 @@ module.exports = function(config){
         }
     );
 
-    const aChar = ['BJT', 'BUU', 'FRZ', 'GHA', 'GHC', 'GKU', 'SRU'],
-        aColor = [ ['BSJ', 'SSJ'], ['MAJ'], ['FRZ'], ['GHS'], ['GHT'], ['TRN', 'SSJ'], ['SRU', 'PFC'] ],
+    const aChar = ['BJT', 'BUU', 'FRZ', 'GHN', 'GKU', 'SRU'],
+        aColor = [ ['BSJ', 'SSJ'], ['MAJ'], ['FRZ'], ['GHS'/*, 'GHT'*/], ['TRN', 'SSJ'], ['SRU', 'PFC'] ],
         aBox = ['oPositionBox', 'aHurtBox', 'aHitBox'],
         nSquare = 50,
         nExpand = 1200,
@@ -134,11 +134,9 @@ module.exports = function(config){
             ['light_first', 'light_first_active', 'light_second', 'light_second_active', 'light_third', 'light_third_active'],
             ['heavy', 'heavy_active', 'tracker', 'tracker_active', 'luncher', 'luncher_active'],
             ['kikoha', 'ki_beam'],
-            ['super_first', 'super_second', 'super_third', null, 'super_fourth'],
-            null,
-            ['super_fifth', null, null, 'super_sixth']
+            ['super_first', 'super_second', 'super_third']
         ],
-        aExpand = ['ki_beam', 'super_third', 'super_fourth', 'super_fifth', 'super_sixth'],
+        aExpand = [/*'ki_beam', 'super_third', 'super_fourth', 'super_fifth', 'super_sixth'*/],
         oPath = {
             sFrames: 'characters/frames',
             sData: 'data/_extra'
@@ -286,7 +284,7 @@ module.exports = function(config){
                 aPromise.push(
                     new Promise( (fResolve, fReject) => {
                         try {
-                            const oPNG = pngjs.load(config.paths.src.images + '/' + oPath.sFrames + '/' + sChar + '/box/' + sBox + '.png'),
+                            const oPNG = pngjs.load(config.paths.src.images + '/' + oPath.sFrames + '/' + sChar + '/__box/' + sBox + '.png'),
                                 oPixelData = new PixelData(oPNG),
                                 oStart = {};
 

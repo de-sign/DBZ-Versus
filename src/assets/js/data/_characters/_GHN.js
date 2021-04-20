@@ -1,19 +1,19 @@
-GAME.oData.oCharacter.GKU = {
-    sEntity: 'GKU',
+GAME.oData.oCharacter.GHN = {
+    sEntity: 'GHN',
     bActive: true,
     aColor: [
         {
-            sColor: 'SSJ',
-            sName: 'Gokū SSJ',
-            sEntityColor: 'BLU'
-        },
+            sColor: 'GHS',
+            sName: 'Gohan SNS',
+            sEntityColor: 'ORG'
+        }/*,
         {
-            sColor: 'TRN',
-            sName: 'Gokū',
-            sEntityColor: 'BLU'
-        }
+            sColor: 'GHT',
+            sName: 'Gohan SSJT',
+            sEntityColor: 'ORG'
+        }*/
     ],
-   
+
     oFrames: {
         stand: {
             oPositionBox: {
@@ -273,10 +273,10 @@ GAME.oData.oCharacter.GKU = {
                 nX: -30,
                 nY: -98,
                 nWidth: 56,
-                nHeight: 32
+                nHeight: 100
             }, {
                 nX: 22,
-                nY: -98,
+                nY: -94,
                 nWidth: 60,
                 nHeight: 32
             }]
@@ -297,16 +297,16 @@ GAME.oData.oCharacter.GKU = {
                 nX: -30,
                 nY: -98,
                 nWidth: 56,
-                nHeight: 32
+                nHeight: 100
             }, {
                 nX: 22,
-                nY: -98,
+                nY: -94,
                 nWidth: 60,
                 nHeight: 32
             }],
             aHitBox: {
                 nX: 18,
-                nY: -98,
+                nY: -94,
                 nWidth: 64,
                 nHeight: 32
             }
@@ -327,10 +327,10 @@ GAME.oData.oCharacter.GKU = {
                 nX: -30,
                 nY: -98,
                 nWidth: 56,
-                nHeight: 100
+                nHeight: 32
             }, {
                 nX: 22,
-                nY: -94,
+                nY: -98,
                 nWidth: 64,
                 nHeight: 32
             }]
@@ -351,22 +351,74 @@ GAME.oData.oCharacter.GKU = {
                 nX: -30,
                 nY: -98,
                 nWidth: 56,
-                nHeight: 100
+                nHeight: 32
             }, {
                 nX: 22,
-                nY: -94,
+                nY: -98,
                 nWidth: 64,
                 nHeight: 32
             }],
             aHitBox: {
                 nX: 22,
-                nY: -94,
+                nY: -98,
                 nWidth: 64,
                 nHeight: 32
             }
         },
-        light_third: null,
-        light_third_active: null,
+        light_third: {
+            oPositionBox: {
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
+            },
+            aHurtBox: [{
+                nX: -22,
+                nY: -138,
+                nWidth: 60,
+                nHeight: 60
+            }, {
+                nX: 18,
+                nY: -122,
+                nWidth: 20,
+                nHeight: 40
+            }, {
+                nX: -30,
+                nY: -98,
+                nWidth: 56,
+                nHeight: 100
+            }]
+        },
+        light_third_active: {
+            oPositionBox: {
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
+            },
+            aHurtBox: [{
+                nX: -22,
+                nY: -138,
+                nWidth: 60,
+                nHeight: 60
+            }, {
+                nX: 18,
+                nY: -122,
+                nWidth: 20,
+                nHeight: 40
+            }, {
+                nX: -30,
+                nY: -98,
+                nWidth: 56,
+                nHeight: 100
+            }],
+            aHitBox: {
+                nX: 18,
+                nY: -122,
+                nWidth: 48,
+                nHeight: 40
+            }
+        },
         heavy: {
             oPositionBox: {
                 nX: -30,
@@ -429,20 +481,20 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 112
             },
             aHurtBox: [{
-                nX: 6,
-                nY: -126,
-                nWidth: 52,
-                nHeight: 60
+                nX: -14,
+                nY: -138,
+                nWidth: 60,
+                nHeight: 52
             }, {
-                nX: -6,
-                nY: -90,
-                nWidth: 100,
-                nHeight: 40
-            }, {
-                nX: -38,
-                nY: -54,
-                nWidth: 76,
+                nX: 18,
+                nY: -122,
+                nWidth: 56,
                 nHeight: 56
+            }, {
+                nX: -26,
+                nY: -110,
+                nWidth: 64,
+                nHeight: 112
             }]
         },
         tracker_active: {
@@ -453,26 +505,26 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 112
             },
             aHurtBox: [{
-                nX: 6,
-                nY: -126,
-                nWidth: 52,
-                nHeight: 60
+                nX: -14,
+                nY: -138,
+                nWidth: 60,
+                nHeight: 52
             }, {
-                nX: -6,
-                nY: -90,
-                nWidth: 100,
-                nHeight: 40
-            }, {
-                nX: -38,
-                nY: -54,
-                nWidth: 76,
+                nX: 18,
+                nY: -122,
+                nWidth: 56,
                 nHeight: 56
+            }, {
+                nX: -26,
+                nY: -110,
+                nWidth: 64,
+                nHeight: 112
             }],
             aHitBox: {
-                nX: 46,
-                nY: -90,
-                nWidth: 48,
-                nHeight: 40
+                nX: 18,
+                nY: -122,
+                nWidth: 56,
+                nHeight: 56
             }
         },
         luncher: {
@@ -483,15 +535,15 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 112
             },
             aHurtBox: [{
-                nX: 22,
-                nY: -154,
-                nWidth: 44,
-                nHeight: 104
+                nX: 34,
+                nY: -170,
+                nWidth: 36,
+                nHeight: 80
             }, {
                 nX: -22,
-                nY: -138,
+                nY: -146,
                 nWidth: 60,
-                nHeight: 124
+                nHeight: 148
             }]
         },
         luncher_active: {
@@ -502,21 +554,21 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 112
             },
             aHurtBox: [{
-                nX: 22,
-                nY: -154,
-                nWidth: 44,
-                nHeight: 104
+                nX: 34,
+                nY: -170,
+                nWidth: 36,
+                nHeight: 80
             }, {
                 nX: -22,
-                nY: -138,
+                nY: -146,
                 nWidth: 60,
-                nHeight: 124
+                nHeight: 148
             }],
             aHitBox: {
-                nX: 22,
-                nY: -154,
-                nWidth: 44,
-                nHeight: 104
+                nX: 34,
+                nY: -170,
+                nWidth: 36,
+                nHeight: 80
             }
         },
         kikoha: {
@@ -543,6 +595,7 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 100
             }]
         },
+        ki_beam: null,
         super_first: {
             oPositionBox: {
                 nX: -30,
@@ -560,24 +613,22 @@ GAME.oData.oCharacter.GKU = {
             },
             aHurtBox: [{
                 nX: -10,
-                nY: -138,
+                nY: -134,
                 nWidth: 60,
                 nHeight: 56
             }, {
                 nX: -22,
-                nY: -118,
+                nY: -114,
                 nWidth: 104,
-                nHeight: 64
+                nHeight: 44
             }, {
                 nX: -38,
-                nY: -58,
-                nWidth: 84,
-                nHeight: 60
+                nY: -74,
+                nWidth: 68,
+                nHeight: 76
             }]
         },
-        super_third_SSJ: {
-            sPath: 'super_third.png',
-            nZIndex: 80,
+        super_third: {
             oPositionBox: {
                 nX: -30,
                 nY: -110,
@@ -586,101 +637,27 @@ GAME.oData.oCharacter.GKU = {
             },
             aHurtBox: [{
                 nX: -10,
-                nY: -138,
+                nY: -134,
                 nWidth: 60,
                 nHeight: 56
             }, {
                 nX: -22,
-                nY: -118,
+                nY: -114,
                 nWidth: 104,
-                nHeight: 64
+                nHeight: 44
             }, {
                 nX: -38,
-                nY: -58,
-                nWidth: 84,
-                nHeight: 60
-            }]
-        },
-        super_third_TRN: {
-            sPath: 'super_third.png',
-            nZIndex: 80,
-            oPositionBox: {
-                nX: -30,
-                nY: -110,
-                nWidth: 64,
-                nHeight: 112
-            },
-            aHurtBox: [{
-                nX: -14,
-                nY: -134,
-                nWidth: 60,
-                nHeight: 64
-            }, {
-                nX: 22,
-                nY: -110,
-                nWidth: 64,
-                nHeight: 40
-            }, {
-                nX: -30,
-                nY: -98,
-                nWidth: 56,
-                nHeight: 100
+                nY: -74,
+                nWidth: 68,
+                nHeight: 76
             }]
         },
         list_first: false,
         list_second: false,
         list_third: false
     },
-
+    
     oAnimations: {
-        test: [
-            {
-                nFrame: 8,
-                sFrame: 'burst',
-                oPositionBox: null
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oPositionBox: null,
-                aHurtBox: null
-            },
-            {
-                nFrame: 10,
-                sFrame: 'super_first',
-                oPositionBox: null,
-                aHurtBox: null
-            },
-            {
-                nFrame: 10,
-                sFrame: 'super_second',
-                oPositionBox: null,
-                aHurtBox: null
-            },
-            {
-                nFrame: 44,
-                sFrame: 'super_third',
-                oPositionBox: null,
-                aHurtBox: null
-            },
-            {
-                nFrame: 10,
-                sFrame: 'super_second',
-                oPositionBox: null,
-                aHurtBox: null
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oPositionBox: null,
-                aHurtBox: null
-            },
-            {
-                nFrame: 8,
-                sFrame: 'burst',
-                oPositionBox: null
-            }
-        ],
         // Command
         // 4, 4, 6
         light_first: [
@@ -779,11 +756,11 @@ GAME.oData.oCharacter.GKU = {
             }
         ],
         // 8, 6, 10
-        tracker: {
+        tracker_first: {
             oMove: {
                 nDelay: 2,
-                nLength: 12,
-                nX: 96
+                nLength: 8,
+                nX: 72
             },
             aFrames: [
                 {
@@ -815,6 +792,49 @@ GAME.oData.oCharacter.GKU = {
                 {
                     nFrame: 6,
                     sFrame: 'forward',
+                    oStatus: {
+                        bCancel: true
+                    }
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'blur',
+                    oStatus: {
+                        bCancel: true
+                    }
+                }
+            ]
+        },
+        // 8, 6, 10
+        tracker_second: {
+            oMove: {
+                nDelay: 2,
+                nLength: 4,
+                nX: 24
+            },
+            aFrames: [
+                {
+                    nFrame: 2,
+                    sFrame: 'blur',
+                },
+                {
+                    nFrame: 4,
+                    sFrame: 'forward',
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'light_third'
+                },
+                {
+                    nFrame: 6,
+                    sFrame: 'light_third_active',
+                    oStatus: {
+                        bCancel: true
+                    }
+                },
+                {
+                    nFrame: 8,
+                    sFrame: 'light_third',
                     oStatus: {
                         bCancel: true
                     }
@@ -891,9 +911,9 @@ GAME.oData.oCharacter.GKU = {
                 }
             },
         ],
-        // Kameha
+        // Masenko
         // 46, 36, 26
-        super_SSJ: [
+        super_GHS: [
             {
                 nFrame: 2,
                 sFrame: 'blur',
@@ -911,46 +931,16 @@ GAME.oData.oCharacter.GKU = {
             },
             {
                 nFrame: 4,
-                sFrame: 'super_third_SSJ',
+                sFrame: 'super_third',
                 aHurtBox: null
             },
             {
                 nFrame: 40,
-                sFrame: 'super_third_SSJ'
+                sFrame: 'super_third'
             },
             {
                 nFrame: 20,
                 sFrame: 'super_second'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur'
-            }
-        ],
-        super_TRN: [
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                aHurtBox: null
-            },
-            {
-                nFrame: 30,
-                sFrame: 'super_first',
-                aHurtBox: null
-            },
-            {
-                nFrame: 10,
-                sFrame: 'super_second',
-                aHurtBox: null
-            },
-            {
-                nFrame: 4,
-                sFrame: 'super_third_TRN',
-                aHurtBox: null
-            },
-            {
-                nFrame: 60,
-                sFrame: 'super_third_TRN'
             },
             {
                 nFrame: 2,
@@ -962,10 +952,10 @@ GAME.oData.oCharacter.GKU = {
     oCommands: {
         aOffense: [
             {
-                sFilter: 'SSJ',
+                sFilter: 'GHS',
                 sCod: 'super',
-                sName: 'Chô Kamehameha',
-                sAnimation: 'super_SSJ',
+                sName: 'Masenkō',
+                sAnimation: 'super_GHS',
                 sListAnimation: 'super_list',
                 nCost: 12,
                 nDamage: 4,
@@ -973,51 +963,12 @@ GAME.oData.oCharacter.GKU = {
                 aEntity: {
                     sType: 'Beam',
                     sSFX: 'ADO__Beam',
-                    sAnimation: 'circle',
+                    sAnimation: 'triangle',
                     nFrameStart: 43,
                     bLink: true,
                     oPosition: {
                         nX: 0,
-                        nY: 0
-                    }
-                },
-                oStun: {
-                    nFreeze: 46,
-                    nBlock: 36,
-                    nHit: 36,
-                    bLunch: true,
-                    sHitAnimation: 'hit_heavy'
-                },
-                oPushback: {
-                    nLength: 4,
-                    nX: -192
-                },
-                bLast: false,
-                oManipulation: {
-                    nMaxLengthFrame: 15,
-                    aButtons: [
-                        { DN: false },
-                        { DF: false },
-                        { FW: false, C: true }
-                    ]
-                }
-            },
-            {
-                sFilter: 'TRN',
-                sCod: 'super',
-                sName: 'Genki-dama',
-                sAnimation: 'super_TRN',
-                nCost: 12,
-                nDamage: 4,
-                nGatlingLevel: 3,
-                aEntity: {
-                    sType: 'Projectile',
-                    sSFX: 'ADO__Beam',
-                    sAnimation: 'ball',
-                    nFrameStart: 13,
-                    oPosition: {
-                        nX: 0,
-                        nY: -256
+                        nY: -8
                     }
                 },
                 oStun: {
@@ -1090,14 +1041,30 @@ GAME.oData.oCharacter.GKU = {
                 }
             },
             {
-                sCod: 'tracker',
+                sCod: 'tracker_first',
                 sName: 'Tracker',
-                sAnimation: 'tracker',
+                sAnimation: 'tracker_first',
                 nGatlingLevel: 1,
+                oSelfCancel: {
+                    tracker_second: {
+                        sCod: 'tracker_second',
+                        sName: '2nd',
+                        sAnimation: 'tracker_second',
+                        oStun: {
+                            nBlock: 8,
+                            nHit: 18,
+                            sHitAnimation: 'hit_light'
+                        }
+                    }
+                },
                 oStun: {
                     nBlock: 8,
                     nHit: 18,
                     sHitAnimation: 'hit_heavy'
+                },
+                oPushback: {
+                    nLength: 4,
+                    nX: -36
                 },
                 bLast: true,
                 oManipulation: {

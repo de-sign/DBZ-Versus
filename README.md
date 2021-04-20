@@ -61,8 +61,7 @@ __General__
 * Nouveaux CHARACTER et COLOR
     * BUU
     * FRZ
-    * GHA
-    * GHC
+    * GHN ( GHS fait, TODO GHT )
 * Faire un script pour paramétrage via fichier EXCEL ( ou CSV ? )
 * Paramétrages
     * HurtBox
