@@ -633,54 +633,6 @@ GAME.oData.oCharacter.GKU = {
     },
 
     oAnimations: {
-        test: [
-            {
-                nFrame: 8,
-                sFrame: 'burst',
-                oPositionBox: null
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oPositionBox: null,
-                aHurtBox: null
-            },
-            {
-                nFrame: 10,
-                sFrame: 'super_first',
-                oPositionBox: null,
-                aHurtBox: null
-            },
-            {
-                nFrame: 10,
-                sFrame: 'super_second',
-                oPositionBox: null,
-                aHurtBox: null
-            },
-            {
-                nFrame: 44,
-                sFrame: 'super_third',
-                oPositionBox: null,
-                aHurtBox: null
-            },
-            {
-                nFrame: 10,
-                sFrame: 'super_second',
-                oPositionBox: null,
-                aHurtBox: null
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oPositionBox: null,
-                aHurtBox: null
-            },
-            {
-                nFrame: 8,
-                sFrame: 'burst',
-                oPositionBox: null
-            }
-        ],
         // Command
         // 4, 4, 6
         light_first: [
@@ -893,7 +845,7 @@ GAME.oData.oCharacter.GKU = {
         ],
         // Kameha
         // 46, 36, 26
-        super_SSJ: [
+        SSJ_super: [
             {
                 nFrame: 2,
                 sFrame: 'blur',
@@ -927,7 +879,7 @@ GAME.oData.oCharacter.GKU = {
                 sFrame: 'blur'
             }
         ],
-        super_TRN: [
+        TRN_super: [
             {
                 nFrame: 2,
                 sFrame: 'blur',
@@ -956,6 +908,54 @@ GAME.oData.oCharacter.GKU = {
                 nFrame: 2,
                 sFrame: 'blur'
             }
+        ],
+        GHT_super: [
+            {
+                nFrame: 8,
+                sFrame: 'burst',
+                oPositionBox: null
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oPositionBox: null,
+                aHurtBox: null
+            },
+            {
+                nFrame: 10,
+                sFrame: 'super_first',
+                oPositionBox: null,
+                aHurtBox: null
+            },
+            {
+                nFrame: 10,
+                sFrame: 'super_second',
+                oPositionBox: null,
+                aHurtBox: null
+            },
+            {
+                nFrame: 44,
+                sFrame: 'super_third_SSJ',
+                oPositionBox: null,
+                aHurtBox: null
+            },
+            {
+                nFrame: 10,
+                sFrame: 'super_second',
+                oPositionBox: null,
+                aHurtBox: null
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oPositionBox: null,
+                aHurtBox: null
+            },
+            {
+                nFrame: 8,
+                sFrame: 'burst',
+                oPositionBox: null
+            }
         ]
     },
 
@@ -965,7 +965,7 @@ GAME.oData.oCharacter.GKU = {
                 sFilter: 'SSJ',
                 sCod: 'super',
                 sName: 'Chô Kamehameha',
-                sAnimation: 'super_SSJ',
+                sAnimation: 'SSJ_super',
                 sListAnimation: 'super_list',
                 nCost: 12,
                 nDamage: 4,
@@ -1006,7 +1006,7 @@ GAME.oData.oCharacter.GKU = {
                 sFilter: 'TRN',
                 sCod: 'super',
                 sName: 'Genki-dama',
-                sAnimation: 'super_TRN',
+                sAnimation: 'TRN_super',
                 nCost: 12,
                 nDamage: 4,
                 nGatlingLevel: 3,

@@ -94,7 +94,7 @@ module.exports = function(config){
     );
 
     const aChar = ['BJT', 'BUU', 'FRZ', 'GHN', 'GKU', 'SRU'],
-        aColor = [ ['BSJ', 'SSJ'], ['MAJ'], ['FRZ'], ['GHS'/*, 'GHT'*/], ['TRN', 'SSJ'], ['SRU', 'PFC'] ],
+        aColor = [ ['BSJ', 'SSJ'], ['MAJ'], ['FRZ'], [/*'GHS', */'GHT'], ['TRN', 'SSJ'], ['SRU', 'PFC'] ],
         aBox = ['oPositionBox', 'aHurtBox', 'aHitBox'],
         nSquare = 50,
         nExpand = 1200,
@@ -128,12 +128,12 @@ module.exports = function(config){
         },
         oPos = { nX: 24, nY: 45 },
         aFrames = [
-            ['stand', 'blur', 'backward', 'forward', 'forward_inverse'],
-            ['jump', 'fall', null, 'guard', 'reflect', 'burst'],
+            ['stand', 'blur', 'backward', 'forward'/*, 'forward_inverse'*/],
+            ['jump', 'fall', 'pre_jump', 'guard', 'reflect', 'burst'],
             ['hit_light', 'hit_heavy', 'hit_luncher', 'hit_fall', 'down', 'recovery'],
-            ['light_first', 'light_first_active', 'light_second', 'light_second_active', 'light_third', 'light_third_active'],
+            ['light_third', 'light_third_active', 'light_first', 'light_first_active', 'light_second', 'light_second_active'],
             ['heavy', 'heavy_active', 'tracker', 'tracker_active', 'luncher', 'luncher_active'],
-            ['kikoha', 'ki_beam'],
+            ['kikoha', 'ki_beam', 'tracker_seconde', 'tracker_seconde_active'],
             ['super_first', 'super_second', 'super_third']
         ],
         aExpand = [/*'ki_beam', 'super_third', 'super_fourth', 'super_fifth', 'super_sixth'*/],
