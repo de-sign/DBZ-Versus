@@ -37,6 +37,14 @@ GAME.oData.oProjectile.ALL = {
         },
 
         death_first: {
+            aHurtBox: [
+                {
+                    nX: -38,
+                    nY: -94,
+                    nWidth: 72,
+                    nHeight: 72
+                }
+            ],
             aHitBox: [
                 {
                     nX: -38,
@@ -47,6 +55,14 @@ GAME.oData.oProjectile.ALL = {
             ]
         },
         death_second: {
+            aHurtBox: [
+                {
+                    nX: -70,
+                    nY: -130,
+                    nWidth: 136,
+                    nHeight: 136
+                }
+            ],
             aHitBox: [
                 {
                     nX: -70,
@@ -58,6 +74,14 @@ GAME.oData.oProjectile.ALL = {
         },
 
         ball_first: {
+            aHurtBox: [
+                {
+                    nX: -52,
+                    nY: -114,
+                    nWidth: 104,
+                    nHeight: 104
+                }
+            ],
             aHitBox: [
                 {
                     nX: -52,
@@ -68,16 +92,23 @@ GAME.oData.oProjectile.ALL = {
             ]
         },
         ball_second: {
+            aHurtBox: [
+                {
+                    nX: -70,
+                    nY: -130,
+                    nWidth: 136,
+                    nHeight: 136
+                }
+            ],
             aHitBox: [
                 {
-                    nX: -98,
-                    nY: -158,
-                    nWidth: 196,
-                    nHeight: 196
+                    nX: -70,
+                    nY: -130,
+                    nWidth: 136,
+                    nHeight: 136
                 }
             ]
         },
-
 
         hit_light: false,
         hit_heavy: false
@@ -97,6 +128,20 @@ GAME.oData.oProjectile.ALL = {
         },
 
         death: {
+            oMove: {
+                nDelay: 10,
+                nX: 16,
+                nY: 4
+            },
+            aFrames: [
+                {
+                    sFrame: 'death_first',
+                    nFrame: 105
+                }
+            ]
+        },
+
+        nova: {
             oMove: {
                 nDelay: 30,
                 nX: 16,

@@ -181,7 +181,7 @@ Object.assign(
             oLife: {
                 player: 30,
                 character: 0,
-                projectile: 0,
+                projectile: 1,
                 beam: 0
             },
             // CHARACTER

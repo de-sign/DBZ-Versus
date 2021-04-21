@@ -61,6 +61,7 @@ Object.assign(
                             const oCommand = this.oGatling.update(this.nKi, oCanAction);
                             if( oCommand ){
                                 oCommand.nCost && (this.nKi -= oCommand.nCost);
+                                this.killLink();
                                 this.setAnimation(oCommand.sAnimation);
                             }
                             // Gestion DIR

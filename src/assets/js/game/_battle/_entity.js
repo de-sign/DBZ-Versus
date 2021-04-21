@@ -59,11 +59,6 @@ Object.assign(
                 bPushback: true
             }
         },
-        oLink: {
-            character: 4,
-            projectile: 3,
-            beam: 1
-        },
 
         add: function(oEntity) {
             const sId = 'BE_' + (++this.nId);
@@ -108,7 +103,7 @@ Object.assign(
                     }
                 } else {
                     // Debut TIMER pour destruction
-                    if( this.nLife <= 0 && this.oAnimation.isEnd() ){
+                    if( this.oAnimation.isEnd() ){
                         this.die();
                     } else {
                         this.updateAnimation();
@@ -123,7 +118,6 @@ Object.assign(
 
             add: function(oEntity){
                 this.oLink[oEntity.sType].push(oEntity);
-                this.checkLink(oEntity.sType, 0);
             },
             remove: function(oEntity){
                 const nIndex = this.oLink[oEntity.sType].indexOf(oEntity);
@@ -131,10 +125,9 @@ Object.assign(
                     this.oLink[oEntity.sType].splice(nIndex, 1);
                 }
             },
-            checkLink: function(sType, nModify){
-                const nSplice = this.oLink[sType].length + nModify - BattleEntity.oLink[sType];
-                if( nSplice > 0 ){
-                    this.oLink[sType].splice(0, nSplice).forEach( oLinkEntity => oLinkEntity.die() );
+            killLink: function(){
+                for( let sType in this.oLink ){
+                    this.oLink[sType].splice(0).forEach( oLinkEntity => oLinkEntity.die() );
                 }
             },
             isLinked: function(){
@@ -329,13 +322,23 @@ Object.assign(
                 destroy: function(){}
                 */
                 takeHit: function(oEntity, oData){
-                    oEntity && BattleEntity.prototype.takeHit.call(this, oEntity, oData);
-                    this.setAnimation(oData.oStun.sHitAnimation, true);
+                    if( oEntity ){
+                        const nDamageEntity = oData.nDamage == null ? 1 : oData.nDamage,
+                            nDamageSelf = this.oHitData.nDamage == null ? 1 : this.oHitData.nDamage;
+                        if( nDamageEntity >= nDamageSelf ){
+                            this.nLife -= nDamageEntity;
+                            this.setAnimation(this.oHitData.oStun.sHitAnimation, true);
+                        }
+                    }
+                    // Auto destruction après avoir HIT
+                    else {
+                        this.setAnimation(this.oHitData.oStun.sHitAnimation, true);
+                    }
                 },
                 confirmHit: function(oData, bGuard){
                     BattleEntity.prototype.confirmHit.call(this, oData, bGuard);
+                    this.nLife -= GAME.oSettings.oLife[this.sType];
                     this.takeHit(null, oData);
-                    this.nLife--;
                 }
             }
         )

@@ -121,10 +121,10 @@ Object.assign(
                 if( oEntity.oCheck.bLunch ){
                     const nDown = this.oArea.oPosition.nY + (oBoxArea.bottom - oBoxArea.originY) - oEntity.oPositionPoint.nGapY;
                     if( nDown < oEntity.oLayer.oPosition.nY + ( oBoxEntity.nY + oBoxEntity.nHeight ) ){
+                        oEntity.setStance('down', true);
                         oBoxEntity = oEntity.getBox('oPositionBox')[0];
                         oEntity.oLayer.oPosition.nY = nDown - ( oBoxEntity.nY + oBoxEntity.nHeight );
                         oEntity.oLunch = null;
-                        oEntity.setStance('down', true);
                     }
                 }
             }
@@ -278,19 +278,6 @@ Object.assign(
                 const oPlayer = this.aPlayer[nIndex];
                 if( oPlayer.oGatling.needFreeze() ){
                     oPlayer.oGatling.bFreeze = true;
-
-                    // Limit Entity
-                    if( oPlayer.oGatling.oCurrent.aEntity ){
-                        const oLimit = {};
-                        oPlayer.oGatling.oCurrent.aEntity.forEach( oCommandEntity => {
-                            oLimit[oCommandEntity.sType] || (oLimit[oCommandEntity.sType] = 0);
-                            oLimit[oCommandEntity.sType]++;
-                        } );
-
-                        for( let sType in oLimit ){
-                            oPlayer.checkLink(sType.toLowerCase(), oLimit[sType]);
-                        }
-                    }
 
                     // Freeze
                     aEntity.forEach( oEntity => {
