@@ -106,7 +106,7 @@ Object.assign(
                     let sSFX = '';
                     if( this.oAnimation.oFrame.oStatus.bGuard ){
                         this.setHurt('guard', oData.oStun.nBlock, true);
-                        oEntity.confirmHit(oData, true);
+                        oEntity.confirmHit(this, oData, true);
                         sSFX = 'ADO__Guard';
                     } else {
                         const nDamage = oData.nDamage == null ? 1 : oData.nDamage;
@@ -125,13 +125,13 @@ Object.assign(
                                 true
                             );
                         }
-                        oEntity.confirmHit(oData);
+                        oEntity.confirmHit(this, oData);
                         sSFX = 'ADO__Hit';
                     }
                     return sSFX;
                 },
-                confirmHit: function(oData, bGuard){
-                    BattleEntity.prototype.confirmHit.call(this, oData, bGuard);
+                confirmHit: function(oEntityHurt, oData, bGuard){
+                    BattleEntity.prototype.confirmHit.call(this, oEntityHurt, oData, bGuard);
                     const nDamage = oData.nDamage == null ? 1 : oData.nDamage;
                     bGuard || oData.nCost || this.addKi(nDamage);
                 },
@@ -192,7 +192,7 @@ Object.assign(
                         };
                     }
                     // Gestion ACTION en HIT
-                    else if( this.bHit ){
+                    else if( this.aHit.length ){
                         const bCancel = this.oAnimation.oFrame.oStatus.bCancel && !this.oAnimation.oFrame.bFreeze;
                         oCanAction = {
                             sCommand: 'aOffense',

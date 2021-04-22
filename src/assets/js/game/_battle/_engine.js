@@ -190,12 +190,13 @@ Object.assign(
 
             // Gestion HIT
             aEntity.forEach( oEntityHit => {
-                if( oEntityHit.oCheck.bHit && !oEntityHit.bHit ){
+                if( oEntityHit.oCheck.bHit ){
                     aEntity.forEach( oEntityHurt => {
                         if(
                             !this.hasSameParent(oEntityHit, oEntityHurt)
                             && oEntityHurt.oCheck.oHurt[ oEntityHit.sType ]
                             && oEntityHurt.nLife > 0
+                            && oEntityHit.aHit.indexOf(oEntityHurt.sId) == -1
                         ){
                             let bHit = false;
                             const aHitBox = this.getCollisionBox(oEntityHit, 'aHitBox'),

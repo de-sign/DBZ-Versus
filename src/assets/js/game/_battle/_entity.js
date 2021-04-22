@@ -21,7 +21,7 @@ function BattleEntity(sType, oData, oPosition, bReverse, oParent) {
 
     this.bReverse = false;
     this.nLife = 0;
-    this.bHit = false;
+    this.aHit = [];
 
     this.init.apply(this, arguments);
 }
@@ -214,7 +214,7 @@ Object.assign(
             
             takeHit: function(oEntity, oData){
                 this.nLife -= oData.nDamage == null ? 1 : oData.nDamage;
-                oEntity.confirmHit(oData);
+                oEntity.confirmHit(this, oData);
             },
             setAnimation: function(sAnimation, bUpdate){
                 let sSet = false;
@@ -226,7 +226,7 @@ Object.assign(
                     );
                     this.setMovement( this.oData.oAnimations[sAnimation].oMove );
                     bUpdate && this.updateAnimation();
-                    this.bHit = false;
+                    this.aHit = [];
                     sSet = true;
                 }
                 return sSet;
@@ -287,9 +287,9 @@ Object.assign(
                     }
                 }
             },
-            confirmHit: function(oData, bGuard){
-                this.bHit = true;
-                this.oParent && this.oParent.confirmHit(oData, bGuard);
+            confirmHit: function(oEntityHurt, oData, bGuard){
+                this.aHit.push(oEntityHurt.sId);
+                this.oParent && this.oParent.confirmHit(oEntityHurt, oData, bGuard);
             },
             pushBack: function(oPushback, bDivide){
                 oPushback = Object.assign({}, oPushback || GAME.oSettings.oPushback);
@@ -335,8 +335,8 @@ Object.assign(
                         this.setAnimation(this.oHitData.oStun.sHitAnimation, true);
                     }
                 },
-                confirmHit: function(oData, bGuard){
-                    BattleEntity.prototype.confirmHit.call(this, oData, bGuard);
+                confirmHit: function(oEntityHurt, oData, bGuard){
+                    BattleEntity.prototype.confirmHit.call(this, oEntityHurt, oData, bGuard);
                     this.nLife -= GAME.oSettings.oLife[this.sType];
                     this.takeHit(null, oData);
                 }
