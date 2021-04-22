@@ -94,7 +94,7 @@ module.exports = function(config){
     );
 
     const aChar = ['BJT', 'BUU', 'FRZ', 'GHN', 'GKU', 'SRU'],
-        aColor = [ ['BSJ', 'SSJ'], ['MAJ'], ['FRZ'], ['GHS', 'GHT'], ['TRN', 'SSJ'], ['SRU', 'PFC'] ],
+        aColor = [ ['BSJ', 'SSJ'], ['MAJ'], [/*'FRZ', */'KLA'], ['GHS', 'GHT'], ['TRN', 'SSJ'], ['SRU', 'PFC'] ],
         aBox = ['oPositionBox', 'aHurtBox', 'aHitBox'],
         nSquare = 50,
         nExpand = 1200,

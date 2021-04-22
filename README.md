@@ -60,7 +60,6 @@ __General__
     * Classe PLAYER avec pour enfant LOCAL et DUMMY ( et AI ? )
 * Nouveaux CHARACTER et COLOR
     * BUU
-    * FRZ
 * Faire un script pour paramétrage via fichier EXCEL ( ou CSV ? )
 * Paramétrages
     * HurtBox

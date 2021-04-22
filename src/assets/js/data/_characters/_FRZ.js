@@ -6,6 +6,11 @@ GAME.oData.oCharacter.FRZ = {
             sColor: 'FRZ',
             sName: 'Furīza',
             sEntityColor: 'PRP'
+        },
+        {
+            sColor: 'MKL',
+            sName: 'Metaru Kūra',
+            sEntityColor: 'ORG'
         }
     ],
 
@@ -648,9 +653,9 @@ GAME.oData.oCharacter.FRZ = {
                 nHeight: 64
             }, {
                 nX: 22,
-                nY: -94,
+                nY: -102,
                 nWidth: 64,
-                nHeight: 32
+                nHeight: 36
             }, {
                 nX: -30,
                 nY: -98,
@@ -981,8 +986,9 @@ GAME.oData.oCharacter.FRZ = {
     oCommands: {
         aOffense: [
             {
+                sFilter: 'FRZ',
                 sCod: 'super',
-                sName: ' Desu Bōru',
+                sName: 'Desu Bōru',
                 sAnimation: 'super',
                 nCost: 12,
                 nDamage: 4,
@@ -995,6 +1001,45 @@ GAME.oData.oCharacter.FRZ = {
                     oPosition: {
                         nX: -20,
                         nY: -192
+                    }
+                },
+                oStun: {
+                    nFreeze: 46,
+                    nBlock: 36,
+                    nHit: 36,
+                    bLunch: true,
+                    sHitAnimation: 'hit_heavy'
+                },
+                oPushback: {
+                    nLength: 4,
+                    nX: -192
+                },
+                bLast: false,
+                oManipulation: {
+                    nMaxLengthFrame: 15,
+                    aButtons: [
+                        { DN: false },
+                        { DF: false },
+                        { FW: false, C: true }
+                    ]
+                }
+            },
+            {
+                sFilter: 'MKL',
+                sCod: 'super',
+                sName: 'Sūpānova Kūra',
+                sAnimation: 'super',
+                nCost: 12,
+                nDamage: 4,
+                nGatlingLevel: 3,
+                aEntity: {
+                    sType: 'Projectile',
+                    sSFX: 'ADO__Beam',
+                    sAnimation: 'nova',
+                    nFrameStart: 13,
+                    oPosition: {
+                        nX: -8,
+                        nY: -216
                     }
                 },
                 oStun: {
