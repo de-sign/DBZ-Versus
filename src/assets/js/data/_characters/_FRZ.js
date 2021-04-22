@@ -593,6 +593,11 @@ GAME.oData.oCharacter.FRZ = {
                 nHeight: 112
             },
             aHurtBox: [{
+                nX: -22,
+                nY: -150,
+                nWidth: 60,
+                nHeight: 56
+            }, {
                 nX: 22,
                 nY: -110,
                 nWidth: 80,
@@ -606,6 +611,11 @@ GAME.oData.oCharacter.FRZ = {
         },
         ki_beam: {
             aHurtBox: [{
+                nX: -22,
+                nY: -150,
+                nWidth: 60,
+                nHeight: 56
+            }, {
                 nX: 22,
                 nY: -110,
                 nWidth: 80,

@@ -3,9 +3,9 @@ function BattleHUD(oPlayer){
     this.oLayer = null;
     this.oPlayer = null;
 
-    this.nLife = 0;
-    this.nHitting = 0;
-    this.nKi = 0;
+    this.nLife = -1;
+    this.nHitting = -1;
+    this.nKi = -1;
 
     this.init(oPlayer);
 }
@@ -126,8 +126,8 @@ Object.assign(
                     this.oText.setText(this.oCurrent.sText);
                     // Freeze
                     if( this.oCurrent.bFreeze ){
-                        this.aPlayer.forEach( oPlayer => {
-                            oPlayer.setFreeze(this.oCurrent.nLength);
+                        BattleEntity.get().forEach( oEntity => {
+                            oEntity.setFreeze(this.oCurrent.nLength);
                         } );
                     }
                     // Show

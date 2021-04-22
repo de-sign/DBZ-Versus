@@ -148,7 +148,7 @@ Object.assign(
                     };
 
                     // Gestion MOVEMENT
-                    if( this.oAnimation.sType == 'movement' ){
+                    if( this.oAnimation.sType == 'movement' && !this.oAnimation.oFrame.bFreeze ){
                         oCanAction = {
                             sCommand: 'aOffense',
                             bStack: false,
@@ -181,7 +181,7 @@ Object.assign(
                         }
                     }
                     // Gestion HURT
-                    else if( this.oAnimation.sType == 'guard' || this.oAnimation.sType == 'hit' ){
+                    else if( (this.oAnimation.sType == 'guard' || this.oAnimation.sType == 'hit') && !this.oAnimation.oFrame.bFreeze ){
                         oCanAction = {
                             sCommand: 'aDefense',
                             bStack: false,

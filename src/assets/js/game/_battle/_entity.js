@@ -275,6 +275,9 @@ Object.assign(
             updateAnimation: function(){
                 this.oAnimation.update();
                 this.oMovement.update();
+                if( this.oAnimation.oFrame && this.oAnimation.oFrame.bResetHit ){
+                    this.aHit = [];
+                }
                 this.move();
             },
             move: function(){
@@ -328,6 +331,8 @@ Object.assign(
                         if( nDamageEntity >= nDamageSelf ){
                             this.nLife -= nDamageEntity;
                             this.setAnimation(this.oHitData.oStun.sHitAnimation, true);
+                        } else {
+                            oEntity.confirmHit(this, oData);
                         }
                     }
                     // Auto destruction après avoir HIT

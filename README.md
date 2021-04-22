@@ -47,7 +47,8 @@ __Battle__
 * Méchaniques de jeu
     * Burst ?
     * Guard Cancel ?
-    * Guard break ?
+    * Guard Break ?
+    * Choppe ?
 
 __Training__
 * Terminer Menu

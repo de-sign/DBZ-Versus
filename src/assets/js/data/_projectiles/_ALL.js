@@ -94,18 +94,18 @@ GAME.oData.oProjectile.ALL = {
         ball_second: {
             aHurtBox: [
                 {
-                    nX: -70,
-                    nY: -130,
-                    nWidth: 136,
-                    nHeight: 136
+                    nX: -98,
+                    nY: -158,
+                    nWidth: 196,
+                    nHeight: 196
                 }
             ],
             aHitBox: [
                 {
-                    nX: -70,
-                    nY: -130,
-                    nWidth: 136,
-                    nHeight: 136
+                    nX: -98,
+                    nY: -158,
+                    nWidth: 196,
+                    nHeight: 196
                 }
             ]
         },
