@@ -662,7 +662,8 @@ GAME.oData.oCharacter.FRZ = {
                 nWidth: 56,
                 nHeight: 100
             }]
-        }
+        },
+        list_beam: false
     },
 
     oAnimations: {

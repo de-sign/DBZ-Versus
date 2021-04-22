@@ -2157,6 +2157,7 @@ GAME.oData.oCharacter.GHN = {
                 }
             },
             {
+                sFilter: 'GHT',
                 sCod: 'light_first',
                 sName: 'Light',
                 sAnimation: 'GHT_light_first',
