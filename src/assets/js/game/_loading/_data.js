@@ -51,6 +51,12 @@ Object.assign(
                                 }
                             }
                         }
+                        GAME.oSettings.aFilter.forEach( oFilter => {
+                            if( oFilter.aFrames.indexOf(sFrame) != -1 ){
+                                oFrames[sFrame + '_' + oFilter.sSuffixe] = Object.assign({}, oFrames[sFrame], oFilter.oData);
+                                oFrames[sFrame + '_' + oFilter.sSuffixe].sPath = oFrames[sFrame].sPath.substring(0, oFrames[sFrame].sPath.length - 4) + '_' + oFilter.sSuffixe + '.png';
+                            }
+                        } );
                     }
                 } );
             } else {
@@ -77,6 +83,8 @@ Object.assign(
                     {
                         sCod: oEntity.sEntity + '_' + oColor.sColor,
                         sEntity: oEntity.sEntity,
+                        sEntityColor: oEntity.sEntityColor,
+                        sName: oEntity.sName,
                         oPath: {
                             sFrames: GAME.oSettings.oPath[sType].sFrames + '/' + oEntity.sEntity + '/' + oColor.sColor
                         }
@@ -120,6 +128,12 @@ Object.assign(
                         oEntityColor.oCommands[sTypeCMD] = [];
                         oEntity.oCommands[sTypeCMD].forEach( oCommand => {
                             if( !oCommand.sFilter || oCommand.sFilter == oColor.sColor ){
+                                if( oCommand.oName ){
+                                    oCommand = Object.assign( {}, {
+                                        sName: oCommand.oName[ oEntityColor.sColor ]
+                                    }, oCommand );
+                                    delete oCommand.oName;
+                                }
                                 oEntityColor.oCommands[sTypeCMD].push(oCommand);
                             }
                         } );
@@ -148,8 +162,14 @@ Object.assign(
                     nParabolY = -1 * (nParabolX * nParabolX - 1),
                     nTargetY = Math.round(nParabolY * GAME.oSettings.oLuncher.oMove.nY),
                     nY = nTargetY - nLastY,
-                    sFrame = nIndex <= GAME.oSettings.oLuncher.nLength / 2 ? 'hit_luncher' : 'hit_fall',
                     bInvulnerable = GAME.oSettings.oLuncher.nInvulnerable >= nIndex;
+                
+                let sFrame = nIndex <= GAME.oSettings.oLuncher.nLength / 2 ? 'hit_luncher' : 'hit_fall';
+                if( nIndex == 1 ){
+                    sFrame += '_filter';
+                } else if (bInvulnerable){
+                    sFrame += '_invul';
+                }
 
                 if(
                     oLastFrame

@@ -38,7 +38,12 @@ __Side__
 <br/>*N/A*
 
 __Select__
-<br/>*N/A*
+* Dupliquer les CHARACTERs
+* Faire des SWAP COLOR
+
+__Stage__
+* Choix du STAGE
+* Choix du BGM
 
 __Battle__
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
@@ -52,16 +57,23 @@ __Battle__
 
 __Training__
 * Terminer Menu
+    * Select Character
     * Dummy ?
         * Guard
         * Reversal
 
 __General__
+* Selection du STAGE et du BGM
 * Optimisation du Code
     * Classe PLAYER avec pour enfant LOCAL et DUMMY ( et AI ? )
 * Nouveaux CHARACTER et COLOR
     * BUU
-* Faire un script pour paramétrage via fichier EXCEL ( ou CSV ? )
+* Faire une API ELECTRON
+    * Paramétrages globaux
+    * Ajouter CHARACTER
+    * Générer SPRITE
+    * Générer ANIMATION
+    * Générer COMMAND
 * Paramétrages
     * HurtBox
     * HitBox

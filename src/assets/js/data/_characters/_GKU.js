@@ -1,16 +1,18 @@
 GAME.oData.oCharacter.GKU = {
-    sEntity: 'GKU',
     bActive: true,
+    sEntity: 'GKU',
     aColor: [
         {
-            sColor: 'SSJ',
-            sName: 'Gokū SSJ',
-            sEntityColor: 'BLU'
+            sName: 'Gokū',
+            sColor: 'LSW',
+            sColorName: 'Legendary Super Warrior color',
+            sEntityColor: 'BLU',
         },
         {
-            sColor: 'TRN',
-            sName: 'Gokū',
-            sEntityColor: 'BLU'
+            sName: 'Ginyū',
+            sColor: 'SCD',
+            sColorName: 'Legendary Super Warrior color',
+            sEntityColor: 'PRP',
         }
     ],
    
@@ -91,7 +93,6 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 100
             }]
         },
-        forward_inverse: null,
         jump: {
             oPositionBox: {
                 nX: -22,
@@ -365,8 +366,6 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 32
             }
         },
-        light_third: null,
-        light_third_active: null,
         heavy: {
             oPositionBox: {
                 nX: -30,
@@ -626,10 +625,7 @@ GAME.oData.oCharacter.GKU = {
                 nWidth: 56,
                 nHeight: 100
             }]
-        },
-        list_first: false,
-        list_second: false,
-        list_third: false
+        }
     },
 
     oAnimations: {
@@ -845,41 +841,7 @@ GAME.oData.oCharacter.GKU = {
         ],
         // Kameha
         // 46, 36, 26
-        SSJ_super: [
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                aHurtBox: null
-            },
-            {
-                nFrame: 30,
-                sFrame: 'super_first',
-                aHurtBox: null
-            },
-            {
-                nFrame: 10,
-                sFrame: 'super_second',
-                aHurtBox: null
-            },
-            {
-                nFrame: 4,
-                sFrame: 'super_third_SSJ',
-                aHurtBox: null
-            },
-            {
-                nFrame: 40,
-                sFrame: 'super_third_SSJ'
-            },
-            {
-                nFrame: 20,
-                sFrame: 'super_second'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur'
-            }
-        ],
-        TRN_super: [
+        super: [
             {
                 nFrame: 2,
                 sFrame: 'blur',
@@ -908,105 +870,15 @@ GAME.oData.oCharacter.GKU = {
                 nFrame: 2,
                 sFrame: 'blur'
             }
-        ],
-        GHT_super: [
-            {
-                nFrame: 8,
-                sFrame: 'burst',
-                oPositionBox: null
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oPositionBox: null,
-                aHurtBox: null
-            },
-            {
-                nFrame: 10,
-                sFrame: 'super_first',
-                oPositionBox: null,
-                aHurtBox: null
-            },
-            {
-                nFrame: 10,
-                sFrame: 'super_second',
-                oPositionBox: null,
-                aHurtBox: null
-            },
-            {
-                nFrame: 44,
-                sFrame: 'super_third_SSJ',
-                oPositionBox: null,
-                aHurtBox: null
-            },
-            {
-                nFrame: 10,
-                sFrame: 'super_second',
-                oPositionBox: null,
-                aHurtBox: null
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oPositionBox: null,
-                aHurtBox: null
-            },
-            {
-                nFrame: 8,
-                sFrame: 'burst',
-                oPositionBox: null
-            }
         ]
     },
 
     oCommands: {
         aOffense: [
             {
-                sFilter: 'SSJ',
-                sCod: 'super',
-                sName: 'Chô Kamehameha',
-                sAnimation: 'SSJ_super',
-                sListAnimation: 'super_list',
-                nCost: 12,
-                nDamage: 4,
-                nGatlingLevel: 3,
-                aEntity: {
-                    sType: 'Beam',
-                    sSFX: 'ADO__Beam',
-                    sAnimation: 'circle',
-                    nFrameStart: 43,
-                    bLink: true,
-                    oPosition: {
-                        nX: 0,
-                        nY: 0
-                    }
-                },
-                oStun: {
-                    nFreeze: 46,
-                    nBlock: 36,
-                    nHit: 36,
-                    bLunch: true,
-                    sHitAnimation: 'hit_heavy'
-                },
-                oPushback: {
-                    nLength: 4,
-                    nX: -192
-                },
-                bLast: false,
-                oManipulation: {
-                    nMaxLengthFrame: 15,
-                    aButtons: [
-                        { DN: false },
-                        { DF: false },
-                        { FW: false, C: true }
-                    ]
-                }
-            },
-            {
-                sFilter: 'TRN',
                 sCod: 'super',
                 sName: 'Genki-dama',
-                sAnimation: 'TRN_super',
+                sAnimation: 'super',
                 nCost: 12,
                 nDamage: 4,
                 nGatlingLevel: 3,

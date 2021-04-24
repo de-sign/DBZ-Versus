@@ -1,15 +1,17 @@
 GAME.oData.oCharacter.FRZ = {
-    sEntity: 'FRZ',
     bActive: true,
+    sEntity: 'FRZ',
     aColor: [
         {
-            sColor: 'FRZ',
             sName: 'Furīza',
+            sColor: 'LSW',
+            sColorName: 'Legendary Super Warrior color',
             sEntityColor: 'PRP'
         },
         {
-            sColor: 'MKL',
             sName: 'Metaru Kūra',
+            sColor: 'CTM',
+            sColorName: 'Custom color',
             sEntityColor: 'ORG'
         }
     ],
@@ -997,9 +999,11 @@ GAME.oData.oCharacter.FRZ = {
     oCommands: {
         aOffense: [
             {
-                sFilter: 'FRZ',
                 sCod: 'super',
-                sName: 'Desu Bōru',
+                oName: {
+                    LSW: 'Desu Bōru',
+                    CTM: 'Sūpānova Kūra'
+                },
                 sAnimation: 'super',
                 nCost: 12,
                 nDamage: 4,
@@ -1008,49 +1012,10 @@ GAME.oData.oCharacter.FRZ = {
                     sType: 'Projectile',
                     sSFX: 'ADO__Beam',
                     sAnimation: 'death',
-                    nFrameStart: 33,
-                    oPosition: {
-                        nX: -20,
-                        nY: -192
-                    }
-                },
-                oStun: {
-                    nFreeze: 46,
-                    nBlock: 36,
-                    nHit: 36,
-                    bLunch: true,
-                    sHitAnimation: 'hit_heavy'
-                },
-                oPushback: {
-                    nLength: 4,
-                    nX: -192
-                },
-                bLast: false,
-                oManipulation: {
-                    nMaxLengthFrame: 15,
-                    aButtons: [
-                        { DN: false },
-                        { DF: false },
-                        { FW: false, C: true }
-                    ]
-                }
-            },
-            {
-                sFilter: 'MKL',
-                sCod: 'super',
-                sName: 'Sūpānova Kūra',
-                sAnimation: 'super',
-                nCost: 12,
-                nDamage: 4,
-                nGatlingLevel: 3,
-                aEntity: {
-                    sType: 'Projectile',
-                    sSFX: 'ADO__Beam',
-                    sAnimation: 'nova',
                     nFrameStart: 13,
                     oPosition: {
-                        nX: -8,
-                        nY: -216
+                        nX: -24,
+                        nY: -230
                     }
                 },
                 oStun: {

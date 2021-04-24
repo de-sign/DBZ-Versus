@@ -16,10 +16,8 @@ Object.assign(
         templates: _builds.templates,
         scripts: _builds.scripts,
         styles: _builds.styles,
-        clean: _builds.clean,
-
-        extra: _extra.global
+        clean: _builds.clean
     },
     // Ajout des EXTRA pour chaques persos
-    _extra, { global: null }
+    _extra
 );

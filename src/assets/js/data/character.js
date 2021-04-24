@@ -213,6 +213,13 @@ GAME.oData.oEntity.oCharacter = {
         // Hurt
         guard: [
             {
+                nFrame: 1,
+                sFrame: 'guard_filter',
+                oStatus: {
+                    bGuard: true
+                }
+            },
+            {
                 sFrame: 'guard',
                 oStatus: {
                     bGuard: true
@@ -221,31 +228,41 @@ GAME.oData.oEntity.oCharacter = {
         ],
         reflect: [
             {
-                sFrame: 'blur',
-                nFrame: 2,
-                aHurtBox: null,
+                sFrame: 'blur_invul',
+                nFrame: 2
             },
             {
                 sFrame: 'reflect',
                 nFrame: 10
             },
             {
-                sFrame: 'blur',
-                nFrame: 2,
-                aHurtBox: null,
+                sFrame: 'blur_invul',
+                nFrame: 2
             }
         ],
         hit_light: [
+            {
+                nFrame: 1,
+                sFrame: 'hit_light_filter'
+            },
             {
                 sFrame: 'hit_light'
             }
         ],
         hit_heavy: [
             {
+                nFrame: 1,
+                sFrame: 'hit_heavy_filter'
+            },
+            {
                 sFrame: 'hit_heavy'
             }
         ],
         hit_luncher: [
+            {
+                nFrame: 1,
+                sFrame: 'hit_luncher_filter'
+            },
             {
                 sFrame: 'hit_luncher'
             }
@@ -267,16 +284,14 @@ GAME.oData.oEntity.oCharacter = {
             },
             {
                 nFrame: 2,
-                sFrame: 'blur',
-                aHurtBox: null
+                sFrame: 'blur_invul'
             }
         ],
         // List
         super_list: [
             {
                 nFrame: 2,
-                sFrame: 'blur',
-                aHurtBox: null
+                sFrame: 'blur_invul'
             },
             {
                 nFrame: 30,

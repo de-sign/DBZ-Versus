@@ -36,6 +36,20 @@ Object.assign(
                     sSFX: 'assets/audios/SFX'
                 }
             },
+            aFilter: [
+                {
+                    sSuffixe: 'invul',
+                    aFrames: ['blur', 'hit_luncher', 'recovery'/*, 'super_first', 'super_second', 'super_third'*/],
+                    oData: {
+                        aHurtBox: null
+                    }
+                },
+                {
+                    sSuffixe: 'filter',
+                    aFrames: ['hit_light', 'hit_heavy', 'hit_luncher', 'guard'/*, 'light_first', 'light_second', 'light_third', 'heavy', 'tracker', 'luncher'*/],
+                    oData: {}
+                }
+            ],
             oPositionPoint: {
                 character: {
                     nX: 98,
@@ -249,8 +263,11 @@ Object.assign(
 
 //=include character.js
 //=include _characters/_GKU.js
+//=include _characters/_GKU_SSJ.js
 //=include _characters/_BJT.js
+//=include _characters/_KID_GHN.js
 //=include _characters/_GHN.js
 //=include _characters/_FRZ.js
 //=include _characters/_SRU.js
 //=include _characters/_BUU.js
+//=include _characters/_MJN_BUU.js

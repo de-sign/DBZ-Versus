@@ -104,14 +104,12 @@ Object.assign(
                 sText = 'Ready !';
             } else if(!this.oController){
                 sText = 'Waiting ...';
-            } else if( !this.oCharacter.bActive ){
-                sText = 'Unavailable';
-            }  
+            }
 
             GAME.oOutput.getElement('SPT__Select_Character_' + this.nPlayer)
                 .setSource( oCharColor.oPath.sPreview );
             GAME.oOutput.getElement('TXT__Select_Character_' + this.nPlayer)
-                .setText( oCharColor.sName );
+                .setText( oCharColor.sName + '<i>' + oCharColor.sColorName + '</i>' );
             GAME.oOutput.getElement('TXT__Select_Player_' + this.nPlayer)
                 .setText( sText );
         },

@@ -1,6 +1,6 @@
 GAME.oData.oProjectile.ALL = {
-    sEntity: 'ALL',
     bActive: true,
+    sEntity: 'ALL',
     aColor: [
         {
             sColor: 'BLU',
@@ -128,20 +128,6 @@ GAME.oData.oProjectile.ALL = {
         },
 
         death: {
-            oMove: {
-                nDelay: 10,
-                nX: 16,
-                nY: 4
-            },
-            aFrames: [
-                {
-                    sFrame: 'death_first',
-                    nFrame: 105
-                }
-            ]
-        },
-
-        nova: {
             oMove: {
                 nDelay: 30,
                 nX: 16,

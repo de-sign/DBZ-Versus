@@ -1,9 +1,10 @@
 GAME.oData.oCharacter.BUU = {
     sEntity: 'BUU',
+    sName: 'Mister Buu',
     aColor: [
         {
-            sColor: 'MJN',
-            sName: 'Majin Buu'
+            sColor: 'LSW',
+            sColorName: 'Legendary Super Warrior color'
         }
     ]
 };

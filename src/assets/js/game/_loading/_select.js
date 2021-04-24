@@ -43,11 +43,13 @@ Object.assign(
         },
         createCharacterList: function(){
             for( let sChar in GAME.oData.oCharacter ){
-                const oChar = GAME.oData.oCharacter[sChar],
-                    oDefaultColor = oChar[oChar.sDefaultColor],
-                    oSprite = new GAME.oOutput.OutputSprite( oDefaultColor.oPath.sFace );
-                oSprite.__oData = oChar;
-                GAME.oOutput.getElement('LAY__Select_Character').add( oSprite );
+                const oChar = GAME.oData.oCharacter[sChar];
+                if( oChar.bActive ){
+                    const oDefaultColor = oChar[oChar.sDefaultColor],
+                        oSprite = new GAME.oOutput.OutputSprite( oDefaultColor.oPath.sFace );
+                    oSprite.__oData = oChar;
+                    GAME.oOutput.getElement('LAY__Select_Character').add( oSprite );
+                }
             }
             this.oContext.update();
         },
