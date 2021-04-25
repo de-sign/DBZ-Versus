@@ -1050,7 +1050,7 @@ GAME.oData.oCharacter.BJT = {
     oCommands: {
         aOffense: [
             {
-                sFilter: 'LSW',
+                aFilter: ['LSW'],
                 sCod: 'super',
                 sName: 'Fainaru Furasshu',
                 sAnimation: 'super',
@@ -1091,7 +1091,7 @@ GAME.oData.oCharacter.BJT = {
                 }
             },
             {
-                sFilter: 'SCD',
+                aFilter: ['SCD'],
                 sCod: 'super',
                 sName: 'Gyarikku-hō',
                 sAnimation: 'super',

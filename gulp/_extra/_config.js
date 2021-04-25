@@ -22,7 +22,7 @@ Object.assign(
             */
             {
                 sSuffixe: 'invul',
-                aFrame: ['blur', 'hit_luncher', 'recovery'/*, 'super_first', 'super_second', 'super_third'*/],
+                aFrame: ['blur', 'hit_luncher', 'recovery', 'reflect'/*, 'super_first', 'super_second', 'super_third'*/],
                 sColor: 'rgb(255, 255, 255)',
                 nAlpha: 0.4
             },

@@ -9,7 +9,7 @@ GAME.oData.oCharacter.GKU_SSJ = {
             sEntityColor: 'BLU'
         },
         {
-            sName: 'Gokū Burakku SSR',
+            sName: 'Burakku SSJR',
             sColor: 'CTM',
             sColorName: 'Custom color',
             sEntityColor: 'PRP'

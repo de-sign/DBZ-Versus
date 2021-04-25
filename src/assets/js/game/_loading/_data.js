@@ -107,7 +107,7 @@ Object.assign(
                 oEntityColor.oFrames = {};
                 for( let sFrame in oEntity.oFrames ){
                     const oFrame = oEntity.oFrames[sFrame];
-                    if( !oFrame.sFilter || oFrame.sFilter == oColor.sColor ){
+                    if( !oFrame.aFilter || oFrame.aFilter.indexOf(oColor.sColor) != 1 ){
                         oEntityColor.oFrames[sFrame] = oFrame;
                     }
                 }
@@ -116,7 +116,7 @@ Object.assign(
                 oEntityColor.oAnimations = {};
                 for( let sAnim in oEntity.oAnimations ){
                     const oAnim = oEntity.oAnimations[sAnim];
-                    if( !oAnim.sFilter || oAnim.sFilter == oColor.sColor ){
+                    if( !oAnim.aFilter || oAnim.aFilter.indexOf(oColor.sColor) != -1 ){
                         oEntityColor.oAnimations[sAnim] = oAnim;
                     }
                 }
@@ -127,7 +127,7 @@ Object.assign(
                     for( let sTypeCMD in oEntity.oCommands ){
                         oEntityColor.oCommands[sTypeCMD] = [];
                         oEntity.oCommands[sTypeCMD].forEach( oCommand => {
-                            if( !oCommand.sFilter || oCommand.sFilter == oColor.sColor ){
+                            if( !oCommand.aFilter || oCommand.aFilter.indexOf(oColor.sColor) != 1 ){
                                 if( oCommand.oName ){
                                     oCommand = Object.assign( {}, {
                                         sName: oCommand.oName[ oEntityColor.sColor ]

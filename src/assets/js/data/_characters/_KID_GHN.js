@@ -1133,7 +1133,7 @@ GAME.oData.oCharacter.KID_GHN = {
     oCommands: {
         aOffense: [
             {
-                sFilter: 'LSW',
+                aFilter: ['LSW'],
                 sCod: 'super',
                 sName: 'Oyako Kamehameha',
                 sAnimation: 'super',
@@ -1188,7 +1188,7 @@ GAME.oData.oCharacter.KID_GHN = {
                 }
             },
             {
-                sFilter: 'SCD',
+                aFilter: ['SCD'],
                 sCod: 'super',
                 sName: 'Masenkō',
                 sAnimation: 'super',
