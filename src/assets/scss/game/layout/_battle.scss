@@ -316,10 +316,27 @@
     width: 200px;
     height: 200px;
     transform-origin: 98px 182px;
-    
-    /* WAITING BEAM via ENTITY */
-    .Battle__Entity_Sprite {
-        transform-origin: 100px 100px;
+
+    &.--float {
+        &_up {
+            .Battle__Entity_Sprite {
+                transform: translate(0, calc(-50% - 4px)) !important;
+            }
+            
+            &.--reverse .Battle__Entity_Sprite {
+                transform: scaleX(-1) translate(0, calc(-50% - 4px)) !important;
+            }
+        }
+
+        &_down {
+            .Battle__Entity_Sprite {
+                transform: translate(0, calc(-50% + 4px)) !important;
+            }
+            
+            &.--reverse .Battle__Entity_Sprite {
+                transform: scaleX(-1) translate(0, calc(-50% + 4px)) !important;
+            }
+        }
     }
 }
 

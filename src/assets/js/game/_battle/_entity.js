@@ -199,6 +199,14 @@ Object.assign(
                         }
                     }
                     
+                    // Animation Float en MOVEMENT
+                    this.oLayer.hElement.classList.remove('--float_up', '--float_down');
+                    if( this.oAnimation.isMovement() ){
+                        const nPart = Math.floor((this.oAnimation.nTick % 32) / 8),
+                            aClass = [null, '--float_up', null, '--float_down'];
+                        aClass[nPart] && this.oLayer.hElement.classList.add( aClass[nPart] );
+                    }
+
                     // Type
                     if( !this.oLayer.hElement.classList.contains('--' + this.oAnimation.sType) ){
                         DOMTokenList.prototype.remove.apply( this.oLayer.hElement.classList, GameAnimation.aAllType.map( sType => '--' + sType ) );

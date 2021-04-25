@@ -36,12 +36,16 @@ Object.assign(
         },
         aAllType: ['action', 'movement','guard', 'hit', 'down', 'recovery'],
         aTypeHurt: ['guard', 'hit'],
+        aTypeMove: ['forward', 'backward'],
 
         getType: function(sName){
             return GameAnimation.oType[sName] || 'action';
         },
         isTypeHurt: function(sName){
             return this.aTypeHurt.indexOf( this.getType(sName) ) != -1;
+        },
+        isTypeMove: function(sName){
+            return this.aTypeMove.indexOf(sName) != -1;
         },
 
         prototype: Object.assign(
@@ -91,6 +95,9 @@ Object.assign(
                 },
                 isHurt: function(){
                     return GameAnimation.isTypeHurt(this.sName);
+                },
+                isMovement: function(){
+                    return GameAnimation.isTypeMove(this.sName);
                 }
             }
         )
