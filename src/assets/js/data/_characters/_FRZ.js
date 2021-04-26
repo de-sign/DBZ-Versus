@@ -4,13 +4,13 @@ GAME.oData.oCharacter.FRZ = {
     aColor: [
         {
             sName: 'Furīza',
-            sColor: 'LSW',
+            sColor: 'LSW_FRZ',
             sColorName: 'Legendary Super Warrior color',
             sEntityColor: 'PRP'
         },
         {
             sName: 'Metaru Kūra',
-            sColor: 'CTM',
+            sColor: 'CTM_MKR',
             sColorName: 'Custom color',
             sEntityColor: 'ORG'
         }
@@ -1001,8 +1001,8 @@ GAME.oData.oCharacter.FRZ = {
             {
                 sCod: 'super',
                 oName: {
-                    LSW: 'Desu Bōru',
-                    CTM: 'Sūpānova Kūra'
+                    LSW_FRZ: 'Desu Bōru',
+                    CTM_MTL_KRA: 'Sūpānova Kūra'
                 },
                 sAnimation: 'super',
                 nCost: 12,

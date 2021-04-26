@@ -5,12 +5,12 @@ GAME.oData.oCharacter.GHN = {
     aColor: [
         {
             sName: 'Gohan SNS',
-            sColor: 'LSW',
+            sColor: 'LSW_SNS',
             sColorName: 'Legendary Super Warrior color'
         },
         {
             sName: 'Gohan SSJ',
-            sColor: 'SCD',
+            sColor: 'LSW_SSJ',
             sColorName: 'Legendary Super Warrior color'
         }
     ],

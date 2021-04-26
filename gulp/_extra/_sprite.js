@@ -30,7 +30,7 @@ module.exports = function(config){
                 oChar.aColor.forEach( sColor => {
                     aPromise.push(
                         new Promise( (fResolveColor, fRejectColor) => {
-                            const sPath = config.paths.src.images + '/' + extra.oPath.sFrames + '/' + sChar + '/frames/' + sColor,
+                            const sPath = config.paths.src.images + '/' + extra.oPath.sFrames + '/' + sChar + '/' + sColor,
                                 aPromiseColor = [];
         
                             canvas.loadImage(sPath + '/__frameset.png').then( oImage => {

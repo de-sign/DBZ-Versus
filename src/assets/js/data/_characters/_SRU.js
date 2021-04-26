@@ -5,12 +5,12 @@ GAME.oData.oCharacter.SRU = {
     aColor: [
         {
             sName: 'Perfect Seru',
-            sColor: 'LSW',
+            sColor: 'LSW_PFC',
             sColorName: 'Legendary Super Warrior color'
         },
         {
             sName: 'Seru',
-            sColor: 'SCD',
+            sColor: 'LSW_SRU',
             sColorName: 'Legendary Super Warrior color'
         }
     ],

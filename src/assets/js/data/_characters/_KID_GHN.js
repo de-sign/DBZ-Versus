@@ -4,13 +4,13 @@ GAME.oData.oCharacter.KID_GHN = {
     aColor: [
         {
             sName: 'Gohan SSJT',
-            sColor: 'LSW',
+            sColor: 'LSW_SSJT',
             sColorName: 'Legendary Super Warrior color',
             sEntityColor: 'BLU'
         },
         {
             sName: 'Gohan',
-            sColor: 'SCD',
+            sColor: 'LSW_TRN',
             sColorName: 'Legendary Super Warrior color',
             sEntityColor: 'ORG',
         }
@@ -1133,7 +1133,7 @@ GAME.oData.oCharacter.KID_GHN = {
     oCommands: {
         aOffense: [
             {
-                aFilter: ['LSW'],
+                aFilter: ['LSW_SSJT'],
                 sCod: 'super',
                 sName: 'Oyako Kamehameha',
                 sAnimation: 'super',
@@ -1156,7 +1156,7 @@ GAME.oData.oCharacter.KID_GHN = {
                     {
                         sType: 'Character',
                         sEntity: 'GKU_SSJ',
-                        sColor: 'LSW',
+                        sColor: 'LSW_SSJT',
                         sAnimation: 'GHN_SSJT_super',
                         nFrameStart: 13,
                         bLink: true,

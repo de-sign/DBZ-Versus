@@ -4,13 +4,19 @@ GAME.oData.oCharacter.GKU = {
     aColor: [
         {
             sName: 'Gokū',
-            sColor: 'LSW',
+            sColor: 'CTM_TRN',
+            sColorName: 'Custom color',
+            sEntityColor: 'BLU',
+        },
+        {
+            sName: 'Gokū',
+            sColor: 'LSW_TRN',
             sColorName: 'Legendary Super Warrior color',
             sEntityColor: 'BLU',
         },
         {
             sName: 'Ginyū',
-            sColor: 'SCD',
+            sColor: 'LSW_GNU',
             sColorName: 'Legendary Super Warrior color',
             sEntityColor: 'PRP',
         }

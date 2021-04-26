@@ -4,13 +4,13 @@ GAME.oData.oCharacter.BJT = {
     aColor: [
         {
             sName: 'Bejīta SSJ',
-            sColor: 'LSW',
+            sColor: 'LSW_SSJ',
             sColorName: 'Legendary Super Warrior color',
             sEntityColor: 'ORG'
         },
         {
             sName: 'Bejīta',
-            sColor: 'SCD',
+            sColor: 'LSW_BAD',
             sColorName: 'Legendary Super Warrior color',
             sEntityColor: 'PRP'
         }
@@ -1050,7 +1050,7 @@ GAME.oData.oCharacter.BJT = {
     oCommands: {
         aOffense: [
             {
-                aFilter: ['LSW'],
+                aFilter: ['LSW_SSJ'],
                 sCod: 'super',
                 sName: 'Fainaru Furasshu',
                 sAnimation: 'super',
@@ -1091,7 +1091,7 @@ GAME.oData.oCharacter.BJT = {
                 }
             },
             {
-                aFilter: ['SCD'],
+                aFilter: ['LSW_BAD'],
                 sCod: 'super',
                 sName: 'Gyarikku-hō',
                 sAnimation: 'super',
