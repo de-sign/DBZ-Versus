@@ -9,9 +9,9 @@ Object.assign(
             oPath: {
                 oCharacter: {
                     sRoot: 'assets/images/characters',
-                    sFace: 'assets/images/characters/face',
-                    sFrames: 'assets/images/characters/frames',
-                    sPreview: 'assets/images/characters/preview'
+                    sFrames: 'assets/images/characters',
+                    sFace: 'face.png',
+                    sPreview: 'stand.png'
                 },
                 oProjectile: {
                     sRoot: 'assets/images/projectiles',

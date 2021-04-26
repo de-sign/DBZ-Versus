@@ -1,7 +1,7 @@
 Object.assign(
     module.exports,  {
         oPath: {
-            sFrames: 'characters/frames',
+            sFrames: 'characters',
             sData: 'data/_extra'
         },
 

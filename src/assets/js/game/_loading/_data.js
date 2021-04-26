@@ -86,7 +86,7 @@ Object.assign(
                         sEntityColor: oEntity.sEntityColor,
                         sName: oEntity.sName,
                         oPath: {
-                            sFrames: GAME.oSettings.oPath[sType].sFrames + '/' + oEntity.sEntity + '/' + oColor.sColor
+                            sFrames: GAME.oSettings.oPath[sType].sRoot + '/' + oEntity.sEntity + '/' + oColor.sColor
                         }
                     },
                     oColor
@@ -97,10 +97,10 @@ Object.assign(
 
                 // PATH
                 if( GAME.oSettings.oPath[sType].sFace ){
-                    oEntityColor.oPath.sFace = GAME.oSettings.oPath[sType].sFace + '/' + oEntity.sEntity + '/' + oColor.sColor + '.png'
+                    oEntityColor.oPath.sFace = GAME.oSettings.oPath[sType].sRoot + '/' + oEntity.sEntity + '/' + oColor.sColor + '/' + GAME.oSettings.oPath[sType].sFace
                 }
                 if( GAME.oSettings.oPath[sType].sPreview ){
-                    oEntityColor.oPath.sPreview = GAME.oSettings.oPath[sType].sPreview + '/' + oEntity.sEntity + '/' + oColor.sColor + '.png'
+                    oEntityColor.oPath.sPreview = GAME.oSettings.oPath[sType].sRoot + '/' + oEntity.sEntity + '/' + oColor.sColor + '/' + GAME.oSettings.oPath[sType].sPreview
                 }
                 
                 // FRAMES
