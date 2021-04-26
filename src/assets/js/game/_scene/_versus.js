@@ -7,11 +7,10 @@ Object.assign(
         prototype: Object.assign(
             Object.create(BattleScene.prototype), {
                 constructor: VersusScene,
-                init: function(oLastData){
+                init: function(){
                     // __SUPER
                     BattleScene.prototype.init.call(
                         this,
-                        oLastData,
                         {
                             sContextClass: '--versus',
                             aController: []
@@ -25,7 +24,7 @@ Object.assign(
                             bFreeze: true,
                             fCallback: () => {
                                 this.aPlayer.forEach( (oPlayer, nIndex) => {
-                                    oPlayer.oInputBuffer.init( oLastData.aController[nIndex] );
+                                    oPlayer.oInputBuffer.init( GAME.oScene.oTransverseData.MNU__aController[nIndex] );
                                 } );
                             }
                         },

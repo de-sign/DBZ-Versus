@@ -134,10 +134,6 @@ Object.assign(
 
 /* Side */
 function SideScene(){
-    this.oData = null;
-	this.oContext = null;
-    this.sType = null;
-
     this.aController = [];
     this.aSideLock = [];
 
@@ -167,15 +163,13 @@ Object.assign(
         prototype: Object.assign(
             Object.create(Scene.prototype), {
                 constructor: SideScene,
-				init: function( oLastData ){
-                    this.oData = oLastData;
-					this.oContext = GAME.oOutput.oViewport.useContext('CTX__Side');
+				init: function(){
+                    Scene.prototype.init.call(this, 'CTX__Side');
 
                     this.nFrameCreated = GAME.oTimer.nFrames;
 
-                    const aName = [ 'Versus', 'Training' ],
-                        aController = oLastData.aController ?
-                            oLastData.aController.reduce( (aAccu, oCtrl) => {
+                    const aController = GAME.oScene.oTransverseData.MNU__aController ?
+                            GAME.oScene.oTransverseData.MNU__aController.reduce( (aAccu, oCtrl) => {
                                 return [...aAccu, oCtrl && oCtrl.sId]
                             }, [] ) :
                             [];
@@ -185,7 +179,7 @@ Object.assign(
                         this.aController.push( new SideController(sController, nIndex == -1 ? 0 : nIndex + 1) );
                     }
 
-                    GAME.oOutput.getElement('TXT__Side_Name').setText( this.sType = aName[oLastData.nLastIndexMenu] );
+                    GAME.oOutput.getElement('TXT__Side_Name').setText( GAME.oScene.oTransverseData.BTL__sType );
                     GameHelper.set( Object.values(ControllerManager.oController), SideScene.aHelper );
 				},
 				update: function(){
@@ -217,12 +211,9 @@ Object.assign(
                     aController.shift();
                     
                     GameHelper.destroy();
-                    return Object.assign(
-                        this.oData,
-                        {
-                            aController: aController
-                        }
-                    );
+                    return {
+                        MNU__aController: aController
+                    };
                 },
 
                 addNewController: function(){
@@ -272,7 +263,7 @@ Object.assign(
                         oCustomer.nSide && nSide++;
                     } );
 
-                    if( this.sType == 'Training' && nSide != nNeedReady ){
+                    if( GAME.oScene.oTransverseData.BTL__sType == 'Training' && nSide != nNeedReady ){
                         let nChange = 0;
                         for( let sController in GAME.oInput.oController ){
                             const oController = GAME.oInput.getController(sController);

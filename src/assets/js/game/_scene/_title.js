@@ -11,8 +11,8 @@ Object.assign(
         prototype: Object.assign(
             Object.create(Scene.prototype), {
                 constructor: TitleScene,
-				init: function( oLastData ){
-					this.oContext = GAME.oOutput.oViewport.useContext('CTX__Title');
+				init: function(){
+                    Scene.prototype.init.call(this, 'CTX__Title');
 
                     this.nController = GAME.oInput.nController;
                     this.nFrameCreated = GAME.oTimer.nFrames;
@@ -36,8 +36,7 @@ Object.assign(
                         GAME.oOutput.getChannel('CHN__SFX').play('ADO__Validate');
                         GAME.oScene.change( new MenuScene() );
                     }
-				},
-                destroy: function(){}
+				}
             }
         )
     }

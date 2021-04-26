@@ -9,10 +9,10 @@ Object.assign(
         prototype: Object.assign(
             Object.create(Scene.prototype), {
                 constructor: MenuScene,
-				init: function( oLastData ){
-					this.oContext = GAME.oOutput.oViewport.useContext('CTX__Menu');
+				init: function(){
+                    Scene.prototype.init.call(this, 'CTX__Menu');
 
-                    this.oMenu = new GameMenu('LAY__Menu', oLastData ? oLastData.nLastIndexMenu : 0);
+                    this.oMenu = new GameMenu('LAY__Menu', GAME.oScene.oTransverseData.MNU__nIndex || 0);
                     GameHelper.set(
                         Object.values(ControllerManager.oController),
                         [ {
@@ -64,8 +64,12 @@ Object.assign(
 				},
                 destroy: function(){
                     GameHelper.destroy();
+                    const aName = [ 'Versus', 'Training' ],
+                        nIndex = this.oMenu.destroy()[0];
+
                     return {
-                        nLastIndexMenu: this.oMenu.destroy()[0]
+                        MNU__nIndex: nIndex,
+                        BTL__sType: aName[nIndex]
                     };
                 },
 

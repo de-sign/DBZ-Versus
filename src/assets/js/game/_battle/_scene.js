@@ -16,18 +16,18 @@ Object.assign(
         prototype: Object.assign(
             Object.create(Scene.prototype), {
                 constructor: BattleScene,
-				init: function( oLastData, oOptions ){
+				init: function( oOptions ){
                     /*
-                        oLastData: sStageSelected, sTypeBattle, aController, aCharacterSelected, aColorSelected
+                        oLastData: BTL__sStage, sTypeBattle, aController, BTL__aCharacterSelected, BTL__aColor
                         oOptions: aController, sContextClass
                     */
-					this.oContext = GAME.oOutput.oViewport.useContext('CTX__Battle');
+                    Scene.prototype.init.call(this, 'CTX__Battle');
                     this.oContext.hElement.classList.add( oOptions.sContextClass );
 
 					this.oArea = GAME.oOutput.getElement('LAY__Battle_Area');
                     this.oArea.enableAutoPositioning();
-                    this.setBackground( oLastData.sStageSelected );
-                    GAME.oOutput.getChannel('CHN__BGM').play('ADO__' + oLastData.sStageSelected, false, true);
+                    this.setBackground( GAME.oScene.oTransverseData.BTL__sStage );
+                    GAME.oOutput.getChannel('CHN__BGM').play('ADO__' + GAME.oScene.oTransverseData.BTL__sStage, false, true);
 
                     for( let nIndex = 0; nIndex < GAME.oSettings.nPlayer; nIndex++ ){
                         
@@ -35,8 +35,8 @@ Object.assign(
                         const nPlayer = nIndex + 1,
                             oPlayer = new BattlePlayer(
                                 nPlayer,
-                                oLastData.aCharacterSelected[nIndex],
-                                oLastData.aColorSelected[nIndex],
+                                GAME.oScene.oTransverseData.BTL__aCharacter[nIndex],
+                                GAME.oScene.oTransverseData.BTL__aColor[nIndex],
                                 GAME.oSettings.oSide.aSide[ GAME.oSettings.oSide.nDefault ].fPosition(this.oArea, nIndex),
                                 !!nIndex,
                                 oOptions.aController[nIndex]
@@ -65,8 +65,7 @@ Object.assign(
                     BattleEntity.get().forEach( oEntity => oEntity.destroy() );
                 },
 
-                endBattle: function(aPlayerWin){
-                },
+                endBattle: function(aPlayerWin){},
                 setBackground: function(sCod){
                     this.oContext.setStyle( {
                         backgroundColor: GAME.oData.oStage[sCod].sColor,

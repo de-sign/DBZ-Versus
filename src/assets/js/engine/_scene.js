@@ -2,10 +2,10 @@
 const SceneManager = {
     oCurrent: null,
     oLast: null,
-    oLastData: null,
+    oTransverseData: {},
 
     init: function() {
-        this.oCurrent.init(this.oLastData);
+        this.oCurrent.init();
     },
     update: function() {
         this.oCurrent.update();
@@ -13,7 +13,10 @@ const SceneManager = {
     destroy: function() {
         this.oLast = this.oCurrent;
         this.oCurrent = null;
-        this.oLastData = this.oLast.destroy();
+        Object.assign(
+            this.oTransverseData,
+            this.oLast.destroy() || {}
+        );
     },
 
     set: function(oScn) {
@@ -26,11 +29,16 @@ const SceneManager = {
     }
 };
 
-function Scene() {}
+function Scene() {
+    this.oContext = null;
+    this.oTransverseData = null;
+}
 Object.assign(
     Scene, {
         prototype: {
-            init: function() {},
+            init: function(sUseContext) {
+                sUseContext && ( this.oContext = OutputManager.oViewport.useContext(sUseContext) );
+            },
             update: function() {},
             destroy: function() {}
         }

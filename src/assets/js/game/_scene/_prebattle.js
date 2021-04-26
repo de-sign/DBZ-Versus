@@ -9,13 +9,12 @@ Object.assign(
         prototype: Object.assign(
             Object.create(LoadingScene.prototype), {
                 constructor: PreBattleScene,
-				init: function( oLastData ){
-                    // oLastData: sStageSelected, sTypeBattle, aCharacterSelected, aColorSelected
+				init: function(){
+                    // oLastData: BTL__sStage, BTL__sType, BTL__aCharacter, BTL__aColor
                     LoadingScene.prototype.init.call(
                         this,
-                        oLastData,
                         {
-                            sRedirection: oLastData.sTypeBattle,
+                            sRedirection: GAME.oScene.oTransverseData.BTL__sType,
                             aStep: [
                                 'stepImage_Stage',
                                 'stepImage_Character',
@@ -27,7 +26,7 @@ Object.assign(
                         }
                     );
 
-                    this.addStepText('Loading ' + this.oData.sTypeBattle);
+                    this.addStepText('Loading ' + GAME.oScene.oTransverseData.BTL__sType);
 				},
                 /*
 				update: function(){},
@@ -37,10 +36,10 @@ Object.assign(
                 // Image
                 stepImage_Stage: function(){
                     this.addStepText( 'Loading background stage' );
-                    this.oAssetManager.add('image', GAME.oSettings.oPath.oStage.sBackground + '/' + this.oData.sStageSelected + '.png' );
+                    this.oAssetManager.add('image', GAME.oSettings.oPath.oStage.sBackground + '/' + GAME.oScene.oTransverseData.BTL__sStage + '.png' );
                 },
                 stepImage_Character: function(){
-                    const oChar = GAME.oData.oCharacter[ this.oData.aCharacterSelected[this.nCharacter] ][ this.oData.aColorSelected[this.nCharacter] ];
+                    const oChar = GAME.oData.oCharacter[ GAME.oScene.oTransverseData.BTL__aCharacter[this.nCharacter] ][ GAME.oScene.oTransverseData.BTL__aColor[this.nCharacter] ];
                     this.addStepText( 'Loading frames ' + oChar.sName );
                     for( let sFrame in oChar.oFrames ){
                         this.oAssetManager.add('image', oChar.oPath.sFrames + '/' + oChar.oFrames[sFrame].sPath);
@@ -49,8 +48,8 @@ Object.assign(
                 },
                 stepImage_Entity: function(){
                     this.addStepText( 'Loading frames Entity' );
-                    this.oData.aCharacterSelected.forEach( (sChar, nIndex) => {
-                        const oChar = GAME.oData.oCharacter[sChar][ this.oData.aColorSelected[nIndex] ];
+                    GAME.oScene.oTransverseData.BTL__aCharacter.forEach( (sChar, nIndex) => {
+                        const oChar = GAME.oData.oCharacter[sChar][ GAME.oScene.oTransverseData.BTL__aColor[nIndex] ];
 
                         oChar.oCommands.aOffense.forEach( oCommand => {
                             if( oCommand.oEntity ){
@@ -71,7 +70,7 @@ Object.assign(
                             aAudio = [...GAME.oSettings.oAudio.oPreBattle[sChannel]];
                             
                         if( sChannel == 'BGM' ){
-                            aAudio.push( this.oData.sStageSelected );
+                            aAudio.push( GAME.oScene.oTransverseData.BTL__sStage );
                         }
 
                         aAudio.forEach( sAudio => {

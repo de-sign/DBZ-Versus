@@ -38,8 +38,8 @@ __Side__
 <br/>*N/A*
 
 __Select__
-* Dupliquer les CHARACTERs
 * Faire des SWAP COLOR
+* Revoir le nommage des COLOR
 
 __Stage__
 * Choix du STAGE
@@ -47,7 +47,6 @@ __Stage__
 
 __Battle__
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
-* Effet visuel pour différencer HIT et GUARD ?
 * Animation de début et fin de match 
 * Méchaniques de jeu
     * Burst ?

@@ -129,21 +129,20 @@ Object.assign(
         prototype: Object.assign(
             Object.create(Scene.prototype), {
                 constructor: SettingScene,
-				init: function( oLastData ){
-					this.oContext = GAME.oOutput.oViewport.useContext('CTX__Setting');
-                    this.oData = oLastData;
+				init: function(){
+                    Scene.prototype.init.call(this, 'CTX__Setting');
 
-                    this.oMenu = new SettingMenu(oLastData ? oLastData.nLastIndexSetting : 0);
+                    this.oMenu = new SettingMenu(GAME.oScene.oTransverseData.STG__nIndex || 0);
 				},
 				update: function(){
                     this.addNewController();
                     this.oMenu.update();
 				},
                 destroy: function(){
-                    return Object.assign(this.oData, {
-                        nLastIndexSetting: this.oMenu.destroy(),
-                        oController: this.oController
-                    } );
+                    return {
+                        STG__nIndex: this.oMenu.destroy(),
+                        STG__oController: this.oController
+                    };
                 },
 
                 addNewController: function(){

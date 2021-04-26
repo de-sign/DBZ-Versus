@@ -172,8 +172,8 @@ Object.assign(
         prototype: Object.assign(
             Object.create(Scene.prototype), {
                 constructor: InputScene,
-				init: function(oLastData){
-					this.oContext = GAME.oOutput.oViewport.useContext('CTX__Input');
+				init: function(){
+                    Scene.prototype.init.call(this, 'CTX__Input');
 
                     // Gestion Buttons
                     this.oLastPress.fFunction = (oEvent) => {
@@ -185,7 +185,7 @@ Object.assign(
                     // Controller init
                     for( let sController in ControllerManager.oController ){
                         const oController = GAME.oInput.getController(sController);
-                        this.aController.push( new InputController(oController, this.oLastPress, oLastData.oController.sId != sController) );
+                        this.aController.push( new InputController(oController, this.oLastPress, GAME.oScene.oTransverseData.STG__oController.sId != sController) );
                     }
                     
                     GameHelper.set( Object.values(ControllerManager.oController), InputScene.aHelper );
@@ -205,7 +205,6 @@ Object.assign(
                     this.aController.forEach( oController => oController.destroy() );
                     window.removeEventListener('keydown', this.oLastPress.fFunction, false);
                     GameHelper.destroy();
-                    return GAME.oScene.oLastData;
                 },
 
                 addNewController: function(){

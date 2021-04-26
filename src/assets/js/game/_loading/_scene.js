@@ -78,8 +78,8 @@ Object.assign(
         prototype: Object.assign(
             Object.create(Scene.prototype), {
                 constructor: LoadingScene,
-				init: function( oLastData, oOptions ){
-					this.oContext = GAME.oOutput.oViewport.useContext('CTX__Loading');
+				init: function( oOptions ){
+                    Scene.prototype.init.call(this, 'CTX__Loading');
 					this.oLayer = GAME.oOutput.getElement('LAY__LoadingStep');
                     this.oLayer.clean();
 
@@ -89,8 +89,6 @@ Object.assign(
                     this.oAssetManager = new LoadingAssetsManager( () => {
                         this.bStepEnd = true;
                     } );
-
-                    this.oData = oLastData;
 				},
 				update: function(){
                     if( !this.sCurrent ){
@@ -109,9 +107,6 @@ Object.assign(
 
                     this.sCurrent && this.oAssetManager.update();
 				},
-                destroy: function(){
-                    return this.oData;
-                },
 
                 addStepText: function(sText){
                     if( LoadingScene.nStepPrint == this.oLayer.aChildElement.length ){

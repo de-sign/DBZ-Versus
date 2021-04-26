@@ -4,15 +4,21 @@ GAME.oData.oCharacter.GKU_SSJ = {
     aColor: [
         {
             sName: 'Gokū SSJ',
-            sColor: 'LSW',
-            sColorName: 'Legendary Super Warrior color',
+            sColor: 'CTM_SSJ',
+            sColorName: 'Custom color',
             sEntityColor: 'BLU'
         },
         {
             sName: 'Burakku SSJR',
-            sColor: 'CTM',
+            sColor: 'CTM_BRK',
             sColorName: 'Custom color',
             sEntityColor: 'PRP'
+        },
+        {
+            sName: 'Gokū SSJ',
+            sColor: 'LSW_SSJ',
+            sColorName: 'Legendary Super Warrior color',
+            sEntityColor: 'BLU'
         }
     ],
    

@@ -166,10 +166,6 @@ Object.assign(
 
 /* Select */
 function SelectScene(){
-    this.oContext = null;
-    this.sType = null;
-    this.oData = null;
-    
     this.oMenu = null;
     this.aPlayer = [];
     this.aColorLock = [];
@@ -210,12 +206,10 @@ Object.assign(
         prototype: Object.assign(
             Object.create(Scene.prototype), {
                 constructor: SelectScene,
-				init: function( oLastData ){
-                    this.oData = oLastData;
-					this.oContext = GAME.oOutput.oViewport.useContext('CTX__Select');
+				init: function(){
+                    Scene.prototype.init.call(this, 'CTX__Select');
 
-                    const aName = [ 'Versus', 'Training' ];
-                    GAME.oOutput.getElement('TXT__Select_Name').setText( this.sType = aName[oLastData.nLastIndexMenu] );
+                    GAME.oOutput.getElement('TXT__Select_Name').setText( GAME.oScene.oTransverseData.BTL__sType );
 
                     this.nFrameCreated = GAME.oTimer.nFrames;
 
@@ -235,14 +229,14 @@ Object.assign(
                         let nPlayer = nIndex + 1;
                         this.aPlayer.push( new SelectPlayer(
                             nPlayer,
-                            oLastData.aController[nIndex],
+                            GAME.oScene.oTransverseData.MNU__aController[nIndex],
                             this.oMenu
                         ) );
                     }
 
                     // Helper
                     const aController = [];
-                    oLastData.aController.forEach( oController => {
+                    GAME.oScene.oTransverseData.MNU__aController.forEach( oController => {
                         oController && aController.push(oController);
                     } );
                     GameHelper.set( aController, SelectScene.aHelper );
@@ -287,13 +281,11 @@ Object.assign(
                         aColorSelected.push( oPlayer.oCharacter.aColor[oPlayer.nColor].sColor );
                     } );
 
-                    return Object.assign(GAME.oScene.oLastData, {
-                        sStageSelected: this.oMenu.oStage.getSelected().__oData.sCod,
-                        sTypeBattle: this.sType,
-                        aController: this.oData.aController,
-                        aCharacterSelected,
-                        aColorSelected
-                    } );
+                    return {
+                        BTL__sStage: this.oMenu.oStage.getSelected().__oData.sCod,
+                        BTL__aCharacter: aCharacterSelected,
+                        BTL__aColor: aColorSelected
+                    };
                 },
 
                 updateStatus: function(){
@@ -334,7 +326,7 @@ Object.assign(
                         oActive: null,
                         oDisable: null
                     };
-                    this.oData.aController.forEach( (oController, nIndex) => {
+                    GAME.oScene.oTransverseData.MNU__aController.forEach( (oController, nIndex) => {
                         oPlayer[ oController ? 'oActive' : 'oDisable'] = {
                             oPlayer: this.aPlayer[nIndex],
                             oOriginalController: oController,
@@ -345,7 +337,7 @@ Object.assign(
                 },
                 allPlayerActive: function(){
                     let bAllActive = true;
-                    this.oData.aController.forEach( oController => {
+                    GAME.oScene.oTransverseData.MNU__aController.forEach( oController => {
                         !oController && ( bAllActive = false );
                     } );
                     return bAllActive;
@@ -356,9 +348,9 @@ Object.assign(
                         for( let sController in ControllerManager.oController ){
                             const oController = GAME.oInput.getController(sController);
                             if( oPlayerByState.oActive.oOriginalController.sId != oController.sId && oController.nFrameChange > this.nFrameCreated ){
-                                this.oData.aController[ this.oData.aController.indexOf(null) ] = oController;
+                                GAME.oScene.oTransverseData.MNU__aController[ GAME.oScene.oTransverseData.MNU__aController.indexOf(null) ] = oController;
                                 this.aPlayer.forEach( (oPlayer, nIndex) => {
-                                    oPlayer.oController = this.oData.aController[nIndex];
+                                    oPlayer.oController = GAME.oScene.oTransverseData.MNU__aController[nIndex];
                                     GameHelper.aController.push(oPlayer.oController);
                                 } );
                                 break;

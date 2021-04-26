@@ -7,10 +7,9 @@ Object.assign(
         prototype: Object.assign(
             Object.create(LoadingScene.prototype), {
                 constructor: InitializeScene,
-				init: function(oLastData){
+				init: function(){
                     LoadingScene.prototype.init.call(
                         this,
-                        oLastData,
                         {
                             sRedirection: 'Title',
                             aStep: [

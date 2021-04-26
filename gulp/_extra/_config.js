@@ -73,7 +73,7 @@ Object.assign(
 
             GKU_SSJ: {
                 sChar: 'GKU_SSJ',
-                aColor: ['LSW', 'CTM'],
+                aColor: ['CTM_SSJ', 'CTM_BRK', 'LSW_SSJ'],
                 aFrames: [
                     ['stand', 'blur', 'backward', 'forward'],
                     ['jump', 'fall', null, 'guard', 'reflect', 'burst'],
