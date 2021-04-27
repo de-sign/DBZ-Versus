@@ -19,8 +19,8 @@
         margin: 90px 0;
         
         & > * {
-            flex: 1 1 300px;
-            max-width: 300px;
+            flex: 1 1 450px;
+            max-width: 450px;
             text-align: left;
             order: 0;
         }
@@ -59,60 +59,38 @@
         }
     }
 
-    /* Stage */
-    .Select__Stages {
-        order: 1;
-        height: 275px;
-
-        .Menu__Layer {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            
-            & > * {
-                margin: 0 auto;
-                transform: scale(0.75) !important;
-                opacity: 0.5;
-
-                &.Menu__cursor_0 {
-                    transform: scale(1) !important;
-                    opacity: 1;
-                    position: relative;
-                    z-index: 100;
-                    box-shadow: none !important;
-                    order: 1;
-                    margin: -50px auto;
-                }
-                
-                &.Menu__cursor_prev {
-                    order: 0 !important;
-                }
-                
-                &.Menu__cursor_next {
-                    order: 2 !important;
-                }
-                
-                &.Menu__cursor_hide {
-                    display: none;
-                }
-            }
-        }
-            
-        .Select__Stage_Name {
-            font-size: 1.5em;
-            margin: 0;
-            color: DarkGray;
-            text-align: center;
-        }
-    }
-
     /* Character */
     .Select__Characters {
         display: flex;
         justify-content: center;
 
-        img {
+        & > * {
             margin: 5px;
+            position: relative;
+        }
+
+        .Menu__cursor_0::before,
+        .Menu__cursor_1::after {
+            display: block;
+            padding: 5px;
+
+            background-color: #333;
+            color: #FFF;
+            position: absolute;
+        }
+
+        .Menu__cursor_0::before {
+            content: 'P1';
+            box-shadow: 1px 1px 0 0 #FFF;
+            top: -1px;
+            left: -1px;
+        }
+
+        .Menu__cursor_1::after {
+            content: 'P2';
+            box-shadow: -1px -1px 0 0 #FFF;
+            bottom: -1px;
+            right: -1px;
         }
     }
 }

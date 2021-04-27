@@ -6,6 +6,7 @@ Object.assign(
     InitializeData.prototype, {
 
         init: function(){
+            // Entity
             this.oData = GAME.oData.oEntity;
             for( let sType in this.oData ){
                 for( let sCod in GAME.oData[sType] ){
@@ -20,6 +21,10 @@ Object.assign(
                     }
                     this.createColor(sType, oEntity);
                 }
+            }
+            // Stage
+            for( let sCod in GAME.oData.oStage ){
+                this.createStage(GAME.oData.oStage[sCod]);
             }
         },
 
@@ -228,6 +233,14 @@ Object.assign(
                 Object.assign(oCommands, this.oData.oCharacter.oCommands);
             }
             oChar.oCommands = oCommands;
+        },
+
+        // STAGE
+        createStage: function(oStage){
+            oStage.oPath = {
+                sPreview: GAME.oSettings.oPath.oStage.sRoot + '/' + oStage.sCod + '/' + GAME.oSettings.oPath.oStage.sPreview,
+                sBackground: GAME.oSettings.oPath.oStage.sRoot + '/' + oStage.sCod + '/' + GAME.oSettings.oPath.oStage.sBackground
+            };
         }
     }
 );

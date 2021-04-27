@@ -19,6 +19,7 @@ Object.assign(
                     
                                 'stepContext_Side',
                                 'stepContext_Select',
+                                'stepContext_Stage',
                                 'stepContext_Battle',
                                 'stepContext_Setting',
                                 'stepContext_Input',
@@ -55,7 +56,7 @@ Object.assign(
                 stepImage_Stage: function(){
                     this.addStepText( 'Loading preview stages' );
                     for( let sStage in GAME.oData.oStage ){
-                        this.oAssetManager.add('image', GAME.oSettings.oPath.oStage.sPreview + '/' + sStage + '.png' );
+                        this.oAssetManager.add('image', GAME.oData.oStage[sStage].oPath.sPreview );
                     }
                 },
                 stepImage_Face: function(){

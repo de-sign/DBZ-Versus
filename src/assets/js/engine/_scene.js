@@ -31,6 +31,7 @@ const SceneManager = {
 
 function Scene() {
     this.oContext = null;
+    this.nFrameCreated = 0;
     this.oTransverseData = null;
 }
 Object.assign(
@@ -38,6 +39,7 @@ Object.assign(
         prototype: {
             init: function(sUseContext) {
                 sUseContext && ( this.oContext = OutputManager.oViewport.useContext(sUseContext) );
+                this.nFrameCreated = GAME.oTimer.nFrames;
             },
             update: function() {},
             destroy: function() {}

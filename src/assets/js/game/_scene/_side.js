@@ -16,9 +16,9 @@ function SideController(sController, nSide){
 Object.assign(
     SideController.prototype, {
         constructor: SideController,
-        init: function(sController, nSide) {
-            this.oController = GAME.oInput.getController(sController);
-            this.oLayer = GAME.oOutput.getElement('LAY__Side_Controller_' + sController);
+        init: function(oController, nSide) {
+            this.oController = oController;
+            this.oLayer = GAME.oOutput.getElement('LAY__Side_Controller_' + oController.sId);
             this.nSide = nSide || 0;
             this.changeSide('same');
         },
@@ -47,6 +47,12 @@ Object.assign(
                             this.bReturn = true;
                         }
                         this.bQuit = false;
+                    },
+                    START: () => {
+                        sSFX = 'ADO__Cancel';
+                        this.bReady = false;
+                        this.bReturn = false;
+                        this.bQuit = true;
                     },
                     // Gestion Select Player
                     LEFT: () => {
@@ -137,11 +143,16 @@ function SideScene(){
     this.aController = [];
     this.aSideLock = [];
 
-    this.nFrameCreated = 0;
+    this.fAddNewController = oController => {
+        this.oContext.addTickUpdate( () => {
+            this.aController.push( new SideController(oController) );
+        } );
+    };
 }
 
 Object.assign(
     SideScene, {
+
         aHelper: [
             {
                 aButton: ['LEFT', 'RIGHT'],
@@ -160,32 +171,25 @@ Object.assign(
                 sText: 'Quit'
             }
         ],
+
         prototype: Object.assign(
             Object.create(Scene.prototype), {
                 constructor: SideScene,
 				init: function(){
                     Scene.prototype.init.call(this, 'CTX__Side');
 
-                    this.nFrameCreated = GAME.oTimer.nFrames;
-
-                    const aController = GAME.oScene.oTransverseData.MNU__aController ?
-                            GAME.oScene.oTransverseData.MNU__aController.reduce( (aAccu, oCtrl) => {
-                                return [...aAccu, oCtrl && oCtrl.sId]
-                            }, [] ) :
-                            [];
+                    GAME.oOutput.getElement('TXT__Side_Name').setText( GAME.oScene.oTransverseData.BTL__sType );
 
                     for( let sController in ControllerManager.oController ){
-                        const nIndex = aController.indexOf(sController);
-                        this.aController.push( new SideController(sController, nIndex == -1 ? 0 : nIndex + 1) );
+                        const oController = ControllerManager.getController(sController),
+                            nIndex = GAME.oScene.oTransverseData.MNU__aController ? GAME.oScene.oTransverseData.MNU__aController.indexOf(oController) : -1;
+                        this.aController.push( new SideController(oController, nIndex == -1 ? 0 : nIndex + 1) );
                     }
+                    GAME.oInput.on('create', this.fAddNewController);
 
-                    GAME.oOutput.getElement('TXT__Side_Name').setText( GAME.oScene.oTransverseData.BTL__sType );
-                    GameHelper.set( Object.values(ControllerManager.oController), SideScene.aHelper );
+                    GameHelper.set(SideScene.aHelper);
 				},
 				update: function(){
-                    this.addNewController();
-
-                    // Update
                     const aLock = this.getPlayerController();
                     this.aController.forEach( oController => {
                         oController.update(aLock);
@@ -210,28 +214,13 @@ Object.assign(
                     let aController = this.getPlayerController(true);
                     aController.shift();
                     
+                    GAME.oInput.off('create', this.fAddNewController);
                     GameHelper.destroy();
                     return {
                         MNU__aController: aController
                     };
                 },
-
-                addNewController: function(){
-                    if( this.aController.length < GAME.oInput.nController ){
-                        const aOldController = this.aController.reduce(
-                            (aAccu, oCtrl) => {
-                                return [...aAccu, oCtrl.oController.sId]
-                            }, []
-                        );
-                        
-                        for( let sController in GAME.oInput.oController ){
-                            if( aOldController.indexOf(sController) == -1 ){
-                                this.aController.push( new SideController(sController) );
-                                GameHelper.aController.push( GAME.oInput.getController(sController) );
-                            }
-                        }
-                    }
-                },
+                
                 getPlayerController: function(bReady){
                     let aLock = [];
                     aLock.length = GAME.oSettings.nPlayer + 1;

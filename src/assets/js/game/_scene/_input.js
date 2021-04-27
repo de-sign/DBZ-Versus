@@ -145,7 +145,15 @@ function InputScene(){
     this.oLastPress = {
         nFrames: -1,
         sKey: null,
-        fFunction: null
+        fKeyDown: oEvent => {
+            this.oLastPress.oEvent = oEvent;
+            this.oLastPress.nFrames = GAME.oTimer.nFrames + 1;
+        },
+        fAddNewController: oController => {
+            this.oContext.addTickUpdate( () => {
+                this.aController.push( new InputController(oController, this.oLastPress, false) );
+            } );
+        }
     };
 
     this.aController = [];
@@ -175,24 +183,18 @@ Object.assign(
 				init: function(){
                     Scene.prototype.init.call(this, 'CTX__Input');
 
-                    // Gestion Buttons
-                    this.oLastPress.fFunction = (oEvent) => {
-                        this.oLastPress.oEvent = oEvent;
-                        this.oLastPress.nFrames = GAME.oTimer.nFrames + 1;
-                    };
-                    window.addEventListener('keydown', this.oLastPress.fFunction, false);
-
                     // Controller init
                     for( let sController in ControllerManager.oController ){
                         const oController = GAME.oInput.getController(sController);
                         this.aController.push( new InputController(oController, this.oLastPress, GAME.oScene.oTransverseData.STG__oController.sId != sController) );
                     }
+
+                    window.addEventListener('keydown', this.oLastPress.fKeyDown, false);
+                    GAME.oInput.on('create', this.oLastPress.fAddNewController);
                     
-                    GameHelper.set( Object.values(ControllerManager.oController), InputScene.aHelper );
+                    GameHelper.set(InputScene.aHelper);
 				},
 				update: function(){
-                    this.addNewController();
-
                     let bAllReady = true;
                     this.aController.forEach( oController => {
                         oController.update();
@@ -203,26 +205,9 @@ Object.assign(
 				},
                 destroy: function(){
                     this.aController.forEach( oController => oController.destroy() );
-                    window.removeEventListener('keydown', this.oLastPress.fFunction, false);
+                    window.removeEventListener('keydown', this.oLastPress.fKeyDown, false);
+                    GAME.oInput.off('create', this.oLastPress.fAddNewController);
                     GameHelper.destroy();
-                },
-
-                addNewController: function(){
-                    if( this.aController.length < GAME.oInput.nController ){
-                        const aOldController = this.aController.reduce(
-                            (aAccu, oCtrl) => {
-                                return [...aAccu, oCtrl.oController.sId]
-                            }, []
-                        );
-                        
-                        for( let sController in GAME.oInput.oController ){
-                            if( aOldController.indexOf(sController) == -1 ){
-                                const oController = GAME.oInput.getController(sController);
-                                this.aController.push( new InputController(oController, this.oLastPress, false) );
-                                GameHelper.aController.push( oController );
-                            }
-                        }
-                    }
                 }
             }
         )

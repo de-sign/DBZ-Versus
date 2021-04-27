@@ -16,7 +16,6 @@ Object.assign(
                 this.createLayerPlayer(nIndex + 1);
             }
             this.createCharacterList();
-            this.createStageList();
         },
         
         getPattern: function(){
@@ -46,18 +45,12 @@ Object.assign(
                 const oChar = GAME.oData.oCharacter[sChar];
                 if( oChar.bActive ){
                     const oDefaultColor = oChar[oChar.sDefaultColor],
+                        oLayer = new GAME.oOutput.OutputLayer(),
                         oSprite = new GAME.oOutput.OutputSprite( oDefaultColor.oPath.sFace );
-                    oSprite.__oData = oChar;
-                    GAME.oOutput.getElement('LAY__Select_Character').add( oSprite );
+                    oLayer.__oData = oChar;
+                    oLayer.add(oSprite);
+                    GAME.oOutput.getElement('LAY__Select_Character').add(oLayer);
                 }
-            }
-            this.oContext.update();
-        },
-        createStageList: function(){
-            for( let sStage in GAME.oData.oStage ){
-                const oSprite = new GAME.oOutput.OutputSprite(GAME.oSettings.oPath.oStage.sPreview + '/' + sStage + '.png' );
-                oSprite.__oData = GAME.oData.oStage[sStage];
-                GAME.oOutput.getElement('LAY__Select_Stage').add( oSprite );
             }
             this.oContext.update();
         }

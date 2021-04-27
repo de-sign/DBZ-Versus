@@ -27,7 +27,7 @@ Object.assign(
 					this.oArea = GAME.oOutput.getElement('LAY__Battle_Area');
                     this.oArea.enableAutoPositioning();
                     this.setBackground( GAME.oScene.oTransverseData.BTL__sStage );
-                    GAME.oOutput.getChannel('CHN__BGM').play('ADO__' + GAME.oScene.oTransverseData.BTL__sStage, false, true);
+                    GAME.oOutput.getChannel('CHN__BGM').play('ADO__' + GAME.oScene.oTransverseData.BTL__sBGM, false, true);
 
                     for( let nIndex = 0; nIndex < GAME.oSettings.nPlayer; nIndex++ ){
                         
@@ -69,7 +69,7 @@ Object.assign(
                 setBackground: function(sCod){
                     this.oContext.setStyle( {
                         backgroundColor: GAME.oData.oStage[sCod].sColor,
-                        backgroundImage: 'url("' + GAME.oSettings.oPath.oStage.sBackground + '/' + sCod + '.png")'
+                        backgroundImage: 'url("' + GAME.oData.oStage[sCod].oPath.sBackground + '")'
                     } );
                 }
             }

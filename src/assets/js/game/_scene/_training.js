@@ -8,6 +8,17 @@ function TrainingScene() {
     this.oMenu = {};
     this.bMenu = false;
     this.bRestart = false;
+
+    this.fCheckNewController = oController => {
+        if( !this.allPlayerActive() && GAME.oScene.oTransverseData.MNU__aController.indexOf(oController) == -1 ){
+            this.oContext.addTickUpdate( () => {
+                const nIndex = GAME.oScene.oTransverseData.MNU__aController.indexOf(null);
+                GAME.oScene.oTransverseData.MNU__aController[nIndex] = oController;
+                this.aPlayer[nIndex].oInputBuffer.init(oController);
+                GameHelper.aController.push(oController);
+            } );
+        }
+    };
 }
 
 Object.assign(
@@ -60,21 +71,14 @@ Object.assign(
                         }
                     );
 
-                    this.nFrameCreated = GAME.oTimer.nFrames;
+                    GameHelper.set(TrainingScene.oHelper.aBattle, GAME.oScene.oTransverseData.MNU__aController.filter( oController => oController ) );
+                    
+                    GAME.oInput.on('create addEvent', this.fCheckNewController);
+
                     this.oTraining = new TrainingEngine(this);
-
-                    const aController = GAME.oScene.oTransverseData.MNU__aController.reduce(
-                        (aAccu, oCtrl) => {
-                            return oCtrl ? [...aAccu, oCtrl] : aAccu;
-                        }, []
-                    );
-                    GameHelper.set( aController, TrainingScene.oHelper.aBattle );
-
                     this.oTraining.trigger('onInit');
                 },
                 update: function(){
-                    this.addNewController();
-
                     GAME.oScene.oTransverseData.MNU__aController.forEach( oController => {
                         oController && oController.ifPressedNow( {
                             START: () => {
@@ -97,33 +101,19 @@ Object.assign(
                 destroy: function(){
                     BattleScene.prototype.destroy.call(this);
                     this.oTraining.destroy();
+                    GAME.oInput.off('create addEvent', this.fCheckNewController);
                     GameHelper.destroy();
                     return {
                         MNU__nIndex: 1
                     };
                 },
 
-                addNewController: function(){
-                    const aOldController = GAME.oScene.oTransverseData.MNU__aController.reduce(
-                        (aAccu, oCtrl) => {
-                            return oCtrl ? [...aAccu, oCtrl.sId] : aAccu;
-                        }, []
-                    );
-
-                    if( aOldController.length != GAME.oScene.oTransverseData.MNU__aController.length ){
-                        for( let sController in GAME.oInput.oController ){
-                            const oController = GAME.oInput.getController(sController);
-                            if( aOldController.indexOf(sController) == -1 && this.nFrameCreated < oController.nFrameChange ){
-                                this.aPlayer.forEach( (oPlayer, nIndex) => {
-                                    if( !oPlayer.oInputBuffer.oController ){
-                                        oPlayer.oInputBuffer.init(oController);
-                                        GAME.oScene.oTransverseData.MNU__aController[nIndex] = oController;
-                                    }
-                                } );
-                                GameHelper.aController.push(oController);
-                            }
-                        }
-                    }
+                allPlayerActive: function(){
+                    let bAllActive = true;
+                    GAME.oScene.oTransverseData.MNU__aController.forEach( oController => {
+                        !oController && ( bAllActive = false );
+                    } );
+                    return bAllActive;
                 }
             }
         )

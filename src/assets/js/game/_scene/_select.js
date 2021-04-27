@@ -22,9 +22,10 @@ Object.assign(
             this.oLayer = GAME.oOutput.getElement('LAY__Select_Player_' + this.nPlayer);
             this.oController = oController;
             this.oMenu = oMenu;
+            this.nColor = GAME.oScene.oTransverseData.SLC__aColor ? GAME.oScene.oTransverseData.SLC__aColor[ this.nPlayer - 1 ] : 0;
 
-            this.oMenu.oCharacter.update();
-            this.oCharacter = this.oMenu.oCharacter.getSelected(this.nCursor).__oData;
+            this.oMenu.update();
+            this.oCharacter = this.oMenu.getSelected(this.nCursor).__oData;
         },
         update: function(oLock) {
             this.checkColor(oLock);
@@ -64,40 +65,27 @@ Object.assign(
                     },
                     // Gestion Select Character
                     LEFT: () => {
-                        this.oMenu.oCharacter.prev(this.nCursor);
+                        this.oMenu.prev(this.nCursor);
                         this.bReady = false;
                         this.bReturn = false;
                         this.bQuit = false;
                         this.nColor = 0;
                     },
                     RIGHT: () => {
-                        this.oMenu.oCharacter.next(this.nCursor);
+                        this.oMenu.next(this.nCursor);
                         this.bReady = false;
                         this.bReturn = false;
                         this.bQuit = false;
                         this.nColor = 0;
-                    },
-                    // Gestion Select Stage
-                    UP: () => {
-                        this.oMenu.oStage.prev();
-                        this.bReturn = false;
-                        this.bQuit = false;
-                    },
-                    DOWN: () => {
-                        this.oMenu.oStage.next();
-                        this.bReturn = false;
-                        this.bQuit = false;
                     }
                 } );
 
                 sSFX && GAME.oOutput.getChannel('CHN__SFX').play(sSFX);
             }
 
-            for( let sMenu in this.oMenu ){
-                this.oMenu[sMenu].update();
-            }
+            this.oMenu.update();
 
-            this.oCharacter = this.oMenu.oCharacter.getSelected(this.nCursor).__oData;
+            this.oCharacter = this.oMenu.getSelected(this.nCursor).__oData;
             const oCharColor = this.oCharacter[ this.oCharacter.aColor[this.nColor].sColor ];
             let sText = 'Player #' + this.nPlayer;
             if( this.bReady ){
@@ -130,40 +118,6 @@ Object.assign(
     }
 );
 
-/* Stage Menu : One cursor ONLY for 2 Controller ! */
-function SelectStageMenu(){
-    GameMenu.apply(this, arguments);
-}
-
-Object.assign(
-    SelectStageMenu, {
-        prototype: Object.assign(
-            Object.create(GameMenu.prototype), {
-                constructor: SelectStageMenu,
-                update: function() {
-                    if( GameMenu.prototype.update.call(this) ){
-                        GAME.oOutput.getElement('TXT__Select_Stage').setText( this.getSelected().__oData.sName );
-
-                        this.oLayer.addTickUpdate( () => {
-                            for( let nIndex = 0; nIndex < this.oLayer.aChildElement.length; nIndex++ ){
-                                const oMenu = this.oLayer.aChildElement[nIndex];
-                                oMenu.hElement.classList.remove('Menu__cursor_prev', 'Menu__cursor_next', 'Menu__cursor_hide');
-                                if( nIndex == this.getIndex( this.aCursor[0].nIndexCurrent - 1 ) ){
-                                    oMenu.hElement.classList.add('Menu__cursor_prev');
-                                } else if( nIndex == this.getIndex( this.aCursor[0].nIndexCurrent + 1 ) ){
-                                    oMenu.hElement.classList.add('Menu__cursor_next');
-                                } else if( nIndex != this.aCursor[0].nIndexCurrent ){
-                                    oMenu.hElement.classList.add('Menu__cursor_hide');
-                                }
-                            }
-                        } );
-                    }
-                }
-            }
-        )
-    }
-);
-
 /* Select */
 function SelectScene(){
     this.oMenu = null;
@@ -171,7 +125,16 @@ function SelectScene(){
     this.aColorLock = [];
     this.oStatus = {};
 
-    this.nFrameCreated = 0;
+    this.fCheckNewController = oController => {
+        if( !this.allPlayerActive() && GAME.oScene.oTransverseData.MNU__aController.indexOf(oController) == -1 ){
+            this.oContext.addTickUpdate( () => {
+                const nIndex = GAME.oScene.oTransverseData.MNU__aController.indexOf(null);
+                GAME.oScene.oTransverseData.MNU__aController[nIndex] = oController;
+                this.aPlayer[nIndex].oController = oController;
+                GameHelper.aController.push(oController);
+            } );
+        }
+    };
 }
 
 Object.assign(
@@ -179,7 +142,7 @@ Object.assign(
         aHelper: [
             {
                 aButton: ['LEFT', 'RIGHT'],
-                sText: 'Select character'
+                sText: 'Select'
             },
             {
                 aButton: ['A'],
@@ -192,10 +155,6 @@ Object.assign(
             {
                 aButton: ['C'],
                 sText: 'Change color'
-            },
-            {
-                aButton: ['UP', 'DOWN'],
-                sText: 'Select stage'
             },
             {
                 aButton: ['START'],
@@ -211,18 +170,8 @@ Object.assign(
 
                     GAME.oOutput.getElement('TXT__Select_Name').setText( GAME.oScene.oTransverseData.BTL__sType );
 
-                    this.nFrameCreated = GAME.oTimer.nFrames;
-
                     // Character List Init
-                    this.oMenu = {
-                        oCharacter: new GameMenu('LAY__Select_Character', [0, -1]),
-                        oStage: new SelectStageMenu('LAY__Select_Stage')
-                    };
-
-                    // Evite le sautillement
-                    for( let sMenu in this.oMenu ){
-                        this.oMenu[sMenu].update();
-                    }
+                    this.oMenu = new GameMenu('LAY__Select_Character', GAME.oScene.oTransverseData.SLC__aIndex || [0, -1]);
 
                     // Players init
                     for( let nIndex = 0; nIndex < GAME.oSettings.nPlayer; nIndex++ ){
@@ -233,17 +182,12 @@ Object.assign(
                             this.oMenu
                         ) );
                     }
+                    GAME.oInput.on('create addEvent', this.fCheckNewController);
 
                     // Helper
-                    const aController = [];
-                    GAME.oScene.oTransverseData.MNU__aController.forEach( oController => {
-                        oController && aController.push(oController);
-                    } );
-                    GameHelper.set( aController, SelectScene.aHelper );
+                    GameHelper.set(SelectScene.aHelper, GAME.oScene.oTransverseData.MNU__aController.filter( oController => oController ));
 				},
 				update: function(){
-                    // Gestion activation Player
-                    this.checkPlayerActivation();
                     this.aPlayer.forEach( (oPlayer, nIndex) => {
                         this.aColorLock[nIndex] = oPlayer.bReady ?
                             {
@@ -262,34 +206,33 @@ Object.assign(
                     } else if( this.oStatus.bReturn ) {
                         GAME.oScene.change( new SideScene() );
                     } else if( this.oStatus.bReady ) {
-                        GAME.oScene.change( new PreBattleScene() );
+                        GAME.oScene.change( new StageScene() );
                     }
 
                     GameHelper.update();
 				},
                 destroy: function(){
+                    GAME.oInput.off('create addEvent', this.fCheckNewController);
                     GameHelper.destroy();
 
-                    for( let sMenu in this.oMenu ){
-                        this.oMenu[sMenu].destroy();
-                    }
-
                     const aCharacterSelected = [],
-                        aColorSelected = [];
+                        aColorSelected = []
+                        aColor = [];
                     this.aPlayer.forEach( oPlayer => {
+                        aColor.push(oPlayer.nColor);
                         aCharacterSelected.push( oPlayer.oCharacter.sEntity );
                         aColorSelected.push( oPlayer.oCharacter.aColor[oPlayer.nColor].sColor );
                     } );
 
                     return {
-                        BTL__sStage: this.oMenu.oStage.getSelected().__oData.sCod,
+                        SLC__aColor: aColor,
+                        SLC__aIndex: this.oMenu.destroy(),
                         BTL__aCharacter: aCharacterSelected,
                         BTL__aColor: aColorSelected
                     };
                 },
 
                 updateStatus: function(){
-
                     this.oStatus = {
                         bReturn: false,
                         bQuit: false,
@@ -341,22 +284,6 @@ Object.assign(
                         !oController && ( bAllActive = false );
                     } );
                     return bAllActive;
-                },
-                checkPlayerActivation: function(){
-                    if( !this.allPlayerActive() ){
-                        const oPlayerByState = this.getPlayerInformations();
-                        for( let sController in ControllerManager.oController ){
-                            const oController = GAME.oInput.getController(sController);
-                            if( oPlayerByState.oActive.oOriginalController.sId != oController.sId && oController.nFrameChange > this.nFrameCreated ){
-                                GAME.oScene.oTransverseData.MNU__aController[ GAME.oScene.oTransverseData.MNU__aController.indexOf(null) ] = oController;
-                                this.aPlayer.forEach( (oPlayer, nIndex) => {
-                                    oPlayer.oController = GAME.oScene.oTransverseData.MNU__aController[nIndex];
-                                    GameHelper.aController.push(oPlayer.oController);
-                                } );
-                                break;
-                            }
-                        }
-                    }
                 },
                 switchController: function(){
                     const oController = this.aPlayer[0].oController;

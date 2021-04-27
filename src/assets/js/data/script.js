@@ -23,8 +23,8 @@ Object.assign(
                 },
                 oStage: {
                     sRoot: 'assets/images/stages',
-                    sBackground: 'assets/images/stages/background',
-                    sPreview: 'assets/images/stages/preview'
+                    sBackground: 'background.png',
+                    sPreview: 'preview.png'
                 },
                 oController: {
                     sRoot: 'assets/images/controllers',
@@ -229,26 +229,61 @@ Object.assign(
             oCharacter: {},
             oProjectile: {},
             oBeam: {},
+
             oStage: {
                 GZA: {
                     sCod: 'GZA',
-                    sName: 'Gizādo Arano',
+                    sName: 'Gizādo Arano <i>Legendary Super Warrior background</i>',
                     sColor: '#90D0F8'
                 },
                 NMK: {
                     sCod: 'NMK',
-                    sName: 'Namekku-sei',
+                    sName: 'Namekku-sei <i>Legendary Super Warrior background</i>',
                     sColor: '#A8D880'
+                },
+                RNG: {
+                    sCod: 'RNG',
+                    sName: 'Random <i>Select random stage</i>'
                 },
                 STH: {
                     sCod: 'STH',
-                    sName: 'Seishin to Toki no Heya',
+                    sName: 'Seishin to Toki no Heya <i>Legendary Super Warrior background</i>',
                     sColor: '#F8F8F8'
                 },
                 KSK: {
                     sCod: 'KSK',
-                    sName: 'Kaiōshin-kai',
+                    sName: 'Kaiōshin-kai <i>Legendary Super Warrior background</i>',
                     sColor: '#F098F8'
+                }
+            },
+            oBGM: {
+                AUTO: {
+                    sCod: 'AUTO',
+                    sName: 'Automatique <i>Selected stage\'s soundtrack</i>'
+                },
+                GZA: { 
+                    sCod: 'Title',
+                    sName: 'Title <i>Legendary Super Warrior soundtrack</i>'
+                },
+                NMK: {
+                    sCod: 'BattleTheme',
+                    sName: 'Battle Theme <i>Legendary Super Warrior soundtrack</i>'
+                },
+                STH: {
+                    sCod: 'Friendship',
+                    sName: 'Friendship <i>Legendary Super Warrior soundtrack</i>'
+                },
+                KSK: {
+                    sCod: 'FightingSpirit',
+                    sName: 'Fighting Spirit <i>Legendary Super Warrior soundtrack</i>'
+                },
+                MNU: {
+                    sCod: 'Menu',
+                    sName: 'Credits <i>Legendary Super Warrior soundtrack</i>'
+                },
+                RNG: {
+                    sCod: 'RNG',
+                    sName: 'Random <i>Select random soundtrack</i>'
                 }
             }
         }

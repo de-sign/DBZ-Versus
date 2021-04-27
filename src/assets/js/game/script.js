@@ -9,6 +9,7 @@
 //=include _loading/_data.js
 //=include _loading/_side.js
 //=include _loading/_select.js
+//=include _loading/_stage.js
 //=include _loading/_battle.js
 //=include _loading/_setting.js
 //=include _loading/_input.js
@@ -32,6 +33,7 @@
 //=include _scene/_menu.js
 //=include _scene/_side.js
 //=include _scene/_select.js
+//=include _scene/_stage.js
 //=include _scene/_setting.js
 //=include _scene/_input.js
 

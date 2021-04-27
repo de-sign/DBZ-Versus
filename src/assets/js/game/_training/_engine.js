@@ -198,7 +198,7 @@ Object.assign(
                     this.trigger('onOpen');
                 
                     this.aHelperController = GameHelper.aController;
-                    GameHelper.set(this.oScene.oController, TrainingScene.oHelper.aMenu );
+                    GameHelper.set(TrainingScene.oHelper.aMenu, this.oScene.oController);
                     GAME.oOutput.getChannel('CHN__SFX').play('ADO__Validate');
                 }
 
@@ -223,7 +223,7 @@ Object.assign(
                     this.oScene.oContext.hElement.classList.remove('--menu');
                 } );
                 this.trigger('onClose');
-                GameHelper.set(this.aHelperController, TrainingScene.oHelper.aBattle );
+                GameHelper.set(TrainingScene.oHelper.aBattle, this.aHelperController);
             },
             toggle: function(){
                 const bOpen = this.isOpen();

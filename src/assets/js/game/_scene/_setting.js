@@ -7,6 +7,22 @@ function SettingMenu(nIndex){
 
 Object.assign(
     SettingMenu, {
+
+        aHelper: [
+            {
+                aButton: ['UP', 'DOWN'],
+                sText: 'Move'
+            },
+            {
+                aButton: ['A'],
+                sText: 'Enter / Change / Validate'
+            },
+            {
+                aButton: ['LEFT', 'RIGHT'],
+                sText: 'Change'
+            }
+        ],
+
         prototype: {
             constructor: SettingMenu,
             init: function(nIndex){
@@ -15,21 +31,7 @@ Object.assign(
                     this.oLayer[sChannel] = GAME.oOutput.getElement('LAY__Setting_Channel_' + sChannel);
                 }
 
-                GameHelper.set(
-                    Object.values(ControllerManager.oController),
-                    [ {
-                        aButton: ['UP', 'DOWN'],
-                        sText: 'Move'
-                    },
-                    {
-                        aButton: ['A'],
-                        sText: 'Enter / Change / Validate'
-                    },
-                    {
-                        aButton: ['LEFT', 'RIGHT'],
-                        sText: 'Change'
-                    } ]
-                );
+                GameHelper.set(SettingMenu.aHelper);
             },
             update: function(){
                 this.navigate();
@@ -131,11 +133,9 @@ Object.assign(
                 constructor: SettingScene,
 				init: function(){
                     Scene.prototype.init.call(this, 'CTX__Setting');
-
                     this.oMenu = new SettingMenu(GAME.oScene.oTransverseData.STG__nIndex || 0);
 				},
 				update: function(){
-                    this.addNewController();
                     this.oMenu.update();
 				},
                 destroy: function(){
@@ -143,23 +143,7 @@ Object.assign(
                         STG__nIndex: this.oMenu.destroy(),
                         STG__oController: this.oController
                     };
-                },
-
-                addNewController: function(){
-                    if( GameHelper.aController.length < GAME.oInput.nController ){
-                        const aOldController = GameHelper.aController.reduce(
-                            (aAccu, oCtrl) => {
-                                return [...aAccu, oCtrl.sId]
-                            }, []
-                        );
-                        
-                        for( let sController in GAME.oInput.oController ){
-                            if( aOldController.indexOf(sController) == -1 ){
-                                GameHelper.aController.push( GAME.oInput.getController(sController) );
-                            }
-                        }
-                    }
-                },
+                }
             }
         )
     }

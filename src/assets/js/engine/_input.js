@@ -3,6 +3,7 @@ const ControllerManager = {
     oController: {},
     oKeyMap: {},
     nController: 0,
+    oListeners: {},
 
     init: function() {
         const fEvent = this.addEvent.bind(this);
@@ -19,6 +20,7 @@ const ControllerManager = {
     create: function(sType, oBtn, nIndex) {
         var oCtrl = new window[sType + 'Controller'](oBtn, nIndex);
         this.addController(oCtrl);
+        this.trigger('create', oCtrl);
         return oCtrl;
     },
     addController: function(oCtrl) {
@@ -53,11 +55,51 @@ const ControllerManager = {
         if (this.oKeyMap[key]) {
             this.oKeyMap[key].forEach((sId) => {
                 this.oController[sId].addEvent(oEvent);
+                this.trigger('addEvent', this.oController[sId], oEvent);
             });
         }
     },
     getController: function(sCod){
         return Controller.oInstance[sCod];
+    },
+
+    on: function(uEvent, uCallback){
+        let oEvent = uEvent;
+        if( typeof uEvent == 'string' ){
+            oEvent = {};
+            uEvent.split(' ').forEach( sEvent => {
+                oEvent[sEvent] = uCallback;
+            } );
+        }
+        for( let sEvent in oEvent ){
+            this.oListeners[sEvent] || ( this.oListeners[sEvent] = [] );
+            Array.isArray(oEvent[sEvent]) ? [].push.apply(this.oListeners[sEvent], oEvent[sEvent]) : this.oListeners[sEvent].push(oEvent[sEvent]);
+        }
+    },
+    off: function(uEvent, uCallback){
+        let oEvent = uEvent;
+        if( typeof uEvent == 'string' ){
+            oEvent = {};
+            uEvent.split(' ').forEach( sEvent => {
+                oEvent[sEvent] = uCallback;
+            } );
+        }
+        for( let sEvent in oEvent ){
+            if( this.oListeners[sEvent] ){
+                const aCallback = Array.isArray(oEvent[sEvent]) ? oEvent[sEvent] : [oEvent[sEvent]];
+                aCallback.forEach( fCallback => {
+                    const nIndex = this.oListeners[sEvent].indexOf( fCallback );
+                    nIndex != -1 && this.oListeners[sEvent].splice(nIndex, 1);
+                } );
+            }
+        }
+    },
+    trigger: function(sEvent){
+        if( this.oListeners[sEvent] ){
+            const aArguments = [...arguments];
+            aArguments.shift();
+            this.oListeners[sEvent].forEach( fCallback => fCallback.apply(this, aArguments) );
+        }
     }
 };
 

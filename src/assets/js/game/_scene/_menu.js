@@ -6,6 +6,17 @@ function MenuScene(){
 
 Object.assign(
     MenuScene, {
+
+        aHelper: 
+        [ {
+            aButton: ['UP', 'DOWN'],
+            sText: 'Move'
+        },
+        {
+            aButton: ['A'],
+            sText: 'Validate'
+        } ],
+
         prototype: Object.assign(
             Object.create(Scene.prototype), {
                 constructor: MenuScene,
@@ -13,23 +24,11 @@ Object.assign(
                     Scene.prototype.init.call(this, 'CTX__Menu');
 
                     this.oMenu = new GameMenu('LAY__Menu', GAME.oScene.oTransverseData.MNU__nIndex || 0);
-                    GameHelper.set(
-                        Object.values(ControllerManager.oController),
-                        [ {
-                            aButton: ['UP', 'DOWN'],
-                            sText: 'Move'
-                        },
-                        {
-                            aButton: ['A'],
-                            sText: 'Validate'
-                        } ]
-                    );
+                    GameHelper.set(MenuScene.aHelper);
 
                     GAME.oOutput.getChannel('CHN__BGM').play('ADO__Menu', false, true);
 				},
 				update: function(){
-                    this.addNewController();
-
                     for( let sController in GAME.oInput.oController ){
                         const oController = GAME.oInput.getController(sController);
                         oController.ifPressedNow( {
@@ -71,23 +70,7 @@ Object.assign(
                         MNU__nIndex: nIndex,
                         BTL__sType: aName[nIndex]
                     };
-                },
-
-                addNewController: function(){
-                    if( GameHelper.aController.length < GAME.oInput.nController ){
-                        const aOldController = GameHelper.aController.reduce(
-                            (aAccu, oCtrl) => {
-                                return [...aAccu, oCtrl.sId]
-                            }, []
-                        );
-                        
-                        for( let sController in GAME.oInput.oController ){
-                            if( aOldController.indexOf(sController) == -1 ){
-                                GameHelper.aController.push( GAME.oInput.getController(sController) );
-                            }
-                        }
-                    }
-                },
+                }
             }
         )
     }

@@ -42,17 +42,17 @@ __Select__
 * Revoir le nommage des COLOR
 
 __Stage__
-* Choix du STAGE
-* Choix du BGM
+<br/>*N/A*
 
 __Battle__
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
-* Animation de début et fin de match 
 * Méchaniques de jeu
     * Burst ?
     * Guard Cancel ?
     * Guard Break ?
     * Choppe ?
+* Animation de début et fin de match 
+* ENTITY de décoration pour FX 
 
 __Training__
 * Terminer Menu
@@ -62,7 +62,6 @@ __Training__
         * Reversal
 
 __General__
-* Selection du STAGE et du BGM
 * Optimisation du Code
     * Classe PLAYER avec pour enfant LOCAL et DUMMY ( et AI ? )
 * Nouveaux CHARACTER et COLOR

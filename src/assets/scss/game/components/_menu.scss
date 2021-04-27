@@ -15,21 +15,23 @@
         }
     }
 
-    &.Menu__nb_cursor_1 {
-        .Menu__cursor_0 {
-            box-shadow: 0 0 0 1px Black;
-        } 
-    }
-
-    &.Menu__nb_cursor_2 {
-        .Menu__cursor_0 {
-            box-shadow: -2px -2px 0 0 Black;
+    &:not(.--noCursor) {
+        &.Menu__nb_cursor_1 {
+            .Menu__cursor_0 {
+                box-shadow: 0 0 0 1px Black;
+            } 
         }
-        .Menu__cursor_1 {
-            box-shadow: 2px 2px 0 0 Black;
-        }
-        .Menu__cursor_0.Menu__cursor_1 {
-            box-shadow: -2px -2px 0 0 Black, 2px 2px 0 0 Black;
+        
+        &.Menu__nb_cursor_2 {
+            .Menu__cursor_0 {
+                box-shadow: -2px -2px 0 0 Black;
+            }
+            .Menu__cursor_1 {
+                box-shadow: 2px 2px 0 0 Black;
+            }
+            .Menu__cursor_0.Menu__cursor_1 {
+                box-shadow: -2px -2px 0 0 Black, 2px 2px 0 0 Black;
+            }
         }
     }
 }

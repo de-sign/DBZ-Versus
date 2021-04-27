@@ -36,7 +36,7 @@ Object.assign(
                 // Image
                 stepImage_Stage: function(){
                     this.addStepText( 'Loading background stage' );
-                    this.oAssetManager.add('image', GAME.oSettings.oPath.oStage.sBackground + '/' + GAME.oScene.oTransverseData.BTL__sStage + '.png' );
+                    this.oAssetManager.add('image', GAME.oData.oStage[GAME.oScene.oTransverseData.BTL__sStage].oPath.sBackground );
                 },
                 stepImage_Character: function(){
                     const oChar = GAME.oData.oCharacter[ GAME.oScene.oTransverseData.BTL__aCharacter[this.nCharacter] ][ GAME.oScene.oTransverseData.BTL__aColor[this.nCharacter] ];
@@ -70,7 +70,7 @@ Object.assign(
                             aAudio = [...GAME.oSettings.oAudio.oPreBattle[sChannel]];
                             
                         if( sChannel == 'BGM' ){
-                            aAudio.push( GAME.oScene.oTransverseData.BTL__sStage );
+                            aAudio.push( GAME.oScene.oTransverseData.BTL__sBGM );
                         }
 
                         aAudio.forEach( sAudio => {

@@ -30,9 +30,11 @@ Object.assign(
             this.hide();
 		},
 
-        set: function(aController, aText){
+        set: function(aText, aController){
             this.nController = -1;
-            this.aController = Array.isArray(aController) ? aController : [aController];
+            if( aController ){
+                this.aController = Array.isArray(aController) ? aController : [aController];
+            }
             this.setText(aText);
             this.show();
         },
@@ -59,7 +61,7 @@ Object.assign(
         updateText: function(nIndex){
             const oLayer = this.oWrapper.aChildElement[nIndex],
                 oText = this.aText[nIndex],
-                oController = this.aController[ this.nController ];
+                oController = this.getController()[ this.nController ];
 
             oText.aButton.forEach( (sButton, nButton) => {
                 oLayer.aChildElement[nButton].setText(
@@ -67,17 +69,22 @@ Object.assign(
                 );
             } );
         },
+
+        getController: function(){
+            return Array.isArray(this.aController) ? this.aController : Object.values(ControllerManager.oController);
+        },
         switchController: function(){
             let bSwitch = false;
+            const aController = this.getController();
             if( this.nController == -1 ){
                 this.nController = 0;
                 bSwitch = true;
             }
-            else if( this.aController.length > 1 ){
+            else if( aController.length > 1 ){
                 this.oTimer.update(this);
                 if( this.oTimer.isEnd() ){
                     this.oTimer.reset();
-                    this.nController = this.nController == this.aController.length - 1 ? 0 : this.nController + 1;
+                    this.nController = this.nController == aController.length - 1 ? 0 : this.nController + 1;
                     bSwitch = true;
                 }
             }
