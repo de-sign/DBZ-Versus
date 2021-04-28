@@ -71,7 +71,10 @@ GAME.oData.oEntity.oCharacter = {
         },
         down: {
             sPath: 'down.png',
-            nZIndex: 10
+            nZIndex: 10,
+            oStatus: {
+                bInvul: true
+            }
         },
         // Command
         light_first: {

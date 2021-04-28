@@ -195,7 +195,11 @@ Object.assign(
                         sFrame
                     } );
                     if( bInvulnerable ){
-                        oLastFrame.aHurtBox = null;
+                        Object.assign( oLastFrame, {
+                            oStatus: {
+                                bInvul: true
+                            }
+                        } );
                     }
                 }
                 aMove.push( { nX, nY } );
