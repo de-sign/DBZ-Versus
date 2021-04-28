@@ -5,6 +5,10 @@ GAME.oData.oEntity.oBeam = {
             sPath: 'beam.png'
         },
 
+        zigzag: {
+            sPath: 'zigzag.png'
+        },
+
         circle_first: {
             sPath: 'circle_first.png'
         },

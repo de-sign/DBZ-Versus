@@ -56,7 +56,20 @@ Object.assign(
                 oRatio: {}
             },
 
-            // BUU
+            BUU: {
+                sChar: 'BUU',
+                aColor: ['LSW_MBU', 'LSW_SBU'],
+                aFrames: [
+                    ['stand', 'blur', 'backward', 'forward'],
+                    ['jump', 'fall', 'pre_jump', 'guard', 'reflect', 'burst'],
+                    ['hit_light', 'hit_heavy', 'hit_luncher', 'hit_fall', 'down', 'recovery'],
+                    ['light_first', 'light_first_active', 'light_second', 'light_second_active', 'light_third', 'light_third_active'],
+                    ['heavy', 'heavy_active', 'tracker', 'tracker_active', 'luncher', 'luncher_active'],
+                    ['kikoha', null, 'tracker_second', 'tracker_second_active'],
+                    ['super_first', 'super_second', 'super_third']
+                ],
+                oRatio: {}
+            },
 
             FRZ: {
                 sChar: 'FRZ',

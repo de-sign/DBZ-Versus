@@ -152,7 +152,8 @@ module.exports = function(config){
     return {
         parse: function(sChar) {
             return function parse(done) {
-                const oFrameData = {},
+                const oChar = extra.oChar[sChar],
+                    oFrameData = {},
                     aPromise = [];
         
                 extra.aBox.forEach( sBox => {
@@ -167,10 +168,10 @@ module.exports = function(config){
                                     this.forEach( (oPos, oPixel) => {
                                         if( this.isBlack(oPixel) ){
                                             const oFrame = {
-                                                    nFrameX: Math.floor(oPos.nX / nSquare),
-                                                    nFrameY: Math.floor(oPos.nY / nSquare)
+                                                    nFrameX: Math.floor(oPos.nX / extra.nSquare),
+                                                    nFrameY: Math.floor(oPos.nY / extra.nSquare)
                                                 },
-                                                sFrame = aFrames[oFrame.nFrameY][oFrame.nFrameX];
+                                                sFrame = oChar.aFrames[oFrame.nFrameY][oFrame.nFrameX];
         
                                             oStart[sFrame] || ( oStart[sFrame] = [] );
                                             oStart[sFrame].push(

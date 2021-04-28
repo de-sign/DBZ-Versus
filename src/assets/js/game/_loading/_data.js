@@ -132,7 +132,7 @@ Object.assign(
                     for( let sTypeCMD in oEntity.oCommands ){
                         oEntityColor.oCommands[sTypeCMD] = [];
                         oEntity.oCommands[sTypeCMD].forEach( oCommand => {
-                            if( !oCommand.aFilter || oCommand.aFilter.indexOf(oColor.sColor) != 1 ){
+                            if( !oCommand.aFilter || oCommand.aFilter.indexOf(oColor.sColor) != -1 ){
                                 if( oCommand.oName ){
                                     oCommand = Object.assign( {}, {
                                         sName: oCommand.oName[ oEntityColor.sColor ]

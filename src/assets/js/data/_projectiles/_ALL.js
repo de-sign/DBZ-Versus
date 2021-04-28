@@ -11,6 +11,10 @@ GAME.oData.oProjectile.ALL = {
             sName: 'Orange kikoha'
         },
         {
+            sColor: 'PNK',
+            sName: 'Pink kikoha'
+        },
+        {
             sColor: 'PRP',
             sName: 'Purple kikoha'
         }

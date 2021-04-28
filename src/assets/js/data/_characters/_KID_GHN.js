@@ -775,7 +775,10 @@ GAME.oData.oCharacter.KID_GHN = {
                 nWidth: 84,
                 nHeight: 56
             }]
-        }
+        },
+        list_first: false,
+        list_second: false,
+        list_third: false
     },
     
     oAnimations: {
@@ -1127,7 +1130,7 @@ GAME.oData.oCharacter.KID_GHN = {
                 nFrame: 2,
                 sFrame: 'blur'
             }
-        ],
+        ]
     },
 
     oCommands: {
@@ -1156,7 +1159,7 @@ GAME.oData.oCharacter.KID_GHN = {
                     {
                         sType: 'Character',
                         sEntity: 'GKU_SSJ',
-                        sColor: 'LSW_SSJT',
+                        sColor: 'LSW_SSJ',
                         sAnimation: 'GHN_SSJT_super',
                         nFrameStart: 13,
                         bLink: true,
@@ -1188,7 +1191,7 @@ GAME.oData.oCharacter.KID_GHN = {
                 }
             },
             {
-                aFilter: ['SCD'],
+                aFilter: ['LSW_TRN'],
                 sCod: 'super',
                 sName: 'Masenkō',
                 sAnimation: 'super',

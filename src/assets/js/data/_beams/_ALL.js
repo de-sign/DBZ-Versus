@@ -11,6 +11,10 @@ GAME.oData.oBeam.ALL = {
             sName: 'Orange beams'
         },
         {
+            sColor: 'PNK',
+            sName: 'Pink beams'
+        },
+        {
             sColor: 'PRP',
             sName: 'Purple beams'
         }
@@ -22,6 +26,15 @@ GAME.oData.oBeam.ALL = {
                 nX: 30,
                 nY: -98,
                 nHeight: 24,
+                nWidth: 1024
+            }
+        },
+
+        zigzag: {
+            aHitBox:  {
+                nX: 30,
+                nY: -110,
+                nHeight: 48,
                 nWidth: 1024
             }
         },
@@ -73,6 +86,22 @@ GAME.oData.oBeam.ALL = {
         beam: [
             {
                 nFrame: 8,
+                sFrame: 'beam'
+            }
+        ],
+
+        zigzag: [
+            {
+                nFrame: 2,
+                sFrame: 'beam',
+                aHitBox: null
+            },
+            {
+                nFrame: 40,
+                sFrame: 'zigzag'
+            },
+            {
+                nFrame: 2,
                 sFrame: 'beam'
             }
         ],

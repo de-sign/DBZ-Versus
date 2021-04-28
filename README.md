@@ -39,7 +39,6 @@ __Side__
 
 __Select__
 * Faire des SWAP COLOR
-* Revoir le nommage des COLOR
 
 __Stage__
 <br/>*N/A*
@@ -65,7 +64,7 @@ __General__
 * Optimisation du Code
     * Classe PLAYER avec pour enfant LOCAL et DUMMY ( et AI ? )
 * Nouveaux CHARACTER et COLOR
-    * BUU
+    * MJN_BUU
 * Faire une API ELECTRON
     * Paramétrages globaux
     * Ajouter CHARACTER
