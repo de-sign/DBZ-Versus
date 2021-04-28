@@ -177,7 +177,13 @@ GAME.oData.oCharacter.KID_GHN = {
                 nY: -110,
                 nWidth: 60,
                 nHeight: 112
-            }
+            },
+            aHurtBox: [{
+                nX: -30,
+                nY: -142,
+                nWidth: 68,
+                nHeight: 144
+            }]
         },
         burst: {
             oPositionBox: {
@@ -308,9 +314,9 @@ GAME.oData.oCharacter.KID_GHN = {
                 nHeight: 96
             }, {
                 nX: 22,
-                nY: -94,
-                nWidth: 64,
-                nHeight: 32
+                nY: -86,
+                nWidth: 60,
+                nHeight: 28
             }]
         },
         light_first_active: {
@@ -318,9 +324,9 @@ GAME.oData.oCharacter.KID_GHN = {
             nZIndex: 30,
             aHitBox: {
                 nX: 22,
-                nY: -94,
-                nWidth: 64,
-                nHeight: 32
+                nY: -86,
+                nWidth: 60,
+                nHeight: 28
             },
             oPositionBox: {
                 nX: -30,
@@ -340,9 +346,9 @@ GAME.oData.oCharacter.KID_GHN = {
                 nHeight: 96
             }, {
                 nX: 22,
-                nY: -94,
-                nWidth: 64,
-                nHeight: 32
+                nY: -86,
+                nWidth: 60,
+                nHeight: 28
             }]
         },
         light_second: {
@@ -366,8 +372,8 @@ GAME.oData.oCharacter.KID_GHN = {
                 nHeight: 96
             }, {
                 nX: 22,
-                nY: -90,
-                nWidth: 60,
+                nY: -94,
+                nWidth: 64,
                 nHeight: 32
             }]
         },
@@ -376,8 +382,8 @@ GAME.oData.oCharacter.KID_GHN = {
             nZIndex: 30,
             aHitBox: {
                 nX: 22,
-                nY: -90,
-                nWidth: 60,
+                nY: -94,
+                nWidth: 64,
                 nHeight: 32
             },
             oPositionBox: {
@@ -398,8 +404,8 @@ GAME.oData.oCharacter.KID_GHN = {
                 nHeight: 96
             }, {
                 nX: 22,
-                nY: -90,
-                nWidth: 60,
+                nY: -94,
+                nWidth: 64,
                 nHeight: 32
             }]
         },
@@ -794,10 +800,7 @@ GAME.oData.oCharacter.KID_GHN = {
             },
             {
                 nFrame: 4,
-                sFrame: 'light_first_active',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'light_first_active'
             },
             {
                 nFrame: 4,
@@ -826,10 +829,7 @@ GAME.oData.oCharacter.KID_GHN = {
             },
             {
                 nFrame: 4,
-                sFrame: 'light_second_active',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'light_second_active'
             },
             {
                 nFrame: 4,
@@ -864,10 +864,7 @@ GAME.oData.oCharacter.KID_GHN = {
                 },
                 {
                     nFrame: 4,
-                    sFrame: 'light_third_active',
-                    oStatus: {
-                        bCancel: true
-                    }
+                    sFrame: 'light_third_active'
                 },
                 {
                     nFrame: 4,
@@ -904,10 +901,7 @@ GAME.oData.oCharacter.KID_GHN = {
                 },
                 {
                     nFrame: 4,
-                    sFrame: 'heavy_active',
-                    oStatus: {
-                        bCancel: true
-                    }
+                    sFrame: 'heavy_active'
                 },
                 {
                     nFrame: 6,
@@ -951,10 +945,7 @@ GAME.oData.oCharacter.KID_GHN = {
                 },
                 {
                     nFrame: 6,
-                    sFrame: 'tracker_active',
-                    oStatus: {
-                        bCancel: true
-                    }
+                    sFrame: 'tracker_active'
                 },
                 {
                     nFrame: 4,
@@ -996,10 +987,7 @@ GAME.oData.oCharacter.KID_GHN = {
                 },
                 {
                     nFrame: 6,
-                    sFrame: 'tracker_second_active',
-                    oStatus: {
-                        bCancel: true
-                    }
+                    sFrame: 'tracker_second_active'
                 },
                 {
                     nFrame: 2,
@@ -1047,10 +1035,7 @@ GAME.oData.oCharacter.KID_GHN = {
             },
             {
                 nFrame: 8,
-                sFrame: 'luncher_active',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'luncher_active'
             },
             {
                 nFrame: 4,
@@ -1101,22 +1086,30 @@ GAME.oData.oCharacter.KID_GHN = {
             {
                 nFrame: 2,
                 sFrame: 'blur',
-                aHurtBox: null
+                oStatus: {
+                    bInvul: true
+                }
             },
             {
                 nFrame: 30,
                 sFrame: 'super_first',
-                aHurtBox: null
+                oStatus: {
+                    bInvul: true
+                }
             },
             {
                 nFrame: 10,
                 sFrame: 'super_second',
-                aHurtBox: null
+                oStatus: {
+                    bInvul: true
+                }
             },
             {
                 nFrame: 4,
                 sFrame: 'super_third',
-                aHurtBox: null
+                oStatus: {
+                    bInvul: true
+                }
             },
             {
                 nFrame: 40,
@@ -1284,16 +1277,22 @@ GAME.oData.oCharacter.KID_GHN = {
                 sName: 'Tracker',
                 sAnimation: 'tracker_first',
                 nGatlingLevel: 1,
-                oSelfCancel: {
-                    tracker_second: {
-                        sCod: 'tracker_second',
-                        sName: '2nd',
-                        sAnimation: 'tracker_second',
-                        oStun: {
-                            nBlock: 8,
-                            nHit: 18,
-                            sHitAnimation: 'hit_light'
-                        }
+                oFollowUp: {
+                    sCod: 'tracker_second',
+                    sName: '2nd',
+                    sAnimation: 'tracker_second',
+                    nGatlingLevel: 1,
+                    oStun: {
+                        nBlock: 8,
+                        nHit: 18,
+                        sHitAnimation: 'hit_light'
+                    },
+                    bLast: true,
+                    oManipulation: {
+                        nMaxLengthFrame: 1,
+                        aButtons: [
+                            { A: true }
+                        ]
                     }
                 },
                 oStun: {
@@ -1336,25 +1335,39 @@ GAME.oData.oCharacter.KID_GHN = {
                 sName: 'Light',
                 sAnimation: 'light_first',
                 nGatlingLevel: 1,
-                oSelfCancel: {
-                    light_second: {
-                        sCod: 'light_second',
-                        sName: '2nd',
-                        sAnimation: 'light_second',
-                        oStun: {
-                            nBlock: 8,
-                            nHit: 13,
-                            sHitAnimation: 'hit_light'
-                        }
+                oFollowUp: {
+                    sCod: 'light_second',
+                    sName: '2nd',
+                    sAnimation: 'light_second',
+                    nGatlingLevel: 1,
+                    oStun: {
+                        nBlock: 8,
+                        nHit: 13,
+                        sHitAnimation: 'hit_light'
                     },
-                    light_third: {
+                    bLast: true,
+                    oManipulation: {
+                        nMaxLengthFrame: 1,
+                        aButtons: [
+                            { A: true }
+                        ]
+                    },
+                    oFollowUp: {
                         sCod: 'light_third',
                         sName: '3rd',
                         sAnimation: 'light_third',
+                        nGatlingLevel: 1,
                         oStun: {
                             nBlock: 8,
                             nHit: 13,
                             sHitAnimation: 'hit_light'
+                        },
+                        bLast: true,
+                        oManipulation: {
+                            nMaxLengthFrame: 1,
+                            aButtons: [
+                                { A: true }
+                            ]
                         }
                     }
                 },

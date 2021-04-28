@@ -43,6 +43,9 @@ Object.assign(
         },
         isEnd: function(){
             return this.nLength && this.nTick >= this.nLength;
+        },
+        isFreeze: function(){
+            return this.nFreeze > 0;
         }
     }
 );

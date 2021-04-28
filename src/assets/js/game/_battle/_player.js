@@ -104,7 +104,7 @@ Object.assign(
                 },
                 takeHit: function(oEntity, oData){
                     let sSFX = '';
-                    if( this.oAnimation.oFrame.oStatus.bGuard ){
+                    if( !oData.bUnblockable && this.oAnimation.oFrame.oStatus.bGuard ){
                         this.setHurt('guard', oData.oStun.nBlock, true);
                         oEntity.confirmHit(this, oData, true);
                         sSFX = 'ADO__Guard';
@@ -132,6 +132,7 @@ Object.assign(
                 },
                 confirmHit: function(oEntityHurt, oData, bGuard){
                     BattleEntity.prototype.confirmHit.call(this, oEntityHurt, oData, bGuard);
+                    this.oGatling.confirmHit(bGuard);
                     const nDamage = oData.nDamage == null ? 1 : oData.nDamage;
                     bGuard || oData.nCost || this.addKi(nDamage);
                 },
@@ -146,9 +147,10 @@ Object.assign(
                         bGuard: false,
                         nCode: 0
                     };
+                    const bFreeze = this.oAnimation.isFreeze();
 
                     // Gestion MOVEMENT
-                    if( this.oAnimation.sType == 'movement' && !this.oAnimation.oFrame.bFreeze ){
+                    if( this.oAnimation.sType == 'movement' && !bFreeze ){
                         oCanAction = {
                             sCommand: 'aOffense',
                             bStack: false,
@@ -181,7 +183,7 @@ Object.assign(
                         }
                     }
                     // Gestion HURT
-                    else if( (this.oAnimation.sType == 'guard' || this.oAnimation.sType == 'hit') && !this.oAnimation.oFrame.bFreeze ){
+                    else if( (this.oAnimation.sType == 'guard' || this.oAnimation.sType == 'hit') && !bFreeze ){
                         oCanAction = {
                             sCommand: 'aDefense',
                             bStack: false,
@@ -193,7 +195,7 @@ Object.assign(
                     }
                     // Gestion ACTION en HIT
                     else if( this.aHit.length ){
-                        const bCancel = this.oAnimation.oFrame.oStatus.bCancel && !this.oAnimation.oFrame.bFreeze;
+                        const bCancel = this.oAnimation.oFrame.oStatus.bCancel && !bFreeze;
                         oCanAction = {
                             sCommand: 'aOffense',
                             bStack: bCancel ? false : true,
@@ -208,7 +210,7 @@ Object.assign(
                 },
                 canMove: function(){
                     oCanAction = this.canAction();
-                    return !this.oAnimation.oFrame.bFreeze && oCanAction.bMove;
+                    return !this.oAnimation.isFreeze() && oCanAction.bMove;
                 },
 
                 // Fonction OUTPUT

@@ -162,7 +162,13 @@ GAME.oData.oCharacter.GKU = {
                 nY: -110,
                 nWidth: 60,
                 nHeight: 112
-            }
+            },
+            aHurtBox: [{
+                nX: -30,
+                nY: -142,
+                nWidth: 68,
+                nHeight: 144
+            }]
         },
         burst: {
             oPositionBox: {
@@ -580,33 +586,7 @@ GAME.oData.oCharacter.GKU = {
                 nHeight: 60
             }]
         },
-        super_third_SSJ: {
-            sPath: 'super_third.png',
-            nZIndex: 80,
-            oPositionBox: {
-                nX: -30,
-                nY: -110,
-                nWidth: 64,
-                nHeight: 112
-            },
-            aHurtBox: [{
-                nX: -10,
-                nY: -138,
-                nWidth: 60,
-                nHeight: 56
-            }, {
-                nX: -22,
-                nY: -118,
-                nWidth: 104,
-                nHeight: 64
-            }, {
-                nX: -38,
-                nY: -58,
-                nWidth: 84,
-                nHeight: 60
-            }]
-        },
-        super_third_TRN: {
+        super_third: {
             sPath: 'super_third.png',
             nZIndex: 80,
             oPositionBox: {
@@ -648,10 +628,7 @@ GAME.oData.oCharacter.GKU = {
             },
             {
                 nFrame: 4,
-                sFrame: 'light_first_active',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'light_first_active'
             },
             {
                 nFrame: 4,
@@ -680,10 +657,7 @@ GAME.oData.oCharacter.GKU = {
             },
             {
                 nFrame: 4,
-                sFrame: 'light_second_active',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'light_second_active'
             },
             {
                 nFrame: 4,
@@ -712,10 +686,7 @@ GAME.oData.oCharacter.GKU = {
             },
             {
                 nFrame: 4,
-                sFrame: 'heavy_active',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'heavy_active'
             },
             {
                 nFrame: 6,
@@ -754,10 +725,7 @@ GAME.oData.oCharacter.GKU = {
                 },
                 {
                     nFrame: 6,
-                    sFrame: 'tracker_active',
-                    oStatus: {
-                        bCancel: true
-                    }
+                    sFrame: 'tracker_active'
                 },
                 {
                     nFrame: 2,
@@ -798,10 +766,7 @@ GAME.oData.oCharacter.GKU = {
             },
             {
                 nFrame: 8,
-                sFrame: 'luncher_active',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'luncher_active'
             },
             {
                 nFrame: 4,
@@ -851,26 +816,34 @@ GAME.oData.oCharacter.GKU = {
             {
                 nFrame: 2,
                 sFrame: 'blur',
-                aHurtBox: null
+                oStatus: {
+                    bInvul: true
+                }
             },
             {
                 nFrame: 30,
                 sFrame: 'super_first',
-                aHurtBox: null
+                oStatus: {
+                    bInvul: true
+                }
             },
             {
                 nFrame: 10,
                 sFrame: 'super_second',
-                aHurtBox: null
+                oStatus: {
+                    bInvul: true
+                }
             },
             {
                 nFrame: 4,
-                sFrame: 'super_third_TRN',
-                aHurtBox: null
+                sFrame: 'super_third',
+                oStatus: {
+                    bInvul: true
+                }
             },
             {
                 nFrame: 60,
-                sFrame: 'super_third_TRN'
+                sFrame: 'super_third'
             },
             {
                 nFrame: 2,
@@ -1008,16 +981,22 @@ GAME.oData.oCharacter.GKU = {
                 sName: 'Light',
                 sAnimation: 'light_first',
                 nGatlingLevel: 1,
-                oSelfCancel: {
-                    light_second: {
-                        sCod: 'light_second',
-                        sName: '2nd',
-                        sAnimation: 'light_second',
-                        oStun: {
-                            nBlock: 8,
-                            nHit: 13,
-                            sHitAnimation: 'hit_light'
-                        }
+                oFollowUp: {
+                    sCod: 'light_second',
+                    sName: '2nd',
+                    sAnimation: 'light_second',
+                    nGatlingLevel: 1,
+                    oStun: {
+                        nBlock: 8,
+                        nHit: 13,
+                        sHitAnimation: 'hit_light'
+                    },
+                    bLast: true,
+                    oManipulation: {
+                        nMaxLengthFrame: 1,
+                        aButtons: [
+                            { A: true }
+                        ]
                     }
                 },
                 oStun: {

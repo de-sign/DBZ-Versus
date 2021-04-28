@@ -197,32 +197,37 @@ Object.assign(
                             && oEntityHurt.oCheck.oHurt[ oEntityHit.sType ]
                             && oEntityHurt.nLife > 0
                             && oEntityHit.aHit.indexOf(oEntityHurt.sId) == -1
+                            && !oEntityHurt.isUnvulnerable()
                         ){
                             let bHit = false;
-                            const aHitBox = this.getCollisionBox(oEntityHit, 'aHitBox'),
-                                aHurtBox = this.getCollisionBox(oEntityHurt, 'aHurtBox');
+                            const oData = oEntityHit.getHitData(),
+                                aHitBox = this.getCollisionBox(oEntityHit, 'aHitBox'),
+                                aHurtBox = this.getCollisionBox(oEntityHurt, ( oData && oData.sCollisionBox ) || 'aHurtBox');
+
                             if( aHitBox.length && aHurtBox.length ){
                                 for( let nHitBox = 0; nHitBox < aHitBox.length; nHitBox++ ){
                                     for( let nHurtBox = 0; nHurtBox < aHurtBox.length; nHurtBox++ ){
                                         if( this.checkCollision(aHitBox[nHitBox], aHurtBox[nHurtBox]) ){
-                                            // HURT
-                                            aHurt.push( {
-                                                oEntityHit,
-                                                oEntityHurt,
-                                                oData: oEntityHit.getHitData()
-                                            } );
-                                            // PUSHBACK
-                                            aPushback.push( {
-                                                oPriority: {
-                                                    nHit: oCollapse[oEntityHit.sId] ? oCollapse[oEntityHit.sId].nPriority + 1 : 2,
-                                                    nHurt: oCollapse[oEntityHurt.sId] ? oCollapse[oEntityHurt.sId].nPriority : 0
-                                                },
-                                                oEntityHit,
-                                                oEntityHurt,
-                                                oData: oEntityHit.getHitData().oPushback
-                                            } );
-                                            bHit = true;
-                                            break;
+                                            if( !oData.bOnlyOnGround || !oEntityHurt.oLunch ){
+                                                // HURT
+                                                aHurt.push( {
+                                                    oEntityHit,
+                                                    oEntityHurt,
+                                                    oData: oData
+                                                } );
+                                                // PUSHBACK
+                                                aPushback.push( {
+                                                    oPriority: {
+                                                        nHit: oCollapse[oEntityHit.sId] ? oCollapse[oEntityHit.sId].nPriority + 1 : 2,
+                                                        nHurt: oCollapse[oEntityHurt.sId] ? oCollapse[oEntityHurt.sId].nPriority : 0
+                                                    },
+                                                    oEntityHit,
+                                                    oEntityHurt,
+                                                    oData: oData.oPushback
+                                                } );
+                                                bHit = true;
+                                                break;
+                                            }
                                         }
                                     }
                                     if( bHit ){
@@ -238,8 +243,8 @@ Object.assign(
             if( aHurt.length ){
                 // Gestion Hurt
                 aHurt.forEach( oHurt => {
-                   const sSFX = oHurt.oEntityHurt.takeHit(oHurt.oEntityHit, oHurt.oData);
-                   GAME.oOutput.getChannel('CHN__SFX').play(sSFX);
+                    const sSFX = oHurt.oEntityHurt.takeHit(oHurt.oEntityHit, oHurt.oData);
+                    GAME.oOutput.getChannel('CHN__SFX').play(sSFX);
                 } );
                 // Gestion PushBack
                 this.movePushback(aPushback, oCollapse);

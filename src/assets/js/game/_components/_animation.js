@@ -29,6 +29,7 @@ Object.assign(
             hit_light: 'hit',
             hit_heavy: 'hit',
             hit_luncher: 'hit',
+            hit_throw: 'hit',
             lunch: 'hit',
             // DOWN
             down: 'down',

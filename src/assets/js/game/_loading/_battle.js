@@ -139,22 +139,25 @@ Object.assign(
                             const oLayer = new GAME.oOutput.OutputLayer(hLayer);
 
                             for( let nIndex = oCharColor.oCommands.aOffense.length - 1; nIndex >= 0; nIndex-- ){
-                                // Clone du LAYER COMMAND
-                                const aCommand = [oCharColor.oCommands.aOffense[nIndex]];
-                                if( aCommand[0].oSelfCancel ){
-                                    for( let sCommand in aCommand[0].oSelfCancel ){
-                                        aCommand.push( Object.assign({}, aCommand[0], aCommand[0].oSelfCancel[sCommand]) );
-                                    }
-                                }
+                                const aCommand = [];
+                                let oCommand = oCharColor.oCommands.aOffense[nIndex];
 
-                                aCommand.forEach( (oCommand, nDeep) => {
-                                    const oListCommand = this.createCommandList(oCommand, nDeep);
-                                    oListCommand.__oData = oCommand;
-                                    oLayer.add(oListCommand, '.Training__Menu_List_Character_Command');
-                                } );
+                                if( oCommand.sCod != 'throw' ){
+                                    do {
+                                        aCommand.push(oCommand);
+                                        oCommand = oCommand.oFollowUp;
+                                    }
+                                    while( oCommand );
+                                    
+                                    aCommand.forEach( (oCommand, nDeep) => {
+                                        const oListCommand = this.createCommandList(oCommand, nDeep);
+                                        oListCommand.__oData = oCommand;
+                                        oLayer.add(oListCommand, '.Training__Menu_List_Character_Command');
+                                    } );
+                                }
                             }
 
-                          // Ajout au menu
+                            // Ajout au menu
                             GAME.oOutput.getElement('LAY__Training_Menu_List').add(oLayer);
                         }
                     } );
@@ -182,16 +185,10 @@ Object.assign(
                 hListCommand.innerHTML = sName;
 
                 let sButtons = '';
-                oCommand.oManipulation.aButtons.forEach( oButton => {
-                    const aButton = [];
-                    let sButton = '';
+                oCommand.oManipulation && oCommand.oManipulation.aButtons.forEach( oButton => {
                     Object.keys(oButton).forEach( sBtn => {
-                        sButton += '<b class="Training__InputButton ' + ( ( oBtn[sBtn] ? '--btn' : '--dir' ) )  + '">' + InitializeBattle.oSymbol[sBtn] + '</b>';
+                        sButtons += '<b class="Training__InputButton ' + ( ( oBtn[sBtn] ? '--btn' : '--dir' ) )  + '">' + InitializeBattle.oSymbol[sBtn] + '</b>';
                     } );
-                    for( let nIndexDeep = 0; nIndexDeep <= nDeep; nIndexDeep++ ){
-                        aButton.push(sButton);
-                    }
-                    sButtons += aButton.join(',');
                 } );
                 hCommand.querySelector('.Training__Menu_List_Button').innerHTML = sButtons;
 

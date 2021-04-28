@@ -36,7 +36,7 @@ module.exports = function(config){
                             canvas.loadImage(sPath + '/__frameset.png').then( oImage => {
                                 oChar.aFrames.forEach( (aRow, nY) => {
                                     aRow && aRow.forEach( (sFrame, nX) => {
-                                        if( sFrame ){
+                                        if( sFrame && ( extra.aFilterFrames.length == 0 || extra.aFilterFrames.indexOf(sFrame) != -1 ) ){
                                             aPromiseColor.push(
                                                 new Promise( (fResolveFrame, fRejectFrame) => {
         

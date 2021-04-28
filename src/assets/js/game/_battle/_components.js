@@ -156,7 +156,7 @@ Object.assign(
         update: function(nKi, oCanAction){
             let bFind = false,
                 bUse = false;
-            const aCommand = this.getEnterCommands(oCanAction.sCommand);
+            const aCommand = this.getCommands(oCanAction.sCommand);
 
             for( let nIndex = 0; nIndex < aCommand.length; nIndex++ ){
                 const oCommand = aCommand[nIndex];
@@ -208,21 +208,51 @@ Object.assign(
             }
         },
 
-        getEnterCommands: function(sType){
+        getCommands: function(sType){
+            let bLastNoManip = false,
+                bAddNoManip = true;
             const aCommand = [],
+                aCommandNoManip = [],
                 nFrameCheck = GAME.oTimer.nFrames;
 
-            if( this.oInputBuffer.nFrameLastUpdate == nFrameCheck ){
-                for( let nIndex = 0; nIndex < this.oCommandData[sType].length; nIndex++ ){
-                    const oCommand = this.oCommandData[sType][nIndex];
-                    if( this.oInputBuffer.checkManipulation(nFrameCheck, oCommand.oManipulation) ){
+            for( let nIndex = 0; nIndex < this.oCommandData[sType].length; nIndex++ ){
+                let oCommand = this.oCommandData[sType][nIndex];
+                if( this.oCurrent && ( this.oCurrent.sRoot || this.oCurrent.sCod ) == oCommand.sCod ){
+                    const oFollow = this.oCurrent.oFollowUp
+                    if(
+                        oFollow &&
+                        (
+                            !oFollow.bFollowOnlyOnHurt
+                            || ( typeof oFollow.bFollowOnlyOnHurt == 'string' ?
+                                oFollow.bFollowOnlyOnHurt == this.oCurrent.sHurt :
+                                this.oCurrent.sHurt )
+                        )
+                    ){
+                        oCommand = this.oCurrent.oFollowUp;
+                    } else {
+                        oCommand = null;
+                    }
+                }
+                if( oCommand ){
+                    if( !oCommand.oManipulation ){
+                        if( !this.oNext && !bLastNoManip ){
+                            aCommandNoManip.push( Object.assign({}, oCommand) );
+                            bLastNoManip = oCommand.bLast;
+                        }
+                    }
+                    else if(
+                        this.oInputBuffer.nFrameLastUpdate == nFrameCheck
+                        && this.oInputBuffer.checkManipulation(nFrameCheck, oCommand.oManipulation)
+                    ){
                         aCommand.push( Object.assign({}, oCommand) );
                         if( oCommand.bLast ){
+                            bAddNoManip = false;
                             break;
                         }
                     }
                 }
             }
+            bAddNoManip && [].push.apply(aCommand, aCommandNoManip);
             return aCommand;
         },
         getEntity: function(){
@@ -240,28 +270,20 @@ Object.assign(
             }
             return aEntity;
         },
+        confirmHit: function(bGuard){
+            this.oCurrent && ( this.oCurrent.sHurt = bGuard ? 'guard' : 'hit');
+        },
 
         canUseCommand: function(nKi, oCommand){
             let bCanUse = false;
             // Gestion KI
             if( !oCommand.nCost || nKi >= oCommand.nCost ){
                 // Gestion GATLING
-                if( this.oUsed[oCommand.sCod] ){
-                    // Gestion REDA CANCEL
-                    const aSelfCancel = oCommand.oSelfCancel ? Object.keys(oCommand.oSelfCancel) : [];
-                    if( this.oCurrent && aSelfCancel.length && ( this.oCurrent.sCod == oCommand.sCod || aSelfCancel.indexOf(this.oCurrent.sCod) != -1 ) ){
-                        for( let nIndex = 0; nIndex < aSelfCancel.length; nIndex++ ){
-                            if( !this.oUsed[ aSelfCancel[nIndex] ] ){
-                                Object.assign(oCommand, oCommand.oSelfCancel[ aSelfCancel[nIndex] ]);
-                                bCanUse = true;
-                                break;
-                            }
-                        }
+                if( !this.oUsed[oCommand.sCod] ){
+                    // Gestion LEVEL
+                    if( !this.oCurrent || this.oCurrent.nGatlingLevel <= oCommand.nGatlingLevel || this.oCurrent.sCod <= oCommand.sRoot ) {
+                        bCanUse = true;
                     }
-                }
-                // Gestion LEVEL
-                else if( !this.oCurrent || this.oCurrent.nGatlingLevel <= oCommand.nGatlingLevel ) {
-                    bCanUse = true;
                 }
             }
             return bCanUse;

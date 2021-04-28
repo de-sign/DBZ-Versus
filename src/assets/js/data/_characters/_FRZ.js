@@ -156,7 +156,13 @@ GAME.oData.oCharacter.FRZ = {
                 nY: -110,
                 nWidth: 60,
                 nHeight: 112
-            }
+            },
+            aHurtBox: [{
+                nX: -30,
+                nY: -142,
+                nWidth: 68,
+                nHeight: 144
+            }]
         },
         burst: {
             oPositionBox: {
@@ -692,10 +698,7 @@ GAME.oData.oCharacter.FRZ = {
             },
             {
                 nFrame: 4,
-                sFrame: 'light_first_active',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'light_first_active'
             },
             {
                 nFrame: 4,
@@ -724,10 +727,7 @@ GAME.oData.oCharacter.FRZ = {
             },
             {
                 nFrame: 4,
-                sFrame: 'light_second_active',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'light_second_active'
             },
             {
                 nFrame: 4,
@@ -756,10 +756,7 @@ GAME.oData.oCharacter.FRZ = {
             },
             {
                 nFrame: 4,
-                sFrame: 'heavy_active',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'heavy_active'
             },
             {
                 nFrame: 6,
@@ -793,10 +790,7 @@ GAME.oData.oCharacter.FRZ = {
                 },
                 {
                     nFrame: 4,
-                    sFrame: 'light_third_active',
-                    oStatus: {
-                        bCancel: true
-                    }
+                    sFrame: 'light_third_active'
                 },
                 {
                     nFrame: 6,
@@ -836,10 +830,7 @@ GAME.oData.oCharacter.FRZ = {
                 },
                 {
                     nFrame: 6,
-                    sFrame: 'tracker_active',
-                    oStatus: {
-                        bCancel: true
-                    }
+                    sFrame: 'tracker_active'
                 },
                 {
                     nFrame: 2,
@@ -880,10 +871,7 @@ GAME.oData.oCharacter.FRZ = {
             },
             {
                 nFrame: 8,
-                sFrame: 'luncher_active',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'luncher_active'
             },
             {
                 nFrame: 4,
@@ -945,22 +933,30 @@ GAME.oData.oCharacter.FRZ = {
             {
                 nFrame: 2,
                 sFrame: 'blur',
-                aHurtBox: null
+                oStatus: {
+                    bInvul: true
+                }
             },
             {
                 nFrame: 30,
                 sFrame: 'super_first',
-                aHurtBox: null
+                oStatus: {
+                    bInvul: true
+                }
             },
             {
                 nFrame: 10,
                 sFrame: 'super_second',
-                aHurtBox: null
+                oStatus: {
+                    bInvul: true
+                }
             },
             {
                 nFrame: 4,
                 sFrame: 'super_third',
-                aHurtBox: null
+                oStatus: {
+                    bInvul: true
+                }
             },
             {
                 nFrame: 60,
@@ -1152,16 +1148,22 @@ GAME.oData.oCharacter.FRZ = {
                 sName: 'Light',
                 sAnimation: 'light_first',
                 nGatlingLevel: 1,
-                oSelfCancel: {
-                    light_second: {
-                        sName: '2nd',
-                        sCod: 'light_second',
-                        sAnimation: 'light_second',
-                        oStun: {
-                            nBlock: 8,
-                            nHit: 13,
-                            sHitAnimation: 'hit_light'
-                        }
+                oFollowUp: {
+                    sName: '2nd',
+                    sCod: 'light_second',
+                    sAnimation: 'light_second',
+                    nGatlingLevel: 1,
+                    oStun: {
+                        nBlock: 8,
+                        nHit: 13,
+                        sHitAnimation: 'hit_light'
+                    },
+                    bLast: true,
+                    oManipulation: {
+                        nMaxLengthFrame: 1,
+                        aButtons: [
+                            { A: true }
+                        ]
                     }
                 },
                 oStun: {

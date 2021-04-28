@@ -286,7 +286,7 @@ Object.assign(
                                 sClass = '--guard';
                             } else if( oPlayer.oAnimation.oFrame.aHitBox ){
                                 sClass = '--damage';
-                            } else if( !oPlayer.oAnimation.oFrame.aHurtBox ){
+                            } else if( oPlayer.isUnvulnerable() ){
                                 sClass = '--invulnerable';
                             }
                             oAnimation.oLayer.hElement.innerHTML += '<span class="' + sClass + '"></span>';

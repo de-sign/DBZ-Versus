@@ -49,7 +49,6 @@ __Battle__
     * Burst ?
     * Guard Cancel ?
     * Guard Break ?
-    * Choppe ?
 * Animation de début et fin de match 
 * ENTITY de décoration pour FX 
 

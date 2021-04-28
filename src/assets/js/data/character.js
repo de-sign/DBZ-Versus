@@ -29,7 +29,10 @@ GAME.oData.oEntity.oCharacter = {
         },
         recovery: {
             sPath: 'recovery.png',
-            nZIndex: 10
+            nZIndex: 10,
+            oStatus: {
+                bInvul: true
+            }
         },
         // Hurt
         guard: {
@@ -130,7 +133,10 @@ GAME.oData.oEntity.oCharacter = {
         // Super
         super_first: {
             sPath: 'super_first.png',
-            nZIndex: 80
+            nZIndex: 80,
+            oStatus: {
+                bInvul: true
+            }
         },
         super_second: {
             sPath: 'super_second.png',
@@ -232,7 +238,7 @@ GAME.oData.oEntity.oCharacter = {
                 nFrame: 2
             },
             {
-                sFrame: 'reflect',
+                sFrame: 'reflect_invul',
                 nFrame: 10
             },
             {
@@ -267,6 +273,15 @@ GAME.oData.oEntity.oCharacter = {
                 sFrame: 'hit_luncher'
             }
         ],
+        hit_throw: [
+            {
+                nFrame: 1,
+                sFrame: 'hit_light_throw'
+            },
+            {
+                sFrame: 'hit_light'
+            }
+        ],
         down: [
             {
                 nFrame: 20,
@@ -299,18 +314,15 @@ GAME.oData.oEntity.oCharacter = {
             },
             {
                 nFrame: 10,
-                sFrame: 'super_second',
-                aHurtBox: null
+                sFrame: 'super_second'
             },
             {
                 nFrame: 2,
-                sFrame: 'list_first',
-                aHurtBox: null
+                sFrame: 'list_first'
             },
             {
                 nFrame: 2,
-                sFrame: 'list_second',
-                aHurtBox: null
+                sFrame: 'list_second'
             },
             {
                 nFrame: 36,
@@ -331,13 +343,46 @@ GAME.oData.oEntity.oCharacter = {
             {
                 nFrame: 2,
                 sFrame: 'blur'
+            }
+        ],
+        // Choppe
+        throw: [
+            {
+                nFrame: 2,
+                sFrame: 'blur'
             },
+            {
+                nFrame: 6,
+                sFrame: 'reflect',
+                aHitBox: null
+            },
+            {
+                nFrame: 3,
+                sFrame: 'guard'
+            },
+            {
+                nFrame: 3,
+                sFrame: 'guard',
+                aHitBox: {
+                    nX: 22,
+                    nY: -110,
+                    nWidth: 32,
+                    nHeight: 112
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oStatus: {
+                    bCancel: true
+                }
+            }
         ]
     },
     oCommands: {
         aDefense: [
             {
-                sName: 'reflect',
+                sCod: 'reflect',
                 sAnimation: 'reflect',
                 bGuard: true,
                 nCost: 4,
@@ -356,6 +401,30 @@ GAME.oData.oEntity.oCharacter = {
                 }
             }
         ],
-        aOffense: []
+        aOffense: [
+            {
+                sCod: 'throw',
+                sAnimation: 'throw',
+                nDamage: 1,
+                bUnblockable: true,
+                bOnlyOnGround: true,
+                sCollisionBox: 'oPositionBox',
+                oStun: {
+                    nHit: 16,
+                    sHitAnimation: 'hit_throw'
+                },
+                oPushback: {
+                    nLength: 1,
+                    nX: 0
+                },
+                bLast: true,
+                oManipulation: {
+                    nMaxLengthFrame: 1,
+                    aButtons: [
+                        { A: false, B: true }
+                    ]
+                }
+            }
+        ]
     }
 };

@@ -21,6 +21,12 @@ Object.assign(
             },
             */
             {
+                sSuffixe: 'throw',
+                aFrame: ['hit_light'],
+                sColor: 'rgb(0, 255, 0)',
+                nAlpha: 0.4
+            },
+            {
                 sSuffixe: 'invul',
                 aFrame: ['blur', 'hit_luncher', 'recovery', 'reflect'/*, 'super_first', 'super_second', 'super_third'*/],
                 sColor: 'rgb(255, 255, 255)',
@@ -39,6 +45,7 @@ Object.assign(
                 nAlpha: 0.4
             }
         ],
+        aFilterFrames: ['hit_light'],
 
         oChar: {
             BJT: {
@@ -101,6 +108,21 @@ Object.assign(
                 oRatio: {}
             },
 
+            GKU: {
+                sChar: 'GKU',
+                aColor: ['CTM_TRN', 'LSW_TRN', 'LSW_GNU'],
+                aFrames: [
+                    ['stand', 'blur', 'backward', 'forward'],
+                    ['jump', 'fall', null, 'guard', 'reflect', 'burst'],
+                    ['hit_light', 'hit_heavy', 'hit_luncher', 'hit_fall', 'down', 'recovery'],
+                    ['light_first', 'light_first_active', 'light_second', 'light_second_active'],
+                    ['heavy', 'heavy_active', 'tracker', 'tracker_active', 'luncher', 'luncher_active'],
+                    ['kikoha'],
+                    ['super_first', 'super_second', 'super_third']
+                ],
+                oRatio: {}
+            },
+
             GKU_SSJ: {
                 sChar: 'GKU_SSJ',
                 aColor: ['CTM_SSJ', 'CTM_BRK', 'LSW_SSJ'],
@@ -116,39 +138,9 @@ Object.assign(
                 oRatio: {}
             },
 
-            GKU: {
-                sChar: 'GKU',
-                aColor: ['CTM_TRN'],
-                aFrames: [
-                    ['stand', 'blur', 'backward', 'forward'],
-                    ['jump', 'fall', null, 'guard', 'reflect', 'burst'],
-                    ['hit_light', 'hit_heavy', 'hit_luncher', 'hit_fall', 'down', 'recovery'],
-                    ['light_first', 'light_first_active', 'light_second', 'light_second_active'],
-                    ['heavy', 'heavy_active', 'tracker', 'tracker_active', 'luncher', 'luncher_active'],
-                    ['kikoha'],
-                    ['super_first', 'super_second', 'super_third']
-                ],
-                oRatio: {}
-            },
-            
-            SRU: {
-                sChar: 'SRU',
-                aColor: ['LSW', 'SCD'],
-                aFrames: [
-                    ['stand', 'blur', 'backward', 'forward'],
-                    ['jump', 'fall', null, 'guard', 'reflect', 'burst'],
-                    ['hit_light', 'hit_heavy', 'hit_luncher', 'hit_fall', 'down', 'recovery'],
-                    ['light_first', 'light_first_active', 'light_second', 'light_second_active', 'light_third', 'light_third_active'],
-                    ['heavy', 'heavy_active', 'tracker', 'tracker_active', 'luncher', 'luncher_active'],
-                    ['kikoha', 'ki_beam'],
-                    ['super_first', 'super_second', 'super_third']
-                ],
-                oRatio: {}
-            },
-
             KID_GHN: {
                 sChar: 'KID_GHN',
-                aColor: ['LSW', 'SCD'],
+                aColor: ['LSW_SSJT', 'LSW_TRN'],
                 aFrames: [
                     ['stand', 'blur', 'backward', 'forward'],
                     ['jump', 'fall', 'pre_jump', 'guard', 'reflect', 'burst'],
@@ -156,6 +148,21 @@ Object.assign(
                     ['light_first', 'light_first_active', 'light_second', 'light_second_active', 'light_third', 'light_third_active'],
                     ['heavy', 'heavy_active', 'tracker', 'tracker_active', 'luncher', 'luncher_active'],
                     ['kikoha', null, 'tracker_second', 'tracker_second_active'],
+                    ['super_first', 'super_second', 'super_third']
+                ],
+                oRatio: {}
+            },
+            
+            SRU: {
+                sChar: 'SRU',
+                aColor: ['LSW_PFC', 'LSW_SRU'],
+                aFrames: [
+                    ['stand', 'blur', 'backward', 'forward'],
+                    ['jump', 'fall', null, 'guard', 'reflect', 'burst'],
+                    ['hit_light', 'hit_heavy', 'hit_luncher', 'hit_fall', 'down', 'recovery'],
+                    ['light_first', 'light_first_active', 'light_second', 'light_second_active', 'light_third', 'light_third_active'],
+                    ['heavy', 'heavy_active', 'tracker', 'tracker_active', 'luncher', 'luncher_active'],
+                    ['kikoha', 'ki_beam'],
                     ['super_first', 'super_second', 'super_third']
                 ],
                 oRatio: {}

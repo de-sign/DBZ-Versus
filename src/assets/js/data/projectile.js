@@ -18,10 +18,12 @@ GAME.oData.oEntity.oProjectile = {
         },
 
         hit_light: {
-            sPath: '../__common/hit_light.png'
+            sPath: '../__common/hit_light.png',
+            nZIndex: 80
         },
         hit_heavy: {
-            sPath: '../__common/hit_heavy.png'
+            sPath: '../__common/hit_heavy.png',
+            nZIndex: 80
         }
     },
     

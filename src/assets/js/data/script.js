@@ -39,14 +39,22 @@ Object.assign(
             aFilter: [
                 {
                     sSuffixe: 'invul',
-                    aFrames: ['blur', 'hit_luncher', 'recovery'/*, 'super_first', 'super_second', 'super_third'*/],
+                    aFrames: ['blur', 'hit_luncher', 'recovery', 'reflect'],
                     oData: {
+                        oStatus: {
+                            bInvul: true
+                        },
                         aHurtBox: null
                     }
                 },
                 {
+                    sSuffixe: 'throw',
+                    aFrames: ['hit_light'],
+                    oData: {}
+                },
+                {
                     sSuffixe: 'filter',
-                    aFrames: ['hit_light', 'hit_heavy', 'hit_luncher', 'guard'/*, 'light_first', 'light_second', 'light_third', 'heavy', 'tracker', 'luncher'*/],
+                    aFrames: ['hit_light', 'hit_heavy', 'hit_luncher', 'guard'],
                     oData: {}
                 }
             ],

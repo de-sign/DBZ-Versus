@@ -272,6 +272,9 @@ Object.assign(
             getHitData: function(){
                 return this.oHitData;
             },
+            isUnvulnerable: function(){
+                return this.oAnimation.oFrame.oStatus.bInvul;
+            },
 
             isDead: function(){
                 return this.oDeadTimer;

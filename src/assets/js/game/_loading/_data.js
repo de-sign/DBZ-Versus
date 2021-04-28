@@ -18,6 +18,7 @@ Object.assign(
                         this.createLunch(oEntity);
                         this.createRecovery(oEntity);
                         this.createCommands(oEntity);
+                        this.createThrow(oEntity);
                     }
                     this.createColor(sType, oEntity);
                 }
@@ -140,6 +141,12 @@ Object.assign(
                                     delete oCommand.oName;
                                 }
                                 oEntityColor.oCommands[sTypeCMD].push(oCommand);
+                                
+                                const sRoot = oCommand.sCod;
+                                while( oCommand.oFollowUp ) {
+                                    oCommand.oFollowUp.sRoot = sRoot;
+                                    oCommand = oCommand.oFollowUp;
+                                }
                             }
                         } );
                     }
@@ -217,22 +224,44 @@ Object.assign(
 
         createCommands: function(oChar){
             const oCommands = {};
-            if( oChar.bActive ){
-                for( let sType in this.oData.oCharacter.oCommands ){
-                    oCommands[sType] = [
-                        ...this.oData.oCharacter.oCommands[sType],
-                        ...(oChar.oCommands[sType] || [])
-                    ];
-                    oCommands[sType].forEach( oCommand => {
-                        if( oCommand.aEntity && !Array.isArray(oCommand.aEntity) ){
-                            oCommand.aEntity = [oCommand.aEntity];
-                        }
-                    } );
-                }
-            } else {
-                Object.assign(oCommands, this.oData.oCharacter.oCommands);
+            for( let sType in this.oData.oCharacter.oCommands ){
+                oCommands[sType] = [];
+                this.oData.oCharacter.oCommands[sType].forEach( oCommand => {
+                    oCommands[sType].push( Object.assign({}, oCommand) );
+                } );
+                oChar.oCommands && oChar.oCommands[sType] && [].push.apply(oCommands[sType], oChar.oCommands[sType]);
+                oCommands[sType].forEach( oCommand => {
+                    if( oCommand.aEntity && !Array.isArray(oCommand.aEntity) ){
+                        oCommand.aEntity = [oCommand.aEntity];
+                    }
+                } );
             }
             oChar.oCommands = oCommands;
+        },
+
+        createThrow: function(oChar){
+            let oThrow = null,
+                oLuncher = null;
+
+            oChar.oCommands.aOffense.forEach( oCommand => {
+                switch( oCommand.sCod ){
+                    case 'throw':
+                        oThrow = oCommand;
+                        break;
+                    case 'luncher':
+                        oLuncher = oCommand;
+                        break;
+                }
+            } );
+
+            oThrow.oFollowUp = Object.assign(
+                {},
+                oLuncher,
+                {
+                    bFollowOnlyOnHurt: true,
+                    oManipulation: null
+                }
+            );
         },
 
         // STAGE

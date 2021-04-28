@@ -344,14 +344,14 @@
     width: 256px;
     height: 256px;
     transform-origin: 128px 190px;
-    z-index: 50;
+    z-index: 0;
 }
 
 .Battle__Beam {
     width: 200px;
     height: 300px;
     transform-origin: 98px 232px;
-    z-index: 70;
+    z-index: 0;
     
     .Battle__Entity_Sprite {
         transform-origin: 100px 150px;
