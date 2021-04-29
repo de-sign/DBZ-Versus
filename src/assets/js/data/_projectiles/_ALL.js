@@ -1,5 +1,4 @@
 GAME.oData.oProjectile.ALL = {
-    bActive: true,
     sEntity: 'ALL',
     aColor: [
         {

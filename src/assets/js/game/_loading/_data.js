@@ -36,38 +36,34 @@ Object.assign(
         // ENTITY
         createFrames: function(sType, oEntity){
             const oFrames = {};
-            if( oEntity.bActive ){
-                [
-                    ...Object.keys(this.oData[sType].oFrames),
-                    ...Object.keys(oEntity.oFrames)
-                ]
-                .filter( (uValue, nIndex, aSelf) => {
-                    return aSelf.indexOf(uValue) === nIndex;
-                } )
-                .forEach( sFrame => {
-                    if( oEntity.oFrames[sFrame] != null ){
-                        oFrames[sFrame] = Object.assign({}, this.oData[sType].oFrames[sFrame] || {}, oEntity.oFrames[sFrame] || {});
-                        for( let sProp in oFrames[sFrame] ){
-                            if( this.oData[sType].oFrames[sFrame] && this.isPlainObject(this.oData[sType].oFrames[sFrame][sProp]) ){
-                                if( this.isPlainObject(oEntity.oFrames[sFrame][sProp]) ){
-                                    Object.assign(oFrames[sFrame][sProp], this.oData[sType].oFrames[sFrame][sProp], oEntity.oFrames[sFrame][sProp]);
-                                }
-                                else if( this.oData[sType].oFrames[sFrame][sProp].bDelete && oEntity.oFrames[sFrame][sProp] == null ){
-                                    delete oFrames[sFrame][sProp];
-                                }
+            [
+                ...Object.keys(this.oData[sType].oFrames),
+                ...Object.keys(oEntity.oFrames)
+            ]
+            .filter( (uValue, nIndex, aSelf) => {
+                return aSelf.indexOf(uValue) === nIndex;
+            } )
+            .forEach( sFrame => {
+                if( oEntity.oFrames[sFrame] != null ){
+                    oFrames[sFrame] = Object.assign({}, this.oData[sType].oFrames[sFrame] || {}, oEntity.oFrames[sFrame] || {});
+                    for( let sProp in oFrames[sFrame] ){
+                        if( this.oData[sType].oFrames[sFrame] && this.isPlainObject(this.oData[sType].oFrames[sFrame][sProp]) ){
+                            if( this.isPlainObject(oEntity.oFrames[sFrame][sProp]) ){
+                                Object.assign(oFrames[sFrame][sProp], this.oData[sType].oFrames[sFrame][sProp], oEntity.oFrames[sFrame][sProp]);
+                            }
+                            else if( this.oData[sType].oFrames[sFrame][sProp].bDelete && oEntity.oFrames[sFrame][sProp] == null ){
+                                delete oFrames[sFrame][sProp];
                             }
                         }
-                        GAME.oSettings.aFilter.forEach( oFilter => {
-                            if( oFilter.aFrames.indexOf(sFrame) != -1 ){
-                                oFrames[sFrame + '_' + oFilter.sSuffixe] = Object.assign({}, oFrames[sFrame], oFilter.oData);
-                                oFrames[sFrame + '_' + oFilter.sSuffixe].sPath = oFrames[sFrame].sPath.substring(0, oFrames[sFrame].sPath.length - 4) + '_' + oFilter.sSuffixe + '.png';
-                            }
-                        } );
                     }
-                } );
-            } else {
-                Object.assign(oFrames, this.oData[sType].oFrames);
-            }
+                    GAME.oSettings.aFilter.forEach( oFilter => {
+                        if( oFilter.aFrames.indexOf(sFrame) != -1 ){
+                            oFrames[sFrame + '_' + oFilter.sSuffixe] = Object.assign({}, oFrames[sFrame], oFilter.oData);
+                            oFrames[sFrame + '_' + oFilter.sSuffixe].sPath = oFrames[sFrame].sPath.substring(0, oFrames[sFrame].sPath.length - 4) + '_' + oFilter.sSuffixe + '.png';
+                        }
+                    } );
+                }
+            } );
             oEntity.oFrames = oFrames;
         },
 
@@ -197,7 +193,8 @@ Object.assign(
                     if( bInvulnerable ){
                         Object.assign( oLastFrame, {
                             oStatus: {
-                                bInvul: true
+                                bInvul: true,
+                                bReverse: nIndex == 1
                             }
                         } );
                     }
@@ -245,6 +242,7 @@ Object.assign(
 
         createThrow: function(oChar){
             let oThrow = null,
+                oBackThrow = null;
                 oLuncher = null;
 
             oChar.oCommands.aOffense.forEach( oCommand => {
@@ -252,20 +250,25 @@ Object.assign(
                     case 'throw':
                         oThrow = oCommand;
                         break;
+                    case 'back_throw':
+                        oBackThrow = oCommand;
+                        break;
                     case 'luncher':
-                        oLuncher = oCommand;
+                        oLuncher = Object.assign(
+                            {},
+                            oCommand,
+                            {
+                                sCod: 'throw_luncher',
+                                oManipulation: null
+                            }
+                        );
                         break;
                 }
             } );
 
-            oThrow.oFollowUp = Object.assign(
-                {},
-                oLuncher,
-                {
-                    bFollowOnlyOnHurt: true,
-                    oManipulation: null
-                }
-            );
+            // BackThrow
+            oBackThrow.oFollowUp.oFollowUp = oLuncher;
+            oThrow.oFollowUp = Object.assign( { bFollowOnlyOnHurt: true }, oLuncher );
         },
 
         // STAGE

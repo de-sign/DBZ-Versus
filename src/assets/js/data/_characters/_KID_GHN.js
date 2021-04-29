@@ -1,5 +1,4 @@
 GAME.oData.oCharacter.KID_GHN = {
-    bActive: true,
     sEntity: 'KID_GHN',
     aColor: [
         {

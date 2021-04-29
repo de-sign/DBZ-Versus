@@ -1,5 +1,4 @@
 GAME.oData.oCharacter.BJT = {
-    bActive: true,
     sEntity: 'BJT',
     aColor: [
         {

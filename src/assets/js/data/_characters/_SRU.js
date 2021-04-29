@@ -1,5 +1,4 @@
 GAME.oData.oCharacter.SRU = {
-    bActive: true,
     sEntity: 'SRU',
     sEntityColor: 'BLU',
     aColor: [

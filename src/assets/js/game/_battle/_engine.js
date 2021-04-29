@@ -40,7 +40,7 @@ Object.assign(
 
                 // Gestion Reverse
                 aEntity.forEach( (oEntity, nIndex) => {
-                    if( oEntity.oCheck.bReverse && oEntity.canMove() && oCollapse[oEntity.sId] ){
+                    if( oEntity.oCheck.bReverse && oEntity.canReverse() && oCollapse[oEntity.sId] ){
                         oEntity.bReverse = oCollapse[oEntity.sId].nOrientation == 1;
                     }
                 } );
@@ -259,23 +259,28 @@ Object.assign(
             aPushback.forEach( oPushback => {
                 const bDivide = oPushback.oPriority.nHit < oPushback.oPriority.nHurt;
                 this.pushbackEntity(
-                    bDivide ? oPushback.oEntityHit : oPushback.oEntityHurt,
+                    bDivide ?
+                        oPushback.oEntityHit :
+                        oPushback.oEntityHurt,
                     oPushback.oData,
+                    bDivide ?
+                        oPushback.oEntityHit.bReverse :
+                        !oPushback.oEntityHit.bReverse,
                     bDivide
                 );
             } );
         },
-        pushbackEntity: function(oEntity, oData, bDivide){
+        pushbackEntity: function(oEntity, oData, bReverse, bDivide){
             if( oEntity.isLinked() ){
-                oEntity.oParent.oCheck.bPushback && oEntity.oParent.pushBack(oData, bDivide);
+                oEntity.oParent.oCheck.bPushback && oEntity.oParent.pushBack(oData, bReverse, bDivide);
                 for( let sType in oEntity.oParent.oLink ){
                     oEntity.oParent.oLink[sType].forEach( oLinkEntity => {
-                        oLinkEntity.oCheck.bPushback && oLinkEntity.pushBack(oData, bDivide);
+                        oLinkEntity.oCheck.bPushback && oLinkEntity.pushBack(oData, bReverse, bDivide);
                     } );
                 }
             }
             else if( oEntity.oCheck.bPushback ){
-                oEntity.pushBack(oData, bDivide);
+                oEntity.pushBack(oData, bReverse, bDivide);
             }
         },
 

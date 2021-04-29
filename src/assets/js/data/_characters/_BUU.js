@@ -1,5 +1,4 @@
 GAME.oData.oCharacter.BUU = {
-    bActive: true,
     sEntity: 'BUU',
     sEntityColor: 'PNK',
     aColor: [

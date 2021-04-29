@@ -42,15 +42,13 @@ Object.assign(
         },
         createCharacterList: function(){
             for( let sChar in GAME.oData.oCharacter ){
-                const oChar = GAME.oData.oCharacter[sChar];
-                if( oChar.bActive ){
-                    const oDefaultColor = oChar[oChar.sDefaultColor],
-                        oLayer = new GAME.oOutput.OutputLayer(),
-                        oSprite = new GAME.oOutput.OutputSprite( oDefaultColor.oPath.sFace );
-                    oLayer.__oData = oChar;
-                    oLayer.add(oSprite);
-                    GAME.oOutput.getElement('LAY__Select_Character').add(oLayer);
-                }
+                const oChar = GAME.oData.oCharacter[sChar],
+                    oDefaultColor = oChar[oChar.sDefaultColor],
+                    oLayer = new GAME.oOutput.OutputLayer(),
+                    oSprite = new GAME.oOutput.OutputSprite( oDefaultColor.oPath.sFace );
+                oLayer.__oData = oChar;
+                oLayer.add(oSprite);
+                GAME.oOutput.getElement('LAY__Select_Character').add(oLayer);
             }
             this.oContext.update();
         }

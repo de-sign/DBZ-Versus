@@ -224,7 +224,7 @@ Object.assign(
                 this.nLife -= oData.nDamage == null ? 1 : oData.nDamage;
                 oEntity.confirmHit(this, oData);
             },
-            setAnimation: function(sAnimation, bUpdate){
+            setAnimation: function(sAnimation, bUpdate, bReverse){
                 let sSet = false;
                 if( !this.oAnimation || GameAnimation.isTypeHurt(sAnimation) || this.oAnimation.sName != sAnimation ){
                     this.oAnimation = new GameAnimation(
@@ -232,16 +232,21 @@ Object.assign(
                         this.oData.oFrames,
                         this.oData.oAnimations[sAnimation].aFrames
                     );
-                    this.setMovement( this.oData.oAnimations[sAnimation].oMove );
+                    this.setMovement(
+                        this.oData.oAnimations[sAnimation].oMove,
+                        bReverse == null ?
+                            this.bReverse :
+                            bReverse
+                    );
                     bUpdate && this.updateAnimation();
                     this.aHit = [];
                     sSet = true;
                 }
                 return sSet;
             },
-            setMovement: function(oMove){
+            setMovement: function(oMove, bReverse){
                 this.oMovement = oMove ?
-                    new BattleMovement(oMove.nDelay, oMove, oMove.nLength) :
+                    new BattleMovement(oMove.nDelay, oMove, oMove.nLength, bReverse) :
                     BattleMovement.empty();
             },
             setFreeze: function(nFreeze){
@@ -294,7 +299,7 @@ Object.assign(
             move: function(){
                 if( this.oMovement.oMove ){
                     if( this.oMovement.oMove.nX ){
-                        this.oLayer.oPosition.nX += this.oMovement.oMove.nX * (this.bReverse ? -1 : 1);
+                        this.oLayer.oPosition.nX += this.oMovement.oMove.nX * (this.oMovement.bReverse ? -1 : 1);
                     }
                     if( this.oMovement.oMove.nY ){
                         this.oLayer.oPosition.nY += this.oMovement.oMove.nY;
@@ -305,10 +310,10 @@ Object.assign(
                 this.aHit.push(oEntityHurt.sId);
                 this.oParent && this.oParent.confirmHit(oEntityHurt, oData, bGuard);
             },
-            pushBack: function(oPushback, bDivide){
+            pushBack: function(oPushback, bReverse, bDivide){
                 oPushback = Object.assign({}, oPushback || GAME.oSettings.oPushback);
                 bDivide && (oPushback.nX /= 2);
-                this.setMovement(oPushback);
+                this.setMovement(oPushback, bReverse);
             }
         }
     }

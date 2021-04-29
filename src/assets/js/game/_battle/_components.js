@@ -160,7 +160,7 @@ Object.assign(
 
             for( let nIndex = 0; nIndex < aCommand.length; nIndex++ ){
                 const oCommand = aCommand[nIndex];
-                if( oCommand.bGuard ? oCanAction.bGuard : !oCanAction.bGuard ){
+                if( !oCommand.sCheck || oCanAction[oCommand.sCheck] ){
                     if( this.canUseCommand(nKi, oCommand) ){
                         if( oCanAction.bStack ){
                             this.oNext = oCommand;
@@ -281,7 +281,7 @@ Object.assign(
                 // Gestion GATLING
                 if( !this.oUsed[oCommand.sCod] ){
                     // Gestion LEVEL
-                    if( !this.oCurrent || this.oCurrent.nGatlingLevel <= oCommand.nGatlingLevel || this.oCurrent.sCod <= oCommand.sRoot ) {
+                    if( !this.oCurrent || this.oCurrent.nGatlingLevel <= oCommand.nGatlingLevel || (this.oCurrent.sRoot || this.oCurrent.sCod ) == oCommand.sRoot ) {
                         bCanUse = true;
                     }
                 }
@@ -295,13 +295,14 @@ Object.assign(
 );
 
 /* ----- BattleMovement ----- */
-function BattleMovement(nDelay, uMove, nLength){
+function BattleMovement(nDelay, uMove, nLength, bReverse){
     GameTimer.call(this);
     
     this.aStep = [];
     this.oMove = null;
+    this.bReverse = false;
 
-    this.init(nDelay, uMove, nLength);
+    this.init(nDelay, uMove, nLength, bReverse);
 }
 
 Object.assign(
@@ -314,7 +315,7 @@ Object.assign(
         prototype: Object.assign(
             Object.create(GameTimer.prototype), {
                 constructor: BattleMovement,
-                init: function(nDelay, uMove, nLength){
+                init: function(nDelay, uMove, nLength, bReverse){
                     if( Array.isArray(uMove) ){
                         nLength = uMove.length;
                         this.aStep = uMove;
@@ -333,6 +334,8 @@ Object.assign(
                             this.aStep.push(uMove);
                         }
                     }
+
+                    this.bReverse = bReverse;
 
                     GameTimer.prototype.init.call(this, nLength, nDelay);
                 },

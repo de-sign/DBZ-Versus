@@ -37,7 +37,7 @@ Object.assign(
                     // Gestion validation
                     A: () => {
                         sSFX = 'ADO__Validate';
-                        this.bReady = this.oCharacter.bActive;
+                        this.bReady = true;
                         this.bReturn = false;
                         this.bQuit = false;
                     },

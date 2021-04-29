@@ -1,5 +1,4 @@
 GAME.oData.oCharacter.FRZ = {
-    bActive: true,
     sEntity: 'FRZ',
     aColor: [
         {

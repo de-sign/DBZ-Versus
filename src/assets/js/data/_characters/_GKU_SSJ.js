@@ -1,5 +1,4 @@
 GAME.oData.oCharacter.GKU_SSJ = {
-    bActive: true,
     sEntity: 'GKU_SSJ',
     aColor: [
         {

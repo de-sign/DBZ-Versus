@@ -1,6 +1,5 @@
 GAME.oData.oBeam.ALL = {
     sEntity: 'ALL',
-    bActive: true,
     aColor: [
         {
             sColor: 'BLU',

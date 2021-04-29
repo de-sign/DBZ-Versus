@@ -174,7 +174,10 @@ GAME.oData.oEntity.oCharacter = {
         // Movement
         stand: [
             {
-                sFrame: 'stand'
+                sFrame: 'stand',
+                oStatus: {
+                    bReverse: true,
+                }
             }
         ],
         block: [
@@ -192,10 +195,16 @@ GAME.oData.oEntity.oCharacter = {
             aFrames: [
                 {
                     nFrame: 2,
-                    sFrame: 'blur'
+                    sFrame: 'blur',
+                    oStatus: {
+                        bReverse: true,
+                    }
                 },
                 {
-                    sFrame: 'forward'
+                    sFrame: 'forward',
+                    oStatus: {
+                        bReverse: true,
+                    }
                 }
             ]
         },
@@ -208,12 +217,14 @@ GAME.oData.oEntity.oCharacter = {
                     nFrame: 2,
                     sFrame: 'blur',
                     oStatus: {
+                        bReverse: true,
                         bGuard: true
                     }
                 },
                 {
                     sFrame: 'backward',
                     oStatus: {
+                        bReverse: true,
                         bGuard: true
                     }
                 }
@@ -278,8 +289,11 @@ GAME.oData.oEntity.oCharacter = {
         ],
         hit_throw: [
             {
-                nFrame: 1,
-                sFrame: 'hit_light_throw'
+                nFrame: 6,
+                sFrame: 'hit_light_throw',
+                oStatus: {
+                    bThrow: true
+                }
             },
             {
                 sFrame: 'hit_light'
@@ -294,7 +308,10 @@ GAME.oData.oEntity.oCharacter = {
         recovery: [
             {
                 nFrame: 1,
-                sFrame: 'recovery'
+                sFrame: 'recovery',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 7,
@@ -305,6 +322,37 @@ GAME.oData.oEntity.oCharacter = {
                 sFrame: 'blur_invul'
             }
         ],
+        teleport: {
+            oMove: {
+                nDelay: 4,
+                nLength: 1,
+                nX: 84
+            },
+            aFrames: [
+                {
+                    nFrame: 2,
+                    sFrame: 'blur'
+                },
+                {
+                    nFrame: 5,
+                    sFrame: 'burst',
+                    oStatus: {
+                        bReverse: true
+                    }
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'blur'
+                },
+                {
+                    nFrame: 1,
+                    sFrame: 'blur',
+                    oStatus: {
+                        bCancel: true
+                    }
+                }
+            ]
+        },
         // List
         super_list: [
             {
@@ -385,11 +433,11 @@ GAME.oData.oEntity.oCharacter = {
     oCommands: {
         aDefense: [
             {
-                sCod: 'reflect',
+                sCod: 'tech_throw',
                 sAnimation: 'reflect',
-                bGuard: true,
-                nCost: 4,
+                sCheck: 'bThrow',
                 nDamage: 0,
+                sCollisionBox: 'oPositionBox',
                 oStun: {},
                 oPushback: {
                     nLength: 4,
@@ -397,7 +445,27 @@ GAME.oData.oEntity.oCharacter = {
                 },
                 bLast: true,
                 oManipulation: {
-                    nMaxLengthFrame: 1,
+                    nMaxLengthFrame: 2,
+                    aButtons: [
+                        { A: false, B: true }
+                    ]
+                }
+            },
+            {
+                sCod: 'reflect',
+                sAnimation: 'reflect',
+                sCheck: 'bGuard',
+                nCost: 4,
+                nDamage: 0,
+                sCollisionBox: 'oPositionBox',
+                oStun: {},
+                oPushback: {
+                    nLength: 4,
+                    nX: -192
+                },
+                bLast: true,
+                oManipulation: {
+                    nMaxLengthFrame: 2,
                     aButtons: [
                         { B: false, C: true }
                     ]
@@ -406,23 +474,48 @@ GAME.oData.oEntity.oCharacter = {
         ],
         aOffense: [
             {
-                sCod: 'throw',
+                sCod: 'back_throw',
                 sAnimation: 'throw',
-                nDamage: 1,
+                nDamage: 0,
                 bUnblockable: true,
                 bOnlyOnGround: true,
                 sCollisionBox: 'oPositionBox',
                 oStun: {
-                    nHit: 16,
+                    nHit: 30,
                     sHitAnimation: 'hit_throw'
                 },
-                oPushback: {
-                    nLength: 1,
-                    nX: 0
-                },
+                oPushback: {},
                 bLast: true,
                 oManipulation: {
-                    nMaxLengthFrame: 1,
+                    nMaxLengthFrame: 5,
+                    aButtons: [
+                        { BW: false, A: false, B: true }
+                    ]
+                },
+                oFollowUp: {
+                    sCod: 'throw_teleport',
+                    sAnimation: 'teleport',
+                    bFollowOnlyOnHurt: true,
+                    oStun: {},
+                    oPushback: {},
+                    bLast: true
+                }
+            },
+            {
+                sCod: 'throw',
+                sAnimation: 'throw',
+                nDamage: 0,
+                bUnblockable: true,
+                bOnlyOnGround: true,
+                sCollisionBox: 'oPositionBox',
+                oStun: {
+                    nHit: 30,
+                    sHitAnimation: 'hit_throw'
+                },
+                oPushback: {},
+                bLast: true,
+                oManipulation: {
+                    nMaxLengthFrame: 5,
                     aButtons: [
                         { A: false, B: true }
                     ]

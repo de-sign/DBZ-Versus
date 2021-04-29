@@ -1,5 +1,4 @@
 GAME.oData.oCharacter.GKU = {
-    bActive: true,
     sEntity: 'GKU',
     aColor: [
         {
@@ -568,23 +567,7 @@ GAME.oData.oCharacter.GKU = {
                 nY: -110,
                 nWidth: 64,
                 nHeight: 112
-            },
-            aHurtBox: [{
-                nX: -10,
-                nY: -138,
-                nWidth: 60,
-                nHeight: 56
-            }, {
-                nX: -22,
-                nY: -118,
-                nWidth: 104,
-                nHeight: 64
-            }, {
-                nX: -38,
-                nY: -58,
-                nWidth: 84,
-                nHeight: 60
-            }]
+            }
         },
         super_third: {
             sPath: 'super_third.png',

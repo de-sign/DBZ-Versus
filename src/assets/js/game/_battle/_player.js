@@ -105,26 +105,24 @@ Object.assign(
                 takeHit: function(oEntity, oData){
                     let sSFX = '';
                     if( !oData.bUnblockable && this.oAnimation.oFrame.oStatus.bGuard ){
-                        this.setHurt('guard', oData.oStun.nBlock, true);
+                        this.setHurt('guard', oData.oStun.nBlock, !oEntity.bReverse);
                         oEntity.confirmHit(this, oData, true);
                         sSFX = 'ADO__Guard';
-                    } else {
+                    }
+                    else {
                         const nDamage = oData.nDamage == null ? 1 : oData.nDamage;
 
                         if( nDamage ){
                             this.nLife -= nDamage;
                             this.nHitting += nDamage;
                             this.addKi( 2 * nDamage );
-
-                            const bLunch = oData.oStun.bLunch && !this.oLunch,
-                                bDeath = this.nLife <= 0;
-                                
-                            this.setHurt(
-                                bLunch || bDeath ? 'lunch' : oData.oStun.sHitAnimation,
-                                oData.oStun.nHit,
-                                true
-                            );
                         }
+
+                        const bLunch = oData.oStun.bLunch && !this.oLunch,
+                            bDeath = this.nLife <= 0,
+                            sHitAnim = bLunch || bDeath ? 'lunch' : oData.oStun.sHitAnimation;
+                            
+                        sHitAnim && this.setHurt( sHitAnim, oData.oStun.nHit, !oEntity.bReverse);
                         oEntity.confirmHit(this, oData);
                         sSFX = 'ADO__Hit';
                     }
@@ -145,6 +143,7 @@ Object.assign(
                         bMove: false,
                         bRecovery: false,
                         bGuard: false,
+                        bThrow: false,
                         nCode: 0
                     };
                     const bFreeze = this.oAnimation.isFreeze();
@@ -157,6 +156,7 @@ Object.assign(
                             bMove: true,
                             bRecovery: false,
                             bGuard: false,
+                            bThrow: false,
                             nCode: 1
                         };
                     }
@@ -169,6 +169,7 @@ Object.assign(
                                 bMove: true,
                                 bRecovery: false,
                                 bGuard: false,
+                                bThrow: false,
                                 nCode: 2
                             };
                         } else {
@@ -178,18 +179,20 @@ Object.assign(
                                 bMove: false,
                                 bRecovery: true,
                                 bGuard: false,
+                                bThrow: false,
                                 nCode: 3
                             };
                         }
                     }
                     // Gestion HURT
-                    else if( (this.oAnimation.sType == 'guard' || this.oAnimation.sType == 'hit') && !bFreeze ){
+                    else if( (this.oAnimation.sType == 'guard' || this.oAnimation.sType == 'hit') ){
                         oCanAction = {
                             sCommand: 'aDefense',
-                            bStack: false,
+                            bStack: bFreeze,
                             bMove: false,
                             bRecovery: false,
-                            bGuard: this.oAnimation.sType == 'guard',
+                            bGuard: this.oAnimation.oFrame.oStatus.bGuard,
+                            bThrow: this.oAnimation.oFrame.oStatus.bThrow,
                             nCode: 4
                         };
                     }
@@ -202,6 +205,7 @@ Object.assign(
                             bMove: false,
                             bRecovery: false,
                             bGuard: false,
+                            bThrow: false,
                             nCode: bCancel ? 5 : 6
                         };
                     }
@@ -212,27 +216,30 @@ Object.assign(
                     oCanAction = this.canAction();
                     return !this.oAnimation.isFreeze() && oCanAction.bMove;
                 },
+                canReverse: function(){
+                    return this.oAnimation.oFrame.oStatus.bReverse;
+                },
 
                 // Fonction OUTPUT
-                pushBack: function(oPushback, bDivide){
+                pushBack: function(oPushback, bReverse, bDivide){
                     if( this.oAnimation.sName != 'lunch' ){
-                        BattleEntity.prototype.pushBack.call(this, oPushback, bDivide);
+                        BattleEntity.prototype.pushBack.call(this, oPushback, bReverse, bDivide);
                     }
                 },
-                setAnimation: function(sAnimation, bUpdate){
+                setAnimation: function(sAnimation, bUpdate, bReverse){
                     if(
-                        BattleEntity.prototype.setAnimation.call(this, sAnimation, bUpdate)
+                        BattleEntity.prototype.setAnimation.call(this, sAnimation, bUpdate, bReverse)
                         && ( !this.oAnimation.isHurt() || this.oAnimation.sName == 'guard' )
                     ){
                         this.nHitting = 0;
                     }
                 },
-                setStance: function(sMovement, bUpdate){
+                setStance: function(sMovement, bUpdate, bReverse){
                     this.oGatling.reset();
-                    this.setAnimation(sMovement, bUpdate);
+                    this.setAnimation(sMovement, bUpdate, bReverse);
                 },
-                setHurt: function(sHurt, nFramesLength, bUpdate){
-                    this.setStance(sHurt, bUpdate);
+                setHurt: function(sHurt, nFramesLength, bReverse){
+                    this.setStance(sHurt, true, bReverse);
                     if( this.oAnimation.sName == 'lunch' ){
                         this.oLunch = {
                             oAnimation: this.oAnimation,
