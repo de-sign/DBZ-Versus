@@ -316,6 +316,10 @@
     width: 200px;
     height: 200px;
     transform-origin: 98px 182px;
+    
+    .Battle__Entity_Sprite {
+        transform-origin: 100px 100px;
+    }
 
     &.--float {
         &_up {

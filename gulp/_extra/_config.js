@@ -45,7 +45,7 @@ Object.assign(
                 nAlpha: 0.4
             }
         ],
-        aFilterFrames: ['hit_light'],
+        aFilterFrames: [],
 
         oChar: {
             BJT: {
@@ -151,6 +151,47 @@ Object.assign(
                     ['super_first', 'super_second', 'super_third']
                 ],
                 oRatio: {}
+            },
+
+            MJN_BUU: {
+                sChar: 'MJN_BUU',
+                aColor: ['LSW_MJB', 'LSW_PKR'],
+                aFrames: [
+                    ['stand', 'blur', 'backward', 'forward'],
+                    ['jump', 'fall', null, 'guard', 'reflect', 'burst'],
+                    ['hit_light', 'hit_heavy', 'hit_luncher', 'hit_fall', 'down', 'recovery'],
+                    ['light_first', 'light_first_active', 'light_second', 'light_second_active'],
+                    ['heavy', 'heavy_active', null, null, 'luncher', 'luncher_active'],
+                    ['tracker', 'tracker_second', 'kikoha', 'super_first', 'super_second', 'super_third'],
+                    ['tracker_1', null, 'tracker_2', null, 'tracker_active'],
+                    ['tracker_second_active', null, 'tracker_second_2', null, 'tracker_second_1']
+                ],
+                oRatio: {
+                    tracker_1: {
+                        nWidth: 2,
+                        nHeight: 1
+                    },
+                    tracker_2: {
+                        nWidth: 2,
+                        nHeight: 1
+                    },
+                    tracker_active: {
+                        nWidth: 2,
+                        nHeight: 1
+                    },
+                    tracker_second_1: {
+                        nWidth: 2,
+                        nHeight: 1
+                    },
+                    tracker_second_2: {
+                        nWidth: 2,
+                        nHeight: 1
+                    },
+                    tracker_second_active: {
+                        nWidth: 2,
+                        nHeight: 1
+                    }
+                }
             },
             
             SRU: {

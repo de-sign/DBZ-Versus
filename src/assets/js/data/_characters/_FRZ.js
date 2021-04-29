@@ -1053,7 +1053,7 @@ GAME.oData.oCharacter.FRZ = {
                     }
                 },
                 oStun: {
-                    nBlock: 8,
+                    nBlock: 12,
                     nHit: 18,
                     sHitAnimation: 'hit_heavy'
                 },
@@ -1071,7 +1071,7 @@ GAME.oData.oCharacter.FRZ = {
                 sAnimation: 'luncher',
                 nGatlingLevel: 1,
                 oStun: {
-                    nBlock: 8,
+                    nBlock: 12,
                     nHit: 22,
                     bLunch: true,
                     sHitAnimation: 'hit_luncher'
@@ -1090,7 +1090,7 @@ GAME.oData.oCharacter.FRZ = {
                 sAnimation: 'tracker',
                 nGatlingLevel: 1,
                 oStun: {
-                    nBlock: 8,
+                    nBlock: 12,
                     nHit: 18,
                     sHitAnimation: 'hit_heavy'
                 },
@@ -1108,7 +1108,7 @@ GAME.oData.oCharacter.FRZ = {
                 sAnimation: 'heavy_tracker',
                 nGatlingLevel: 1,
                 oStun: {
-                    nBlock: 6,
+                    nBlock: 10,
                     nHit: 16,
                     sHitAnimation: 'hit_heavy'
                 },
@@ -1130,7 +1130,7 @@ GAME.oData.oCharacter.FRZ = {
                 sAnimation: 'heavy',
                 nGatlingLevel: 1,
                 oStun: {
-                    nBlock: 6,
+                    nBlock: 10,
                     nHit: 16,
                     sHitAnimation: 'hit_heavy'
                 },
@@ -1153,7 +1153,7 @@ GAME.oData.oCharacter.FRZ = {
                     sAnimation: 'light_second',
                     nGatlingLevel: 1,
                     oStun: {
-                        nBlock: 8,
+                        nBlock: 12,
                         nHit: 13,
                         sHitAnimation: 'hit_light'
                     },
@@ -1166,7 +1166,7 @@ GAME.oData.oCharacter.FRZ = {
                     }
                 },
                 oStun: {
-                    nBlock: 8,
+                    nBlock: 12,
                     nHit: 13,
                     sHitAnimation: 'hit_light'
                 },

@@ -313,4 +313,4 @@ Object.assign(
 //=include _characters/_FRZ.js
 //=include _characters/_SRU.js
 //=include _characters/_BUU.js
-/*/=include _characters/_MJN_BUU.js*/
+//=include _characters/_MJN_BUU.js

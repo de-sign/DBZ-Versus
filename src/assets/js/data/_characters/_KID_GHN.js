@@ -1240,7 +1240,7 @@ GAME.oData.oCharacter.KID_GHN = {
                     }
                 },
                 oStun: {
-                    nBlock: 8,
+                    nBlock: 12,
                     nHit: 16,
                     sHitAnimation: 'hit_light'
                 },
@@ -1258,7 +1258,7 @@ GAME.oData.oCharacter.KID_GHN = {
                 sAnimation: 'luncher',
                 nGatlingLevel: 1,
                 oStun: {
-                    nBlock: 8,
+                    nBlock: 12,
                     nHit: 22,
                     bLunch: true,
                     sHitAnimation: 'hit_luncher'
@@ -1282,7 +1282,7 @@ GAME.oData.oCharacter.KID_GHN = {
                     sAnimation: 'tracker_second',
                     nGatlingLevel: 1,
                     oStun: {
-                        nBlock: 8,
+                        nBlock: 12,
                         nHit: 18,
                         sHitAnimation: 'hit_light'
                     },
@@ -1295,7 +1295,7 @@ GAME.oData.oCharacter.KID_GHN = {
                     }
                 },
                 oStun: {
-                    nBlock: 8,
+                    nBlock: 12,
                     nHit: 18,
                     sHitAnimation: 'hit_heavy'
                 },
@@ -1317,7 +1317,7 @@ GAME.oData.oCharacter.KID_GHN = {
                 sAnimation: 'heavy',
                 nGatlingLevel: 1,
                 oStun: {
-                    nBlock: 6,
+                    nBlock: 10,
                     nHit: 16,
                     sHitAnimation: 'hit_heavy'
                 },
@@ -1340,7 +1340,7 @@ GAME.oData.oCharacter.KID_GHN = {
                     sAnimation: 'light_second',
                     nGatlingLevel: 1,
                     oStun: {
-                        nBlock: 8,
+                        nBlock: 12,
                         nHit: 13,
                         sHitAnimation: 'hit_light'
                     },
@@ -1357,7 +1357,7 @@ GAME.oData.oCharacter.KID_GHN = {
                         sAnimation: 'light_third',
                         nGatlingLevel: 1,
                         oStun: {
-                            nBlock: 8,
+                            nBlock: 12,
                             nHit: 13,
                             sHitAnimation: 'hit_light'
                         },
@@ -1371,7 +1371,7 @@ GAME.oData.oCharacter.KID_GHN = {
                     }
                 },
                 oStun: {
-                    nBlock: 8,
+                    nBlock: 12,
                     nHit: 13,
                     sHitAnimation: 'hit_light'
                 },

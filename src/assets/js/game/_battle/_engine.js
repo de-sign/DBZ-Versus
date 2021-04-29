@@ -257,7 +257,7 @@ Object.assign(
 
         movePushback: function(aPushback, oCollapse){
             aPushback.forEach( oPushback => {
-                const bDivide = oPushback.oPriority.nHit < oPushback.oPriority.nHurt;
+                const bDivide = oPushback.oPriority.nHit < oPushback.oPriority.nHurt && oPushback.nX > 0;
                 this.pushbackEntity(
                     bDivide ?
                         oPushback.oEntityHit :

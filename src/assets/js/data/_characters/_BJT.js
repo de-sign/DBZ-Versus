@@ -1138,7 +1138,7 @@ GAME.oData.oCharacter.BJT = {
                     }
                 },
                 oStun: {
-                    nBlock: 8,
+                    nBlock: 12,
                     nHit: 16,
                     sHitAnimation: 'hit_light'
                 },
@@ -1156,7 +1156,7 @@ GAME.oData.oCharacter.BJT = {
                 sAnimation: 'luncher',
                 nGatlingLevel: 1,
                 oStun: {
-                    nBlock: 8,
+                    nBlock: 12,
                     nHit: 22,
                     bLunch: true,
                     sHitAnimation: 'hit_luncher'
@@ -1175,7 +1175,7 @@ GAME.oData.oCharacter.BJT = {
                 sAnimation: 'tracker',
                 nGatlingLevel: 1,
                 oStun: {
-                    nBlock: 8,
+                    nBlock: 12,
                     nHit: 18,
                     sHitAnimation: 'hit_heavy'
                 },
@@ -1193,7 +1193,7 @@ GAME.oData.oCharacter.BJT = {
                 sAnimation: 'heavy',
                 nGatlingLevel: 1,
                 oStun: {
-                    nBlock: 6,
+                    nBlock: 10,
                     nHit: 16,
                     sHitAnimation: 'hit_heavy'
                 },
@@ -1211,7 +1211,7 @@ GAME.oData.oCharacter.BJT = {
                 sAnimation: 'light_first',
                 nGatlingLevel: 1,
                 oStun: {
-                    nBlock: 8,
+                    nBlock: 12,
                     nHit: 13,
                     sHitAnimation: 'hit_light'
                 },
@@ -1228,7 +1228,7 @@ GAME.oData.oCharacter.BJT = {
                     sAnimation: 'light_second',
                     nGatlingLevel: 1,
                     oStun: {
-                        nBlock: 8,
+                        nBlock: 12,
                         nHit: 13,
                         sHitAnimation: 'hit_light'
                     },
@@ -1245,7 +1245,7 @@ GAME.oData.oCharacter.BJT = {
                         sAnimation: 'light_third',
                         nGatlingLevel: 1,
                         oStun: {
-                            nBlock: 8,
+                            nBlock: 12,
                             nHit: 13,
                             sHitAnimation: 'hit_light'
                         },
