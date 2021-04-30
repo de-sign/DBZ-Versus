@@ -438,10 +438,13 @@ GAME.oData.oEntity.oCharacter = {
                 sCheck: 'bThrow',
                 nDamage: 0,
                 sCollisionBox: 'oPositionBox',
-                oStun: {},
+                oStun: {
+                    nHit: 12,
+                    sHitAnimation: 'hit_light'
+                },
                 oPushback: {
                     nLength: 4,
-                    nX: -192
+                    nX: -98
                 },
                 bLast: true,
                 oManipulation: {
