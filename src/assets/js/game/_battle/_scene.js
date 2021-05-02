@@ -63,6 +63,7 @@ Object.assign(
 				},
                 destroy: function(){
                     BattleEntity.get().forEach( oEntity => oEntity.destroy() );
+                    this.oInfo.destroy();
                 },
 
                 endBattle: function(aPlayerWin){},

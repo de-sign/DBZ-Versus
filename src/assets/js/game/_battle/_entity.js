@@ -227,6 +227,7 @@ Object.assign(
             setAnimation: function(sAnimation, bUpdate, bReverse){
                 let sSet = false;
                 if( !this.oAnimation || GameAnimation.isTypeHurt(sAnimation) || this.oAnimation.sName != sAnimation ){
+                    this.killLink();
                     this.oAnimation = new GameAnimation(
                         sAnimation,
                         this.oData.oFrames,
@@ -287,6 +288,9 @@ Object.assign(
             canMove: function(){
                 return this.oCheck.bCollapse && this.oCheck.bReverse;
             },
+            canReverse: function(){
+                return this.oAnimation.oFrame.oStatus.bReverse;
+            },
 
             updateAnimation: function(){
                 this.oAnimation.update();
@@ -311,7 +315,7 @@ Object.assign(
                 this.oParent && this.oParent.confirmHit(oEntityHurt, oData, bGuard);
             },
             pushBack: function(oPushback, bReverse, bDivide){
-                oPushback = Object.assign({}, oPushback || GAME.oSettings.oPushback);
+                oPushback = Object.assign({}, oPushback);
                 bDivide && (oPushback.nX /= 2);
                 this.setMovement(oPushback, bReverse);
             }

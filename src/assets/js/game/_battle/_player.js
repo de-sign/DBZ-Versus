@@ -61,7 +61,6 @@ Object.assign(
                             const oCommand = this.oGatling.update(this.nKi, oCanAction);
                             if( oCommand ){
                                 oCommand.nCost && (this.nKi -= oCommand.nCost);
-                                this.killLink();
                                 this.setAnimation(oCommand.sAnimation);
                             }
                             // Gestion DIR
@@ -216,9 +215,6 @@ Object.assign(
                     oCanAction = this.canAction();
                     return !this.oAnimation.isFreeze() && oCanAction.bMove;
                 },
-                canReverse: function(){
-                    return this.oAnimation.oFrame.oStatus.bReverse;
-                },
 
                 // Fonction OUTPUT
                 pushBack: function(oPushback, bReverse, bDivide){
@@ -251,22 +247,25 @@ Object.assign(
                 },
 
                 updateAnimation: function(){
-                    const aCommandEntity = this.oGatling.getEntity();
-                    aCommandEntity.length && aCommandEntity.forEach( oCommandEntity => {
-                        const oEntity = new window['Battle' + oCommandEntity.sType](
-                            oCommandEntity.sEntity || 'ALL',
-                            oCommandEntity.sColor || this.oData.sEntityColor,
-                            oCommandEntity.sAnimation,
-                            oCommandEntity.oPosition,
-                            this.bReverse,
-                            this.oGatling.oCurrent,
-                            this
-                        );
-                        oCommandEntity.bLink && this.add(oEntity);
-                        // Pour ne pas perdre une FRAME dans la LOOP
-                        oEntity.update();
-                        oCommandEntity.sSFX && GAME.oOutput.getChannel('CHN__SFX').play(oCommandEntity.sSFX);
-                    } );
+                    if( !this.oAnimation.isFreeze() ){
+
+                        const aCommandEntity = this.oGatling.getEntity();
+                        aCommandEntity.length && aCommandEntity.forEach( oCommandEntity => {
+                            const oEntity = new window['Battle' + oCommandEntity.sType](
+                                oCommandEntity.sEntity || 'ALL',
+                                oCommandEntity.sColor || this.oData.sEntityColor,
+                                oCommandEntity.sAnimation,
+                                oCommandEntity.oPosition,
+                                this.bReverse,
+                                this.oGatling.oCurrent,
+                                this
+                            );
+                            oCommandEntity.bLink && this.add(oEntity);
+                            // Pour ne pas perdre une FRAME dans la LOOP
+                            oEntity.update();
+                            oCommandEntity.sSFX && GAME.oOutput.getChannel('CHN__SFX').play(oCommandEntity.sSFX);
+                        } );
+                    }
                     BattleEntity.prototype.updateAnimation.call(this);
                 }
             }

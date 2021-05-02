@@ -67,6 +67,9 @@ Object.assign(
                                 case 'TXT__Training_Menu_List':
                                     sRedirection = 'oList';
                                     break;
+                                case 'TXT__Training_Menu_Select':
+                                    sRedirection = 'select';
+                                    break;
                                 case 'TXT__Training_Menu_Restart':
                                     sRedirection = 'restart';
                                     break;
@@ -146,8 +149,12 @@ Object.assign(
                             break;
                         case 'restart':
                             sSFX = 'ADO__Validate';
-                            this.oScene.bRestart = true;
+                            this.restart();
                             this.close();
+                            break;
+                        case 'select':
+                            sSFX = 'ADO__Validate';
+                            GAME.oScene.change( new SelectScene() );
                             break;
                         case 'close':
                             sSFX = 'ADO__Cancel';
@@ -238,6 +245,30 @@ Object.assign(
                     const oModule = this.oModule[sModule];
                     oModule.oEngine && oModule.oEngine[sEvent] && oModule.oEngine[sEvent]();
                 }
+            },
+
+            restart: function(){
+                // Entity
+                BattleEntity.get().forEach( oEntity => {
+                    if( oEntity.constructor != BattlePlayer ){
+                        oEntity.destroy();
+                    }
+                } );
+                this.oScene.oInfo.destroy();
+
+                const oParameters = this.oModule.oParameters.oEngine;
+                this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
+                    nIndex++;
+
+                    // Bars
+                    oParameters.setStat(nIndex, 'Life');
+                    oParameters.setStat(nIndex, 'Ki');
+
+                    // Perso
+                    oPlayer.oLunch = null;
+                    oPlayer.setStance('stand', true);
+                    oParameters.setPosition(nIndex - 1);
+                } );
             }
         }
     }

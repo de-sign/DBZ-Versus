@@ -171,14 +171,9 @@ Object.assign(
             destroy: function(){
             },
 
-            onInit: function(){
-                this.oScene.oTraining.restart = this.restart.bind(this);
-            },
+            // onInit: function(){},
             // onOpen: function(){},
-            onClose: function(){
-                this.oScene.bRestart && this.restart();
-                this.oScene.bRestart = false;
-            },
+            // onClose: function(){},
 
             changeStat: function(nIndex, sStat, nChange){
                 sStat = 'n' + sStat;
@@ -233,28 +228,6 @@ Object.assign(
                 oPlayer.bReverse = oPlayer.nPlayer == 2;
                 oPlayer.oLayer.resetPosition();
                 oPlayer.moveLayer( GAME.oSettings.oSide.aSide[ this.aParam[0].nSide ].fPosition(this.oScene.oArea, nIndex) );
-            },
-
-            restart: function(){
-                // Entity
-                BattleEntity.get().forEach( oEntity => {
-                    if( oEntity.constructor != BattlePlayer ){
-                        oEntity.destroy();
-                    }
-                } );
-
-                this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
-                    nIndex++;
-
-                    // Bars
-                    this.setStat(nIndex, 'Life');
-                    this.setStat(nIndex, 'Ki');
-
-                    // Perso
-                    oPlayer.oLunch = null;
-                    oPlayer.setStance('stand', true);
-                    this.setPosition(nIndex - 1);
-                } );
             }
         }
     }

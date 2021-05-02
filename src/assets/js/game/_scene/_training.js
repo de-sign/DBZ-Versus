@@ -7,7 +7,6 @@ function TrainingScene() {
     this.oCurrentMenu = null;
     this.oMenu = {};
     this.bMenu = false;
-    this.bRestart = false;
 
     this.fCheckNewController = oController => {
         if( !this.allPlayerActive() && GAME.oScene.oTransverseData.MNU__aController.indexOf(oController) == -1 ){

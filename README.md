@@ -44,17 +44,24 @@ __Stage__
 <br/>*N/A*
 
 __Battle__
+* ENTITY de décoration pour FX 
+* Animation de début et fin de match 
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
 * Méchaniques de jeu
-    * Burst ?
-    * Guard Cancel ?
-    * Guard Break ?
-* Animation de début et fin de match 
-* ENTITY de décoration pour FX 
+    * Movement :
+        * Dash ?
+        * Dash Cancel ?
+        * Jump ?
+    * Attack :
+        * Jump Cancel ?
+        * Guard Break ?
+    * Defense :
+        * Backdash ?
+        * Guard Cancel ?
+        * Burst ?
 
 __Training__
 * Terminer Menu
-    * Select Character
     * Dummy ?
         * Guard
         * Reversal
@@ -62,8 +69,6 @@ __Training__
 __General__
 * Optimisation du Code
     * Classe PLAYER avec pour enfant LOCAL et DUMMY ( et AI ? )
-* Nouveaux CHARACTER et COLOR
-    * MJN_BUU
 * Faire une API ELECTRON
     * Paramétrages globaux
     * Ajouter CHARACTER

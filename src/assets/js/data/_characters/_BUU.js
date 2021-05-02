@@ -1105,19 +1105,17 @@ GAME.oData.oCharacter.BUU = {
                 nCost: 12,
                 nDamage: 4,
                 nGatlingLevel: 3,
-                aEntity: [
-                    {
-                        sType: 'Beam',
-                        sSFX: 'ADO__Beam',
-                        sAnimation: 'zigzag',
-                        nFrameStart: 43,
-                        bLink: true,
-                        oPosition: {
-                            nX: -16,
-                            nY: -60
-                        }
+                aEntity: {
+                    sType: 'Beam',
+                    sSFX: 'ADO__Beam',
+                    sAnimation: 'zigzag',
+                    nFrameStart: 43,
+                    bLink: true,
+                    oPosition: {
+                        nX: -16,
+                        nY: -60
                     }
-                ],
+                },
                 oStun: {
                     nFreeze: 46,
                     nBlock: 36,

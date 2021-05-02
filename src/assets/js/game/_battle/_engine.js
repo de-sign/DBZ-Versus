@@ -223,7 +223,7 @@ Object.assign(
                                                     },
                                                     oEntityHit,
                                                     oEntityHurt,
-                                                    oData: oData.oPushback
+                                                    oData: oData.oPushback || GAME.oSettings.oPushback
                                                 } );
                                                 bHit = true;
                                                 break;
@@ -257,7 +257,7 @@ Object.assign(
 
         movePushback: function(aPushback, oCollapse){
             aPushback.forEach( oPushback => {
-                const bDivide = oPushback.oPriority.nHit < oPushback.oPriority.nHurt && oPushback.nX > 0;
+                const bDivide = oPushback.oPriority.nHit < oPushback.oPriority.nHurt && oPushback.oData.nX < 0;
                 this.pushbackEntity(
                     bDivide ?
                         oPushback.oEntityHit :

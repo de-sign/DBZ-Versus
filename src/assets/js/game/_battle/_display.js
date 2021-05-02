@@ -98,6 +98,8 @@ Object.assign(
                 this.show();
             },
             destroy: function(){
+                this.hide();
+                this.oContext.update();
             },
 
             add: function(){
@@ -141,7 +143,7 @@ Object.assign(
                 this.oContext.addTickUpdate( () => {
                     this.oContext.hElement.classList.remove('--info');
                     // Callback
-                    this.oCurrent.fCallback && this.oCurrent.fCallback();
+                    this.oCurrent && this.oCurrent.fCallback && this.oCurrent.fCallback();
                     this.oCurrent = null;
                 } );
             }
