@@ -90,7 +90,7 @@ Object.assign(
                         }
                     }
 
-                    this.updateAnimation();
+                    return this.updateAnimation();
                 },
                 // destroy: function(){},
 
@@ -102,11 +102,25 @@ Object.assign(
                     this.nKi = Math.min(this.nKi + nKi, GAME.oSettings.nKi);
                 },
                 takeHit: function(oEntity, oData){
-                    let sSFX = '';
+                    let aNewEntity = null;
                     if( !oData.bUnblockable && this.oAnimation.oFrame.oStatus.bGuard ){
                         this.setHurt('guard', oData.oStun.nBlock, !oEntity.bReverse);
                         oEntity.confirmHit(this, oData, true);
-                        sSFX = 'ADO__Guard';
+                        aNewEntity = [
+                            /* TODO création des ENTITY EFFECT
+                            {
+                                sType: 'effect',
+                                sAnimation: 'guard',
+                                oPosition: this.getPosition(), // ???
+                                bReverse: this.bReverse,
+                                oParent: this
+                            },
+                            */
+                            {
+                                sType: 'sound',
+                                sEntity: 'ADO__Guard'
+                            }
+                        ];
                     }
                     else {
                         const nDamage = oData.nDamage == null ? 1 : oData.nDamage;
@@ -121,11 +135,25 @@ Object.assign(
                             bDeath = this.nLife <= 0,
                             sHitAnim = bLunch || bDeath ? 'lunch' : oData.oStun.sHitAnimation;
                             
-                        sHitAnim && this.setHurt( sHitAnim, oData.oStun.nHit, !oEntity.bReverse);
+                        sHitAnim && this.setHurt(sHitAnim, oData.oStun.nHit, !oEntity.bReverse);
                         oEntity.confirmHit(this, oData);
-                        sSFX = 'ADO__Hit';
+                        aNewEntity = [
+                            /* TODO création des ENTITY EFFECT
+                            {
+                                sType: 'effect',
+                                sAnimation: 'hit',
+                                oPosition: this.getPosition(), // ???
+                                bReverse: this.bReverse,
+                                oParent: this
+                            },
+                            */
+                            {
+                                sType: 'sound',
+                                sEntity: 'ADO__Hit'
+                            }
+                        ];
                     }
-                    return sSFX;
+                    return aNewEntity;
                 },
                 confirmHit: function(oEntityHurt, oData, bGuard){
                     BattleEntity.prototype.confirmHit.call(this, oEntityHurt, oData, bGuard);
@@ -247,26 +275,35 @@ Object.assign(
                 },
 
                 updateAnimation: function(){
+                    let aNewEntity = null;
                     if( !this.oAnimation.isFreeze() ){
-
                         const aCommandEntity = this.oGatling.getEntity();
-                        aCommandEntity.length && aCommandEntity.forEach( oCommandEntity => {
-                            const oEntity = new window['Battle' + oCommandEntity.sType](
-                                oCommandEntity.sEntity || 'ALL',
-                                oCommandEntity.sColor || this.oData.sEntityColor,
-                                oCommandEntity.sAnimation,
-                                oCommandEntity.oPosition,
-                                this.bReverse,
-                                this.oGatling.oCurrent,
-                                this
-                            );
-                            oCommandEntity.bLink && this.add(oEntity);
-                            // Pour ne pas perdre une FRAME dans la LOOP
-                            oEntity.update();
-                            oCommandEntity.sSFX && GAME.oOutput.getChannel('CHN__SFX').play(oCommandEntity.sSFX);
-                        } );
+                        if( aCommandEntity.length ){
+                            aNewEntity = [];
+                            aCommandEntity.forEach( oCommandEntity => {
+                                aNewEntity.push( {
+                                    sType: oCommandEntity.sType,
+                                    bLink: oCommandEntity.bLink,
+
+                                    sEntity: oCommandEntity.sEntity || 'ALL',
+                                    sColor: oCommandEntity.sColor || this.oData.sEntityColor,
+                                    sAnimation: oCommandEntity.sAnimation,
+                                    oPosition: oCommandEntity.oPosition,
+                                    bReverse: this.bReverse,
+                                    oHitData: this.oGatling.oCurrent,
+                                    oParent: this
+                                } );
+
+                                oCommandEntity.sSFX && aNewEntity.push( {
+                                    sType: 'sound',
+                                    sEntity: oCommandEntity.sSFX
+                                } );
+                            } );
+                        }
                     }
                     BattleEntity.prototype.updateAnimation.call(this);
+
+                    return aNewEntity;
                 }
             }
         )

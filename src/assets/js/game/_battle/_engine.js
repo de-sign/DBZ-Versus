@@ -70,7 +70,6 @@ Object.assign(
         getOrientation: function(oEntityA, oEntityB){
             return Math.min( Math.max(oEntityA.oLayer.oPosition.nX - oEntityB.oLayer.oPosition.nX, -1), 1);
         },
-
         checkCollision: function(oBoxA, oBoxB){
             return !(
                 !oBoxA
@@ -84,12 +83,42 @@ Object.assign(
         hasSameParent: function(oEntityA, oEntityB){
             return (oEntityA.oParent || oEntityA).sId == (oEntityB.oParent || oEntityB).sId;
         },
+
+        generateEntity: function(aEffect){
+            if( aEffect && aEffect.length ){
+                aEffect.forEach( oEffect => {
+                    let oEntity = null;
+                    switch(oEffect.sType){
+                        // sEntity
+                        case 'sound':
+                            GAME.oOutput.getChannel('CHN__SFX').play(oEffect.sEntity);
+                            break;
+                        
+                        // sEntity, sColor, sAnimation, oPosition, bReverse, oHitData, oParent, bLink
+                        case 'projectile':
+                        case 'beam':
+                        case 'character':
+                            oEntity = new window['Battle' + oEffect.sType[0].toUpperCase() + oEffect.sType.slice(1)]( oEffect.sEntity, oEffect.sColor, oEffect.sAnimation, oEffect.oPosition, oEffect.bReverse, oEffect.oHitData, oEffect.oParent );
+                            oEffect.bLink && oEffect.oParent.add(oEntity);
+                            oEntity.update();
+                            break;
+
+                        // sAnimation, oPosition, bReverse, oParent
+                        case 'effect':
+                            oEntity = new BattleEffect( oEffect.sAnimation, oEffect.oPosition, oEffect.bReverse, oEffect.oParent );
+                            oEntity.update();
+                            break;
+                    }
+                } );
+            }
+        },
         
         // ENTITY dans AREA : LEFT, RIGHT et DOWN
         stayInArea: function(oEntity){
             // Check
             let oBoxEntity = oEntity.getBox('oPositionBox')[0],
-                nPriority = oEntity.canMove() ? 0 : 1,
+                nPriority = oEntity.oAnimation.sType == 'action' ? 2 :
+                    ( oEntity.canMove() ? 0 : 1 ),
                 sMove = null;
                 
             const oBoxArea = this.oArea.getBox(),
@@ -218,7 +247,7 @@ Object.assign(
                                                 // PUSHBACK
                                                 aPushback.push( {
                                                     oPriority: {
-                                                        nHit: oCollapse[oEntityHit.sId] ? oCollapse[oEntityHit.sId].nPriority + 1 : 2,
+                                                        nHit: oCollapse[oEntityHit.sId] ? oCollapse[oEntityHit.sId].nPriority : 2,
                                                         nHurt: oCollapse[oEntityHurt.sId] ? oCollapse[oEntityHurt.sId].nPriority : 0
                                                     },
                                                     oEntityHit,
@@ -241,11 +270,13 @@ Object.assign(
             } );
 
             if( aHurt.length ){
+                const aNewEntity = [];
                 // Gestion Hurt
                 aHurt.forEach( oHurt => {
-                    const sSFX = oHurt.oEntityHurt.takeHit(oHurt.oEntityHit, oHurt.oData);
-                    GAME.oOutput.getChannel('CHN__SFX').play(sSFX);
+                    const aEntity = oHurt.oEntityHurt.takeHit(oHurt.oEntityHit, oHurt.oData);
+                    aEntity && [].push.apply(aNewEntity, aEntity);
                 } );
+                this.generateEntity(aNewEntity);
                 // Gestion PushBack
                 this.movePushback(aPushback, oCollapse);
                 // Gestion hit freeze
@@ -257,17 +288,11 @@ Object.assign(
 
         movePushback: function(aPushback, oCollapse){
             aPushback.forEach( oPushback => {
-                const bDivide = oPushback.oPriority.nHit < oPushback.oPriority.nHurt && oPushback.oData.nX < 0;
-                this.pushbackEntity(
-                    bDivide ?
-                        oPushback.oEntityHit :
-                        oPushback.oEntityHurt,
-                    oPushback.oData,
-                    bDivide ?
-                        oPushback.oEntityHit.bReverse :
-                        !oPushback.oEntityHit.bReverse,
-                    bDivide
-                );
+                if( oPushback.oPriority.nHit < oPushback.oPriority.nHurt && oPushback.oData.nX < 0 ){
+                    this.pushbackEntity( oPushback.oEntityHit, oPushback.oData, oPushback.oEntityHit.bReverse, true );
+                } else {
+                    this.pushbackEntity( oPushback.oEntityHurt, oPushback.oData, !oPushback.oEntityHit.bReverse, false );
+                }
             } );
         },
         pushbackEntity: function(oEntity, oData, bReverse, bDivide){

@@ -21,6 +21,10 @@ Object.assign(
                     sRoot: 'assets/images/beams',
                     sFrames: 'assets/images/beams'
                 },
+                oEffect: {
+                    sRoot: 'assets/images/effects',
+                    sFrames: 'assets/images/effects'
+                },
                 oStage: {
                     sRoot: 'assets/images/stages',
                     sBackground: 'background.png',
@@ -71,6 +75,10 @@ Object.assign(
                 beam: {
                     nX: 98,
                     nY: 232
+                },
+                effect: {
+                    nX: 128,
+                    nY: 190
                 }
             },
             oSide: {
@@ -303,6 +311,8 @@ Object.assign(
 
 //=include beam.js
 //=include _beams/_ALL.js
+
+//=include effect.js
 
 //=include character.js
 //=include _characters/_GKU.js

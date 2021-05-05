@@ -53,10 +53,17 @@ Object.assign(
                     this.oEngine = new BattleEngine(this.aPlayer, this.oArea);
 				},
 				update: function(){
-                    BattleEntity.get().forEach( oEntity => oEntity.update() );
+                    // Entity
+                    const aNewEntity = [];
+                    BattleEntity.get().forEach( oEntity => {
+                        const aEntity = oEntity.update();
+                        aEntity && [].push.apply(aNewEntity, aEntity);
+                    } );
+                    this.oEngine.generateEntity(aNewEntity);
+                    // Engine
                     this.endBattle( this.oEngine.update() );
+                    // Display
                     BattleEntity.get().forEach( oEntity => oEntity.render() );
-
                     this.oInfo.update();
                     this.aHUD.forEach( oHUD => oHUD.update() );
                     this.oCombo.update();

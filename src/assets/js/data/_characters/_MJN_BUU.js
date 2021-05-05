@@ -1094,7 +1094,7 @@ GAME.oData.oCharacter.MJN_BUU = {
                 nDamage: 4,
                 nGatlingLevel: 3,
                 aEntity: {
-                    sType: 'Projectile',
+                    sType: 'projectile',
                     sSFX: 'ADO__Beam',
                     sAnimation: 'ball',
                     nFrameStart: 13,
@@ -1134,7 +1134,7 @@ GAME.oData.oCharacter.MJN_BUU = {
                 nDamage: 4,
                 nGatlingLevel: 3,
                 aEntity: {
-                    sType: 'Projectile',
+                    sType: 'projectile',
                     sSFX: 'ADO__Beam',
                     sAnimation: 'death',
                     nFrameStart: 13,
@@ -1171,7 +1171,7 @@ GAME.oData.oCharacter.MJN_BUU = {
                 nCost: 4,
                 nGatlingLevel: 2,
                 aEntity: {
-                    sType: 'Projectile',
+                    sType: 'projectile',
                     sSFX: 'ADO__Projectile',
                     sAnimation: 'kikoha',
                     nFrameStart: 10,

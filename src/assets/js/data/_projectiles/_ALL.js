@@ -111,10 +111,7 @@ GAME.oData.oProjectile.ALL = {
                     nHeight: 196
                 }
             ]
-        },
-
-        hit_light: false,
-        hit_heavy: false
+        }
     },
     
     oAnimations: {

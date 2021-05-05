@@ -958,7 +958,7 @@ GAME.oData.oCharacter.GHN = {
                 nDamage: 4,
                 nGatlingLevel: 3,
                 aEntity: {
-                    sType: 'Beam',
+                    sType: 'beam',
                     sSFX: 'ADO__Beam',
                     sAnimation: 'triangle',
                     nFrameStart: 43,
@@ -996,7 +996,7 @@ GAME.oData.oCharacter.GHN = {
                 nCost: 4,
                 nGatlingLevel: 2,
                 aEntity: {
-                    sType: 'Projectile',
+                    sType: 'projectile',
                     sSFX: 'ADO__Projectile',
                     sAnimation: 'kikoha',
                     nFrameStart: 10,

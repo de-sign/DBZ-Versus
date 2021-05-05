@@ -617,6 +617,12 @@ GAME.oData.oCharacter.FRZ = {
             }]
         },
         ki_beam: {
+            oPositionBox: {
+                nX: -30,
+                nY: -110,
+                nWidth: 64,
+                nHeight: 112
+            },
             aHurtBox: [{
                 nX: -22,
                 nY: -150,
@@ -1004,7 +1010,7 @@ GAME.oData.oCharacter.FRZ = {
                 nDamage: 4,
                 nGatlingLevel: 3,
                 aEntity: {
-                    sType: 'Projectile',
+                    sType: 'projectile',
                     sSFX: 'ADO__Beam',
                     sAnimation: 'death',
                     nFrameStart: 13,
@@ -1042,7 +1048,7 @@ GAME.oData.oCharacter.FRZ = {
                 nCost: 4,
                 nGatlingLevel: 2,
                 aEntity: {
-                    sType: 'Beam',
+                    sType: 'beam',
                     sSFX: 'ADO__Projectile',
                     sAnimation: 'beam',
                     nFrameStart: 13,

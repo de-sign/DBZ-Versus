@@ -9,18 +9,20 @@ Object.assign(
             // Entity
             this.oData = GAME.oData.oEntity;
             for( let sType in this.oData ){
-                for( let sCod in GAME.oData[sType] ){
-                    const oEntity = GAME.oData[sType][sCod];
-    
-                    this.createFrames(sType, oEntity);
-                    this.createAnimations(sType, oEntity);
-                    if( sType == 'oCharacter' ){
-                        this.createLunch(oEntity);
-                        this.createRecovery(oEntity);
-                        this.createCommands(oEntity);
-                        this.createThrow(oEntity);
+                if( GAME.oData[sType] ){
+                    for( let sCod in GAME.oData[sType] ){
+                        const oEntity = GAME.oData[sType][sCod];
+                        
+                        this.createFrames(sType, oEntity);
+                        this.createAnimations(sType, oEntity);
+                        if( sType == 'oCharacter' ){
+                            this.createLunch(oEntity);
+                            this.createRecovery(oEntity);
+                            this.createCommands(oEntity);
+                            this.createThrow(oEntity);
+                        }
+                        this.createColor(sType, oEntity);
                     }
-                    this.createColor(sType, oEntity);
                 }
             }
             // Stage
@@ -99,10 +101,10 @@ Object.assign(
 
                 // PATH
                 if( GAME.oSettings.oPath[sType].sFace ){
-                    oEntityColor.oPath.sFace = GAME.oSettings.oPath[sType].sRoot + '/' + oEntity.sEntity + '/' + oColor.sColor + '/' + GAME.oSettings.oPath[sType].sFace
+                    oEntityColor.oPath.sFace = GAME.oSettings.oPath[sType].sRoot + '/' + oEntity.sEntity + '/' + oColor.sColor + '/' + GAME.oSettings.oPath[sType].sFace;
                 }
                 if( GAME.oSettings.oPath[sType].sPreview ){
-                    oEntityColor.oPath.sPreview = GAME.oSettings.oPath[sType].sRoot + '/' + oEntity.sEntity + '/' + oColor.sColor + '/' + GAME.oSettings.oPath[sType].sPreview
+                    oEntityColor.oPath.sPreview = GAME.oSettings.oPath[sType].sRoot + '/' + oEntity.sEntity + '/' + oColor.sColor + '/' + GAME.oSettings.oPath[sType].sPreview;
                 }
                 
                 // FRAMES

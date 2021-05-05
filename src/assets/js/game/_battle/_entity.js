@@ -5,7 +5,8 @@ function BattleEntity(sType, oData, oPosition, bReverse, oParent) {
     this.oLink = {
         beam: [],
         character: [],
-        projectile: []
+        projectile: [],
+        effect: []
     };
     this.oCheck = null;
     this.oPositionPoint = null;
@@ -57,6 +58,9 @@ Object.assign(
                 bHit: true,
                 oHurt: {},
                 bPushback: true
+            },
+            effect: {
+                oHurt: {}
             }
         },
 
@@ -295,9 +299,6 @@ Object.assign(
             updateAnimation: function(){
                 this.oAnimation.update();
                 this.oMovement.update();
-                if( this.oAnimation.oFrame && this.oAnimation.oFrame.bResetHit ){
-                    this.aHit = [];
-                }
                 this.move();
             },
             move: function(){
@@ -335,35 +336,40 @@ Object.assign(
                 constructor: BattleEntity,
                 init: function(sEntity, sColor, sAnimation, oPosition, bReverse, oHitData, oParent){
                     BattleEntity.prototype.init.call(this, 'projectile', GAME.oData.oProjectile[sEntity][sColor], oPosition, bReverse, oParent);
-                    this.bReverse = bReverse;
+                    this.nLife = oHitData.nDamage == null ? 1 : oHitData.nDamage;
                     this.oHitData = oHitData;
 
                     this.setAnimation(sAnimation);
                 },
-                /*
-                update: function(){},
-                destroy: function(){}
-                */
-                takeHit: function(oEntity, oData){
-                    if( oEntity ){
-                        const nDamageEntity = oData.nDamage == null ? 1 : oData.nDamage,
-                            nDamageSelf = this.oHitData.nDamage == null ? 1 : this.oHitData.nDamage;
-                        if( nDamageEntity >= nDamageSelf ){
-                            this.nLife -= nDamageEntity;
-                            this.setAnimation(this.oHitData.oStun.sHitAnimation, true);
-                        } else {
-                            oEntity.confirmHit(this, oData);
-                        }
+                update: function(){
+                    let aNewEntity = null;
+                    if( this.isDead() || this.nLife > 0 ){
+                        BattleEntity.prototype.update.call(this);
+                    } else {
+                        this.die();
+                        aNewEntity = [
+                            {
+                                sType: 'effect',
+                                sAnimation: 'explode_' + this.oHitData.oStun.sHitAnimation.split('_').pop(),
+                                bReverse: this.bReverse,
+                                oParent: this
+                            },
+                            {
+                                sType: 'sound',
+                                sEntity: 'ADO__Hit'
+                            }
+                        ];
                     }
-                    // Auto destruction après avoir HIT
-                    else {
-                        this.setAnimation(this.oHitData.oStun.sHitAnimation, true);
-                    }
+                    return aNewEntity;
                 },
-                confirmHit: function(oEntityHurt, oData, bGuard){
+                // destroy: function(){}
+                takeHit: function(oEntity, oData){
+                    this.nLife -= oData.nDamage == null ? 1 : oData.nDamage;
+                    oEntity.confirmHit(this, oData, false, true);
+                },
+                confirmHit: function(oEntityHurt, oData, bGuard, bNotDestroy){
                     BattleEntity.prototype.confirmHit.call(this, oEntityHurt, oData, bGuard);
-                    this.nLife -= GAME.oSettings.oLife[this.sType];
-                    this.takeHit(null, oData);
+                    bNotDestroy || (this.nLife = 0);
                 }
             }
         )
@@ -382,7 +388,6 @@ Object.assign(
                 constructor: BattleEntity,
                 init: function(sEntity, sColor, sAnimation, oPosition, bReverse, oHitData, oParent){
                     BattleEntity.prototype.init.call(this, 'beam', GAME.oData.oBeam[sEntity][sColor], oPosition, bReverse, oParent);
-                    this.bReverse = bReverse;
                     this.oHitData = oHitData;
 
                     this.generateAnimation(sAnimation, oPosition);
@@ -430,7 +435,6 @@ Object.assign(
                 constructor: BattleEntity,
                 init: function(sEntity, sColor, sAnimation, oPosition, bReverse, oHitData, oParent){
                     BattleEntity.prototype.init.call(this, 'character', GAME.oData.oCharacter[sEntity][sColor], oPosition, bReverse, oParent);
-                    this.bReverse = bReverse;
                     this.oHitData = oHitData;
 
                     this.bCustomAnimation = this.generateAnimation(sAnimation, oPosition);
@@ -471,6 +475,29 @@ Object.assign(
 
                     return bGenerate;
                 }
+            }
+        )
+    }
+);
+
+/* ----- BattleEffect ----- */
+function BattleEffect(sAnimation, oPosition, bReverse, oParent){
+    BattleEntity.apply(this, arguments);
+}
+
+Object.assign(
+    BattleEffect, {
+        prototype: Object.assign(
+            Object.create(BattleEntity.prototype), {
+                constructor: BattleEntity,
+                init: function(sAnimation, oPosition, bReverse, oParent){
+                    BattleEntity.prototype.init.call(this, 'effect', GAME.oData.oEntity.oEffect, oPosition || {}, bReverse, oParent);
+                    this.setAnimation(sAnimation);
+                },
+                /*
+                update: function(){},
+                destroy: function(){}
+                */
             }
         )
     }

@@ -1106,7 +1106,7 @@ GAME.oData.oCharacter.BUU = {
                 nDamage: 4,
                 nGatlingLevel: 3,
                 aEntity: {
-                    sType: 'Beam',
+                    sType: 'beam',
                     sSFX: 'ADO__Beam',
                     sAnimation: 'zigzag',
                     nFrameStart: 43,
@@ -1147,7 +1147,7 @@ GAME.oData.oCharacter.BUU = {
                 nDamage: 4,
                 nGatlingLevel: 3,
                 aEntity:  {
-                    sType: 'Beam',
+                    sType: 'beam',
                     sSFX: 'ADO__Beam',
                     sAnimation: 'zigzag',
                     nFrameStart: 43,
@@ -1185,7 +1185,7 @@ GAME.oData.oCharacter.BUU = {
                 nCost: 4,
                 nGatlingLevel: 2,
                 aEntity: {
-                    sType: 'Projectile',
+                    sType: 'projectile',
                     sSFX: 'ADO__Projectile',
                     sAnimation: 'kikoha',
                     nFrameStart: 10,
