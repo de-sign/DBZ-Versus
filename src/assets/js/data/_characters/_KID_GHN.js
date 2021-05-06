@@ -1242,7 +1242,8 @@ GAME.oData.oCharacter.KID_GHN = {
                 oStun: {
                     nBlock: 12,
                     nHit: 16,
-                    sHitAnimation: 'hit_light'
+                    sHitAnimation: 'hit_light',
+                    sImpactAnimation: 'explode_light'
                 },
                 bLast: true,
                 oManipulation: {

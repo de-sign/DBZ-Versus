@@ -347,18 +347,6 @@ Object.assign(
                         BattleEntity.prototype.update.call(this);
                     } else {
                         this.die();
-                        aNewEntity = [
-                            {
-                                sType: 'effect',
-                                sAnimation: 'explode_' + this.oHitData.oStun.sHitAnimation.split('_').pop(),
-                                bReverse: this.bReverse,
-                                oParent: this
-                            },
-                            {
-                                sType: 'sound',
-                                sEntity: 'ADO__Hit'
-                            }
-                        ];
                     }
                     return aNewEntity;
                 },
@@ -366,6 +354,15 @@ Object.assign(
                 takeHit: function(oEntity, oData){
                     this.nLife -= oData.nDamage == null ? 1 : oData.nDamage;
                     oEntity.confirmHit(this, oData, false, true);
+                    return aNewEntity = [
+                        {
+                            sType: 'effect',
+                            sAnimation: oData.oStun.sImpactAnimation || 'impact_hit',
+                            oPosition: GAME.oSettings.oPositionEffect,
+                            bReverse: !this.bReverse,
+                            oParent: this
+                        }
+                    ];
                 },
                 confirmHit: function(oEntityHurt, oData, bGuard, bNotDestroy){
                     BattleEntity.prototype.confirmHit.call(this, oEntityHurt, oData, bGuard);

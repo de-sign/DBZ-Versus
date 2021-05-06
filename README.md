@@ -23,7 +23,7 @@ Utilise un moteur de jeu fait maison et FOX Website :
 
 ## TODO
 __BUG__
-<br/>*N/A*
+Problème de PUSHBACK sur la TECH THROW
 
 __Menu__
 * Ajout du ONLINE ?
@@ -44,7 +44,6 @@ __Stage__
 <br/>*N/A*
 
 __Battle__
-* ENTITY de décoration pour FX 
 * Animation de début et fin de match 
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
 * Méchaniques de jeu

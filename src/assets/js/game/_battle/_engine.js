@@ -85,6 +85,7 @@ Object.assign(
         },
 
         generateEntity: function(aEffect){
+            const aEntity = [];
             if( aEffect && aEffect.length ){
                 aEffect.forEach( oEffect => {
                     let oEntity = null;
@@ -109,8 +110,10 @@ Object.assign(
                             oEntity.update();
                             break;
                     }
+                    oEntity && aEntity.push(oEntity);
                 } );
             }
+            return aEntity;
         },
         
         // ENTITY dans AREA : LEFT, RIGHT et DOWN
@@ -276,7 +279,7 @@ Object.assign(
                     const aEntity = oHurt.oEntityHurt.takeHit(oHurt.oEntityHit, oHurt.oData);
                     aEntity && [].push.apply(aNewEntity, aEntity);
                 } );
-                this.generateEntity(aNewEntity);
+                [].push.apply( aEntity, this.generateEntity(aNewEntity) );
                 // Gestion PushBack
                 this.movePushback(aPushback, oCollapse);
                 // Gestion hit freeze

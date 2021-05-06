@@ -13,10 +13,14 @@ module.exports = function(config){
         _data: {}
     };
 
-    Object.keys(extra.oChar).forEach( sChar => {
-        _extra['char_' + sChar] = _extra._char['char_' + sChar] = gulp.parallel( sprite.generate(sChar), gulp.series( data.parse(sChar), data.clean(sChar) ) );
-        _extra['sprite_' + sChar] = _extra._sprite['sprite_' + sChar] = gulp.series( sprite.generate(sChar) );
-        _extra['data_' + sChar] = _extra._data['data_' + sChar] = gulp.series( data.parse(sChar), data.clean(sChar) );
+    extra.aEntity.forEach( sType => {
+        Object.keys(extra[sType]).forEach( sEntity => {
+            _extra['sprite_' + sEntity] = _extra._sprite['sprite_' + sEntity] = gulp.series( sprite.generate(sType, sEntity) );
+            if( sType == 'oChar') {
+                _extra['char_' + sEntity] = _extra._char['char_' + sEntity] = gulp.parallel( sprite.generate(sType, sEntity), gulp.series( data.parse(sEntity), data.clean(sEntity) ) );
+                _extra['data_' + sEntity] = _extra._data['data_' + sEntity] = gulp.series( data.parse(sEntity), data.clean(sEntity) );
+            } 
+        } );
     } );
 
     _extra.char = gulp.parallel.apply(gulp, Object.values(_extra._char) );

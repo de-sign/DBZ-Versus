@@ -99,8 +99,8 @@ module.exports = function(config){
         oTarget[oBox.sFrame][oBox.sBox] || ( oTarget[oBox.sFrame][oBox.sBox] = [] );
 
         const oFramePos = {
-                nX: oBox.nFrameX * extra.nSquare + extra.oPos.nX,
-                nY: oBox.nFrameY * extra.nSquare + extra.oPos.nY
+                nX: oBox.nFrameX * extra.oSquare.oChar + extra.oPos.oChar.nX,
+                nY: oBox.nFrameY * extra.oSquare.oChar + extra.oPos.oChar.nY
             },
             oBoxFrame = {
                 nX: (oBox.nX - oFramePos.nX) * 4 - 2,
@@ -160,7 +160,7 @@ module.exports = function(config){
                     aPromise.push(
                         new Promise( (fResolve, fReject) => {
                             try {
-                                const oPNG = pngjs.load(config.paths.src.images + '/' + extra.oPath.sFrames + '/' + sChar + '/__box/' + sBox + '.png'),
+                                const oPNG = pngjs.load(config.paths.src.images + '/' + extra.oPath.oFrames.oChar + '/' + sChar + '/__box/' + sBox + '.png'),
                                     oPixelData = new PixelData(oPNG),
                                     oStart = {};
         
@@ -168,8 +168,8 @@ module.exports = function(config){
                                     this.forEach( (oPos, oPixel) => {
                                         if( this.isBlack(oPixel) ){
                                             const oFrame = {
-                                                    nFrameX: Math.floor(oPos.nX / extra.nSquare),
-                                                    nFrameY: Math.floor(oPos.nY / extra.nSquare)
+                                                    nFrameX: Math.floor(oPos.nX / extra.oSquare.oChar),
+                                                    nFrameY: Math.floor(oPos.nY / extra.oSquare.oChar)
                                                 },
                                                 sFrame = oChar.aFrames[oFrame.nFrameY][oFrame.nFrameX];
         

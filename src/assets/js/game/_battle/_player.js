@@ -107,15 +107,13 @@ Object.assign(
                         this.setHurt('guard', oData.oStun.nBlock, !oEntity.bReverse);
                         oEntity.confirmHit(this, oData, true);
                         aNewEntity = [
-                            /* TODO création des ENTITY EFFECT
                             {
                                 sType: 'effect',
-                                sAnimation: 'guard',
-                                oPosition: this.getPosition(), // ???
-                                bReverse: this.bReverse,
+                                sAnimation: oData.oStun.sImpactAnimation || 'impact_guard',
+                                oPosition: GAME.oSettings.oPositionEffect,
+                                bReverse: !this.bReverse,
                                 oParent: this
                             },
-                            */
                             {
                                 sType: 'sound',
                                 sEntity: 'ADO__Guard'
@@ -138,15 +136,13 @@ Object.assign(
                         sHitAnim && this.setHurt(sHitAnim, oData.oStun.nHit, !oEntity.bReverse);
                         oEntity.confirmHit(this, oData);
                         aNewEntity = [
-                            /* TODO création des ENTITY EFFECT
                             {
                                 sType: 'effect',
-                                sAnimation: 'hit',
-                                oPosition: this.getPosition(), // ???
-                                bReverse: this.bReverse,
+                                sAnimation: oData.oStun.sImpactAnimation || 'impact_hit',
+                                oPosition: GAME.oSettings.oPositionEffect,
+                                bReverse: !this.bReverse,
                                 oParent: this
                             },
-                            */
                             {
                                 sType: 'sound',
                                 sEntity: 'ADO__Hit'

@@ -1108,7 +1108,8 @@ GAME.oData.oCharacter.MJN_BUU = {
                     nBlock: 36,
                     nHit: 36,
                     bLunch: true,
-                    sHitAnimation: 'hit_heavy'
+                    sHitAnimation: 'hit_heavy',
+                    sImpactAnimation: 'explode_heavy'
                 },
                 oPushback: {
                     nLength: 4,
@@ -1148,7 +1149,8 @@ GAME.oData.oCharacter.MJN_BUU = {
                     nBlock: 36,
                     nHit: 36,
                     bLunch: true,
-                    sHitAnimation: 'hit_heavy'
+                    sHitAnimation: 'hit_heavy',
+                    sImpactAnimation: 'explode_heavy'
                 },
                 oPushback: {
                     nLength: 4,
@@ -1183,7 +1185,8 @@ GAME.oData.oCharacter.MJN_BUU = {
                 oStun: {
                     nBlock: 12,
                     nHit: 16,
-                    sHitAnimation: 'hit_light'
+                    sHitAnimation: 'hit_light',
+                    sImpactAnimation: 'explode_light'
                 },
                 bLast: true,
                 oManipulation: {

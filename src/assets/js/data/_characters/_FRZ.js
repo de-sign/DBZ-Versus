@@ -1024,7 +1024,8 @@ GAME.oData.oCharacter.FRZ = {
                     nBlock: 36,
                     nHit: 36,
                     bLunch: true,
-                    sHitAnimation: 'hit_heavy'
+                    sHitAnimation: 'hit_heavy',
+                    sImpactAnimation: 'explode_heavy'
                 },
                 oPushback: {
                     nLength: 4,

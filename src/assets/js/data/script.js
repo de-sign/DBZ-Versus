@@ -78,7 +78,7 @@ Object.assign(
                 },
                 effect: {
                     nX: 128,
-                    nY: 190
+                    nY: 210
                 }
             },
             oSide: {
@@ -213,6 +213,9 @@ Object.assign(
                 character: 0,
                 projectile: 1,
                 beam: 0
+            },
+            oPositionEffect: {
+                nX: -24
             },
             // CHARACTER
             nKi: 20,
