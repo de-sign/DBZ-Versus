@@ -14,16 +14,16 @@ Object.assign(
 				init: function(){
                     Scene.prototype.init.call(this, 'CTX__Title');
 
-                    this.nController = GAME.oInput.nController;
-                    this.nFrameCreated = GAME.oTimer.nFrames;
+                    this.nController = ControllerManager.nController;
+                    this.nFrameCreated = TimerEngine.nFrames;
 				},
 				update: function(){
                     let bPress = false;
-                    if( this.nController < GAME.oInput.nController ){
+                    if( this.nController < ControllerManager.nController ){
                         bPress = true;
                     } else {
                         for( let sController in ControllerManager.oController ){
-                            const oController = GAME.oInput.getController(sController);
+                            const oController = ControllerManager.getController(sController);
                             if( this.nFrameCreated < oController.nFrameChange ){
                                 bPress = true;
                                 break;
@@ -32,9 +32,9 @@ Object.assign(
                     }
 
                     if( bPress ){
-                        GAME.oOutput.oAudio.resume();
-                        GAME.oOutput.getChannel('CHN__SFX').play('ADO__Validate');
-                        GAME.oScene.change( new MenuScene() );
+                        OutputManager.oAudio.resume();
+                        OutputManager.getChannel('CHN__SFX').play('ADO__Validate');
+                        SceneManager.change( new MenuScene() );
                     }
 				}
             }

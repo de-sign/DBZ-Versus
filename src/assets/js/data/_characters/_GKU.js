@@ -1,4 +1,4 @@
-GAME.oData.oCharacter.GKU = {
+GameData.oCharacter.GKU = {
     sEntity: 'GKU',
     aColor: [
         {

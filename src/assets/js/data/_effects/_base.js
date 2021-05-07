@@ -1,6 +1,6 @@
-GAME.oData.oEntity.oEffect = {
+GameData.oEntity.oEffect = {
 
-    oPath: GAME.oSettings.oPath.oEffect,
+    oPath: GameData.oSettings.oPath.oEffect,
 
     oFrames: {
         explode_light_1: {

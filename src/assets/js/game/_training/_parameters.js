@@ -13,15 +13,15 @@ Object.assign(
                     TrainingMenu.prototype.init.apply(this, arguments);
 
                     this.aLayer.push( {
-                        nSide: GAME.oOutput.getElement('LAY__Training_Menu_Parameters_Side')
+                        nSide: OutputManager.getElement('LAY__Training_Menu_Parameters_Side')
                     } );
 
                     this.oScene.aPlayer.forEach( oPlayer => {
                         this.aLayer.push( {
-                            nLife: GAME.oOutput.getElement('LAY__Training_Menu_Parameters_Life_' + oPlayer.nPlayer),
-                            nKi: GAME.oOutput.getElement('LAY__Training_Menu_Parameters_Ki_' + oPlayer.nPlayer),
-                            bRegenLife: GAME.oOutput.getElement('LAY__Training_Menu_Parameters_RegenLife_' + oPlayer.nPlayer),
-                            bRegenKi: GAME.oOutput.getElement('LAY__Training_Menu_Parameters_RegenKi_' + oPlayer.nPlayer)
+                            nLife: OutputManager.getElement('LAY__Training_Menu_Parameters_Life_' + oPlayer.nPlayer),
+                            nKi: OutputManager.getElement('LAY__Training_Menu_Parameters_Ki_' + oPlayer.nPlayer),
+                            bRegenLife: OutputManager.getElement('LAY__Training_Menu_Parameters_RegenLife_' + oPlayer.nPlayer),
+                            bRegenKi: OutputManager.getElement('LAY__Training_Menu_Parameters_RegenKi_' + oPlayer.nPlayer)
                         } );
                     } );
                 },
@@ -94,7 +94,7 @@ Object.assign(
                             this.oEngine.changeSide(nChange);
                             break;
                     }
-                    GAME.oOutput.getChannel('CHN__SFX').play('ADO__Validate');
+                    OutputManager.getChannel('CHN__SFX').play('ADO__Validate');
                 },
                 display: function(){
                     this.aLayer.forEach( (oLayer, nIndex) => {
@@ -110,7 +110,7 @@ Object.assign(
                                 oLayer[sType].aChildElement[0].setText( oParam[sType] );
                             }
                             else if( sType == 'nSide' ) {
-                                oLayer[sType].aChildElement[0].setText( GAME.oSettings.oSide.aSide[oParam[sType]].sName );
+                                oLayer[sType].aChildElement[0].setText( GameData.oSettings.oSide.aSide[oParam[sType]].sName );
                             }
                         }
                     } );
@@ -136,15 +136,15 @@ Object.assign(
             init: function(oScene){
                 this.oScene = oScene;
 
-                this.aParam.push( GameStore.get('Parameters') || {
-                    nSide: GAME.oSettings.oSide.nDefault
+                this.aParam.push( StoreEngine.get('Parameters') || {
+                    nSide: GameData.oSettings.oSide.nDefault
                 } );
 
                 this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                     nIndex++;
-                    this.aParam.push( GameStore.get('Parameters_' + nIndex) || {
-                        nLife: GAME.oSettings.oLife.player,
-                        nKi: GAME.oSettings.nKi,
+                    this.aParam.push( StoreEngine.get('Parameters_' + nIndex) || {
+                        nLife: GameData.oSettings.oLife.player,
+                        nKi: GameData.oSettings.nKi,
                         bRegenLife: true,
                         bRegenKi: true
                     } );
@@ -183,8 +183,8 @@ Object.assign(
                         nKi: 0
                     },
                     oMaxStat = {
-                        nLife: GAME.oSettings.oLife.player,
-                        nKi: GAME.oSettings.nKi
+                        nLife: GameData.oSettings.oLife.player,
+                        nKi: GameData.oSettings.nKi
                     };
 
                 oParam[sStat] += nChange;
@@ -195,7 +195,7 @@ Object.assign(
                     oParam[sStat] = oMaxStat[sStat];
                 }
 
-                GameStore.update('Parameters_' + nIndex, oParam);
+                StoreEngine.update('Parameters_' + nIndex, oParam);
             },
             setStat: function(nIndex, sStat){
                 const oParam = this.aParam[nIndex];
@@ -207,27 +207,27 @@ Object.assign(
                 sRegen = 'bRegen' + sRegen;
                 this.aParam[nIndex][sRegen] = !this.aParam[nIndex][sRegen];
 
-                GameStore.update('Parameters_' + nIndex, this.aParam[nIndex]);
+                StoreEngine.update('Parameters_' + nIndex, this.aParam[nIndex]);
             },
 
             changeSide: function(nChange){
                 const oParam = this.aParam[0];
                 oParam.nSide += nChange;
 
-                if( oParam.nSide >= GAME.oSettings.oSide.aSide.length ){
+                if( oParam.nSide >= GameData.oSettings.oSide.aSide.length ){
                     oParam.nSide = 0;
                 }
                 else if( oParam.nSide < 0 ){
-                    oParam.nSide = GAME.oSettings.oSide.aSide.length - 1;
+                    oParam.nSide = GameData.oSettings.oSide.aSide.length - 1;
                 }
 
-                GameStore.update('Parameters', oParam);
+                StoreEngine.update('Parameters', oParam);
             },
             setPosition: function(nIndex){
                 const oPlayer = this.oScene.aPlayer[nIndex];
                 oPlayer.bReverse = oPlayer.nPlayer == 2;
                 oPlayer.oLayer.resetPosition();
-                oPlayer.moveLayer( GAME.oSettings.oSide.aSide[ this.aParam[0].nSide ].fPosition(this.oScene.oArea, nIndex) );
+                oPlayer.moveLayer( GameData.oSettings.oSide.aSide[ this.aParam[0].nSide ].fPosition(this.oScene.oArea, nIndex) );
             }
         }
     }

@@ -18,7 +18,7 @@ Object.assign(
             this.oController = oController;
             this.oPressed = oPressed;
             this.bReady = bReady;
-            this.oLayer = GAME.oOutput.getElement('LAY__Input_Controller_' + oController.sId);
+            this.oLayer = OutputManager.getElement('LAY__Input_Controller_' + oController.sId);
             this.oMenu = new GameMenu('LAY__Input_Controller_' + oController.sId, bReady ? -1 : 0);
         },
         update: function() {
@@ -62,7 +62,7 @@ Object.assign(
                         }
                     } );
                 }
-                sSFX && GAME.oOutput.getChannel('CHN__SFX').play(sSFX);
+                sSFX && OutputManager.getChannel('CHN__SFX').play(sSFX);
             }
             else {
                 this.oMenu.select(-1);
@@ -71,7 +71,7 @@ Object.assign(
             }
 
             this.oMenu.update();
-            GAME.oOutput.getElement('TXT__Input_Return_' + this.oController.sId)
+            OutputManager.getElement('TXT__Input_Return_' + this.oController.sId)
                 .setText(
                     bConnected ? 
                         ( this.bReady ? 'Ready&nbsp;!' : 'Return' ) :
@@ -84,7 +84,7 @@ Object.assign(
 
         setWaitingButton: function(oMenuSelected){
             this.oWaitingButton = oMenuSelected;
-            this.oWaitingButton.nFramesChange = GAME.oTimer.nFrames;
+            this.oWaitingButton.nFramesChange = TimerEngine.nFrames;
             if( this.oController.sType == 'keyboard' ){
                 this.oPressed.nFrames = -1;
                 oMenuSelected.aChildElement[0].setText('Press key ...');
@@ -96,7 +96,7 @@ Object.assign(
             let oBtn = null;
             switch( this.oController.sType ){
                 case 'keyboard':
-                    if( this.oPressed.nFrames == GAME.oTimer.nFrames ) {
+                    if( this.oPressed.nFrames == TimerEngine.nFrames ) {
                         oBtn = {
                             sKey: this.oPressed.oEvent.code.toUpperCase(),
                             sText: this.oPressed.oEvent.key.toUpperCase()
@@ -121,14 +121,14 @@ Object.assign(
                     
                 if( sNewBtn != sLastBtn ){
                     if( sLastBtn ){
-                        GAME.oOutput.getElement('LAY__Input_Button_' + this.oController.sId + '_' + sLastBtn)
+                        OutputManager.getElement('LAY__Input_Button_' + this.oController.sId + '_' + sLastBtn)
                             .aChildElement[0].setText( this.oController.oButtons[sNewBtn].sText );
                         oBtns[sLastBtn] = this.oController.oButtons[sNewBtn];
                     }
                 }
                     
                 this.oController.updateButtons(oBtns);
-                GAME.oInput.updateController(this.oController);
+                ControllerManager.updateController(this.oController);
                 this.oController.store();
 
                 this.oWaitingButton.aChildElement[0].setText(oBtn.sText);
@@ -147,7 +147,7 @@ function InputScene(){
         sKey: null,
         fKeyDown: oEvent => {
             this.oLastPress.oEvent = oEvent;
-            this.oLastPress.nFrames = GAME.oTimer.nFrames + 1;
+            this.oLastPress.nFrames = TimerEngine.nFrames + 1;
         },
         fAddNewController: oController => {
             this.oContext.addTickUpdate( () => {
@@ -185,12 +185,12 @@ Object.assign(
 
                     // Controller init
                     for( let sController in ControllerManager.oController ){
-                        const oController = GAME.oInput.getController(sController);
-                        this.aController.push( new InputController(oController, this.oLastPress, GAME.oScene.oTransverseData.STG__oController.sId != sController) );
+                        const oController = ControllerManager.getController(sController);
+                        this.aController.push( new InputController(oController, this.oLastPress, SceneManager.oTransverseData.STG__oController.sId != sController) );
                     }
 
                     window.addEventListener('keydown', this.oLastPress.fKeyDown, false);
-                    GAME.oInput.on('create', this.oLastPress.fAddNewController);
+                    ControllerManager.on('create', this.oLastPress.fAddNewController);
                     
                     GameHelper.set(InputScene.aHelper);
 				},
@@ -201,12 +201,12 @@ Object.assign(
                         bAllReady && ( bAllReady = oController.bReady );
                     } );
                     GameHelper.update();
-                    bAllReady && GAME.oScene.change( new SettingScene() );
+                    bAllReady && SceneManager.change( new SettingScene() );
 				},
                 destroy: function(){
                     this.aController.forEach( oController => oController.destroy() );
                     window.removeEventListener('keydown', this.oLastPress.fKeyDown, false);
-                    GAME.oInput.off('create', this.oLastPress.fAddNewController);
+                    ControllerManager.off('create', this.oLastPress.fAddNewController);
                     GameHelper.destroy();
                 }
             }

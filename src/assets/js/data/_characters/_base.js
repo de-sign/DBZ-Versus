@@ -1,4 +1,4 @@
-GAME.oData.oEntity.oCharacter = {
+GameData.oEntity.oCharacter = {
     oFrames: {
         // Surcharger par "_CHAR.js", complété via "gulp extra"
         stand: {

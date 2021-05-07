@@ -1,4 +1,4 @@
-GAME.oData.oProjectile.ALL = {
+GameData.oProjectile.ALL = {
     sEntity: 'ALL',
     aColor: [
         {

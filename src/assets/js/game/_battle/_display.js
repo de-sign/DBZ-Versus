@@ -14,21 +14,21 @@ Object.assign(
     BattleHUD.prototype, {
         init: function(oPlayer) {
             this.oPlayer = oPlayer;
-            this.oLayer = GAME.oOutput.getElement('LAY__Battle_HUD_' + this.oPlayer.nPlayer);
+            this.oLayer = OutputManager.getElement('LAY__Battle_HUD_' + this.oPlayer.nPlayer);
 
             this.oLayer.addTickUpdate( () => {
-                GAME.oOutput.getElement('SPT__Battle_HUD_Sprite_' + this.oPlayer.nPlayer)
+                OutputManager.getElement('SPT__Battle_HUD_Sprite_' + this.oPlayer.nPlayer)
                     .setSource( this.oPlayer.oData.oPath.sFace );
-                GAME.oOutput.getElement('TXT__Battle_HUD_Name_' + this.oPlayer.nPlayer)
+                OutputManager.getElement('TXT__Battle_HUD_Name_' + this.oPlayer.nPlayer)
                     .setText( this.oPlayer.oData.sName );
-                GAME.oOutput.getElement('TXT__Battle_HUD_Number_' + this.oPlayer.nPlayer)
+                OutputManager.getElement('TXT__Battle_HUD_Number_' + this.oPlayer.nPlayer)
                     .setText( 'Player #' + this.oPlayer.nPlayer );
             } );
         },
         update: function(){
             if( this.nLife != this.oPlayer.nLife || this.nHitting != this.oPlayer.nHitting ){
                 this.oLayer.addTickUpdate( () => {
-                    const oLayer = GAME.oOutput.getElement('LAY__Battle_HUD_Life_' + this.oPlayer.nPlayer);
+                    const oLayer = OutputManager.getElement('LAY__Battle_HUD_Life_' + this.oPlayer.nPlayer);
                     this.nLife = this.oPlayer.nLife;
                     this.nHitting = this.oPlayer.nHitting;
 
@@ -44,7 +44,7 @@ Object.assign(
                 } );
             }
             if( this.nKi != this.oPlayer.nKi ){
-                const oLayer = GAME.oOutput.getElement('LAY__Battle_HUD_Ki_' + this.oPlayer.nPlayer);
+                const oLayer = OutputManager.getElement('LAY__Battle_HUD_Ki_' + this.oPlayer.nPlayer);
                 this.nKi = this.oPlayer.nKi;
 
                 for( let nIndex = 0; nIndex < oLayer.aChildElement.length; nIndex++ ){
@@ -84,8 +84,8 @@ Object.assign(
             init: function(oContext, aPlayer) {
                 this.oContext = oContext;
                 this.aPlayer = aPlayer;
-                this.oImg = GAME.oOutput.getElement('SPT__Battle_Info_Sprite');
-                this.oText = GAME.oOutput.getElement('TXT__Battle_Info_Text');
+                this.oImg = OutputManager.getElement('SPT__Battle_Info_Sprite');
+                this.oText = OutputManager.getElement('TXT__Battle_Info_Text');
             },
             update: function(){
                 if( this.oCurrent ){
@@ -169,7 +169,7 @@ Object.assign(
         init: function(aPlayer) {
             this.aPlayer = aPlayer;
             this.aPlayer.forEach( oPlayer => {
-                this.aText.push( GAME.oOutput.getElement('TXT__Battle_Combo_Text_' + oPlayer.nPlayer) );
+                this.aText.push( OutputManager.getElement('TXT__Battle_Combo_Text_' + oPlayer.nPlayer) );
                 this.aLast.push(0);
             } );
         },

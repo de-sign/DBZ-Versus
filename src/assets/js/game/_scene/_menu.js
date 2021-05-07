@@ -23,28 +23,28 @@ Object.assign(
 				init: function(){
                     Scene.prototype.init.call(this, 'CTX__Menu');
 
-                    this.oMenu = new GameMenu('LAY__Menu', GAME.oScene.oTransverseData.MNU__nIndex || 0);
+                    this.oMenu = new GameMenu('LAY__Menu', SceneManager.oTransverseData.MNU__nIndex || 0);
                     GameHelper.set(MenuScene.aHelper);
 
-                    GAME.oOutput.getChannel('CHN__BGM').play('ADO__Menu', false, true);
+                    OutputManager.getChannel('CHN__BGM').play('ADO__Menu', false, true);
 				},
 				update: function(){
-                    for( let sController in GAME.oInput.oController ){
-                        const oController = GAME.oInput.getController(sController);
+                    for( let sController in ControllerManager.oController ){
+                        const oController = ControllerManager.getController(sController);
                         oController.ifPressedNow( {
                             // Gestion validation
                             A: () => {
                                 let sMenuSelected = this.oMenu.getSelected().sId;
-                                GAME.oOutput.getChannel('CHN__SFX').play('ADO__Validate');
+                                OutputManager.getChannel('CHN__SFX').play('ADO__Validate');
                                 switch( sMenuSelected ){
                                     case 'TXT__Menu_Versus':
-                                        GAME.oScene.change( new SideScene() );
+                                        SceneManager.change( new SideScene() );
                                         break;
                                     case 'TXT__Menu_Training':
-                                        GAME.oScene.change( new SideScene() );
+                                        SceneManager.change( new SideScene() );
                                         break;
                                     case 'TXT__Menu_Setting':
-                                        GAME.oScene.change( new SettingScene() );
+                                        SceneManager.change( new SettingScene() );
                                         break;
                                 }
                             },

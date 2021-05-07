@@ -1,34 +1,41 @@
-function OutputSourceAudio(sId, oAudio) {
-    this.sId = sId;
-    this.oAudio = oAudio;
-    OutputAudioElement.call(this);
+/* ----- START CLASS ----- */
+/* ----- START CONSTRUCTOR ----- */
+function OutputSourceAudio(sId, oSource) {
+    OutputSource.apply(this, arguments);
 }
+/* ----- END CONSTRUCTOR ----- */
 
 Object.assign(
     OutputSourceAudio, {
 
         prototype: Object.assign(
-            Object.create(OutputAudioElement.prototype), {
+            /* ----- START EXTENDS ----- */
+            Object.create(OutputSource.prototype), {
+            /* ----- END EXTENDS ----- */
                 constructor: OutputSourceAudio,
-
+                /* ----- START PROTOTYPE ----- */
+                /* ----- START METHODS ----- */
                 init: function(){
-                    this.setNode(null, OutputAudioElement.oAudioContext.createMediaElementSource(this.oAudio));
+                    this.setNode(null, OutputAudioElement.oAudioContext.createMediaElementSource(this.oSource));
                 },
 
                 play: function(bLoop){
                     if( bLoop != null ){
-                        this.oAudio.loop = bLoop;
+                        this.oSource.loop = bLoop;
                     }
-                    this.oAudio.currentTime = 0;
-                    this.oAudio.play();
+                    this.oSource.currentTime = 0;
+                    this.oSource.play();
                 },
                 resume: function(){
-                    this.oAudio.paused && this.oAudio.play();
+                    this.oSource.paused && this.oSource.play();
                 },
                 pause: function(){
-                    this.oAudio.paused || this.oAudio.pause();
+                    this.oSource.paused || this.oSource.pause();
                 }
+                /* ----- END METHODS ----- */
+                /* ----- END PROTOTYPE ----- */
             }
         )
     }
 );
+/* ----- END CLASS ----- */

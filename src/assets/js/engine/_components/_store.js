@@ -1,9 +1,16 @@
-// Store
-function GameStore(){}
+/* ----- START CLASS ----- */
+/* ----- START CONSTRUCTOR ----- */
+function StoreEngine(){}
+/* ----- END CONSTRUCTOR ----- */
 
 Object.assign(
-    GameStore, {
+    StoreEngine, {
+        /* ----- START SINGLETON ----- */
+        /* ----- START PROPERTIES ----- */
         oData: {},
+        /* ----- END PROPERTIES ----- */
+
+        /* ----- START METHODS ----- */
         init: function(){
             for( let nIndex = 0; nIndex < localStorage.length; nIndex++ ){
                 const sKey = localStorage.key(nIndex),
@@ -19,5 +26,8 @@ Object.assign(
         get: function(sKey){
             return this.oData[sKey];
         }
+        /* ----- END METHODS ----- */
+        /* ----- END SINGLETON ----- */
     }
-)
+);
+/* ----- END CLASS ----- */

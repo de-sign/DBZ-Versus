@@ -1,4 +1,4 @@
-GAME.oData.oEntity.oBeam = {
+GameData.oEntity.oBeam = {
 
     oFrames: {
         beam: {

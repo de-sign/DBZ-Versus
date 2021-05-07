@@ -1,28 +1,44 @@
+/* ----- START CLASS ----- */
+/* ----- START CONSTRUCTOR ----- */
 function OutputHTMLElement(hElm) {
-    if( hElm instanceof HTMLElement ){
-        this.hElement = hElm;
-        hElm.classList.add( OutputManager.oConfig.class.created );
-        this.bElementCreate = false;
-    } else {
-        this.hElement = this.createHTML(this.constructor.name, hElm);
-        this.bElementCreate = true;
-    }
-    this.sId = this.hElement.id;
+    /* ----- START PROPERTIES ----- */
+    this.hElement = null;
+    this.bElementCreate = false;
+    this.sId = null;
 
     this.bAutoPositioning = false;
     this.oPosition = {};
     this.oReferencePosition = {};
 
-    this.oStyle = getComputedStyle(this.hElement);
+    this.oStyle = {};
+    /* ----- END PROPERTIES ----- */
+
+    this.init(hElm);
     OutputElement.call(this);
 }
+/* ----- END CONSTRUCTOR ----- */
 
 Object.assign(
     OutputHTMLElement, {
         prototype: Object.assign(
+            /* ----- START EXTENDS ----- */
             Object.create(OutputElement.prototype), {
+            /* ----- END EXTENDS ----- */
                 constructor: OutputHTMLElement,
-
+                /* ----- START PROTOTYPE ----- */
+                /* ----- START METHODS ----- */
+                init: function(hElm){
+                    if( hElm instanceof HTMLElement ){
+                        this.hElement = hElm;
+                        hElm.classList.add( OutputManager.oConfig.class.created );
+                        this.bElementCreate = false;
+                    } else {
+                        this.hElement = this.createHTML(this.constructor.name, hElm);
+                        this.bElementCreate = true;
+                    }
+                    this.sId = this.hElement.id;
+                    this.oStyle = getComputedStyle(this.hElement);
+                },
                 update: function() {
                     if( this.bAutoPositioning ){
                         this.setStyle({
@@ -100,7 +116,10 @@ Object.assign(
                         Object.assign(this.hElement.style, oCss);
                     });
                 }
+                /* ----- END METHODS ----- */
+                /* ----- END PROTOTYPE ----- */
             }
         )
     }
 );
+/* ----- END CLASS ----- */

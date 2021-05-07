@@ -13,7 +13,7 @@ Object.assign(
                 constructor: TrainingMenuList,
                 init: function(){
                     TrainingMenu.prototype.init.apply(this, arguments);
-                    this.oSprite = GAME.oOutput.getElement('SPT__Training_Menu_List');
+                    this.oSprite = OutputManager.getElement('SPT__Training_Menu_List');
                     this.oLastLayer = this.oMenu.oLayer;
                 },
                 update: function(){
@@ -154,7 +154,7 @@ Object.assign(
                     oLastLayer && oLastLayer.hElement.classList.remove('--show');
                     oMenu.oLayer.hElement.classList.add('--show');
                 } );
-                GAME.oOutput.getChannel('CHN__SFX').play('ADO__Validate');
+                OutputManager.getChannel('CHN__SFX').play('ADO__Validate');
             },
             getMenu: function(){
                 return this.oScene.oTraining.oModule.oList.oMenu.oMenu;

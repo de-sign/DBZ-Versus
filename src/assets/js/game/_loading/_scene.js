@@ -80,7 +80,7 @@ Object.assign(
                 constructor: LoadingScene,
 				init: function( oOptions ){
                     Scene.prototype.init.call(this, 'CTX__Loading');
-					this.oLayer = GAME.oOutput.getElement('LAY__LoadingStep');
+					this.oLayer = OutputManager.getElement('LAY__LoadingStep');
                     this.oLayer.clean();
 
                     this.aStep = oOptions.aStep;
@@ -96,7 +96,7 @@ Object.assign(
                         if( this.sCurrent ){
                             this[this.sCurrent]();
                         } else {
-                            GAME.oScene.change( new window[ this.sRedirection + 'Scene']() );
+                            SceneManager.change( new window[ this.sRedirection + 'Scene']() );
                         }
                     }
                     else if( this.bStepEnd ){
@@ -112,7 +112,7 @@ Object.assign(
                     if( LoadingScene.nStepPrint == this.oLayer.aChildElement.length ){
                         this.oLayer.delete( this.oLayer.aChildElement[0] );
                     }
-                    this.oLayer.add( new GAME.oOutput.OutputText(sText) );
+                    this.oLayer.add( new OutputManager.OutputText(sText) );
                 }
             }
         )

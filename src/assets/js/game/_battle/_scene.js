@@ -24,21 +24,21 @@ Object.assign(
                     Scene.prototype.init.call(this, 'CTX__Battle');
                     this.oContext.hElement.classList.add( oOptions.sContextClass );
 
-					this.oArea = GAME.oOutput.getElement('LAY__Battle_Area');
+					this.oArea = OutputManager.getElement('LAY__Battle_Area');
                     this.oArea.enableAutoPositioning();
-                    this.setBackground( GAME.oScene.oTransverseData.BTL__sStage );
-                    GAME.oOutput.getChannel('CHN__BGM').play('ADO__' + GAME.oScene.oTransverseData.BTL__sBGM, false, true);
+                    this.setBackground( SceneManager.oTransverseData.BTL__sStage );
+                    OutputManager.getChannel('CHN__BGM').play('ADO__' + SceneManager.oTransverseData.BTL__sBGM, false, true);
 
-                    for( let nIndex = 0; nIndex < GAME.oSettings.nPlayer; nIndex++ ){
+                    for( let nIndex = 0; nIndex < GameData.oSettings.nPlayer; nIndex++ ){
                         
                         // Players init
                         const nPlayer = nIndex + 1,
                             oPlayer = new BattlePlayer(
                                 nPlayer,
-                                GAME.oScene.oTransverseData.BTL__aCharacter[nIndex],
-                                GAME.oScene.oTransverseData.BTL__aColor[nIndex],
+                                SceneManager.oTransverseData.BTL__aCharacter[nIndex],
+                                SceneManager.oTransverseData.BTL__aColor[nIndex],
                                 oOptions.sAnimation,
-                                GAME.oSettings.oSide.aSide[ GAME.oSettings.oSide.nDefault ].fPosition(this.oArea, nIndex),
+                                GameData.oSettings.oSide.aSide[ GameData.oSettings.oSide.nDefault ].fPosition(this.oArea, nIndex),
                                 !!nIndex,
                                 oOptions.aController[nIndex]
                             );
@@ -77,8 +77,8 @@ Object.assign(
                 endBattle: function(aPlayerWin){},
                 setBackground: function(sCod){
                     this.oContext.setStyle( {
-                        backgroundColor: GAME.oData.oStage[sCod].sColor,
-                        backgroundImage: 'url("' + GAME.oData.oStage[sCod].oPath.sBackground + '")'
+                        backgroundColor: GameData.oStage[sCod].sColor,
+                        backgroundImage: 'url("' + GameData.oStage[sCod].oPath.sBackground + '")'
                     } );
                 }
             }

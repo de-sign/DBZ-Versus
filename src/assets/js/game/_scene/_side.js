@@ -18,7 +18,7 @@ Object.assign(
         constructor: SideController,
         init: function(oController, nSide) {
             this.oController = oController;
-            this.oLayer = GAME.oOutput.getElement('LAY__Side_Controller_' + oController.sId);
+            this.oLayer = OutputManager.getElement('LAY__Side_Controller_' + oController.sId);
             this.nSide = nSide || 0;
             this.changeSide('same');
         },
@@ -71,7 +71,7 @@ Object.assign(
                     }
                 } );
                 
-                sSFX && GAME.oOutput.getChannel('CHN__SFX').play(sSFX);
+                sSFX && OutputManager.getChannel('CHN__SFX').play(sSFX);
             }
             else {
                 this.changeSide();
@@ -81,9 +81,9 @@ Object.assign(
             }
 
             if( this.bReady && this.nSide ) {
-                GAME.oOutput.getElement('TXT__Side_Player_State_' + this.nSide).setText('Ready !');
+                OutputManager.getElement('TXT__Side_Player_State_' + this.nSide).setText('Ready !');
             }
-            GAME.oOutput.getElement('TXT__Side_Controller_' + this.oController.sId)
+            OutputManager.getElement('TXT__Side_Controller_' + this.oController.sId)
                 .setText(bConnected ? this.oController.sName : 'Disconnected&nbsp;!' );
         },
         destroy: function(){
@@ -104,10 +104,10 @@ Object.assign(
             switch( sChange ){
                 case 'left':
                     if( this.nSide == 0 ) {
-                        this.nSide = GAME.oSettings.nPlayer - 1;
+                        this.nSide = GameData.oSettings.nPlayer - 1;
                     } else if( this.nSide == 1 ) {
-                        this.nSide = GAME.oSettings.nPlayer;
-                    } else if( this.nSide == GAME.oSettings.nPlayer ){
+                        this.nSide = GameData.oSettings.nPlayer;
+                    } else if( this.nSide == GameData.oSettings.nPlayer ){
                         this.nSide = 0;
                     } else {
                         this.nSide--;
@@ -116,10 +116,10 @@ Object.assign(
 
                 case 'right':
                     if( this.nSide == 0 ) {
-                        this.nSide = GAME.oSettings.nPlayer;
-                    } else if( this.nSide == GAME.oSettings.nPlayer ){
+                        this.nSide = GameData.oSettings.nPlayer;
+                    } else if( this.nSide == GameData.oSettings.nPlayer ){
                         this.nSide = 1;
-                    } else if( this.nSide == GAME.oSettings.nPlayer - 1 ){
+                    } else if( this.nSide == GameData.oSettings.nPlayer - 1 ){
                         this.nSide = 0;
                     } else {
                         this.nSide++;
@@ -133,7 +133,7 @@ Object.assign(
             }
 
             this.checkSide(aLock);
-            GAME.oOutput.getElement( this.nSide ? 'LAY__Side_Player_' + this.nSide : 'LAY__Side_Empty' ).add(this.oLayer);
+            OutputManager.getElement( this.nSide ? 'LAY__Side_Player_' + this.nSide : 'LAY__Side_Empty' ).add(this.oLayer);
         }
     }
 );
@@ -178,14 +178,14 @@ Object.assign(
 				init: function(){
                     Scene.prototype.init.call(this, 'CTX__Side');
 
-                    GAME.oOutput.getElement('TXT__Side_Name').setText( GAME.oScene.oTransverseData.BTL__sType );
+                    OutputManager.getElement('TXT__Side_Name').setText( SceneManager.oTransverseData.BTL__sType );
 
                     for( let sController in ControllerManager.oController ){
                         const oController = ControllerManager.getController(sController),
-                            nIndex = GAME.oScene.oTransverseData.MNU__aController ? GAME.oScene.oTransverseData.MNU__aController.indexOf(oController) : -1;
+                            nIndex = SceneManager.oTransverseData.MNU__aController ? SceneManager.oTransverseData.MNU__aController.indexOf(oController) : -1;
                         this.aController.push( new SideController(oController, nIndex == -1 ? 0 : nIndex + 1) );
                     }
-                    GAME.oInput.on('create', this.fAddNewController);
+                    ControllerManager.on('create', this.fAddNewController);
 
                     GameHelper.set(SideScene.aHelper);
 				},
@@ -197,15 +197,15 @@ Object.assign(
 
                     this.getPlayerController(true).forEach( (oController, nSide) => {
                         if( !oController && nSide ){
-                            GAME.oOutput.getElement('TXT__Side_Player_State_' + nSide).setText('Waiting ...');
+                            OutputManager.getElement('TXT__Side_Player_State_' + nSide).setText('Waiting ...');
                         }
                     } );
 
                     this.updateStatus();
                     if( this.oStatus.bReturn || this.oStatus.bQuit ) {
-                        GAME.oScene.change( new MenuScene() );
+                        SceneManager.change( new MenuScene() );
                     } else if( this.oStatus.bReady ) {
-                        GAME.oScene.change( new SelectScene() );
+                        SceneManager.change( new SelectScene() );
                     }
                     
                     GameHelper.update();
@@ -214,7 +214,7 @@ Object.assign(
                     let aController = this.getPlayerController(true);
                     aController.shift();
                     
-                    GAME.oInput.off('create', this.fAddNewController);
+                    ControllerManager.off('create', this.fAddNewController);
                     GameHelper.destroy();
                     return {
                         MNU__aController: aController
@@ -223,7 +223,7 @@ Object.assign(
                 
                 getPlayerController: function(bReady){
                     let aLock = [];
-                    aLock.length = GAME.oSettings.nPlayer + 1;
+                    aLock.length = GameData.oSettings.nPlayer + 1;
                     aLock = aLock.fill(null);
 
                     this.aController.forEach( oController => {
@@ -236,7 +236,7 @@ Object.assign(
                 updateStatus: function(){
 
                     let nReady = 0,
-                        nNeedReady = GAME.oSettings.nPlayer,
+                        nNeedReady = GameData.oSettings.nPlayer,
                         nSide = 0;
 
                     this.oStatus = {
@@ -252,10 +252,10 @@ Object.assign(
                         oCustomer.nSide && nSide++;
                     } );
 
-                    if( GAME.oScene.oTransverseData.BTL__sType == 'Training' && nSide != nNeedReady ){
+                    if( SceneManager.oTransverseData.BTL__sType == 'Training' && nSide != nNeedReady ){
                         let nChange = 0;
-                        for( let sController in GAME.oInput.oController ){
-                            const oController = GAME.oInput.getController(sController);
+                        for( let sController in ControllerManager.oController ){
+                            const oController = ControllerManager.getController(sController);
                             if( oController.nFrameChange > this.nFrameCreated ){
                                 nChange++;
                             }

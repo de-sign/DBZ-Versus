@@ -12,11 +12,11 @@ Object.assign(
                 init: function(){
                     TrainingMenu.prototype.init.apply(this, arguments);
                     this.oLayer = {
-                        bHistory: GAME.oOutput.getElement('LAY__Training_Menu_Display_Input'),
-                        bBox: GAME.oOutput.getElement('LAY__Training_Menu_Display_Box'),
-                        bAnimation: GAME.oOutput.getElement('LAY__Training_Menu_Display_Animations'),
+                        bHistory: OutputManager.getElement('LAY__Training_Menu_Display_Input'),
+                        bBox: OutputManager.getElement('LAY__Training_Menu_Display_Box'),
+                        bAnimation: OutputManager.getElement('LAY__Training_Menu_Display_Animations'),
 
-                        oFrameRate: GAME.oOutput.getElement('LAY__Training_Menu_Display_Framerate')
+                        oFrameRate: OutputManager.getElement('LAY__Training_Menu_Display_Framerate')
                     };
                 },
                 /*
@@ -71,7 +71,7 @@ Object.assign(
                             this.oEngine.changeFrame(nChange);
                             break;
                     }
-                    GAME.oOutput.getChannel('CHN__SFX').play('ADO__Validate');
+                    OutputManager.getChannel('CHN__SFX').play('ADO__Validate');
                 },
                 display: function(){
                     for( let sType in this.oLayer){
@@ -146,11 +146,11 @@ Object.assign(
             init: function(oScene){
                 this.oScene = oScene;
 
-                Object.assign( this.oParameters, GameStore.get('Display') );
+                Object.assign( this.oParameters, StoreEngine.get('Display') );
 
                 oScene.aPlayer.forEach( oPlayer => {
-                    const oHistory = GAME.oOutput.getElement('LAY__Training_History_' + oPlayer.nPlayer),
-                        oAnim = GAME.oOutput.getElement('LAY__Training_Animation_' + oPlayer.nPlayer);
+                    const oHistory = OutputManager.getElement('LAY__Training_History_' + oPlayer.nPlayer),
+                        oAnim = OutputManager.getElement('LAY__Training_Animation_' + oPlayer.nPlayer);
 
                     this.aHistory.push( oHistory );
                     this.aAnimation.push( {
@@ -211,7 +211,7 @@ Object.assign(
                             } );
                             
                             if( nHistory == aHistory.length - 1 ){
-                                sFrame = '<i>' + ( GAME.oTimer.nFrames - oHistory.nFrame + 1 ) + '</i>';
+                                sFrame = '<i>' + ( TimerEngine.nFrames - oHistory.nFrame + 1 ) + '</i>';
                             } else {
                                 sFrame = '<i>' + ( aHistory[ nHistory + 1 ].nFrame - oHistory.nFrame ) + '</i>';
                             }
@@ -220,7 +220,7 @@ Object.assign(
                             if( oTextHist ){
                                 oTextHist.setText(sText);
                             } else {
-                                oTextHist = new GAME.oOutput.OutputText(sText);
+                                oTextHist = new OutputManager.OutputText(sText);
                                 this.aHistory[nIndex].add(oTextHist);
                             }
                         } );
@@ -233,7 +233,7 @@ Object.assign(
                     BattleEntity.get().forEach( oEntity => {
                         ['oPositionBox', 'aHurtBox', 'aHitBox'].forEach( sBox => {
                             const aBox = oEntity.getBox(sBox),
-                                oLayer = GAME.oOutput.getElement('LAY__Training_' + sBox.slice(1) + '_' + oEntity.sId),
+                                oLayer = OutputManager.getElement('LAY__Training_' + sBox.slice(1) + '_' + oEntity.sId),
                                 nMaxElement = Math.max( oLayer.hElement.children.length, aBox.length );
 
                             oLayer.addTickUpdate( () => {
@@ -309,7 +309,7 @@ Object.assign(
             },
             toogle: function(sType){
                 this[ this.oParameters.oShow[sType] ? 'hide' : 'show' ](sType);
-                GameStore.update('Display', this.oParameters);
+                StoreEngine.update('Display', this.oParameters);
             },
 
             // FrameRate
@@ -321,10 +321,10 @@ Object.assign(
                 else if( this.oParameters.nFrameRate < 0 ){
                     this.oParameters.nFrameRate = TrainingEngineDisplay.aFrameRate.length - 1;
                 }
-                GameStore.update('Display', this.oParameters);
+                StoreEngine.update('Display', this.oParameters);
             },
             setFrameRate: function(nFrameRate){
-                GAME.oTimer.setFPS(nFrameRate || this.getFrameRate());
+                TimerEngine.setFPS(nFrameRate || this.getFrameRate());
             },
             getFrameRate: function(){
                 return TrainingEngineDisplay.aFrameRate[ this.oParameters.nFrameRate ];

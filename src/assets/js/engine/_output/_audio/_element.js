@@ -1,19 +1,32 @@
+/* ----- START CLASS ----- */
+/* ----- START CONSTRUCTOR ----- */
 function OutputAudioElement() {
+    /* ----- START PROPERTIES ----- */
     this.oNode = {
         oInput: null,
         oOutput: null
     };
+    /* ----- END PROPERTIES ----- */
+
     OutputElement.call(this);
     this.init.apply(this, arguments);
 }
 
 Object.assign(
     OutputAudioElement, {
+        /* ----- START SINGLETON ----- */
+        /* ----- START PROPERTIES ----- */
         oAudioContext: new AudioContext(),
+        /* ----- END PROPERTIES ----- */
+        /* ----- END SINGLETON ----- */
 
         prototype: Object.assign(
+            /* ----- START EXTENDS ----- */
             Object.create(OutputElement.prototype), {
+            /* ----- END EXTENDS ----- */
                 constructor: OutputAudioElement,
+                /* ----- START PROTOTYPE ----- */
+                /* ----- START METHODS ----- */
                 init: function(){},
 
                 setNode: function(oInput, oOutput) {
@@ -38,7 +51,10 @@ Object.assign(
                         this.oNode.oOutput.disconnect( oElm.oNode.oInput );
                     }
                 }
+                /* ----- END METHODS ----- */
+                /* ----- END PROTOTYPE ----- */
             }
         )
     }
 );
+/* ----- END CLASS ----- */

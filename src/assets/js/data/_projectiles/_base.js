@@ -1,4 +1,4 @@
-GAME.oData.oEntity.oProjectile = {
+GameData.oEntity.oProjectile = {
 
     oFrames: {
         kikoha: {

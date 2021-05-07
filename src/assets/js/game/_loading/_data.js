@@ -7,11 +7,11 @@ Object.assign(
 
         init: function(){
             // Entity
-            this.oData = GAME.oData.oEntity;
+            this.oData = GameData.oEntity;
             for( let sType in this.oData ){
-                if( GAME.oData[sType] ){
-                    for( let sCod in GAME.oData[sType] ){
-                        const oEntity = GAME.oData[sType][sCod];
+                if( GameData[sType] ){
+                    for( let sCod in GameData[sType] ){
+                        const oEntity = GameData[sType][sCod];
                         
                         this.createFrames(sType, oEntity);
                         this.createAnimations(sType, oEntity);
@@ -26,8 +26,8 @@ Object.assign(
                 }
             }
             // Stage
-            for( let sCod in GAME.oData.oStage ){
-                this.createStage(GAME.oData.oStage[sCod]);
+            for( let sCod in GameData.oStage ){
+                this.createStage(GameData.oStage[sCod]);
             }
         },
 
@@ -58,7 +58,7 @@ Object.assign(
                             }
                         }
                     }
-                    GAME.oSettings.aFilter.forEach( oFilter => {
+                    GameData.oSettings.aFilter.forEach( oFilter => {
                         if( oFilter.aFrames.indexOf(sFrame) != -1 ){
                             oFrames[sFrame + '_' + oFilter.sSuffixe] = Object.assign({}, oFrames[sFrame], oFilter.oData);
                             oFrames[sFrame + '_' + oFilter.sSuffixe].sPath = oFrames[sFrame].sPath.substring(0, oFrames[sFrame].sPath.length - 4) + '_' + oFilter.sSuffixe + '.png';
@@ -90,7 +90,7 @@ Object.assign(
                         sEntityColor: oEntity.sEntityColor,
                         sName: oEntity.sName,
                         oPath: {
-                            sFrames: GAME.oSettings.oPath[sType].sRoot + '/' + oEntity.sEntity + '/' + oColor.sColor
+                            sFrames: GameData.oSettings.oPath[sType].sRoot + '/' + oEntity.sEntity + '/' + oColor.sColor
                         }
                     },
                     oColor
@@ -100,11 +100,11 @@ Object.assign(
                 oEntity.sDefaultColor || (oEntity.sDefaultColor = oColor.sColor);
 
                 // PATH
-                if( GAME.oSettings.oPath[sType].sFace ){
-                    oEntityColor.oPath.sFace = GAME.oSettings.oPath[sType].sRoot + '/' + oEntity.sEntity + '/' + oColor.sColor + '/' + GAME.oSettings.oPath[sType].sFace;
+                if( GameData.oSettings.oPath[sType].sFace ){
+                    oEntityColor.oPath.sFace = GameData.oSettings.oPath[sType].sRoot + '/' + oEntity.sEntity + '/' + oColor.sColor + '/' + GameData.oSettings.oPath[sType].sFace;
                 }
-                if( GAME.oSettings.oPath[sType].sPreview ){
-                    oEntityColor.oPath.sPreview = GAME.oSettings.oPath[sType].sRoot + '/' + oEntity.sEntity + '/' + oColor.sColor + '/' + GAME.oSettings.oPath[sType].sPreview;
+                if( GameData.oSettings.oPath[sType].sPreview ){
+                    oEntityColor.oPath.sPreview = GameData.oSettings.oPath[sType].sRoot + '/' + oEntity.sEntity + '/' + oColor.sColor + '/' + GameData.oSettings.oPath[sType].sPreview;
                 }
                 
                 // FRAMES
@@ -163,18 +163,18 @@ Object.assign(
 
             const aAnim = [],
                 aMove = [],
-                nDemiLength = (GAME.oSettings.oLuncher.nLength - 1) / 2,
-                nX = GAME.oSettings.oLuncher.oMove.nX / GAME.oSettings.oLuncher.nLength;
+                nDemiLength = (GameData.oSettings.oLuncher.nLength - 1) / 2,
+                nX = GameData.oSettings.oLuncher.oMove.nX / GameData.oSettings.oLuncher.nLength;
 
             // Ajout de 10 FRAMES supplémentaire pour gérer le DOWN
-            for( let nIndex = 1; nIndex <= GAME.oSettings.oLuncher.nLength + 10; nIndex++ ){
+            for( let nIndex = 1; nIndex <= GameData.oSettings.oLuncher.nLength + 10; nIndex++ ){
                 const nParabolX = (nIndex - 1 - nDemiLength) / nDemiLength,
                     nParabolY = -1 * (nParabolX * nParabolX - 1),
-                    nTargetY = Math.round(nParabolY * GAME.oSettings.oLuncher.oMove.nY),
+                    nTargetY = Math.round(nParabolY * GameData.oSettings.oLuncher.oMove.nY),
                     nY = nTargetY - nLastY,
-                    bInvulnerable = GAME.oSettings.oLuncher.nInvulnerable >= nIndex;
+                    bInvulnerable = GameData.oSettings.oLuncher.nInvulnerable >= nIndex;
                 
-                let sFrame = nIndex <= GAME.oSettings.oLuncher.nLength / 2 ? 'hit_luncher' : 'hit_fall';
+                let sFrame = nIndex <= GameData.oSettings.oLuncher.nLength / 2 ? 'hit_luncher' : 'hit_fall';
                 if( nIndex == 1 ){
                     sFrame += '_filter';
                 } else if (bInvulnerable){
@@ -219,7 +219,7 @@ Object.assign(
                     aAnim.push( Object.assign({}, oFrame) );
                 } );
                 oChar.oAnimations['recovery_' + sType] = {
-                    oMove: GAME.oSettings.oRecovery[sType],
+                    oMove: GameData.oSettings.oRecovery[sType],
                     aFrames: aAnim
                 };
             } );
@@ -276,8 +276,8 @@ Object.assign(
         // STAGE
         createStage: function(oStage){
             oStage.oPath = {
-                sPreview: GAME.oSettings.oPath.oStage.sRoot + '/' + oStage.sCod + '/' + GAME.oSettings.oPath.oStage.sPreview,
-                sBackground: GAME.oSettings.oPath.oStage.sRoot + '/' + oStage.sCod + '/' + GAME.oSettings.oPath.oStage.sBackground
+                sPreview: GameData.oSettings.oPath.oStage.sRoot + '/' + oStage.sCod + '/' + GameData.oSettings.oPath.oStage.sPreview,
+                sBackground: GameData.oSettings.oPath.oStage.sRoot + '/' + oStage.sCod + '/' + GameData.oSettings.oPath.oStage.sBackground
             };
         }
     }

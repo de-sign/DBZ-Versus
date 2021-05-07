@@ -31,13 +31,13 @@ Object.assign(
             },
             update: function(bReverse){
                 this.bReverse = bReverse;
-                if( this.oController && this.oController.nFrameChange == GAME.oTimer.nFrames ){
-                    this.nFrameLastUpdate = GAME.oTimer.nFrames;
+                if( this.oController && this.oController.nFrameChange == TimerEngine.nFrames ){
+                    this.nFrameLastUpdate = TimerEngine.nFrames;
                     this.updateDirection();
 
                     this.aHistory.length >= BattleInputBuffer.nLengthHistory && this.aHistory.shift();
                     this.aHistory.push( {
-                        nFrame: GAME.oTimer.nFrames,
+                        nFrame: TimerEngine.nFrames,
                         oButtons: this.getButtonsPressed()
                     } );
                 }
@@ -194,7 +194,7 @@ Object.assign(
             this.aTimerEntity = [];
         },
         use: function(oCommand){
-            this.oCurrent = Object.assign({ nFrameStart: GAME.oTimer.nFrames }, oCommand);
+            this.oCurrent = Object.assign({ nFrameStart: TimerEngine.nFrames }, oCommand);
             this.bFreeze = false;
             this.oNext = null;
             this.oUsed[oCommand.sCod] = true;
@@ -213,7 +213,7 @@ Object.assign(
                 bAddNoManip = true;
             const aCommand = [],
                 aCommandNoManip = [],
-                nFrameCheck = GAME.oTimer.nFrames;
+                nFrameCheck = TimerEngine.nFrames;
 
             for( let nIndex = 0; nIndex < this.oCommandData[sType].length; nIndex++ ){
                 let oCommand = this.oCommandData[sType][nIndex];

@@ -27,8 +27,8 @@ Object.assign(
             constructor: SettingMenu,
             init: function(nIndex){
                 this.oMenu = new GameMenu('LAY__Setting', nIndex);
-                for( let sChannel in GAME.oOutput.oAudio.oChannel ){
-                    this.oLayer[sChannel] = GAME.oOutput.getElement('LAY__Setting_Channel_' + sChannel);
+                for( let sChannel in OutputManager.oAudio.oChannel ){
+                    this.oLayer[sChannel] = OutputManager.getElement('LAY__Setting_Channel_' + sChannel);
                 }
 
                 GameHelper.set(SettingMenu.aHelper);
@@ -46,20 +46,20 @@ Object.assign(
 
             navigate: function(){
                 let sSFX = null;
-                for( let sController in GAME.oInput.oController ){
-                    const oController = GAME.oInput.getController(sController);
+                for( let sController in ControllerManager.oController ){
+                    const oController = ControllerManager.getController(sController);
                     oController.ifPressedNow( {
                         // Gestion validation
                         A: () => {
                             sSFX = 'ADO__Validate';
-                            GAME.oScene.oCurrent.oController = oController;
+                            SceneManager.oCurrent.oController = oController;
                             const sMenuSelected = this.oMenu.getSelected().sId;
                             switch( sMenuSelected ){
                                 case 'TXT__Setting_Input':
-                                    GAME.oScene.change( new InputScene() );
+                                    SceneManager.change( new InputScene() );
                                     break;
                                 case 'TXT__Setting_Return':
-                                    GAME.oScene.change( new MenuScene() );
+                                    SceneManager.change( new MenuScene() );
                                     sSFX = 'ADO__Cancel';
                                     break;
                                 default:
@@ -69,8 +69,8 @@ Object.assign(
                         },
                         B: () => {
                             sSFX = 'ADO__Cancel';
-                            GAME.oScene.oCurrent.oController = oController;
-                            GAME.oScene.change( new MenuScene() );
+                            SceneManager.oCurrent.oController = oController;
+                            SceneManager.change( new MenuScene() );
                         },
                         // Gestion changement
                         LEFT: () => {
@@ -88,17 +88,17 @@ Object.assign(
                         }
                     } );
                 }
-                sSFX && GAME.oOutput.getChannel('CHN__SFX').play(sSFX);
+                sSFX && OutputManager.getChannel('CHN__SFX').play(sSFX);
             },
             display: function(){
                 for( let sChannel in this.oLayer ){
-                    this.oLayer[sChannel].aChildElement[0].setText( GAME.oOutput.getChannel(sChannel).getStepGain() );
+                    this.oLayer[sChannel].aChildElement[0].setText( OutputManager.getChannel(sChannel).getStepGain() );
                 }
             },
             change: function(nChange){
                 let sChange = false;
                 const sChannel = this.oMenu.getSelected().__sChannel,
-                    oChannel = GAME.oOutput.getChannel(sChannel);
+                    oChannel = OutputManager.getChannel(sChannel);
 
                 if( oChannel ){
                     let nStep = oChannel.getStepGain() + nChange;
@@ -133,7 +133,7 @@ Object.assign(
                 constructor: SettingScene,
 				init: function(){
                     Scene.prototype.init.call(this, 'CTX__Setting');
-                    this.oMenu = new SettingMenu(GAME.oScene.oTransverseData.STG__nIndex || 0);
+                    this.oMenu = new SettingMenu(SceneManager.oTransverseData.STG__nIndex || 0);
 				},
 				update: function(){
                     this.oMenu.update();

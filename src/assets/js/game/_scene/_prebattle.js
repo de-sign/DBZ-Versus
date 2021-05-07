@@ -14,7 +14,7 @@ Object.assign(
                     LoadingScene.prototype.init.call(
                         this,
                         {
-                            sRedirection: GAME.oScene.oTransverseData.BTL__sType,
+                            sRedirection: SceneManager.oTransverseData.BTL__sType,
                             aStep: [
                                 'stepImage_Stage',
                                 'stepImage_Character',
@@ -26,7 +26,7 @@ Object.assign(
                         }
                     );
 
-                    this.addStepText('Loading ' + GAME.oScene.oTransverseData.BTL__sType);
+                    this.addStepText('Loading ' + SceneManager.oTransverseData.BTL__sType);
 				},
                 /*
 				update: function(){},
@@ -36,10 +36,10 @@ Object.assign(
                 // Image
                 stepImage_Stage: function(){
                     this.addStepText( 'Loading background stage' );
-                    this.oAssetManager.add('image', GAME.oData.oStage[GAME.oScene.oTransverseData.BTL__sStage].oPath.sBackground );
+                    this.oAssetManager.add('image', GameData.oStage[SceneManager.oTransverseData.BTL__sStage].oPath.sBackground );
                 },
                 stepImage_Character: function(){
-                    const oChar = GAME.oData.oCharacter[ GAME.oScene.oTransverseData.BTL__aCharacter[this.nCharacter] ][ GAME.oScene.oTransverseData.BTL__aColor[this.nCharacter] ];
+                    const oChar = GameData.oCharacter[ SceneManager.oTransverseData.BTL__aCharacter[this.nCharacter] ][ SceneManager.oTransverseData.BTL__aColor[this.nCharacter] ];
                     this.addStepText( 'Loading frames ' + oChar.sName );
                     for( let sFrame in oChar.oFrames ){
                         this.oAssetManager.add('image', oChar.oPath.sFrames + '/' + oChar.oFrames[sFrame].sPath);
@@ -48,12 +48,12 @@ Object.assign(
                 },
                 stepImage_Entity: function(){
                     this.addStepText( 'Loading frames Entity' );
-                    GAME.oScene.oTransverseData.BTL__aCharacter.forEach( (sChar, nIndex) => {
-                        const oChar = GAME.oData.oCharacter[sChar][ GAME.oScene.oTransverseData.BTL__aColor[nIndex] ];
+                    SceneManager.oTransverseData.BTL__aCharacter.forEach( (sChar, nIndex) => {
+                        const oChar = GameData.oCharacter[sChar][ SceneManager.oTransverseData.BTL__aColor[nIndex] ];
 
                         oChar.oCommands.aOffense.forEach( oCommand => {
                             if( oCommand.oEntity ){
-                                const oEntity = GAME.oData['o' + oCommand.oEntity.sType][oCommand.oEntity.sEntity || 'ALL'][oChar.sEntityColor];
+                                const oEntity = GameData['o' + oCommand.oEntity.sType][oCommand.oEntity.sEntity || 'ALL'][oChar.sEntityColor];
                                 for( let sFrame in oEntity.oFrames ){
                                     this.oAssetManager.add('image', oEntity.oPath.sFrames + '/' + oEntity.oFrames[sFrame].sPath);
                                 }
@@ -65,12 +65,12 @@ Object.assign(
                 // Audio
                 stepOutput_Audio: function(){
                     this.addStepText( 'Loading audio' );
-                    for( let sChannel in GAME.oSettings.oAudio.oPreBattle ){
-                        const oChannel = GAME.oOutput.getChannel('CHN__' + sChannel),
-                            aAudio = [...GAME.oSettings.oAudio.oPreBattle[sChannel]];
+                    for( let sChannel in GameData.oSettings.oAudio.oPreBattle ){
+                        const oChannel = OutputManager.getChannel('CHN__' + sChannel),
+                            aAudio = [...GameData.oSettings.oAudio.oPreBattle[sChannel]];
                             
                         if( sChannel == 'BGM' ){
-                            aAudio.push( GAME.oScene.oTransverseData.BTL__sBGM );
+                            aAudio.push( SceneManager.oTransverseData.BTL__sBGM );
                         }
 
                         aAudio.forEach( sAudio => {
@@ -78,9 +78,9 @@ Object.assign(
                                 case 'BGM':
                                     this.oAssetManager.add(
                                         'audio',
-                                        GAME.oSettings.oPath.oAudio[ 's' + sChannel ] + '/' + sAudio + '.mp3',
+                                        GameData.oSettings.oPath.oAudio[ 's' + sChannel ] + '/' + sAudio + '.mp3',
                                         oAudio => {
-                                            oChannel.add( new GAME.oOutput.OutputSourceAudio('ADO__' + sAudio, oAudio) );
+                                            oChannel.add( new OutputManager.OutputSourceAudio('ADO__' + sAudio, oAudio) );
                                             return Promise.resolve();
                                         }
                                     );
@@ -88,13 +88,13 @@ Object.assign(
                                 case 'SFX':
                                     this.oAssetManager.add(
                                         'arraybuffer',
-                                        GAME.oSettings.oPath.oAudio[ 's' + sChannel ] + '/' + sAudio + '.mp3',
+                                        GameData.oSettings.oPath.oAudio[ 's' + sChannel ] + '/' + sAudio + '.mp3',
                                         oEvent => {
                                             return new Promise( fResolve => {
-                                                GAME.oOutput.OutputAudioElement.oAudioContext.decodeAudioData(
+                                                OutputManager.OutputAudioElement.oAudioContext.decodeAudioData(
                                                     oEvent.response, 
                                                     oBuffer => {
-                                                        oChannel.add( new GAME.oOutput.OutputSourceBuffer('ADO__' + sAudio, oBuffer) );
+                                                        oChannel.add( new OutputManager.OutputSourceBuffer('ADO__' + sAudio, oBuffer) );
                                                         fResolve();
                                                     },
                                                     () => fResolve()

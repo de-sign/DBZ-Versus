@@ -1,4 +1,4 @@
-GAME.oData.oCharacter.GHN = {
+GameData.oCharacter.GHN = {
     sEntity: 'GHN',
     sEntityColor: 'ORG',
     aColor: [

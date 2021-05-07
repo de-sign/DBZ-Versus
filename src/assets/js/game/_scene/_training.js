@@ -9,10 +9,10 @@ function TrainingScene() {
     this.bMenu = false;
 
     this.fCheckNewController = oController => {
-        if( !this.allPlayerActive() && GAME.oScene.oTransverseData.MNU__aController.indexOf(oController) == -1 ){
+        if( !this.allPlayerActive() && SceneManager.oTransverseData.MNU__aController.indexOf(oController) == -1 ){
             this.oContext.addTickUpdate( () => {
-                const nIndex = GAME.oScene.oTransverseData.MNU__aController.indexOf(null);
-                GAME.oScene.oTransverseData.MNU__aController[nIndex] = oController;
+                const nIndex = SceneManager.oTransverseData.MNU__aController.indexOf(null);
+                SceneManager.oTransverseData.MNU__aController[nIndex] = oController;
                 this.aPlayer[nIndex].oInputBuffer.init(oController);
                 GameHelper.aController.push(oController);
             } );
@@ -66,20 +66,20 @@ Object.assign(
                         this,
                         {
                             sContextClass: '--training',
-                            aController: GAME.oScene.oTransverseData.MNU__aController,
+                            aController: SceneManager.oTransverseData.MNU__aController,
                             sAnimation: 'stand'
                         }
                     );
 
-                    GameHelper.set(TrainingScene.oHelper.aBattle, GAME.oScene.oTransverseData.MNU__aController.filter( oController => oController ) );
+                    GameHelper.set(TrainingScene.oHelper.aBattle, SceneManager.oTransverseData.MNU__aController.filter( oController => oController ) );
                     
-                    GAME.oInput.on('create addEvent', this.fCheckNewController);
+                    ControllerManager.on('create addEvent', this.fCheckNewController);
 
                     this.oTraining = new TrainingEngine(this);
                     this.oTraining.trigger('onInit');
                 },
                 update: function(){
-                    GAME.oScene.oTransverseData.MNU__aController.forEach( oController => {
+                    SceneManager.oTransverseData.MNU__aController.forEach( oController => {
                         oController && oController.ifPressedNow( {
                             START: () => {
                                 if( oController.isPressed('UP') ){
@@ -101,7 +101,7 @@ Object.assign(
                 destroy: function(){
                     BattleScene.prototype.destroy.call(this);
                     this.oTraining.destroy();
-                    GAME.oInput.off('create addEvent', this.fCheckNewController);
+                    ControllerManager.off('create addEvent', this.fCheckNewController);
                     GameHelper.destroy();
                     return {
                         MNU__nIndex: 1
@@ -110,7 +110,7 @@ Object.assign(
 
                 allPlayerActive: function(){
                     let bAllActive = true;
-                    GAME.oScene.oTransverseData.MNU__aController.forEach( oController => {
+                    SceneManager.oTransverseData.MNU__aController.forEach( oController => {
                         !oController && ( bAllActive = false );
                     } );
                     return bAllActive;

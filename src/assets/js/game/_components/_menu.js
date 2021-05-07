@@ -9,7 +9,7 @@ function GameMenu(sLayer, aIndexDefault){
 Object.assign(
     GameMenu.prototype, {
 		init: function(sLayer, aIndexDefault){
-			this.oLayer = GAME.oOutput.getElement(sLayer);
+			this.oLayer = OutputManager.getElement(sLayer);
 			aIndexDefault.forEach( (nDefault, nIndex) => {
 				this.aCursor.push( {
 					nIndexCurrent: null,
@@ -80,14 +80,14 @@ Object.assign(
 			nCursor || ( nCursor = 0 );
 			if( this.aCursor[nCursor] ){
 				this.select( nCursor, this.aCursor[nCursor].nIndexCurrent + 1 );
-				GAME.oOutput.getChannel('CHN__SFX').play('ADO__Move');
+				OutputManager.getChannel('CHN__SFX').play('ADO__Move');
 			}
 		},
 		prev: function(nCursor){
 			nCursor || ( nCursor = 0 );
 			if( this.aCursor[nCursor] ){
 				this.select( nCursor, this.aCursor[nCursor].nIndexCurrent - 1 );
-				GAME.oOutput.getChannel('CHN__SFX').play('ADO__Move');
+				OutputManager.getChannel('CHN__SFX').play('ADO__Move');
 			}
 		},
 		getSelected: function(nCursor){

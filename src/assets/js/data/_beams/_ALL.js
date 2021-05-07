@@ -1,4 +1,4 @@
-GAME.oData.oBeam.ALL = {
+GameData.oBeam.ALL = {
     sEntity: 'ALL',
     aColor: [
         {

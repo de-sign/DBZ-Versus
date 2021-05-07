@@ -1,4 +1,4 @@
-GAME.oData.oCharacter.KID_GHN = {
+GameData.oCharacter.KID_GHN = {
     sEntity: 'KID_GHN',
     aColor: [
         {

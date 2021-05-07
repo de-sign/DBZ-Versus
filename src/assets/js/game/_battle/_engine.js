@@ -92,7 +92,7 @@ Object.assign(
                     switch(oEffect.sType){
                         // sEntity
                         case 'sound':
-                            GAME.oOutput.getChannel('CHN__SFX').play(oEffect.sEntity);
+                            OutputManager.getChannel('CHN__SFX').play(oEffect.sEntity);
                             break;
                         
                         // sEntity, sColor, sAnimation, oPosition, bReverse, oHitData, oParent, bLink
@@ -255,7 +255,7 @@ Object.assign(
                                                     },
                                                     oEntityHit,
                                                     oEntityHurt,
-                                                    oData: oData.oPushback || GAME.oSettings.oPushback
+                                                    oData: oData.oPushback || GameData.oSettings.oPushback
                                                 } );
                                                 bHit = true;
                                                 break;
@@ -284,7 +284,7 @@ Object.assign(
                 this.movePushback(aPushback, oCollapse);
                 // Gestion hit freeze
                 aEntity.forEach( oEntity => {
-                    oEntity.setFreeze(GAME.oSettings.nFreeze);
+                    oEntity.setFreeze(GameData.oSettings.nFreeze);
                 } );
             }
         },
@@ -324,7 +324,7 @@ Object.assign(
                     } );
 
                     // Texte
-                    GAME.oScene.oCurrent.oInfo.add( {
+                    SceneManager.oCurrent.oInfo.add( {
                         sImg: oPlayer.oData.oPath.sFace,
                         sText: oPlayer.oGatling.oCurrent.sName + '&nbsp;!'
                     } );

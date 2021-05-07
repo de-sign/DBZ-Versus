@@ -65,18 +65,18 @@ Object.assign(
                 constructor: StageScene,
 				init: function(){
                     Scene.prototype.init.call(this, 'CTX__Stage');
-                    GAME.oOutput.getElement('TXT__Stage_Name').setText( GAME.oScene.oTransverseData.BTL__sType );
+                    OutputManager.getElement('TXT__Stage_Name').setText( SceneManager.oTransverseData.BTL__sType );
 
                     // Menu Init
                     this.oMenu = {
-                        oStage: new GameMenu('LAY__Stage_Stage', GAME.oScene.oTransverseData.STG__nStageIndex || Math.floor(Object.keys(GAME.oData.oStage).length / 2)),
-                        oBGM: new StageBGMMenu('LAY__Stage_BGM', GAME.oScene.oTransverseData.STG__nBGMIndex)
+                        oStage: new GameMenu('LAY__Stage_Stage', SceneManager.oTransverseData.STG__nStageIndex || Math.floor(Object.keys(GameData.oStage).length / 2)),
+                        oBGM: new StageBGMMenu('LAY__Stage_BGM', SceneManager.oTransverseData.STG__nBGMIndex)
                     };
                     for( let sMenu in this.oMenu ){
                         this.oMenu[sMenu].update();
                     }
 
-                    GameHelper.set(StageScene.aHelper, GAME.oScene.oTransverseData.MNU__aController.filter( oController => oController ));
+                    GameHelper.set(StageScene.aHelper, SceneManager.oTransverseData.MNU__aController.filter( oController => oController ));
 				},
 				update: function(){
                     GameHelper.update();
@@ -85,7 +85,7 @@ Object.assign(
                 destroy: function(){
                     let sStage = this.oMenu.oStage.getSelected().__oData.sCod;
                     if( sStage == 'RNG' ){
-                        const aStage = Object.keys(GAME.oData.oStage).filter( sValue => sValue != 'RNG' ),
+                        const aStage = Object.keys(GameData.oStage).filter( sValue => sValue != 'RNG' ),
                         nRNG = Math.floor(Math.random() * aStage.length);
                         sStage = aStage[nRNG];
                     }
@@ -93,12 +93,12 @@ Object.assign(
                     let sBGM = this.oMenu.oBGM.getSelected().__oData.sCod;
                     switch( sBGM ){
                         case 'RNG':
-                            const aBGM = Object.values(GAME.oData.oBGM).filter( sValue => sValue != 'RNG' || sValue != 'AUTO' ),
+                            const aBGM = Object.values(GameData.oBGM).filter( sValue => sValue != 'RNG' || sValue != 'AUTO' ),
                                 nRNG = Math.floor(Math.random() * aBGM.length);
                             sBGM = aBGM[nRNG].sCod;
                             break;
                         case 'AUTO':
-                            sBGM = GAME.oData.oBGM[sStage].sCod;
+                            sBGM = GameData.oBGM[sStage].sCod;
                             break;
                     }
                     
@@ -117,22 +117,22 @@ Object.assign(
                     let bChange = false,
                         sSFX = null;
 
-                    for( let nIndex in GAME.oScene.oTransverseData.MNU__aController ){
-                        const oController = GAME.oScene.oTransverseData.MNU__aController[nIndex];
+                    for( let nIndex in SceneManager.oTransverseData.MNU__aController ){
+                        const oController = SceneManager.oTransverseData.MNU__aController[nIndex];
                         oController && oController.ifPressedNow( {
                             // Gestion validation
                             A: () => {
-                                GAME.oScene.change( new PreBattleScene() );
+                                SceneManager.change( new PreBattleScene() );
                                 sSFX = 'ADO__Validate';
                                 bChange = true;
                             },
                             B: () => {
-                                GAME.oScene.change( new SelectScene() );
+                                SceneManager.change( new SelectScene() );
                                 sSFX = 'ADO__Cancel';
                                 bChange = true;
                             },
                             START: () => {
-                                GAME.oScene.change( new MenuScene() );
+                                SceneManager.change( new MenuScene() );
                                 sSFX = 'ADO__Cancel';
                                 bChange = true;
                             },
@@ -161,13 +161,13 @@ Object.assign(
                         }
                     }
 
-                    sSFX && GAME.oOutput.getChannel('CHN__SFX').play(sSFX);
+                    sSFX && OutputManager.getChannel('CHN__SFX').play(sSFX);
         
                     for( let sMenu in this.oMenu ){
                         this.oMenu[sMenu].update();
                     }
 
-                    GAME.oOutput.getElement('TXT__Stage_Stage_Name')
+                    OutputManager.getElement('TXT__Stage_Stage_Name')
                         .setText( this.oMenu.oStage.getSelected().__oData.sName );
                 }
             }

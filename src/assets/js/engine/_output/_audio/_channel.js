@@ -1,26 +1,37 @@
+/* ----- START CLASS ----- */
+/* ----- START CONSTRUCTOR ----- */
 function OutputChannel(sId, nDefaultGain) {
+    /* ----- START PROPERTIES ----- */
     this.sId = sId;
     this.oSource = {};
     this.sCurrentSource = null;
+    /* ----- END PROPERTIES ----- */
+
     OutputAudioElement.call(this, nDefaultGain);
 }
+/* ----- END CONSTRUCTOR ----- */
 
 Object.assign(
     OutputChannel, {
-
+        /* ----- START SINGLETON ----- */
+        /* ----- START PROPERTIES ----- */
         nStepGain: 10,
+        /* ----- END PROPERTIES ----- */
 
         prototype: Object.assign(
+            /* ----- START EXTENDS ----- */
             Object.create(OutputAudioElement.prototype), {
+            /* ----- END EXTENDS ----- */
                 constructor: OutputChannel,
-
+                /* ----- START PROTOTYPE ----- */
+                /* ----- START METHODS ----- */
                 init: function(nDefaultGain){
                     const oMerger = OutputAudioElement.oAudioContext.createChannelMerger(),
                         oGain = OutputAudioElement.oAudioContext.createGain();
                         oMerger.connect(oGain);
                     this.setNode(oMerger, oGain);
 
-                    const oStore = GameStore.get(this.sId);
+                    const oStore = StoreEngine.get(this.sId);
                     this.setGain( oStore ? oStore.nGain : nDefaultGain / OutputChannel.nStepGain );
                 },
 
@@ -73,7 +84,7 @@ Object.assign(
                     const oGain = this.oNode.oOutput.gain;
                     this.addTickUpdate( () => {
                         oGain.value = nGain;
-                        GameStore.update( this.sId, { nGain: nGain } );
+                        StoreEngine.update( this.sId, { nGain: nGain } );
                     } );
                 },
                 setGainAtStep: function(nStep){
@@ -83,7 +94,10 @@ Object.assign(
                 getStepGain: function(){
                     return Math.round(this.oNode.oOutput.gain.value * OutputChannel.nStepGain);
                 }
+                /* ----- END METHODS ----- */
+                /* ----- END PROTOTYPE ----- */
             }
         )
     }
 );
+/* ----- END CLASS ----- */

@@ -1,27 +1,31 @@
-function OutputSourceBuffer(sId, oBuffer) {
-    this.sId = sId;
-    this.oBuffer = oBuffer;
-    OutputAudioElement.call(this);
+/* ----- START CLASS ----- */
+/* ----- START CONSTRUCTOR ----- */
+function OutputSourceBuffer(sId, oSource) {
+    OutputSource.apply(this, arguments);
 }
+/* ----- END CONSTRUCTOR ----- */
 
 Object.assign(
     OutputSourceBuffer, {
 
         prototype: Object.assign(
-            Object.create(OutputAudioElement.prototype), {
+            /* ----- START EXTENDS ----- */
+            Object.create(OutputSource.prototype), {
+            /* ----- END EXTENDS ----- */
                 constructor: OutputSourceBuffer,
-
+                /* ----- START PROTOTYPE ----- */
+                /* ----- START METHODS ----- */
                 init: function(){
                     this.setNode(null, OutputAudioElement.oAudioContext.createChannelMerger());
                 },
                 create: function(){
-                    const oBuffer = OutputAudioElement.oAudioContext.createBufferSource();
-                    oBuffer.buffer = this.oBuffer;
-                    oBuffer.connect( this.oNode.oOutput );
-                    oBuffer.addEventListener('ended', () => {
-                        oBuffer.disconnect( this.oNode.oOutput );
+                    const oSource = OutputAudioElement.oAudioContext.createBufferSource();
+                    oSource.buffer = this.oSource;
+                    oSource.connect( this.oNode.oOutput );
+                    oSource.addEventListener('ended', () => {
+                        oSource.disconnect( this.oNode.oOutput );
                     } );
-                    return oBuffer;
+                    return oSource;
                 },
 
                 play: function(bLoop){
@@ -33,9 +37,11 @@ Object.assign(
                 },
                 resume: function(){
                     this.play();
-                },
-                pause: function(){}
+                }
+                /* ----- END METHODS ----- */
+                /* ----- END PROTOTYPE ----- */
             }
         )
     }
 );
+/* ----- END CLASS ----- */

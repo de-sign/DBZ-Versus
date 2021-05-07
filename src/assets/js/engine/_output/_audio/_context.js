@@ -1,6 +1,11 @@
+/* ----- START CLASS ----- */
+/* ----- START CONSTRUCTOR ----- */
 function OutputAudioContext() {
+    /* ----- START PROPERTIES ----- */
     this.sId = 'AD__Game';
     this.oChannel = {};
+    /* ----- END PROPERTIES ----- */
+
     OutputAudioElement.call(this);
 }
 
@@ -8,9 +13,12 @@ Object.assign(
     OutputAudioContext, {
 
         prototype: Object.assign(
+            /* ----- START EXTENDS ----- */
             Object.create(OutputAudioElement.prototype), {
+            /* ----- END EXTENDS ----- */
                 constructor: OutputAudioContext,
-
+                /* ----- START PROTOTYPE ----- */
+                /* ----- START METHODS ----- */
                 init: function(){
                     const oMerger = OutputAudioElement.oAudioContext.createChannelMerger();
                     oMerger.connect( OutputAudioElement.oAudioContext.destination );
@@ -42,7 +50,10 @@ Object.assign(
                 suspend: function(){
                     OutputAudioElement.oAudioContext.suspend();
                 }
+                /* ----- END METHODS ----- */
+                /* ----- END PROTOTYPE ----- */
             }
         )
     }
 );
+/* ----- END CLASS ----- */

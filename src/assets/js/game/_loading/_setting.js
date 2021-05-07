@@ -9,40 +9,40 @@ Object.assign(
     InitializeSetting.prototype, {
 
         init: function(){
-            this.oLayer = GAME.oOutput.getElement('LAY__Setting');
+            this.oLayer = OutputManager.getElement('LAY__Setting');
 
             this.getPattern();
-            for( let sChannel in GAME.oOutput.oAudio.oChannel ){
+            for( let sChannel in OutputManager.oAudio.oChannel ){
                 this.createChannel(sChannel);
             }
             this.addReturn();
         },
         
         getPattern: function(){
-            this.oPattern = GAME.oOutput.getElement('LAY__Setting_Channel_');
+            this.oPattern = OutputManager.getElement('LAY__Setting_Channel_');
             this.oPattern && this.oLayer.delete( this.oPattern );
         },
         createChannel: function(sChannel){
             // Clone du LAYER
             let hLayer = this.oPattern.hElement.cloneNode(true);
             hLayer.id += sChannel;
-            hLayer.classList.remove(GAME.oOutput.oConfig.class.created);
+            hLayer.classList.remove(OutputManager.oConfig.class.created);
             [].forEach.call(
                 hLayer.querySelectorAll('.--change'),
                 hElement => {
-                    hElement.classList.remove('--change', GAME.oOutput.oConfig.class.created);
+                    hElement.classList.remove('--change', OutputManager.oConfig.class.created);
                 }
             );
             hLayer.querySelector('.Setting__Channel_Name').innerHTML = sChannel.substring(5) + ' volume';
 
             // Ajout dans le context
-            const oLayer = new GAME.oOutput.OutputLayer(hLayer);
+            const oLayer = new OutputManager.OutputLayer(hLayer);
             oLayer.__sChannel = sChannel;
             this.oLayer.add(oLayer, '.Setting__Output');
             this.oLayer.update();
         },
         addReturn: function(){
-            this.oLayer.add(false, new GAME.oOutput.OutputText(document.getElementById('TXT__Setting_Return')));
+            this.oLayer.add(false, new OutputManager.OutputText(document.getElementById('TXT__Setting_Return')));
         }
     }
 );

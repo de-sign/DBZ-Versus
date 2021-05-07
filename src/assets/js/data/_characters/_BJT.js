@@ -1,4 +1,4 @@
-GAME.oData.oCharacter.BJT = {
+GameData.oCharacter.BJT = {
     sEntity: 'BJT',
     aColor: [
         {

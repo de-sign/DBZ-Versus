@@ -12,7 +12,7 @@ Object.assign(
         oTimer: new GameTimer(),
 
 		init: function(sLayer){
-			this.oLayer = GAME.oOutput.getElement(sLayer);
+			this.oLayer = OutputManager.getElement(sLayer);
             this.oWrapper = this.oLayer.aChildElement[0];
             this.oWrapper.enableAutoPositioning();
             this.oTimer.init( GameHelper.nTimer );
@@ -51,11 +51,11 @@ Object.assign(
             this.update();
         },
         createText: function(oText){
-            const oLayer = new GAME.oOutput.OutputLayer();
+            const oLayer = new OutputManager.OutputLayer();
             oText.aButton.forEach( sButton => {
-                oLayer.add( new GAME.oOutput.OutputText(sButton, { class: 'Helper__Button' }) );
+                oLayer.add( new OutputManager.OutputText(sButton, { class: 'Helper__Button' }) );
             } );
-            oLayer.add( new GAME.oOutput.OutputText(oText.sText) );
+            oLayer.add( new OutputManager.OutputText(oText.sText) );
             this.oWrapper.add(oLayer);
         },
         updateText: function(nIndex){

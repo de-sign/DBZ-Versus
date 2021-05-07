@@ -1,4 +1,4 @@
-GAME.oData.oCharacter.FRZ = {
+GameData.oCharacter.FRZ = {
     sEntity: 'FRZ',
     aColor: [
         {

@@ -55,14 +55,14 @@ Object.assign(
                 // Image
                 stepImage_Stage: function(){
                     this.addStepText( 'Loading preview stages' );
-                    for( let sStage in GAME.oData.oStage ){
-                        this.oAssetManager.add('image', GAME.oData.oStage[sStage].oPath.sPreview );
+                    for( let sStage in GameData.oStage ){
+                        this.oAssetManager.add('image', GameData.oStage[sStage].oPath.sPreview );
                     }
                 },
                 stepImage_Face: function(){
                     this.addStepText( 'Loading face characters' );
-                    for( let sChar in GAME.oData.oCharacter ){
-                        const oChar = GAME.oData.oCharacter[sChar];
+                    for( let sChar in GameData.oCharacter ){
+                        const oChar = GameData.oCharacter[sChar];
                         oChar.aColor.forEach( oColor => {
                             this.oAssetManager.add('image', oChar[oColor.sColor].oPath.sFace );
                         } );
@@ -70,8 +70,8 @@ Object.assign(
                 },
                 stepImage_Character: function(){
                     this.addStepText( 'Loading preview characters' );
-                    for( let sChar in GAME.oData.oCharacter ){
-                        const oChar = GAME.oData.oCharacter[sChar];
+                    for( let sChar in GameData.oCharacter ){
+                        const oChar = GameData.oCharacter[sChar];
                         oChar.aColor.forEach( oColor => {
                             this.oAssetManager.add('image', oChar[oColor.sColor].oPath.sFace );
                         } );
@@ -83,7 +83,7 @@ Object.assign(
                     window.addEventListener('gamepadconnected', oEvent => {
                         if( !GamepadController.oIndexCreate[oEvent.gamepad.index] ){
                             if( oEvent.gamepad.mapping == 'standard' ){
-                                const oGamepad = GamepadController.recover( oEvent.gamepad, GAME.oSettings.oController.oGamepad );
+                                const oGamepad = GamepadController.recover( oEvent.gamepad, GameData.oSettings.oController.oGamepad );
                                 InitializeInput.createController(oGamepad.sId);
                                 InitializeSide.createController(oGamepad.sId);
                                 console.log(oEvent.gamepad.id);
@@ -99,18 +99,18 @@ Object.assign(
                 stepOutput_Audio: function(){
                     this.addStepText( 'Loading audio' );
                     // LOADING BGM & SFX
-                    for( let sChannel in GAME.oSettings.oAudio.oInitialize ){
-                        const aAudio = GAME.oSettings.oAudio.oInitialize[sChannel],
-                            oChannel = GAME.oOutput.getChannel('CHN__' + sChannel);
+                    for( let sChannel in GameData.oSettings.oAudio.oInitialize ){
+                        const aAudio = GameData.oSettings.oAudio.oInitialize[sChannel],
+                            oChannel = OutputManager.getChannel('CHN__' + sChannel);
 
                         aAudio.forEach( sAudio => {
                             switch( sChannel ){
                                 case 'BGM':
                                     this.oAssetManager.add(
                                         'audio',
-                                        GAME.oSettings.oPath.oAudio[ 's' + sChannel ] + '/' + sAudio + '.mp3',
+                                        GameData.oSettings.oPath.oAudio[ 's' + sChannel ] + '/' + sAudio + '.mp3',
                                         oAudio => {
-                                            oChannel.add( new GAME.oOutput.OutputSourceAudio('ADO__' + sAudio, oAudio) );
+                                            oChannel.add( new OutputManager.OutputSourceAudio('ADO__' + sAudio, oAudio) );
                                             return Promise.resolve();
                                         }
                                     );
@@ -118,13 +118,13 @@ Object.assign(
                                 case 'SFX':
                                     this.oAssetManager.add(
                                         'arraybuffer',
-                                        GAME.oSettings.oPath.oAudio[ 's' + sChannel ] + '/' + sAudio + '.mp3',
+                                        GameData.oSettings.oPath.oAudio[ 's' + sChannel ] + '/' + sAudio + '.mp3',
                                         oEvent => {
                                             return new Promise( fResolve => {
-                                                GAME.oOutput.OutputAudioElement.oAudioContext.decodeAudioData(
+                                                OutputManager.OutputAudioElement.oAudioContext.decodeAudioData(
                                                     oEvent.response, 
                                                     oBuffer => {
-                                                        oChannel.add( new GAME.oOutput.OutputSourceBuffer('ADO__' + sAudio, oBuffer) );
+                                                        oChannel.add( new OutputManager.OutputSourceBuffer('ADO__' + sAudio, oBuffer) );
                                                         fResolve();
                                                     },
                                                     () => fResolve()
@@ -138,7 +138,7 @@ Object.assign(
                     }
                     // Gestion BLUR / FOCUS
                     window.addEventListener('visibilitychange', () => {
-                        const oChannel = GAME.oOutput.getChannel('CHN__BGM');
+                        const oChannel = OutputManager.getChannel('CHN__BGM');
                         if( document.visibilityState == 'visible' ){
                             oChannel.play();
                         } else {

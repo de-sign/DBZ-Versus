@@ -1,13 +1,23 @@
+/* ----- START CLASS ----- */
+/* ----- START CONSTRUCTOR ----- */
 function OutputLayer(hElm) {
+    /* ----- START PROPERTIES ----- */
     this.aChildElement = [];
+    /* ----- END PROPERTIES ----- */
+
     OutputHTMLElement.call(this, hElm);
 }
+/* ----- END CONSTRUCTOR ----- */
+
 Object.assign(
     OutputLayer, {
         prototype: Object.assign(
+            /* ----- START EXTENDS ----- */
             Object.create(OutputHTMLElement.prototype), {
+                /* ----- END EXTENDS ----- */
                 constructor: OutputLayer,
-
+                /* ----- START PROTOTYPE ----- */
+                /* ----- START METHODS ----- */
                 update: function() {
                     OutputHTMLElement.prototype.update.call(this);
                     this.aChildElement.forEach( oElm => {
@@ -82,7 +92,10 @@ Object.assign(
                         this.hElement.classList.remove( OutputManager.oConfig.class.scope );
                     }
                 }
+                /* ----- END METHODS ----- */
+                /* ----- END PROTOTYPE ----- */
             }
         )
     }
 );
+/* ----- END CLASS ----- */

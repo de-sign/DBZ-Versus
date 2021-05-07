@@ -1,16 +1,23 @@
+/* ----- START CLASS ----- */
+/* ----- START CONSTRUCTOR ----- */
 function OutputViewport(hElm) {
+    /* ----- START PROPERTIES ----- */
     this.sContextUsed = '';
-    OutputLayer.call(this, hElm);
-    
     this.oOrigin = {};
+    /* ----- END PROPERTIES ----- */
+
+    OutputLayer.call(this, hElm);
     this.setOrigin();
 }
 Object.assign(
     OutputViewport, {
         prototype: Object.assign(
+            /* ----- START EXTENDS ----- */
             Object.create(OutputLayer.prototype), {
+            /* ----- END EXTENDS ----- */
                 constructor: OutputViewport,
-
+                /* ----- START PROTOTYPE ----- */
+                /* ----- START METHODS ----- */
                 update: function(){
                     OutputHTMLElement.prototype.update.call(this);
                     const oCtx = this.getContext();
@@ -46,7 +53,10 @@ Object.assign(
                     }
                     return oCtx;
                 }
+                /* ----- END METHODS ----- */
+                /* ----- END PROTOTYPE ----- */
             }
         )
     }
 );
+/* ----- END CLASS ----- */

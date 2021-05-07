@@ -1,4 +1,4 @@
-GAME.oData.oCharacter.BUU = {
+GameData.oCharacter.BUU = {
     sEntity: 'BUU',
     sEntityColor: 'PNK',
     aColor: [

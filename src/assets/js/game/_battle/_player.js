@@ -18,9 +18,9 @@ Object.assign(
             Object.create(BattleEntity.prototype), {
                 constructor: BattlePlayer,
                 init: function(nPlayer, sChar, sColor, sAnimation, oPosition, bReverse, oController) {
-                    BattleEntity.prototype.init.call(this, 'character', GAME.oData.oCharacter[sChar][sColor], sAnimation, oPosition, bReverse);
+                    BattleEntity.prototype.init.call(this, 'character', GameData.oCharacter[sChar][sColor], sAnimation, oPosition, bReverse);
 
-                    this.nLife = GAME.oSettings.oLife.player;
+                    this.nLife = GameData.oSettings.oLife.player;
                     this.nPlayer = nPlayer;
                     this.oInputBuffer = new BattleInputBuffer(oController);
                     this.oGatling = new BattleGatling(this.oInputBuffer, this.oData.oCommands);
@@ -49,7 +49,7 @@ Object.assign(
                                     this.setStance('recovery');
                                     break;
                             }
-                            GAME.oOutput.getChannel('CHN__SFX').play('ADO__Recovery');
+                            OutputManager.getChannel('CHN__SFX').play('ADO__Recovery');
                         }
                         
                         else {
@@ -96,7 +96,7 @@ Object.assign(
                     return this.oGatling.oCurrent;
                 },
                 addKi: function(nKi){
-                    this.nKi = Math.min(this.nKi + nKi, GAME.oSettings.nKi);
+                    this.nKi = Math.min(this.nKi + nKi, GameData.oSettings.nKi);
                 },
                 takeHit: function(oEntity, oData){
                     const aNewEntity = [];
@@ -107,7 +107,7 @@ Object.assign(
                             aNewEntity.push( {
                                 sType: 'effect',
                                 sAnimation: oData.oStun.sImpactAnimation || 'impact_guard',
-                                oPosition: GAME.oSettings.oPositionEffect,
+                                oPosition: GameData.oSettings.oPositionEffect,
                                 bReverse: !this.bReverse,
                                 oParent: this
                             } );
@@ -136,7 +136,7 @@ Object.assign(
                             aNewEntity.push( {
                                 sType: 'effect',
                                 sAnimation: oData.oStun.sImpactAnimation || 'impact_hit',
-                                oPosition: GAME.oSettings.oPositionEffect,
+                                oPosition: GameData.oSettings.oPositionEffect,
                                 bReverse: !this.bReverse,
                                 oParent: this
                             } );

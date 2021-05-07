@@ -154,7 +154,7 @@ Object.assign(
                             break;
                         case 'select':
                             sSFX = 'ADO__Validate';
-                            GAME.oScene.change( new SelectScene() );
+                            SceneManager.change( new SelectScene() );
                             break;
                         case 'close':
                             sSFX = 'ADO__Cancel';
@@ -162,7 +162,7 @@ Object.assign(
                             break;
                         case 'quit':
                             sSFX = 'ADO__Cancel';
-                            GAME.oScene.change( new MenuScene() );
+                            SceneManager.change( new MenuScene() );
                             break;
                         case null:
                             break;
@@ -171,7 +171,7 @@ Object.assign(
                             this.open(sRedir);
                             break;
                     }
-                    sSFX && GAME.oOutput.getChannel('CHN__SFX').play(sSFX);
+                    sSFX && OutputManager.getChannel('CHN__SFX').play(sSFX);
                 }
                 else {
                     for( let sModule in this.oModule ){
@@ -206,7 +206,7 @@ Object.assign(
                 
                     this.aHelperController = GameHelper.aController;
                     GameHelper.set(TrainingScene.oHelper.aMenu, this.oScene.oController);
-                    GAME.oOutput.getChannel('CHN__SFX').play('ADO__Validate');
+                    OutputManager.getChannel('CHN__SFX').play('ADO__Validate');
                 }
 
                 this.oMenu.oLast = this.oMenu.oCurrent;

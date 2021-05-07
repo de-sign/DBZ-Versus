@@ -25,7 +25,7 @@ Object.assign(
                             sText: 'Ready ?',
                             fCallback: () => {
                                 this.aPlayer.forEach( (oPlayer, nIndex) => {
-                                    oPlayer.oInputBuffer.init( GAME.oScene.oTransverseData.MNU__aController[nIndex] );
+                                    oPlayer.oInputBuffer.init( SceneManager.oTransverseData.MNU__aController[nIndex] );
                                 } );
                             }
                         },
@@ -45,10 +45,10 @@ Object.assign(
                             bFreeze: true,
                             nLength: 120,
                             fCallback: () => {
-                                GAME.oScene.change( new MenuScene() );
+                                SceneManager.change( new MenuScene() );
                             }
                         } );
-                        GAME.oOutput.getChannel('CHN__BGM').play('ADO__Victory', true, false);
+                        OutputManager.getChannel('CHN__BGM').play('ADO__Victory', true, false);
                     }
                 }
             }

@@ -67,7 +67,6 @@ __Training__
 
 __General__
 * Optimisation du Code
-    * Exclure le code GAMESTORE d'ENGINE via un système de LISTENER
     * Classe PLAYER avec pour enfant LOCAL et DUMMY ( et AI ? )
 * Faire une API ELECTRON
     * Paramétrages globaux
