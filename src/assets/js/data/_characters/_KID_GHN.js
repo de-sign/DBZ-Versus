@@ -1149,7 +1149,7 @@ GAME.oData.oCharacter.KID_GHN = {
                         }
                     },
                     {
-                        sType: 'Character',
+                        sType: 'character',
                         sEntity: 'GKU_SSJ',
                         sColor: 'LSW_SSJ',
                         sAnimation: 'GHN_SSJT_super',

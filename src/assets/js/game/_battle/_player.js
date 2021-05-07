@@ -102,23 +102,23 @@ Object.assign(
                     this.nKi = Math.min(this.nKi + nKi, GAME.oSettings.nKi);
                 },
                 takeHit: function(oEntity, oData){
-                    let aNewEntity = null;
+                    const aNewEntity = [];
                     if( !oData.bUnblockable && this.oAnimation.oFrame.oStatus.bGuard ){
                         this.setHurt('guard', oData.oStun.nBlock, !oEntity.bReverse);
                         oEntity.confirmHit(this, oData, true);
-                        aNewEntity = [
-                            {
+                        if( oData.oStun.sImpactAnimation !== false ){
+                            aNewEntity.push( {
                                 sType: 'effect',
                                 sAnimation: oData.oStun.sImpactAnimation || 'impact_guard',
                                 oPosition: GAME.oSettings.oPositionEffect,
                                 bReverse: !this.bReverse,
                                 oParent: this
-                            },
-                            {
-                                sType: 'sound',
-                                sEntity: 'ADO__Guard'
-                            }
-                        ];
+                            } );
+                        }
+                        aNewEntity.push( {
+                            sType: 'sound',
+                            sEntity: 'ADO__Guard'
+                        } );
                     }
                     else {
                         const nDamage = oData.nDamage == null ? 1 : oData.nDamage;
@@ -135,19 +135,19 @@ Object.assign(
                             
                         sHitAnim && this.setHurt(sHitAnim, oData.oStun.nHit, !oEntity.bReverse);
                         oEntity.confirmHit(this, oData);
-                        aNewEntity = [
-                            {
+                        if( oData.oStun.sImpactAnimation !== false ){
+                            aNewEntity.push( {
                                 sType: 'effect',
                                 sAnimation: oData.oStun.sImpactAnimation || 'impact_hit',
                                 oPosition: GAME.oSettings.oPositionEffect,
                                 bReverse: !this.bReverse,
                                 oParent: this
-                            },
-                            {
-                                sType: 'sound',
-                                sEntity: 'ADO__Hit'
-                            }
-                        ];
+                            } );
+                        }
+                        aNewEntity.push( {
+                            sType: 'sound',
+                            sEntity: 'ADO__Hit'
+                        } );
                     }
                     return aNewEntity;
                 },

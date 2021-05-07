@@ -1,36 +1,31 @@
-GAME.oData.oEntity.oEffect = {
+GAME.oData.oEntity.oBeam = {
 
     oFrames: {
-        hit_light: {
-            sPath: '../__common/hit_light.png',
-            nZIndex: 80
+        beam: {
+            sPath: 'beam.png'
         },
-        hit_heavy: {
-            sPath: '../__common/hit_heavy.png',
-            nZIndex: 80
+
+        zigzag: {
+            sPath: 'zigzag.png'
+        },
+
+        circle_first: {
+            sPath: 'circle_first.png'
+        },
+        circle_second: {
+            sPath: 'circle_second.png'
+        },
+        
+        triangle_first: {
+            sPath: 'triangle_first.png'
+        },
+        triangle_second: {
+            sPath: 'triangle_second.png'
+        },
+        triangle_third: {
+            sPath: 'triangle_third.png'
         }
     },
     
-    oAnimations: {
-        hit_light: [
-            {
-                sFrame: 'hit_light',
-                nFrame: 8
-            }
-        ],
-        hit_heavy: [
-            {
-                sFrame: 'hit_light',
-                nFrame: 2
-            },
-            {
-                sFrame: 'hit_heavy',
-                nFrame: 16
-            },
-            {
-                sFrame: 'hit_light',
-                nFrame: 4
-            }
-        ]
-    }
+    oAnimations: {}
 };

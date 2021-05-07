@@ -440,11 +440,13 @@ GAME.oData.oEntity.oCharacter = {
                 sCollisionBox: 'oPositionBox',
                 oStun: {
                     nHit: 12,
-                    sHitAnimation: 'hit_light'
+                    sHitAnimation: 'hit_light',
+                    sImpactAnimation: false
                 },
                 oPushback: {
                     nLength: 4,
-                    nX: -98
+                    nX: -98,
+                    bNotDivide: true
                 },
                 bLast: true,
                 oManipulation: {
@@ -461,10 +463,13 @@ GAME.oData.oEntity.oCharacter = {
                 nCost: 4,
                 nDamage: 0,
                 sCollisionBox: 'oPositionBox',
-                oStun: {},
+                oStun: {
+                    sImpactAnimation: false
+                },
                 oPushback: {
                     nLength: 4,
-                    nX: -192
+                    nX: -192,
+                    bNotDivide: true
                 },
                 bLast: true,
                 oManipulation: {

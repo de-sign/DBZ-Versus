@@ -24,7 +24,6 @@ Object.assign(
             backward: 'movement',
             // GUARD
             guard: 'guard',
-            reflect: 'guard',
             // HIT
             hit_light: 'hit',
             hit_heavy: 'hit',

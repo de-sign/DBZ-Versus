@@ -35,12 +35,12 @@ Object.assign(
                     return OutputElement.oInstanceByConstructor.OutputHTMLContext[sId || this.sContextUsed];
                 },
                 useContext: function(sId) {
-                    let oCtx = this.getContext(this.sContextUsed);
-                    oCtx && oCtx.unuse();
-                    oCtx = this.getContext(sId);
+                    const oLastCtx = this.getContext(this.sContextUsed);
+                    oLastCtx && this.addTickUpdate( () => oLastCtx.unuse() );
+                    const oCtx = this.getContext(sId);
                     if (oCtx) {
                         this.sContextUsed = sId;
-                        oCtx.use();
+                        this.addTickUpdate( () => oCtx.use() );
                     } else {
                         this.sContextUsed = null;
                     }

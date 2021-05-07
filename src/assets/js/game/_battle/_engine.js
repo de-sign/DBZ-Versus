@@ -292,7 +292,7 @@ Object.assign(
         movePushback: function(aPushback, oCollapse){
             aPushback.forEach( oPushback => {
                 if( oPushback.oPriority.nHit < oPushback.oPriority.nHurt && oPushback.oData.nX < 0 ){
-                    this.pushbackEntity( oPushback.oEntityHit, oPushback.oData, oPushback.oEntityHit.bReverse, true );
+                    this.pushbackEntity( oPushback.oEntityHit, oPushback.oData, oPushback.oEntityHit.bReverse, !oPushback.oData.bNotDivide );
                 } else {
                     this.pushbackEntity( oPushback.oEntityHurt, oPushback.oData, !oPushback.oEntityHit.bReverse, false );
                 }
