@@ -19,7 +19,7 @@ Object.assign(
 				init: function( oOptions ){
                     /*
                         oLastData: BTL__sStage, sTypeBattle, aController, BTL__aCharacterSelected, BTL__aColor
-                        oOptions: aController, sContextClass
+                        oOptions: aController, sContextClass, sAnimation
                     */
                     Scene.prototype.init.call(this, 'CTX__Battle');
                     this.oContext.hElement.classList.add( oOptions.sContextClass );
@@ -37,6 +37,7 @@ Object.assign(
                                 nPlayer,
                                 GAME.oScene.oTransverseData.BTL__aCharacter[nIndex],
                                 GAME.oScene.oTransverseData.BTL__aColor[nIndex],
+                                oOptions.sAnimation,
                                 GAME.oSettings.oSide.aSide[ GAME.oSettings.oSide.nDefault ].fPosition(this.oArea, nIndex),
                                 !!nIndex,
                                 oOptions.aController[nIndex]

@@ -1,5 +1,5 @@
 /* ----- BattlePlayer ----- */
-function BattlePlayer(nPlayer, sChar, sColor, oPosition, bReverse, oController){
+function BattlePlayer(nPlayer, sChar, sColor, sAnimation, oPosition, bReverse, oController){
     this.nPlayer = null;
 
     this.oInputBuffer = null;
@@ -17,16 +17,13 @@ Object.assign(
         prototype: Object.assign(
             Object.create(BattleEntity.prototype), {
                 constructor: BattlePlayer,
-                init: function(nPlayer, sChar, sColor, oPosition, bReverse, oController) {
-                    BattleEntity.prototype.init.call(this, 'character', GAME.oData.oCharacter[sChar][sColor], oPosition, bReverse);
+                init: function(nPlayer, sChar, sColor, sAnimation, oPosition, bReverse, oController) {
+                    BattleEntity.prototype.init.call(this, 'character', GAME.oData.oCharacter[sChar][sColor], sAnimation, oPosition, bReverse);
 
                     this.nLife = GAME.oSettings.oLife.player;
                     this.nPlayer = nPlayer;
                     this.oInputBuffer = new BattleInputBuffer(oController);
                     this.oGatling = new BattleGatling(this.oInputBuffer, this.oData.oCommands);
-
-                    // init en STAND
-                    this.setAnimation('stand', true);
                 },
                 update: function(){
                     // Gestion des INPUTs

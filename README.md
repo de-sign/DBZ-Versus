@@ -44,7 +44,7 @@ __Stage__
 <br/>*N/A*
 
 __Battle__
-* Animation de début et fin de match 
+* Animation de fin de match 
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
 * Méchaniques de jeu
     * Movement :
@@ -67,6 +67,7 @@ __Training__
 
 __General__
 * Optimisation du Code
+    * Exclure le code GAMESTORE d'ENGINE via un système de LISTENER
     * Classe PLAYER avec pour enfant LOCAL et DUMMY ( et AI ? )
 * Faire une API ELECTRON
     * Paramétrages globaux
@@ -75,6 +76,7 @@ __General__
     * Générer ANIMATION
     * Générer COMMAND
 * Paramétrages
+    * Animations
     * HurtBox
     * HitBox
     * StartUp

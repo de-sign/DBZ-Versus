@@ -9,9 +9,12 @@ Object.assign(
 
                 use: function() {
                     this.hElement.classList.add( OutputManager.oConfig.class.used );
+                    this.addTickUpdate( () => {
+                        this.hElement.classList.add( OutputManager.oConfig.class.init );
+                    } );
                 },
                 unuse: function() {
-                    this.hElement.classList.remove( OutputManager.oConfig.class.used );
+                    this.hElement.classList.remove( OutputManager.oConfig.class.used, OutputManager.oConfig.class.init );
                 }
             }
         )

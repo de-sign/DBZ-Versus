@@ -140,12 +140,15 @@ Object.assign(
             },
             hide: function(){
                 // Hide
-                this.oContext.addTickUpdate( () => {
-                    this.oContext.hElement.classList.remove('--info');
-                    // Callback
-                    this.oCurrent && this.oCurrent.fCallback && this.oCurrent.fCallback();
+                if( this.oCurrent ){
+                    const fCallback = this.oCurrent && this.oCurrent.fCallback;
                     this.oCurrent = null;
-                } );
+                    
+                    this.oContext.addTickUpdate( () => {
+                        this.oContext.hElement.classList.remove('--info');
+                        fCallback && fCallback();
+                    } );
+                }
             }
         }
     }

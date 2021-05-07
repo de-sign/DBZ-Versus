@@ -39,7 +39,7 @@ Object.assign(
                 },
                 {
                     sSuffixe: 'invul',
-                    aFrame: ['blur', 'hit_luncher', 'recovery', 'reflect'/*, 'super_first', 'super_second', 'super_third'*/],
+                    aFrame: ['blur', 'hit_luncher', 'recovery', 'reflect', 'guard'/*, 'super_first', 'super_second', 'super_third'*/],
                     sColor: 'rgb(255, 255, 255)',
                     nAlpha: 0.4
                 },
@@ -57,7 +57,7 @@ Object.assign(
                 }
             ]
         },
-        aFilterFrames: ['hit_light', 'hit_heavy', 'hit_luncher', 'guard'],
+        aFilterFrames: [/*'hit_light', 'hit_heavy', 'hit_luncher', */'guard'],
 
         aEntity: ['oEffect', 'oChar'],
         oEffect: {

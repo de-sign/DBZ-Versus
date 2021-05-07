@@ -252,8 +252,12 @@ GAME.oData.oEntity.oCharacter = {
                 nFrame: 2
             },
             {
+                sFrame: 'guard_invul',
+                nFrame: 4
+            },
+            {
                 sFrame: 'reflect_invul',
-                nFrame: 10
+                nFrame: 6
             },
             {
                 sFrame: 'blur_invul',
@@ -427,6 +431,41 @@ GAME.oData.oEntity.oCharacter = {
                 oStatus: {
                     bCancel: true
                 }
+            }
+        ],
+        // Animation
+        opening: [
+            // TP
+            {
+                nFrame: 8,
+                sFrame: 'burst'
+            },
+            // FORWARD
+            {
+                nFrame: 8,
+                sFrame: 'forward'
+            },
+            // REFLECT
+            {
+                sFrame: 'blur',
+                nFrame: 2
+            },
+            {
+                sFrame: 'guard',
+                nFrame: 12
+            },
+            {
+                sFrame: 'reflect',
+                nFrame: 16,
+                aHitBox: null
+            },
+            // STAND
+            {
+                sFrame: 'blur',
+                nFrame: 2
+            },
+            {
+                sFrame: 'stand'
             }
         ]
     },

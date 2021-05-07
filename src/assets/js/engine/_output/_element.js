@@ -31,10 +31,11 @@ Object.assign(
             constructor: OutputElement,
 
             update: function() {
-                this.aTickUpdate.forEach( fUpd => {
+                const aUpdate = this.aTickUpdate;
+                this.aTickUpdate = [];
+                aUpdate.forEach( fUpd => {
                     fUpd.call(this);
                 } );
-                this.aTickUpdate = [];
             },
 
             addTickUpdate: function(fUpd) {

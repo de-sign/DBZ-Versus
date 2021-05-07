@@ -10,4 +10,8 @@
     .outputViewport.--outputInitialize &.--outputCreated:not(.--outputUsed) {
         display: none !important;
     }
+
+	&:not(.--outputInitialize) {
+		z-index: -100;
+	}
 }	

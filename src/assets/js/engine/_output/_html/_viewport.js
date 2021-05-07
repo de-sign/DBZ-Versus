@@ -40,7 +40,7 @@ Object.assign(
                     const oCtx = this.getContext(sId);
                     if (oCtx) {
                         this.sContextUsed = sId;
-                        this.addTickUpdate( () => oCtx.use() );
+                        oCtx.use();
                     } else {
                         this.sContextUsed = null;
                     }

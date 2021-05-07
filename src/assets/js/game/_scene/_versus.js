@@ -1,5 +1,6 @@
 function VersusScene() {
     BattleScene.call(this);
+    this.bEnd = false;
 }
 
 Object.assign(
@@ -13,7 +14,8 @@ Object.assign(
                         this,
                         {
                             sContextClass: '--versus',
-                            aController: []
+                            aController: [],
+                            sAnimation: 'opening'
                         }
                     );
 
@@ -21,7 +23,6 @@ Object.assign(
                     this.oInfo.add(
                         {
                             sText: 'Ready ?',
-                            bFreeze: true,
                             fCallback: () => {
                                 this.aPlayer.forEach( (oPlayer, nIndex) => {
                                     oPlayer.oInputBuffer.init( GAME.oScene.oTransverseData.MNU__aController[nIndex] );
@@ -35,7 +36,8 @@ Object.assign(
                     );
                 },
                 endBattle: function(aPlayerWin){
-                    if( aPlayerWin.length ){
+                    if( !this.bEnd && aPlayerWin.length ){
+                        this.bEnd = true;
                         this.oInfo.add( {
                             sText: aPlayerWin.length == 2 ?
                                 'Double KO !' :

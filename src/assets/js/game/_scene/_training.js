@@ -66,7 +66,8 @@ Object.assign(
                         this,
                         {
                             sContextClass: '--training',
-                            aController: GAME.oScene.oTransverseData.MNU__aController
+                            aController: GAME.oScene.oTransverseData.MNU__aController,
+                            sAnimation: 'stand'
                         }
                     );
 

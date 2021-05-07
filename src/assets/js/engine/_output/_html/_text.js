@@ -15,6 +15,7 @@ Object.assign(
                 constructor: OutputText,
 
                 setText: function(sTxt) {
+                    sTxt = sTxt.toString();
                     if (this.sText != sTxt) {
                         this.addTickUpdate(() => {
                             this.hElement.innerHTML = this.sText = sTxt;
