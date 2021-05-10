@@ -44,6 +44,7 @@ Object.assign(
 
 /* ----- START CLASS ----- */
 /* ----- START CONSTRUCTOR ----- */
+/* ----- DETAILS Classe de définition ayant pas unique but d'être mère des classes scenes du jeu. ----- */
 function Scene() {
     /* ----- START PROPERTIES ----- */
     this.oContext = null;

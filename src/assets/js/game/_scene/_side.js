@@ -104,10 +104,10 @@ Object.assign(
             switch( sChange ){
                 case 'left':
                     if( this.nSide == 0 ) {
-                        this.nSide = GameData.oSettings.nPlayer - 1;
+                        this.nSide = GameSettings.nPlayer - 1;
                     } else if( this.nSide == 1 ) {
-                        this.nSide = GameData.oSettings.nPlayer;
-                    } else if( this.nSide == GameData.oSettings.nPlayer ){
+                        this.nSide = GameSettings.nPlayer;
+                    } else if( this.nSide == GameSettings.nPlayer ){
                         this.nSide = 0;
                     } else {
                         this.nSide--;
@@ -116,10 +116,10 @@ Object.assign(
 
                 case 'right':
                     if( this.nSide == 0 ) {
-                        this.nSide = GameData.oSettings.nPlayer;
-                    } else if( this.nSide == GameData.oSettings.nPlayer ){
+                        this.nSide = GameSettings.nPlayer;
+                    } else if( this.nSide == GameSettings.nPlayer ){
                         this.nSide = 1;
-                    } else if( this.nSide == GameData.oSettings.nPlayer - 1 ){
+                    } else if( this.nSide == GameSettings.nPlayer - 1 ){
                         this.nSide = 0;
                     } else {
                         this.nSide++;
@@ -223,7 +223,7 @@ Object.assign(
                 
                 getPlayerController: function(bReady){
                     let aLock = [];
-                    aLock.length = GameData.oSettings.nPlayer + 1;
+                    aLock.length = GameSettings.nPlayer + 1;
                     aLock = aLock.fill(null);
 
                     this.aController.forEach( oController => {
@@ -236,7 +236,7 @@ Object.assign(
                 updateStatus: function(){
 
                     let nReady = 0,
-                        nNeedReady = GameData.oSettings.nPlayer,
+                        nNeedReady = GameSettings.nPlayer,
                         nSide = 0;
 
                     this.oStatus = {

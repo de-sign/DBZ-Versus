@@ -65,9 +65,9 @@ Object.assign(
                 // Audio
                 stepOutput_Audio: function(){
                     this.addStepText( 'Loading audio' );
-                    for( let sChannel in GameData.oSettings.oAudio.oPreBattle ){
+                    for( let sChannel in GameSettings.oAudio.oPreBattle ){
                         const oChannel = OutputManager.getChannel('CHN__' + sChannel),
-                            aAudio = [...GameData.oSettings.oAudio.oPreBattle[sChannel]];
+                            aAudio = [...GameSettings.oAudio.oPreBattle[sChannel]];
                             
                         if( sChannel == 'BGM' ){
                             aAudio.push( SceneManager.oTransverseData.BTL__sBGM );
@@ -78,7 +78,7 @@ Object.assign(
                                 case 'BGM':
                                     this.oAssetManager.add(
                                         'audio',
-                                        GameData.oSettings.oPath.oAudio[ 's' + sChannel ] + '/' + sAudio + '.mp3',
+                                        GameSettings.oPath.oAudio[ 's' + sChannel ] + '/' + sAudio + '.mp3',
                                         oAudio => {
                                             oChannel.add( new OutputManager.OutputSourceAudio('ADO__' + sAudio, oAudio) );
                                             return Promise.resolve();
@@ -88,7 +88,7 @@ Object.assign(
                                 case 'SFX':
                                     this.oAssetManager.add(
                                         'arraybuffer',
-                                        GameData.oSettings.oPath.oAudio[ 's' + sChannel ] + '/' + sAudio + '.mp3',
+                                        GameSettings.oPath.oAudio[ 's' + sChannel ] + '/' + sAudio + '.mp3',
                                         oEvent => {
                                             return new Promise( fResolve => {
                                                 OutputManager.OutputAudioElement.oAudioContext.decodeAudioData(

@@ -255,7 +255,7 @@ Object.assign(
                                                     },
                                                     oEntityHit,
                                                     oEntityHurt,
-                                                    oData: oData.oPushback || GameData.oSettings.oPushback
+                                                    oData: oData.oPushback || GameSettings.oPushback
                                                 } );
                                                 bHit = true;
                                                 break;
@@ -284,7 +284,7 @@ Object.assign(
                 this.movePushback(aPushback, oCollapse);
                 // Gestion hit freeze
                 aEntity.forEach( oEntity => {
-                    oEntity.setFreeze(GameData.oSettings.nFreeze);
+                    oEntity.setFreeze(GameSettings.nFreeze);
                 } );
             }
         },

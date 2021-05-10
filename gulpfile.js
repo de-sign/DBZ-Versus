@@ -11,13 +11,13 @@ const _extra        = require('./gulp/_extra')(config);
 Object.assign(
     exports,
     {
-        default: gulp.series(_builds.global, _serves.global),
+        default: gulp.series(_builds.global, _serves.global, _extra.extra),
         build: _builds.global,
         templates: _builds.templates,
         scripts: _builds.scripts,
         styles: _builds.styles,
-        clean: _builds.clean
+        clean: _builds.clean,
     },
-    // Ajout des EXTRA pour chaques persos
+    // Ajout des EXTRA
     _extra
 );

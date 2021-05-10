@@ -1,6 +1,6 @@
 /* ----- START CLASS ----- */
 /* ----- START CONSTRUCTOR ----- */
-function OutputAudioElement() {
+function OutputAudioElement(){
     /* ----- START PROPERTIES ----- */
     this.oNode = {
         oInput: null,
@@ -11,6 +11,7 @@ function OutputAudioElement() {
     OutputElement.call(this);
     this.init.apply(this, arguments);
 }
+/* ----- END CONSTRUCTOR ----- */
 
 Object.assign(
     OutputAudioElement, {

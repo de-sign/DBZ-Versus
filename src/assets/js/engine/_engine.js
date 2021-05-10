@@ -1,5 +1,6 @@
 /* ----- START CLASS ----- */
 /* ----- START CONSTRUCTOR ----- */
+/* ----- DETAILS **Le moteur de jeu.** Il possède tout : l'horloge, le stockage d'information technique, le managers des entrées, des scenes, des sorties. ----- */
 function GameEngine(){}
 /* ----- END CONSTRUCTOR ----- */
 
@@ -8,6 +9,7 @@ Object.assign(
         /* ----- START SINGLETON ----- */
         /* ----- START PROPERTIES ----- */
         // Components
+        /* ----- DETAILS L'horlorge du moteur de jeu : [TimerEngine](TimerEngine.md) ----- */
         oTimer: TimerEngine,
         oStore: StoreEngine,
 

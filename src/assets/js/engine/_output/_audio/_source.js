@@ -7,6 +7,7 @@ function OutputSource(sId, oSource){
     OutputAudioElement.call(this);
 }
 /* ----- END CONSTRUCTOR ----- */
+
 Object.assign(
     OutputSource, {
 

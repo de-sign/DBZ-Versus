@@ -1,0 +1,33 @@
+.markdown-body {
+    position: relative;
+    overflow: visible;
+    padding-bottom: 16px;
+}
+
+.markdown-body p:last-child {
+    margin: 0;
+}
+
+.markdown-body h2 {
+    margin-top: 48px;
+}
+
+.markdown-body em {
+    opacity: 0.75;
+}
+
+.markdown-body p > strong:first-child {
+    font-size: 1.25em;
+    margin-top: 24px;
+    display: block;
+    padding-bottom: .3em;
+}
+
+a[href="References.md"] {
+    position: absolute;
+    top: 0px;
+    right: -40px;
+    writing-mode: vertical-lr;
+    color: inherit;
+    font-size: 1.5em;
+}

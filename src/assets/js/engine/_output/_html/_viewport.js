@@ -9,6 +9,8 @@ function OutputViewport(hElm) {
     OutputLayer.call(this, hElm);
     this.setOrigin();
 }
+/* ----- END CONSTRUCTOR ----- */
+
 Object.assign(
     OutputViewport, {
         prototype: Object.assign(

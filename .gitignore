@@ -76,3 +76,7 @@ src/pages/_templates/*.njk
 
 # Data extract
 src/assets/js/data/_extra/*.json
+
+# Documentations Markdown
+src/doc/*
+!src/doc/_doc.css

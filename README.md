@@ -23,7 +23,7 @@ Utilise un moteur de jeu fait maison et FOX Website :
 
 ## TODO
 __BUG__
-Problème de PUSHBACK sur la TECH THROW
+<br/>*N/A*
 
 __Menu__
 * Ajout du ONLINE ?
@@ -68,6 +68,9 @@ __Training__
 __General__
 * Optimisation du Code
     * Classe PLAYER avec pour enfant LOCAL et DUMMY ( et AI ? )
+* Commenter le Code afin de générer la DOC
+    * ENGINE
+    * GAME
 * Faire une API ELECTRON
     * Paramétrages globaux
     * Ajouter CHARACTER

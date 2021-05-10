@@ -174,7 +174,7 @@ Object.assign(
                     this.oMenu = new GameMenu('LAY__Select_Character', SceneManager.oTransverseData.SLC__aIndex || [0, -1]);
 
                     // Players init
-                    for( let nIndex = 0; nIndex < GameData.oSettings.nPlayer; nIndex++ ){
+                    for( let nIndex = 0; nIndex < GameSettings.nPlayer; nIndex++ ){
                         let nPlayer = nIndex + 1;
                         this.aPlayer.push( new SelectPlayer(
                             nPlayer,

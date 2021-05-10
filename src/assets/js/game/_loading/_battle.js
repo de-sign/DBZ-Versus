@@ -32,7 +32,7 @@ Object.assign(
 
                 this.getPattern();
                 BattleEntity.init('LAY__Battle_Entity_');
-                for( let nIndex = 0; nIndex < GameData.oSettings.nPlayer; nIndex++ ){
+                for( let nIndex = 0; nIndex < GameSettings.nPlayer; nIndex++ ){
                     const nPlayer = nIndex + 1;
                     this.createHUDPlayer(nPlayer);
                     this.createHUDLife(nPlayer);
@@ -75,13 +75,13 @@ Object.assign(
             },
             createHUDLife: function(nPlayer){
                 const oLayer = OutputManager.getElement('LAY__Battle_HUD_Life_' + nPlayer);
-                for( let nIndex = 0; nIndex < GameData.oSettings.oLife.player; nIndex++ ){
+                for( let nIndex = 0; nIndex < GameSettings.oLife.player; nIndex++ ){
                     oLayer.add( new OutputManager.OutputText() );
                 }
             },
             createHUDKi: function(nPlayer){
                 const oLayer = OutputManager.getElement('LAY__Battle_HUD_Ki_' + nPlayer);
-                for( let nIndex = 0; nIndex < GameData.oSettings.nKi; nIndex++ ){
+                for( let nIndex = 0; nIndex < GameSettings.nKi; nIndex++ ){
                     oLayer.add( new OutputManager.OutputText() );
                 }
             },

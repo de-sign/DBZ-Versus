@@ -88,13 +88,13 @@ Object.assign(
                 this.sId = BattleEntity.add(this);
                 this.sType = sType;
                 this.oCheck = BattleEntity.oCheck[sType];
-                this.oPositionPoint = GameData.oSettings.oPositionPoint[sType];
+                this.oPositionPoint = GameSettings.oPositionPoint[sType];
                 
                 this.oData = oData;
                 this.bReverse = bReverse;
                 this.oParent = oParent;
 
-                this.nLife = GameData.oSettings.oLife[sType];
+                this.nLife = GameSettings.oLife[sType];
                 this.createLayer();
                 this.moveLayer(oPosition || {});
 
@@ -141,7 +141,7 @@ Object.assign(
             },
             die: function(){
                 this.oDeadTimer = new GameTimer();
-                this.oDeadTimer.init( GameData.oSettings.nDie );
+                this.oDeadTimer.init( GameSettings.nDie );
                 this.oLayer.addTickUpdate( () => {
                     this.oLayer.hElement.classList.add('--dead');
                 } );
@@ -358,7 +358,7 @@ Object.assign(
                         {
                             sType: 'effect',
                             sAnimation: oData.oStun.sImpactAnimation || 'impact_hit',
-                            oPosition: GameData.oSettings.oPositionEffect,
+                            oPosition: GameSettings.oPositionEffect,
                             bReverse: !this.bReverse,
                             oParent: this
                         }

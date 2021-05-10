@@ -8,6 +8,7 @@ function OutputAudioContext() {
 
     OutputAudioElement.call(this);
 }
+/* ----- END CONSTRUCTOR ----- */
 
 Object.assign(
     OutputAudioContext, {

@@ -29,7 +29,7 @@ Object.assign(
                     this.setBackground( SceneManager.oTransverseData.BTL__sStage );
                     OutputManager.getChannel('CHN__BGM').play('ADO__' + SceneManager.oTransverseData.BTL__sBGM, false, true);
 
-                    for( let nIndex = 0; nIndex < GameData.oSettings.nPlayer; nIndex++ ){
+                    for( let nIndex = 0; nIndex < GameSettings.nPlayer; nIndex++ ){
                         
                         // Players init
                         const nPlayer = nIndex + 1,
@@ -38,7 +38,7 @@ Object.assign(
                                 SceneManager.oTransverseData.BTL__aCharacter[nIndex],
                                 SceneManager.oTransverseData.BTL__aColor[nIndex],
                                 oOptions.sAnimation,
-                                GameData.oSettings.oSide.aSide[ GameData.oSettings.oSide.nDefault ].fPosition(this.oArea, nIndex),
+                                GameSettings.oSide.aSide[ GameSettings.oSide.nDefault ].fPosition(this.oArea, nIndex),
                                 !!nIndex,
                                 oOptions.aController[nIndex]
                             );

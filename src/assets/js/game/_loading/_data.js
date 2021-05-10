@@ -58,7 +58,7 @@ Object.assign(
                             }
                         }
                     }
-                    GameData.oSettings.aFilter.forEach( oFilter => {
+                    GameSettings.aFilter.forEach( oFilter => {
                         if( oFilter.aFrames.indexOf(sFrame) != -1 ){
                             oFrames[sFrame + '_' + oFilter.sSuffixe] = Object.assign({}, oFrames[sFrame], oFilter.oData);
                             oFrames[sFrame + '_' + oFilter.sSuffixe].sPath = oFrames[sFrame].sPath.substring(0, oFrames[sFrame].sPath.length - 4) + '_' + oFilter.sSuffixe + '.png';
@@ -90,7 +90,7 @@ Object.assign(
                         sEntityColor: oEntity.sEntityColor,
                         sName: oEntity.sName,
                         oPath: {
-                            sFrames: GameData.oSettings.oPath[sType].sRoot + '/' + oEntity.sEntity + '/' + oColor.sColor
+                            sFrames: GameSettings.oPath[sType].sRoot + '/' + oEntity.sEntity + '/' + oColor.sColor
                         }
                     },
                     oColor
@@ -100,11 +100,11 @@ Object.assign(
                 oEntity.sDefaultColor || (oEntity.sDefaultColor = oColor.sColor);
 
                 // PATH
-                if( GameData.oSettings.oPath[sType].sFace ){
-                    oEntityColor.oPath.sFace = GameData.oSettings.oPath[sType].sRoot + '/' + oEntity.sEntity + '/' + oColor.sColor + '/' + GameData.oSettings.oPath[sType].sFace;
+                if( GameSettings.oPath[sType].sFace ){
+                    oEntityColor.oPath.sFace = GameSettings.oPath[sType].sRoot + '/' + oEntity.sEntity + '/' + oColor.sColor + '/' + GameSettings.oPath[sType].sFace;
                 }
-                if( GameData.oSettings.oPath[sType].sPreview ){
-                    oEntityColor.oPath.sPreview = GameData.oSettings.oPath[sType].sRoot + '/' + oEntity.sEntity + '/' + oColor.sColor + '/' + GameData.oSettings.oPath[sType].sPreview;
+                if( GameSettings.oPath[sType].sPreview ){
+                    oEntityColor.oPath.sPreview = GameSettings.oPath[sType].sRoot + '/' + oEntity.sEntity + '/' + oColor.sColor + '/' + GameSettings.oPath[sType].sPreview;
                 }
                 
                 // FRAMES
@@ -163,18 +163,18 @@ Object.assign(
 
             const aAnim = [],
                 aMove = [],
-                nDemiLength = (GameData.oSettings.oLuncher.nLength - 1) / 2,
-                nX = GameData.oSettings.oLuncher.oMove.nX / GameData.oSettings.oLuncher.nLength;
+                nDemiLength = (GameSettings.oLuncher.nLength - 1) / 2,
+                nX = GameSettings.oLuncher.oMove.nX / GameSettings.oLuncher.nLength;
 
             // Ajout de 10 FRAMES supplémentaire pour gérer le DOWN
-            for( let nIndex = 1; nIndex <= GameData.oSettings.oLuncher.nLength + 10; nIndex++ ){
+            for( let nIndex = 1; nIndex <= GameSettings.oLuncher.nLength + 10; nIndex++ ){
                 const nParabolX = (nIndex - 1 - nDemiLength) / nDemiLength,
                     nParabolY = -1 * (nParabolX * nParabolX - 1),
-                    nTargetY = Math.round(nParabolY * GameData.oSettings.oLuncher.oMove.nY),
+                    nTargetY = Math.round(nParabolY * GameSettings.oLuncher.oMove.nY),
                     nY = nTargetY - nLastY,
-                    bInvulnerable = GameData.oSettings.oLuncher.nInvulnerable >= nIndex;
+                    bInvulnerable = GameSettings.oLuncher.nInvulnerable >= nIndex;
                 
-                let sFrame = nIndex <= GameData.oSettings.oLuncher.nLength / 2 ? 'hit_luncher' : 'hit_fall';
+                let sFrame = nIndex <= GameSettings.oLuncher.nLength / 2 ? 'hit_luncher' : 'hit_fall';
                 if( nIndex == 1 ){
                     sFrame += '_filter';
                 } else if (bInvulnerable){
@@ -219,7 +219,7 @@ Object.assign(
                     aAnim.push( Object.assign({}, oFrame) );
                 } );
                 oChar.oAnimations['recovery_' + sType] = {
-                    oMove: GameData.oSettings.oRecovery[sType],
+                    oMove: GameSettings.oRecovery[sType],
                     aFrames: aAnim
                 };
             } );
@@ -276,8 +276,8 @@ Object.assign(
         // STAGE
         createStage: function(oStage){
             oStage.oPath = {
-                sPreview: GameData.oSettings.oPath.oStage.sRoot + '/' + oStage.sCod + '/' + GameData.oSettings.oPath.oStage.sPreview,
-                sBackground: GameData.oSettings.oPath.oStage.sRoot + '/' + oStage.sCod + '/' + GameData.oSettings.oPath.oStage.sBackground
+                sPreview: GameSettings.oPath.oStage.sRoot + '/' + oStage.sCod + '/' + GameSettings.oPath.oStage.sPreview,
+                sBackground: GameSettings.oPath.oStage.sRoot + '/' + oStage.sCod + '/' + GameSettings.oPath.oStage.sBackground
             };
         }
     }

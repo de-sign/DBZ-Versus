@@ -83,7 +83,7 @@ Object.assign(
                     window.addEventListener('gamepadconnected', oEvent => {
                         if( !GamepadController.oIndexCreate[oEvent.gamepad.index] ){
                             if( oEvent.gamepad.mapping == 'standard' ){
-                                const oGamepad = GamepadController.recover( oEvent.gamepad, GameData.oSettings.oController.oGamepad );
+                                const oGamepad = GamepadController.recover( oEvent.gamepad, GameSettings.oController.oGamepad );
                                 InitializeInput.createController(oGamepad.sId);
                                 InitializeSide.createController(oGamepad.sId);
                                 console.log(oEvent.gamepad.id);
@@ -99,8 +99,8 @@ Object.assign(
                 stepOutput_Audio: function(){
                     this.addStepText( 'Loading audio' );
                     // LOADING BGM & SFX
-                    for( let sChannel in GameData.oSettings.oAudio.oInitialize ){
-                        const aAudio = GameData.oSettings.oAudio.oInitialize[sChannel],
+                    for( let sChannel in GameSettings.oAudio.oInitialize ){
+                        const aAudio = GameSettings.oAudio.oInitialize[sChannel],
                             oChannel = OutputManager.getChannel('CHN__' + sChannel);
 
                         aAudio.forEach( sAudio => {
@@ -108,7 +108,7 @@ Object.assign(
                                 case 'BGM':
                                     this.oAssetManager.add(
                                         'audio',
-                                        GameData.oSettings.oPath.oAudio[ 's' + sChannel ] + '/' + sAudio + '.mp3',
+                                        GameSettings.oPath.oAudio[ 's' + sChannel ] + '/' + sAudio + '.mp3',
                                         oAudio => {
                                             oChannel.add( new OutputManager.OutputSourceAudio('ADO__' + sAudio, oAudio) );
                                             return Promise.resolve();
@@ -118,7 +118,7 @@ Object.assign(
                                 case 'SFX':
                                     this.oAssetManager.add(
                                         'arraybuffer',
-                                        GameData.oSettings.oPath.oAudio[ 's' + sChannel ] + '/' + sAudio + '.mp3',
+                                        GameSettings.oPath.oAudio[ 's' + sChannel ] + '/' + sAudio + '.mp3',
                                         oEvent => {
                                             return new Promise( fResolve => {
                                                 OutputManager.OutputAudioElement.oAudioContext.decodeAudioData(

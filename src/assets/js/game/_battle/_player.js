@@ -20,7 +20,7 @@ Object.assign(
                 init: function(nPlayer, sChar, sColor, sAnimation, oPosition, bReverse, oController) {
                     BattleEntity.prototype.init.call(this, 'character', GameData.oCharacter[sChar][sColor], sAnimation, oPosition, bReverse);
 
-                    this.nLife = GameData.oSettings.oLife.player;
+                    this.nLife = GameSettings.oLife.player;
                     this.nPlayer = nPlayer;
                     this.oInputBuffer = new BattleInputBuffer(oController);
                     this.oGatling = new BattleGatling(this.oInputBuffer, this.oData.oCommands);
@@ -96,7 +96,7 @@ Object.assign(
                     return this.oGatling.oCurrent;
                 },
                 addKi: function(nKi){
-                    this.nKi = Math.min(this.nKi + nKi, GameData.oSettings.nKi);
+                    this.nKi = Math.min(this.nKi + nKi, GameSettings.nKi);
                 },
                 takeHit: function(oEntity, oData){
                     const aNewEntity = [];
@@ -107,7 +107,7 @@ Object.assign(
                             aNewEntity.push( {
                                 sType: 'effect',
                                 sAnimation: oData.oStun.sImpactAnimation || 'impact_guard',
-                                oPosition: GameData.oSettings.oPositionEffect,
+                                oPosition: GameSettings.oPositionEffect,
                                 bReverse: !this.bReverse,
                                 oParent: this
                             } );
@@ -136,7 +136,7 @@ Object.assign(
                             aNewEntity.push( {
                                 sType: 'effect',
                                 sAnimation: oData.oStun.sImpactAnimation || 'impact_hit',
-                                oPosition: GameData.oSettings.oPositionEffect,
+                                oPosition: GameSettings.oPositionEffect,
                                 bReverse: !this.bReverse,
                                 oParent: this
                             } );

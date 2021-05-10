@@ -121,7 +121,7 @@ Object.assign(
         prototype: Object.assign(
             /* ----- START EXTENDS ----- */
             Object.create(Controller.prototype), {
-                /* ----- END EXTENDS ----- */
+            /* ----- END EXTENDS ----- */
                 constructor: GamepadController,
                 /* ----- START PROTOTYPE ----- */
                 /* ----- START METHODS ----- */

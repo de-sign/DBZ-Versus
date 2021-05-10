@@ -1,31 +1,57 @@
-GameData.oEntity.oBeam = {
+/* ----- START CLASS ----- */
+/* ----- START CONSTRUCTOR ----- */
+/* ----- DETAILS
+Constante avec les données de base des rayons.  
+Prévue pour être étendu et formaté.
+<style>#constructor, #constructor+*, #constructor+*+*, #inheritance, #inheritance+*{ display: none; }</style>
+----- */
+// function GameData.oEntity.oBeam(){}
+/* ----- END CONSTRUCTOR ----- */
 
-    oFrames: {
-        beam: {
-            sPath: 'beam.png'
-        },
+GameData.oEntity.oBeam = {};
 
-        zigzag: {
-            sPath: 'zigzag.png'
-        },
+Object.assign(
+    GameData.oEntity.oBeam,
+    {
+        /* ----- START EXTENDS ----- */
+        /*
+        Object.create(GameData.prototype), {
+        */
+        /* ----- END EXTENDS ----- */
 
-        circle_first: {
-            sPath: 'circle_first.png'
+        /* ----- START SINGLETON ----- */
+        /* ----- START PROPERTIES ----- */
+        /* ----- DETAILS Données des FRAMES ----- */
+        oFrames: {
+            beam: {
+                sPath: 'beam.png'
+            },
+            
+            zigzag: {
+                sPath: 'zigzag.png'
+            },
+            
+            circle_first: {
+                sPath: 'circle_first.png'
+            },
+            circle_second: {
+                sPath: 'circle_second.png'
+            },
+            
+            triangle_first: {
+                sPath: 'triangle_first.png'
+            },
+            triangle_second: {
+                sPath: 'triangle_second.png'
+            },
+            triangle_third: {
+                sPath: 'triangle_third.png'
+            }
         },
-        circle_second: {
-            sPath: 'circle_second.png'
-        },
-        
-        triangle_first: {
-            sPath: 'triangle_first.png'
-        },
-        triangle_second: {
-            sPath: 'triangle_second.png'
-        },
-        triangle_third: {
-            sPath: 'triangle_third.png'
-        }
-    },
-    
-    oAnimations: {}
-};
+        /* ----- DETAILS Données des animations ----- */
+        oAnimations: {},
+        /* ----- END PROPERTIES ----- */
+        /* ----- END SINGLETON ----- */
+    }
+);
+/* ----- END CLASS ----- */

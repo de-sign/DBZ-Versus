@@ -35,7 +35,7 @@ Object.assign(
                     hElement.classList.remove('--change', OutputManager.oConfig.class.created);
                 }
             );
-            hLayer.querySelector('.Side__Controller_Sprite').src = GameData.oSettings.oPath.oController.sRoot + '/' + oController.sType + '.png';
+            hLayer.querySelector('.Side__Controller_Sprite').src = GameSettings.oPath.oController.sRoot + '/' + oController.sType + '.png';
             hLayer.querySelector('.Side__Controller_Name').innerHTML = oController.sName;
 
             OutputManager.getElement('LAY__Side_Empty').add(new OutputManager.OutputLayer(hLayer));
@@ -47,7 +47,7 @@ Object.assign(
                 this.oContext = OutputManager.getElement('CTX__Side');
 
                 InitializeSide.getPattern();
-                for( let nIndex = 0; nIndex < GameData.oSettings.nPlayer; nIndex++ ){
+                for( let nIndex = 0; nIndex < GameSettings.nPlayer; nIndex++ ){
                     this.createLayerPlayer(nIndex + 1);
                 }
                 for( let sController in ControllerManager.oController ){

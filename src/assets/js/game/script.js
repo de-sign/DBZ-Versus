@@ -50,7 +50,7 @@ window.addEventListener('load', oEvent => {
 		(bArray ? aData : [aData]).forEach( oData => {
 			if( (oData.sType == 'keyboard' || oData.sType == 'gamepad') && !oData.aOrder ){
 				bSet = true;
-				aNewData.push(Object.assign( { aOrder: GameData.oSettings.oController.aOrderButtons }, oData ));
+				aNewData.push(Object.assign( { aOrder: GameSettings.oController.aOrderButtons }, oData ));
 			};
 		} );
 		bSet && StoreEngine.update( sKey, bArray ? aNewData : aNewData[0] );
@@ -58,15 +58,15 @@ window.addEventListener('load', oEvent => {
 	/* ----- END PATCH ----- */
 
 	// Input
-	for( let nPlayer = 0; nPlayer < GameData.oSettings.nPlayer; nPlayer++ ){
-		KeyboardController.recover('IC_' + ( nPlayer + 1 ), GameData.oSettings.oController.aKeyboard[nPlayer]);
+	for( let nPlayer = 0; nPlayer < GameSettings.nPlayer; nPlayer++ ){
+		KeyboardController.recover('IC_' + ( nPlayer + 1 ), GameSettings.oController.aKeyboard[nPlayer]);
 	}
 	// Output
-	for( let sChannel in GameData.oSettings.oAudio.oChannel ){
-		OutputManager.oAudio.add( new OutputManager.OutputChannel('CHN__' + sChannel, GameData.oSettings.oAudio.oChannel[sChannel]) );
+	for( let sChannel in GameSettings.oAudio.oChannel ){
+		OutputManager.oAudio.add( new OutputManager.OutputChannel('CHN__' + sChannel, GameSettings.oAudio.oChannel[sChannel]) );
 	}
 	// Scene
-	SceneManager.set( new window[ GameData.oSettings.sStartScene ]() );
+	SceneManager.set( new window[ GameSettings.sStartScene ]() );
 	// Start
 	GameEngine.start();
 }, false);

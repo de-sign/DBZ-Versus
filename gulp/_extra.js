@@ -6,6 +6,7 @@ const extra         = require('./_extra/_config');
 module.exports = function(config){
     const data          = require('./_extra/_data')(config);
     const sprite        = require('./_extra/_sprite')(config);
+    const doc           = require('./_extra/_doc')(config);
 
     const _extra = {
         _char: {},
@@ -26,6 +27,12 @@ module.exports = function(config){
     _extra.char = gulp.parallel.apply(gulp, Object.values(_extra._char) );
     _extra.sprite = gulp.parallel.apply(gulp, Object.values(_extra._sprite) );
     _extra.data = gulp.parallel.apply(gulp, Object.values(_extra._data) );
+
+    _extra.doc_reference = gulp.series( doc.json, doc.clean, doc.reference );
+    _extra.doc_pages = gulp.series( doc.json, doc.clean, doc.pages );
+    _extra.doc = gulp.series( doc.json, doc.clean, gulp.parallel(doc.reference, doc.pages ) );
+
+    _extra.extra = gulp.series( _extra.doc, doc.move );
 
     return _extra;
 };

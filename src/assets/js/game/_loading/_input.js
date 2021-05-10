@@ -34,7 +34,7 @@ Object.assign(
                     hElement.classList.remove('--change', OutputManager.oConfig.class.created);
                 }
             );
-            hLayer.querySelector('.Input__Controller_Sprite').src = GameData.oSettings.oPath.oController.sRoot + '/' + oController.sType + '.png';
+            hLayer.querySelector('.Input__Controller_Sprite').src = GameSettings.oPath.oController.sRoot + '/' + oController.sType + '.png';
             hLayer.querySelector('.Input__Controller_Number').innerHTML = oController.sName;
 
             // Clone des BUTTON

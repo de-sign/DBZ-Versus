@@ -110,7 +110,7 @@ Object.assign(
                                 oLayer[sType].aChildElement[0].setText( oParam[sType] );
                             }
                             else if( sType == 'nSide' ) {
-                                oLayer[sType].aChildElement[0].setText( GameData.oSettings.oSide.aSide[oParam[sType]].sName );
+                                oLayer[sType].aChildElement[0].setText( GameSettings.oSide.aSide[oParam[sType]].sName );
                             }
                         }
                     } );
@@ -137,14 +137,14 @@ Object.assign(
                 this.oScene = oScene;
 
                 this.aParam.push( StoreEngine.get('Parameters') || {
-                    nSide: GameData.oSettings.oSide.nDefault
+                    nSide: GameSettings.oSide.nDefault
                 } );
 
                 this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                     nIndex++;
                     this.aParam.push( StoreEngine.get('Parameters_' + nIndex) || {
-                        nLife: GameData.oSettings.oLife.player,
-                        nKi: GameData.oSettings.nKi,
+                        nLife: GameSettings.oLife.player,
+                        nKi: GameSettings.nKi,
                         bRegenLife: true,
                         bRegenKi: true
                     } );
@@ -183,8 +183,8 @@ Object.assign(
                         nKi: 0
                     },
                     oMaxStat = {
-                        nLife: GameData.oSettings.oLife.player,
-                        nKi: GameData.oSettings.nKi
+                        nLife: GameSettings.oLife.player,
+                        nKi: GameSettings.nKi
                     };
 
                 oParam[sStat] += nChange;
@@ -214,11 +214,11 @@ Object.assign(
                 const oParam = this.aParam[0];
                 oParam.nSide += nChange;
 
-                if( oParam.nSide >= GameData.oSettings.oSide.aSide.length ){
+                if( oParam.nSide >= GameSettings.oSide.aSide.length ){
                     oParam.nSide = 0;
                 }
                 else if( oParam.nSide < 0 ){
-                    oParam.nSide = GameData.oSettings.oSide.aSide.length - 1;
+                    oParam.nSide = GameSettings.oSide.aSide.length - 1;
                 }
 
                 StoreEngine.update('Parameters', oParam);
@@ -227,7 +227,7 @@ Object.assign(
                 const oPlayer = this.oScene.aPlayer[nIndex];
                 oPlayer.bReverse = oPlayer.nPlayer == 2;
                 oPlayer.oLayer.resetPosition();
-                oPlayer.moveLayer( GameData.oSettings.oSide.aSide[ this.aParam[0].nSide ].fPosition(this.oScene.oArea, nIndex) );
+                oPlayer.moveLayer( GameSettings.oSide.aSide[ this.aParam[0].nSide ].fPosition(this.oScene.oArea, nIndex) );
             }
         }
     }
