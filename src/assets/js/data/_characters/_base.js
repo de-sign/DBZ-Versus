@@ -2,7 +2,15 @@
 /* ----- START CONSTRUCTOR ----- */
 /* ----- DETAILS
 Constante avec les données de base des personnages.  
-Prévue pour être étendu et formaté.
+Prévue pour être étendu et formaté par les informations contenues dans chaque fichier personnages :
+    - [GameData.oCharacter.BJT](GameData.oCharacter.BJT.md)
+    - [GameData.oCharacter.BUU](GameData.oCharacter.BUU.md)
+    - [GameData.oCharacter.FRZ](GameData.oCharacter.FRZ.md)
+    - [GameData.oCharacter.GHN](GameData.oCharacter.GHN.md)
+    - [GameData.oCharacter.GKU](GameData.oCharacter.GKU.md)
+    - [GameData.oCharacter.GKU_SSJ](GameData.oCharacter.GKU_SSJ.md)
+    - [GameData.oCharacter.KID_GHN](GameData.oCharacter.KID_GHN.md)
+    - [GameData.oCharacter.MJN_BUU](GameData.oCharacter.MJN_BUU.md)
 <style>#constructor, #constructor+*, #constructor+*+*, #inheritance, #inheritance+*{ display: none; }</style>
 ----- */
 // function GameData.oEntity.oCharacter(){}

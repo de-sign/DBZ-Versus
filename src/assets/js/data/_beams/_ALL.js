@@ -1,191 +1,222 @@
-GameData.oBeam.ALL = {
-    sEntity: 'ALL',
-    aColor: [
-        {
-            sColor: 'BLU',
-            sName: 'Blue beams'
-        },
-        {
-            sColor: 'ORG',
-            sName: 'Orange beams'
-        },
-        {
-            sColor: 'PNK',
-            sName: 'Pink beams'
-        },
-        {
-            sColor: 'PRP',
-            sName: 'Purple beams'
-        }
-    ],
+/* ----- START CLASS ----- */
+/* ----- START CONSTRUCTOR ----- */
+/* ----- DETAILS
+Définition de l'entité général possédant toutes les informations des rayons comme les couleurs, les FRAMES, les animations, etc  
+Prévue pour compléter les informations contenues dans [GameData.oEntity.oBeam](GameData.oEntity.oBeam.md).
+<style>#constructor, #constructor+*, #constructor+*+*, #inheritance, #inheritance+*{ display: none; }</style>
+----- */
+// function GameData.oBeam.ALL(){}
+/* ----- END CONSTRUCTOR ----- */
 
-    oFrames: {
-        beam: {
-            aHitBox:  {
-                nX: 30,
-                nY: -98,
-                nHeight: 24,
-                nWidth: 1024
-            }
-        },
+GameData.oEntity.oBeam.ALL = {};
 
-        zigzag: {
-            aHitBox:  {
-                nX: 30,
-                nY: -110,
-                nHeight: 48,
-                nWidth: 1024
-            }
-        },
+Object.assign(
+    GameData.oEntity.oBeam.ALL,
+    {
+        /* ----- START EXTENDS ----- */
+        /*
+        Object.create(GameData.prototype), {
+        */
+        /* ----- END EXTENDS ----- */
 
-        circle_first: {
-            aHitBox:  {
-                nX: 30,
-                nY: -110,
-                nHeight: 48,
-                nWidth: 1024
-            }
-        },
-        circle_second: {
-            aHitBox: {
-                nX: 30,
-                nY: -142,
-                nHeight: 112,
-                nWidth: 1024
-            }
-        },
-
-        triangle_first: {
-            aHitBox:  {
-                nX: 30,
-                nY: -118,
-                nHeight: 64,
-                nWidth: 1024
-            }
-        },
-        triangle_second: {
-            aHitBox: {
-                nX: 30,
-                nY: -126,
-                nHeight: 80,
-                nWidth: 1024
-            }
-        },
-        triangle_third: {
-            aHitBox: {
-                nX: 30,
-                nY: -142,
-                nHeight: 112,
-                nWidth: 1024
-            }
-        }
-    },
-    
-    oAnimations: {
-        beam: [
+        /* ----- START SINGLETON ----- */
+        /* ----- START PROPERTIES ----- */
+        /* ----- DETAILS
+            Code technique de l'entité.  
+            Les rayons ne possède qu'une seule entité, ALL, contrairement aux personnages.
+        ----- */
+        sEntity: 'ALL',
+        /* ----- DETAILS Liste des couleurs de l'entité. ----- */
+        aColor: [
             {
-                nFrame: 8,
-                sFrame: 'beam'
+                sColor: 'BLU',
+                sName: 'Blue beams'
+            },
+            {
+                sColor: 'ORG',
+                sName: 'Orange beams'
+            },
+            {
+                sColor: 'PNK',
+                sName: 'Pink beams'
+            },
+            {
+                sColor: 'PRP',
+                sName: 'Purple beams'
             }
         ],
+        /* ----- DETAILS Données des FRAMES. ----- */
+        oFrames: {
+            beam: {
+                aHitBox:  {
+                    nX: 30,
+                    nY: -98,
+                    nHeight: 24,
+                    nWidth: 1024
+                }
+            },
 
-        zigzag: [
-            {
-                nFrame: 2,
-                sFrame: 'beam',
-                aHitBox: null
+            zigzag: {
+                aHitBox:  {
+                    nX: 30,
+                    nY: -110,
+                    nHeight: 48,
+                    nWidth: 1024
+                }
             },
-            {
-                nFrame: 40,
-                sFrame: 'zigzag'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'beam'
-            }
-        ],
 
-        circle: [
-            {
-                nFrame: 2,
-                sFrame: 'beam',
-                aHitBox: null
+            circle_first: {
+                aHitBox:  {
+                    nX: 30,
+                    nY: -110,
+                    nHeight: 48,
+                    nWidth: 1024
+                }
             },
-            {
-                nFrame: 2,
-                sFrame: 'circle_first',
-                aHitBox: null
+            circle_second: {
+                aHitBox: {
+                    nX: 30,
+                    nY: -142,
+                    nHeight: 112,
+                    nWidth: 1024
+                }
             },
-            {
-                nFrame: 36,
-                sFrame: 'circle_second'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'circle_first'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'beam'
-            }
-        ],
 
-        triangle: [
-            {
-                nFrame: 2,
-                sFrame: 'beam',
-                aHitBox: null
+            triangle_first: {
+                aHitBox:  {
+                    nX: 30,
+                    nY: -118,
+                    nHeight: 64,
+                    nWidth: 1024
+                }
             },
-            {
-                nFrame: 2,
-                sFrame: 'triangle_first',
-                aHitBox: null
+            triangle_second: {
+                aHitBox: {
+                    nX: 30,
+                    nY: -126,
+                    nHeight: 80,
+                    nWidth: 1024
+                }
             },
-            {
-                nFrame: 36,
-                sFrame: 'triangle_second'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'triangle_first'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'beam'
+            triangle_third: {
+                aHitBox: {
+                    nX: 30,
+                    nY: -142,
+                    nHeight: 112,
+                    nWidth: 1024
+                }
             }
-        ],
-        big_triangle: [
-            {
-                nFrame: 2,
-                sFrame: 'beam',
-                aHitBox: null
-            },
-            {
-                nFrame: 2,
-                sFrame: 'triangle_first',
-                aHitBox: null
-            },
-            {
-                nFrame: 2,
-                sFrame: 'triangle_second',
-                aHitBox: null
-            },
-            {
-                nFrame: 32,
-                sFrame: 'triangle_third'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'triangle_second'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'triangle_first'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'beam'
-            }
-        ]
+        },
+        /* ----- DETAILS Données des animations. ----- */
+        oAnimations: {
+            beam: [
+                {
+                    nFrame: 8,
+                    sFrame: 'beam'
+                }
+            ],
+
+            zigzag: [
+                {
+                    nFrame: 2,
+                    sFrame: 'beam',
+                    aHitBox: null
+                },
+                {
+                    nFrame: 40,
+                    sFrame: 'zigzag'
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'beam'
+                }
+            ],
+
+            circle: [
+                {
+                    nFrame: 2,
+                    sFrame: 'beam',
+                    aHitBox: null
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'circle_first',
+                    aHitBox: null
+                },
+                {
+                    nFrame: 36,
+                    sFrame: 'circle_second'
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'circle_first'
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'beam'
+                }
+            ],
+
+            triangle: [
+                {
+                    nFrame: 2,
+                    sFrame: 'beam',
+                    aHitBox: null
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'triangle_first',
+                    aHitBox: null
+                },
+                {
+                    nFrame: 36,
+                    sFrame: 'triangle_second'
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'triangle_first'
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'beam'
+                }
+            ],
+            big_triangle: [
+                {
+                    nFrame: 2,
+                    sFrame: 'beam',
+                    aHitBox: null
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'triangle_first',
+                    aHitBox: null
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'triangle_second',
+                    aHitBox: null
+                },
+                {
+                    nFrame: 32,
+                    sFrame: 'triangle_third'
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'triangle_second'
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'triangle_first'
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'beam'
+                }
+            ]
+        },
+        /* ----- END PROPERTIES ----- */
+        /* ----- END SINGLETON ----- */
     }
-};
+);
+/* ----- END CLASS ----- */

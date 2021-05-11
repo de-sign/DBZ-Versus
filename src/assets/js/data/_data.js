@@ -16,13 +16,37 @@ Object.assign(
                 - [GameData.oEntity.oEffect](GameData.oEntity.oEffect.md)
                 - [GameData.oEntity.oProjectile](GameData.oEntity.oProjectile.md)
         ----- */
-        oEntity: {},
-        /* ----- DETAILS Données des personnages  ----- */
-        oCharacter: {},
-        /* ----- DETAILS Données des projectiles ----- */
-        oProjectile: {},
-        /* ----- DETAILS Données des rayons ----- */
-        oBeam: {},
+        oEntity: {
+            /*
+                Complete with :
+                    - data/_beams/_base.js
+                    - data/_characters/_base.js
+                    - data/_effects/_base.js
+                    - data/_projectiles/_base.js
+            */
+        },
+        /* ----- DETAILS
+            Données des personnages :
+                - [GameData.oCharacter.BJT](GameData.oCharacter.BJT.md)
+                - [GameData.oCharacter.BUU](GameData.oCharacter.BUU.md)
+                - [GameData.oCharacter.FRZ](GameData.oCharacter.FRZ.md)
+                - [GameData.oCharacter.GHN](GameData.oCharacter.GHN.md)
+                - [GameData.oCharacter.GKU](GameData.oCharacter.GKU.md)
+                - [GameData.oCharacter.GKU_SSJ](GameData.oCharacter.GKU_SSJ.md)
+                - [GameData.oCharacter.KID_GHN](GameData.oCharacter.KID_GHN.md)
+                - [GameData.oCharacter.MJN_BUU](GameData.oCharacter.MJN_BUU.md)
+            ----- */
+        oCharacter: {
+            // Complete with data/_characters/_*.js files
+        },
+        /* ----- DETAILS Données des projectiles : [GameData.oProjectile.ALL](GameData.oProjectile.ALL.md) ----- */
+        oProjectile: {
+            // Complete with data/_projectiless/_ALL.js
+        },
+        /* ----- DETAILS Données des rayons : [GameData.oBeam.ALL](GameData.oBeam.ALL.md) ----- */
+        oBeam: {
+            // Complete with data/_beams/_ALL.js
+        },
         /* ----- DETAILS Données des stages ----- */
         oStage: {
             GZA: {

@@ -30,9 +30,7 @@ module.exports = function(config){
 
     _extra.doc_reference = gulp.series( doc.json, doc.clean, doc.reference );
     _extra.doc_pages = gulp.series( doc.json, doc.clean, doc.pages );
-    _extra.doc = gulp.series( doc.json, doc.clean, gulp.parallel(doc.reference, doc.pages ) );
-
-    _extra.extra = gulp.series( _extra.doc, doc.move );
+    _extra.js = _extra.doc = gulp.series( doc.delete, doc.json, doc.clean, gulp.parallel(doc.reference, doc.pages ) );
 
     return _extra;
 };

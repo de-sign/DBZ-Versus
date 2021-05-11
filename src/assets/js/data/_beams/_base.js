@@ -2,7 +2,7 @@
 /* ----- START CONSTRUCTOR ----- */
 /* ----- DETAILS
 Constante avec les données de base des rayons.  
-Prévue pour être étendu et formaté.
+Prévue pour être étendu et formaté par les informations contenues dans [GameData.oBeam.ALL](GameData.oBeam.ALL.md).
 <style>#constructor, #constructor+*, #constructor+*+*, #inheritance, #inheritance+*{ display: none; }</style>
 ----- */
 // function GameData.oEntity.oBeam(){}

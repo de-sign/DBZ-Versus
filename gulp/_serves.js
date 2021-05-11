@@ -4,7 +4,7 @@ const browserSync   = require('browser-sync').create();
 const path          = require('path');
 
 // Export
-module.exports = function(config, _builds){
+module.exports = function(config, _builds, _extra){
 
     const _serves = {
         browserSync: (done) => {
@@ -24,7 +24,7 @@ module.exports = function(config, _builds){
                         Array.isArray(config.files.watch[task]) ?
                             config.files.watch[task].map( file => _getFile(task, file) ) :
                             _getFile(task, config.files.watch[task]),
-                        gulp.series(_builds[task])
+                        gulp.parallel(_builds[task], _extra[task] || function empty(done){ done() })
                     );
                 };
                 done();

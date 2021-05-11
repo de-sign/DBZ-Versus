@@ -2,6 +2,7 @@
 const gulp          = require('gulp');
 const plumber       = require('gulp-plumber');
 const beautify      = require('gulp-beautify');
+const del           = require('del');
 const fs            = require('fs');
 const path          = require('path');
 const extra         = require('./_config');
@@ -9,9 +10,10 @@ const extra         = require('./_config');
 module.exports = function(config){
 
     const sPathSrc = config.paths.src.js + ( extra.oPath.oDoc.sSrc == '.' ? '' : '/' + extra.oPath.oDoc.sSrc ),
-        sPathDest = path.resolve(config.paths.src.root + '/' + extra.oPath.oDoc.sDest),
-        sStyleFile = '_doc.css',
-        sJSONFile = sPathDest + '/_doc.json';
+        sPathRoot = path.resolve(config.paths.src.root + '/' + extra.oPath.oDoc.sDest),
+        sPathDest = path.resolve(config.paths.src.root + '/' + extra.oPath.oDoc.sDest + '/markdown'),
+        sStyleFile = '../_doc.css',
+        sJSONFile = sPathRoot + '/_doc.json';
 
     // Methods json
     function readDir(aAccu, sPath){
@@ -92,6 +94,10 @@ module.exports = function(config){
 
     // Export
     return {
+        delete: function(){
+            return del([sPathDest + '/*'], { force: true });
+        },
+        
         json: function(done){
             const aFile = [],
                 aPromise = [],
@@ -151,11 +157,11 @@ module.exports = function(config){
                 .pipe(plumber(config.plugins.plumber))
                 .pipe(beautify.js(config.plugins.beautify.js))
                 .pipe(plumber.stop())
-                .pipe(gulp.dest(sPathDest));
+                .pipe(gulp.dest(sPathRoot));
         },
 
         reference: function(done){
-            const oData = require(sJSONFile),
+            const oData = JSON.parse( fs.readFileSync(sJSONFile, { encoding: 'utf-8' }) ),
                 aMarkdown = [],
                 oTree = {},
                 oNodes = {};
@@ -195,6 +201,10 @@ module.exports = function(config){
 
             aMarkdown.push( `# &#8251; Class references` );
             aMarkdown.push( `` );
+            aMarkdown.push( `**For correctly see this documentation !**  ` );
+            aMarkdown.push( `Please install [Markdown Viewer / Browser Extension](https://github.com/simov/markdown-viewer#markdown-viewer--browser-extension)  `);
+            aMarkdown.push( `and enable the extension for the \`\`\`https://raw.githubusercontent.com\`\`\` origin on [advanced options](https://github.com/simov/markdown-viewer#advanced-options).`);
+            aMarkdown.push( `` );
 
             for( let sDirectory in oTree ){
                 aMarkdown.push( `## ${sDirectory.toUpperCase()}` );
@@ -213,7 +223,7 @@ module.exports = function(config){
         },
 
         pages: function(done){
-            const oData = require(sJSONFile),
+            const oData = JSON.parse( fs.readFileSync(sJSONFile, { encoding: 'utf-8' }) ),
                 aPromise = [];
 
             for( let sClass in oData ){
@@ -340,7 +350,7 @@ module.exports = function(config){
 
                         aMarkdown.push( `<link rel="stylesheet" href="${sStyleFile}" />` );
                         aMarkdown.push( `` );
-                        aMarkdown.push( `[&#8251; RETURN](References.md)` );
+                        aMarkdown.push( `[&#8251; Return to Class references](References.md)` );
 
                         fs.writeFile(
                             sPathDest + '/' + sClass + '.md',
@@ -362,10 +372,6 @@ module.exports = function(config){
                     console.log(oError.message);
                     done();
                 } );
-        },
-        move: () => {
-            return gulp.src(sPathDest + '/*' )
-                .pipe(gulp.dest(config.paths.dest.root + '/doc'));
         }
     };
 };
