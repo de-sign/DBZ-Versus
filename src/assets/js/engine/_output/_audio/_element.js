@@ -51,7 +51,7 @@ Object.assign(
                         this.oParentElement = null;
                         this.oNode.oOutput.disconnect( oElm.oNode.oInput );
                     }
-                }
+                },
                 /* ----- END METHODS ----- */
                 /* ----- END PROTOTYPE ----- */
             }

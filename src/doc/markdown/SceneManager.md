@@ -1,45 +1,78 @@
 # SceneManager
+
+Le gestionnaire des scènes de jeu avec un stockage de données transverse. 
+
+
 _System :_ ENGINE  
 _File source :_ [engine/_scene/_manager.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/engine/_scene/_manager.js)
 
 ## Static properties
-**SceneManager.oCurrent**
+### SceneManager.oCurrent
+
+Contient la scène en cours : [Scene](Scene.md) 
 
 ```javascript
-oCurrent: null
+SceneManager.oCurrent = null;
 ```
-**SceneManager.oLast**
+
+### SceneManager.oLast
+
+Contient la scène gérer précédemment. 
 
 ```javascript
-oLast: null
+SceneManager.oLast = null;
 ```
-**SceneManager.oTransverseData**
+
+### SceneManager.oTransverseData
+
+Contient les données transvèrses des scenes.Est surchargé à chaque destruction d'une scene.
 
 ```javascript
-oTransverseData: {}
+SceneManager.oTransverseData = {};
 ```
+
 
 ## Static methods
-**SceneManager.init()**
+### SceneManager.init()
+
+Initialise la scène en cours : [Scene.prototype.update](Scene.md). 
+
 ```javascript
-SceneManager.init()
+SceneManager.init();
 ```
-**SceneManager.update()**
+
+### SceneManager.update()
+
+Mets à jour la scène en cours. 
+
 ```javascript
-SceneManager.update()
+SceneManager.update();
 ```
-**SceneManager.destroy()**
+
+### SceneManager.destroy()
+
+Détruit la scène en cours, la stock comme scène précédente et surchage les données transverse. 
+
 ```javascript
-SceneManager.destroy()
+SceneManager.destroy();
 ```
-**SceneManager.set()**
+
+### SceneManager.set()
+
+Défini la scène transmise comme étant celle en cours. 
+
 ```javascript
-SceneManager.set(oScn)
+SceneManager.set(oScn);
 ```
-**SceneManager.change()**
+
+### SceneManager.change()
+
+Détruit la scène en cours, défini la scène transmise comme courante et l'initialise. 
+
 ```javascript
-SceneManager.change(oScn)
+SceneManager.change(oScn);
 ```
+
 
 <link rel="stylesheet" href="../_doc.css" />
 

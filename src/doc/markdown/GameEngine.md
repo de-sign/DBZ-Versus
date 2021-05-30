@@ -1,51 +1,78 @@
 # GameEngine
-**Le moteur de jeu.** Il possède tout : l'horloge, le stockage d'information technique, le managers des entrées, des scenes, des sorties.
+
+**Le moteur de jeu.** Il possède tout : l'horloge, le stockage d'informations persistantes, le managers des entrées, des scenes, des sorties. 
+
 
 _System :_ ENGINE  
 _File source :_ [engine/_engine.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/engine/_engine.js)
 
 ## Static properties
-**GameEngine.oInput**
+### GameEngine.oTimer
+
+L'horlorge du moteur de jeu : [TimerEngine](TimerEngine.md) 
 
 ```javascript
-oInput: ControllerManager
+GameEngine.oTimer = TimerEngine;
 ```
-**GameEngine.oOutput**
+
+### GameEngine.oStore
+
+Le système de stockage d'informations persistantes : [StoreEngine](StoreEngine.md) 
 
 ```javascript
-oOutput: OutputManager
+GameEngine.oStore = StoreEngine;
 ```
-**GameEngine.oScene**
+
+### GameEngine.oInput
+
+Le gestionnaire des entrées : [ControllerManager](ControllerManager.md) 
 
 ```javascript
-oScene: SceneManager
+GameEngine.oInput = ControllerManager;
 ```
-**GameEngine.oStore**
+
+### GameEngine.oScene
+
+Le gestionnaire des scènes de jeu : [SceneManager](SceneManager.md) 
 
 ```javascript
-oStore: StoreEngine
+GameEngine.oScene = SceneManager;
 ```
-**GameEngine.oTimer**
-L'horlorge du moteur de jeu : [TimerEngine](TimerEngine.md)
 
+### GameEngine.oOutput
+
+Le gestionnaire des sorties : [OutputManager](OutputManager.md) 
 
 ```javascript
-oTimer: TimerEngine
+GameEngine.oOutput = OutputManager;
 ```
+
 
 ## Static methods
-**GameEngine.start()**
+### GameEngine.start()
+
+Si l'horloge n'est pas en route, initialise les gestionnaires et démarre l'horloge 
+
 ```javascript
-GameEngine.start()
+GameEngine.start();
 ```
-**GameEngine.update()**
+
+### GameEngine.update()
+
+Mets à jours les gestionnaires dans l'ordre suivant :- [ControllerManager.update()](ControllerManager.md)- [SceneManager.update()](SceneManager.md)- [OutputManager.update()](OutputManager.md)
+
 ```javascript
-GameEngine.update()
+GameEngine.update();
 ```
-**GameEngine.stop()**
+
+### GameEngine.stop()
+
+Arrete l'horloge et detruit la scène en cours 
+
 ```javascript
-GameEngine.stop()
+GameEngine.stop();
 ```
+
 
 <link rel="stylesheet" href="../_doc.css" />
 

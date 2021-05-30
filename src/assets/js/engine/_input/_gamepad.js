@@ -259,7 +259,7 @@ Object.assign(
                     }
 
                     StoreEngine.update( this.oGamepad.id, aStore );
-                }
+                },
                 /* ----- END METHODS ----- */
                 /* ----- END PROTOTYPE ----- */
             }

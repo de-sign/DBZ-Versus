@@ -1,62 +1,84 @@
 # OutputElement
+
+
 _System :_ ENGINE  
 _File source :_ [engine/_output/_element.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/engine/_output/_element.js)
 
 ## Static properties
-**OutputElement.nId**
+### OutputElement.nId
 
 ```javascript
-nId: 0
+OutputElement.nId = 0;
 ```
-**OutputElement.oInstance**
+
+### OutputElement.oInstance
 
 ```javascript
-oInstance: {}
+OutputElement.oInstance = {};
 ```
-**OutputElement.oInstanceByConstructor**
+
+### OutputElement.oInstanceByConstructor
 
 ```javascript
-oInstanceByConstructor: {}
+OutputElement.oInstanceByConstructor = {};
 ```
+
 
 ## Static methods
-**OutputElement.add()**
+### OutputElement.add()
+
 ```javascript
-OutputElement.add(oElm)
-```
-**OutputElement.remove()**
-```javascript
-OutputElement.remove(oElm)
+OutputElement.add(oElm);
 ```
 
+### OutputElement.remove()
+
+```javascript
+OutputElement.remove(oElm);
+```
+
+
 ## Constructor
-**OutputElement()**
+### OutputElement()
+
 ```javascript
 new OutputElement();
 ```
+
+
 ## Instance properties
-**OutputElement.prototype.aTickUpdate**
-```javascript
-this.aTickUpdate = [];
-```
-**OutputElement.prototype.oParentElement**
-```javascript
-this.oParentElement = null;
-```
-**OutputElement.prototype.sId**
+### this.sId
+
 ```javascript
 this.sId = this.sId || '';
 ```
 
+### this.aTickUpdate
+
+```javascript
+this.aTickUpdate = [];
+```
+
+### this.oParentElement
+
+```javascript
+this.oParentElement = null;
+```
+
+
 ## Instance methods
-**OutputElement.prototype.update()**
+### OutputElement.prototype.update()
+
 ```javascript
-this.update()
+this.update();
 ```
-**OutputElement.prototype.addTickUpdate()**
+
+### OutputElement.prototype.addTickUpdate()
+
 ```javascript
-this.addTickUpdate(fUpd)
+this.addTickUpdate(fUpd);
 ```
+
 
 <link rel="stylesheet" href="../_doc.css" />
 

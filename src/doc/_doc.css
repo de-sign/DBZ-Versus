@@ -1,33 +1,75 @@
-.markdown-body {
-    position: relative;
-    overflow: visible;
-    padding-bottom: 16px;
+* {
+    box-sizing: border-box;
 }
 
-.markdown-body p:last-child {
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+body._toc-left {
+    padding: 0 !important;
+}
+
+#_html {
+    position: relative;
+    overflow: auto;
+    padding-bottom: 16px;
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+}
+
+#_html > *:not(style) {
+    display: block;
+    max-width: 838px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#_html p:last-child {
     margin: 0;
 }
 
-.markdown-body h2 {
+#_html h2 {
     margin-top: 48px;
 }
 
-.markdown-body em {
+#_html em {
     opacity: 0.75;
 }
 
-.markdown-body p > strong:first-child {
-    font-size: 1.25em;
-    margin-top: 24px;
-    display: block;
-    padding-bottom: .3em;
+#_html h3 {
+    margin-top: 36px;
+    margin-bottom: 12px;
 }
 
 a[href="References.md"] {
-    position: absolute;
-    top: 0px;
-    right: -40px;
+    position: fixed;
+    top: 16px;
+    right: calc( 50% - 419px - 60px );
     writing-mode: vertical-lr;
     color: inherit;
     font-size: 1.5em;
+    z-index: 200;
+}
+
+#_toc {
+    background-color: transparent;
+    top: 16px;
+    left: calc( 50% + 419px + 60px - 20px );
+    right: 20px;
+    width: auto;
+    z-index: 100;
+    height: auto;
+    bottom: auto;
+}
+
+#_toc ._ul a {
+    font-size: 1em !important;
+    padding: 5px 15px !important;
 }

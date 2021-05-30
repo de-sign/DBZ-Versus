@@ -1,94 +1,134 @@
 # OutputHTMLElement
+
+
 _System :_ ENGINE  
 _File source :_ [engine/_output/_html/_element.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/engine/_output/_html/_element.js)
 
 ## Constructor
-**OutputHTMLElement()**
+
+OutputHTMLElement is a child class of [OutputElement](OutputElement.md).
+### OutputHTMLElement()
+
 ```javascript
 new OutputHTMLElement(hElm);
 ```
-## Inheritance
-OutputHTMLElement is a child class of [OutputElement](OutputElement.md).
+
 
 ## Instance properties
 _Properties inherited :_ [OutputElement.prototype](OutputElement.md#instance-properties)
 
-**OutputHTMLElement.prototype.bAutoPositioning**
-```javascript
-this.bAutoPositioning = false;
-```
-**OutputHTMLElement.prototype.bElementCreate**
-```javascript
-this.bElementCreate = false;
-```
-**OutputHTMLElement.prototype.hElement**
+### this.hElement
+
 ```javascript
 this.hElement = null;
 ```
-**OutputHTMLElement.prototype.oPosition**
+
+### this.bElementCreate
+
 ```javascript
-this.oPosition = {};
+this.bElementCreate = false;
 ```
-**OutputHTMLElement.prototype.oReferencePosition**
-```javascript
-this.oReferencePosition = {};
-```
-**OutputHTMLElement.prototype.oStyle**
-```javascript
-this.oStyle = {};
-```
-**OutputHTMLElement.prototype.sId**
+
+### this.sId
+
 ```javascript
 this.sId = null;
 ```
 
+### this.bAutoPositioning
+
+```javascript
+this.bAutoPositioning = false;
+```
+
+### this.oPosition
+
+```javascript
+this.oPosition = {};
+```
+
+### this.oReferencePosition
+
+```javascript
+this.oReferencePosition = {};
+```
+
+### this.oStyle
+
+```javascript
+this.oStyle = {};
+```
+
+
 ## Instance methods
 _Methods inherited :_ [OutputElement.prototype](OutputElement.md#instance-methods) 
 
-**OutputHTMLElement.prototype.init()**
+### OutputHTMLElement.prototype.init()
+
 ```javascript
-this.init(hElm)
+this.init(hElm);
 ```
-**OutputHTMLElement.prototype.update()**
+
+### OutputHTMLElement.prototype.update()
+
 ```javascript
-this.update()
+this.update();
 ```
-**OutputHTMLElement.prototype.createHTML()**
+
+### OutputHTMLElement.prototype.createHTML()
+
 ```javascript
-this.createHTML(sTyp, oHCfg)
+this.createHTML(sTyp, oHCfg);
 ```
-**OutputHTMLElement.prototype.autoCreateChildElement()**
+
+### OutputHTMLElement.prototype.autoCreateChildElement()
+
 ```javascript
-this.autoCreateChildElement()
+this.autoCreateChildElement();
 ```
-**OutputHTMLElement.prototype.getBox()**
+
+### OutputHTMLElement.prototype.getBox()
+
 ```javascript
-this.getBox()
+this.getBox();
 ```
-**OutputHTMLElement.prototype.setPosition()**
+
+### OutputHTMLElement.prototype.setPosition()
+
 ```javascript
-this.setPosition(oPos)
+this.setPosition(oPos);
 ```
-**OutputHTMLElement.prototype.resetPosition()**
+
+### OutputHTMLElement.prototype.resetPosition()
+
 ```javascript
-this.resetPosition()
+this.resetPosition();
 ```
-**OutputHTMLElement.prototype.getCalculatedPosition()**
+
+### OutputHTMLElement.prototype.getCalculatedPosition()
+
 ```javascript
-this.getCalculatedPosition()
+this.getCalculatedPosition();
 ```
-**OutputHTMLElement.prototype.enableAutoPositioning()**
+
+### OutputHTMLElement.prototype.enableAutoPositioning()
+
 ```javascript
-this.enableAutoPositioning()
+this.enableAutoPositioning();
 ```
-**OutputHTMLElement.prototype.disableAutoPositioning()**
+
+### OutputHTMLElement.prototype.disableAutoPositioning()
+
 ```javascript
-this.disableAutoPositioning()
+this.disableAutoPositioning();
 ```
-**OutputHTMLElement.prototype.setStyle()**
+
+### OutputHTMLElement.prototype.setStyle()
+
 ```javascript
-this.setStyle(oCss)
+this.setStyle(oCss);
 ```
+
 
 <link rel="stylesheet" href="../_doc.css" />
 

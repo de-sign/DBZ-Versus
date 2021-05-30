@@ -1,54 +1,74 @@
 # OutputAudioContext
+
+
 _System :_ ENGINE  
 _File source :_ [engine/_output/_audio/_context.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/engine/_output/_audio/_context.js)
 
 ## Constructor
-**OutputAudioContext()**
+
+OutputAudioContext is a child class of [OutputAudioElement](OutputAudioElement.md).
+### OutputAudioContext()
+
 ```javascript
 new OutputAudioContext();
 ```
-## Inheritance
-OutputAudioContext is a child class of [OutputAudioElement](OutputAudioElement.md).
+
 
 ## Instance properties
 _Properties inherited :_ [OutputAudioElement.prototype](OutputAudioElement.md#instance-properties)
 
-**OutputAudioContext.prototype.oChannel**
-```javascript
-this.oChannel = {};
-```
-**OutputAudioContext.prototype.sId**
+### this.sId
+
 ```javascript
 this.sId = 'AD__Game';
 ```
 
+### this.oChannel
+
+```javascript
+this.oChannel = {};
+```
+
+
 ## Instance methods
 _Methods inherited :_ [OutputAudioElement.prototype](OutputAudioElement.md#instance-methods) 
 
-**OutputAudioContext.prototype.init()**
+### OutputAudioContext.prototype.init()
+
 ```javascript
-this.init()
+this.init();
 ```
-**OutputAudioContext.prototype.update()**
+
+### OutputAudioContext.prototype.update()
+
 ```javascript
-this.update()
+this.update();
 ```
-**OutputAudioContext.prototype.add()**
+
+### OutputAudioContext.prototype.add()
+
 ```javascript
-this.add(oElm)
+this.add(oElm);
 ```
-**OutputAudioContext.prototype.remove()**
+
+### OutputAudioContext.prototype.remove()
+
 ```javascript
-this.remove(oElm)
+this.remove(oElm);
 ```
-**OutputAudioContext.prototype.resume()**
+
+### OutputAudioContext.prototype.resume()
+
 ```javascript
-this.resume()
+this.resume();
 ```
-**OutputAudioContext.prototype.suspend()**
+
+### OutputAudioContext.prototype.suspend()
+
 ```javascript
-this.suspend()
+this.suspend();
 ```
+
 
 <link rel="stylesheet" href="../_doc.css" />
 

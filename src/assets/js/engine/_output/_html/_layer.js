@@ -91,7 +91,7 @@ Object.assign(
                         }
                         this.hElement.classList.remove( OutputManager.oConfig.class.scope );
                     }
-                }
+                },
                 /* ----- END METHODS ----- */
                 /* ----- END PROTOTYPE ----- */
             }

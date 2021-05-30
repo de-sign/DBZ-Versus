@@ -1,16 +1,34 @@
 # GameData.oCharacter.BUU
-**Mister Buu**Définition du personnage possédant toutes les informations comme les couleurs, les FRAMES, les animations, etc  Prévue pour compléter les informations contenues dans [GameData.oEntity.oCharacter](GameData.oEntity.oCharacter.md).<style>#constructor, #constructor+*, #constructor+*+*, #inheritance, #inheritance+*{ display: none; }</style>
+
+**Mister Buu**  Définition du personnage possédant toutes les informations comme les couleurs, les FRAMES, les animations, etc  Prévue pour compléter les informations contenues dans [GameData.oEntity.oCharacter](GameData.oEntity.oCharacter.md).
+
 
 _System :_ DATA  
 _File source :_ [data/_characters/_BUU.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/data/_characters/_BUU.js)
 
-## Static properties
-**GameData.oCharacter.BUU.aColor**
-Liste des couleurs de l'entité.
+## Properties
+### GameData.oCharacter.BUU.sEntity
 
+Code technique de l'entité. 
 
 ```javascript
-aColor: [
+GameData.oCharacter.BUU.sEntity = 'BUU';
+```
+
+### GameData.oCharacter.BUU.sEntityColor
+
+Couleur utilisée pour les projectiles, rayons, etc. 
+
+```javascript
+GameData.oCharacter.BUU.sEntityColor = 'PNK';
+```
+
+### GameData.oCharacter.BUU.aColor
+
+Liste des couleurs de l'entité. 
+
+```javascript
+GameData.oCharacter.BUU.aColor = [
     {
         sName: 'Mister Buu',
         sColor: 'LSW_MBU',
@@ -21,662 +39,15 @@ aColor: [
         sColor: 'LSW_SBU',
         sColorName: 'Legendary Super Warrior color'
     }
-]
+];
 ```
-**GameData.oCharacter.BUU.oAnimations**
-Données des animations.
 
+### GameData.oCharacter.BUU.oFrames
+
+Données des FRAMES. 
 
 ```javascript
-oAnimations: {
-    // 4, 4, 6
-    light_first: [
-        {
-            nFrame: 2,
-            sFrame: 'blur'
-        },
-        {
-            nFrame: 2,
-            sFrame: 'light_first'
-        },
-        {
-            nFrame: 4,
-            sFrame: 'light_first_active'
-        },
-        {
-            nFrame: 4,
-            sFrame: 'light_first',
-            oStatus: {
-                bCancel: true
-            }
-        },
-        {
-            nFrame: 2,
-            sFrame: 'blur',
-            oStatus: {
-                bCancel: true
-            }
-        }
-    ],
-    // 4, 4, 6
-    light_second: [
-        {
-            nFrame: 2,
-            sFrame: 'blur'
-        },
-        {
-            nFrame: 2,
-            sFrame: 'light_second'
-        },
-        {
-            nFrame: 4,
-            sFrame: 'light_second_active'
-        },
-        {
-            nFrame: 4,
-            sFrame: 'light_second',
-            oStatus: {
-                bCancel: true
-            }
-        },
-        {
-            nFrame: 2,
-            sFrame: 'blur',
-            oStatus: {
-                bCancel: true
-            }
-        }
-    ],
-    // 6, 4, 8
-    heavy: {
-        
-        oMove: {
-            nDelay: 2,
-            nLength: 2,
-            nX: 16
-        },
-        aFrames: [
-            {
-                nFrame: 2,
-                sFrame: 'blur'
-            },
-            {
-                nFrame: 4,
-                sFrame: 'heavy'
-            },
-            {
-                nFrame: 4,
-                sFrame: 'heavy_active'
-            },
-            {
-                nFrame: 6,
-                sFrame: 'heavy',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: true
-                }
-            }
-        ]
-    },
-    // 8, 6, 10
-    shoulder: {
-        oMove: {
-            nDelay: 2,
-            nLength: 6,
-            nX: 48
-        },
-        aFrames: [
-            {
-                nFrame: 2,
-                sFrame: 'blur'
-            },
-            {
-                nFrame: 4,
-                sFrame: 'forward',
-            },
-            {
-                nFrame: 2,
-                sFrame: 'light_third',
-            },
-            {
-                nFrame: 6,
-                sFrame: 'light_third_active'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'light_third',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 6,
-                sFrame: 'forward',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: true
-                }
-            }
-        ]
-    },
-    // 10, 6, 8
-    tracker_first: {
-        oMove: {
-            nDelay: 2,
-            nLength: 18,
-            nX: 96
-        },
-        aFrames: [
-            {
-                nFrame: 2,
-                sFrame: 'blur'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'forward',
-            },
-            {
-                nFrame: 4,
-                sFrame: 'pre_jump'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'tracker'
-            },
-            {
-                nFrame: 6,
-                sFrame: 'tracker_active'
-            },
-            {
-                nFrame: 4,
-                sFrame: 'tracker',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'jump',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: true
-                }
-            }
-        ]
-    },
-    // 8, 6, 10
-    tracker_second: {
-        oMove: {
-            nLength: 4,
-            nX: 24
-        },
-        aFrames: [
-            {
-                nFrame: 4,
-                sFrame: 'tracker',
-            },
-            {
-                nFrame: 4,
-                sFrame: 'tracker_second',
-            },
-            {
-                nFrame: 6,
-                sFrame: 'tracker_second_active'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'tracker_second',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 4,
-                sFrame: 'tracker',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'jump',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: true
-                }
-            }
-        ]
-    },
-    // 10, 8, 12
-    luncher: [
-        {
-            nFrame: 2,
-            sFrame: 'blur'
-        },
-        {
-            nFrame: 6,
-            sFrame: 'jump'
-        },
-        {
-            nFrame: 2,
-            sFrame: 'luncher'
-        },
-        {
-            nFrame: 8,
-            sFrame: 'luncher_active'
-        },
-        {
-            nFrame: 4,
-            sFrame: 'luncher',
-            oStatus: {
-                bCancel: true
-            }
-        },
-        {
-            nFrame: 6,
-            sFrame: 'jump',
-            oStatus: {
-                bCancel: true
-            }
-        },
-        {
-            nFrame: 2,
-            sFrame: 'blur',
-            oStatus: {
-                bCancel: true
-            }
-        }
-    ],
-    kikoha: [
-        {
-            nFrame: 2,
-            sFrame: 'blur'
-        },
-        {
-            nFrame: 20,
-            sFrame: 'kikoha',
-            oStatus: {
-                bCancel: true
-            }
-        },
-        {
-            nFrame: 2,
-            sFrame: 'blur',
-            oStatus: {
-                bCancel: true
-            }
-        },
-    ],
-    
-    // Kameha
-    // 46, 36, 26
-    super: [
-        {
-            nFrame: 2,
-            sFrame: 'blur',
-            oStatus: {
-                bInvul: true
-            }
-        },
-        {
-            nFrame: 30,
-            sFrame: 'super_first',
-            oStatus: {
-                bInvul: true
-            }
-        },
-        {
-            nFrame: 10,
-            sFrame: 'super_second',
-            oStatus: {
-                bInvul: true
-            }
-        },
-        {
-            nFrame: 4,
-            sFrame: 'super_third',
-            oStatus: {
-                bInvul: true
-            }
-        },
-        {
-            nFrame: 40,
-            sFrame: 'super_third'
-        },
-        {
-            nFrame: 20,
-            sFrame: 'super_second'
-        },
-        {
-            nFrame: 2,
-            sFrame: 'blur'
-        }
-    ],
-    // List
-    super_list: [
-        {
-            nFrame: 2,
-            sFrame: 'blur_invul'
-        },
-        {
-            nFrame: 30,
-            sFrame: 'super_first'
-        },
-        {
-            nFrame: 10,
-            sFrame: 'super_second'
-        },
-        {
-            nFrame: 2,
-            sFrame: 'list_first'
-        },
-        {
-            nFrame: 40,
-            sFrame: 'list_second'
-        },
-        {
-            nFrame: 2,
-            sFrame: 'list_first'
-        },
-        {
-            nFrame: 20,
-            sFrame: 'super_second'
-        },
-        {
-            nFrame: 2,
-            sFrame: 'blur'
-        },
-    ]
-}
-```
-**GameData.oCharacter.BUU.oCommands**
-Données des commandes.
-
-
-```javascript
-oCommands: {
-    aOffense: [
-        {
-            aFilter: ['LSW_MBU'],
-            sCod: 'super',
-            sName: 'Chônoryoku',
-            sAnimation: 'super',
-            sListAnimation: 'super_list',
-            nCost: 12,
-            nDamage: 4,
-            nGatlingLevel: 3,
-            aEntity: {
-                sType: 'beam',
-                sSFX: 'ADO__Beam',
-                sAnimation: 'zigzag',
-                nFrameStart: 43,
-                bLink: true,
-                oPosition: {
-                    nX: -16,
-                    nY: -60
-                }
-            },
-            oStun: {
-                nFreeze: 46,
-                nBlock: 36,
-                nHit: 36,
-                bLunch: true,
-                sHitAnimation: 'hit_heavy'
-            },
-            oPushback: {
-                nLength: 4,
-                nX: -192
-            },
-            bLast: false,
-            oManipulation: {
-                nMaxLengthFrame: 15,
-                aButtons: [
-                    { DN: false },
-                    { DF: false },
-                    { FW: false, C: true }
-                ]
-            }
-        },
-        {
-            aFilter: ['LSW_SBU'],
-            sCod: 'super',
-            sName: 'Chônoryoku',
-            sAnimation: 'super',
-            sListAnimation: 'super_list',
-            nCost: 12,
-            nDamage: 4,
-            nGatlingLevel: 3,
-            aEntity:  {
-                sType: 'beam',
-                sSFX: 'ADO__Beam',
-                sAnimation: 'zigzag',
-                nFrameStart: 43,
-                bLink: true,
-                oPosition: {
-                    nX: -16,
-                    nY: -72
-                }
-            },
-            oStun: {
-                nFreeze: 46,
-                nBlock: 36,
-                nHit: 36,
-                bLunch: true,
-                sHitAnimation: 'hit_heavy'
-            },
-            oPushback: {
-                nLength: 4,
-                nX: -192
-            },
-            bLast: false,
-            oManipulation: {
-                nMaxLengthFrame: 15,
-                aButtons: [
-                    { DN: false },
-                    { DF: false },
-                    { FW: false, C: true }
-                ]
-            }
-        },
-        {
-            sCod: 'kikoha',
-            sName: 'Kikoha',
-            sAnimation: 'kikoha',
-            nCost: 4,
-            nGatlingLevel: 2,
-            aEntity: {
-                sType: 'projectile',
-                sSFX: 'ADO__Projectile',
-                sAnimation: 'kikoha',
-                nFrameStart: 10,
-                oPosition: {
-                    nX: 58,
-                    nY: -24
-                }
-            },
-            oStun: {
-                nBlock: 12,
-                nHit: 16,
-                sHitAnimation: 'hit_light',
-                sImpactAnimation: 'explode_light'
-            },
-            bLast: true,
-            oManipulation: {
-                nMaxLengthFrame: 1,
-                aButtons: [
-                    { C: true }
-                ]
-            }
-        },
-        {
-            sCod: 'luncher',
-            sName: 'Luncher',
-            sAnimation: 'luncher',
-            nGatlingLevel: 1,
-            oStun: {
-                nBlock: 12,
-                nHit: 22,
-                bLunch: true,
-                sHitAnimation: 'hit_luncher'
-            },
-            bLast: true,
-            oManipulation: {
-                nMaxLengthFrame: 1,
-                aButtons: [
-                    { DN: false, B: true }
-                ]
-            }
-        },
-        {
-            sCod: 'shoulder',
-            sName: 'Shoulder dash',
-            sAnimation: 'shoulder',
-            nGatlingLevel: 1,
-            oStun: {
-                nBlock: 12,
-                nHit: 18,
-                sHitAnimation: 'hit_heavy'
-            },
-            oPushback: {
-                nLength: 4,
-                nX: -128
-            },
-            bLast: true,
-            oManipulation: {
-                nMaxLengthFrame: 1,
-                aButtons: [
-                    { FW: false, B: true }
-                ]
-            }
-        },
-        {
-            sCod: 'tracker_first',
-            sName: 'Tracker',
-            sAnimation: 'tracker_first',
-            nGatlingLevel: 1,
-            oFollowUp: {
-                sName: '2nd',
-                sCod: 'tracker_second',
-                sAnimation: 'tracker_second',
-                nGatlingLevel: 1,
-                bOnHit: true,
-                oStun: {
-                    nBlock: 12,
-                    nHit: 18,
-                    sHitAnimation: 'hit_light'
-                },
-                bLast: true,
-                oManipulation: {
-                    nMaxLengthFrame: 1,
-                    aButtons: [
-                        { A: true }
-                    ]
-                }
-            },
-            oStun: {
-                nBlock: 12,
-                nHit: 18,
-                sHitAnimation: 'hit_heavy'
-            },
-            oPushback: {
-                nLength: 4,
-                nX: -36
-            },
-            bLast: true,
-            oManipulation: {
-                nMaxLengthFrame: 1,
-                aButtons: [
-                    { FW: false, A: true }
-                ]
-            }
-        },
-        {
-            sCod: 'heavy',
-            sName: 'Heavy',
-            sAnimation: 'heavy',
-            nGatlingLevel: 1,
-            oStun: {
-                nBlock: 10,
-                nHit: 16,
-                sHitAnimation: 'hit_heavy'
-            },
-            bLast: true,
-            oManipulation: {
-                nMaxLengthFrame: 1,
-                aButtons: [
-                    { B: true }
-                ]
-            }
-        },
-        {
-            sCod: 'light_first',
-            sName: 'Light',
-            sAnimation: 'light_first',
-            nGatlingLevel: 1,
-            oFollowUp: {
-                sCod: 'light_second',
-                sName: '2nd',
-                sAnimation: 'light_second',
-                nGatlingLevel: 1,
-                oStun: {
-                    nBlock: 12,
-                    nHit: 13,
-                    sHitAnimation: 'hit_light'
-                },
-                bLast: true,
-                oManipulation: {
-                    nMaxLengthFrame: 1,
-                    aButtons: [
-                        { A: true }
-                    ]
-                }
-            },
-            oStun: {
-                nBlock: 12,
-                nHit: 13,
-                sHitAnimation: 'hit_light'
-            },
-            bLast: true,
-            oManipulation: {
-                nMaxLengthFrame: 1,
-                aButtons: [
-                    { A: true }
-                ]
-            }
-        }
-    ]
-}
-```
-**GameData.oCharacter.BUU.oFrames**
-Données des FRAMES.
-
-
-```javascript
-oFrames: {
+GameData.oCharacter.BUU.oFrames = {
     stand: {
         oPositionBox: {
             nX: -30,
@@ -1369,30 +740,659 @@ oFrames: {
     },
     list_first: false,
     list_second: false
-}
+};
 ```
-**GameData.oCharacter.BUU.sEntity**
-Code technique de l'entité.
 
+### GameData.oCharacter.BUU.oAnimations
+
+Données des animations. 
 
 ```javascript
-sEntity: 'BUU'
+GameData.oCharacter.BUU.oAnimations = {
+    // 4, 4, 6
+    light_first: [
+        {
+            nFrame: 2,
+            sFrame: 'blur'
+        },
+        {
+            nFrame: 2,
+            sFrame: 'light_first'
+        },
+        {
+            nFrame: 4,
+            sFrame: 'light_first_active'
+        },
+        {
+            nFrame: 4,
+            sFrame: 'light_first',
+            oStatus: {
+                bCancel: true
+            }
+        },
+        {
+            nFrame: 2,
+            sFrame: 'blur',
+            oStatus: {
+                bCancel: true
+            }
+        }
+    ],
+    // 4, 4, 6
+    light_second: [
+        {
+            nFrame: 2,
+            sFrame: 'blur'
+        },
+        {
+            nFrame: 2,
+            sFrame: 'light_second'
+        },
+        {
+            nFrame: 4,
+            sFrame: 'light_second_active'
+        },
+        {
+            nFrame: 4,
+            sFrame: 'light_second',
+            oStatus: {
+                bCancel: true
+            }
+        },
+        {
+            nFrame: 2,
+            sFrame: 'blur',
+            oStatus: {
+                bCancel: true
+            }
+        }
+    ],
+    // 6, 4, 8
+    heavy: {
+        
+        oMove: {
+            nDelay: 2,
+            nLength: 2,
+            nX: 16
+        },
+        aFrames: [
+            {
+                nFrame: 2,
+                sFrame: 'blur'
+            },
+            {
+                nFrame: 4,
+                sFrame: 'heavy'
+            },
+            {
+                nFrame: 4,
+                sFrame: 'heavy_active'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'heavy',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oStatus: {
+                    bCancel: true
+                }
+            }
+        ]
+    },
+    // 8, 6, 10
+    shoulder: {
+        oMove: {
+            nDelay: 2,
+            nLength: 6,
+            nX: 48
+        },
+        aFrames: [
+            {
+                nFrame: 2,
+                sFrame: 'blur'
+            },
+            {
+                nFrame: 4,
+                sFrame: 'forward',
+            },
+            {
+                nFrame: 2,
+                sFrame: 'light_third',
+            },
+            {
+                nFrame: 6,
+                sFrame: 'light_third_active'
+            },
+            {
+                nFrame: 2,
+                sFrame: 'light_third',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 6,
+                sFrame: 'forward',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oStatus: {
+                    bCancel: true
+                }
+            }
+        ]
+    },
+    // 10, 6, 8
+    tracker_first: {
+        oMove: {
+            nDelay: 2,
+            nLength: 18,
+            nX: 96
+        },
+        aFrames: [
+            {
+                nFrame: 2,
+                sFrame: 'blur'
+            },
+            {
+                nFrame: 2,
+                sFrame: 'forward',
+            },
+            {
+                nFrame: 4,
+                sFrame: 'pre_jump'
+            },
+            {
+                nFrame: 2,
+                sFrame: 'tracker'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'tracker_active'
+            },
+            {
+                nFrame: 4,
+                sFrame: 'tracker',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'jump',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oStatus: {
+                    bCancel: true
+                }
+            }
+        ]
+    },
+    // 8, 6, 10
+    tracker_second: {
+        oMove: {
+            nLength: 4,
+            nX: 24
+        },
+        aFrames: [
+            {
+                nFrame: 4,
+                sFrame: 'tracker',
+            },
+            {
+                nFrame: 4,
+                sFrame: 'tracker_second',
+            },
+            {
+                nFrame: 6,
+                sFrame: 'tracker_second_active'
+            },
+            {
+                nFrame: 2,
+                sFrame: 'tracker_second',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 4,
+                sFrame: 'tracker',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'jump',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oStatus: {
+                    bCancel: true
+                }
+            }
+        ]
+    },
+    // 10, 8, 12
+    luncher: [
+        {
+            nFrame: 2,
+            sFrame: 'blur'
+        },
+        {
+            nFrame: 6,
+            sFrame: 'jump'
+        },
+        {
+            nFrame: 2,
+            sFrame: 'luncher'
+        },
+        {
+            nFrame: 8,
+            sFrame: 'luncher_active'
+        },
+        {
+            nFrame: 4,
+            sFrame: 'luncher',
+            oStatus: {
+                bCancel: true
+            }
+        },
+        {
+            nFrame: 6,
+            sFrame: 'jump',
+            oStatus: {
+                bCancel: true
+            }
+        },
+        {
+            nFrame: 2,
+            sFrame: 'blur',
+            oStatus: {
+                bCancel: true
+            }
+        }
+    ],
+    kikoha: [
+        {
+            nFrame: 2,
+            sFrame: 'blur'
+        },
+        {
+            nFrame: 20,
+            sFrame: 'kikoha',
+            oStatus: {
+                bCancel: true
+            }
+        },
+        {
+            nFrame: 2,
+            sFrame: 'blur',
+            oStatus: {
+                bCancel: true
+            }
+        },
+    ],
+    
+    // Kameha
+    // 46, 36, 26
+    super: [
+        {
+            nFrame: 2,
+            sFrame: 'blur',
+            oStatus: {
+                bInvul: true
+            }
+        },
+        {
+            nFrame: 30,
+            sFrame: 'super_first',
+            oStatus: {
+                bInvul: true
+            }
+        },
+        {
+            nFrame: 10,
+            sFrame: 'super_second',
+            oStatus: {
+                bInvul: true
+            }
+        },
+        {
+            nFrame: 4,
+            sFrame: 'super_third',
+            oStatus: {
+                bInvul: true
+            }
+        },
+        {
+            nFrame: 40,
+            sFrame: 'super_third'
+        },
+        {
+            nFrame: 20,
+            sFrame: 'super_second'
+        },
+        {
+            nFrame: 2,
+            sFrame: 'blur'
+        }
+    ],
+    // List
+    super_list: [
+        {
+            nFrame: 2,
+            sFrame: 'blur_invul'
+        },
+        {
+            nFrame: 30,
+            sFrame: 'super_first'
+        },
+        {
+            nFrame: 10,
+            sFrame: 'super_second'
+        },
+        {
+            nFrame: 2,
+            sFrame: 'list_first'
+        },
+        {
+            nFrame: 40,
+            sFrame: 'list_second'
+        },
+        {
+            nFrame: 2,
+            sFrame: 'list_first'
+        },
+        {
+            nFrame: 20,
+            sFrame: 'super_second'
+        },
+        {
+            nFrame: 2,
+            sFrame: 'blur'
+        },
+    ]
+};
 ```
-**GameData.oCharacter.BUU.sEntityColor**
-Couleur utilisée pour les projectiles, rayons, etc.
 
+### GameData.oCharacter.BUU.oCommands
+
+Données des commandes. 
 
 ```javascript
-sEntityColor: 'PNK'
+GameData.oCharacter.BUU.oCommands = {
+    aOffense: [
+        {
+            aFilter: ['LSW_MBU'],
+            sCod: 'super',
+            sName: 'Chônoryoku',
+            sAnimation: 'super',
+            sListAnimation: 'super_list',
+            nCost: 12,
+            nDamage: 4,
+            nGatlingLevel: 3,
+            aEntity: {
+                sType: 'beam',
+                sSFX: 'ADO__Beam',
+                sAnimation: 'zigzag',
+                nFrameStart: 43,
+                bLink: true,
+                oPosition: {
+                    nX: -16,
+                    nY: -60
+                }
+            },
+            oStun: {
+                nFreeze: 46,
+                nBlock: 36,
+                nHit: 36,
+                bLunch: true,
+                sHitAnimation: 'hit_heavy'
+            },
+            oPushback: {
+                nLength: 4,
+                nX: -192
+            },
+            bLast: false,
+            oManipulation: {
+                nMaxLengthFrame: 15,
+                aButtons: [
+                    { DN: false },
+                    { DF: false },
+                    { FW: false, C: true }
+                ]
+            }
+        },
+        {
+            aFilter: ['LSW_SBU'],
+            sCod: 'super',
+            sName: 'Chônoryoku',
+            sAnimation: 'super',
+            sListAnimation: 'super_list',
+            nCost: 12,
+            nDamage: 4,
+            nGatlingLevel: 3,
+            aEntity:  {
+                sType: 'beam',
+                sSFX: 'ADO__Beam',
+                sAnimation: 'zigzag',
+                nFrameStart: 43,
+                bLink: true,
+                oPosition: {
+                    nX: -16,
+                    nY: -72
+                }
+            },
+            oStun: {
+                nFreeze: 46,
+                nBlock: 36,
+                nHit: 36,
+                bLunch: true,
+                sHitAnimation: 'hit_heavy'
+            },
+            oPushback: {
+                nLength: 4,
+                nX: -192
+            },
+            bLast: false,
+            oManipulation: {
+                nMaxLengthFrame: 15,
+                aButtons: [
+                    { DN: false },
+                    { DF: false },
+                    { FW: false, C: true }
+                ]
+            }
+        },
+        {
+            sCod: 'kikoha',
+            sName: 'Kikoha',
+            sAnimation: 'kikoha',
+            nCost: 4,
+            nGatlingLevel: 2,
+            aEntity: {
+                sType: 'projectile',
+                sSFX: 'ADO__Projectile',
+                sAnimation: 'kikoha',
+                nFrameStart: 10,
+                oPosition: {
+                    nX: 58,
+                    nY: -24
+                }
+            },
+            oStun: {
+                nBlock: 12,
+                nHit: 16,
+                sHitAnimation: 'hit_light',
+                sImpactAnimation: 'explode_light'
+            },
+            bLast: true,
+            oManipulation: {
+                nMaxLengthFrame: 1,
+                aButtons: [
+                    { C: true }
+                ]
+            }
+        },
+        {
+            sCod: 'luncher',
+            sName: 'Luncher',
+            sAnimation: 'luncher',
+            nGatlingLevel: 1,
+            oStun: {
+                nBlock: 12,
+                nHit: 22,
+                bLunch: true,
+                sHitAnimation: 'hit_luncher'
+            },
+            bLast: true,
+            oManipulation: {
+                nMaxLengthFrame: 1,
+                aButtons: [
+                    { DN: false, B: true }
+                ]
+            }
+        },
+        {
+            sCod: 'shoulder',
+            sName: 'Shoulder dash',
+            sAnimation: 'shoulder',
+            nGatlingLevel: 1,
+            oStun: {
+                nBlock: 12,
+                nHit: 18,
+                sHitAnimation: 'hit_heavy'
+            },
+            oPushback: {
+                nLength: 4,
+                nX: -128
+            },
+            bLast: true,
+            oManipulation: {
+                nMaxLengthFrame: 1,
+                aButtons: [
+                    { FW: false, B: true }
+                ]
+            }
+        },
+        {
+            sCod: 'tracker_first',
+            sName: 'Tracker',
+            sAnimation: 'tracker_first',
+            nGatlingLevel: 1,
+            oFollowUp: {
+                sName: '2nd',
+                sCod: 'tracker_second',
+                sAnimation: 'tracker_second',
+                nGatlingLevel: 1,
+                bOnHit: true,
+                oStun: {
+                    nBlock: 12,
+                    nHit: 18,
+                    sHitAnimation: 'hit_light'
+                },
+                bLast: true,
+                oManipulation: {
+                    nMaxLengthFrame: 1,
+                    aButtons: [
+                        { A: true }
+                    ]
+                }
+            },
+            oStun: {
+                nBlock: 12,
+                nHit: 18,
+                sHitAnimation: 'hit_heavy'
+            },
+            oPushback: {
+                nLength: 4,
+                nX: -36
+            },
+            bLast: true,
+            oManipulation: {
+                nMaxLengthFrame: 1,
+                aButtons: [
+                    { FW: false, A: true }
+                ]
+            }
+        },
+        {
+            sCod: 'heavy',
+            sName: 'Heavy',
+            sAnimation: 'heavy',
+            nGatlingLevel: 1,
+            oStun: {
+                nBlock: 10,
+                nHit: 16,
+                sHitAnimation: 'hit_heavy'
+            },
+            bLast: true,
+            oManipulation: {
+                nMaxLengthFrame: 1,
+                aButtons: [
+                    { B: true }
+                ]
+            }
+        },
+        {
+            sCod: 'light_first',
+            sName: 'Light',
+            sAnimation: 'light_first',
+            nGatlingLevel: 1,
+            oFollowUp: {
+                sCod: 'light_second',
+                sName: '2nd',
+                sAnimation: 'light_second',
+                nGatlingLevel: 1,
+                oStun: {
+                    nBlock: 12,
+                    nHit: 13,
+                    sHitAnimation: 'hit_light'
+                },
+                bLast: true,
+                oManipulation: {
+                    nMaxLengthFrame: 1,
+                    aButtons: [
+                        { A: true }
+                    ]
+                }
+            },
+            oStun: {
+                nBlock: 12,
+                nHit: 13,
+                sHitAnimation: 'hit_light'
+            },
+            bLast: true,
+            oManipulation: {
+                nMaxLengthFrame: 1,
+                aButtons: [
+                    { A: true }
+                ]
+            }
+        }
+    ]
+};
 ```
 
-## Constructor
-**GameData.oCharacter.BUU()**
-```javascript
-new GameData.oCharacter.BUU();
-```
-## Inheritance
-GameData.oCharacter.BUU is a child class of [GameData](GameData.md).
 
 <link rel="stylesheet" href="../_doc.css" />
 

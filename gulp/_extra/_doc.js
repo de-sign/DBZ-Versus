@@ -29,7 +29,7 @@ module.exports = function(config){
         } );
     }
 
-    function parse(sText, oRegExp, bDEBUG){
+    function parse(sText, oRegExp){
         const aResult = [];
         [...sText.matchAll(oRegExp.rRegexp)].forEach( aMatch => {
             if( oRegExp.oStructure ){
@@ -39,7 +39,6 @@ module.exports = function(config){
                 }
                 aResult.push( oResult );
             } else {
-                bDEBUG && console.log(oRegExp, aMatch);
                 let sResult = null;
                 const aGroup = Array.isArray(oRegExp.nGroup) ? oRegExp.nGroup : [oRegExp.nGroup];
                 for( let nIndex = 0; nIndex < aGroup.length; nIndex++ ){
@@ -47,6 +46,8 @@ module.exports = function(config){
                     if( sResult ){
                         if( oRegExp.rRemove ){
                             sResult = sResult.replace(oRegExp.rRemove, '');
+                        } else if( oRegExp.nRemove ){
+                            sResult = sResult.replace(new RegExp('^' + aMatch[oRegExp.nRemove], 'gm'), '');
                         } else {
                             sResult = sResult.trim();
                         }
@@ -71,31 +72,12 @@ module.exports = function(config){
         } );
     }
 
-    // Methods pages
-    function transform(oData){
-        const aResult = [],
-            uValue = Object.values(oData)[0];
-
-        if( Array.isArray(uValue) ){
-            for( let nIndex = 0; nIndex < uValue.length; nIndex++ ){
-                const oResult = {};
-                aResult.push(oResult);
-                for( let sProp in oData ){
-                    const aData = Array.isArray(oData[sProp]) ? oData[sProp] : [oData[sProp]];
-                    oResult[sProp] = aData[nIndex];
-                }
-            }
-        } else {
-            aResult.push(oData);
-        }
-
-        return aResult;
-    }
-
     // Export
     return {
-        delete: function(){
-            return del([sPathDest + '/*'], { force: true });
+        delete: function(done){
+            del.sync([sPathDest], { force: true });
+            fs.mkdirSync(sPathDest);
+            done();
         },
         
         json: function(done){
@@ -120,10 +102,10 @@ module.exports = function(config){
                                         aParse = Array.isArray(aParse) ? aParse : [aParse];
                                         aParse.forEach( oParse => {
                                             const sPath = path.relative( sPathSrc, sFile );
-                                            oParse.sName = oParse.oConstructor.sName;
+                                            oParse.sName = oParse[ oParse.sType == 'DATA' ? 'oInitialize' : 'oConstructor'].sName;
                                             oParse.sPath = sFile;
                                             oParse.sDirectory = sPath.split(path.sep).shift();
-                                            oData[oParse.oConstructor.sName] = oParse;
+                                            oData[oParse.sName] = oParse;
                                         } );
                                     }
                                     fResolve();
@@ -181,7 +163,11 @@ module.exports = function(config){
                 aNode
                     .sort( sort )
                     .forEach( oNode => {
-                        aMarkdown.push( `${sPrefixe}- [${oNode.sName}](${oNode.sName}.md)` );
+                        if( oNode.oClass ){
+                            aMarkdown.push( `${sPrefixe}- [${oNode.sName}](${oNode.sName}.md)` );
+                        } else {
+                            aMarkdown.push( `${sPrefixe}- ${oNode.sName}` );
+                        }
                         render(oNode.aNodes, sPrefixe + '    ');
                     } );
             }
@@ -191,7 +177,17 @@ module.exports = function(config){
                     oNode = getNodes(sClass);
 
                 oNode.oClass = oClass;
-                if( oClass.sExtend ){
+                if( oClass.sMenu ){
+                    let oMenu = null;
+                    oClass.sMenu.split('/').forEach( sSubMenu => {
+                        let oSubMenu = getNodes(sSubMenu);
+                        if( oMenu && oMenu.aNodes.indexOf(oSubMenu) == -1 ){
+                            oMenu.aNodes.push(oSubMenu);
+                        }
+                        oMenu = oSubMenu;
+                    } );
+                    oMenu.aNodes.push(oNode);
+                } else if( oClass.sExtend ){
                     getNodes(oClass.sExtend).aNodes.push(oNode);
                 } else {
                     oTree[oClass.sDirectory] || (oTree[oClass.sDirectory] = []);
@@ -201,7 +197,8 @@ module.exports = function(config){
 
             aMarkdown.push( `# &#8251; Class references` );
             aMarkdown.push( `` );
-            aMarkdown.push( `**For correctly see this documentation !**  ` );
+            aMarkdown.push( `## For correctly see this documentation !` );
+            aMarkdown.push( `` );
             aMarkdown.push( `Please install [Markdown Viewer / Browser Extension](https://github.com/simov/markdown-viewer#markdown-viewer--browser-extension)  `);
             aMarkdown.push( `and enable the extension for the \`\`\`https://raw.githubusercontent.com\`\`\` origin on [advanced options](https://github.com/simov/markdown-viewer#advanced-options).`);
             aMarkdown.push( `` );
@@ -211,18 +208,133 @@ module.exports = function(config){
                 render(oTree[sDirectory]);
                 aMarkdown.push( `` );
             }
+
+            aMarkdown.push( `<link rel="stylesheet" href="${sStyleFile}" />` );
             
             fs.writeFile(
                 sPathDest + '/References.md',
                 aMarkdown.join('\n'),
                 oError => {
-                    oError && console.log(oError.message);
+                    oError && console.log(oError);
                     done();
                 }
             );
         },
 
         pages: function(done){
+
+            function render(uPrefix, oData, sType, nLevel){
+                const aRender = [];
+                if( Array.isArray(oData) ){
+                    oData.forEach( oSubData => {
+                        [].push.apply( aRender, render(uPrefix, oSubData, sType, nLevel) );
+                    } );
+                }
+                else {
+                    if( oData.oSubCategory ){
+                        [].push.apply(
+                            aRender,
+                            renderElement(
+                                oData.oSubCategory,
+                                'subcategory',
+                                nLevel - 1
+                            )
+                        );
+                        delete( oData.oSubCategory );
+                    }
+
+                    transform(oData)
+                        .forEach( oSubData => {
+                            [].push.apply(
+                                aRender,
+                                renderElement(
+                                    Object.assign({ uPrefix }, oSubData),
+                                    sType,
+                                    nLevel
+                                )
+                            );
+                        } );
+                    aRender.push( `` );
+                }
+
+                return aRender;
+            }
+
+            function transform(oData){
+                const aResult = [],
+                    uValue = Object.values(oData)[0];
+
+                if( Array.isArray(uValue) ){
+                    for( let nIndex = 0; nIndex < uValue.length; nIndex++ ){
+                        const oResult = {};
+                        aResult.push(oResult);
+                        for( let sProp in oData ){
+                            const aData = Array.isArray(oData[sProp]) ? oData[sProp] : [oData[sProp]];
+                            oResult[sProp] = aData[nIndex];
+                        }
+                    }
+                } else {
+                    aResult.push(oData);
+                }
+
+                return aResult;
+            }
+
+            function renderElement(oData, sType, nLevel){
+                const aRender = [],
+                    aLevel = [null, '#', '##', '###', '####', '#####', '######'],
+                    aPrefix = Array.isArray(oData.uPrefix) ? oData.uPrefix : [oData.uPrefix, oData.uPrefix];;
+
+                switch(sType){
+                    case 'subcategory':
+                        aRender.push( `${aLevel[nLevel]} ${oData.sName}` );
+                        if( oData.sDetails ){
+                            aRender.push( `` );
+                            aRender.push( oData.sDetails );
+                        }
+                        aRender.push( `` );
+                        break;
+
+                    case 'constructor':
+                        aRender.push( `${aLevel[nLevel]} ${oData.sName}()` );
+                        aRender.push( `` );
+                        aRender.push( `\`\`\`javascript` );
+                        aRender.push( `new ${oData.sName}${oData.sArguments};` );
+                        aRender.push( `\`\`\`` );
+                        aRender.push( `` );
+                        break;
+
+                    case 'property':
+                        aRender.push( `${aLevel[nLevel]} ${aPrefix[0]}.${oData.sName}` );
+                        if( oData.sDetails ){
+                            aRender.push( `` );
+                            aRender.push( oData.sDetails );
+                        }
+                        aRender.push( `` );
+                        aRender.push( `\`\`\`javascript` );
+                        aRender.push( `${aPrefix[1]}.${oData.sName} = ${oData.sValue};` );
+                        aRender.push( `\`\`\`` );
+                        aRender.push( `` );
+                        break;
+
+                    case 'method':
+                        aRender.push( `${aLevel[nLevel]} ${aPrefix[0]}.${oData.sName}()` );
+                        if( oData.sDetails ){
+                            aRender.push( `` );
+                            aRender.push( oData.sDetails );
+                        }
+                        aRender.push( `` );
+                        aRender.push( `\`\`\`javascript` );
+                        aRender.push( `${aPrefix[1]}.${oData.sName}${oData.sArguments};` );
+                        // aRender.push( `    ${oData.sCode}` );
+                        aRender.push( `\`\`\`` );
+                        aRender.push( `` );
+                        break;
+                }
+
+                return aRender;
+            }
+
             const oData = JSON.parse( fs.readFileSync(sJSONFile, { encoding: 'utf-8' }) ),
                 aPromise = [];
 
@@ -232,120 +344,125 @@ module.exports = function(config){
 
                         const aMarkdown = [],
                             oClass = oData[sClass],
+                            sDetails = (oClass.oInitialize || oClass.oConstructor).sDetails,
                             sPath = path
                                 .relative(config.paths.src.js, oClass.sPath)
-                                .replace(
-                                    new RegExp('\\' + path.sep, 'g'),
-                                    '/'
-                                );
+                                .replace( new RegExp('\\' + path.sep, 'g'), '/' );
 
-                        aMarkdown.push( `# ${sClass}` );
-                        if( oClass.oConstructor.sDetails ){
-                            aMarkdown.push( oClass.oConstructor.sDetails );
-                            aMarkdown.push( `` );
-                        }
+                        // FileName
+                        [].push.apply(
+                            aMarkdown,
+                            render(
+                                sClass,
+                                { sName: sClass, sDetails },
+                                'subcategory',
+                                1
+                            )
+                        );
                         aMarkdown.push( `_System :_ ${oClass.sDirectory.toUpperCase()}  ` );
                         aMarkdown.push( `_File source :_ [${sPath}](https://github.com/de-sign/DBZ-Versus/blob/master/${oClass.sPath})` );
                         aMarkdown.push( `` );
 
-                        if( oClass.oSingleton ){
-                            if( oClass.oSingleton.aProperties ){
-                                aMarkdown.push( `## Static properties` );
-                                transform(oClass.oSingleton.aProperties)
-                                    .sort(sort)
-                                    .forEach( oProperty => {
-                                        aMarkdown.push( `**${sClass}.${oProperty.sName}**` );
-                                        if( oProperty.sDetails ){
-                                            aMarkdown.push( oProperty.sDetails );
-                                            aMarkdown.push( `` );
-                                        }
-                                        aMarkdown.push( `` );
-                                        aMarkdown.push( `\`\`\`javascript` );
-                                        aMarkdown.push( `${oProperty.sCode}` );
-                                        aMarkdown.push( `\`\`\`` );
-                                    } );
-                                aMarkdown.push( `` );
-                            }
-                            if( oClass.oSingleton.aMethods ){
-                                aMarkdown.push( `## Static methods` );
-                                transform(oClass.oSingleton.aMethods)
-                                    // .sort(sort)
-                                    .forEach( oMethod => {
-                                        aMarkdown.push( `**${sClass}.${oMethod.sName}()**` );
-                                        if( oMethod.sDetails ){
-                                            aMarkdown.push( oMethod.sDetails );
-                                            aMarkdown.push( `` );
-                                        }
-                                        aMarkdown.push( `\`\`\`javascript` );
-                                        aMarkdown.push( `${sClass}.${oMethod.sName}${oMethod.sArguments}` );
-                                        aMarkdown.push( `\`\`\`` );
-                                        // aMarkdown.push( `    ${oMethod.sCode}` );
-                                    } );
-                                aMarkdown.push( `` );
+                        if( oClass.sType == 'DATA' ){
+                            if( oClass.oInitialize.aProperties ){
+                                aMarkdown.push( `## Properties` );
+                                [].push.apply(
+                                    aMarkdown,
+                                    render(
+                                        sClass,
+                                        oClass.oInitialize.aProperties,
+                                        'property',
+                                        3
+                                    )
+                                );
                             }
                         }
 
-                        if( oClass.sExtend || oClass.oConstructor.aProperties || oClass.oPrototype ){
+                        else if( oClass.sType == 'CLASS' ){
 
-                            aMarkdown.push( `## Constructor` );
-                            aMarkdown.push( `**${oClass.oConstructor.sName}()**` );
-                            aMarkdown.push( `\`\`\`javascript` );
-                            aMarkdown.push( `new ${oClass.oConstructor.sName}${oClass.oConstructor.sArguments};` );
-                            aMarkdown.push( `\`\`\`` );
+                            if( oClass.oSingleton ){
 
-                            if( oClass.sExtend ){
-                                aMarkdown.push( `## Inheritance` );
-                                aMarkdown.push( `${oClass.oConstructor.sName} is a child class of [${oClass.sExtend}](${oClass.sExtend}.md).` );
-                                aMarkdown.push( `` );
-                            }
-                            
-                            if( oClass.oConstructor.aProperties ){
-                                aMarkdown.push( `## Instance properties` );
-
-                                if( oClass.sExtend ){
-                                    aMarkdown.push( `_Properties inherited :_ [${oClass.sExtend}.prototype](${oClass.sExtend}.md#instance-properties)` );
-                                    aMarkdown.push( `` );
+                                if( oClass.oSingleton.aProperties ){
+                                    aMarkdown.push( `## Static properties` );
+                                    [].push.apply(
+                                        aMarkdown,
+                                        render(
+                                            sClass,
+                                            oClass.oSingleton.aProperties,
+                                            'property',
+                                            3
+                                        )
+                                    );
                                 }
 
-                                transform(oClass.oConstructor.aProperties)
-                                    .sort(sort)
-                                    .forEach( oProperty => {
-                                        aMarkdown.push( `**${sClass}.prototype.${oProperty.sName}**` );
-                                        if( oProperty.sDetails ){
-                                            aMarkdown.push( oProperty.sDetails );
-                                            aMarkdown.push( `` );
-                                        }
-                                        aMarkdown.push( `\`\`\`javascript` );
-                                        aMarkdown.push( `${oProperty.sCode}` );
-                                        aMarkdown.push( `\`\`\`` );
-                                    } );
-                                aMarkdown.push( `` );
+                                if( oClass.oSingleton.aMethods ){
+                                    aMarkdown.push( `## Static methods` );
+                                    [].push.apply(
+                                        aMarkdown,
+                                        render(
+                                            sClass,
+                                            oClass.oSingleton.aMethods,
+                                            'method',
+                                            3
+                                        )
+                                    );
+                                }
                             }
-                            
-                            if( oClass.oPrototype && oClass.oPrototype.aMethods ){
-                                aMarkdown.push( `## Instance methods` );
+
+                            if( oClass.sExtend || oClass.oConstructor.aProperties || oClass.oPrototype ){
+
+                                aMarkdown.push( `## Constructor` );
 
                                 if( oClass.sExtend ){
-                                    aMarkdown.push( `_Methods inherited :_ [${oClass.sExtend}.prototype](${oClass.sExtend}.md#instance-methods) ` );
                                     aMarkdown.push( `` );
+                                    aMarkdown.push( `${oClass.oConstructor.sName} is a child class of [${oClass.sExtend}](${oClass.sExtend}.md).` );
                                 }
 
-                                transform(oClass.oPrototype.aMethods)
-                                    // .sort(sort)
-                                    .forEach( oMethod => {
-                                        aMarkdown.push( `**${sClass}.prototype.${oMethod.sName}()**` );
-                                        if( oMethod.sDetails ){
-                                            aMarkdown.push( oMethod.sDetails );
-                                            aMarkdown.push( `` );
-                                        }
-                                        aMarkdown.push( `\`\`\`javascript` );
-                                        aMarkdown.push( `this.${oMethod.sName}${oMethod.sArguments}` );
-                                        aMarkdown.push( `\`\`\`` );
-                                        // aMarkdown.push( `    ${oMethod.sCode}` );
-                                    } );
-                                aMarkdown.push( `` );
-                            }
+                                [].push.apply(
+                                    aMarkdown,
+                                    render(
+                                        sClass,
+                                        oClass.oConstructor,
+                                        'constructor',
+                                        3
+                                    )
+                                );
                                 
+                                if( oClass.oConstructor.aProperties ){
+                                    aMarkdown.push( `## Instance properties` );
+                                    if( oClass.sExtend ){
+                                        aMarkdown.push( `_Properties inherited :_ [${oClass.sExtend}.prototype](${oClass.sExtend}.md#instance-properties)` );
+                                        aMarkdown.push( `` );
+                                    }
+                                    [].push.apply(
+                                        aMarkdown,
+                                        render(
+                                            'this',
+                                            oClass.oConstructor.aProperties,
+                                            'property',
+                                            3
+                                        )
+                                    );
+                                }
+                                
+                                if( oClass.oPrototype && oClass.oPrototype.aMethods ){
+                                    aMarkdown.push( `## Instance methods` );
+                                    if( oClass.sExtend ){
+                                        aMarkdown.push( `_Methods inherited :_ [${oClass.sExtend}.prototype](${oClass.sExtend}.md#instance-methods) ` );
+                                        aMarkdown.push( `` );
+                                    }
+                                    [].push.apply(
+                                        aMarkdown,
+                                        render(
+                                            [sClass + '.prototype', 'this'],
+                                            oClass.oPrototype.aMethods,
+                                            'method',
+                                            3
+                                        )
+                                    );
+                                }
+                                    
+                            }
                         }
 
                         aMarkdown.push( `<link rel="stylesheet" href="${sStyleFile}" />` );
@@ -369,7 +486,7 @@ module.exports = function(config){
                 .all(aPromise)
                 .then( () => done() )
                 .catch( oError => {
-                    console.log(oError.message);
+                    console.log(oError);
                     done();
                 } );
         }

@@ -1,16 +1,26 @@
 # GameData.oCharacter.KID_GHN
-**GohanS SSJT**Définition du personnage possédant toutes les informations comme les couleurs, les FRAMES, les animations, etc  Prévue pour compléter les informations contenues dans [GameData.oEntity.oCharacter](GameData.oEntity.oCharacter.md).<style>#constructor, #constructor+*, #constructor+*+*, #inheritance, #inheritance+*{ display: none; }</style>
+
+**GohanS SSJT**  Définition du personnage possédant toutes les informations comme les couleurs, les FRAMES, les animations, etc  Prévue pour compléter les informations contenues dans [GameData.oEntity.oCharacter](GameData.oEntity.oCharacter.md).
+
 
 _System :_ DATA  
 _File source :_ [data/_characters/_KID_GHN.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/data/_characters/_KID_GHN.js)
 
-## Static properties
-**GameData.oCharacter.KID_GHN.aColor**
-Liste des couleurs de l'entité.
+## Properties
+### GameData.oCharacter.KID_GHN.sEntity
 
+Code technique de l'entité. 
 
 ```javascript
-aColor: [
+GameData.oCharacter.KID_GHN.sEntity = 'KID_GHN';
+```
+
+### GameData.oCharacter.KID_GHN.aColor
+
+Liste des couleurs de l'entité. 
+
+```javascript
+GameData.oCharacter.KID_GHN.aColor = [
     {
         sName: 'Gohan SSJT',
         sColor: 'LSW_SSJT',
@@ -23,625 +33,15 @@ aColor: [
         sColorName: 'Legendary Super Warrior color',
         sEntityColor: 'ORG',
     }
-]
+];
 ```
-**GameData.oCharacter.KID_GHN.oAnimations**
-Données des animations.
 
+### GameData.oCharacter.KID_GHN.oFrames
+
+Données des FRAMES. 
 
 ```javascript
-oAnimations: {
-    // 4, 4, 6
-    light_first: [
-        {
-            nFrame: 2,
-            sFrame: 'blur'
-        },
-        {
-            nFrame: 2,
-            sFrame: 'light_first'
-        },
-        {
-            nFrame: 4,
-            sFrame: 'light_first_active'
-        },
-        {
-            nFrame: 4,
-            sFrame: 'light_first',
-            oStatus: {
-                bCancel: true
-            }
-        },
-        {
-            nFrame: 2,
-            sFrame: 'blur',
-            oStatus: {
-                bCancel: true
-            }
-        }
-    ],
-    // 4, 4, 6
-    light_second: [
-        {
-            nFrame: 2,
-            sFrame: 'blur'
-        },
-        {
-            nFrame: 2,
-            sFrame: 'light_second'
-        },
-        {
-            nFrame: 4,
-            sFrame: 'light_second_active'
-        },
-        {
-            nFrame: 4,
-            sFrame: 'light_second',
-            oStatus: {
-                bCancel: true
-            }
-        },
-        {
-            nFrame: 2,
-            sFrame: 'blur',
-            oStatus: {
-                bCancel: true
-            }
-        }
-    ],
-    // 4, 4, 6
-    light_third: {
-        oMove: {
-            nDelay: 2,
-            nLength: 4,
-            nX: 24
-        },
-        aFrames: [
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-            },
-            {
-                nFrame: 2,
-                sFrame: 'light_third'
-            },
-            {
-                nFrame: 4,
-                sFrame: 'light_third_active'
-            },
-            {
-                nFrame: 4,
-                sFrame: 'light_third',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: true
-                }
-            }
-        ]
-    },
-    // 6, 4, 8
-    heavy: {
-        
-        oMove: {
-            nDelay: 2,
-            nLength: 2,
-            nX: 16
-        },
-        aFrames: [
-            {
-                nFrame: 2,
-                sFrame: 'blur'
-            },
-            {
-                nFrame: 4,
-                sFrame: 'heavy'
-            },
-            {
-                nFrame: 4,
-                sFrame: 'heavy_active'
-            },
-            {
-                nFrame: 6,
-                sFrame: 'heavy',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: true
-                }
-            }
-        ]
-    },
-    // 10, 6, 8
-    tracker_first: {
-        oMove: {
-            nDelay: 2,
-            nLength: 18,
-            nX: 96
-        },
-        aFrames: [
-            {
-                nFrame: 2,
-                sFrame: 'blur'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'forward',
-            },
-            {
-                nFrame: 4,
-                sFrame: 'pre_jump'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'tracker'
-            },
-            {
-                nFrame: 6,
-                sFrame: 'tracker_active'
-            },
-            {
-                nFrame: 4,
-                sFrame: 'tracker',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'jump',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: true
-                }
-            }
-        ]
-    },
-    // 8, 6, 10
-    tracker_second: {
-        oMove: {
-            nLength: 4,
-            nX: 24
-        },
-        aFrames: [
-            {
-                nFrame: 4,
-                sFrame: 'tracker',
-            },
-            {
-                nFrame: 4,
-                sFrame: 'tracker_second',
-            },
-            {
-                nFrame: 6,
-                sFrame: 'tracker_second_active'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'tracker_second',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 4,
-                sFrame: 'tracker',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'jump',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'blur',
-                oStatus: {
-                    bCancel: true
-                }
-            }
-        ]
-    },
-    // 10, 8, 12
-    luncher: [
-        {
-            nFrame: 2,
-            sFrame: 'blur'
-        },
-        {
-            nFrame: 6,
-            sFrame: 'jump'
-        },
-        {
-            nFrame: 2,
-            sFrame: 'luncher'
-        },
-        {
-            nFrame: 8,
-            sFrame: 'luncher_active'
-        },
-        {
-            nFrame: 4,
-            sFrame: 'luncher',
-            oStatus: {
-                bCancel: true
-            }
-        },
-        {
-            nFrame: 6,
-            sFrame: 'jump',
-            oStatus: {
-                bCancel: true
-            }
-        },
-        {
-            nFrame: 2,
-            sFrame: 'blur',
-            oStatus: {
-                bCancel: true
-            }
-        }
-    ],
-    kikoha: [
-        {
-            nFrame: 2,
-            sFrame: 'blur'
-        },
-        {
-            nFrame: 20,
-            sFrame: 'kikoha',
-            oStatus: {
-                bCancel: true
-            }
-        },
-        {
-            nFrame: 2,
-            sFrame: 'blur',
-            oStatus: {
-                bCancel: true
-            }
-        },
-    ],
-    
-    // Kameha
-    // 46, 36, 26
-    super: [
-        {
-            nFrame: 2,
-            sFrame: 'blur',
-            oStatus: {
-                bInvul: true
-            }
-        },
-        {
-            nFrame: 30,
-            sFrame: 'super_first',
-            oStatus: {
-                bInvul: true
-            }
-        },
-        {
-            nFrame: 10,
-            sFrame: 'super_second',
-            oStatus: {
-                bInvul: true
-            }
-        },
-        {
-            nFrame: 4,
-            sFrame: 'super_third',
-            oStatus: {
-                bInvul: true
-            }
-        },
-        {
-            nFrame: 40,
-            sFrame: 'super_third'
-        },
-        {
-            nFrame: 20,
-            sFrame: 'super_second'
-        },
-        {
-            nFrame: 2,
-            sFrame: 'blur'
-        }
-    ]
-}
-```
-**GameData.oCharacter.KID_GHN.oCommands**
-Données des commandes.
-
-
-```javascript
-oCommands: {
-    aOffense: [
-        {
-            aFilter: ['LSW_SSJT'],
-            sCod: 'super',
-            sName: 'Oyako Kamehameha',
-            sAnimation: 'super',
-            sListAnimation: 'super_list',
-            nCost: 12,
-            nDamage: 4,
-            nGatlingLevel: 3,
-            aEntity: [
-                {
-                    sType: 'beam',
-                    sSFX: 'ADO__Beam',
-                    sAnimation: 'circle',
-                    nFrameStart: 43,
-                    bLink: true,
-                    oPosition: {
-                        nX: -4,
-                        nY: 12
-                    }
-                },
-                {
-                    sType: 'character',
-                    sEntity: 'GKU_SSJ',
-                    sColor: 'LSW_SSJ',
-                    sAnimation: 'GHN_SSJT_super',
-                    nFrameStart: 13,
-                    bLink: true,
-                    oPosition: {
-                        nX: -52,
-                        nY: 0
-                    }
-                }
-            ],
-            oStun: {
-                nFreeze: 46,
-                nBlock: 36,
-                nHit: 36,
-                bLunch: true,
-                sHitAnimation: 'hit_heavy'
-            },
-            oPushback: {
-                nLength: 4,
-                nX: -192
-            },
-            bLast: false,
-            oManipulation: {
-                nMaxLengthFrame: 15,
-                aButtons: [
-                    { DN: false },
-                    { DF: false },
-                    { FW: false, C: true }
-                ]
-            }
-        },
-        {
-            aFilter: ['LSW_TRN'],
-            sCod: 'super',
-            sName: 'Masenkō',
-            sAnimation: 'super',
-            sListAnimation: 'super_list',
-            nCost: 12,
-            nDamage: 4,
-            nGatlingLevel: 3,
-            aEntity:  {
-                sType: 'beam',
-                sSFX: 'ADO__Beam',
-                sAnimation: 'triangle',
-                nFrameStart: 43,
-                bLink: true,
-                oPosition: {
-                    nX: -8,
-                    nY: 8
-                }
-            },
-            oStun: {
-                nFreeze: 46,
-                nBlock: 36,
-                nHit: 36,
-                bLunch: true,
-                sHitAnimation: 'hit_heavy'
-            },
-            oPushback: {
-                nLength: 4,
-                nX: -192
-            },
-            bLast: false,
-            oManipulation: {
-                nMaxLengthFrame: 15,
-                aButtons: [
-                    { DN: false },
-                    { DF: false },
-                    { FW: false, C: true }
-                ]
-            }
-        },
-        {
-            sCod: 'kikoha',
-            sName: 'Kikoha',
-            sAnimation: 'kikoha',
-            nCost: 4,
-            nGatlingLevel: 2,
-            aEntity: {
-                sType: 'projectile',
-                sSFX: 'ADO__Projectile',
-                sAnimation: 'kikoha',
-                nFrameStart: 10,
-                oPosition: {
-                    nX: 58,
-                    nY: -24
-                }
-            },
-            oStun: {
-                nBlock: 12,
-                nHit: 16,
-                sHitAnimation: 'hit_light',
-                sImpactAnimation: 'explode_light'
-            },
-            bLast: true,
-            oManipulation: {
-                nMaxLengthFrame: 1,
-                aButtons: [
-                    { C: true }
-                ]
-            }
-        },
-        {
-            sCod: 'luncher',
-            sName: 'Luncher',
-            sAnimation: 'luncher',
-            nGatlingLevel: 1,
-            oStun: {
-                nBlock: 12,
-                nHit: 22,
-                bLunch: true,
-                sHitAnimation: 'hit_luncher'
-            },
-            bLast: true,
-            oManipulation: {
-                nMaxLengthFrame: 1,
-                aButtons: [
-                    { DN: false, B: true }
-                ]
-            }
-        },
-        {
-            sCod: 'tracker_first',
-            sName: 'Tracker',
-            sAnimation: 'tracker_first',
-            nGatlingLevel: 1,
-            oFollowUp: {
-                sCod: 'tracker_second',
-                sName: '2nd',
-                sAnimation: 'tracker_second',
-                nGatlingLevel: 1,
-                oStun: {
-                    nBlock: 12,
-                    nHit: 18,
-                    sHitAnimation: 'hit_light'
-                },
-                bLast: true,
-                oManipulation: {
-                    nMaxLengthFrame: 1,
-                    aButtons: [
-                        { A: true }
-                    ]
-                }
-            },
-            oStun: {
-                nBlock: 12,
-                nHit: 18,
-                sHitAnimation: 'hit_heavy'
-            },
-            oPushback: {
-                nLength: 4,
-                nX: -36
-            },
-            bLast: true,
-            oManipulation: {
-                nMaxLengthFrame: 1,
-                aButtons: [
-                    { FW: false, A: true }
-                ]
-            }
-        },
-        {
-            sCod: 'heavy',
-            sName: 'Heavy',
-            sAnimation: 'heavy',
-            nGatlingLevel: 1,
-            oStun: {
-                nBlock: 10,
-                nHit: 16,
-                sHitAnimation: 'hit_heavy'
-            },
-            bLast: true,
-            oManipulation: {
-                nMaxLengthFrame: 1,
-                aButtons: [
-                    { B: true }
-                ]
-            }
-        },
-        {
-            sCod: 'light_first',
-            sName: 'Light',
-            sAnimation: 'light_first',
-            nGatlingLevel: 1,
-            oFollowUp: {
-                sCod: 'light_second',
-                sName: '2nd',
-                sAnimation: 'light_second',
-                nGatlingLevel: 1,
-                oStun: {
-                    nBlock: 12,
-                    nHit: 13,
-                    sHitAnimation: 'hit_light'
-                },
-                bLast: true,
-                oManipulation: {
-                    nMaxLengthFrame: 1,
-                    aButtons: [
-                        { A: true }
-                    ]
-                },
-                oFollowUp: {
-                    sCod: 'light_third',
-                    sName: '3rd',
-                    sAnimation: 'light_third',
-                    nGatlingLevel: 1,
-                    oStun: {
-                        nBlock: 12,
-                        nHit: 13,
-                        sHitAnimation: 'hit_light'
-                    },
-                    bLast: true,
-                    oManipulation: {
-                        nMaxLengthFrame: 1,
-                        aButtons: [
-                            { A: true }
-                        ]
-                    }
-                }
-            },
-            oStun: {
-                nBlock: 12,
-                nHit: 13,
-                sHitAnimation: 'hit_light'
-            },
-            bLast: true,
-            oManipulation: {
-                nMaxLengthFrame: 1,
-                aButtons: [
-                    { A: true }
-                ]
-            }
-        }
-    ]
-}
-```
-**GameData.oCharacter.KID_GHN.oFrames**
-Données des FRAMES.
-
-
-```javascript
-oFrames: {
+GameData.oCharacter.KID_GHN.oFrames = {
     stand: {
         oPositionBox: {
             nX: -30,
@@ -1410,23 +810,622 @@ oFrames: {
     list_first: false,
     list_second: false,
     list_third: false
-}
+};
 ```
-**GameData.oCharacter.KID_GHN.sEntity**
-Code technique de l'entité.
 
+### GameData.oCharacter.KID_GHN.oAnimations
+
+Données des animations. 
 
 ```javascript
-sEntity: 'KID_GHN'
+GameData.oCharacter.KID_GHN.oAnimations = {
+    // 4, 4, 6
+    light_first: [
+        {
+            nFrame: 2,
+            sFrame: 'blur'
+        },
+        {
+            nFrame: 2,
+            sFrame: 'light_first'
+        },
+        {
+            nFrame: 4,
+            sFrame: 'light_first_active'
+        },
+        {
+            nFrame: 4,
+            sFrame: 'light_first',
+            oStatus: {
+                bCancel: true
+            }
+        },
+        {
+            nFrame: 2,
+            sFrame: 'blur',
+            oStatus: {
+                bCancel: true
+            }
+        }
+    ],
+    // 4, 4, 6
+    light_second: [
+        {
+            nFrame: 2,
+            sFrame: 'blur'
+        },
+        {
+            nFrame: 2,
+            sFrame: 'light_second'
+        },
+        {
+            nFrame: 4,
+            sFrame: 'light_second_active'
+        },
+        {
+            nFrame: 4,
+            sFrame: 'light_second',
+            oStatus: {
+                bCancel: true
+            }
+        },
+        {
+            nFrame: 2,
+            sFrame: 'blur',
+            oStatus: {
+                bCancel: true
+            }
+        }
+    ],
+    // 4, 4, 6
+    light_third: {
+        oMove: {
+            nDelay: 2,
+            nLength: 4,
+            nX: 24
+        },
+        aFrames: [
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+            },
+            {
+                nFrame: 2,
+                sFrame: 'light_third'
+            },
+            {
+                nFrame: 4,
+                sFrame: 'light_third_active'
+            },
+            {
+                nFrame: 4,
+                sFrame: 'light_third',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oStatus: {
+                    bCancel: true
+                }
+            }
+        ]
+    },
+    // 6, 4, 8
+    heavy: {
+        
+        oMove: {
+            nDelay: 2,
+            nLength: 2,
+            nX: 16
+        },
+        aFrames: [
+            {
+                nFrame: 2,
+                sFrame: 'blur'
+            },
+            {
+                nFrame: 4,
+                sFrame: 'heavy'
+            },
+            {
+                nFrame: 4,
+                sFrame: 'heavy_active'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'heavy',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oStatus: {
+                    bCancel: true
+                }
+            }
+        ]
+    },
+    // 10, 6, 8
+    tracker_first: {
+        oMove: {
+            nDelay: 2,
+            nLength: 18,
+            nX: 96
+        },
+        aFrames: [
+            {
+                nFrame: 2,
+                sFrame: 'blur'
+            },
+            {
+                nFrame: 2,
+                sFrame: 'forward',
+            },
+            {
+                nFrame: 4,
+                sFrame: 'pre_jump'
+            },
+            {
+                nFrame: 2,
+                sFrame: 'tracker'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'tracker_active'
+            },
+            {
+                nFrame: 4,
+                sFrame: 'tracker',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'jump',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oStatus: {
+                    bCancel: true
+                }
+            }
+        ]
+    },
+    // 8, 6, 10
+    tracker_second: {
+        oMove: {
+            nLength: 4,
+            nX: 24
+        },
+        aFrames: [
+            {
+                nFrame: 4,
+                sFrame: 'tracker',
+            },
+            {
+                nFrame: 4,
+                sFrame: 'tracker_second',
+            },
+            {
+                nFrame: 6,
+                sFrame: 'tracker_second_active'
+            },
+            {
+                nFrame: 2,
+                sFrame: 'tracker_second',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 4,
+                sFrame: 'tracker',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'jump',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'blur',
+                oStatus: {
+                    bCancel: true
+                }
+            }
+        ]
+    },
+    // 10, 8, 12
+    luncher: [
+        {
+            nFrame: 2,
+            sFrame: 'blur'
+        },
+        {
+            nFrame: 6,
+            sFrame: 'jump'
+        },
+        {
+            nFrame: 2,
+            sFrame: 'luncher'
+        },
+        {
+            nFrame: 8,
+            sFrame: 'luncher_active'
+        },
+        {
+            nFrame: 4,
+            sFrame: 'luncher',
+            oStatus: {
+                bCancel: true
+            }
+        },
+        {
+            nFrame: 6,
+            sFrame: 'jump',
+            oStatus: {
+                bCancel: true
+            }
+        },
+        {
+            nFrame: 2,
+            sFrame: 'blur',
+            oStatus: {
+                bCancel: true
+            }
+        }
+    ],
+    kikoha: [
+        {
+            nFrame: 2,
+            sFrame: 'blur'
+        },
+        {
+            nFrame: 20,
+            sFrame: 'kikoha',
+            oStatus: {
+                bCancel: true
+            }
+        },
+        {
+            nFrame: 2,
+            sFrame: 'blur',
+            oStatus: {
+                bCancel: true
+            }
+        },
+    ],
+    
+    // Kameha
+    // 46, 36, 26
+    super: [
+        {
+            nFrame: 2,
+            sFrame: 'blur',
+            oStatus: {
+                bInvul: true
+            }
+        },
+        {
+            nFrame: 30,
+            sFrame: 'super_first',
+            oStatus: {
+                bInvul: true
+            }
+        },
+        {
+            nFrame: 10,
+            sFrame: 'super_second',
+            oStatus: {
+                bInvul: true
+            }
+        },
+        {
+            nFrame: 4,
+            sFrame: 'super_third',
+            oStatus: {
+                bInvul: true
+            }
+        },
+        {
+            nFrame: 40,
+            sFrame: 'super_third'
+        },
+        {
+            nFrame: 20,
+            sFrame: 'super_second'
+        },
+        {
+            nFrame: 2,
+            sFrame: 'blur'
+        }
+    ]
+};
 ```
 
-## Constructor
-**GameData.oCharacter.KID_GHN()**
+### GameData.oCharacter.KID_GHN.oCommands
+
+Données des commandes. 
+
 ```javascript
-new GameData.oCharacter.KID_GHN();
+GameData.oCharacter.KID_GHN.oCommands = {
+    aOffense: [
+        {
+            aFilter: ['LSW_SSJT'],
+            sCod: 'super',
+            sName: 'Oyako Kamehameha',
+            sAnimation: 'super',
+            sListAnimation: 'super_list',
+            nCost: 12,
+            nDamage: 4,
+            nGatlingLevel: 3,
+            aEntity: [
+                {
+                    sType: 'beam',
+                    sSFX: 'ADO__Beam',
+                    sAnimation: 'circle',
+                    nFrameStart: 43,
+                    bLink: true,
+                    oPosition: {
+                        nX: -4,
+                        nY: 12
+                    }
+                },
+                {
+                    sType: 'character',
+                    sEntity: 'GKU_SSJ',
+                    sColor: 'LSW_SSJ',
+                    sAnimation: 'GHN_SSJT_super',
+                    nFrameStart: 13,
+                    bLink: true,
+                    oPosition: {
+                        nX: -52,
+                        nY: 0
+                    }
+                }
+            ],
+            oStun: {
+                nFreeze: 46,
+                nBlock: 36,
+                nHit: 36,
+                bLunch: true,
+                sHitAnimation: 'hit_heavy'
+            },
+            oPushback: {
+                nLength: 4,
+                nX: -192
+            },
+            bLast: false,
+            oManipulation: {
+                nMaxLengthFrame: 15,
+                aButtons: [
+                    { DN: false },
+                    { DF: false },
+                    { FW: false, C: true }
+                ]
+            }
+        },
+        {
+            aFilter: ['LSW_TRN'],
+            sCod: 'super',
+            sName: 'Masenkō',
+            sAnimation: 'super',
+            sListAnimation: 'super_list',
+            nCost: 12,
+            nDamage: 4,
+            nGatlingLevel: 3,
+            aEntity:  {
+                sType: 'beam',
+                sSFX: 'ADO__Beam',
+                sAnimation: 'triangle',
+                nFrameStart: 43,
+                bLink: true,
+                oPosition: {
+                    nX: -8,
+                    nY: 8
+                }
+            },
+            oStun: {
+                nFreeze: 46,
+                nBlock: 36,
+                nHit: 36,
+                bLunch: true,
+                sHitAnimation: 'hit_heavy'
+            },
+            oPushback: {
+                nLength: 4,
+                nX: -192
+            },
+            bLast: false,
+            oManipulation: {
+                nMaxLengthFrame: 15,
+                aButtons: [
+                    { DN: false },
+                    { DF: false },
+                    { FW: false, C: true }
+                ]
+            }
+        },
+        {
+            sCod: 'kikoha',
+            sName: 'Kikoha',
+            sAnimation: 'kikoha',
+            nCost: 4,
+            nGatlingLevel: 2,
+            aEntity: {
+                sType: 'projectile',
+                sSFX: 'ADO__Projectile',
+                sAnimation: 'kikoha',
+                nFrameStart: 10,
+                oPosition: {
+                    nX: 58,
+                    nY: -24
+                }
+            },
+            oStun: {
+                nBlock: 12,
+                nHit: 16,
+                sHitAnimation: 'hit_light',
+                sImpactAnimation: 'explode_light'
+            },
+            bLast: true,
+            oManipulation: {
+                nMaxLengthFrame: 1,
+                aButtons: [
+                    { C: true }
+                ]
+            }
+        },
+        {
+            sCod: 'luncher',
+            sName: 'Luncher',
+            sAnimation: 'luncher',
+            nGatlingLevel: 1,
+            oStun: {
+                nBlock: 12,
+                nHit: 22,
+                bLunch: true,
+                sHitAnimation: 'hit_luncher'
+            },
+            bLast: true,
+            oManipulation: {
+                nMaxLengthFrame: 1,
+                aButtons: [
+                    { DN: false, B: true }
+                ]
+            }
+        },
+        {
+            sCod: 'tracker_first',
+            sName: 'Tracker',
+            sAnimation: 'tracker_first',
+            nGatlingLevel: 1,
+            oFollowUp: {
+                sCod: 'tracker_second',
+                sName: '2nd',
+                sAnimation: 'tracker_second',
+                nGatlingLevel: 1,
+                oStun: {
+                    nBlock: 12,
+                    nHit: 18,
+                    sHitAnimation: 'hit_light'
+                },
+                bLast: true,
+                oManipulation: {
+                    nMaxLengthFrame: 1,
+                    aButtons: [
+                        { A: true }
+                    ]
+                }
+            },
+            oStun: {
+                nBlock: 12,
+                nHit: 18,
+                sHitAnimation: 'hit_heavy'
+            },
+            oPushback: {
+                nLength: 4,
+                nX: -36
+            },
+            bLast: true,
+            oManipulation: {
+                nMaxLengthFrame: 1,
+                aButtons: [
+                    { FW: false, A: true }
+                ]
+            }
+        },
+        {
+            sCod: 'heavy',
+            sName: 'Heavy',
+            sAnimation: 'heavy',
+            nGatlingLevel: 1,
+            oStun: {
+                nBlock: 10,
+                nHit: 16,
+                sHitAnimation: 'hit_heavy'
+            },
+            bLast: true,
+            oManipulation: {
+                nMaxLengthFrame: 1,
+                aButtons: [
+                    { B: true }
+                ]
+            }
+        },
+        {
+            sCod: 'light_first',
+            sName: 'Light',
+            sAnimation: 'light_first',
+            nGatlingLevel: 1,
+            oFollowUp: {
+                sCod: 'light_second',
+                sName: '2nd',
+                sAnimation: 'light_second',
+                nGatlingLevel: 1,
+                oStun: {
+                    nBlock: 12,
+                    nHit: 13,
+                    sHitAnimation: 'hit_light'
+                },
+                bLast: true,
+                oManipulation: {
+                    nMaxLengthFrame: 1,
+                    aButtons: [
+                        { A: true }
+                    ]
+                },
+                oFollowUp: {
+                    sCod: 'light_third',
+                    sName: '3rd',
+                    sAnimation: 'light_third',
+                    nGatlingLevel: 1,
+                    oStun: {
+                        nBlock: 12,
+                        nHit: 13,
+                        sHitAnimation: 'hit_light'
+                    },
+                    bLast: true,
+                    oManipulation: {
+                        nMaxLengthFrame: 1,
+                        aButtons: [
+                            { A: true }
+                        ]
+                    }
+                }
+            },
+            oStun: {
+                nBlock: 12,
+                nHit: 13,
+                sHitAnimation: 'hit_light'
+            },
+            bLast: true,
+            oManipulation: {
+                nMaxLengthFrame: 1,
+                aButtons: [
+                    { A: true }
+                ]
+            }
+        }
+    ]
+};
 ```
-## Inheritance
-GameData.oCharacter.KID_GHN is a child class of [GameData](GameData.md).
+
 
 <link rel="stylesheet" href="../_doc.css" />
 

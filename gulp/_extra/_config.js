@@ -14,132 +14,181 @@ Object.assign(
 
         // DOC
         oRegExp: {
-            rRegexp: /\/\* ----- START CLASS ----- \*\/(?:.|\n|\r)*?\/\* ----- END CLASS ----- \*\//gm,
+            rRegexp: /\/\* ----- START (CLASS|DATA) ----- \*\/[^]*?\/\* ----- END \1 ----- \*\//gm,
             nGroup: 0,
             oStructure: {
-                oSingleton: {
-                    rRegexp: /\/\* ----- START SINGLETON ----- \*\/(?:.|\n|\r)*?\/\* ----- END SINGLETON ----- \*\//gm,
+                sType: {
+                    rRegexp: /\/\* ----- START (CLASS|DATA) ----- \*\/[^]*?\/\* ----- END \1 ----- \*\//gm,
+                    nGroup: 1
+                },
+                sMenu: {
+                    rRegexp: /\/\* ----- MENU([^]*?)----- \*\//gm,
+                    nGroup: 1
+                },
+                // DATA
+                oInitialize: {
+                    rRegexp: /\/\* ----- START INITIALIZE ----- \*\/[^]*?\/\* ----- END INITIALIZE ----- \*\//gm,
                     nGroup: 0,
                     oStructure: {
+                        sName: {
+                            rRegexp: /(?:\/\* ----- DETAILS[^]*?----- \*\/\s*?)?(?:(.*)=[^]*?);/gm,
+                            nGroup: 1
+                        },
+                        sDetails: {
+                            rRegexp: /(?:\/\* ----- DETAILS([^]*?)----- \*\/\s*?)?(?:.*=[^]*?);/gm,
+                            nGroup: 1,
+                            rRemove: /^\s*/gm
+                        },
                         aProperties: {
-                            rRegexp: /\/\* ----- START PROPERTIES ----- \*\/(?:.|\n|\r)*?\/\* ----- END PROPERTIES ----- \*\//gm,
+                            rRegexp: /\/\* ----- START PROPERTIES ----- \*\/[^]*?\/\* ----- END PROPERTIES ----- \*\//gm,
                             nGroup: 0,
                             oStructure: {
+                                // (?:\/\* ----- DETAILS[^]*?----- \*\/\s*?)?( *?)(?:o.*:\s?\{[^]*?^\1\}|a.*:\s\[[^]*?^\1\]|.*:\s.*),
                                 sName: {
-                                    rRegexp: /(?:\/\* ----- DETAILS\s?((?:.|\n|\r)*?)\s?----- \*\/(?:\s|\n|\r)*?)?(?:((o.*):\s?(\{(?:.|\n|\r)*?^(?: {8}|	{2})\}))|((a.*):\s?(\[(?:.|\n|\r)*?^(?: {8}|	{2})\]))|((.*):\s?(.*))),/gm,
-                                    nGroup: [3, 6, 9]
+                                    rRegexp: /(?:\/\* ----- DETAILS[^]*?----- \*\/\s*?)?( *?)(?:(o.*):\s?\{[^]*?^\1\}|(a.*):\s\[[^]*?^\1\]|(.*):\s.*),/gm,
+                                    nGroup: [2, 3, 4]
                                 },
                                 sDetails: {
-                                    rRegexp: /(?:\/\* ----- DETAILS\s?((?:.|\n|\r)*?)\s?----- \*\/(?:\s|\n|\r)*?)?(?:((o.*):\s?(\{(?:.|\n|\r)*?^(?: {8}|	{2})\}))|((a.*):\s?(\[(?:.|\n|\r)*?^(?: {8}|	{2})\]))|((.*):\s?(.*))),/gm,
+                                    rRegexp: /(?:\/\* ----- DETAILS([^]*?)----- \*\/\s*?)?( *?)(?:o.*:\s?\{[^]*?^\2\}|a.*:\s\[[^]*?^\2\]|.*:\s.*),/gm,
                                     nGroup: 1,
                                     rRemove: /^\s*/gm
                                 },
                                 sValue: {
-                                    rRegexp: /(?:\/\* ----- DETAILS\s?((?:.|\n|\r)*?)\s?----- \*\/(?:\s|\n|\r)*?)?(?:((o.*):\s?(\{(?:.|\n|\r)*?^(?: {8}|	{2})\}))|((a.*):\s?(\[(?:.|\n|\r)*?^(?: {8}|	{2})\]))|((.*):\s?(.*))),/gm,
-                                    nGroup: [4, 7, 10]
+                                    rRegexp: /(?:\/\* ----- DETAILS[^]*?----- \*\/\s*?)?( *?)(?:o.*:\s?(\{[^]*?^\1\})|a.*:\s(\[[^]*?^\1\])|.*:\s(.*)),/gm,
+                                    nGroup: [2, 3, 4],
+                                    nRemove: 1
+                                }
+                            }
+                        }
+                    }
+                },
+                // CLASS
+                oSingleton: {
+                    rRegexp: /\/\* ----- START SINGLETON ----- \*\/[^]*?\/\* ----- END SINGLETON ----- \*\//gm,
+                    nGroup: 0,
+                    oStructure: {
+                        aProperties: {
+                            rRegexp: /\/\* ----- START PROPERTIES ----- \*\/[^]*?\/\* ----- END PROPERTIES ----- \*\//gm,
+                            nGroup: 0,
+                            oStructure: {
+                                // (?:\/\* ----- DETAILS[^]*?----- \*\/\s*?)?( *?)(?:o.*:\s?\{[^]*?^\1\}|a.*:\s\[[^]*?^\1\]|.*:\s.*),
+                                sName: {
+                                    rRegexp: /(?:\/\* ----- DETAILS[^]+?----- \*\/\s*?)?( *?)(?:(o.*):\s?\{[^]*?^\1\}|(a.*):\s\[[^]*?^\1\]|(.*):\s.*),/gm,
+                                    nGroup: [2, 3, 4]
                                 },
-                                sCode: {
-                                    rRegexp: /(?:\/\* ----- DETAILS\s?((?:.|\n|\r)*?)\s?----- \*\/(?:\s|\n|\r)*?)?(?:((o.*):\s?(\{(?:.|\n|\r)*?^(?: {8}|	{2})\}))|((a.*):\s?(\[(?:.|\n|\r)*?^(?: {8}|	{2})\]))|((.*):\s?(.*))),/gm,
-                                    nGroup: [2, 5, 8],
-                                    rRemove: /^( {8}|	{2})/gm
+                                sDetails: {
+                                    rRegexp: /(?:\/\* ----- DETAILS([^]*?)----- \*\/\s*?)?( *?)(?:o.*:\s?\{[^]*?^\2\}|a.*:\s\[[^]*?^\2\]|.*:\s.*),/gm,
+                                    nGroup: 1,
+                                    rRemove: /^\s*/gm
+                                },
+                                sValue: {
+                                    rRegexp: /(?:\/\* ----- DETAILS[^]*?----- \*\/\s*?)?( *?)(?:o.*:\s?(\{[^]*?^\1\})|a.*:\s(\[[^]*?^\1\])|.*:\s(.*)),/gm,
+                                    nGroup: [2, 3, 4],
+                                    nRemove: 1
+                                },
+                                oSubCategory: {
+                                    rRegexp: /\/\* -----\s*?SUBCATEGORY[^]*?(?:DETAILS[^]*?)?----- \*\//gm,
+                                    nGroup: 0,
+                                    oStructure: {
+                                        sName: {
+                                            rRegexp: /\/\* -----\s*?SUBCATEGORY([^]*?)(?:DETAILS[^]*?)?----- \*\//gm,
+                                            nGroup: 1
+                                        },
+                                        sDetails: {
+                                            rRegexp: /\/\* -----\s*?SUBCATEGORY[^]*?(?:DETAILS([^]*?))?----- \*\//gm,
+                                            nGroup: 1,
+                                            rRemove: /^\s*/gm
+                                        }
+                                    }
                                 }
                             }
                         },
                         aMethods: {
-                            rRegexp: /\/\* ----- START METHODS ----- \*\/(?:.|\n|\r)*?\/\* ----- END METHODS ----- \*\//gm,
+                            rRegexp: /\/\* ----- START METHODS ----- \*\/[^]*?\/\* ----- END METHODS ----- \*\//gm,
                             nGroup: 0,
                             oStructure: {
+                                // (?:\/\* ----- DETAILS[^]*?----- \*\/\s*?)?( *?).*?:\s?function\s?\(.*\)\s?\{(?:[^]*?^\1){0,1}?\}
                                 sName: {
-                                    rRegexp: /(?:\/\* ----- DETAILS\s?((?:.|\n|\r)*?)\s?----- \*\/(?:\s|\n|\r)*?)?(.*):\s?function\s?(\(.*\))\s?\{(?:((?:.|\n|\r)*?)^(?: {8}|	{2})){0,1}?\}/gm,
+                                    rRegexp: /(?:\/\* ----- DETAILS[^]*?----- \*\/\s*?)?( *?)(.*?):\s?function\s?\(.*\)\s?\{(?:[^]*?^\1){0,1}?\}/gm,
                                     nGroup: 2
                                 },
                                 sDetails: {
-                                    rRegexp: /(?:\/\* ----- DETAILS\s?((?:.|\n|\r)*?)\s?----- \*\/(?:\s|\n|\r)*?)?(.*):\s?function\s?(\(.*\))\s?\{(?:((?:.|\n|\r)*?)^(?: {8}|	{2})){0,1}?\}/gm,
+                                    rRegexp: /(?:\/\* ----- DETAILS([^]*?)----- \*\/\s*?)?( *?).*?:\s?function\s?\(.*\)\s?\{(?:[^]*?^\2){0,1}?\}/gm,
                                     nGroup: 1,
                                     rRemove: /^\s*/gm
                                 },
                                 sArguments: {
-                                    rRegexp: /(?:\/\* ----- DETAILS\s?((?:.|\n|\r)*?)\s?----- \*\/(?:\s|\n|\r)*?)?(.*):\s?function\s?(\(.*\))\s?\{(?:((?:.|\n|\r)*?)^(?: {8}|	{2})){0,1}?\}/gm,
-                                    nGroup: 3
-                                },
-                                sCode: {
-                                    rRegexp: /(?:\/\* ----- DETAILS\s?((?:.|\n|\r)*?)\s?----- \*\/(?:\s|\n|\r)*?)?(.*):\s?function\s?(\(.*\))\s?\{(?:((?:.|\n|\r)*?)^(?: {8}|	{2})){0,1}?\}/gm,
-                                    nGroup: 4
+                                    rRegexp: /(?:\/\* ----- DETAILS[^]*?----- \*\/\s*?)?( *?).*?:\s?function\s?(\(.*\))\s?\{(?:[^]*?^\1){0,1}?\}/gm,
+                                    nGroup: 2
                                 }
                             }
                         }
                     }
                 },
                 oConstructor: {
-                    rRegexp: /\/\* ----- START CONSTRUCTOR ----- \*\/(?:.|\n|\r)*?\/\* ----- END CONSTRUCTOR ----- \*\//gm,
+                    rRegexp: /\/\* ----- START CONSTRUCTOR ----- \*\/[^]*?\/\* ----- END CONSTRUCTOR ----- \*\//gm,
                     nGroup: 0,
                     oStructure: {
+                        // (?:\/\* ----- DETAILS([^]*?)----- \*\/\s*?)?^(?:\/\/\s?)?function (.*)(\(.*\))
                         sName: {
-                            rRegexp: /(?:\/\* ----- DETAILS\s?((?:.|\n|\r)*?)\s?----- \*\/(?:\s|\n|\r)*?)?^(?:\/\/\s?)?function (.*)(\(.*\))/gm,
-                            nGroup: 2
+                            rRegexp: /(?:\/\* ----- DETAILS[^]*?----- \*\/\s*?)?^(?:\/\/\s?)?function (.*)\(.*\)/gm,
+                            nGroup: 1
                         },
                         sDetails: {
-                            rRegexp: /(?:\/\* ----- DETAILS\s?((?:.|\n|\r)*?)\s?----- \*\/(?:\s|\n|\r)*?)?^(?:\/\/\s?)?function (.*)(\(.*\))/gm,
+                            rRegexp: /(?:\/\* ----- DETAILS([^]*?)----- \*\/\s*?)?^(?:\/\/\s?)?function .*\(.*\)/gm,
                             nGroup: 1,
                             rRemove: /^\s*/gm
                         },
                         sArguments: {
-                            rRegexp: /(?:\/\* ----- DETAILS\s?((?:.|\n|\r)*?)\s?----- \*\/(?:\s|\n|\r)*?)?^(?:\/\/\s?)?function (.*)(\(.*\))/gm,
-                            nGroup: 3
+                            rRegexp: /(?:\/\* ----- DETAILS[^]*?----- \*\/\s*?)?^(?:\/\/\s?)?function .*(\(.*\))/gm,
+                            nGroup: 1
                         },
                         aProperties: {
-                            rRegexp: /\/\* ----- START PROPERTIES ----- \*\/(?:.|\n|\r)*?\/\* ----- END PROPERTIES ----- \*\//gm,
+                            rRegexp: /\/\* ----- START PROPERTIES ----- \*\/[^]*?\/\* ----- END PROPERTIES ----- \*\//gm,
                             nGroup: 0,
                             oStructure: {
                                 sName: {
-                                    rRegexp: /(?:\/\* ----- DETAILS\s?((?:.|\n|\r)*?)\s?----- \*\/(?:\s|\n|\r)*?)?this\.(.*)?=((?:.|\n|\r)*?)?;/gm,
-                                    nGroup: 2
+                                    rRegexp: /(?:\/\* ----- DETAILS[^]*?----- \*\/\s*?)?this\.(.*)?=[^]*?;/gm,
+                                    nGroup: 1
                                 },
                                 sDetails: {
-                                    rRegexp: /(?:\/\* ----- DETAILS\s?((?:.|\n|\r)*?)\s?----- \*\/(?:\s|\n|\r)*?)?this\.(.*)?=((?:.|\n|\r)*?)?;/gm,
+                                    rRegexp: /(?:\/\* ----- DETAILS([^]*?)----- \*\/\s*?)?this\..*?=[^]*?;/gm,
                                     nGroup: 1,
                                     rRemove: /^\s*/gm
                                 },
                                 sValue: {
-                                    rRegexp: /(?:\/\* ----- DETAILS\s?((?:.|\n|\r)*?)\s?----- \*\/(?:\s|\n|\r)*?)?this\.(.*)?=((?:.|\n|\r)*?)?;/gm,
-                                    nGroup: 3
-                                },
-                                sCode: {
-                                    rRegexp: /this\.(.*)?=((?:.|\n|\r)*?)?;/gm,
-                                    nGroup: 0
+                                    rRegexp: /(?:\/\* ----- DETAILS[^]*?----- \*\/\s*?)?this\..*?=([^]*?);/gm,
+                                    nGroup: 1
                                 }
                             }
                         }
                     }
                 },
                 sExtend: {
-                    rRegexp: /\/\* ----- START EXTENDS ----- \*\/(?:.|\n|\r)*?Object\.create\((.*?).prototype\)(?:.|\n|\r)*?\/\* ----- END EXTENDS ----- \*\//gm,
+                    rRegexp: /\/\* ----- START EXTENDS ----- \*\/[^]*?Object\.create\((.*?).prototype\)[^]*?\/\* ----- END EXTENDS ----- \*\//gm,
                     nGroup: 1
                 },
                 oPrototype: {
-                    rRegexp: /\/\* ----- START PROTOTYPE ----- \*\/(?:.|\n|\r)*?\/\* ----- END PROTOTYPE ----- \*\//gm,
+                    rRegexp: /\/\* ----- START PROTOTYPE ----- \*\/[^]*?\/\* ----- END PROTOTYPE ----- \*\//gm,
                     nGroup: 0,
                     oStructure: {
                         aMethods: {
-                            rRegexp: /\/\* ----- START METHODS ----- \*\/(?:.|\n|\r)*?\/\* ----- END METHODS ----- \*\//gm,
+                            rRegexp: /\/\* ----- START METHODS ----- \*\/[^]*?\/\* ----- END METHODS ----- \*\//gm,
                             nGroup: 0,
                             oStructure: {
+                                // (?:\/\* ----- DETAILS[^]*?----- \*\/\s*?)?( *?).*?:\s?function\s?\(.*\)\s?\{(?:[^]*?^\1){0,1}?\}
                                 sName: {
-                                    rRegexp: /(?:\/\* ----- DETAILS\s?((?:.|\n|\r)*?)\s?----- \*\/(?:\s|\n|\r)*?)?(?:(?:^(?: {12}|	{3})(.*):\s?function\s?(\(.*\))\s?\{(?:((?:.|\n|\r)*?)?^(?: {12}|	{3})){0,1}?\})|(?:^(?: {16}|	{4})(.*):\s?function\s?(\(.*\))\s?\{(?:((?:.|\n|\r)*?)?^(?: {16}|	{4})){0,1}?\}))/gm,
-                                    nGroup: [2, 5]
+                                    rRegexp: /(?:\/\* ----- DETAILS[^]*?----- \*\/\s*?)?( *?)(.*?):\s?function\s?\(.*\)\s?\{(?:[^]*?^\1){0,1}?\}/gm,
+                                    nGroup: 2
                                 },
                                 sDetails: {
-                                    rRegexp: /(?:\/\* ----- DETAILS\s?((?:.|\n|\r)*?)\s?----- \*\/(?:\s|\n|\r)*?)?(?:(?:^(?: {12}|	{3})(.*):\s?function\s?(\(.*\))\s?\{(?:((?:.|\n|\r)*?)?^(?: {12}|	{3})){0,1}?\})|(?:^(?: {16}|	{4})(.*):\s?function\s?(\(.*\))\s?\{(?:((?:.|\n|\r)*?)?^(?: {16}|	{4})){0,1}?\}))/gm,
+                                    rRegexp: /(?:\/\* ----- DETAILS([^]*?)----- \*\/\s*?)?( *?).*?:\s?function\s?\(.*\)\s?\{(?:[^]*?^\2){0,1}?\}/gm,
                                     nGroup: 1,
                                     rRemove: /^\s*/gm
                                 },
                                 sArguments: {
-                                    rRegexp: /(?:\/\* ----- DETAILS\s?((?:.|\n|\r)*?)\s?----- \*\/(?:\s|\n|\r)*?)?(?:(?:^(?: {12}|	{3})(.*):\s?function\s?(\(.*\))\s?\{(?:((?:.|\n|\r)*?)?^(?: {12}|	{3})){0,1}?\})|(?:^(?: {16}|	{4})(.*):\s?function\s?(\(.*\))\s?\{(?:((?:.|\n|\r)*?)?^(?: {16}|	{4})){0,1}?\}))/gm,
-                                    nGroup: [3, 6]
-                                },
-                                sCode: {
-                                    rRegexp: /(?:\/\* ----- DETAILS\s?((?:.|\n|\r)*?)\s?----- \*\/(?:\s|\n|\r)*?)?(?:(?:^(?: {12}|	{3})(.*):\s?function\s?(\(.*\))\s?\{(?:((?:.|\n|\r)*?)?^(?: {12}|	{3})){0,1}?\})|(?:^(?: {16}|	{4})(.*):\s?function\s?(\(.*\))\s?\{(?:((?:.|\n|\r)*?)?^(?: {16}|	{4})){0,1}?\}))/gm,
-                                    nGroup: [4, 7]
+                                    rRegexp: /(?:\/\* ----- DETAILS[^]*?----- \*\/\s*?)?( *?).*?:\s?function\s?(\(.*\))\s?\{(?:[^]*?^\1){0,1}?\}/gm,
+                                    nGroup: 2
                                 }
                             }
                         }

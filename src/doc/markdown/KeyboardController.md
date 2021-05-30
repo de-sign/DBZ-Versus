@@ -1,66 +1,87 @@
 # KeyboardController
+
+
 _System :_ ENGINE  
 _File source :_ [engine/_input/_keyboard.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/engine/_input/_keyboard.js)
 
 ## Static properties
-**KeyboardController.oButtonText**
+### KeyboardController.oButtonText
 
 ```javascript
-oButtonText: {
+KeyboardController.oButtonText = {
     KEYW: 'W / Z',
     KEYA: 'A / Q'
-}
+};
 ```
+
 
 ## Static methods
-**KeyboardController.getButtonText()**
+### KeyboardController.getButtonText()
+
 ```javascript
-KeyboardController.getButtonText(sCode)
-```
-**KeyboardController.recover()**
-```javascript
-KeyboardController.recover(sId, oDefault)
+KeyboardController.getButtonText(sCode);
 ```
 
+### KeyboardController.recover()
+
+```javascript
+KeyboardController.recover(sId, oDefault);
+```
+
+
 ## Constructor
-**KeyboardController()**
+
+KeyboardController is a child class of [Controller](Controller.md).
+### KeyboardController()
+
 ```javascript
 new KeyboardController(oBtn);
 ```
-## Inheritance
-KeyboardController is a child class of [Controller](Controller.md).
+
 
 ## Instance properties
 _Properties inherited :_ [Controller.prototype](Controller.md#instance-properties)
 
-**KeyboardController.prototype.aEvents**
-```javascript
-this.aEvents = [];
-```
-**KeyboardController.prototype.sName**
+### this.sName
+
 ```javascript
 this.sName = 'Keyboard #';
 ```
-**KeyboardController.prototype.sType**
+
+### this.sType
+
 ```javascript
 this.sType = 'keyboard';
 ```
 
+### this.aEvents
+
+```javascript
+this.aEvents = [];
+```
+
+
 ## Instance methods
 _Methods inherited :_ [Controller.prototype](Controller.md#instance-methods) 
 
-**KeyboardController.prototype.update()**
+### KeyboardController.prototype.update()
+
 ```javascript
-this.update()
+this.update();
 ```
-**KeyboardController.prototype.addEvent()**
+
+### KeyboardController.prototype.addEvent()
+
 ```javascript
-this.addEvent(oEvent)
+this.addEvent(oEvent);
 ```
-**KeyboardController.prototype.store()**
+
+### KeyboardController.prototype.store()
+
 ```javascript
-this.store()
+this.store();
 ```
+
 
 <link rel="stylesheet" href="../_doc.css" />
 

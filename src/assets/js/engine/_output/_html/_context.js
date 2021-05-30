@@ -22,7 +22,7 @@ Object.assign(
                 },
                 unuse: function() {
                     this.hElement.classList.remove( OutputManager.oConfig.class.used, OutputManager.oConfig.class.init );
-                }
+                },
                 /* ----- END METHODS ----- */
                 /* ----- END PROTOTYPE ----- */
             }

@@ -37,7 +37,7 @@ Object.assign(
                 },
                 resume: function(){
                     this.play();
-                }
+                },
                 /* ----- END METHODS ----- */
                 /* ----- END PROTOTYPE ----- */
             }

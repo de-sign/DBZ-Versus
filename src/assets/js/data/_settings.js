@@ -8,8 +8,13 @@ Object.assign(
     GameSettings,
     {
         /* ----- START SINGLETON ----- */
+
         /* ----- START PROPERTIES ----- */
-        // Technique
+        /* -----
+        SUBCATEGORY Static properties - Technical Settings
+        DETAILS Données techniques figées des paramétrages, comme les chemins des ressources, les réglages audios par défaut, etc
+        ----- */
+
         /* ----- DETAILS Constante du nombre de joueur ----- */
         nPlayer: 2,
         /* ----- DETAILS Nom de la scene de départ ----- */
@@ -213,8 +218,14 @@ Object.assign(
                 SFX: ['Hit', 'Guard', 'Recovery', 'Beam', 'Projectile']
             }
         },
+        /* ----- END PROPERTIES ----- */
 
-        // Game
+        /* ----- START PROPERTIES ----- */
+        /* -----
+        SUBCATEGORY Static properties - Game Settings
+        DETAILS Données paramétrables de jeu, comme la vie, le KI, etc
+        ----- */
+
         /* ----- DETAILS Nombre de FRAME lors d'un HIT FREEZE ----- */
         nFreeze: 6,
         /* ----- DETAILS PUSHBACK par défault appliqué lors d'un coup ----- */
@@ -223,7 +234,7 @@ Object.assign(
             nX: -24
         },
         // ENTITY
-        /* ----- DETAILS Constante de temps avant suppression d'un entité pour futur ROLLBACK ----- */
+        /* ----- DETAILS Temps avant suppression d'un entité pour futur ROLLBACK ----- */
         nDie: 60,
         /* ----- DETAILS Nombre de point de vie pour chaque entité ----- */
         oLife: {
@@ -232,7 +243,7 @@ Object.assign(
             projectile: 1,
             beam: 0
         },
-        /* ----- DETAILS Constante de position lors d'un effet visuel sur une entité ----- */
+        /* ----- DETAILS Position lors d'un effet visuel sur une entité ----- */
         oPositionEffect: {
             nX: -24
         },

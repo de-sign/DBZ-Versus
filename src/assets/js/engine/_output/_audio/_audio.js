@@ -31,7 +31,7 @@ Object.assign(
                 },
                 pause: function(){
                     this.oSource.paused || this.oSource.pause();
-                }
+                },
                 /* ----- END METHODS ----- */
                 /* ----- END PROTOTYPE ----- */
             }

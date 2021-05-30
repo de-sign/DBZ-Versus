@@ -1,16 +1,196 @@
 # GameData.oEntity.oCharacter
-Constante avec les données de base des personnages.  Prévue pour être étendu et formaté par les informations contenues dans chaque fichier personnages :- [GameData.oCharacter.BJT](GameData.oCharacter.BJT.md)- [GameData.oCharacter.BUU](GameData.oCharacter.BUU.md)- [GameData.oCharacter.FRZ](GameData.oCharacter.FRZ.md)- [GameData.oCharacter.GHN](GameData.oCharacter.GHN.md)- [GameData.oCharacter.GKU](GameData.oCharacter.GKU.md)- [GameData.oCharacter.GKU_SSJ](GameData.oCharacter.GKU_SSJ.md)- [GameData.oCharacter.KID_GHN](GameData.oCharacter.KID_GHN.md)- [GameData.oCharacter.MJN_BUU](GameData.oCharacter.MJN_BUU.md)<style>#constructor, #constructor+*, #constructor+*+*, #inheritance, #inheritance+*{ display: none; }</style>
+
+Constante avec les données de base des personnages.  Prévue pour être étendu et formaté par les informations contenues dans chaque fichier personnages :- [GameData.oCharacter.BJT](GameData.oCharacter.BJT.md)- [GameData.oCharacter.BUU](GameData.oCharacter.BUU.md)- [GameData.oCharacter.FRZ](GameData.oCharacter.FRZ.md)- [GameData.oCharacter.GHN](GameData.oCharacter.GHN.md)- [GameData.oCharacter.GKU](GameData.oCharacter.GKU.md)- [GameData.oCharacter.GKU_SSJ](GameData.oCharacter.GKU_SSJ.md)- [GameData.oCharacter.KID_GHN](GameData.oCharacter.KID_GHN.md)- [GameData.oCharacter.MJN_BUU](GameData.oCharacter.MJN_BUU.md)
+
 
 _System :_ DATA  
 _File source :_ [data/_characters/_base.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/data/_characters/_base.js)
 
-## Static properties
-**GameData.oEntity.oCharacter.oAnimations**
-Données des animations
+## Properties
+### GameData.oEntity.oCharacter.oFrames
 
+Données des FRAMES 
 
 ```javascript
-oAnimations: {
+GameData.oEntity.oCharacter.oFrames = {
+    // Surcharger par "_CHAR.js", complété via "gulp extra"
+    stand: {
+        sPath: 'stand.png'
+    },
+    blur: {
+        sPath: 'blur.png'
+    },
+    backward: {
+        sPath: 'backward.png',
+        nZIndex: 10
+    },
+    forward: {
+        sPath: 'forward.png',
+        nZIndex: 20
+    },
+    forward_inverse: {
+        sPath: 'forward_inverse.png',
+        nZIndex: 20
+    },
+    jump: {
+        sPath: 'jump.png',
+        nZIndex: 30
+    },
+    fall: {
+        sPath: 'fall.png',
+        nZIndex: 30
+    },
+    recovery: {
+        sPath: 'recovery.png',
+        nZIndex: 10,
+        oStatus: {
+            bInvul: true
+        }
+    },
+    // Hurt
+    guard: {
+        sPath: 'guard.png',
+        nZIndex: 10
+    },
+    reflect: {
+        sPath: 'reflect.png',
+        nZIndex: 40,
+        aHitBox: {
+            nX: -1024,
+            nY: (-39 * 4) - 2,
+            nWidth: 2048,
+            nHeight: 40 * 4
+        }
+    },
+    burst: {
+        sPath: 'burst.png',
+        nZIndex: 40
+    },
+    hit_light: {
+        sPath: 'hit_light.png',
+        nZIndex: 10
+    },
+    hit_heavy: {
+        sPath: 'hit_heavy.png',
+        nZIndex: 10
+    },
+    hit_luncher: {
+        sPath: 'hit_luncher.png',
+        nZIndex: 10
+    },
+    hit_fall: {
+        sPath: 'hit_fall.png',
+        nZIndex: 10
+    },
+    down: {
+        sPath: 'down.png',
+        nZIndex: 10,
+        oStatus: {
+            bInvul: true
+        }
+    },
+    // Command
+    light_first: {
+        sPath: 'light_first.png',
+        nZIndex: 30
+    },
+    light_first_active: {
+        sPath: 'light_first_active.png',
+        nZIndex: 30
+    },
+    light_second: {
+        sPath: 'light_second.png',
+        nZIndex: 30
+    },
+    light_second_active: {
+        sPath: 'light_second_active.png',
+        nZIndex: 30
+    },
+    light_third: {
+        sPath: 'light_third.png',
+        nZIndex: 30
+    },
+    light_third_active: {
+        sPath: 'light_third_active.png',
+        nZIndex: 30
+    },
+    heavy: {
+        sPath: 'heavy.png',
+        nZIndex: 30
+    },
+    heavy_active: {
+        sPath: 'heavy_active.png',
+        nZIndex: 30
+    },
+    tracker: {
+        sPath: 'tracker.png',
+        nZIndex: 30
+    },
+    tracker_active: {
+        sPath: 'tracker_active.png',
+        nZIndex: 30
+    },
+    luncher: {
+        sPath: 'luncher.png',
+        nZIndex: 30
+    },
+    luncher_active: {
+        sPath: 'luncher_active.png',
+        nZIndex: 30
+    },
+    kikoha: {
+        sPath: 'kikoha.png',
+        nZIndex: 80
+    },
+    ki_beam: {
+        sPath: 'ki_beam.png',
+        nZIndex: 80
+    },
+    // Super
+    super_first: {
+        sPath: 'super_first.png',
+        nZIndex: 80,
+        oStatus: {
+            bInvul: true
+        }
+    },
+    super_second: {
+        sPath: 'super_second.png',
+        nZIndex: 80
+    },
+    super_third: {
+        sPath: 'super_third.png',
+        nZIndex: 80
+    },
+    super_fourth: {
+        sPath: 'super_fourth.png',
+        nZIndex: 80
+    },
+    // Command List
+    list_first: {
+        sPath: 'list_first.png'
+    },
+    list_second: {
+        sPath: 'list_second.png'
+    },
+    list_third: {
+        sPath: 'list_third.png'
+    },
+    list_fourth: {
+        sPath: 'list_fourth.png'
+    },
+    list_beam: {
+        sPath: 'list_beam.png'
+    }
+};
+```
+
+### GameData.oEntity.oCharacter.oAnimations
+
+Données des animations 
+
+```javascript
+GameData.oEntity.oCharacter.oAnimations = {
     // Movement
     stand: [
         {
@@ -308,14 +488,15 @@ oAnimations: {
             sFrame: 'stand'
         }
     ]
-}
+};
 ```
-**GameData.oEntity.oCharacter.oCommands**
-Données des commandes
 
+### GameData.oEntity.oCharacter.oCommands
+
+Données des commandes 
 
 ```javascript
-oCommands: {
+GameData.oEntity.oCharacter.oCommands = {
     aDefense: [
         {
             sCod: 'tech_throw',
@@ -415,193 +596,9 @@ oCommands: {
             }
         }
     ]
-}
-```
-**GameData.oEntity.oCharacter.oFrames**
-Données des FRAMES
-
-
-```javascript
-oFrames: {
-    // Surcharger par "_CHAR.js", complété via "gulp extra"
-    stand: {
-        sPath: 'stand.png'
-    },
-    blur: {
-        sPath: 'blur.png'
-    },
-    backward: {
-        sPath: 'backward.png',
-        nZIndex: 10
-    },
-    forward: {
-        sPath: 'forward.png',
-        nZIndex: 20
-    },
-    forward_inverse: {
-        sPath: 'forward_inverse.png',
-        nZIndex: 20
-    },
-    jump: {
-        sPath: 'jump.png',
-        nZIndex: 30
-    },
-    fall: {
-        sPath: 'fall.png',
-        nZIndex: 30
-    },
-    recovery: {
-        sPath: 'recovery.png',
-        nZIndex: 10,
-        oStatus: {
-            bInvul: true
-        }
-    },
-    // Hurt
-    guard: {
-        sPath: 'guard.png',
-        nZIndex: 10
-    },
-    reflect: {
-        sPath: 'reflect.png',
-        nZIndex: 40,
-        aHitBox: {
-            nX: -1024,
-            nY: (-39 * 4) - 2,
-            nWidth: 2048,
-            nHeight: 40 * 4
-        }
-    },
-    burst: {
-        sPath: 'burst.png',
-        nZIndex: 40
-    },
-    hit_light: {
-        sPath: 'hit_light.png',
-        nZIndex: 10
-    },
-    hit_heavy: {
-        sPath: 'hit_heavy.png',
-        nZIndex: 10
-    },
-    hit_luncher: {
-        sPath: 'hit_luncher.png',
-        nZIndex: 10
-    },
-    hit_fall: {
-        sPath: 'hit_fall.png',
-        nZIndex: 10
-    },
-    down: {
-        sPath: 'down.png',
-        nZIndex: 10,
-        oStatus: {
-            bInvul: true
-        }
-    },
-    // Command
-    light_first: {
-        sPath: 'light_first.png',
-        nZIndex: 30
-    },
-    light_first_active: {
-        sPath: 'light_first_active.png',
-        nZIndex: 30
-    },
-    light_second: {
-        sPath: 'light_second.png',
-        nZIndex: 30
-    },
-    light_second_active: {
-        sPath: 'light_second_active.png',
-        nZIndex: 30
-    },
-    light_third: {
-        sPath: 'light_third.png',
-        nZIndex: 30
-    },
-    light_third_active: {
-        sPath: 'light_third_active.png',
-        nZIndex: 30
-    },
-    heavy: {
-        sPath: 'heavy.png',
-        nZIndex: 30
-    },
-    heavy_active: {
-        sPath: 'heavy_active.png',
-        nZIndex: 30
-    },
-    tracker: {
-        sPath: 'tracker.png',
-        nZIndex: 30
-    },
-    tracker_active: {
-        sPath: 'tracker_active.png',
-        nZIndex: 30
-    },
-    luncher: {
-        sPath: 'luncher.png',
-        nZIndex: 30
-    },
-    luncher_active: {
-        sPath: 'luncher_active.png',
-        nZIndex: 30
-    },
-    kikoha: {
-        sPath: 'kikoha.png',
-        nZIndex: 80
-    },
-    ki_beam: {
-        sPath: 'ki_beam.png',
-        nZIndex: 80
-    },
-    // Super
-    super_first: {
-        sPath: 'super_first.png',
-        nZIndex: 80,
-        oStatus: {
-            bInvul: true
-        }
-    },
-    super_second: {
-        sPath: 'super_second.png',
-        nZIndex: 80
-    },
-    super_third: {
-        sPath: 'super_third.png',
-        nZIndex: 80
-    },
-    super_fourth: {
-        sPath: 'super_fourth.png',
-        nZIndex: 80
-    },
-    // Command List
-    list_first: {
-        sPath: 'list_first.png'
-    },
-    list_second: {
-        sPath: 'list_second.png'
-    },
-    list_third: {
-        sPath: 'list_third.png'
-    },
-    list_fourth: {
-        sPath: 'list_fourth.png'
-    },
-    list_beam: {
-        sPath: 'list_beam.png'
-    }
-}
+};
 ```
 
-## Constructor
-**GameData.oEntity.oCharacter()**
-```javascript
-new GameData.oEntity.oCharacter();
-```
-## Inheritance
-GameData.oEntity.oCharacter is a child class of [GameData](GameData.md).
 
 <link rel="stylesheet" href="../_doc.css" />
 

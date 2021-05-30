@@ -50,7 +50,7 @@ Object.assign(
                 },
                 suspend: function(){
                     OutputAudioElement.oAudioContext.suspend();
-                }
+                },
                 /* ----- END METHODS ----- */
                 /* ----- END PROTOTYPE ----- */
             }

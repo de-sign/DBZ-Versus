@@ -1,17 +1,98 @@
 # OutputManager
+
+
 _System :_ ENGINE  
 _File source :_ [engine/_output/_manager.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/engine/_output/_manager.js)
 
 ## Static properties
-**OutputManager.oAudio**
+### OutputManager.OutputElement
 
 ```javascript
-oAudio: new OutputAudioContext()
+OutputManager.OutputElement = OutputElement;
 ```
-**OutputManager.oConfig**
+
+### OutputManager.OutputAudioElement
 
 ```javascript
-oConfig: {
+OutputManager.OutputAudioElement = OutputAudioElement;
+```
+
+### OutputManager.OutputAudioContext
+
+```javascript
+OutputManager.OutputAudioContext = OutputAudioContext;
+```
+
+### OutputManager.OutputChannel
+
+```javascript
+OutputManager.OutputChannel = OutputChannel;
+```
+
+### OutputManager.OutputSourceAudio
+
+```javascript
+OutputManager.OutputSourceAudio = OutputSourceAudio;
+```
+
+### OutputManager.OutputSourceBuffer
+
+```javascript
+OutputManager.OutputSourceBuffer = OutputSourceBuffer;
+```
+
+### OutputManager.OutputHTMLElement
+
+```javascript
+OutputManager.OutputHTMLElement = OutputHTMLElement;
+```
+
+### OutputManager.OutputLayer
+
+```javascript
+OutputManager.OutputLayer = OutputLayer;
+```
+
+### OutputManager.OutputViewport
+
+```javascript
+OutputManager.OutputViewport = OutputViewport;
+```
+
+### OutputManager.OutputHTMLContext
+
+```javascript
+OutputManager.OutputHTMLContext = OutputHTMLContext;
+```
+
+### OutputManager.OutputText
+
+```javascript
+OutputManager.OutputText = OutputText;
+```
+
+### OutputManager.OutputSprite
+
+```javascript
+OutputManager.OutputSprite = OutputSprite;
+```
+
+### OutputManager.oViewport
+
+```javascript
+OutputManager.oViewport = null;
+```
+
+### OutputManager.oAudio
+
+```javascript
+OutputManager.oAudio = new OutputAudioContext();
+```
+
+### OutputManager.oConfig
+
+```javascript
+OutputManager.oConfig = {
     selectors: {
         OutputViewport: '.outputViewport',
         OutputHTMLContext: '.outputContext',
@@ -47,95 +128,41 @@ oConfig: {
             class: 'outputSprite'
         }
     }
-}
+};
 ```
-**OutputManager.OutputAudioContext**
 
-```javascript
-OutputAudioContext: OutputAudioContext
-```
-**OutputManager.OutputAudioElement**
-
-```javascript
-OutputAudioElement: OutputAudioElement
-```
-**OutputManager.OutputChannel**
-
-```javascript
-OutputChannel: OutputChannel
-```
-**OutputManager.OutputElement**
-
-```javascript
-OutputElement: OutputElement
-```
-**OutputManager.OutputHTMLContext**
-
-```javascript
-OutputHTMLContext: OutputHTMLContext
-```
-**OutputManager.OutputHTMLElement**
-
-```javascript
-OutputHTMLElement: OutputHTMLElement
-```
-**OutputManager.OutputLayer**
-
-```javascript
-OutputLayer: OutputLayer
-```
-**OutputManager.OutputSourceAudio**
-
-```javascript
-OutputSourceAudio: OutputSourceAudio
-```
-**OutputManager.OutputSourceBuffer**
-
-```javascript
-OutputSourceBuffer: OutputSourceBuffer
-```
-**OutputManager.OutputSprite**
-
-```javascript
-OutputSprite: OutputSprite
-```
-**OutputManager.OutputText**
-
-```javascript
-OutputText: OutputText
-```
-**OutputManager.OutputViewport**
-
-```javascript
-OutputViewport: OutputViewport
-```
-**OutputManager.oViewport**
-
-```javascript
-oViewport: null
-```
 
 ## Static methods
-**OutputManager.init()**
+### OutputManager.init()
+
 ```javascript
-OutputManager.init()
+OutputManager.init();
 ```
-**OutputManager.update()**
+
+### OutputManager.update()
+
 ```javascript
-OutputManager.update()
+OutputManager.update();
 ```
-**OutputManager.getElement()**
+
+### OutputManager.getElement()
+
 ```javascript
-OutputManager.getElement(sCod)
+OutputManager.getElement(sCod);
 ```
-**OutputManager.getChannel()**
+
+### OutputManager.getChannel()
+
 ```javascript
-OutputManager.getChannel(sCod)
+OutputManager.getChannel(sCod);
 ```
-**OutputManager.getContext()**
+
+### OutputManager.getContext()
+
 ```javascript
-OutputManager.getContext(sCod)
+OutputManager.getContext(sCod);
 ```
+
 
 <link rel="stylesheet" href="../_doc.css" />
 

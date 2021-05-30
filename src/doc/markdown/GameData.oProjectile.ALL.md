@@ -1,16 +1,26 @@
 # GameData.oProjectile.ALL
-Définition de l'entité général possédant toutes les informations des projectiles comme les couleurs, les FRAMES, les animations, etc  Prévue pour compléter les informations contenues dans [GameData.oEntity.oProjectile](GameData.oEntity.oProjectile.md).<style>#constructor, #constructor+*, #constructor+*+*, #inheritance, #inheritance+*{ display: none; }</style>
+
+Définition de l'entité général possédant toutes les informations des projectiles comme les couleurs, les FRAMES, les animations, etc  Prévue pour compléter les informations contenues dans [GameData.oEntity.oProjectile](GameData.oEntity.oProjectile.md).
+
 
 _System :_ DATA  
 _File source :_ [data/_projectiles/_ALL.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/data/_projectiles/_ALL.js)
 
-## Static properties
-**GameData.oProjectile.ALL.aColor**
-Liste des couleurs de l'entité.
+## Properties
+### GameData.oProjectile.ALL.sEntity
 
+Code technique de l'entité.  Les rayons ne possède qu'une seule entité, ALL, contrairement aux personnages.
 
 ```javascript
-aColor: [
+GameData.oProjectile.ALL.sEntity = 'ALL';
+```
+
+### GameData.oProjectile.ALL.aColor
+
+Liste des couleurs de l'entité. 
+
+```javascript
+GameData.oProjectile.ALL.aColor = [
     {
         sColor: 'BLU',
         sName: 'Blue kikoha'
@@ -27,81 +37,15 @@ aColor: [
         sColor: 'PRP',
         sName: 'Purple kikoha'
     }
-]
+];
 ```
-**GameData.oProjectile.ALL.oAnimations**
-Données des animations.
 
+### GameData.oProjectile.ALL.oFrames
+
+Données des FRAMES. 
 
 ```javascript
-oAnimations: {
-    kikoha: {
-        oMove: {
-            nX: 12
-        },
-        aFrames: [
-            {
-                sFrame: 'kikoha',
-                nFrame: 90
-            }
-        ]
-    },
-
-    death: {
-        oMove: {
-            nDelay: 30,
-            nX: 16,
-            nY: 4
-        },
-        aFrames: [
-            {
-                sFrame: 'death_first',
-                nFrame: 15,
-                aHitBox: null
-            },
-            {
-                sFrame: 'death_second',
-                nFrame: 15,
-                aHitBox: null
-            },
-            {
-                sFrame: 'death_second',
-                nFrame: 105
-            }
-        ]
-    },
-
-    ball: {
-        oMove: {
-            nDelay: 30,
-            nX: 16,
-            nY: 6
-        },
-        aFrames: [
-            {
-                sFrame: 'ball_first',
-                nFrame: 15,
-                aHitBox: null
-            },
-            {
-                sFrame: 'ball_second',
-                nFrame: 15,
-                aHitBox: null
-            },
-            {
-                sFrame: 'ball_second',
-                nFrame: 90
-            }
-        ]
-    }
-}
-```
-**GameData.oProjectile.ALL.oFrames**
-Données des FRAMES.
-
-
-```javascript
-oFrames: {
+GameData.oProjectile.ALL.oFrames = {
     kikoha: {
         aHurtBox: [
             {
@@ -194,23 +138,77 @@ oFrames: {
             }
         ]
     }
-}
+};
 ```
-**GameData.oProjectile.ALL.sEntity**
-Code technique de l'entité.  Les rayons ne possède qu'une seule entité, ALL, contrairement aux personnages.
 
+### GameData.oProjectile.ALL.oAnimations
+
+Données des animations. 
 
 ```javascript
-sEntity: 'ALL'
+GameData.oProjectile.ALL.oAnimations = {
+    kikoha: {
+        oMove: {
+            nX: 12
+        },
+        aFrames: [
+            {
+                sFrame: 'kikoha',
+                nFrame: 90
+            }
+        ]
+    },
+
+    death: {
+        oMove: {
+            nDelay: 30,
+            nX: 16,
+            nY: 4
+        },
+        aFrames: [
+            {
+                sFrame: 'death_first',
+                nFrame: 15,
+                aHitBox: null
+            },
+            {
+                sFrame: 'death_second',
+                nFrame: 15,
+                aHitBox: null
+            },
+            {
+                sFrame: 'death_second',
+                nFrame: 105
+            }
+        ]
+    },
+
+    ball: {
+        oMove: {
+            nDelay: 30,
+            nX: 16,
+            nY: 6
+        },
+        aFrames: [
+            {
+                sFrame: 'ball_first',
+                nFrame: 15,
+                aHitBox: null
+            },
+            {
+                sFrame: 'ball_second',
+                nFrame: 15,
+                aHitBox: null
+            },
+            {
+                sFrame: 'ball_second',
+                nFrame: 90
+            }
+        ]
+    }
+};
 ```
 
-## Constructor
-**GameData.oProjectile.ALL()**
-```javascript
-new GameData.oProjectile.ALL();
-```
-## Inheritance
-GameData.oProjectile.ALL is a child class of [GameData](GameData.md).
 
 <link rel="stylesheet" href="../_doc.css" />
 

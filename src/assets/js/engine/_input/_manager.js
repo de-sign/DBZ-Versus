@@ -112,7 +112,7 @@ Object.assign(
                 aArguments.shift();
                 this.oListeners[sEvent].forEach( fCallback => fCallback.apply(this, aArguments) );
             }
-        }
+        },
         /* ----- END METHODS ----- */
         /* ----- END SINGLETON ----- */
     }

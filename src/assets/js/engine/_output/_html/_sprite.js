@@ -29,7 +29,7 @@ Object.assign(
                     if( this.sSource != sSrc ){
                         this.hElement.src = this.sSource = sSrc;
                     }
-                }
+                },
                 /* ----- END METHODS ----- */
                 /* ----- END PROTOTYPE ----- */
             }

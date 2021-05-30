@@ -85,7 +85,7 @@ Object.assign(
         },
         getContext: function(sCod) {
             return this.oViewport.getContext(sCod);
-        }
+        },
         /* ----- END METHODS ----- */
         /* ----- END SINGLETON ----- */
     }

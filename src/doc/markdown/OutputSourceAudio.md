@@ -1,34 +1,46 @@
 # OutputSourceAudio
+
+
 _System :_ ENGINE  
 _File source :_ [engine/_output/_audio/_audio.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/engine/_output/_audio/_audio.js)
 
 ## Constructor
-**OutputSourceAudio()**
+
+OutputSourceAudio is a child class of [OutputSource](OutputSource.md).
+### OutputSourceAudio()
+
 ```javascript
 new OutputSourceAudio(sId, oSource);
 ```
-## Inheritance
-OutputSourceAudio is a child class of [OutputSource](OutputSource.md).
+
 
 ## Instance methods
 _Methods inherited :_ [OutputSource.prototype](OutputSource.md#instance-methods) 
 
-**OutputSourceAudio.prototype.init()**
+### OutputSourceAudio.prototype.init()
+
 ```javascript
-this.init()
+this.init();
 ```
-**OutputSourceAudio.prototype.play()**
+
+### OutputSourceAudio.prototype.play()
+
 ```javascript
-this.play(bLoop)
+this.play(bLoop);
 ```
-**OutputSourceAudio.prototype.resume()**
+
+### OutputSourceAudio.prototype.resume()
+
 ```javascript
-this.resume()
+this.resume();
 ```
-**OutputSourceAudio.prototype.pause()**
+
+### OutputSourceAudio.prototype.pause()
+
 ```javascript
-this.pause()
+this.pause();
 ```
+
 
 <link rel="stylesheet" href="../_doc.css" />
 

@@ -86,7 +86,7 @@ Object.assign(
                 store: function(){
                     const oData = Controller.createDataStore(this);
                     StoreEngine.update( this.sId, oData );
-                }
+                },
                 /* ----- END METHODS ----- */
                 /* ----- END PROTOTYPE ----- */
             }

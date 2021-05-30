@@ -93,7 +93,7 @@ Object.assign(
                 },
                 getStepGain: function(){
                     return Math.round(this.oNode.oOutput.gain.value * OutputChannel.nStepGain);
-                }
+                },
                 /* ----- END METHODS ----- */
                 /* ----- END PROTOTYPE ----- */
             }

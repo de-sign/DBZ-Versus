@@ -1,23 +1,18 @@
 # GameData.oEntity.oProjectile
-Constante avec les données de base des projectiles.  Prévue pour être étendu et formaté par les informations contenues dans [GameData.oProjectile.ALL](GameData.oProjectile.ALL.md).<style>#constructor, #constructor+*, #constructor+*+*, #inheritance, #inheritance+*{ display: none; }</style>
+
+Constante avec les données de base des projectiles.  Prévue pour être étendu et formaté par les informations contenues dans [GameData.oProjectile.ALL](GameData.oProjectile.ALL.md).
+
 
 _System :_ DATA  
 _File source :_ [data/_projectiles/_base.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/data/_projectiles/_base.js)
 
-## Static properties
-**GameData.oEntity.oProjectile.oAnimations**
-Données des animations
+## Properties
+### GameData.oEntity.oProjectile.oFrames
 
-
-```javascript
-oAnimations: {}
-```
-**GameData.oEntity.oProjectile.oFrames**
-Données des FRAMES
-
+Données des FRAMES 
 
 ```javascript
-oFrames: {
+GameData.oEntity.oProjectile.oFrames = {
     kikoha: {
         sPath: 'kikoha.png'
     },
@@ -33,16 +28,17 @@ oFrames: {
     ball_second: {
         sPath: 'ball_second.png'
     }
-}
+};
 ```
 
-## Constructor
-**GameData.oEntity.oProjectile()**
+### GameData.oEntity.oProjectile.oAnimations
+
+Données des animations 
+
 ```javascript
-new GameData.oEntity.oProjectile();
+GameData.oEntity.oProjectile.oAnimations = {};
 ```
-## Inheritance
-GameData.oEntity.oProjectile is a child class of [GameData](GameData.md).
+
 
 <link rel="stylesheet" href="../_doc.css" />
 

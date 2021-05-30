@@ -1,23 +1,18 @@
 # GameData.oEntity.oBeam
-Constante avec les données de base des rayons.  Prévue pour être étendu et formaté par les informations contenues dans [GameData.oBeam.ALL](GameData.oBeam.ALL.md).<style>#constructor, #constructor+*, #constructor+*+*, #inheritance, #inheritance+*{ display: none; }</style>
+
+Constante avec les données de base des rayons.  Prévue pour être étendu et formaté par les informations contenues dans [GameData.oBeam.ALL](GameData.oBeam.ALL.md).
+
 
 _System :_ DATA  
 _File source :_ [data/_beams/_base.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/data/_beams/_base.js)
 
-## Static properties
-**GameData.oEntity.oBeam.oAnimations**
-Données des animations
+## Properties
+### GameData.oEntity.oBeam.oFrames
 
-
-```javascript
-oAnimations: {}
-```
-**GameData.oEntity.oBeam.oFrames**
-Données des FRAMES
-
+Données des FRAMES 
 
 ```javascript
-oFrames: {
+GameData.oEntity.oBeam.oFrames = {
     beam: {
         sPath: 'beam.png'
     },
@@ -42,16 +37,17 @@ oFrames: {
     triangle_third: {
         sPath: 'triangle_third.png'
     }
-}
+};
 ```
 
-## Constructor
-**GameData.oEntity.oBeam()**
+### GameData.oEntity.oBeam.oAnimations
+
+Données des animations 
+
 ```javascript
-new GameData.oEntity.oBeam();
+GameData.oEntity.oBeam.oAnimations = {};
 ```
-## Inheritance
-GameData.oEntity.oBeam is a child class of [GameData](GameData.md).
+
 
 <link rel="stylesheet" href="../_doc.css" />
 

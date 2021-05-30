@@ -32,7 +32,7 @@ Object.assign(
                             this.hElement.innerHTML = this.sText = sTxt;
                         });
                     }
-                }
+                },
                 /* ----- END METHODS ----- */
                 /* ----- END PROTOTYPE ----- */
             }

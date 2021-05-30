@@ -20,7 +20,7 @@ Object.assign(
                 /* ----- START METHODS ----- */
                 play: function(){},
                 pause: function(){},
-                resume: function(){}
+                resume: function(){},
                 /* ----- END METHODS ----- */
                 /* ----- END PROTOTYPE ----- */
             }

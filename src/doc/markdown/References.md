@@ -1,26 +1,31 @@
 # &#8251; Class references
 
-**For correctly see this documentation !**  
+## For correctly see this documentation !
+
 Please install [Markdown Viewer / Browser Extension](https://github.com/simov/markdown-viewer#markdown-viewer--browser-extension)  
 and enable the extension for the ```https://raw.githubusercontent.com``` origin on [advanced options](https://github.com/simov/markdown-viewer#advanced-options).
 
 ## DATA
 - [GameData](GameData.md)
-    - [GameData.oBeam.ALL](GameData.oBeam.ALL.md)
-    - [GameData.oCharacter.BJT](GameData.oCharacter.BJT.md)
-    - [GameData.oCharacter.BUU](GameData.oCharacter.BUU.md)
-    - [GameData.oCharacter.FRZ](GameData.oCharacter.FRZ.md)
-    - [GameData.oCharacter.GHN](GameData.oCharacter.GHN.md)
-    - [GameData.oCharacter.GKU](GameData.oCharacter.GKU.md)
-    - [GameData.oCharacter.GKU_SSJ](GameData.oCharacter.GKU_SSJ.md)
-    - [GameData.oCharacter.KID_GHN](GameData.oCharacter.KID_GHN.md)
-    - [GameData.oCharacter.MJN_BUU](GameData.oCharacter.MJN_BUU.md)
-    - [GameData.oCharacter.SRU](GameData.oCharacter.SRU.md)
-    - [GameData.oEntity.oBeam](GameData.oEntity.oBeam.md)
-    - [GameData.oEntity.oCharacter](GameData.oEntity.oCharacter.md)
-    - [GameData.oEntity.oEffect](GameData.oEntity.oEffect.md)
-    - [GameData.oEntity.oProjectile](GameData.oEntity.oProjectile.md)
-    - [GameData.oProjectile.ALL](GameData.oProjectile.ALL.md)
+    - GameData.oBeam
+        - [GameData.oBeam.ALL](GameData.oBeam.ALL.md)
+    - GameData.oCharacter
+        - [GameData.oCharacter.BJT](GameData.oCharacter.BJT.md)
+        - [GameData.oCharacter.BUU](GameData.oCharacter.BUU.md)
+        - [GameData.oCharacter.FRZ](GameData.oCharacter.FRZ.md)
+        - [GameData.oCharacter.GHN](GameData.oCharacter.GHN.md)
+        - [GameData.oCharacter.GKU](GameData.oCharacter.GKU.md)
+        - [GameData.oCharacter.GKU_SSJ](GameData.oCharacter.GKU_SSJ.md)
+        - [GameData.oCharacter.KID_GHN](GameData.oCharacter.KID_GHN.md)
+        - [GameData.oCharacter.MJN_BUU](GameData.oCharacter.MJN_BUU.md)
+        - [GameData.oCharacter.SRU](GameData.oCharacter.SRU.md)
+    - GameData.oEntity
+        - [GameData.oEntity.oBeam](GameData.oEntity.oBeam.md)
+        - [GameData.oEntity.oCharacter](GameData.oEntity.oCharacter.md)
+        - [GameData.oEntity.oEffect](GameData.oEntity.oEffect.md)
+        - [GameData.oEntity.oProjectile](GameData.oEntity.oProjectile.md)
+    - GameData.oProjectile
+        - [GameData.oProjectile.ALL](GameData.oProjectile.ALL.md)
 - [GameSettings](GameSettings.md)
 
 ## ENGINE
@@ -47,3 +52,5 @@ and enable the extension for the ```https://raw.githubusercontent.com``` origin 
 - [SceneManager](SceneManager.md)
 - [StoreEngine](StoreEngine.md)
 - [TimerEngine](TimerEngine.md)
+
+<link rel="stylesheet" href="../_doc.css" />

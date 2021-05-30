@@ -1,70 +1,98 @@
 # OutputChannel
+
+
 _System :_ ENGINE  
 _File source :_ [engine/_output/_audio/_channel.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/engine/_output/_audio/_channel.js)
 
 ## Constructor
-**OutputChannel()**
+
+OutputChannel is a child class of [OutputAudioElement](OutputAudioElement.md).
+### OutputChannel()
+
 ```javascript
 new OutputChannel(sId, nDefaultGain);
 ```
-## Inheritance
-OutputChannel is a child class of [OutputAudioElement](OutputAudioElement.md).
+
 
 ## Instance properties
 _Properties inherited :_ [OutputAudioElement.prototype](OutputAudioElement.md#instance-properties)
 
-**OutputChannel.prototype.oSource**
-```javascript
-this.oSource = {};
-```
-**OutputChannel.prototype.sCurrentSource**
-```javascript
-this.sCurrentSource = null;
-```
-**OutputChannel.prototype.sId**
+### this.sId
+
 ```javascript
 this.sId = sId;
 ```
 
+### this.oSource
+
+```javascript
+this.oSource = {};
+```
+
+### this.sCurrentSource
+
+```javascript
+this.sCurrentSource = null;
+```
+
+
 ## Instance methods
 _Methods inherited :_ [OutputAudioElement.prototype](OutputAudioElement.md#instance-methods) 
 
-**OutputChannel.prototype.init()**
+### OutputChannel.prototype.init()
+
 ```javascript
-this.init(nDefaultGain)
+this.init(nDefaultGain);
 ```
-**OutputChannel.prototype.add()**
+
+### OutputChannel.prototype.add()
+
 ```javascript
-this.add(oElm)
+this.add(oElm);
 ```
-**OutputChannel.prototype.remove()**
+
+### OutputChannel.prototype.remove()
+
 ```javascript
-this.remove(oElm)
+this.remove(oElm);
 ```
-**OutputChannel.prototype.use()**
+
+### OutputChannel.prototype.use()
+
 ```javascript
-this.use(sCod)
+this.use(sCod);
 ```
-**OutputChannel.prototype.play()**
+
+### OutputChannel.prototype.play()
+
 ```javascript
-this.play(sCod, bRestart, bLoop)
+this.play(sCod, bRestart, bLoop);
 ```
-**OutputChannel.prototype.pause()**
+
+### OutputChannel.prototype.pause()
+
 ```javascript
-this.pause()
+this.pause();
 ```
-**OutputChannel.prototype.setGain()**
+
+### OutputChannel.prototype.setGain()
+
 ```javascript
-this.setGain(nGain)
+this.setGain(nGain);
 ```
-**OutputChannel.prototype.setGainAtStep()**
+
+### OutputChannel.prototype.setGainAtStep()
+
 ```javascript
-this.setGainAtStep(nStep)
+this.setGainAtStep(nStep);
 ```
-**OutputChannel.prototype.getStepGain()**
+
+### OutputChannel.prototype.getStepGain()
+
 ```javascript
-this.getStepGain()
+this.getStepGain();
 ```
+
 
 <link rel="stylesheet" href="../_doc.css" />
 

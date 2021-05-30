@@ -1,169 +1,38 @@
 # GameSettings
-Singleton possedant toutes les paramètres du jeu, aussi bien figés que paramètrables, comme le chemin des ressources, la configuration des bouttons, la vie des entités, etc
+
+Singleton possedant toutes les paramètres du jeu, aussi bien figés que paramètrables, comme le chemin des ressources, la configuration des bouttons, la vie des entités, etc 
+
 
 _System :_ DATA  
 _File source :_ [data/_settings.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/data/_settings.js)
 
 ## Static properties
-**GameSettings.aFilter**
-Constante de filtre des effets visuels des SPRITES de personnage
+## Static properties - Technical Settings
 
+Données techniques figées des paramétrages, comme les chemins des ressources, les réglages audios par défaut, etc
+
+### GameSettings.nPlayer
+
+Constante du nombre de joueur 
 
 ```javascript
-aFilter: [
-    {
-        sSuffixe: 'invul',
-        aFrames: ['blur', 'hit_luncher', 'recovery', 'reflect'],
-        oData: {
-            oStatus: {
-                bInvul: true
-            },
-            aHurtBox: null
-        }
-    },
-    {
-        sSuffixe: 'throw',
-        aFrames: ['hit_light'],
-        oData: {}
-    },
-    {
-        sSuffixe: 'filter',
-        aFrames: ['hit_light', 'hit_heavy', 'hit_luncher', 'guard'],
-        oData: {}
-    }
-]
+GameSettings.nPlayer = 2;
 ```
-**GameSettings.nDie**
-Constante de temps avant suppression d'un entité pour futur ROLLBACK
 
+### GameSettings.sStartScene
+
+Nom de la scene de départ 
 
 ```javascript
-nDie: 60
+GameSettings.sStartScene = 'InitializeScene';
 ```
-**GameSettings.nFreeze**
-Nombre de FRAME lors d'un HIT FREEZE
 
+### GameSettings.oPath
 
-```javascript
-nFreeze: 6
-```
-**GameSettings.nKi**
-Nombre maximum de KI possible en combat
-
+Constante des chemins techniques de chaques entités 
 
 ```javascript
-nKi: 20
-```
-**GameSettings.nPlayer**
-Constante du nombre de joueur
-
-
-```javascript
-nPlayer: 2
-```
-**GameSettings.oAudio**
-Constante du volume par défaut de chaque canal de sortie AUDIO
-
-
-```javascript
-oAudio: {
-    oChannel: {
-        BGM: 5,
-        SFX: 10
-    },
-    oInitialize: {
-        BGM: ['Menu'],
-        SFX: ['Move', 'Validate', 'Cancel']
-    },
-    oPreBattle: {
-        BGM: ['Victory'/* BGM of STAGE */],
-        SFX: ['Hit', 'Guard', 'Recovery', 'Beam', 'Projectile']
-    }
-}
-```
-**GameSettings.oController**
-Configuration des différents périphériques d'entrées
-
-
-```javascript
-oController: {
-    aOrderButtons: ['UP', 'DOWN', 'LEFT', 'RIGHT', 'A', 'B', 'C', 'START'],
-    aKeyboard: [
-        {
-            UP: 'KeyW',
-            DOWN: 'KeyS',
-            LEFT: 'KeyA',
-            RIGHT: 'KeyD',
-            A: 'KeyU',
-            B: 'KeyI',
-            C: 'KeyO',
-            START: 'Enter'
-        },
-        {
-            UP: 'ArrowUp',
-            DOWN: 'ArrowDown',
-            LEFT: 'ArrowLeft',
-            RIGHT: 'ArrowRight',
-            A: 'Numpad1',
-            B: 'Numpad2',
-            C: 'Numpad3',
-            START: 'Numpad0'
-        }
-    ],
-    oGamepad: {
-        /*
-        UP: 'Axe-1',
-        DOWN: 'Axe+1',
-        LEFT: 'Axe-0',
-        RIGHT: 'Axe+0',
-        */
-        UP: 'Button12',
-        DOWN: 'Button13',
-        LEFT: 'Button14',
-        RIGHT: 'Button15',
-        A: 'Button2',
-        B: 'Button3',
-        C: 'Button1',
-        START: 'Button9'
-    }
-}
-```
-**GameSettings.oLife**
-Nombre de point de vie pour chaque entité
-
-
-```javascript
-oLife: {
-    player: 30,
-    character: 0,
-    projectile: 1,
-    beam: 0
-}
-```
-**GameSettings.oLuncher**
-Paramétrage de l'animation d'un personnage LUNCHER
-
-
-```javascript
-oLuncher: {
-    nLength: 36,
-    nInvulnerable: 8,
-    oMove: {
-        nX: -63 * 4,
-        nY: -54 * 4
-    },
-    oFrames: {
-        sLunch: 'hit_luncher',
-        sFall: 'hit_fall'
-    }
-}
-```
-**GameSettings.oPath**
-Constante des chemins techniques de chaques entités
-
-
-```javascript
-oPath: {
+GameSettings.oPath = {
     oCharacter: {
         sRoot: 'assets/images/characters',
         sFrames: 'assets/images/characters',
@@ -196,23 +65,44 @@ oPath: {
         sBGM: 'assets/audios/BGM',
         sSFX: 'assets/audios/SFX'
     }
-}
+};
 ```
-**GameSettings.oPositionEffect**
-Constante de position lors d'un effet visuel sur une entité
 
+### GameSettings.aFilter
+
+Constante de filtre des effets visuels des SPRITES de personnage 
 
 ```javascript
-oPositionEffect: {
-    nX: -24
-}
+GameSettings.aFilter = [
+    {
+        sSuffixe: 'invul',
+        aFrames: ['blur', 'hit_luncher', 'recovery', 'reflect'],
+        oData: {
+            oStatus: {
+                bInvul: true
+            },
+            aHurtBox: null
+        }
+    },
+    {
+        sSuffixe: 'throw',
+        aFrames: ['hit_light'],
+        oData: {}
+    },
+    {
+        sSuffixe: 'filter',
+        aFrames: ['hit_light', 'hit_heavy', 'hit_luncher', 'guard'],
+        oData: {}
+    }
+];
 ```
-**GameSettings.oPositionPoint**
-Constante des POSITION_POINT de chaque entité
 
+### GameSettings.oPositionPoint
+
+Constante des POSITION_POINT de chaque entité 
 
 ```javascript
-oPositionPoint: {
+GameSettings.oPositionPoint = {
     character: {
         nX: 98,
         nY: 182,
@@ -230,40 +120,15 @@ oPositionPoint: {
         nX: 128,
         nY: 210
     }
-}
+};
 ```
-**GameSettings.oPushback**
-PUSHBACK par défault appliqué lors d'un coup
 
+### GameSettings.oSide
+
+Constante des choix de position sur le terrain en TRAINING 
 
 ```javascript
-oPushback: {
-    nLength: 4,
-    nX: -24
-}
-```
-**GameSettings.oRecovery**
-Paramètrage de la distance de déplacement lors d'une relevé d'un personnage mis au sol
-
-
-```javascript
-oRecovery: {
-    backward: {
-        nLength: 1,
-        nX: -192
-    },
-    forward: {
-        nLength: 1,
-        nX: 192
-    }
-}
-```
-**GameSettings.oSide**
-Constante des choix de position sur le terrain en TRAINING
-
-
-```javascript
-oSide: {
+GameSettings.oSide = {
     nDefault: 2,
     aSide: [
         {
@@ -323,15 +188,177 @@ oSide: {
             }
         }
     ]
-}
+};
 ```
-**GameSettings.sStartScene**
-Nom de la scene de départ
 
+### GameSettings.oController
+
+Configuration des différents périphériques d'entrées 
 
 ```javascript
-sStartScene: 'InitializeScene'
+GameSettings.oController = {
+    aOrderButtons: ['UP', 'DOWN', 'LEFT', 'RIGHT', 'A', 'B', 'C', 'START'],
+    aKeyboard: [
+        {
+            UP: 'KeyW',
+            DOWN: 'KeyS',
+            LEFT: 'KeyA',
+            RIGHT: 'KeyD',
+            A: 'KeyU',
+            B: 'KeyI',
+            C: 'KeyO',
+            START: 'Enter'
+        },
+        {
+            UP: 'ArrowUp',
+            DOWN: 'ArrowDown',
+            LEFT: 'ArrowLeft',
+            RIGHT: 'ArrowRight',
+            A: 'Numpad1',
+            B: 'Numpad2',
+            C: 'Numpad3',
+            START: 'Numpad0'
+        }
+    ],
+    oGamepad: {
+        /*
+        UP: 'Axe-1',
+        DOWN: 'Axe+1',
+        LEFT: 'Axe-0',
+        RIGHT: 'Axe+0',
+        */
+        UP: 'Button12',
+        DOWN: 'Button13',
+        LEFT: 'Button14',
+        RIGHT: 'Button15',
+        A: 'Button2',
+        B: 'Button3',
+        C: 'Button1',
+        START: 'Button9'
+    }
+};
 ```
+
+### GameSettings.oAudio
+
+Constante du volume par défaut de chaque canal de sortie AUDIO 
+
+```javascript
+GameSettings.oAudio = {
+    oChannel: {
+        BGM: 5,
+        SFX: 10
+    },
+    oInitialize: {
+        BGM: ['Menu'],
+        SFX: ['Move', 'Validate', 'Cancel']
+    },
+    oPreBattle: {
+        BGM: ['Victory'/* BGM of STAGE */],
+        SFX: ['Hit', 'Guard', 'Recovery', 'Beam', 'Projectile']
+    }
+};
+```
+
+
+## Static properties - Game Settings
+
+Données paramétrables de jeu, comme la vie, le KI, etc
+
+### GameSettings.nFreeze
+
+Nombre de FRAME lors d'un HIT FREEZE 
+
+```javascript
+GameSettings.nFreeze = 6;
+```
+
+### GameSettings.oPushback
+
+PUSHBACK par défault appliqué lors d'un coup 
+
+```javascript
+GameSettings.oPushback = {
+    nLength: 4,
+    nX: -24
+};
+```
+
+### GameSettings.nDie
+
+Temps avant suppression d'un entité pour futur ROLLBACK 
+
+```javascript
+GameSettings.nDie = 60;
+```
+
+### GameSettings.oLife
+
+Nombre de point de vie pour chaque entité 
+
+```javascript
+GameSettings.oLife = {
+    player: 30,
+    character: 0,
+    projectile: 1,
+    beam: 0
+};
+```
+
+### GameSettings.oPositionEffect
+
+Position lors d'un effet visuel sur une entité 
+
+```javascript
+GameSettings.oPositionEffect = {
+    nX: -24
+};
+```
+
+### GameSettings.nKi
+
+Nombre maximum de KI possible en combat 
+
+```javascript
+GameSettings.nKi = 20;
+```
+
+### GameSettings.oLuncher
+
+Paramétrage de l'animation d'un personnage LUNCHER 
+
+```javascript
+GameSettings.oLuncher = {
+    nLength: 36,
+    nInvulnerable: 8,
+    oMove: {
+        nX: -63 * 4,
+        nY: -54 * 4
+    },
+    oFrames: {
+        sLunch: 'hit_luncher',
+        sFall: 'hit_fall'
+    }
+};
+```
+
+### GameSettings.oRecovery
+
+Paramètrage de la distance de déplacement lors d'une relevé d'un personnage mis au sol 
+
+```javascript
+GameSettings.oRecovery = {
+    backward: {
+        nLength: 1,
+        nX: -192
+    },
+    forward: {
+        nLength: 1,
+        nX: 192
+    }
+};
+```
+
 
 <link rel="stylesheet" href="../_doc.css" />
 

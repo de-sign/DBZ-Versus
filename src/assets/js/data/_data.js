@@ -10,11 +10,11 @@ Object.assign(
         /* ----- START SINGLETON ----- */
         /* ----- START PROPERTIES ----- */
         /* ----- DETAILS
-            Données de base pour chaques entités :
-                - [GameData.oEntity.oBeam](GameData.oEntity.oBeam.md)
-                - [GameData.oEntity.oCharacter](GameData.oEntity.oCharacter.md)
-                - [GameData.oEntity.oEffect](GameData.oEntity.oEffect.md)
-                - [GameData.oEntity.oProjectile](GameData.oEntity.oProjectile.md)
+        Données de base pour chaques entités :
+            - [GameData.oEntity.oBeam](GameData.oEntity.oBeam.md)
+            - [GameData.oEntity.oCharacter](GameData.oEntity.oCharacter.md)
+            - [GameData.oEntity.oEffect](GameData.oEntity.oEffect.md)
+            - [GameData.oEntity.oProjectile](GameData.oEntity.oProjectile.md)
         ----- */
         oEntity: {
             /*
@@ -35,7 +35,7 @@ Object.assign(
                 - [GameData.oCharacter.GKU_SSJ](GameData.oCharacter.GKU_SSJ.md)
                 - [GameData.oCharacter.KID_GHN](GameData.oCharacter.KID_GHN.md)
                 - [GameData.oCharacter.MJN_BUU](GameData.oCharacter.MJN_BUU.md)
-            ----- */
+        ----- */
         oCharacter: {
             // Complete with data/_characters/_*.js files
         },

@@ -1,26 +1,32 @@
 # OutputAudioElement
+
+
 _System :_ ENGINE  
 _File source :_ [engine/_output/_audio/_element.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/engine/_output/_audio/_element.js)
 
 ## Static properties
-**OutputAudioElement.oAudioContext**
+### OutputAudioElement.oAudioContext
 
 ```javascript
-oAudioContext: new AudioContext()
+OutputAudioElement.oAudioContext = new AudioContext();
 ```
 
+
 ## Constructor
-**OutputAudioElement()**
+
+OutputAudioElement is a child class of [OutputElement](OutputElement.md).
+### OutputAudioElement()
+
 ```javascript
 new OutputAudioElement();
 ```
-## Inheritance
-OutputAudioElement is a child class of [OutputElement](OutputElement.md).
+
 
 ## Instance properties
 _Properties inherited :_ [OutputElement.prototype](OutputElement.md#instance-properties)
 
-**OutputAudioElement.prototype.oNode**
+### this.oNode
+
 ```javascript
 this.oNode = {
         oInput: null,
@@ -28,25 +34,34 @@ this.oNode = {
     };
 ```
 
+
 ## Instance methods
 _Methods inherited :_ [OutputElement.prototype](OutputElement.md#instance-methods) 
 
-**OutputAudioElement.prototype.init()**
+### OutputAudioElement.prototype.init()
+
 ```javascript
-this.init()
+this.init();
 ```
-**OutputAudioElement.prototype.setNode()**
+
+### OutputAudioElement.prototype.setNode()
+
 ```javascript
-this.setNode(oInput, oOutput)
+this.setNode(oInput, oOutput);
 ```
-**OutputAudioElement.prototype.connect()**
+
+### OutputAudioElement.prototype.connect()
+
 ```javascript
-this.connect(oElm)
+this.connect(oElm);
 ```
-**OutputAudioElement.prototype.disconnect()**
+
+### OutputAudioElement.prototype.disconnect()
+
 ```javascript
-this.disconnect(oElm)
+this.disconnect(oElm);
 ```
+
 
 <link rel="stylesheet" href="../_doc.css" />
 

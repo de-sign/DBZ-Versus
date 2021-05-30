@@ -1,101 +1,144 @@
 # Controller
+
+
 _System :_ ENGINE  
 _File source :_ [engine/_input/_controller.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/engine/_input/_controller.js)
 
 ## Static properties
-**Controller.nId**
+### Controller.nId
 
 ```javascript
-nId: 0
+Controller.nId = 0;
 ```
-**Controller.oInstance**
+
+### Controller.oInstance
 
 ```javascript
-oInstance: {}
+Controller.oInstance = {};
 ```
+
 
 ## Static methods
-**Controller.add()**
+### Controller.add()
+
 ```javascript
-Controller.add(oKCtrl)
-```
-**Controller.createDataStore()**
-```javascript
-Controller.createDataStore(oController, oStore)
-```
-**Controller.getDataStore()**
-```javascript
-Controller.getDataStore(oStore)
+Controller.add(oKCtrl);
 ```
 
+### Controller.createDataStore()
+
+```javascript
+Controller.createDataStore(oController, oStore);
+```
+
+### Controller.getDataStore()
+
+```javascript
+Controller.getDataStore(oStore);
+```
+
+
 ## Constructor
-**Controller()**
+### Controller()
+
 ```javascript
 new Controller();
 ```
+
+
 ## Instance properties
-**Controller.prototype.dTimestampChange**
-```javascript
-this.dTimestampChange = 0;
-```
-**Controller.prototype.nFrameChange**
-```javascript
-this.nFrameChange = 0;
-```
-**Controller.prototype.oButtons**
+### this.oButtons
+
 ```javascript
 this.oButtons = {};
 ```
-**Controller.prototype.oKeyMap**
+
+### this.oKeyMap
+
 ```javascript
 this.oKeyMap = {};
 ```
 
+### this.nFrameChange
+
+```javascript
+this.nFrameChange = 0;
+```
+
+### this.dTimestampChange
+
+```javascript
+this.dTimestampChange = 0;
+```
+
+
 ## Instance methods
-**Controller.prototype.init()**
+### Controller.prototype.init()
+
 ```javascript
-this.init(oBtn)
+this.init(oBtn);
 ```
-**Controller.prototype.update()**
+
+### Controller.prototype.update()
+
 ```javascript
-this.update()
+this.update();
 ```
-**Controller.prototype.destroy()**
+
+### Controller.prototype.destroy()
+
 ```javascript
-this.destroy()
+this.destroy();
 ```
-**Controller.prototype.addButtons()**
+
+### Controller.prototype.addButtons()
+
 ```javascript
-this.addButtons(oBtns)
+this.addButtons(oBtns);
 ```
-**Controller.prototype.removeButtons()**
+
+### Controller.prototype.removeButtons()
+
 ```javascript
-this.removeButtons(oBtns)
+this.removeButtons(oBtns);
 ```
-**Controller.prototype.updateButtons()**
+
+### Controller.prototype.updateButtons()
+
 ```javascript
-this.updateButtons(oBtns)
+this.updateButtons(oBtns);
 ```
-**Controller.prototype.hasPressedNow()**
+
+### Controller.prototype.hasPressedNow()
+
 ```javascript
-this.hasPressedNow(sBtn)
+this.hasPressedNow(sBtn);
 ```
-**Controller.prototype.isPressed()**
+
+### Controller.prototype.isPressed()
+
 ```javascript
-this.isPressed(sBtn)
+this.isPressed(sBtn);
 ```
-**Controller.prototype.getLastPress()**
+
+### Controller.prototype.getLastPress()
+
 ```javascript
-this.getLastPress(sBtn)
+this.getLastPress(sBtn);
 ```
-**Controller.prototype.ifPressedNow()**
+
+### Controller.prototype.ifPressedNow()
+
 ```javascript
-this.ifPressedNow(oCallback, bOnlyFirst = true)
+this.ifPressedNow(oCallback, bOnlyFirst = true);
 ```
-**Controller.prototype.ifPressed()**
+
+### Controller.prototype.ifPressed()
+
 ```javascript
-this.ifPressed(oCallback, bOnlyFirst = true)
+this.ifPressed(oCallback, bOnlyFirst = true);
 ```
+
 
 <link rel="stylesheet" href="../_doc.css" />
 

@@ -115,7 +115,7 @@ Object.assign(
                     this.addTickUpdate(() => {
                         Object.assign(this.hElement.style, oCss);
                     });
-                }
+                },
                 /* ----- END METHODS ----- */
                 /* ----- END PROTOTYPE ----- */
             }

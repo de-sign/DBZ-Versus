@@ -1,84 +1,114 @@
 # ControllerManager
+
+
 _System :_ ENGINE  
 _File source :_ [engine/_input/_manager.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/engine/_input/_manager.js)
 
 ## Static properties
-**ControllerManager.GamepadController**
+### ControllerManager.KeyboardController
 
 ```javascript
-GamepadController: GamepadController
+ControllerManager.KeyboardController = KeyboardController;
 ```
-**ControllerManager.KeyboardController**
+
+### ControllerManager.GamepadController
 
 ```javascript
-KeyboardController: KeyboardController
+ControllerManager.GamepadController = GamepadController;
 ```
-**ControllerManager.nController**
+
+### ControllerManager.oController
 
 ```javascript
-nController: 0
+ControllerManager.oController = {};
 ```
-**ControllerManager.oController**
+
+### ControllerManager.oKeyMap
 
 ```javascript
-oController: {}
+ControllerManager.oKeyMap = {};
 ```
-**ControllerManager.oKeyMap**
+
+### ControllerManager.nController
 
 ```javascript
-oKeyMap: {}
+ControllerManager.nController = 0;
 ```
-**ControllerManager.oListeners**
+
+### ControllerManager.oListeners
 
 ```javascript
-oListeners: {}
+ControllerManager.oListeners = {};
 ```
+
 
 ## Static methods
-**ControllerManager.init()**
+### ControllerManager.init()
+
 ```javascript
-ControllerManager.init()
+ControllerManager.init();
 ```
-**ControllerManager.update()**
+
+### ControllerManager.update()
+
 ```javascript
-ControllerManager.update()
+ControllerManager.update();
 ```
-**ControllerManager.create()**
+
+### ControllerManager.create()
+
 ```javascript
-ControllerManager.create(sType, oBtn, nIndex)
+ControllerManager.create(sType, oBtn, nIndex);
 ```
-**ControllerManager.addController()**
+
+### ControllerManager.addController()
+
 ```javascript
-ControllerManager.addController(oCtrl)
+ControllerManager.addController(oCtrl);
 ```
-**ControllerManager.removeController()**
+
+### ControllerManager.removeController()
+
 ```javascript
-ControllerManager.removeController(oCtrl)
+ControllerManager.removeController(oCtrl);
 ```
-**ControllerManager.updateController()**
+
+### ControllerManager.updateController()
+
 ```javascript
-ControllerManager.updateController(oCtrl)
+ControllerManager.updateController(oCtrl);
 ```
-**ControllerManager.addEvent()**
+
+### ControllerManager.addEvent()
+
 ```javascript
-ControllerManager.addEvent(oEvent)
+ControllerManager.addEvent(oEvent);
 ```
-**ControllerManager.getController()**
+
+### ControllerManager.getController()
+
 ```javascript
-ControllerManager.getController(sCod)
+ControllerManager.getController(sCod);
 ```
-**ControllerManager.on()**
+
+### ControllerManager.on()
+
 ```javascript
-ControllerManager.on(uEvent, uCallback)
+ControllerManager.on(uEvent, uCallback);
 ```
-**ControllerManager.off()**
+
+### ControllerManager.off()
+
 ```javascript
-ControllerManager.off(uEvent, uCallback)
+ControllerManager.off(uEvent, uCallback);
 ```
-**ControllerManager.trigger()**
+
+### ControllerManager.trigger()
+
 ```javascript
-ControllerManager.trigger(sEvent)
+ControllerManager.trigger(sEvent);
 ```
+
 
 <link rel="stylesheet" href="../_doc.css" />
 

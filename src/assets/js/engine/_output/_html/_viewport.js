@@ -54,7 +54,7 @@ Object.assign(
                         this.sContextUsed = null;
                     }
                     return oCtx;
-                }
+                },
                 /* ----- END METHODS ----- */
                 /* ----- END PROTOTYPE ----- */
             }
