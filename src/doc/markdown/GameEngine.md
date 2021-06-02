@@ -7,7 +7,11 @@ _System :_ ENGINE
 _File source :_ [engine/_engine.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/engine/_engine.js)
 
 ## Static properties
-### GameEngine.oTimer
+### Utilitary properties
+
+Les properties suivantes sont destinées à être utilisé par le système ou par un développeur
+
+#### GameEngine.oTimer
 
 L'horlorge du moteur de jeu : [TimerEngine](TimerEngine.md) 
 
@@ -15,7 +19,7 @@ L'horlorge du moteur de jeu : [TimerEngine](TimerEngine.md)
 GameEngine.oTimer = TimerEngine;
 ```
 
-### GameEngine.oStore
+#### GameEngine.oStore
 
 Le système de stockage d'informations persistantes : [StoreEngine](StoreEngine.md) 
 
@@ -23,7 +27,7 @@ Le système de stockage d'informations persistantes : [StoreEngine](StoreEngine.
 GameEngine.oStore = StoreEngine;
 ```
 
-### GameEngine.oInput
+#### GameEngine.oInput
 
 Le gestionnaire des entrées : [ControllerManager](ControllerManager.md) 
 
@@ -31,7 +35,7 @@ Le gestionnaire des entrées : [ControllerManager](ControllerManager.md)
 GameEngine.oInput = ControllerManager;
 ```
 
-### GameEngine.oScene
+#### GameEngine.oScene
 
 Le gestionnaire des scènes de jeu : [SceneManager](SceneManager.md) 
 
@@ -39,7 +43,7 @@ Le gestionnaire des scènes de jeu : [SceneManager](SceneManager.md)
 GameEngine.oScene = SceneManager;
 ```
 
-### GameEngine.oOutput
+#### GameEngine.oOutput
 
 Le gestionnaire des sorties : [OutputManager](OutputManager.md) 
 
@@ -49,15 +53,11 @@ GameEngine.oOutput = OutputManager;
 
 
 ## Static methods
-### GameEngine.start()
+### Technical methods
 
-Si l'horloge n'est pas en route, initialise les gestionnaires et démarre l'horloge 
+Les méthodes suivantes sont purement technique et ne devrait être utilisé principalement que par le système
 
-```javascript
-GameEngine.start();
-```
-
-### GameEngine.update()
+#### GameEngine.update()
 
 Mets à jours les gestionnaires dans l'ordre suivant :- [ControllerManager.update()](ControllerManager.md)- [SceneManager.update()](SceneManager.md)- [OutputManager.update()](OutputManager.md)
 
@@ -65,7 +65,20 @@ Mets à jours les gestionnaires dans l'ordre suivant :- [ControllerManager.upda
 GameEngine.update();
 ```
 
-### GameEngine.stop()
+
+### Utilitary methods
+
+Les méthodes suivantes sont destinées à être utilisé par le système ou par un développeur
+
+#### GameEngine.start()
+
+Si l'horloge n'est pas en route, initialise les gestionnaires et démarre l'horloge 
+
+```javascript
+GameEngine.start();
+```
+
+#### GameEngine.stop()
 
 Arrete l'horloge et detruit la scène en cours 
 

@@ -142,7 +142,7 @@ Object.assign(
                                 const aCommand = [];
                                 let oCommand = oCharColor.oCommands.aOffense[nIndex];
 
-                                if( oCommand.sCod.indexOf('throw') == -1 ){
+                                if( !oCommand.bNotInCommandList ){
                                     do {
                                         aCommand.push(oCommand);
                                         oCommand = oCommand.oFollowUp;

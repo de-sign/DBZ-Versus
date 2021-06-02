@@ -21,6 +21,9 @@ Utilise un moteur de jeu fait maison et FOX Website :
 <br/>
 <br/>
 
+## Documentation
+Une documentation technique est disponnible ici : [References.md](https://github.com/de-sign/DBZ-Versus/blob/master/src/doc/markdown/References.md)
+
 ## TODO
 __BUG__
 <br/>*N/A*
@@ -44,7 +47,13 @@ __Stage__
 <br/>*N/A*
 
 __Battle__
-* Animation de fin de match 
+* Fin de match
+    * Animation de victoire
+    * Menu de choix
+        * Rematch
+        * Select Character
+        * Select Stage
+        * Quit
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
 * Méchaniques de jeu
     * Movement :
@@ -64,6 +73,7 @@ __Training__
     * Dummy ?
         * Guard
         * Reversal
+    * Frame Data ?
 
 __General__
 * Optimisation du Code

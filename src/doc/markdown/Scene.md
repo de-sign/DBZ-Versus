@@ -15,7 +15,11 @@ new Scene();
 
 
 ## Instance properties
-### this.oContext
+### Utilitary properties
+
+Les propriétés suivantes sont destinées à être utilisé par le système ou par un développeur
+
+#### this.oContext
 
 Context de sortie visuel de la scene : [OutputHTMLContext](OutputHTMLContext.md). 
 
@@ -23,7 +27,7 @@ Context de sortie visuel de la scene : [OutputHTMLContext](OutputHTMLContext.md)
 this.oContext = null;
 ```
 
-### this.nFrameCreated
+#### this.nFrameCreated
 
 FRAME de l'horloge interne lors de son initialisation : [TimerEngine.nFrames](TimerEngine.md). 
 
@@ -33,7 +37,11 @@ this.nFrameCreated = 0;
 
 
 ## Instance methods
-### Scene.prototype.init()
+### Technical methods
+
+Les méthodes suivantes sont purement technique et ne devrait être utilisé principalement que par le système.  Elles sont vouées à être surcharger et utilisées par une class fille créée par le développeur.
+
+#### Scene.prototype.init()
 
 Utilise le context transmis si défini et récupère la FRAME de l'horloge interne :- [OutputViewport.useContext()](OutputViewport.md)- [TimerEngine.nFrames](TimerEngine.md)
 
@@ -41,17 +49,17 @@ Utilise le context transmis si défini et récupère la FRAME de l'horloge inter
 this.init(sUseContext);
 ```
 
-### Scene.prototype.update()
+#### Scene.prototype.update()
 
-Fonction de mise à jour de la scène, voué à être surcharger. 
+Fonction de mise à jour de la scène, vouée à être surcharger. 
 
 ```javascript
 this.update();
 ```
 
-### Scene.prototype.destroy()
+#### Scene.prototype.destroy()
 
-Fonction de destruction de la scène, voué à être surcharger.    Si elle retourne un objet, ce dernier est utilisé pour surcharger les données transvères du gestionnaire de scene : [SceneManager.oTransverseData](SceneManager.md)
+Fonction de destruction de la scène, vouée à être surcharger.    Si elle retourne un objet, ce dernier est utilisé pour surcharger les données transvères du gestionnaire de scene : [SceneManager.oTransverseData](SceneManager.md)
 
 ```javascript
 this.destroy();

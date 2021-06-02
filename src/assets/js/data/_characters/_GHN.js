@@ -965,7 +965,7 @@ GameData.oCharacter.GHN = {
                 sCod: 'super',
                 sName: 'Masenkō',
                 sAnimation: 'super',
-                sListAnimation: 'super_list',
+                sListAnimation: 'list_super',
                 nCost: 12,
                 nDamage: 4,
                 nGatlingLevel: 3,

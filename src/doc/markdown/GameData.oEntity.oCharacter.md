@@ -378,7 +378,7 @@ GameData.oEntity.oCharacter.oAnimations = {
         ]
     },
     // List
-    super_list: [
+    list_super: [
         {
             nFrame: 2,
             sFrame: 'blur_invul'
@@ -553,6 +553,7 @@ GameData.oEntity.oCharacter.oCommands = {
             nDamage: 0,
             bUnblockable: true,
             bOnlyOnGround: true,
+            bNotInCommandList: true,
             sCollisionBox: 'oPositionBox',
             oStun: {
                 nHit: 30,
@@ -581,6 +582,7 @@ GameData.oEntity.oCharacter.oCommands = {
             nDamage: 0,
             bUnblockable: true,
             bOnlyOnGround: true,
+            bNotInCommandList: true,
             sCollisionBox: 'oPositionBox',
             oStun: {
                 nHit: 30,

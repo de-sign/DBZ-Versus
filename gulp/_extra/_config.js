@@ -120,6 +120,21 @@ Object.assign(
                                 sArguments: {
                                     rRegexp: /(?:\/\* ----- DETAILS[^]*?----- \*\/\s*?)?( *?).*?:\s?function\s?(\(.*\))\s?\{(?:[^]*?^\1){0,1}?\}/gm,
                                     nGroup: 2
+                                },
+                                oSubCategory: {
+                                    rRegexp: /\/\* -----\s*?SUBCATEGORY[^]*?(?:DETAILS[^]*?)?----- \*\//gm,
+                                    nGroup: 0,
+                                    oStructure: {
+                                        sName: {
+                                            rRegexp: /\/\* -----\s*?SUBCATEGORY([^]*?)(?:DETAILS[^]*?)?----- \*\//gm,
+                                            nGroup: 1
+                                        },
+                                        sDetails: {
+                                            rRegexp: /\/\* -----\s*?SUBCATEGORY[^]*?(?:DETAILS([^]*?))?----- \*\//gm,
+                                            nGroup: 1,
+                                            rRemove: /^\s*/gm
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -159,6 +174,21 @@ Object.assign(
                                 sValue: {
                                     rRegexp: /(?:\/\* ----- DETAILS[^]*?----- \*\/\s*?)?this\..*?=([^]*?);/gm,
                                     nGroup: 1
+                                },
+                                oSubCategory: {
+                                    rRegexp: /\/\* -----\s*?SUBCATEGORY[^]*?(?:DETAILS[^]*?)?----- \*\//gm,
+                                    nGroup: 0,
+                                    oStructure: {
+                                        sName: {
+                                            rRegexp: /\/\* -----\s*?SUBCATEGORY([^]*?)(?:DETAILS[^]*?)?----- \*\//gm,
+                                            nGroup: 1
+                                        },
+                                        sDetails: {
+                                            rRegexp: /\/\* -----\s*?SUBCATEGORY[^]*?(?:DETAILS([^]*?))?----- \*\//gm,
+                                            nGroup: 1,
+                                            rRemove: /^\s*/gm
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -189,6 +219,21 @@ Object.assign(
                                 sArguments: {
                                     rRegexp: /(?:\/\* ----- DETAILS[^]*?----- \*\/\s*?)?( *?).*?:\s?function\s?(\(.*\))\s?\{(?:[^]*?^\1){0,1}?\}/gm,
                                     nGroup: 2
+                                },
+                                oSubCategory: {
+                                    rRegexp: /\/\* -----\s*?SUBCATEGORY[^]*?(?:DETAILS[^]*?)?----- \*\//gm,
+                                    nGroup: 0,
+                                    oStructure: {
+                                        sName: {
+                                            rRegexp: /\/\* -----\s*?SUBCATEGORY([^]*?)(?:DETAILS[^]*?)?----- \*\//gm,
+                                            nGroup: 1
+                                        },
+                                        sDetails: {
+                                            rRegexp: /\/\* -----\s*?SUBCATEGORY[^]*?(?:DETAILS([^]*?))?----- \*\//gm,
+                                            nGroup: 1,
+                                            rRemove: /^\s*/gm
+                                        }
+                                    }
                                 }
                             }
                         }

@@ -11,7 +11,7 @@ Object.assign(
 
         /* ----- START PROPERTIES ----- */
         /* -----
-        SUBCATEGORY Static properties - Technical Settings
+        SUBCATEGORY Technical Settings
         DETAILS Données techniques figées des paramétrages, comme les chemins des ressources, les réglages audios par défaut, etc
         ----- */
 
@@ -222,7 +222,7 @@ Object.assign(
 
         /* ----- START PROPERTIES ----- */
         /* -----
-        SUBCATEGORY Static properties - Game Settings
+        SUBCATEGORY Game Settings
         DETAILS Données paramétrables de jeu, comme la vie, le KI, etc
         ----- */
 

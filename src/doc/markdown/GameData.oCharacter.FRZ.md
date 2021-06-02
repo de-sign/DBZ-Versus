@@ -1005,7 +1005,7 @@ GameData.oCharacter.FRZ.oAnimations = {
         }
     ],
     // 12, 4, 16
-    death_beam_list: [
+    list_death_beam: [
         {
             nFrame: 2,
             sFrame: 'blur'
@@ -1083,7 +1083,7 @@ GameData.oCharacter.FRZ.oCommands = {
             sCod: 'death_beam',
             sName: 'Desubīmu',
             sAnimation: 'death_beam',
-            sListAnimation: 'death_beam_list',
+            sListAnimation: 'list_death_beam',
             nCost: 4,
             nGatlingLevel: 2,
             aEntity: {

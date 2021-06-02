@@ -1017,7 +1017,7 @@ GameData.oCharacter.BJT.oAnimations = {
         }
     ],
     // List
-    super_list: [
+    list_super: [
         {
             nFrame: 2,
             sFrame: 'blur'
@@ -1082,7 +1082,7 @@ GameData.oCharacter.BJT.oCommands = {
             sCod: 'super',
             sName: 'Fainaru Furasshu',
             sAnimation: 'super',
-            sListAnimation: 'super_list',
+            sListAnimation: 'list_super',
             nCost: 12,
             nDamage: 4,
             nGatlingLevel: 3,
@@ -1123,7 +1123,7 @@ GameData.oCharacter.BJT.oCommands = {
             sCod: 'super',
             sName: 'Gyarikku-hō',
             sAnimation: 'super',
-            sListAnimation: 'super_list',
+            sListAnimation: 'list_super',
             nCost: 12,
             nDamage: 4,
             nGatlingLevel: 3,

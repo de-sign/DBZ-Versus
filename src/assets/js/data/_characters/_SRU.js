@@ -954,7 +954,7 @@ GameData.oCharacter.SRU = {
             },
         ],
         // 12, 4, 16
-        death_beam_list: [
+        list_death_beam: [
             {
                 nFrame: 2,
                 sFrame: 'blur'
@@ -984,7 +984,7 @@ GameData.oCharacter.SRU = {
                 sCod: 'super',
                 sName: 'Taiyōkei Hakai Kamehameha',
                 sAnimation: 'super',
-                sListAnimation: 'super_list',
+                sListAnimation: 'list_super',
                 nCost: 12,
                 nDamage: 4,
                 nGatlingLevel: 3,
@@ -1024,7 +1024,7 @@ GameData.oCharacter.SRU = {
                 sCod: 'death_beam',
                 sName: 'Desubīmu',
                 sAnimation: 'death_beam',
-                sListAnimation: 'death_beam_list',
+                sListAnimation: 'list_death_beam',
                 nCost: 4,
                 nGatlingLevel: 2,
                 aEntity: {

@@ -1,4 +1,5 @@
 /* ----- START CLASS ----- */
+/* ----- MENU GameEngine/System ----- */
 /* ----- START CONSTRUCTOR ----- */
 /* ----- DETAILS
 Le système de stockage d'informations persistantes.     
@@ -11,14 +12,22 @@ Object.assign(
     StoreEngine, {
         /* ----- START SINGLETON ----- */
         /* ----- START PROPERTIES ----- */
+        /* -----
+        SUBCATEGORY Technical properties
+        DETAILS Les propriétés suivantes sont purement technique et ne devrait être utilisé principalement que par le système
+        ----- */
         /* ----- DETAILS
         Contient les données stocké dans le localStorage.    
-        **A mettre à jour via la fonction StoreEngine.update() !**
+        **A mettre à jour via la fonction `StoreEngine.update()` !**
         ----- */
         oData: {},
         /* ----- END PROPERTIES ----- */
 
         /* ----- START METHODS ----- */
+        /* -----
+        SUBCATEGORY Utilitary methods
+        DETAILS Les méthodes suivantes sont destinées à être utilisé par le système ou par un développeur
+        ----- */
         /* ----- DETAILS Récupère toutes les informations stocker dans le localStorage. ----- */
         init: function(){
             for( let nIndex = 0; nIndex < localStorage.length; nIndex++ ){
@@ -33,7 +42,11 @@ Object.assign(
             localStorage.setItem(sKey, sData);
             this.oData[sKey] = JSON.parse(sData);
         },
-        /* ----- DETAILS Donne les données de la clef transmise récupéré du localStorage. ----- */
+        /* ----- DETAILS
+        Donne les données de la clef transmise récupéré du localStorage.  
+        Lors de l'appel des fonctions `StoreEngine.init()` et `StoreEngine.update()`, un nouvel objet `StoreEngine.oData` est créé !    
+        **A utiliser avec abus !**
+        ----- */
         get: function(sKey){
             return this.oData[sKey];
         },

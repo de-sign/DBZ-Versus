@@ -7,9 +7,13 @@ _System :_ ENGINE
 _File source :_ [engine/_components/_store.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/engine/_components/_store.js)
 
 ## Static properties
-### StoreEngine.oData
+### Technical properties
 
-Contient les données stocké dans le localStorage.    **A mettre à jour via la fonction StoreEngine.update() !**
+Les propriétés suivantes sont purement technique et ne devrait être utilisé principalement que par le système
+
+#### StoreEngine.oData
+
+Contient les données stocké dans le localStorage.    **A mettre à jour via la fonction `StoreEngine.update()` !**
 
 ```javascript
 StoreEngine.oData = {};
@@ -17,7 +21,11 @@ StoreEngine.oData = {};
 
 
 ## Static methods
-### StoreEngine.init()
+### Utilitary methods
+
+Les méthodes suivantes sont destinées à être utilisé par le système ou par un développeur
+
+#### StoreEngine.init()
 
 Récupère toutes les informations stocker dans le localStorage. 
 
@@ -25,7 +33,7 @@ Récupère toutes les informations stocker dans le localStorage.
 StoreEngine.init();
 ```
 
-### StoreEngine.update()
+#### StoreEngine.update()
 
 Mets à jour les données du localStorage de la clef transmise. 
 
@@ -33,9 +41,9 @@ Mets à jour les données du localStorage de la clef transmise.
 StoreEngine.update(sKey, uData);
 ```
 
-### StoreEngine.get()
+#### StoreEngine.get()
 
-Donne les données de la clef transmise récupéré du localStorage. 
+Donne les données de la clef transmise récupéré du localStorage.  Lors de l'appel des fonctions `StoreEngine.init()` et `StoreEngine.update()`, un nouvel objet `StoreEngine.oData` est créé !    **A utiliser avec abus !**
 
 ```javascript
 StoreEngine.get(sKey);

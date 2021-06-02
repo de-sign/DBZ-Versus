@@ -1,4 +1,5 @@
 /* ----- START CLASS ----- */
+/* ----- MENU GameEngine/Output ----- */
 /* ----- START CONSTRUCTOR ----- */
 function OutputManager(){}
 /* ----- END CONSTRUCTOR ----- */

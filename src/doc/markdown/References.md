@@ -1,6 +1,6 @@
 # &#8251; Class references
 
-## For correctly see this documentation !
+## If you don't see correctly this documentation !
 
 Please install [Markdown Viewer / Browser Extension](https://github.com/simov/markdown-viewer#markdown-viewer--browser-extension)  
 and enable the extension for the ```https://raw.githubusercontent.com``` origin on [advanced options](https://github.com/simov/markdown-viewer#advanced-options).
@@ -29,28 +29,32 @@ and enable the extension for the ```https://raw.githubusercontent.com``` origin 
 - [GameSettings](GameSettings.md)
 
 ## ENGINE
-- [Controller](Controller.md)
-    - [GamepadController](GamepadController.md)
-    - [KeyboardController](KeyboardController.md)
-- [ControllerManager](ControllerManager.md)
 - [GameEngine](GameEngine.md)
-- [OutputElement](OutputElement.md)
-    - [OutputAudioElement](OutputAudioElement.md)
-        - [OutputAudioContext](OutputAudioContext.md)
-        - [OutputChannel](OutputChannel.md)
-        - [OutputSource](OutputSource.md)
-            - [OutputSourceAudio](OutputSourceAudio.md)
-            - [OutputSourceBuffer](OutputSourceBuffer.md)
-    - [OutputHTMLElement](OutputHTMLElement.md)
-        - [OutputLayer](OutputLayer.md)
-            - [OutputHTMLContext](OutputHTMLContext.md)
-            - [OutputViewport](OutputViewport.md)
-        - [OutputSprite](OutputSprite.md)
-        - [OutputText](OutputText.md)
-- [OutputManager](OutputManager.md)
-- [Scene](Scene.md)
-- [SceneManager](SceneManager.md)
-- [StoreEngine](StoreEngine.md)
-- [TimerEngine](TimerEngine.md)
+    - Input
+        - [Controller](Controller.md)
+            - [GamepadController](GamepadController.md)
+            - [KeyboardController](KeyboardController.md)
+        - [ControllerManager](ControllerManager.md)
+    - Output
+        - [OutputElement](OutputElement.md)
+            - [OutputAudioElement](OutputAudioElement.md)
+                - [OutputAudioContext](OutputAudioContext.md)
+                - [OutputChannel](OutputChannel.md)
+                - [OutputSource](OutputSource.md)
+                    - [OutputSourceAudio](OutputSourceAudio.md)
+                    - [OutputSourceBuffer](OutputSourceBuffer.md)
+            - [OutputHTMLElement](OutputHTMLElement.md)
+                - [OutputLayer](OutputLayer.md)
+                    - [OutputHTMLContext](OutputHTMLContext.md)
+                    - [OutputViewport](OutputViewport.md)
+                - [OutputSprite](OutputSprite.md)
+                - [OutputText](OutputText.md)
+        - [OutputManager](OutputManager.md)
+    - Scenes
+        - [Scene](Scene.md)
+        - [SceneManager](SceneManager.md)
+    - System
+        - [StoreEngine](StoreEngine.md)
+        - [TimerEngine](TimerEngine.md)
 
 <link rel="stylesheet" href="../_doc.css" />

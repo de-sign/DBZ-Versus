@@ -991,7 +991,7 @@ GameData.oCharacter.GKU_SSJ.oCommands = {
             sCod: 'super',
             sName: 'Chô Kamehameha',
             sAnimation: 'super',
-            sListAnimation: 'super_list',
+            sListAnimation: 'list_super',
             nCost: 12,
             nDamage: 4,
             nGatlingLevel: 3,

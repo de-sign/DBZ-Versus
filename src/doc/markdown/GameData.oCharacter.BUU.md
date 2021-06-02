@@ -1097,7 +1097,7 @@ GameData.oCharacter.BUU.oAnimations = {
         }
     ],
     // List
-    super_list: [
+    list_super: [
         {
             nFrame: 2,
             sFrame: 'blur_invul'
@@ -1146,7 +1146,7 @@ GameData.oCharacter.BUU.oCommands = {
             sCod: 'super',
             sName: 'Chônoryoku',
             sAnimation: 'super',
-            sListAnimation: 'super_list',
+            sListAnimation: 'list_super',
             nCost: 12,
             nDamage: 4,
             nGatlingLevel: 3,
@@ -1187,7 +1187,7 @@ GameData.oCharacter.BUU.oCommands = {
             sCod: 'super',
             sName: 'Chônoryoku',
             sAnimation: 'super',
-            sListAnimation: 'super_list',
+            sListAnimation: 'list_super',
             nCost: 12,
             nDamage: 4,
             nGatlingLevel: 3,

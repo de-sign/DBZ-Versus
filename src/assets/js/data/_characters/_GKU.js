@@ -977,6 +977,18 @@ GameData.oCharacter.GKU = {
                 sName: 'Light',
                 sAnimation: 'light_first',
                 nGatlingLevel: 1,
+                oStun: {
+                    nBlock: 12,
+                    nHit: 13,
+                    sHitAnimation: 'hit_light'
+                },
+                bLast: true,
+                oManipulation: {
+                    nMaxLengthFrame: 1,
+                    aButtons: [
+                        { A: true }
+                    ]
+                },
                 oFollowUp: {
                     sCod: 'light_second',
                     sName: '2nd',
@@ -994,18 +1006,6 @@ GameData.oCharacter.GKU = {
                             { A: true }
                         ]
                     }
-                },
-                oStun: {
-                    nBlock: 12,
-                    nHit: 13,
-                    sHitAnimation: 'hit_light'
-                },
-                bLast: true,
-                oManipulation: {
-                    nMaxLengthFrame: 1,
-                    aButtons: [
-                        { A: true }
-                    ]
                 }
             }
         ]

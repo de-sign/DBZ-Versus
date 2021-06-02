@@ -7,11 +7,11 @@ _System :_ DATA
 _File source :_ [data/_settings.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/data/_settings.js)
 
 ## Static properties
-## Static properties - Technical Settings
+### Technical Settings
 
 Données techniques figées des paramétrages, comme les chemins des ressources, les réglages audios par défaut, etc
 
-### GameSettings.nPlayer
+#### GameSettings.nPlayer
 
 Constante du nombre de joueur 
 
@@ -19,7 +19,7 @@ Constante du nombre de joueur
 GameSettings.nPlayer = 2;
 ```
 
-### GameSettings.sStartScene
+#### GameSettings.sStartScene
 
 Nom de la scene de départ 
 
@@ -27,7 +27,7 @@ Nom de la scene de départ
 GameSettings.sStartScene = 'InitializeScene';
 ```
 
-### GameSettings.oPath
+#### GameSettings.oPath
 
 Constante des chemins techniques de chaques entités 
 
@@ -68,7 +68,7 @@ GameSettings.oPath = {
 };
 ```
 
-### GameSettings.aFilter
+#### GameSettings.aFilter
 
 Constante de filtre des effets visuels des SPRITES de personnage 
 
@@ -97,7 +97,7 @@ GameSettings.aFilter = [
 ];
 ```
 
-### GameSettings.oPositionPoint
+#### GameSettings.oPositionPoint
 
 Constante des POSITION_POINT de chaque entité 
 
@@ -123,7 +123,7 @@ GameSettings.oPositionPoint = {
 };
 ```
 
-### GameSettings.oSide
+#### GameSettings.oSide
 
 Constante des choix de position sur le terrain en TRAINING 
 
@@ -191,7 +191,7 @@ GameSettings.oSide = {
 };
 ```
 
-### GameSettings.oController
+#### GameSettings.oController
 
 Configuration des différents périphériques d'entrées 
 
@@ -239,7 +239,7 @@ GameSettings.oController = {
 };
 ```
 
-### GameSettings.oAudio
+#### GameSettings.oAudio
 
 Constante du volume par défaut de chaque canal de sortie AUDIO 
 
@@ -261,11 +261,11 @@ GameSettings.oAudio = {
 ```
 
 
-## Static properties - Game Settings
+### Game Settings
 
 Données paramétrables de jeu, comme la vie, le KI, etc
 
-### GameSettings.nFreeze
+#### GameSettings.nFreeze
 
 Nombre de FRAME lors d'un HIT FREEZE 
 
@@ -273,7 +273,7 @@ Nombre de FRAME lors d'un HIT FREEZE
 GameSettings.nFreeze = 6;
 ```
 
-### GameSettings.oPushback
+#### GameSettings.oPushback
 
 PUSHBACK par défault appliqué lors d'un coup 
 
@@ -284,7 +284,7 @@ GameSettings.oPushback = {
 };
 ```
 
-### GameSettings.nDie
+#### GameSettings.nDie
 
 Temps avant suppression d'un entité pour futur ROLLBACK 
 
@@ -292,7 +292,7 @@ Temps avant suppression d'un entité pour futur ROLLBACK
 GameSettings.nDie = 60;
 ```
 
-### GameSettings.oLife
+#### GameSettings.oLife
 
 Nombre de point de vie pour chaque entité 
 
@@ -305,7 +305,7 @@ GameSettings.oLife = {
 };
 ```
 
-### GameSettings.oPositionEffect
+#### GameSettings.oPositionEffect
 
 Position lors d'un effet visuel sur une entité 
 
@@ -315,7 +315,7 @@ GameSettings.oPositionEffect = {
 };
 ```
 
-### GameSettings.nKi
+#### GameSettings.nKi
 
 Nombre maximum de KI possible en combat 
 
@@ -323,7 +323,7 @@ Nombre maximum de KI possible en combat
 GameSettings.nKi = 20;
 ```
 
-### GameSettings.oLuncher
+#### GameSettings.oLuncher
 
 Paramétrage de l'animation d'un personnage LUNCHER 
 
@@ -342,7 +342,7 @@ GameSettings.oLuncher = {
 };
 ```
 
-### GameSettings.oRecovery
+#### GameSettings.oRecovery
 
 Paramètrage de la distance de déplacement lors d'une relevé d'un personnage mis au sol 
 

@@ -7,7 +7,11 @@ _System :_ ENGINE
 _File source :_ [engine/_scene/_manager.js](https://github.com/de-sign/DBZ-Versus/blob/master/src/assets/js/engine/_scene/_manager.js)
 
 ## Static properties
-### SceneManager.oCurrent
+### Utilitary properties
+
+Les propriétés suivantes sont destinées à être utilisé par le système ou par un développeur
+
+#### SceneManager.oCurrent
 
 Contient la scène en cours : [Scene](Scene.md) 
 
@@ -15,17 +19,17 @@ Contient la scène en cours : [Scene](Scene.md)
 SceneManager.oCurrent = null;
 ```
 
-### SceneManager.oLast
+#### SceneManager.oLast
 
-Contient la scène gérer précédemment. 
+Contient la scène gérer précédemment : [Scene](Scene.md) 
 
 ```javascript
 SceneManager.oLast = null;
 ```
 
-### SceneManager.oTransverseData
+#### SceneManager.oTransverseData
 
-Contient les données transvèrses des scenes.Est surchargé à chaque destruction d'une scene.
+Contient les données transvèrses des scenes.    Est surchargé à chaque destruction d'une scene : [Scene.prototype.destroy()](Scene.md) 
 
 ```javascript
 SceneManager.oTransverseData = {};
@@ -33,23 +37,27 @@ SceneManager.oTransverseData = {};
 
 
 ## Static methods
-### SceneManager.init()
+### Technical methods
 
-Initialise la scène en cours : [Scene.prototype.update](Scene.md). 
+Les méthodes suivantes sont purement technique et ne devrait être utilisé principalement que par le système
+
+#### SceneManager.init()
+
+Initialise la scène en cours : [Scene.prototype.init()](Scene.md). 
 
 ```javascript
 SceneManager.init();
 ```
 
-### SceneManager.update()
+#### SceneManager.update()
 
-Mets à jour la scène en cours. 
+Mets à jour la scène en cours : [Scene.prototype.update()](Scene.md). 
 
 ```javascript
 SceneManager.update();
 ```
 
-### SceneManager.destroy()
+#### SceneManager.destroy()
 
 Détruit la scène en cours, la stock comme scène précédente et surchage les données transverse. 
 
@@ -57,7 +65,7 @@ Détruit la scène en cours, la stock comme scène précédente et surchage les 
 SceneManager.destroy();
 ```
 
-### SceneManager.set()
+#### SceneManager.set()
 
 Défini la scène transmise comme étant celle en cours. 
 
@@ -65,7 +73,12 @@ Défini la scène transmise comme étant celle en cours.
 SceneManager.set(oScn);
 ```
 
-### SceneManager.change()
+
+### Utilitary methods
+
+Les méthodes suivantes sont destinées à être utilisé par le système ou par un développeur
+
+#### SceneManager.change()
 
 Détruit la scène en cours, défini la scène transmise comme courante et l'initialise. 
 

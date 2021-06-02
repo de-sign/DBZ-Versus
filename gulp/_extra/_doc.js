@@ -197,7 +197,7 @@ module.exports = function(config){
 
             aMarkdown.push( `# &#8251; Class references` );
             aMarkdown.push( `` );
-            aMarkdown.push( `## For correctly see this documentation !` );
+            aMarkdown.push( `## If you don't see correctly this documentation !` );
             aMarkdown.push( `` );
             aMarkdown.push( `Please install [Markdown Viewer / Browser Extension](https://github.com/simov/markdown-viewer#markdown-viewer--browser-extension)  `);
             aMarkdown.push( `and enable the extension for the \`\`\`https://raw.githubusercontent.com\`\`\` origin on [advanced options](https://github.com/simov/markdown-viewer#advanced-options).`);
@@ -237,10 +237,11 @@ module.exports = function(config){
                             renderElement(
                                 oData.oSubCategory,
                                 'subcategory',
-                                nLevel - 1
+                                nLevel
                             )
                         );
                         delete( oData.oSubCategory );
+                        nLevel++;
                     }
 
                     transform(oData)
