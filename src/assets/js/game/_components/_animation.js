@@ -22,6 +22,7 @@ Object.assign(
             block: 'movement',
             forward: 'movement',
             backward: 'movement',
+            dash: 'dash',
             // GUARD
             guard: 'guard',
             // HIT

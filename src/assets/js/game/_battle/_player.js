@@ -205,7 +205,7 @@ Object.assign(
                         }
                     }
                     // Gestion HURT
-                    else if( (this.oAnimation.sType == 'guard' || this.oAnimation.sType == 'hit') ){
+                    else if( this.oAnimation.sType == 'guard' || this.oAnimation.sType == 'hit' ){
                         oCanAction = {
                             sCommand: 'aDefense',
                             bStack: bFreeze,
@@ -216,8 +216,8 @@ Object.assign(
                             nCode: 4
                         };
                     }
-                    // Gestion ACTION en HIT
-                    else if( this.aHit.length ){
+                    // Gestion ACTION en HIT 
+                    else if( this.aHit.length || this.oAnimation.sType == 'dash' ){
                         const bCancel = this.oAnimation.oFrame.oStatus.bCancel && !bFreeze;
                         oCanAction = {
                             sCommand: 'aOffense',

@@ -57,14 +57,11 @@ __Battle__
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
 * Méchaniques de jeu
     * Movement :
-        * Dash ?
-        * Dash Cancel ?
         * Jump ?
     * Attack :
         * Jump Cancel ?
         * Guard Break ?
     * Defense :
-        * Backdash ?
         * Guard Cancel ?
         * Burst ?
 

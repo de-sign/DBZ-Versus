@@ -451,6 +451,45 @@ GameData.oEntity.oCharacter = {
                 }
             }
         ],
+        // Dash
+        dash: {
+            oMove: {
+                nX: 12
+            },
+            aFrames: [
+                {
+                    nFrame: 2,
+                    sFrame: 'blur'
+                },
+                {
+                    nFrame: 4,
+                    sFrame: 'burst'
+                },
+                {
+                    nFrame: 8,
+                    sFrame: 'forward'
+                }
+            ]
+        },
+        backdash: {
+            oMove: {
+                nX: -12
+            },
+            aFrames: [
+                {
+                    nFrame: 2,
+                    sFrame: 'blur'
+                },
+                {
+                    nFrame: 4,
+                    sFrame: 'burst'
+                },
+                {
+                    nFrame: 8,
+                    sFrame: 'backward'
+                }
+            ]
+        },
         // Animation
         opening: [
             // TP
@@ -539,6 +578,57 @@ GameData.oEntity.oCharacter = {
             }
         ],
         aOffense: [
+            {
+                sCod: 'dash',
+                sAnimation: 'dash',
+                bNotInCommandList: true,
+                nGatlingLevel: 0,
+                oStun: {},
+                oPushback: {},
+                oManipulation: {
+                    nMaxLengthFrame: 15,
+                    aButtons: [
+                        { FW: false },
+                        null,
+                        { FW: false }
+                    ]
+                }
+            },
+            {
+                sCod: 'backdash',
+                sAnimation: 'backdash',
+                bNotInCommandList: true,
+                nGatlingLevel: 0,
+                oStun: {},
+                oPushback: {},
+                oManipulation: {
+                    nMaxLengthFrame: 15,
+                    aButtons: [
+                        { BW: false },
+                        null,
+                        { BW: false }
+                    ]
+                }
+            },
+            {
+                 // dash_cancel
+                sCod: 'dash',
+                sAnimation: 'dash',
+                bNotInCommandList: true,
+                nCost: 8,
+                nGatlingLevel: 1,
+                oStun: {},
+                oPushback: {},
+                bLast: true,
+                oManipulation: {
+                    nMaxLengthFrame: 15,
+                    aButtons: [
+                        { FW: false },
+                        null,
+                        { FW: false }
+                    ]
+                }
+            },
             {
                 sCod: 'back_throw',
                 sAnimation: 'throw',
