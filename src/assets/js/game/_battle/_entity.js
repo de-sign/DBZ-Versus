@@ -20,6 +20,16 @@ function BattleEntity(sType, oData, oPosition, bReverse, oParent) {
     this.oAnimation = null;
     this.oMovement = null;
 
+    this.oStatus = {
+        bReverse: false, // Possibilité de se retourner : stand, tp, etc
+        bGuard: false, // Possibilité de guarder : backdash, block
+        bThrow: false, // Possibilité de TechThrow : hit_throw
+        bInvul: false, // Impossibilité de prendre un coup : lunch
+        bAerialInvul: false, // Impossibilité de prendre un coup aérien : luncher
+        bCancel: false, // Coup cancellable : ligth, etc
+        bAerial: false, // Personnage en l'air : jump, lunch, fall, etc
+        bLunch: false // Personnage en l'air via un coup : lunch
+    };
     this.bReverse = false;
     this.nLife = 0;
     this.aHit = [];
@@ -207,7 +217,7 @@ Object.assign(
                     
                     // Animation Float en MOVEMENT
                     this.oLayer.hElement.classList.remove('--float_up', '--float_down');
-                    if( this.oAnimation.isMovement() ){
+                    if( this.oAnimation.sType == 'movement' ){
                         const nPart = Math.floor((this.oAnimation.nTick % 32) / 8),
                             aClass = [null, '--float_up', null, '--float_down'];
                         aClass[nPart] && this.oLayer.hElement.classList.add( aClass[nPart] );
@@ -218,7 +228,7 @@ Object.assign(
                         DOMTokenList.prototype.remove.apply( this.oLayer.hElement.classList, GameAnimation.aAllType.map( sType => '--' + sType ) );
                         this.oLayer.hElement.classList.add('--' + this.oAnimation.sType);
                     }
-                    this.oLayer.hElement.classList[ this.oAnimation.oFrame.oStatus.bGuard ? 'add' : 'remove' ]('--guard');
+                    this.oLayer.hElement.classList[ this.oStatus.bGuard ? 'add' : 'remove' ]('--guard');
                     
                     // Frame
                     this.oAnimation.oFrame.nZIndex && this.oLayer.setStyle( { zIndex: this.oAnimation.oFrame.nZIndex } );
@@ -284,8 +294,8 @@ Object.assign(
             getHitData: function(){
                 return this.oHitData;
             },
-            isUnvulnerable: function(){
-                return this.oAnimation.oFrame.oStatus.bInvul;
+            isInvulnerable: function(){
+                return this.oStatus.bInvul;
             },
 
             isDead: function(){
@@ -295,12 +305,29 @@ Object.assign(
                 return this.oCheck.bCollapse && this.oCheck.bReverse;
             },
             canReverse: function(){
-                return this.oAnimation.oFrame.oStatus.bReverse;
+                return this.oStatus.bReverse;
             },
 
+            updateStatus: function(oForce){
+                this.oStatus = Object.assign(
+                    {
+                        bReverse: false, // Possibilité de se retourner : stand, tp, etc
+                        bGuard: false, // Possibilité de guarder : backdash, block
+                        bThrow: false, // Possibilité de TechThrow : hit_throw
+                        bInvul: false, // Impossibilité de prendre un coup : lunch
+                        bAerialInvul: false, // Impossibilité de prendre un coup aérien : luncher
+                        bCancel: false, // Coup cancellable : ligth, etc
+                        bAerial: this.oStatus.bAerial, // Personnage en l'air : jump, lunch, fall, etc
+                        bLunch: this.oStatus.bLunch // Personnage en l'air via un coup : lunch
+                    },
+                    this.oAnimation.oFrame.oStatus,
+                    oForce || {}
+                );
+            },
             updateAnimation: function(){
                 this.oAnimation.update();
                 this.oMovement.update();
+                this.updateStatus();
                 this.move();
             },
             move: function(){

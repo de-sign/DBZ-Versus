@@ -825,7 +825,7 @@ GameData.oCharacter.BJT.oAnimations = {
             }
         }
     ],
-    // 8, 4, 8
+    // 6, 4, 8
     heavy: {
         oMove: {
             nDelay: 2,
@@ -840,10 +840,6 @@ GameData.oCharacter.BJT.oAnimations = {
             {
                 nFrame: 4,
                 sFrame: 'forward_inverse',
-            },
-            {
-                nFrame: 2,
-                sFrame: 'heavy'
             },
             {
                 nFrame: 4,
@@ -924,22 +920,57 @@ GameData.oCharacter.BJT.oAnimations = {
         },
         {
             nFrame: 2,
-            sFrame: 'luncher'
+            sFrame: 'luncher',
+            oStatus: {
+                bAerialInvul: true
+            }
         },
         {
             nFrame: 8,
-            sFrame: 'luncher_active'
+            sFrame: 'luncher_active',
+            oStatus: {
+                bAerialInvul: true
+            }
         },
         {
             nFrame: 4,
             sFrame: 'luncher',
             oStatus: {
+                bAerialInvul: true,
                 bCancel: true
             }
         },
         {
             nFrame: 6,
             sFrame: 'jump',
+            oStatus: {
+                bCancel: true
+            }
+        },
+        {
+            nFrame: 2,
+            sFrame: 'blur',
+            oStatus: {
+                bCancel: true
+            }
+        }
+    ],
+    jump_light: [
+        {
+            nFrame: 2,
+            sFrame: 'blur'
+        },
+        {
+            nFrame: 2,
+            sFrame: 'heavy'
+        },
+        {
+            nFrame: 6,
+            sFrame: 'heavy_active'
+        },
+        {
+            nFrame: 4,
+            sFrame: 'heavy',
             oStatus: {
                 bCancel: true
             }
@@ -1086,6 +1117,7 @@ GameData.oCharacter.BJT.oCommands = {
             nCost: 12,
             nDamage: 4,
             nGatlingLevel: 3,
+            sCheck: 'bGround',
             aEntity: {
                 sType: 'beam',
                 sSFX: 'ADO__Beam',
@@ -1127,6 +1159,7 @@ GameData.oCharacter.BJT.oCommands = {
             nCost: 12,
             nDamage: 4,
             nGatlingLevel: 3,
+            sCheck: 'bGround',
             aEntity: {
                 sType: 'beam',
                 sSFX: 'ADO__Beam',
@@ -1165,6 +1198,7 @@ GameData.oCharacter.BJT.oCommands = {
             sAnimation: 'kikoha',
             nCost: 4,
             nGatlingLevel: 2,
+            sCheck: 'bGround',
             aEntity: {
                 sType: 'projectile',
                 sSFX: 'ADO__Projectile',
@@ -1194,6 +1228,8 @@ GameData.oCharacter.BJT.oCommands = {
             sName: 'Luncher',
             sAnimation: 'luncher',
             nGatlingLevel: 1,
+            sCheck: 'bGround',
+            bJumpCancellable: true,
             oStun: {
                 nBlock: 12,
                 nHit: 22,
@@ -1213,6 +1249,7 @@ GameData.oCharacter.BJT.oCommands = {
             sName: 'Tracker',
             sAnimation: 'tracker',
             nGatlingLevel: 1,
+            sCheck: 'bGround',
             oStun: {
                 nBlock: 12,
                 nHit: 18,
@@ -1227,10 +1264,29 @@ GameData.oCharacter.BJT.oCommands = {
             }
         },
         {
+            sCod: 'jump_light',
+            sName: 'Jump attack',
+            sAnimation: 'jump_light',
+            nGatlingLevel: 1,
+            sCheck: 'bAerial',
+            oStun: {
+                nBlock: 12,
+                nHit: 16,
+                sHitAnimation: 'hit_heavy'
+            },
+            oManipulation: {
+                nMaxLengthFrame: 1,
+                aButtons: [
+                    { A: true }
+                ]
+            }
+        },
+        {
             sCod: 'heavy',
             sName: 'Heavy',
             sAnimation: 'heavy',
             nGatlingLevel: 1,
+            sCheck: 'bGround',
             oStun: {
                 nBlock: 10,
                 nHit: 16,
@@ -1249,6 +1305,7 @@ GameData.oCharacter.BJT.oCommands = {
             sName: 'Light',
             sAnimation: 'light_first',
             nGatlingLevel: 1,
+            sCheck: 'bGround',
             oStun: {
                 nBlock: 12,
                 nHit: 13,
@@ -1266,6 +1323,7 @@ GameData.oCharacter.BJT.oCommands = {
                 sCod: 'light_second',
                 sAnimation: 'light_second',
                 nGatlingLevel: 1,
+                sCheck: 'bGround',
                 oStun: {
                     nBlock: 12,
                     nHit: 13,
@@ -1283,6 +1341,7 @@ GameData.oCharacter.BJT.oCommands = {
                     sCod: 'light_third',
                     sAnimation: 'light_third',
                     nGatlingLevel: 1,
+                    sCheck: 'bGround',
                     oStun: {
                         nBlock: 12,
                         nHit: 13,

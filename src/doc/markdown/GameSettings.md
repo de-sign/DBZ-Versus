@@ -342,6 +342,25 @@ GameSettings.oLuncher = {
 };
 ```
 
+#### GameSettings.oJump
+
+Paramétrage de l'animation d'un personnage JUMP 
+
+```javascript
+GameSettings.oJump = {
+    nLength: 36,
+    nPrejump: 6,
+    oMove: {
+        nX: 63 * 4,
+        nY: -54 * 3
+    },
+    oFrames: {
+        sPrejump: 'fall',
+        sJump: 'jump'
+    }
+};
+```
+
 #### GameSettings.oRecovery
 
 Paramètrage de la distance de déplacement lors d'une relevé d'un personnage mis au sol 
@@ -349,12 +368,10 @@ Paramètrage de la distance de déplacement lors d'une relevé d'un personnage m
 ```javascript
 GameSettings.oRecovery = {
     backward: {
-        nLength: 1,
-        nX: -192
+        nX: -14
     },
     forward: {
-        nLength: 1,
-        nX: 192
+        nX: 14
     }
 };
 ```

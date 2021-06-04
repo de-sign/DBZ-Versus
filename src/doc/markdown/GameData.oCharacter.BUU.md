@@ -1003,22 +1003,57 @@ GameData.oCharacter.BUU.oAnimations = {
         },
         {
             nFrame: 2,
-            sFrame: 'luncher'
+            sFrame: 'luncher',
+            oStatus: {
+                bAerialInvul: true
+            }
         },
         {
             nFrame: 8,
-            sFrame: 'luncher_active'
+            sFrame: 'luncher_active',
+            oStatus: {
+                bAerialInvul: true
+            }
         },
         {
             nFrame: 4,
             sFrame: 'luncher',
             oStatus: {
+                bAerialInvul: true,
                 bCancel: true
             }
         },
         {
             nFrame: 6,
             sFrame: 'jump',
+            oStatus: {
+                bCancel: true
+            }
+        },
+        {
+            nFrame: 2,
+            sFrame: 'blur',
+            oStatus: {
+                bCancel: true
+            }
+        }
+    ],
+    jump_light: [
+        {
+            nFrame: 2,
+            sFrame: 'blur'
+        },
+        {
+            nFrame: 2,
+            sFrame: 'tracker'
+        },
+        {
+            nFrame: 6,
+            sFrame: 'tracker_active'
+        },
+        {
+            nFrame: 4,
+            sFrame: 'tracker',
             oStatus: {
                 bCancel: true
             }
@@ -1150,6 +1185,7 @@ GameData.oCharacter.BUU.oCommands = {
             nCost: 12,
             nDamage: 4,
             nGatlingLevel: 3,
+            sCheck: 'bGround',
             aEntity: {
                 sType: 'beam',
                 sSFX: 'ADO__Beam',
@@ -1191,6 +1227,7 @@ GameData.oCharacter.BUU.oCommands = {
             nCost: 12,
             nDamage: 4,
             nGatlingLevel: 3,
+            sCheck: 'bGround',
             aEntity:  {
                 sType: 'beam',
                 sSFX: 'ADO__Beam',
@@ -1229,6 +1266,7 @@ GameData.oCharacter.BUU.oCommands = {
             sAnimation: 'kikoha',
             nCost: 4,
             nGatlingLevel: 2,
+            sCheck: 'bGround',
             aEntity: {
                 sType: 'projectile',
                 sSFX: 'ADO__Projectile',
@@ -1258,6 +1296,8 @@ GameData.oCharacter.BUU.oCommands = {
             sName: 'Luncher',
             sAnimation: 'luncher',
             nGatlingLevel: 1,
+            sCheck: 'bGround',
+            bJumpCancellable: true,
             oStun: {
                 nBlock: 12,
                 nHit: 22,
@@ -1277,6 +1317,7 @@ GameData.oCharacter.BUU.oCommands = {
             sName: 'Shoulder dash',
             sAnimation: 'shoulder',
             nGatlingLevel: 1,
+            sCheck: 'bGround',
             oStun: {
                 nBlock: 12,
                 nHit: 18,
@@ -1299,11 +1340,13 @@ GameData.oCharacter.BUU.oCommands = {
             sName: 'Tracker',
             sAnimation: 'tracker_first',
             nGatlingLevel: 1,
+            sCheck: 'bGround',
             oFollowUp: {
                 sName: '2nd',
                 sCod: 'tracker_second',
                 sAnimation: 'tracker_second',
                 nGatlingLevel: 1,
+                sCheck: 'bGround',
                 bOnHit: true,
                 oStun: {
                     nBlock: 12,
@@ -1336,10 +1379,29 @@ GameData.oCharacter.BUU.oCommands = {
             }
         },
         {
+            sCod: 'jump_light',
+            sName: 'Jump attack',
+            sAnimation: 'jump_light',
+            nGatlingLevel: 1,
+            sCheck: 'bAerial',
+            oStun: {
+                nBlock: 12,
+                nHit: 16,
+                sHitAnimation: 'hit_heavy'
+            },
+            oManipulation: {
+                nMaxLengthFrame: 1,
+                aButtons: [
+                    { A: true }
+                ]
+            }
+        },
+        {
             sCod: 'heavy',
             sName: 'Heavy',
             sAnimation: 'heavy',
             nGatlingLevel: 1,
+            sCheck: 'bGround',
             oStun: {
                 nBlock: 10,
                 nHit: 16,
@@ -1358,11 +1420,13 @@ GameData.oCharacter.BUU.oCommands = {
             sName: 'Light',
             sAnimation: 'light_first',
             nGatlingLevel: 1,
+            sCheck: 'bGround',
             oFollowUp: {
                 sCod: 'light_second',
                 sName: '2nd',
                 sAnimation: 'light_second',
                 nGatlingLevel: 1,
+                sCheck: 'bGround',
                 oStun: {
                     nBlock: 12,
                     nHit: 13,

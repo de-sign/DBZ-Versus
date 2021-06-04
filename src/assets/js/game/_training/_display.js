@@ -274,7 +274,7 @@ Object.assign(
                 if( this.oParameters.oShow.bAnimation ){
                     this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                         const oAnimation = this.aAnimation[nIndex];
-                        if( oPlayer.oAnimation.sType != 'movement' ){
+                        if( !oPlayer.oAnimation.isMovement() ){
                             if( oPlayer.oAnimation != oAnimation.oLast ){
                                 oAnimation.oLast = oPlayer.oAnimation;
                                 oAnimation.oLayer.hElement.innerHTML = '';
@@ -282,11 +282,11 @@ Object.assign(
                             let sClass = '--' + oPlayer.oAnimation.sType;
                             if( oPlayer.oAnimation.oFrame.bFreeze ){
                                 sClass = '--freeze';
-                            } else if( oPlayer.oAnimation.oFrame.oStatus.bGuard ){
+                            } else if( oPlayer.oStatus.bGuard ){
                                 sClass = '--guard';
                             } else if( oPlayer.oAnimation.oFrame.aHitBox ){
                                 sClass = '--damage';
-                            } else if( oPlayer.isUnvulnerable() ){
+                            } else if( oPlayer.isInvulnerable() ){
                                 sClass = '--invulnerable';
                             }
                             oAnimation.oLayer.hElement.innerHTML += '<span class="' + sClass + '"></span>';

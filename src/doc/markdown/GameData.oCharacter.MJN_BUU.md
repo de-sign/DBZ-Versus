@@ -1026,16 +1026,23 @@ GameData.oCharacter.MJN_BUU.oAnimations = {
         },
         {
             nFrame: 2,
-            sFrame: 'luncher'
+            sFrame: 'luncher',
+            oStatus: {
+                bAerialInvul: true
+            }
         },
         {
             nFrame: 8,
-            sFrame: 'luncher_active'
+            sFrame: 'luncher_active',
+            oStatus: {
+                bAerialInvul: true
+            }
         },
         {
             nFrame: 4,
             sFrame: 'luncher',
             oStatus: {
+                bAerialInvul: true,
                 bCancel: true
             }
         },
@@ -1131,6 +1138,7 @@ GameData.oCharacter.MJN_BUU.oCommands = {
             nCost: 12,
             nDamage: 4,
             nGatlingLevel: 3,
+            sCheck: 'bGround',
             aEntity: {
                 sType: 'projectile',
                 sSFX: 'ADO__Beam',
@@ -1172,6 +1180,7 @@ GameData.oCharacter.MJN_BUU.oCommands = {
             nCost: 12,
             nDamage: 4,
             nGatlingLevel: 3,
+            sCheck: 'bGround',
             aEntity: {
                 sType: 'projectile',
                 sSFX: 'ADO__Beam',
@@ -1210,6 +1219,7 @@ GameData.oCharacter.MJN_BUU.oCommands = {
             sAnimation: 'kikoha',
             nCost: 4,
             nGatlingLevel: 2,
+            sCheck: 'bGround',
             aEntity: {
                 sType: 'projectile',
                 sSFX: 'ADO__Projectile',
@@ -1239,6 +1249,8 @@ GameData.oCharacter.MJN_BUU.oCommands = {
             sName: 'Luncher',
             sAnimation: 'luncher',
             nGatlingLevel: 1,
+            sCheck: 'bGround',
+            bJumpCancellable: true,
             oStun: {
                 nBlock: 12,
                 nHit: 22,
@@ -1258,6 +1270,7 @@ GameData.oCharacter.MJN_BUU.oCommands = {
             sName: 'Tracker',
             sAnimation: 'tracker',
             nGatlingLevel: 1,
+            sCheck: 'bGround',
             oStun: {
                 nBlock: 12,
                 nHit: 18,
@@ -1276,6 +1289,7 @@ GameData.oCharacter.MJN_BUU.oCommands = {
                 sName: '2nd',
                 sAnimation: 'tracker_second',
                 nGatlingLevel: 1,
+                sCheck: 'bGround',
                 oStun: {
                     nBlock: 12,
                     nHit: 24,
@@ -1299,6 +1313,7 @@ GameData.oCharacter.MJN_BUU.oCommands = {
             sName: 'Heavy',
             sAnimation: 'heavy',
             nGatlingLevel: 1,
+            sCheck: 'bGround',
             oStun: {
                 nBlock: 10,
                 nHit: 18,
@@ -1317,11 +1332,13 @@ GameData.oCharacter.MJN_BUU.oCommands = {
             sName: 'Light',
             sAnimation: 'light_first',
             nGatlingLevel: 1,
+            sCheck: 'bGround',
             oFollowUp: {
                 sCod: 'light_second',
                 sName: '2nd',
                 sAnimation: 'light_second',
                 nGatlingLevel: 1,
+                sCheck: 'bGround',
                 oStun: {
                     nBlock: 12,
                     nHit: 13,

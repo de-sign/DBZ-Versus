@@ -80,6 +80,25 @@ Object.assign(
 	            || (oBoxB.nY + oBoxB.nHeight <= oBoxA.nY) // trop en haut
             );
         },
+        checkInvulnerable: function(oEntityHit, oEntityHurt){
+            let bInvul = false;
+            const oData = oEntityHit.getHitData();
+            if( oData ){
+                // Gestion INVULNERABLE
+                if( oEntityHurt.isInvulnerable() ){
+                    bInvul = true;
+                }
+                // Gestion THROW contre adversaire en l'air
+                else if( oData.bOnlyOnGround && oEntityHurt.oStatus.bAerial ){
+                    bInvul = true;
+                }
+                // Gestion courp aérien contre ANTI AIR
+                else if( oEntityHit.oStatus.bAerial && oEntityHurt.oStatus.bAerialInvul ){
+                    bInvul = true;
+                }
+            }
+            return bInvul;
+        },
         hasSameParent: function(oEntityA, oEntityB){
             return (oEntityA.oParent || oEntityA).sId == (oEntityB.oParent || oEntityB).sId;
         },
@@ -153,10 +172,9 @@ Object.assign(
                 if( oEntity.oCheck.bLunch ){
                     const nDown = this.oArea.oPosition.nY + (oBoxArea.bottom - oBoxArea.originY) - oEntity.oPositionPoint.nGapY;
                     if( nDown < oEntity.oLayer.oPosition.nY + ( oBoxEntity.nY + oBoxEntity.nHeight ) ){
-                        oEntity.setStance('down', true);
+                        oEntity.setStance( oEntity.oAnimation.sName == 'fall' ? 'down' : 'landing', true);
                         oBoxEntity = oEntity.getBox('oPositionBox')[0];
                         oEntity.oLayer.oPosition.nY = nDown - ( oBoxEntity.nY + oBoxEntity.nHeight );
-                        oEntity.oLunch = null;
                     }
                 }
             }
@@ -229,7 +247,7 @@ Object.assign(
                             && oEntityHurt.oCheck.oHurt[ oEntityHit.sType ]
                             && oEntityHurt.nLife > 0
                             && oEntityHit.aHit.indexOf(oEntityHurt.sId) == -1
-                            && !oEntityHurt.isUnvulnerable()
+                            && !this.checkInvulnerable(oEntityHit, oEntityHurt)
                         ){
                             let bHit = false;
                             const oData = oEntityHit.getHitData(),
@@ -240,26 +258,24 @@ Object.assign(
                                 for( let nHitBox = 0; nHitBox < aHitBox.length; nHitBox++ ){
                                     for( let nHurtBox = 0; nHurtBox < aHurtBox.length; nHurtBox++ ){
                                         if( this.checkCollision(aHitBox[nHitBox], aHurtBox[nHurtBox]) ){
-                                            if( !oData.bOnlyOnGround || !oEntityHurt.oLunch ){
-                                                // HURT
-                                                aHurt.push( {
-                                                    oEntityHit,
-                                                    oEntityHurt,
-                                                    oData: oData
-                                                } );
-                                                // PUSHBACK
-                                                aPushback.push( {
-                                                    oPriority: {
-                                                        nHit: oCollapse[oEntityHit.sId] ? oCollapse[oEntityHit.sId].nPriority : 2,
-                                                        nHurt: oCollapse[oEntityHurt.sId] ? oCollapse[oEntityHurt.sId].nPriority : 0
-                                                    },
-                                                    oEntityHit,
-                                                    oEntityHurt,
-                                                    oData: oData.oPushback || GameSettings.oPushback
-                                                } );
-                                                bHit = true;
-                                                break;
-                                            }
+                                            // HURT
+                                            aHurt.push( {
+                                                oEntityHit,
+                                                oEntityHurt,
+                                                oData: oData
+                                            } );
+                                            // PUSHBACK
+                                            aPushback.push( {
+                                                oPriority: {
+                                                    nHit: oCollapse[oEntityHit.sId] ? oCollapse[oEntityHit.sId].nPriority : 2,
+                                                    nHurt: oCollapse[oEntityHurt.sId] ? oCollapse[oEntityHurt.sId].nPriority : 0
+                                                },
+                                                oEntityHit,
+                                                oEntityHurt,
+                                                oData: oData.oPushback || GameSettings.oPushback
+                                            } );
+                                            bHit = true;
+                                            break;
                                         }
                                     }
                                     if( bHit ){

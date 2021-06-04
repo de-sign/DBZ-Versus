@@ -756,16 +756,23 @@ GameData.oCharacter.GKU = {
             },
             {
                 nFrame: 2,
-                sFrame: 'luncher'
+                sFrame: 'luncher',
+                oStatus: {
+                    bAerialInvul: true
+                }
             },
             {
                 nFrame: 8,
-                sFrame: 'luncher_active'
+                sFrame: 'luncher_active',
+                oStatus: {
+                    bAerialInvul: true
+                }
             },
             {
                 nFrame: 4,
                 sFrame: 'luncher',
                 oStatus: {
+                    bAerialInvul: true,
                     bCancel: true
                 }
             },
@@ -855,6 +862,7 @@ GameData.oCharacter.GKU = {
                 nCost: 12,
                 nDamage: 4,
                 nGatlingLevel: 3,
+                sCheck: 'bGround',
                 aEntity: {
                     sType: 'projectile',
                     sSFX: 'ADO__Beam',
@@ -893,6 +901,7 @@ GameData.oCharacter.GKU = {
                 sAnimation: 'kikoha',
                 nCost: 4,
                 nGatlingLevel: 2,
+                sCheck: 'bGround',
                 aEntity: {
                     sType: 'projectile',
                     sSFX: 'ADO__Projectile',
@@ -922,6 +931,8 @@ GameData.oCharacter.GKU = {
                 sName: 'Luncher',
                 sAnimation: 'luncher',
                 nGatlingLevel: 1,
+                sCheck: 'bGround',
+                bJumpCancellable: true,
                 oStun: {
                     nBlock: 12,
                     nHit: 22,
@@ -941,6 +952,7 @@ GameData.oCharacter.GKU = {
                 sName: 'Tracker',
                 sAnimation: 'tracker',
                 nGatlingLevel: 1,
+                sCheck: 'bGround',
                 oStun: {
                     nBlock: 12,
                     nHit: 18,
@@ -959,6 +971,7 @@ GameData.oCharacter.GKU = {
                 sName: 'Heavy',
                 sAnimation: 'heavy',
                 nGatlingLevel: 1,
+                sCheck: 'bGround',
                 oStun: {
                     nBlock: 10,
                     nHit: 16,
@@ -977,6 +990,7 @@ GameData.oCharacter.GKU = {
                 sName: 'Light',
                 sAnimation: 'light_first',
                 nGatlingLevel: 1,
+                sCheck: 'bGround',
                 oStun: {
                     nBlock: 12,
                     nHit: 13,
@@ -994,6 +1008,7 @@ GameData.oCharacter.GKU = {
                     sName: '2nd',
                     sAnimation: 'light_second',
                     nGatlingLevel: 1,
+                    sCheck: 'bGround',
                     oStun: {
                         nBlock: 12,
                         nHit: 13,

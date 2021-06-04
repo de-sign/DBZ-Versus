@@ -185,7 +185,7 @@ module.exports = function(config){
         scripts: gulp.parallel(_builds.js),
         styles: gulp.parallel(_builds.scss, _builds.images, _builds.fonts, _builds.audios, _builds.videos)
     });
-    _builds.global = gulp.series(_builds.clean, _builds.favicon, _builds.templates, gulp.parallel(_builds.scripts, _builds.styles));
+    _builds.global = gulp.series(_builds.clean, /*_builds.favicon,*/ _builds.templates, gulp.parallel(_builds.scripts, _builds.styles));
 
     return _builds;
 };

@@ -158,7 +158,7 @@ Object.assign(
                 this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                     nIndex++;
                     const oParam = this.aParam[nIndex];
-                    if( oPlayer.oAnimation.sType == 'movement' && oPlayer.oAnimation.nTick == 1 ){
+                    if( oPlayer.oAnimation.isMovement() && oPlayer.oAnimation.nTick == 1 ){
                         if( oPlayer.nLife <= 0 || ( oParam.bRegenLife && oPlayer.nLife < oParam.nLife ) ){
                             this.setStat(nIndex, 'Life');
                         }

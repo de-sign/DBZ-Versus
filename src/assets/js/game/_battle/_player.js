@@ -3,7 +3,11 @@ function BattlePlayer(nPlayer, sChar, sColor, sAnimation, oPosition, bReverse, o
     this.nPlayer = null;
 
     this.oInputBuffer = null;
-    this.oLunch = null;
+    this.oMemory = {
+        sType: null,
+        oAnimation: null,
+        oMove: null
+    };
     this.oGatling = null;
 
     this.nHitting = 0;
@@ -35,7 +39,7 @@ Object.assign(
                         const sDirection = this.oInputBuffer.getDirection();
 
                         // Gestion RECOVERY
-                        if( oCanAction.bRecovery ){
+                        if( oCanAction.sCommand == 'aRecovery' ){
                             switch( sDirection ){
                                 case 'DB':
                                 case 'BW':
@@ -60,33 +64,50 @@ Object.assign(
                                 oCommand.nCost && (this.nKi -= oCommand.nCost);
                                 this.setAnimation(oCommand.sAnimation);
                             }
+                            // Gestion JUMPCANCEL
+                            else if( this.oGatling.isJumpCancellable() && !oCanAction.bStack ){
+                                switch( sDirection ){
+                                    case 'UB':
+                                        this.setStance('jump_backward');
+                                        break;
+                                    case 'UP':
+                                        this.setStance('jump_neutral');
+                                        break;
+                                    case 'UF':
+                                        this.setStance('jump_forward');
+                                        break;
+                                }
+                            }
                             // Gestion DIR
                             else if( this.canMove() ){
-
-                                if( this.oLunch ){
-                                    this.oAnimation = this.oLunch.oAnimation;
-                                    this.oMovement = this.oLunch.oMovement;
-                                }
-                                else {
-                                    switch( sDirection ){
-                                        case 'DB':
-                                            this.setStance('block');
-                                            break;
-                                        case 'BW':
-                                            this.setStance('backward');
-                                            break;
-                                        case 'FW':
-                                            this.setStance('forward');
-                                            break;
-                                        default:
-                                            this.setStance('stand');
-                                            break;
-                                    }
+                                switch( sDirection ){
+                                    case 'DB':
+                                        this.setStance('block');
+                                        break;
+                                    case 'BW':
+                                        this.setStance('backward');
+                                        break;
+                                    case 'FW':
+                                        this.setStance('forward');
+                                        break;
+                                    case 'UB':
+                                        this.setStance('jump_backward');
+                                        break;
+                                    case 'UP':
+                                        this.setStance('jump_neutral');
+                                        break;
+                                    case 'UF':
+                                        this.setStance('jump_forward');
+                                        break;
+                                    default:
+                                        this.setStance('stand');
+                                        break;
                                 }
                             }
                         }
                     }
 
+                    this.updateMemory();
                     return this.updateAnimation();
                 },
                 // destroy: function(){},
@@ -100,7 +121,7 @@ Object.assign(
                 },
                 takeHit: function(oEntity, oData){
                     const aNewEntity = [];
-                    if( !oData.bUnblockable && this.oAnimation.oFrame.oStatus.bGuard ){
+                    if( !oData.bUnblockable && this.oStatus.bGuard ){
                         this.setHurt('guard', oData.oStun.nBlock, !oEntity.bReverse);
                         oEntity.confirmHit(this, oData, true);
                         if( oData.oStun.sImpactAnimation !== false ){
@@ -126,7 +147,7 @@ Object.assign(
                             this.addKi( 2 * nDamage );
                         }
 
-                        const bLunch = oData.oStun.bLunch && !this.oLunch,
+                        const bLunch = oData.oStun.bLunch && !this.oStatus.bLunch,
                             bDeath = this.nLife <= 0,
                             sHitAnim = bLunch || bDeath ? 'lunch' : oData.oStun.sHitAnimation;
                             
@@ -154,6 +175,45 @@ Object.assign(
                     const nDamage = oData.nDamage == null ? 1 : oData.nDamage;
                     bGuard || oData.nCost || this.addKi(nDamage);
                 },
+                setMemory: function(){
+                    // Annulation du JUMP en cas de HIT en l'air
+                    if( this.oAnimation.isHurt() && this.oMemory.sType == 'jump' ){
+                        this.oMemory = {
+                            sType: null,
+                            oAnimation: null,
+                            oMove: null
+                        };
+                    }
+                    else {
+                        // Gestion en fonction de l'animation
+                        switch( this.oAnimation.sName ){
+                            case 'jump_backward':
+                            case 'jump_neutral':
+                            case 'jump_forward':
+                                this.oMemory = {
+                                    sType: 'jump',
+                                    oAnimation: this.oAnimation,
+                                    oMovement: this.oMovement
+                                };
+                                break;
+                            case 'fall':
+                                this.oMemory = {
+                                    sType: 'fall',
+                                    oAnimation: this.oAnimation,
+                                    oMovement: this.oMovement
+                                };
+                                break;
+                            case 'down':
+                            case 'landing':
+                                this.oMemory = {
+                                    sType: null,
+                                    oAnimation: null,
+                                    oMove: null
+                                };
+                                break;
+                        }
+                    }
+                },
 
                 // Fonction INPUT
                 canAction: function(){
@@ -164,35 +224,31 @@ Object.assign(
                         bRecovery: false,
                         bGuard: false,
                         bThrow: false,
+                        bAerial: this.oStatus.bAerial,
+                        bGround: !this.oStatus.bAerial,
                         nCode: 0
                     };
                     const bFreeze = this.oAnimation.isFreeze();
 
                     // Gestion MOVEMENT
-                    if( this.oAnimation.sType == 'movement' && !bFreeze ){
+                    if( !bFreeze && this.oAnimation.isMovement() ){
+                        const bCancel = this.oAnimation.sType != 'jump' || this.oStatus.bCancel;
                         oCanAction = {
                             sCommand: 'aOffense',
-                            bStack: false,
-                            bMove: true,
+                            bStack: !bCancel,
+                            bMove: !this.oStatus.bAerial,
                             bRecovery: false,
                             bGuard: false,
                             bThrow: false,
-                            nCode: 1
+                            bAerial: this.oStatus.bAerial,
+                            bGround: !this.oStatus.bAerial,
+                            nCode: bCancel ? 1 : 2
                         };
                     }
                     // Gestion END ANIMATION
                     else if( this.oAnimation.isEnd() ){
-                        if( this.oAnimation.sType != 'down' ){
-                            oCanAction = {
-                                sCommand: 'aOffense',
-                                bStack: false,
-                                bMove: true,
-                                bRecovery: false,
-                                bGuard: false,
-                                bThrow: false,
-                                nCode: 2
-                            };
-                        } else {
+                        // DOWN => RECOVERY
+                        if( this.oAnimation.sType == 'down' ){
                             oCanAction = {
                                 sCommand: 'aRecovery',
                                 bStack: false,
@@ -200,33 +256,53 @@ Object.assign(
                                 bRecovery: true,
                                 bGuard: false,
                                 bThrow: false,
+                                bAerial: false,
+                                bGround: true,
                                 nCode: 3
+                            };
+                        }
+                        // STAND => ALL action
+                        else if( !(this.oStatus.bAerial && this.oAnimation.isHurt()) ){
+                            oCanAction = {
+                                sCommand: 'aOffense',
+                                bStack: false,
+                                bMove: !this.oStatus.bAerial,
+                                bRecovery: false,
+                                bGuard: false, 
+                                bThrow: false, 
+                                bAerial: this.oStatus.bAerial,
+                                bGround: !this.oStatus.bAerial,
+                                nCode: 4
                             };
                         }
                     }
                     // Gestion HURT
-                    else if( this.oAnimation.sType == 'guard' || this.oAnimation.sType == 'hit' ){
+                    else if( this.oAnimation.isHurt() ){
                         oCanAction = {
                             sCommand: 'aDefense',
                             bStack: bFreeze,
                             bMove: false,
                             bRecovery: false,
-                            bGuard: this.oAnimation.oFrame.oStatus.bGuard,
-                            bThrow: this.oAnimation.oFrame.oStatus.bThrow,
-                            nCode: 4
+                            bGuard: this.oStatus.bGuard,
+                            bThrow: this.oStatus.bThrow,
+                            bAerial: this.oStatus.bAerial,
+                            bGround: !this.oStatus.bAerial,
+                            nCode: 5
                         };
                     }
-                    // Gestion ACTION en HIT 
+                    // Gestion STACK pour ACTION en HIT ou DASH
                     else if( this.aHit.length || this.oAnimation.sType == 'dash' ){
-                        const bCancel = this.oAnimation.oFrame.oStatus.bCancel && !bFreeze;
+                        const bCancel = this.oStatus.bCancel && !bFreeze;
                         oCanAction = {
                             sCommand: 'aOffense',
-                            bStack: bCancel ? false : true,
+                            bStack: !bCancel,
                             bMove: false,
                             bRecovery: false,
                             bGuard: false,
                             bThrow: false,
-                            nCode: bCancel ? 5 : 6
+                            bAerial: this.oStatus.bAerial,
+                            bGround: !this.oStatus.bAerial,
+                            nCode: bCancel ? 6 : 7
                         };
                     }
                     
@@ -244,29 +320,48 @@ Object.assign(
                     }
                 },
                 setAnimation: function(sAnimation, bUpdate, bReverse){
-                    if(
-                        BattleEntity.prototype.setAnimation.call(this, sAnimation, bUpdate, bReverse)
-                        && ( !this.oAnimation.isHurt() || this.oAnimation.sName == 'guard' )
-                    ){
+                    const bChanged = BattleEntity.prototype.setAnimation.call(this, sAnimation, bUpdate, bReverse);
+                    if( bChanged && ( !this.oAnimation.isHurt() || this.oAnimation.sName == 'guard' ) ){
                         this.nHitting = 0;
                     }
+                    return bChanged;
                 },
                 setStance: function(sMovement, bUpdate, bReverse){
-                    this.oGatling.reset();
-                    this.setAnimation(sMovement, bUpdate, bReverse);
+                    if( this.setAnimation(sMovement, bUpdate, bReverse) ){
+                        this.oGatling.reset();
+                        this.setMemory();
+                    }
                 },
                 setHurt: function(sHurt, nFramesLength, bReverse){
                     this.setStance(sHurt, true, bReverse);
-                    if( this.oAnimation.sName == 'lunch' ){
-                        this.oLunch = {
-                            oAnimation: this.oAnimation,
-                            oMovement: this.oMovement,
-                        };
-                    } else {
+                    if( this.oAnimation.sName != 'lunch' ){
                         this.oAnimation.setLength(nFramesLength);
                     }
                 },
 
+                updateMemory: function(){
+                    // Gestion FALL
+                    if( this.oStatus.bAerial && this.oAnimation.isHurt() && this.oAnimation.isEnd() ){
+                        if( this.oMemory.sType == 'fall' ){
+                            this.oAnimation = this.oMemory.oAnimation;
+                            this.oMovement = this.oMemory.oMovement;
+                        } else {
+                            this.setStance('fall');
+                        }
+                    }
+                    // Gestion JUMP
+                    else if( !this.oAnimation.isFreeze() && this.oMemory.sType == 'jump' ){
+                        if( this.oAnimation.isEnd() ){
+                            this.oAnimation = this.oMemory.oAnimation;
+                            this.oMovement = this.oMemory.oMovement;
+                            this.oGatling.reset();
+                        }
+                        else if( this.oAnimation.sType != 'jump' ){
+                            this.oMovement = this.oMemory.oMovement;
+                            this.oMemory.oAnimation.update();
+                        }
+                    }
+                },
                 updateAnimation: function(){
                     let aNewEntity = null;
                     if( !this.oAnimation.isFreeze() ){

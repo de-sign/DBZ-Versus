@@ -150,6 +150,14 @@ GameData.oEntity.oCharacter = {
             sPath: 'ki_beam.png',
             nZIndex: 80
         },
+        jump_light: {
+            sPath: 'jump_light.png',
+            nZIndex: 30
+        },
+        jump_light_active: {
+            sPath: 'jump_light_active.png',
+            nZIndex: 30
+        },
         // Super
         super_first: {
             sPath: 'super_first.png',
@@ -195,6 +203,7 @@ GameData.oEntity.oCharacter = {
                 sFrame: 'stand',
                 oStatus: {
                     bReverse: true,
+                    bAerial: false
                 }
             }
         ],
@@ -202,6 +211,7 @@ GameData.oEntity.oCharacter = {
             {
                 sFrame: 'stand',
                 oStatus: {
+                    bReverse: true,
                     bGuard: true
                 }
             }
@@ -215,13 +225,13 @@ GameData.oEntity.oCharacter = {
                     nFrame: 2,
                     sFrame: 'blur',
                     oStatus: {
-                        bReverse: true,
+                        bReverse: true
                     }
                 },
                 {
                     sFrame: 'forward',
                     oStatus: {
-                        bReverse: true,
+                        bReverse: true
                     }
                 }
             ]
@@ -245,6 +255,44 @@ GameData.oEntity.oCharacter = {
                         bReverse: true,
                         bGuard: true
                     }
+                }
+            ]
+        },
+        dash: {
+            oMove: {
+                nX: 12
+            },
+            aFrames: [
+                {
+                    nFrame: 2,
+                    sFrame: 'blur'
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'burst'
+                },
+                {
+                    nFrame: 10,
+                    sFrame: 'forward'
+                }
+            ]
+        },
+        backdash: {
+            oMove: {
+                nX: -12
+            },
+            aFrames: [
+                {
+                    nFrame: 2,
+                    sFrame: 'blur'
+                },
+                {
+                    nFrame: 8,
+                    sFrame: 'burst'
+                },
+                {
+                    nFrame: 4,
+                    sFrame: 'backward'
                 }
             ]
         },
@@ -324,24 +372,34 @@ GameData.oEntity.oCharacter = {
         down: [
             {
                 nFrame: 20,
-                sFrame: 'down'
+                sFrame: 'down',
+                oStatus: {
+                    bAerial: false,
+                    bLunch: false
+                }
             }
         ],
         recovery: [
             {
-                nFrame: 1,
+                nFrame: 6,
                 sFrame: 'recovery',
                 oStatus: {
                     bReverse: true
                 }
             },
             {
-                nFrame: 7,
-                sFrame: 'recovery'
-            },
+                nFrame: 4,
+                sFrame: 'blur_invul'
+            }
+        ],
+        landing: [
             {
                 nFrame: 2,
-                sFrame: 'blur_invul'
+                sFrame: 'blur',
+                oStatus: {
+                    bAerial: false,
+                    bLunch: false
+                }
             }
         ],
         teleport: {
@@ -451,45 +509,6 @@ GameData.oEntity.oCharacter = {
                 }
             }
         ],
-        // Dash
-        dash: {
-            oMove: {
-                nX: 12
-            },
-            aFrames: [
-                {
-                    nFrame: 2,
-                    sFrame: 'blur'
-                },
-                {
-                    nFrame: 4,
-                    sFrame: 'burst'
-                },
-                {
-                    nFrame: 8,
-                    sFrame: 'forward'
-                }
-            ]
-        },
-        backdash: {
-            oMove: {
-                nX: -12
-            },
-            aFrames: [
-                {
-                    nFrame: 2,
-                    sFrame: 'blur'
-                },
-                {
-                    nFrame: 4,
-                    sFrame: 'burst'
-                },
-                {
-                    nFrame: 8,
-                    sFrame: 'backward'
-                }
-            ]
-        },
         // Animation
         opening: [
             // TP
@@ -583,13 +602,14 @@ GameData.oEntity.oCharacter = {
                 sAnimation: 'dash',
                 bNotInCommandList: true,
                 nGatlingLevel: 0,
+                sCheck: 'bGround',
                 oStun: {},
                 oPushback: {},
                 oManipulation: {
                     nMaxLengthFrame: 15,
                     aButtons: [
                         { FW: false },
-                        null,
+                        { NT: false },
                         { FW: false }
                     ]
                 }
@@ -599,24 +619,26 @@ GameData.oEntity.oCharacter = {
                 sAnimation: 'backdash',
                 bNotInCommandList: true,
                 nGatlingLevel: 0,
+                sCheck: 'bGround',
                 oStun: {},
                 oPushback: {},
                 oManipulation: {
                     nMaxLengthFrame: 15,
                     aButtons: [
                         { BW: false },
-                        null,
+                        { NT: false },
                         { BW: false }
                     ]
                 }
             },
             {
-                 // dash_cancel
+                // dash_cancel
                 sCod: 'dash',
                 sAnimation: 'dash',
                 bNotInCommandList: true,
                 nCost: 8,
                 nGatlingLevel: 1,
+                sCheck: 'bGround',
                 oStun: {},
                 oPushback: {},
                 bLast: true,
@@ -624,7 +646,7 @@ GameData.oEntity.oCharacter = {
                     nMaxLengthFrame: 15,
                     aButtons: [
                         { FW: false },
-                        null,
+                        { NT: false },
                         { FW: false }
                     ]
                 }
@@ -636,6 +658,7 @@ GameData.oEntity.oCharacter = {
                 bUnblockable: true,
                 bOnlyOnGround: true,
                 bNotInCommandList: true,
+                sCheck: 'bGround',
                 sCollisionBox: 'oPositionBox',
                 oStun: {
                     nHit: 30,
@@ -665,6 +688,7 @@ GameData.oEntity.oCharacter = {
                 bUnblockable: true,
                 bOnlyOnGround: true,
                 bNotInCommandList: true,
+                sCheck: 'bGround',
                 sCollisionBox: 'oPositionBox',
                 oStun: {
                     nHit: 30,

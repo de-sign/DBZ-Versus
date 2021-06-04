@@ -30,7 +30,7 @@ Object.assign(
                     sText: 'Open menu'
                 },
                 {
-                    aButton: ['UP', 'START'],
+                    aButton: ['DOWN', 'START'],
                     sText: 'Restart'
                 }
             ],
@@ -82,7 +82,7 @@ Object.assign(
                     SceneManager.oTransverseData.MNU__aController.forEach( oController => {
                         oController && oController.ifPressedNow( {
                             START: () => {
-                                if( oController.isPressed('UP') ){
+                                if( oController.isPressed('DOWN') && !this.oTraining.isOpen() ){
                                     this.oTraining.restart();
                                 } else {
                                     this.oController = oController;

@@ -16,28 +16,35 @@ Object.assign(
     GameAnimation, {
         
         oType: {
+            // ACTION
             // undefined: 'action' 
-            // MOVEMENT
-            stand: 'movement',
-            block: 'movement',
-            forward: 'movement',
-            backward: 'movement',
             dash: 'dash',
-            // GUARD
+
+            // MOVEMENT
+            stand: 'stand',
+            block: 'stand',
+            backward: 'movement',
+            forward: 'movement',
+            jump_backward: 'jump',
+            jump_neutral: 'jump',
+            jump_forward: 'jump',
+
+            // HURT
             guard: 'guard',
-            // HIT
             hit_light: 'hit',
             hit_heavy: 'hit',
             hit_luncher: 'hit',
             hit_throw: 'hit',
-            lunch: 'hit',
+            lunch: 'lunch',
+            fall: 'lunch',
+
             // DOWN
             down: 'down',
             recovery: 'recovery'
         },
-        aAllType: ['action', 'movement','guard', 'hit', 'down', 'recovery'],
-        aTypeHurt: ['guard', 'hit'],
-        aTypeMove: ['forward', 'backward'],
+        aAllType: ['action', 'movement', 'jump', 'dash', 'guard', 'hit', 'lunch', 'down', 'recovery'],
+        aTypeHurt: ['guard', 'hit', 'lunch'],
+        aTypeMove: ['stand', 'movement', 'jump'],
 
         getType: function(sName){
             return GameAnimation.oType[sName] || 'action';
@@ -46,7 +53,7 @@ Object.assign(
             return this.aTypeHurt.indexOf( this.getType(sName) ) != -1;
         },
         isTypeMove: function(sName){
-            return this.aTypeMove.indexOf(sName) != -1;
+            return this.aTypeMove.indexOf( this.getType(sName) ) != -1;
         },
 
         prototype: Object.assign(

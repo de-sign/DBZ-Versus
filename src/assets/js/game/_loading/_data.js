@@ -17,6 +17,7 @@ Object.assign(
                         this.createAnimations(sType, oEntity);
                         if( sType == 'oCharacter' ){
                             this.createLunch(oEntity);
+                            this.createJump(oEntity);
                             this.createRecovery(oEntity);
                             this.createCommands(oEntity);
                             this.createAnimationsList(oEntity);
@@ -162,8 +163,16 @@ Object.assign(
             let nLastY = 0,
                 oLastFrame = null;
 
-            const aAnim = [],
-                aMove = [],
+            const oAnim = {
+                    lunch: {
+                        aAnim: [],
+                        aMove: []
+                    },
+                    fall: {
+                        aAnim: [],
+                        aMove: []
+                    }
+                },
                 nDemiLength = (GameSettings.oLuncher.nLength - 1) / 2,
                 nX = GameSettings.oLuncher.oMove.nX / GameSettings.oLuncher.nLength;
 
@@ -173,51 +182,114 @@ Object.assign(
                     nParabolY = -1 * (nParabolX * nParabolX - 1),
                     nTargetY = Math.round(nParabolY * GameSettings.oLuncher.oMove.nY),
                     nY = nTargetY - nLastY,
-                    bInvulnerable = GameSettings.oLuncher.nInvulnerable >= nIndex;
+                    bInvulnerable = GameSettings.oLuncher.nInvulnerable >= nIndex,
+                    bFall = nIndex > GameSettings.oLuncher.nLength / 2,
+                    sAnim = bFall ? 'fall' : 'lunch';
                 
-                let sFrame = nIndex <= GameSettings.oLuncher.nLength / 2 ? 'hit_luncher' : 'hit_fall';
+                let sFrame = GameSettings.oLuncher.oFrames[ bFall ? 'sFall' : 'sLunch' ];
                 if( nIndex == 1 ){
                     sFrame += '_filter';
                 } else if (bInvulnerable){
                     sFrame += '_invul';
                 }
 
-                if(
-                    oLastFrame
-                    && oLastFrame.sFrame == sFrame
-                    && (bInvulnerable ? !oLastFrame.aHurtBox : oLastFrame.aHurtBox)
-                ){
+                if( oLastFrame && oLastFrame.sFrame == sFrame ){
                     oLastFrame.nFrame++;
                 } else {
-                    aAnim.push( oLastFrame = {
+                    oAnim[sAnim].aAnim.push( oLastFrame = {
                         nFrame: 1,
-                        sFrame
+                        sFrame,
+                        oStatus: {
+                            bAerial: true
+                        }
                     } );
                     if( bInvulnerable ){
                         Object.assign( oLastFrame, {
                             oStatus: {
+                                bAerial: true,
                                 bInvul: true,
+                                bLunch: true,
                                 bReverse: nIndex == 1
                             }
                         } );
                     }
                 }
-                aMove.push( { nX, nY } );
+                oAnim[sAnim].aMove.push( { nX, nY } );
                 nLastY = nTargetY;
             }
 
-            oChar.oAnimations.lunch = {
-                oMove: aMove,
-                aFrames: aAnim
+            for( let sAnim in oAnim ){
+                oChar.oAnimations[sAnim] = {
+                    oMove: oAnim[sAnim].aMove,
+                    aFrames: oAnim[sAnim].aAnim
+                };
+            }
+        },
+
+        createJump: function(oChar){
+            const oCoef = {
+                backward: -1,
+                neutral: 0,
+                forward: 1
             };
+
+            for( let sType in oCoef ){
+                let nLastY = 0,
+                    oLastFrame = null;
+
+                const aAnim = [ {
+                        nFrame: 2,
+                        sFrame: 'blur',
+                        oStatus: {
+                            bAerial: true
+                        }
+                    } ],
+                    aMove = [{}],
+                    nDemiLength = (GameSettings.oJump.nLength - 1) / 2,
+                    nX = GameSettings.oJump.oMove.nX / GameSettings.oJump.nLength;
+
+                // Ajout de 10 FRAMES supplémentaire pour gérer le DOWN
+                for( let nIndex = 1; nIndex <= GameSettings.oJump.nLength + 10; nIndex++ ){
+                    const nParabolX = (nIndex - 1 - nDemiLength) / nDemiLength,
+                        nParabolY = -1 * (nParabolX * nParabolX - 1),
+                        nTargetY = Math.round(nParabolY * GameSettings.oJump.oMove.nY),
+                        nY = nTargetY - nLastY,
+                        bPrejump = nIndex <= GameSettings.oJump.nPrejump;
+                    
+                    let sFrame = GameSettings.oJump.oFrames[ bPrejump ? 'sPrejump' : 'sJump' ];
+                    if( oLastFrame && oLastFrame.sFrame == sFrame ){
+                        oLastFrame.nFrame++;
+                    } else {
+                        aAnim.push( oLastFrame = {
+                            nFrame: 1,
+                            sFrame,
+                            oStatus: {
+                                bAerial: true,
+                                bReverse: true,
+                                bCancel: !bPrejump
+                            }
+                        } );
+                    }
+                    aMove.push( { nX: nX * oCoef[sType], nY } );
+                    nLastY = nTargetY;
+                }
+                
+                oChar.oAnimations['jump_' + sType] = {
+                    oMove: aMove,
+                    aFrames: aAnim
+                };
+            }
         },
 
         createRecovery: function(oChar){
             const aRecovery = oChar.oAnimations.recovery.aFrames;
             ['forward', 'backward'].forEach( sType => {
                 const aAnim = [];
-                aRecovery.forEach( oFrame => {
-                    aAnim.push( Object.assign({}, oFrame) );
+                aRecovery.forEach( (oFrame, nIndex) => {
+                    aAnim.push( Object.assign(
+                        nIndex ? {} : { oPositionBox: null },
+                        oFrame
+                    ) );
                 } );
                 oChar.oAnimations['recovery_' + sType] = {
                     oMove: GameSettings.oRecovery[sType],

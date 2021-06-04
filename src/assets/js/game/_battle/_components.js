@@ -290,6 +290,9 @@ Object.assign(
         },
         needFreeze: function(){
             return this.oCurrent && this.oCurrent.oStun.nFreeze && !this.bFreeze;
+        },
+        isJumpCancellable: function(){
+            return this.oCurrent && this.oCurrent.bJumpCancellable;
         }
     }
 );
