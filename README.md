@@ -27,7 +27,6 @@ Une documentation technique est disponnible ici : [References.md](https://github
 ## TODO
 __BUG__
 * Problème REVERSE en cas de CROSS UP dans le coin
-* 
 
 __Menu__
 * Ajout du ONLINE ?
@@ -48,6 +47,15 @@ __Stage__
 <br/>*N/A*
 
 __Battle__
+* Faire le SPRITE pour JUMP ATTACK
+    * LIGHT
+        * FRZ
+        * GHN
+        * GKU_SSJ
+        * GKU
+        * MJN_BUU
+    * HEAVY
+        * All
 * Fin de match
     * Animation de victoire
     * Menu de choix
@@ -73,12 +81,6 @@ __Training__
 __General__
 * Optimisation du Code
     * Classe PLAYER avec pour enfant LOCAL et DUMMY ( et AI ? )
-* Faire le SPRITE pour JUMP ATTACK
-    * FRZ
-    * GHN
-    * GKU_SSJ
-    * GKU
-    * MJN_BUU
 * Commenter le Code afin de générer la DOC
     * ENGINE ( A finir )
     * GAME

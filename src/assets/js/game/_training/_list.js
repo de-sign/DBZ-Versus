@@ -70,29 +70,36 @@ Object.assign(
 
                 changeAnimation: function(){
                     const oMenu = this.oMenu.getSelected();
+                    let nLength = 60,
+                        sAnimation = 'stand';
+
                     if( oMenu && oMenu.__oData ){
-                        if( !this.oAnimation ){
-                            this.setAnimation('stand');
+                        if( oMenu.__oData.sCheck == 'bAerial' ){
+                            sAnimation = 'jump_neutral';
                         }
-                        else if( !this.oAnimation.nLength || this.oAnimation.isEnd() ){
-                            if( this.oAnimation.sName == 'stand' ){
-                                this.setAnimation(oMenu.__oData.sListAnimation || oMenu.__oData.sAnimation);
-                            } else {
-                                this.setAnimation('stand');
-                                this.oAnimation.nLength = 60;
+                        if( this.oAnimation ){
+                            if( this.oAnimation.isMovement() ){
+                                if( this.oAnimation.sName == sAnimation && this.oAnimation.isEnd() ){
+                                    sAnimation = oMenu.__oData.sListAnimation || oMenu.__oData.sAnimation;
+                                    nLength = 0;
+                                }
+                            }
+                            else if( !this.oAnimation.isEnd() ){
+                                sAnimation = null;
                             }
                         }
-                    } else {
-                        this.setAnimation('stand');
                     }
+
+                    sAnimation && this.setAnimation(sAnimation, nLength);
                 },
-                setAnimation: function(sAnimation){
+                setAnimation: function(sAnimation, nLength){
                     if( !this.oAnimation || this.oAnimation.sName != sAnimation ){
                         this.oAnimation = new GameAnimation(
                             sAnimation,
                             this.oEngine.oPlayer.oData.oFrames,
                             this.oEngine.oPlayer.oData.oAnimations[sAnimation].aFrames
                         );
+                        nLength && (this.oAnimation.nLength = nLength);
                     }
                 }
             }

@@ -64,20 +64,6 @@ Object.assign(
                                 oCommand.nCost && (this.nKi -= oCommand.nCost);
                                 this.setAnimation(oCommand.sAnimation);
                             }
-                            // Gestion JUMPCANCEL
-                            else if( this.oGatling.isJumpCancellable() && !oCanAction.bStack ){
-                                switch( sDirection ){
-                                    case 'UB':
-                                        this.setStance('jump_backward');
-                                        break;
-                                    case 'UP':
-                                        this.setStance('jump_neutral');
-                                        break;
-                                    case 'UF':
-                                        this.setStance('jump_forward');
-                                        break;
-                                }
-                            }
                             // Gestion DIR
                             else if( this.canMove() ){
                                 switch( sDirection ){
@@ -101,6 +87,20 @@ Object.assign(
                                         break;
                                     default:
                                         this.setStance('stand');
+                                        break;
+                                }
+                            }
+                            // Gestion JUMPCANCEL
+                            else if( this.oGatling.isJumpCancellable() && !oCanAction.bStack ){
+                                switch( sDirection ){
+                                    case 'UB':
+                                        this.setStance('jump_backward');
+                                        break;
+                                    case 'UP':
+                                        this.setStance('jump_neutral');
+                                        break;
+                                    case 'UF':
+                                        this.setStance('jump_forward');
                                         break;
                                 }
                             }
