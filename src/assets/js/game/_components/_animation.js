@@ -28,6 +28,7 @@ Object.assign(
             jump_backward: 'jump',
             jump_neutral: 'jump',
             jump_forward: 'jump',
+            landing: 'landing',
 
             // HURT
             guard: 'guard',
@@ -45,6 +46,7 @@ Object.assign(
         aAllType: ['action', 'movement', 'jump', 'dash', 'guard', 'hit', 'lunch', 'down', 'recovery'],
         aTypeHurt: ['guard', 'hit', 'lunch'],
         aTypeMove: ['stand', 'movement', 'jump'],
+        aTypeStack: ['action', 'dash', 'landing'],
 
         getType: function(sName){
             return GameAnimation.oType[sName] || 'action';
@@ -54,6 +56,9 @@ Object.assign(
         },
         isTypeMove: function(sName){
             return this.aTypeMove.indexOf( this.getType(sName) ) != -1;
+        },
+        isTypeStack: function(sName){
+            return this.aTypeStack.indexOf( this.getType(sName) ) != -1;
         },
 
         prototype: Object.assign(
@@ -106,6 +111,9 @@ Object.assign(
                 },
                 isMovement: function(){
                     return GameAnimation.isTypeMove(this.sName);
+                },
+                isStack: function(){
+                    return GameAnimation.isTypeStack(this.sName);
                 }
             }
         )

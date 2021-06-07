@@ -349,14 +349,18 @@ Paramétrage de l'animation d'un personnage JUMP
 ```javascript
 GameSettings.oJump = {
     nLength: 36,
-    nPrejump: 6,
+    oPre: {
+        nJump: 8,
+        nLanding: 8
+    },
     oMove: {
         nX: 63 * 4,
         nY: -54 * 3
     },
     oFrames: {
         sPrejump: 'fall',
-        sJump: 'jump'
+        sJump: 'jump',
+        sPrelanding: 'fall',
     }
 };
 ```

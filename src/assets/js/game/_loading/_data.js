@@ -200,19 +200,12 @@ Object.assign(
                         nFrame: 1,
                         sFrame,
                         oStatus: {
-                            bAerial: true
+                            bAerial: true,
+                            bLunch: true,
+                            bInvul: bInvulnerable,
+                            bReverse: nIndex == 1
                         }
                     } );
-                    if( bInvulnerable ){
-                        Object.assign( oLastFrame, {
-                            oStatus: {
-                                bAerial: true,
-                                bInvul: true,
-                                bLunch: true,
-                                bReverse: nIndex == 1
-                            }
-                        } );
-                    }
                 }
                 oAnim[sAnim].aMove.push( { nX, nY } );
                 nLastY = nTargetY;
@@ -248,15 +241,23 @@ Object.assign(
                     nDemiLength = (GameSettings.oJump.nLength - 1) / 2,
                     nX = GameSettings.oJump.oMove.nX / GameSettings.oJump.nLength;
 
-                // Ajout de 10 FRAMES supplémentaire pour gérer le DOWN
+                // Ajout de 10 FRAMES supplémentaire pour gérer le LANDING
                 for( let nIndex = 1; nIndex <= GameSettings.oJump.nLength + 10; nIndex++ ){
                     const nParabolX = (nIndex - 1 - nDemiLength) / nDemiLength,
                         nParabolY = -1 * (nParabolX * nParabolX - 1),
                         nTargetY = Math.round(nParabolY * GameSettings.oJump.oMove.nY),
                         nY = nTargetY - nLastY,
-                        bPrejump = nIndex <= GameSettings.oJump.nPrejump;
+                        bPrejump = nIndex <= GameSettings.oJump.oPre.nJump,
+                        bPrelanding = nIndex >= GameSettings.oJump.nLength - GameSettings.oJump.oPre.nLanding;
                     
-                    let sFrame = GameSettings.oJump.oFrames[ bPrejump ? 'sPrejump' : 'sJump' ];
+                    let sFrame = 'sJump';
+                    if( bPrejump ){
+                        sFrame = 'sPrejump';
+                    } else if( bPrelanding ){
+                        sFrame = 'sPrelanding';
+                    }
+                    sFrame = GameSettings.oJump.oFrames[sFrame];
+
                     if( oLastFrame && oLastFrame.sFrame == sFrame ){
                         oLastFrame.nFrame++;
                     } else {
