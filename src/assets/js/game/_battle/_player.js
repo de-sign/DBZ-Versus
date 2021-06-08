@@ -291,7 +291,7 @@ Object.assign(
                         };
                     }
                     // Gestion STACK pour ACTION en HIT ou DASH
-                    else if( this.aHit.length || this.oAnimation.sType == 'dash' ){
+                    else if( this.aHit.length || this.oAnimation.isStack() ){
                         const bCancel = this.oStatus.bCancel && !bFreeze;
                         oCanAction = {
                             sCommand: 'aOffense',
