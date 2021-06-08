@@ -22,6 +22,7 @@ Object.assign(
 
             // MOVEMENT
             stand: 'stand',
+            landing: 'stand',
             block: 'stand',
             backward: 'movement',
             forward: 'movement',

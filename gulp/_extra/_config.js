@@ -292,7 +292,7 @@ Object.assign(
                 }
             ]
         },
-        aFilterFrames: [/*'hit_light', 'hit_heavy', 'hit_luncher', */'guard'],
+        aFilterFrames: [/*'hit_light', 'hit_heavy', 'hit_luncher', 'guard'*/],
 
         aEntity: ['oEffect', 'oChar'],
         oEffect: {
@@ -479,6 +479,198 @@ Object.assign(
                 ],
                 oRatio: {}
             },
+        },
+
+        oMigrate: {
+            oCanvas: {
+                nWidth: 50 * 7,
+                nHeight: 50 * 14
+            },
+            aFrames: [
+                ['stand_0', 'stand_1'],
+                ['move_0', 'move_1', 'move_2', 'move_3'],
+                ['jump_0', 'jump_1', 'jump_2', 'jump_3'],
+                ['guard_0', 'guard_1', 'guard_2'],
+                ['hit_0', 'hit_1', 'hit_2', 'hit_3', 'hit_4', 'hit_5', 'hit_6'],
+                ['throw_0', 'throw_1', 'throw_2'],
+                ['ki_0_0', 'ki_0_1', 'ki_1_0', 'ki_1_1', 'ki_1_2'],
+                ['attack_0_0', 'attack_0_1', 'attack_0_2', 'attack_0_3', 'attack_0_4', 'attack_0_5', 'attack_0_6'],
+                ['attack_1_0', 'attack_1_1', 'attack_1_2', 'attack_1_3', 'attack_1_4', 'attack_1_5', 'attack_1_6'],
+                ['attack_2_0', 'attack_2_1', 'attack_2_2', 'attack_2_3', 'attack_2_4', 'attack_2_5', 'attack_2_6'],
+                ['attack_3_0', 'attack_3_1', 'attack_3_2', 'attack_3_3', 'attack_3_4', 'attack_3_5', 'attack_3_6'],
+                ['attack_4_0', 'attack_4_1', 'attack_4_2', 'attack_4_3', 'attack_4_4', 'attack_4_5', 'attack_4_6'],
+                ['attack_5_0', 'attack_5_1', 'attack_5_2', 'attack_5_3', 'attack_5_4', 'attack_5_5', 'attack_5_6'],
+                ['attack_6_0', 'attack_6_1', 'attack_6_2', 'attack_6_3', 'attack_6_4', 'attack_6_5', 'attack_6_6']
+            ],
+            
+            oMapping: {
+                stand_0: 'stand',
+                stand_1: 'blur',
+
+                move_0: 'backward',
+                move_1: 'forward',
+                move_2: 'burst',
+                move_3: 'recovery',
+
+                jump_0: 'pre_jump',
+                jump_1: 'fall',
+                jump_2: 'jump',
+                jump_3: 'fall',
+                
+                guard_0: 'guard',
+                guard_1: 'pre_jump',
+                guard_2: 'reflect',
+
+                hit_0: 'hit_light',
+                hit_1: 'hit_heavy',
+                hit_2: 'hit_luncher',
+                hit_3: 'hit_fall',
+                hit_4: 'down',
+
+                throw_0: 'reflect',
+                throw_1: 'guard',
+
+                ki_0_0: 'kikoha',
+                ki_0_1: 'ki_beam',
+                ki_1_0: 'super_first',
+                ki_1_1: 'super_second',
+                ki_1_2: 'super_third',
+
+                attack_0_0: 'pre_jump',
+                attack_0_1: 'jump_light',
+                attack_0_2: 'jump_light_active',
+                attack_0_3: 'jump_light_second',
+                attack_0_4: 'jump_light_second_active',
+                attack_0_5: 'jump',
+
+                attack_1_0: 'jump',
+                attack_1_1: 'fall',
+                attack_1_2: 'jump_heavy',
+                attack_1_3: 'jump_heavy_active',
+                attack_1_4: 'jump',
+
+                attack_2_0: 'light_first',
+                attack_2_1: 'light_first_active',
+                attack_2_2: 'light_second',
+                attack_2_3: 'light_second_active',
+                attack_2_4: 'light_third',
+                attack_2_5: 'light_third_active',
+
+                attack_3_0: 'heavy',
+                attack_3_1: 'heavy_active',
+                attack_3_2: 'heavy_second',
+                attack_3_3: 'heavy_second_active',
+                
+                attack_4_0: 'jump',
+                attack_4_1: 'luncher',
+                attack_4_2: 'luncher_active',
+                attack_4_3: 'jump',
+
+                attack_5_0: 'tracker',
+                attack_5_1: 'tracker_active',
+                attack_5_2: 'tracker_second',
+                attack_5_3: 'tracker_second_active',
+                attack_5_4: 'tracker_third',
+                attack_5_5: 'tracker_third_active',
+
+                attack_6_0: 'extra',
+                attack_6_1: 'extra_active',
+                attack_6_2: 'extra_second',
+                attack_6_3: 'extra_second_active'
+            },
+            
+            oChar: {
+                BJT: {
+                    jump_light: 'heavy',
+                    jump_light_active: 'heavy_active',
+                    heavy: 'forward_inverse',
+                    heavy_active: 'heavy',
+                    heavy_second: 'heavy_active',
+                    tracker: 'forward',
+                    tracker_active: 'tracker',
+                    tracker_second: 'tracker_active',
+                    tracker_second_active: 'forward'
+                },
+
+                BUU: {
+                    jump_light: 'tracker',
+                    jump_light_active: 'tracker_active',
+                    jump_light_second: 'tracker_second',
+                    jump_light_second_active: 'tracker_second_active',
+                    light_third: false,
+                    light_third_active: false,
+                    tracker: 'pre_jump',
+                    tracker_active: 'tracker',
+                    tracker_second: 'tracker_active',
+                    tracker_second_active: 'tracker_second',
+                    tracker_third: 'tracker_second_active',
+                    tracker_third_active: 'jump',
+                    extra: 'forward',
+                    extra_active: 'light_third',
+                    extra_second: 'light_third_active',
+                    extra_second_active: 'forward'
+                },
+
+                FRZ: {
+                    light_third: false,
+                    light_third_active: false,
+                    tracker: 'forward',
+                    tracker_active: 'tracker',
+                    tracker_second: 'tracker_active',
+                    tracker_second_active: 'forward',
+                    extra: 'light_third',
+                    extra_active: 'light_third_active'
+                },
+
+                GHN: {
+                    tracker: 'forward',
+                    tracker_active: 'tracker',
+                    tracker_second: 'tracker_active',
+                    tracker_second_active: 'forward',
+                    tracker_third: 'tracker_second',
+                    tracker_third_active: 'tracker_second_active'
+                },
+
+                GKU: {
+                    tracker: 'forward',
+                    tracker_active: 'tracker',
+                    tracker_second: 'tracker_active',
+                    tracker_second_active: 'forward'
+                },
+
+                GKU_SSJ: {
+                    tracker: 'forward',
+                    tracker_active: 'tracker',
+                    tracker_second: 'tracker_active',
+                    tracker_second_active: 'forward'
+                },
+
+                KID_GHN: {
+                    jump_light: 'tracker',
+                    jump_light_active: 'tracker_active',
+                    jump_light_second: 'tracker_second',
+                    jump_light_second_active: 'tracker_second_active',
+                    tracker: 'pre_jump',
+                    tracker_active: 'tracker',
+                    tracker_second: 'tracker_active',
+                    tracker_second_active: 'tracker_second',
+                    tracker_third: 'tracker_second_active',
+                    tracker_third_active: 'jump'
+                },
+
+                SRU: {
+                    light_third: false,
+                    light_third_active: false,
+                    tracker: 'forward',
+                    tracker_active: 'light_third',
+                    tracker_second: 'light_third_active',
+                    tracker_second_active: 'forward',
+                    extra: 'forward',
+                    extra_active: 'tracker',
+                    extra_second: 'tracker_active',
+                    extra_second_active: 'forward'
+                }
+            }
         }
     }
 );
