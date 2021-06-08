@@ -79,17 +79,23 @@ __Training__
     * Frame Data ?
 
 __General__
-* Optimisation du Code
-    * Classe PLAYER avec pour enfant LOCAL et DUMMY ( et AI ? )
-* Commenter le Code afin de générer la DOC
-    * ENGINE ( A finir )
-    * GAME
-* Faire une API ELECTRON
+* Modifier la logique des FRAMES
+    * Modifier les FRAMESETS
+    * Modifier la CONFIG BASE
+        * FRAMES
+        * ANIMATIONS
+    * Tester
+* Faire une API ELECTRON ?
     * Paramétrages globaux
     * Ajouter CHARACTER
     * Générer SPRITE
     * Générer ANIMATION
     * Générer COMMAND
+* Commenter le Code afin de générer la DOC
+    * ENGINE ( A finir )
+    * GAME
+* Optimisation du Code
+    * Classe PLAYER avec pour enfant LOCAL et DUMMY ( et AI ? )
 * Paramétrages
     * Animations
     * HurtBox

@@ -292,6 +292,34 @@ Object.assign(
                 }
             ]
         },
+        oNewFilter: {
+            oChar: [
+                {
+                    sSuffixe: '_0',
+                    aFrame: ['stand_1', 'hit_2', 'hit_4', 'move_1', 'move_2', 'move_3', 'guard_0', 'guard_2'],
+                    sColor: 'rgb(255, 255, 255)',
+                    nAlpha: 0.4
+                },
+                {
+                    sSuffixe: '_1',
+                    aFrame: ['hit_0', 'hit_1', 'hit_2'],
+                    sColor: 'rgb(255, 102, 0)',
+                    nAlpha: 0.4
+                },
+                {
+                    sSuffixe: '_2',
+                    aFrame: ['guard_0', 'guard_1'],
+                    sColor: 'rgb(0, 102, 255)',
+                    nAlpha: 0.4
+                },
+                {
+                    sSuffixe: '_3',
+                    aFrame: ['hit_0', 'hit_1'],
+                    sColor: 'rgb(153, 51, 204)',
+                    nAlpha: 0.4
+                }
+            ]
+        },
         aFilterFrames: [/*'hit_light', 'hit_heavy', 'hit_luncher', 'guard'*/],
 
         aEntity: ['oEffect', 'oChar'],
@@ -460,7 +488,22 @@ Object.assign(
                     tracker_second_active: {
                         nWidth: 2,
                         nHeight: 1
-                    }
+                    },
+
+                    // MIGRATE
+                    attack_5_0: { nMX: 0 }, // 'tracker_second',
+                    attack_5_1: { nMX: 0, nWidth: 2 }, // 'tracker_second_1',
+                    attack_5_2: { nMX: 1, nWidth: 2 }, // 'tracker_second_2',
+                    attack_5_3: { nMX: 2, nWidth: 2 }, // 'tracker_second_active',
+                    attack_5_4: { nMX: 3, nWidth: 2 }, // 'tracker_2',
+                    attack_5_5: { nMX: 4, nWidth: 2 }, // 'tracker_1',
+                    attack_5_6: { nMX: 5 }, // 'tracker',
+
+                    attack_6_0: { nMX: 0, nWidth: 2 }, // 'tracker_2',
+                    attack_6_1: { nMX: 1, nWidth: 2 }, // 'tracker_active',
+                    attack_6_2: { nMX: 2, nWidth: 2 }, // 'tracker_2',
+                    attack_6_3: { nMX: 3, nWidth: 2 }, // 'tracker_1',
+                    attack_6_4: { nMX: 4 } // 'tracker',
                 }
             },
             
@@ -489,7 +532,7 @@ Object.assign(
             aFrames: [
                 ['stand_0', 'stand_1'],
                 ['move_0', 'move_1', 'move_2', 'move_3'],
-                ['jump_0', 'jump_1', 'jump_2', 'jump_3'],
+                ['jump_0', 'jump_1', 'jump_2', 'jump_3', 'jump_4'],
                 ['guard_0', 'guard_1', 'guard_2'],
                 ['hit_0', 'hit_1', 'hit_2', 'hit_3', 'hit_4', 'hit_5', 'hit_6'],
                 ['throw_0', 'throw_1', 'throw_2'],
@@ -516,6 +559,7 @@ Object.assign(
                 jump_1: 'fall',
                 jump_2: 'jump',
                 jump_3: 'fall',
+                jump_4: 'pre_jump',
                 
                 guard_0: 'guard',
                 guard_1: 'pre_jump',
@@ -572,11 +616,15 @@ Object.assign(
                 attack_5_3: 'tracker_second_active',
                 attack_5_4: 'tracker_third',
                 attack_5_5: 'tracker_third_active',
+                attack_5_6: 'tracker_extra',
 
                 attack_6_0: 'extra',
                 attack_6_1: 'extra_active',
                 attack_6_2: 'extra_second',
-                attack_6_3: 'extra_second_active'
+                attack_6_3: 'extra_second_active',
+                attack_6_4: 'extra_third',
+                attack_6_5: 'extra_third_active',
+                attack_6_6: 'extra_extra',
             },
             
             oChar: {
@@ -656,6 +704,22 @@ Object.assign(
                     tracker_second_active: 'tracker_second',
                     tracker_third: 'tracker_second_active',
                     tracker_third_active: 'jump'
+                },
+
+                MJN_BUU: {
+                    tracker: 'tracker_second',
+                    tracker_active: 'tracker_second_1',
+                    tracker_second: 'tracker_second_2',
+                    tracker_second_active: 'tracker_second_active',
+                    tracker_third: 'tracker_2',
+                    tracker_third_active: 'tracker_1',
+                    tracker_extra: 'tracker',
+                    
+                    extra: 'tracker_2',
+                    extra_active: 'tracker_active',
+                    extra_second: 'tracker_2',
+                    extra_second_active: 'tracker_1',
+                    extra_third: 'tracker',
                 },
 
                 SRU: {
