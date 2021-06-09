@@ -333,7 +333,9 @@ Object.assign(
                     ['impact_hit_1', 'impact_hit_2', 'impact_hit_3', 'impact_hit_4'],
                     ['impact_guard_1', 'impact_guard_2', 'impact_guard_3', 'impact_guard_4']
                 ],
-                oRatio: {}
+                oRatio: {
+                    hit_6: { nHeight: 2 }
+                }
             }
         },
 
@@ -351,7 +353,9 @@ Object.assign(
                     ['kikoha'],
                     ['super_first', 'super_second', 'super_third']
                 ],
-                oRatio: {}
+                oRatio: {
+                    hit_6: { nHeight: 2 }
+                }
             },
 
             BUU: {
@@ -367,13 +371,15 @@ Object.assign(
                     ['kikoha', null, 'tracker_second', 'tracker_second_active'],
                     ['super_first', 'super_second', 'super_third']
                 ],
-                oRatio: {}
+                oRatio: {
+                    hit_6: { nHeight: 2 }
+                }
             },
 
             FRZ: {
                 sType: 'oChar',
                 sChar: 'FRZ',
-                aColor: ['LSW_FRZ', 'CTM_MKR'],
+                aColor: ['LSW_FRZ'/*, 'CTM_MKR'*/, 'SWP_FRT'],
                 aFrames: [
                     ['stand', 'blur', 'backward', 'forward'],
                     ['jump', 'fall', null, 'guard', 'reflect', 'burst'],
@@ -383,7 +389,9 @@ Object.assign(
                     ['kikoha', 'ki_beam'],
                     ['super_first', 'super_second', 'super_third']
                 ],
-                oRatio: {}
+                oRatio: {
+                    hit_6: { nHeight: 2 }
+                }
             },
 
             GHN: {
@@ -399,7 +407,9 @@ Object.assign(
                     ['kikoha'],
                     ['super_first', 'super_second', 'super_third']
                 ],
-                oRatio: {}
+                oRatio: {
+                    hit_6: { nHeight: 2 }
+                }
             },
 
             GKU: {
@@ -415,7 +425,9 @@ Object.assign(
                     ['kikoha'],
                     ['super_first', 'super_second', 'super_third']
                 ],
-                oRatio: {}
+                oRatio: {
+                    hit_6: { nHeight: 2 }
+                }
             },
 
             GKU_SSJ: {
@@ -431,7 +443,9 @@ Object.assign(
                     ['kikoha'],
                     ['super_first', 'super_second', 'super_third']
                 ],
-                oRatio: {}
+                oRatio: {
+                    hit_6: { nHeight: 2 }
+                }
             },
 
             KID_GHN: {
@@ -447,7 +461,9 @@ Object.assign(
                     ['kikoha', null, 'tracker_second', 'tracker_second_active'],
                     ['super_first', 'super_second', 'super_third']
                 ],
-                oRatio: {}
+                oRatio: {
+                    hit_6: { nHeight: 2 }
+                }
             },
 
             MJN_BUU: {
@@ -491,19 +507,21 @@ Object.assign(
                     },
 
                     // MIGRATE
-                    attack_5_0: { nMX: 0 }, // 'tracker_second',
-                    attack_5_1: { nMX: 0, nWidth: 2 }, // 'tracker_second_1',
-                    attack_5_2: { nMX: 1, nWidth: 2 }, // 'tracker_second_2',
-                    attack_5_3: { nMX: 2, nWidth: 2 }, // 'tracker_second_active',
-                    attack_5_4: { nMX: 3, nWidth: 2 }, // 'tracker_2',
-                    attack_5_5: { nMX: 4, nWidth: 2 }, // 'tracker_1',
-                    attack_5_6: { nMX: 5 }, // 'tracker',
+                    hit_6: { nHeight: 2 },
 
-                    attack_6_0: { nMX: 0, nWidth: 2 }, // 'tracker_2',
-                    attack_6_1: { nMX: 1, nWidth: 2 }, // 'tracker_active',
-                    attack_6_2: { nMX: 2, nWidth: 2 }, // 'tracker_2',
-                    attack_6_3: { nMX: 3, nWidth: 2 }, // 'tracker_1',
-                    attack_6_4: { nMX: 4 } // 'tracker',
+                    attack_5_0: { nX: 0 }, // 'tracker_second',
+                    attack_5_1: { nX: 0, nWidth: 2 }, // 'tracker_second_1',
+                    attack_5_2: { nX: 1, nWidth: 2 }, // 'tracker_second_2',
+                    attack_5_3: { nX: 2, nWidth: 2 }, // 'tracker_second_active',
+                    attack_5_4: { nX: 3, nWidth: 2 }, // 'tracker_2',
+                    attack_5_5: { nX: 4, nWidth: 2 }, // 'tracker_1',
+                    attack_5_6: { nX: 5 }, // 'tracker',
+
+                    attack_6_0: { nX: 0, nWidth: 2 }, // 'tracker_2',
+                    attack_6_1: { nX: 1, nWidth: 2 }, // 'tracker_active',
+                    attack_6_2: { nX: 2, nWidth: 2 }, // 'tracker_2',
+                    attack_6_3: { nX: 3, nWidth: 2 }, // 'tracker_1',
+                    attack_6_4: { nX: 4 } // 'tracker',
                 }
             },
             
@@ -520,7 +538,9 @@ Object.assign(
                     ['kikoha', 'ki_beam'],
                     ['super_first', 'super_second', 'super_third']
                 ],
-                oRatio: {}
+                oRatio: {
+                    hit_6: { nHeight: 2 }
+                }
             },
         },
 
@@ -533,8 +553,8 @@ Object.assign(
                 ['stand_0', 'stand_1'],
                 ['move_0', 'move_1', 'move_2', 'move_3'],
                 ['jump_0', 'jump_1', 'jump_2', 'jump_3', 'jump_4'],
-                ['guard_0', 'guard_1', 'guard_2'],
-                ['hit_0', 'hit_1', 'hit_2', 'hit_3', 'hit_4', 'hit_5', 'hit_6'],
+                ['guard_0', 'guard_1', 'guard_2', nuull, null, null, 'hit_6'],
+                ['hit_0', 'hit_1', 'hit_2', 'hit_3', 'hit_4', 'hit_5'],
                 ['throw_0', 'throw_1', 'throw_2'],
                 ['ki_0_0', 'ki_0_1', 'ki_1_0', 'ki_1_1', 'ki_1_2'],
                 ['attack_0_0', 'attack_0_1', 'attack_0_2', 'attack_0_3', 'attack_0_4', 'attack_0_5', 'attack_0_6'],
