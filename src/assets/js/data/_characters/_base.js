@@ -345,6 +345,36 @@ GameData.oEntity.oCharacter = {
                 nHeight: 60
             }
         },
+        hit_5: {
+            nZIndex: 10,
+            oPositionBox: {
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
+            },
+            aHurtBox: [{
+                nX: -30,
+                nY: -142,
+                nWidth: 68,
+                nHeight: 144
+            }]
+        },
+        hit_6: {
+            nZIndex: 10,
+            oPositionBox: {
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
+            },
+            aHurtBox: [{
+                nX: -30,
+                nY: -142,
+                nWidth: 68,
+                nHeight: 144
+            }]
+        },
 
         // Command
         throw_0: {
@@ -389,7 +419,13 @@ GameData.oEntity.oCharacter = {
                 nY: -110,
                 nWidth: 60,
                 nHeight: 112
-            }
+            },
+            aHurtBox: [{
+                nX: -30,
+                nY: -142,
+                nWidth: 68,
+                nHeight: 144
+            }]
         },
         throw_3: {
             nZIndex: 30,
@@ -398,7 +434,13 @@ GameData.oEntity.oCharacter = {
                 nY: -110,
                 nWidth: 60,
                 nHeight: 112
-            }
+            },
+            aHurtBox: [{
+                nX: -30,
+                nY: -142,
+                nWidth: 68,
+                nHeight: 144
+            }]
         },
 
         attack_0_0: {
@@ -614,7 +656,19 @@ GameData.oEntity.oCharacter = {
                 nY: -110,
                 nWidth: 68,
                 nHeight: 112
-            }
+            },
+            aHurtBox: [{
+                nX: -42,
+                nY: -114,
+                nWidth: 96,
+                nHeight: 72
+            },
+            {
+                nX: -10,
+                nY: -78,
+                nWidth: 52,
+                nHeight: 56
+            }]
         },
         attack_1_3: {
             nZIndex: 30,
@@ -623,7 +677,25 @@ GameData.oEntity.oCharacter = {
                 nY: -110,
                 nWidth: 68,
                 nHeight: 112
-            }
+            },
+            aHurtBox: [{
+                nX: -42,
+                nY: -114,
+                nWidth: 96,
+                nHeight: 72
+            },
+            {
+                nX: -10,
+                nY: -78,
+                nWidth: 52,
+                nHeight: 56
+            }],
+            aHitBox: [{
+                nX: -10,
+                nY: -78,
+                nWidth: 52,
+                nHeight: 56
+            }]
         },
         attack_1_4: {
             nZIndex: 30,
@@ -1113,7 +1185,7 @@ GameData.oEntity.oCharacter = {
                 sFrame: 'attack_1_1'
             },
             {
-                nFrame: 4,
+                nFrame: 2,
                 sFrame: 'attack_1_2'
             },
             {

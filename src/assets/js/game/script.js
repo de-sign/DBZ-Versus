@@ -36,6 +36,9 @@
 //=include _scene/_setting.js
 //=include _scene/_input.js
 
+//=include _dev/_loading.js
+//=include _dev/_scene.js
+
 /* Init */
 window.addEventListener('load', oEvent => {
 	// Store

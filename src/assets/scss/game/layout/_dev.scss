@@ -1,0 +1,132 @@
+/* Loading */
+#CTX__Dev {
+	display: flex;
+
+    .--selected {
+        color: red !important;
+    }
+
+    #LAY__Dev_Menu {
+        flex: 0 0 200px;
+        min-width: 200px;
+
+        li {
+            display: block;
+            cursor: pointer;
+            font-size: 2em;
+            padding: 5px;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    #LAY__Dev_Content {
+        flex: 1 1 100%;
+        overflow-y: auto;
+        height: 100%;
+    }
+
+    .Dev__Frame {
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        display: none;
+
+        &.--show {
+            display: flex;
+        }
+
+        .Dev__Frame_Colors {
+            flex: 1 1 100%;
+
+            ul {
+                display: flex;
+                padding: 0;
+
+                li {
+                    display: block;
+                    padding: 5px;
+                    cursor: pointer;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+
+        .Dev__Frame_Entity {
+            margin: 25px;
+            position: relative;
+            width: 200px;
+            height: 200px;
+            transform-origin: 98px 182px;
+
+            &:hover {
+                color: red;
+            }
+
+            .Dev__Frame_Entity_Name {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                text-align: center;
+            }
+    
+            .Dev__Frame_Entity_Sprite {
+                position: absolute;
+                top: 50%;
+                transform-origin: 50% 50%;
+                transform: translateY(-50%) !important;
+
+                &:not(.--show) {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .Dev__Frame_Entity_Box {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 10;
+
+        & > * {
+            display: block;
+            position: absolute;
+            border: 1px solid Black;
+            background-color: rgba(White, 0.25);
+        }
+    }
+
+    .Dev__Frame_Entity_PositionBox > * {
+        border-color: Deepskyblue;
+        background-color: rgba(Deepskyblue, 0.25);
+    }
+    
+    .Dev__Frame_Entity_HurtBox > * {
+        border-color: Lime;
+        background-color: rgba(Lime, 0.25);
+    }
+    
+    .--guard .Dev__Frame_Entity_HurtBox > * {
+        border-color: Plum;
+        background-color: rgba(Plum, 0.25);
+    }
+    
+    .--hit .Dev__Frame_Entity_HurtBox > * {
+        border-color: Orange;
+        background-color: rgba(Orange, 0.25);
+    }
+    
+    .Dev__Frame_Entity_HitBox > * {
+        border-color: Red;
+        background-color: rgba(Red, 0.25);
+    }
+}

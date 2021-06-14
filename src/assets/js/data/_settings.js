@@ -266,10 +266,6 @@ Object.assign(
             oMove: {
                 nX: -63 * 4,
                 nY: -54 * 4
-            },
-            oFrames: {
-                sLaunch: 'hit_2',
-                sFall: 'hit_3'
             }
         },
         /* ----- DETAILS Paramétrage de l'animation d'un personnage JUMP ----- */
@@ -282,11 +278,6 @@ Object.assign(
             oMove: {
                 nX: 63 * 4,
                 nY: -54 * 3
-            },
-            oFrames: {
-                sPrejump: 'jump_1',
-                sJump: 'jump_2',
-                sPrelanding: 'jump_3',
             }
         },
         /* ----- DETAILS Paramètrage de la distance de déplacement lors d'une relevé d'un personnage mis au sol ----- */

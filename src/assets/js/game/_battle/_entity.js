@@ -88,7 +88,7 @@ Object.assign(
         },
         init: function(sId){
             this.oPattern = OutputManager.getElement(sId);
-            this.oPattern.oParentElement.delete( this.oPattern);
+            this.oPattern.oParentElement.delete(this.oPattern);
             return this.oPattern;
         },
 

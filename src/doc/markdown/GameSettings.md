@@ -343,10 +343,6 @@ GameSettings.oLauncher = {
     oMove: {
         nX: -63 * 4,
         nY: -54 * 4
-    },
-    oFrames: {
-        sLaunch: 'hit_2',
-        sFall: 'hit_3'
     }
 };
 ```
@@ -365,11 +361,6 @@ GameSettings.oJump = {
     oMove: {
         nX: 63 * 4,
         nY: -54 * 3
-    },
-    oFrames: {
-        sPrejump: 'jump_1',
-        sJump: 'jump_2',
-        sPrelanding: 'jump_3',
     }
 };
 ```

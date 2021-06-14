@@ -19,7 +19,9 @@
             "stage.html",
             "battle.html",
             "setting.html",
-            "input.html"
+            "input.html",
+
+            "dev.html"
         ]
     }
 }

@@ -186,7 +186,7 @@ Object.assign(
                     bFall = nIndex > GameSettings.oLauncher.nLength / 2,
                     sAnim = bFall ? 'launch_1' : 'launch_0';
                 
-                let sFrame = GameSettings.oLauncher.oFrames[ bFall ? 'sFall' : 'sLaunch' ];
+                let sFrame = bFall ? 'hit_3' : 'hit_2';
                 if( nIndex == 1 ){
                     sFrame += '__1';
                 } else if (bInvulnerable){
@@ -259,13 +259,12 @@ Object.assign(
                         bPrejump = nIndex <= GameSettings.oJump.oPre.nJump,
                         bPrelanding = nIndex >= GameSettings.oJump.nLength - GameSettings.oJump.oPre.nLanding;
                     
-                    let sFrame = 'sJump';
+                    let sFrame = 'jump_2';
                     if( bPrejump ){
-                        sFrame = 'sPrejump';
+                        sFrame = 'jump_1';
                     } else if( bPrelanding ){
-                        sFrame = 'sPrelanding';
+                        sFrame = 'jump_3';
                     }
-                    sFrame = GameSettings.oJump.oFrames[sFrame];
 
                     if( oLastFrame && oLastFrame.sFrame == sFrame ){
                         oLastFrame.nFrame++;

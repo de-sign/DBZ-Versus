@@ -54,6 +54,9 @@ Object.assign(
                             },
                             DOWN: () => {
                                 this.oMenu.next();
+                            },
+                            START: () => {
+                                SceneManager.change( new PreDevScene() );
                             }
                         } );
                     }
