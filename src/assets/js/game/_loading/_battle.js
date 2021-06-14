@@ -35,7 +35,6 @@ Object.assign(
                 for( let nIndex = 0; nIndex < GameSettings.nPlayer; nIndex++ ){
                     const nPlayer = nIndex + 1;
                     this.createHUDPlayer(nPlayer);
-                    this.createHUDLife(nPlayer);
                     this.createHUDKi(nPlayer);
                     this.createTrainingParameters(nPlayer);
                 }
@@ -72,12 +71,6 @@ Object.assign(
                 // Ajout dans le context
                 this.oContext.add(new OutputManager.OutputLayer(hLayer), '.Battle__HUDs');
                 this.oContext.update();
-            },
-            createHUDLife: function(nPlayer){
-                const oLayer = OutputManager.getElement('LAY__Battle_HUD_Life_' + nPlayer);
-                for( let nIndex = 0; nIndex < GameSettings.oLife.player; nIndex++ ){
-                    oLayer.add( new OutputManager.OutputText() );
-                }
             },
             createHUDKi: function(nPlayer){
                 const oLayer = OutputManager.getElement('LAY__Battle_HUD_Ki_' + nPlayer);

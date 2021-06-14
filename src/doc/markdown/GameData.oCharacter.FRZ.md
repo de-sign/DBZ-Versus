@@ -855,7 +855,7 @@ Données des commandes.
 GameData.oCharacter.FRZ.oCommands = {
     aOffense: [
         {
-            sCod: 'super',
+            sCod: 'attack_236C',
             oName: {
                 LSW_FRZ: 'Desu Bōru',
                 SWP_FRT: 'Desu Bōru',
@@ -863,7 +863,7 @@ GameData.oCharacter.FRZ.oCommands = {
             },
             sAnimation: 'attack_236C',
             nCost: 12,
-            nDamage: 4,
+            nDamage: 300,
             nGatlingLevel: 3,
             sCheck: 'bGround',
             aEntity: {
@@ -899,12 +899,13 @@ GameData.oCharacter.FRZ.oCommands = {
             }
         },
         {
-            sCod: 'death_beam',
+            sCod: 'attack_C',
             sName: 'Desubīmu',
             sAnimation: 'attack_C',
             sListAnimation: 'list_C',
             nCost: 4,
             nGatlingLevel: 2,
+            nDamage: 100,
             sCheck: 'bGround',
             aEntity: {
                 sType: 'beam',
@@ -931,9 +932,10 @@ GameData.oCharacter.FRZ.oCommands = {
             }
         },
         {
-            sCod: 'launcher',
+            sCod: 'attack_2B',
             sName: 'Launcher',
             sAnimation: 'attack_2B',
+            nDamage: 100,
             nGatlingLevel: 1,
             sCheck: 'bGround',
             bJumpCancellable: true,
@@ -952,9 +954,10 @@ GameData.oCharacter.FRZ.oCommands = {
             }
         },
         {
-            sCod: 'extra',
+            sCod: 'attack_6B',
             sName: 'Palm',
             sAnimation: 'attack_6B',
+            nDamage: 75,
             nGatlingLevel: 1,
             sCheck: 'bGround',
             oStun: {
@@ -975,9 +978,10 @@ GameData.oCharacter.FRZ.oCommands = {
             }
         },
         {
-            sCod: 'tracker',
+            sCod: 'attack_6A',
             sName: 'Tracker',
             sAnimation: 'attack_6A',
+            nDamage: 75,
             nGatlingLevel: 1,
             sCheck: 'bGround',
             oStun: {
@@ -994,9 +998,10 @@ GameData.oCharacter.FRZ.oCommands = {
             }
         },
         {
-            sCod: 'heavy',
+            sCod: 'attack_B',
             sName: 'Heavy',
             sAnimation: 'attack_B',
+            nDamage: 50,
             nGatlingLevel: 1,
             sCheck: 'bGround',
             oStun: {
@@ -1013,15 +1018,17 @@ GameData.oCharacter.FRZ.oCommands = {
             }
         },
         {
-            sCod: 'light_first',
+            sCod: 'attack_A_0',
             sName: 'Light',
             sAnimation: 'attack_A_0',
+            nDamage: 25,
             nGatlingLevel: 1,
             sCheck: 'bGround',
             oFollowUp: {
                 sName: '2nd',
-                sCod: 'light_second',
+                sCod: 'attack_A_1',
                 sAnimation: 'attack_A_1',
+                nDamage: 25,
                 nGatlingLevel: 1,
                 sCheck: 'bGround',
                 oStun: {

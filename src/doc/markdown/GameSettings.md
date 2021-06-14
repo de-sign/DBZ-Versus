@@ -307,7 +307,7 @@ Nombre de point de vie pour chaque entité
 
 ```javascript
 GameSettings.oLife = {
-    player: 30,
+    player: 1000,
     character: 0,
     projectile: 1,
     beam: 0

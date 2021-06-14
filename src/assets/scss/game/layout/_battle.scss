@@ -72,42 +72,24 @@
         }
 
         &_Life {
-            display: flex;
-            flex-direction: row-reverse;
-            text-align: center;
             border: 2px solid Black;
             margin: 5px 0 2px;
             position: relative;
+            display: flex;
+            width: 300px;
+
+            .Battle__HUD:first-child &{
+                flex-direction: row-reverse;
+            }
         
             & > * {
-                width: 12px;
+                flex: 0 0 auto;
                 height: 20px;
-                position: relative;
+                min-width: 20px;
 
-                &::before {
-                    content: '';
-                    display: block;
-                    position: absolute;
-                    bottom: 0;
-                    border-right: 2px solid Black;
-                    border-bottom: 2px solid Black;
-                    height: 4px;
-                    right: -2px;
-                    width: 2px;
-
-                    .Battle__HUD:last-child & {
-                        text-align: right;
-                        border-right: none;
-                        right: auto;
-                        border-left: 2px solid Black;
-                        left: -2px;
-                    }
-                }
-            
                 &.Battle__HUD_Bar_Life {
                     background-color: #00F040;
                 }
-            
                 &.Battle__HUD_Bar_Lose {
                     background-color: Orange;
                 }
@@ -201,6 +183,10 @@
 
         &:last-child {
             text-align: right;
+        }
+        i {
+            font-size: 0.5em;
+            display: block;
         }
     }
 }

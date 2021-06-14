@@ -4,7 +4,7 @@ function BattleHUD(oPlayer){
     this.oPlayer = null;
 
     this.nLife = -1;
-    this.nHitting = -1;
+    this.nLastLife = -1;
     this.nKi = -1;
 
     this.init(oPlayer);
@@ -26,21 +26,17 @@ Object.assign(
             } );
         },
         update: function(){
-            if( this.nLife != this.oPlayer.nLife || this.nHitting != this.oPlayer.nHitting ){
-                this.oLayer.addTickUpdate( () => {
-                    const oLayer = OutputManager.getElement('LAY__Battle_HUD_Life_' + this.oPlayer.nPlayer);
-                    this.nLife = this.oPlayer.nLife;
-                    this.nHitting = this.oPlayer.nHitting;
+            const bResetLast = this.oPlayer.nHitting == 0 && this.nLastLife != this.nLife;
 
-                    for( let nIndex = 0; nIndex < oLayer.aChildElement.length; nIndex++ ){
-                        const oBar = oLayer.aChildElement[nIndex];
-                        oBar.hElement.classList.remove('Battle__HUD_Bar_Life', 'Battle__HUD_Bar_Lose');
-                        if( nIndex < this.nLife ){
-                            oBar.hElement.classList.add('Battle__HUD_Bar_Life');
-                        } else if( nIndex < this.nLife + this.nHitting ){
-                            oBar.hElement.classList.add('Battle__HUD_Bar_Lose');
-                        }
-                    }
+            if( this.nLife != this.oPlayer.nLife || bResetLast ){
+                this.nLife = this.oPlayer.nLife;
+                bResetLast && (this.nLastLife = this.nLife);
+                    
+                OutputManager.getElement('LAY__Battle_HUD_Bar_Lose_' + this.oPlayer.nPlayer).setStyle( {
+                    minWidth: ( (this.nLastLife - this.nLife) * 100 / GameSettings.oLife.player ) + '%'
+                } );
+                OutputManager.getElement('LAY__Battle_HUD_Bar_Life_' + this.oPlayer.nPlayer).setStyle( {
+                    minWidth: ( this.nLife * 100 / GameSettings.oLife.player ) + '%'
                 } );
             }
             if( this.nKi != this.oPlayer.nKi ){
@@ -170,23 +166,27 @@ Object.assign(
             this.aPlayer = aPlayer;
             this.aPlayer.forEach( oPlayer => {
                 this.aText.push( OutputManager.getElement('TXT__Battle_Combo_Text_' + oPlayer.nPlayer) );
-                this.aLast.push(0);
+                this.aLast.push( {
+                    nHit: 0,
+                    nLastLife: oPlayer.nLife
+                } );
             } );
         },
         update: function(){
             this.aPlayer.forEach( (oPlayer, nIndex) => {
                 if( this.aLast[nIndex] != oPlayer.nHitting ){
-                    this[ oPlayer.nHitting > 1 ? 'show' : 'hide' ](nIndex, oPlayer.nHitting);
-                    this.aLast[nIndex] = oPlayer.nHitting;
+                    oPlayer.nHitting || (this.aLast[nIndex].nLastLife = oPlayer.nLife);
+                    this.aLast[nIndex].nHit = oPlayer.nHitting;
+                    this[ oPlayer.nHitting ? 'show' : 'hide' ](nIndex);
                 }
             } );
         },
         destroy: function(){
         },
 
-        show: function(nIndex, nHit){
+        show: function(nIndex){
             const oText = this.aText[nIndex];
-            oText.setText( nHit + ' hits !' );
+            oText.setText( this.aLast[nIndex].nHit + ' hits !<i>' + ( this.aLast[nIndex].nLastLife - this.aPlayer[nIndex].nLife ) + '</i>' );
             oText.addTickUpdate( () => {
                 oText.hElement.classList.add('--show');
                 oText.hElement.classList.remove('--hide');

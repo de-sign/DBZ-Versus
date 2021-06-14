@@ -374,18 +374,18 @@ Object.assign(
 
             oChar.oCommands.aOffense.forEach( oCommand => {
                 switch( oCommand.sCod ){
-                    case 'throw':
+                    case 'attack_AB':
                         oThrow = oCommand;
                         break;
-                    case 'back_throw':
+                    case 'attack_4AB_0':
                         oBackThrow = oCommand;
                         break;
-                    case 'launcher':
+                    case 'attack_2B':
                         oLauncher = Object.assign(
                             {},
                             oCommand,
                             {
-                                sCod: 'throw_launcher',
+                                sCod: 'attack_4AB_2',
                                 oManipulation: null
                             }
                         );

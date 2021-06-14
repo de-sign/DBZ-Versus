@@ -904,12 +904,12 @@ GameData.oCharacter.BJT.oCommands = {
     aOffense: [
         {
             aFilter: ['LSW_SSJ'],
-            sCod: 'super',
+            sCod: 'attack_236C',
             sName: 'Fainaru Furasshu',
             sAnimation: 'attack_236C',
             sListAnimation: 'list_236C',
             nCost: 12,
-            nDamage: 4,
+            nDamage: 300,
             nGatlingLevel: 3,
             sCheck: 'bGround',
             aEntity: {
@@ -946,12 +946,12 @@ GameData.oCharacter.BJT.oCommands = {
         },
         {
             aFilter: ['LSW_BAD'],
-            sCod: 'super',
+            sCod: 'attack_236C',
             sName: 'Gyarikku-hō',
             sAnimation: 'attack_236C',
             sListAnimation: 'list_236C',
             nCost: 12,
-            nDamage: 4,
+            nDamage: 300,
             nGatlingLevel: 3,
             sCheck: 'bGround',
             aEntity: {
@@ -987,11 +987,12 @@ GameData.oCharacter.BJT.oCommands = {
             }
         },
         {
-            sCod: 'kikoha',
+            sCod: 'attack_C',
             sName: 'Kikoha',
             sAnimation: 'attack_C',
             nCost: 4,
             nGatlingLevel: 2,
+            nDamage: 100,
             sCheck: 'bGround',
             aEntity: {
                 sType: 'projectile',
@@ -1018,9 +1019,10 @@ GameData.oCharacter.BJT.oCommands = {
             }
         },
         {
-            sCod: 'launcher',
+            sCod: 'attack_2B',
             sName: 'Launcher',
             sAnimation: 'attack_2B',
+            nDamage: 100,
             nGatlingLevel: 1,
             sCheck: 'bGround',
             bJumpCancellable: true,
@@ -1039,9 +1041,10 @@ GameData.oCharacter.BJT.oCommands = {
             }
         },
         {
-            sCod: 'tracker',
+            sCod: 'attack_6A',
             sName: 'Tracker',
             sAnimation: 'attack_6A',
+            nDamage: 75,
             nGatlingLevel: 1,
             sCheck: 'bGround',
             oStun: {
@@ -1058,9 +1061,10 @@ GameData.oCharacter.BJT.oCommands = {
             }
         },
         {
-            sCod: 'heavy',
+            sCod: 'attack_B',
             sName: 'Heavy',
             sAnimation: 'attack_B',
+            nDamage: 50,
             nGatlingLevel: 1,
             sCheck: 'bGround',
             oStun: {
@@ -1077,9 +1081,10 @@ GameData.oCharacter.BJT.oCommands = {
             }
         },
         {
-            sCod: 'light_first',
+            sCod: 'attack_A_0',
             sName: 'Light',
             sAnimation: 'attack_A_0',
+            nDamage: 25,
             nGatlingLevel: 1,
             sCheck: 'bGround',
             oStun: {
@@ -1095,9 +1100,10 @@ GameData.oCharacter.BJT.oCommands = {
                 ]
             },
             oFollowUp: {
-                sCod: 'light_second',
+                sCod: 'attack_A_1',
                 sName: '2nd',
                 sAnimation: 'attack_A_1',
+                nDamage: 25,
                 nGatlingLevel: 1,
                 sCheck: 'bGround',
                 oStun: {
@@ -1113,9 +1119,10 @@ GameData.oCharacter.BJT.oCommands = {
                     ]
                 },
                 oFollowUp: {
-                    sCod: 'light_third',
+                    sCod: 'attack_A_2',
                     sName: '3rd',
                     sAnimation: 'attack_A_2',
+                    nDamage: 25,
                     nGatlingLevel: 1,
                     sCheck: 'bGround',
                     oStun: {

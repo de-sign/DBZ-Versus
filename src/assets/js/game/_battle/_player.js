@@ -142,9 +142,9 @@ Object.assign(
                         const nDamage = oData.nDamage == null ? 1 : oData.nDamage;
 
                         if( nDamage ){
-                            this.nLife -= nDamage;
-                            this.nHitting += nDamage;
-                            this.addKi( 2 * nDamage );
+                            this.nLife = Math.max(this.nLife - nDamage, 0);
+                            this.nHitting ++;
+                            this.addKi(2);
                         }
 
                         const bLaunch = oData.oStun.bLaunch && !this.oStatus.bLaunch,
@@ -173,7 +173,7 @@ Object.assign(
                     BattleEntity.prototype.confirmHit.call(this, oEntityHurt, oData, bGuard);
                     this.oGatling.confirmHit(bGuard);
                     const nDamage = oData.nDamage == null ? 1 : oData.nDamage;
-                    bGuard || oData.nCost || this.addKi(nDamage);
+                    bGuard || oData.nCost || this.addKi(1);
                 },
                 setMemory: function(){
                     // Annulation du JUMP en cas de HIT en l'air

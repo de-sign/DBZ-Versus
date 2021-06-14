@@ -247,7 +247,7 @@ Object.assign(
         nDie: 60,
         /* ----- DETAILS Nombre de point de vie pour chaque entité ----- */
         oLife: {
-            player: 30,
+            player: 1000,
             character: 0,
             projectile: 1,
             beam: 0

@@ -790,12 +790,12 @@ GameData.oCharacter.SRU = {
     oCommands: {
         aOffense: [
             {
-                sCod: 'super',
+                sCod: 'attack_236C',
                 sName: 'Taiyōkei Hakai Kamehameha',
                 sAnimation: 'attack_236C',
                 sListAnimation: 'list_236C',
                 nCost: 12,
-                nDamage: 4,
+                nDamage: 300,
                 nGatlingLevel: 3,
                 sCheck: 'bGround',
                 aEntity: {
@@ -831,12 +831,13 @@ GameData.oCharacter.SRU = {
                 }
             },
             {
-                sCod: 'death_beam',
+                sCod: 'attack_C',
                 sName: 'Desubīmu',
                 sAnimation: 'attack_C',
                 sListAnimation: 'list_C',
                 nCost: 4,
                 nGatlingLevel: 2,
+                nDamage: 100,
                 sCheck: 'bGround',
                 aEntity: {
                     sType: 'beam',
@@ -863,9 +864,10 @@ GameData.oCharacter.SRU = {
                 }
             },
             {
-                sCod: 'launcher',
+                sCod: 'attack_2B',
                 sName: 'Launcher',
                 sAnimation: 'attack_2B',
+                nDamage: 100,
                 nGatlingLevel: 1,
                 sCheck: 'bGround',
                 bJumpCancellable: true,
@@ -887,6 +889,7 @@ GameData.oCharacter.SRU = {
                 sCod: 'extra',
                 sName: 'Shoulder dash',
                 sAnimation: 'attack_6B',
+                nDamage: 75,
                 nGatlingLevel: 1,
                 sCheck: 'bGround',
                 oStun: {
@@ -907,9 +910,10 @@ GameData.oCharacter.SRU = {
                 }
             },
             {
-                sCod: 'tracker',
+                sCod: 'attack_6A',
                 sName: 'Slide',
                 sAnimation: 'attack_2A',
+                nDamage: 75,
                 nGatlingLevel: 1,
                 sCheck: 'bGround',
                 oStun: {
@@ -926,9 +930,10 @@ GameData.oCharacter.SRU = {
                 }
             },
             {
-                sCod: 'heavy',
+                sCod: 'attack_B',
                 sName: 'Heavy',
                 sAnimation: 'attack_B',
+                nDamage: 50,
                 nGatlingLevel: 1,
                 sCheck: 'bGround',
                 oStun: {
@@ -945,15 +950,17 @@ GameData.oCharacter.SRU = {
                 }
             },
             {
-                sCod: 'light_first',
+                sCod: 'attack_A_0',
                 sName: 'Light',
                 sAnimation: 'attack_A_0',
+                nDamage: 25,
                 nGatlingLevel: 1,
                 sCheck: 'bGround',
                 oFollowUp: {
                     sName: '2nd',
-                    sCod: 'light_second',
+                    sCod: 'attack_A_1',
                     sAnimation: 'attack_A_1',
+                    nDamage: 25,
                     nGatlingLevel: 1,
                     sCheck: 'bGround',
                     oStun: {

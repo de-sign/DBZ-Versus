@@ -179,15 +179,19 @@ Object.assign(
                 sStat = 'n' + sStat;
                 const oParam = this.aParam[nIndex],
                     oMinStat = {
-                        nLife: 1,
+                        nLife: 10 * GameSettings.oLife.player / 100,
                         nKi: 0
                     },
                     oMaxStat = {
                         nLife: GameSettings.oLife.player,
                         nKi: GameSettings.nKi
+                    },
+                    oRatio = {
+                        nLife: 10 * GameSettings.oLife.player / 100,
+                        nKi: 1
                     };
 
-                oParam[sStat] += nChange;
+                oParam[sStat] += nChange * oRatio[sStat];
                 if( oParam[sStat] > oMaxStat[sStat] ){
                     oParam[sStat] = oMinStat[sStat];
                 }

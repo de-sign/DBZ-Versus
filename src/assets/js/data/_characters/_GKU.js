@@ -749,11 +749,11 @@ GameData.oCharacter.GKU = {
     oCommands: {
         aOffense: [
             {
-                sCod: 'super',
+                sCod: 'attack_236C',
                 sName: 'Genki-dama',
                 sAnimation: 'attack_236C',
                 nCost: 12,
-                nDamage: 4,
+                nDamage: 500,
                 nGatlingLevel: 3,
                 sCheck: 'bGround',
                 aEntity: {
@@ -789,7 +789,7 @@ GameData.oCharacter.GKU = {
                 }
             },
             {
-                sCod: 'taiyoken',
+                sCod: 'attack_C',
                 sName: 'Taiyōken',
                 sAnimation: 'attack_C',
                 nCost: 8,
@@ -823,11 +823,12 @@ GameData.oCharacter.GKU = {
             },
             /*
             {
-                sCod: 'kikoha',
+                sCod: 'attack_C',
                 sName: 'Kikoha',
                 sAnimation: 'attack_C',
                 nCost: 4,
                 nGatlingLevel: 2,
+                nDamage: 100,
                 sCheck: 'bGround',
                 aEntity: {
                     sType: 'projectile',
@@ -855,9 +856,10 @@ GameData.oCharacter.GKU = {
             },
             */
             {
-                sCod: 'launcher',
+                sCod: 'attack_2B',
                 sName: 'Launcher',
                 sAnimation: 'attack_2B',
+                nDamage: 100,
                 nGatlingLevel: 1,
                 sCheck: 'bGround',
                 bJumpCancellable: true,
@@ -876,9 +878,10 @@ GameData.oCharacter.GKU = {
                 }
             },
             {
-                sCod: 'tracker',
+                sCod: 'attack_6A',
                 sName: 'Tracker',
                 sAnimation: 'attack_6A',
+                nDamage: 75,
                 nGatlingLevel: 1,
                 sCheck: 'bGround',
                 oStun: {
@@ -895,9 +898,10 @@ GameData.oCharacter.GKU = {
                 }
             },
             {
-                sCod: 'heavy',
+                sCod: 'attack_B',
                 sName: 'Heavy',
                 sAnimation: 'attack_B',
+                nDamage: 50,
                 nGatlingLevel: 1,
                 sCheck: 'bGround',
                 oStun: {
@@ -914,9 +918,10 @@ GameData.oCharacter.GKU = {
                 }
             },
             {
-                sCod: 'light_first',
+                sCod: 'attack_A_0',
                 sName: 'Light',
                 sAnimation: 'attack_A_0',
+                nDamage: 25,
                 nGatlingLevel: 1,
                 sCheck: 'bGround',
                 oStun: {
@@ -932,9 +937,10 @@ GameData.oCharacter.GKU = {
                     ]
                 },
                 oFollowUp: {
-                    sCod: 'light_second',
+                    sCod: 'attack_A_1',
                     sName: '2nd',
                     sAnimation: 'attack_A_1',
+                    nDamage: 25,
                     nGatlingLevel: 1,
                     sCheck: 'bGround',
                     oStun: {

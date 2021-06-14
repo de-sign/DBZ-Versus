@@ -26,7 +26,7 @@ Une documentation technique est disponnible ici : [References.md](https://github
 
 ## TODO
 __BUG__
-* Problème de LOOP avec GKU
+* Problème de LOOP avec GKU et attack_C
 
 __Menu__
 * Ajout du ONLINE ?
@@ -54,14 +54,8 @@ __Battle__
         * Select Character
         * Select Stage
         * Quit
+
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
-* Méchaniques de jeu
-    * Attack :
-        * Damage Reduce
-        * Guard Break ?
-    * Defense :
-        * Guard Cancel ?
-        * Burst ?
 
 __Training__
 * Terminer Menu
@@ -71,23 +65,28 @@ __Training__
     * Frame Data ?
 
 __General__
-* Modifier la logique des FRAMES
-    * Faire les BOX des FRAMES manquantes
-        * Jump B
-        * Stun
-* Barre de vie en pourcentage
-    * Revoir les DAMAGES des coups
+* Méchaniques de jeu
+    * Attack :
+        * Damage Reduce !!!
+        * Guard Break ?
+    * Defense :
+        * Guard Cancel ?
+        * Burst ?
+
 * Faire une API ELECTRON ?
     * Paramétrages globaux
     * Ajouter CHARACTER
     * Générer SPRITE
     * Générer ANIMATION
     * Générer COMMAND
+
 * Commenter le Code afin de générer la DOC
     * ENGINE ( A finir )
     * GAME
+
 * Optimisation du Code
     * Classe PLAYER avec pour enfant LOCAL et DUMMY ( et AI ? )
+
 * Paramétrages
     * Animations
     * HurtBox

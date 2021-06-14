@@ -1433,7 +1433,7 @@ GameData.oEntity.oCharacter = {
     oCommands: {
         aDefense: [
             {
-                sCod: 'tech_throw',
+                sCod: 'defense_AB',
                 sAnimation: 'defense_AB',
                 sCheck: 'bThrow',
                 nDamage: 0,
@@ -1457,7 +1457,7 @@ GameData.oEntity.oCharacter = {
                 }
             },
             {
-                sCod: 'guard_2',
+                sCod: 'defence_BC',
                 sAnimation: 'defence_BC',
                 sCheck: 'bGuard',
                 nCost: 4,
@@ -1482,7 +1482,7 @@ GameData.oEntity.oCharacter = {
         ],
         aOffense: [
             {
-                sCod: 'dash',
+                sCod: 'move_66',
                 sAnimation: 'move_66',
                 bNotInCommandList: true,
                 nGatlingLevel: 0,
@@ -1499,7 +1499,7 @@ GameData.oEntity.oCharacter = {
                 }
             },
             {
-                sCod: 'backdash',
+                sCod: 'move_44',
                 sAnimation: 'move_44',
                 bNotInCommandList: true,
                 nGatlingLevel: 0,
@@ -1517,7 +1517,7 @@ GameData.oEntity.oCharacter = {
             },
             {
                 // Même code que DASH pour ne pas dash_cancel un dash
-                sCod: 'dash', // dash_cancel
+                sCod: 'move_66', // dash_cancel
                 sAnimation: 'attack_66',
                 bNotInCommandList: true,
                 nCost: 8,
@@ -1537,7 +1537,7 @@ GameData.oEntity.oCharacter = {
                 }
             },
             {
-                sCod: 'back_throw',
+                sCod: 'attack_4AB_0',
                 sAnimation: 'attack_4AB_0',
                 nDamage: 0,
                 bUnblockable: true,
@@ -1558,7 +1558,7 @@ GameData.oEntity.oCharacter = {
                     ]
                 },
                 oFollowUp: {
-                    sCod: 'throw_teleport',
+                    sCod: 'attack_4AB_1',
                     sAnimation: 'attack_4AB_1',
                     bFollowOnlyOnHurt: true,
                     oStun: {},
@@ -1567,7 +1567,7 @@ GameData.oEntity.oCharacter = {
                 }
             },
             {
-                sCod: 'throw',
+                sCod: 'attack_AB',
                 sAnimation: 'attack_AB',
                 nDamage: 0,
                 bUnblockable: true,
@@ -1589,9 +1589,10 @@ GameData.oEntity.oCharacter = {
                 }
             },
             {
-                sCod: 'jump_light',
+                sCod: 'attack_jB',
                 sName: 'Jump attack heavy',
                 sAnimation: 'attack_jB',
+                nDamage: 50,
                 nGatlingLevel: 1,
                 sCheck: 'bAerial',
                 oStun: {
@@ -1607,9 +1608,10 @@ GameData.oEntity.oCharacter = {
                 }
             },
             {
-                sCod: 'jump_heavy',
+                sCod: 'attack_jA',
                 sName: 'Jump attack light',
                 sAnimation: 'attack_jA',
+                nDamage: 25,
                 nGatlingLevel: 1,
                 sCheck: 'bAerial',
                 oStun: {

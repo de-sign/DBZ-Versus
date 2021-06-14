@@ -983,12 +983,12 @@ GameData.oCharacter.BUU.oCommands = {
     aOffense: [
         {
             aFilter: ['LSW_MBU'],
-            sCod: 'super',
+            sCod: 'attack_236C',
             sName: 'Chônoryoku',
             sAnimation: 'attack_236C',
             sListAnimation: 'list_236C',
             nCost: 12,
-            nDamage: 4,
+            nDamage: 300,
             nGatlingLevel: 3,
             sCheck: 'bGround',
             aEntity: {
@@ -1025,12 +1025,12 @@ GameData.oCharacter.BUU.oCommands = {
         },
         {
             aFilter: ['LSW_SBU'],
-            sCod: 'super',
+            sCod: 'attack_236C',
             sName: 'Chônoryoku',
             sAnimation: 'attack_236C',
             sListAnimation: 'list_236C',
             nCost: 12,
-            nDamage: 4,
+            nDamage: 300,
             nGatlingLevel: 3,
             sCheck: 'bGround',
             aEntity:  {
@@ -1066,11 +1066,12 @@ GameData.oCharacter.BUU.oCommands = {
             }
         },
         {
-            sCod: 'kikoha',
+            sCod: 'attack_C',
             sName: 'Kikoha',
             sAnimation: 'attack_C',
             nCost: 4,
             nGatlingLevel: 2,
+            nDamage: 100,
             sCheck: 'bGround',
             aEntity: {
                 sType: 'projectile',
@@ -1097,9 +1098,10 @@ GameData.oCharacter.BUU.oCommands = {
             }
         },
         {
-            sCod: 'launcher',
+            sCod: 'attack_2B',
             sName: 'Launcher',
             sAnimation: 'attack_2B',
+            nDamage: 100,
             nGatlingLevel: 1,
             sCheck: 'bGround',
             bJumpCancellable: true,
@@ -1118,9 +1120,10 @@ GameData.oCharacter.BUU.oCommands = {
             }
         },
         {
-            sCod: 'shoulder',
+            sCod: 'attack_6B',
             sName: 'Shoulder dash',
             sAnimation: 'attack_6B',
+            nDamage: 75,
             nGatlingLevel: 1,
             sCheck: 'bGround',
             oStun: {
@@ -1141,16 +1144,18 @@ GameData.oCharacter.BUU.oCommands = {
             }
         },
         {
-            sCod: 'tracker_first',
+            sCod: 'attack_6A_0',
             sName: 'Tracker',
             sAnimation: 'attack_6A_0',
+            nDamage: 75,
             nGatlingLevel: 1,
             sCheck: 'bGround',
             oFollowUp: {
                 sName: '2nd',
-                sCod: 'tracker_second',
+                sCod: 'attack_6A_1',
                 sAnimation: 'attack_6A_1',
                 bFollowOnlyOnHurt: true,
+                nDamage: 75,
                 nGatlingLevel: 1,
                 sCheck: 'bGround',
                 bOnHit: true,
@@ -1179,9 +1184,10 @@ GameData.oCharacter.BUU.oCommands = {
             }
         },
         {
-            sCod: 'heavy',
+            sCod: 'attack_B',
             sName: 'Heavy',
             sAnimation: 'attack_B',
+            nDamage: 50,
             nGatlingLevel: 1,
             sCheck: 'bGround',
             oStun: {
@@ -1198,15 +1204,17 @@ GameData.oCharacter.BUU.oCommands = {
             }
         },
         {
-            sCod: 'light_first',
+            sCod: 'attack_A_0',
             sName: 'Light',
             sAnimation: 'attack_A_0',
+            nDamage: 25,
             nGatlingLevel: 1,
             sCheck: 'bGround',
             oFollowUp: {
-                sCod: 'light_second',
+                sCod: 'attack_A_1',
                 sName: '2nd',
                 sAnimation: 'attack_A_1',
+                nDamage: 25,
                 nGatlingLevel: 1,
                 sCheck: 'bGround',
                 oStun: {
