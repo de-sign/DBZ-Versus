@@ -24,11 +24,11 @@ function BattleEntity(sType, oData, oPosition, bReverse, oParent) {
         bReverse: false, // Possibilité de se retourner : stand, tp, etc
         bGuard: false, // Possibilité de guarder : backdash, block
         bThrow: false, // Possibilité de TechThrow : hit_throw
-        bInvul: false, // Impossibilité de prendre un coup : lunch
-        bAerialInvul: false, // Impossibilité de prendre un coup aérien : luncher
+        bInvul: false, // Impossibilité de prendre un coup : launch
+        bAerialInvul: false, // Impossibilité de prendre un coup aérien : launcher
         bCancel: false, // Coup cancellable : ligth, etc
-        bAerial: false, // Personnage en l'air : jump, lunch, fall, etc
-        bLunch: false // Personnage en l'air via un coup : lunch
+        bAerial: false, // Personnage en l'air : jump, launch, fall, etc
+        bLaunch: false // Personnage en l'air via un coup : launch
     };
     this.bReverse = false;
     this.nLife = 0;
@@ -53,7 +53,7 @@ Object.assign(
                     projectile: true,
                     beam: true
                 },
-                bLunch: true,
+                bLaunch: true,
                 bPushback: true
             },
             projectile: {
@@ -314,11 +314,11 @@ Object.assign(
                         bReverse: false, // Possibilité de se retourner : stand, tp, etc
                         bGuard: false, // Possibilité de guarder : backdash, block
                         bThrow: false, // Possibilité de TechThrow : hit_throw
-                        bInvul: false, // Impossibilité de prendre un coup : lunch
-                        bAerialInvul: false, // Impossibilité de prendre un coup aérien : luncher
+                        bInvul: false, // Impossibilité de prendre un coup : launch
+                        bAerialInvul: false, // Impossibilité de prendre un coup aérien : launcher
                         bCancel: false, // Coup cancellable : ligth, etc
-                        bAerial: this.oStatus.bAerial, // Personnage en l'air : jump, lunch, fall, etc
-                        bLunch: this.oStatus.bLunch // Personnage en l'air via un coup : lunch
+                        bAerial: this.oStatus.bAerial, // Personnage en l'air : jump, launch, fall, etc
+                        bLaunch: this.oStatus.bLaunch // Personnage en l'air via un coup : launch
                     },
                     this.oAnimation.oFrame.oStatus,
                     oForce || {}
@@ -365,7 +365,7 @@ Object.assign(
                 constructor: BattleEntity,
                 init: function(sEntity, sColor, sAnimation, oPosition, bReverse, oHitData, oParent){
                     BattleEntity.prototype.init.call(this, 'projectile', GameData.oProjectile[sEntity][sColor], sAnimation, oPosition, bReverse, oParent);
-                    this.nLife = oHitData.nDamage == null ? 1 : oHitData.nDamage;
+                    this.nLife = oHitData.nDamage || 1;
                     this.oHitData = oHitData;
                 },
                 update: function(){

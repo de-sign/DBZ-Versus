@@ -333,9 +333,7 @@ Object.assign(
                     ['impact_hit_1', 'impact_hit_2', 'impact_hit_3', 'impact_hit_4'],
                     ['impact_guard_1', 'impact_guard_2', 'impact_guard_3', 'impact_guard_4']
                 ],
-                oRatio: {
-                    hit_6: { nHeight: 2 }
-                }
+                oRatio: {}
             }
         },
 
@@ -354,7 +352,14 @@ Object.assign(
                     ['super_first', 'super_second', 'super_third']
                 ],
                 oRatio: {
-                    hit_6: { nHeight: 2 }
+                    hit_6: {
+                        nY: -0.04,
+                        nHeight: 1.08
+                    },
+                    throw_3: {
+                        nY: -1.04,
+                        nHeight: 1.08
+                    }
                 }
             },
 
@@ -372,7 +377,14 @@ Object.assign(
                     ['super_first', 'super_second', 'super_third']
                 ],
                 oRatio: {
-                    hit_6: { nHeight: 2 }
+                    hit_6: {
+                        nY: -0.04,
+                        nHeight: 1.08
+                    },
+                    throw_3: {
+                        nY: -1.04,
+                        nHeight: 1.08
+                    }
                 }
             },
 
@@ -390,7 +402,14 @@ Object.assign(
                     ['super_first', 'super_second', 'super_third']
                 ],
                 oRatio: {
-                    hit_6: { nHeight: 2 }
+                    hit_6: {
+                        nY: -0.04,
+                        nHeight: 1.08
+                    },
+                    throw_3: {
+                        nY: -1.04,
+                        nHeight: 1.08
+                    }
                 }
             },
 
@@ -408,7 +427,14 @@ Object.assign(
                     ['super_first', 'super_second', 'super_third']
                 ],
                 oRatio: {
-                    hit_6: { nHeight: 2 }
+                    hit_6: {
+                        nY: -0.04,
+                        nHeight: 1.08
+                    },
+                    throw_3: {
+                        nY: -1.04,
+                        nHeight: 1.08
+                    }
                 }
             },
 
@@ -426,7 +452,14 @@ Object.assign(
                     ['super_first', 'super_second', 'super_third']
                 ],
                 oRatio: {
-                    hit_6: { nHeight: 2 }
+                    hit_6: {
+                        nY: -0.04,
+                        nHeight: 1.08
+                    },
+                    throw_3: {
+                        nY: -1.04,
+                        nHeight: 1.08
+                    }
                 }
             },
 
@@ -444,7 +477,14 @@ Object.assign(
                     ['super_first', 'super_second', 'super_third']
                 ],
                 oRatio: {
-                    hit_6: { nHeight: 2 }
+                    hit_6: {
+                        nY: -0.04,
+                        nHeight: 1.08
+                    },
+                    throw_3: {
+                        nY: -1.04,
+                        nHeight: 1.08
+                    }
                 }
             },
 
@@ -462,7 +502,14 @@ Object.assign(
                     ['super_first', 'super_second', 'super_third']
                 ],
                 oRatio: {
-                    hit_6: { nHeight: 2 }
+                    hit_6: {
+                        nY: -0.04,
+                        nHeight: 1.08
+                    },
+                    throw_3: {
+                        nY: -1.04,
+                        nHeight: 1.08
+                    }
                 }
             },
 
@@ -489,7 +536,7 @@ Object.assign(
                         nWidth: 2,
                         nHeight: 1
                     },
-                    tracker_active: {
+                    attack_5_2: {
                         nWidth: 2,
                         nHeight: 1
                     },
@@ -507,7 +554,14 @@ Object.assign(
                     },
 
                     // MIGRATE
-                    hit_6: { nHeight: 2 },
+                    hit_6: {
+                        nY: -0.04,
+                        nHeight: 1.08
+                    },
+                    throw_3: {
+                        nY: -1.04,
+                        nHeight: 1.08
+                    },
 
                     attack_5_0: { nX: 0 }, // 'tracker_second',
                     attack_5_1: { nX: 0, nWidth: 2 }, // 'tracker_second_1',
@@ -521,7 +575,9 @@ Object.assign(
                     attack_6_1: { nX: 1, nWidth: 2 }, // 'tracker_active',
                     attack_6_2: { nX: 2, nWidth: 2 }, // 'tracker_2',
                     attack_6_3: { nX: 3, nWidth: 2 }, // 'tracker_1',
-                    attack_6_4: { nX: 4 } // 'tracker',
+                    attack_6_4: { nX: 4 }, // 'tracker',
+                    attack_6_5: { nX: 5 },
+                    attack_6_6: { nX: 6 }
                 }
             },
             
@@ -539,7 +595,14 @@ Object.assign(
                     ['super_first', 'super_second', 'super_third']
                 ],
                 oRatio: {
-                    hit_6: { nHeight: 2 }
+                    hit_6: {
+                        nY: -0.04,
+                        nHeight: 1.08
+                    },
+                    throw_3: {
+                        nY: -1.04,
+                        nHeight: 1.08
+                    }
                 }
             },
         },
@@ -553,9 +616,9 @@ Object.assign(
                 ['stand_0', 'stand_1'],
                 ['move_0', 'move_1', 'move_2', 'move_3'],
                 ['jump_0', 'jump_1', 'jump_2', 'jump_3', 'jump_4'],
-                ['guard_0', 'guard_1', 'guard_2', nuull, null, null, 'hit_6'],
-                ['hit_0', 'hit_1', 'hit_2', 'hit_3', 'hit_4', 'hit_5'],
-                ['throw_0', 'throw_1', 'throw_2'],
+                ['guard_0', 'guard_1', 'guard_2'],
+                ['hit_0', 'hit_1', 'hit_2', 'hit_3', 'hit_4', 'hit_5', 'hit_6'],
+                ['throw_0', 'throw_1', 'throw_2', null, null, null, 'throw_3'],
                 ['ki_0_0', 'ki_0_1', 'ki_1_0', 'ki_1_1', 'ki_1_2'],
                 ['attack_0_0', 'attack_0_1', 'attack_0_2', 'attack_0_3', 'attack_0_4', 'attack_0_5', 'attack_0_6'],
                 ['attack_1_0', 'attack_1_1', 'attack_1_2', 'attack_1_3', 'attack_1_4', 'attack_1_5', 'attack_1_6'],

@@ -18,36 +18,38 @@ Object.assign(
         oType: {
             // ACTION
             // undefined: 'action' 
-            dash: 'dash',
+            move_44: 'dash',
+            move_66: 'dash',
+            attack_66: 'dash',
 
             // MOVEMENT
-            stand: 'stand',
-            landing: 'stand',
-            block: 'stand',
-            backward: 'movement',
-            forward: 'movement',
-            jump_backward: 'jump',
-            jump_neutral: 'jump',
-            jump_forward: 'jump',
-            landing: 'landing',
+            move_5: 'stand',
+            move_1: 'stand',
+            move_4: 'movement',
+            move_6: 'movement',
+            move_7: 'jump',
+            move_8: 'jump',
+            move_9: 'jump',
+            move_0: 'landing',
 
             // HURT
-            guard: 'guard',
-            hit_light: 'hit',
-            hit_heavy: 'hit',
-            hit_luncher: 'hit',
-            hit_throw: 'hit',
-            lunch: 'lunch',
-            fall: 'lunch',
+            defense_4: 'guard',
+            hit_0: 'hit',
+            hit_1: 'hit',
+            hit_2: 'hit',
+            hit_AB: 'hit',
+            launch_0: 'launch',
+            launch_1: 'launch',
 
             // DOWN
-            down: 'down',
-            recovery: 'recovery'
+            launch_2: 'down',
+            launch_5: 'recovery'
         },
-        aAllType: ['action', 'movement', 'jump', 'dash', 'guard', 'hit', 'lunch', 'down', 'recovery'],
-        aTypeHurt: ['guard', 'hit', 'lunch'],
+
+        aAllType: ['action', 'movement', 'jump', 'landing', 'dash', 'guard', 'hit', 'launch', 'down', 'recovery'],
+        aTypeHurt: ['guard', 'hit', 'launch'],
         aTypeMove: ['stand', 'movement', 'jump'],
-        aTypeStack: ['action', 'dash', 'landing'],
+        aTypeStack: ['dash', 'landing'],
 
         getType: function(sName){
             return GameAnimation.oType[sName] || 'action';

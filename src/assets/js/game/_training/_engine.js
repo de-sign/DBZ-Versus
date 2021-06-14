@@ -265,7 +265,7 @@ Object.assign(
                     oParameters.setStat(nIndex, 'Ki');
 
                     // Perso
-                    oPlayer.setStance('landing', true);
+                    oPlayer.setStance('move_0', true);
                     oParameters.setPosition(nIndex - 1);
                 } );
             }

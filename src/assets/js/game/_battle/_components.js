@@ -194,9 +194,13 @@ Object.assign(
             this.aTimerEntity = [];
         },
         use: function(oCommand){
+            if( oCommand.bResetGatling ){
+                this.reset();
+            } else {
+                this.bFreeze = false;
+                this.oNext = null;
+            }
             this.oCurrent = Object.assign({ nFrameStart: TimerEngine.nFrames }, oCommand);
-            this.bFreeze = false;
-            this.oNext = null;
             this.oUsed[oCommand.sCod] = true;
             if( oCommand.aEntity ){
                 this.aTimerEntity = [];

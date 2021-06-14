@@ -26,7 +26,7 @@ Une documentation technique est disponnible ici : [References.md](https://github
 
 ## TODO
 __BUG__
-* Problème REVERSE en cas de CROSS UP dans le coin
+* Problème de LOOP avec GKU
 
 __Menu__
 * Ajout du ONLINE ?
@@ -47,15 +47,6 @@ __Stage__
 <br/>*N/A*
 
 __Battle__
-* Faire le SPRITE pour JUMP ATTACK
-    * LIGHT
-        * FRZ
-        * GHN
-        * GKU_SSJ
-        * GKU
-        * MJN_BUU
-    * HEAVY
-        * All
 * Fin de match
     * Animation de victoire
     * Menu de choix
@@ -66,6 +57,7 @@ __Battle__
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
 * Méchaniques de jeu
     * Attack :
+        * Damage Reduce
         * Guard Break ?
     * Defense :
         * Guard Cancel ?
@@ -80,11 +72,11 @@ __Training__
 
 __General__
 * Modifier la logique des FRAMES
-    * Modifier les FRAMESETS
-    * Modifier la CONFIG BASE
-        * FRAMES
-        * ANIMATIONS
-    * Tester
+    * Faire les BOX des FRAMES manquantes
+        * Jump B
+        * Stun
+* Barre de vie en pourcentage
+    * Revoir les DAMAGES des coups
 * Faire une API ELECTRON ?
     * Paramétrages globaux
     * Ajouter CHARACTER

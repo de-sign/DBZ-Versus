@@ -12,10 +12,10 @@ module.exports = function(config){
         return {
             nSrcX: (nX + (oRatioFrame.nX || 0)) * extra.oSquare[oEntity.sType],
             nSrcY: (nY + (oRatioFrame.nY || 0)) * extra.oSquare[oEntity.sType],
-            nSrcW: oRatioFrame.nWidth * extra.oSquare[oEntity.sType],
-            nSrcH: oRatioFrame.nHeight * extra.oSquare[oEntity.sType],
-            nDstW: oRatioFrame.nWidth * extra.oSquare[oEntity.sType] * 4,
-            nDstH: oRatioFrame.nHeight * extra.oSquare[oEntity.sType] * 4
+            nSrcW: (oRatioFrame.nWidth || 1) * extra.oSquare[oEntity.sType],
+            nSrcH: (oRatioFrame.nHeight || 1) * extra.oSquare[oEntity.sType],
+            nDstW: (oRatioFrame.nWidth || 1) * extra.oSquare[oEntity.sType] * 4,
+            nDstH: (oRatioFrame.nHeight || 1) * extra.oSquare[oEntity.sType] * 4
         };
     }
     

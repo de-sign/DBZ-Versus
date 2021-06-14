@@ -70,12 +70,12 @@ Object.assign(
 
                 changeAnimation: function(){
                     const oMenu = this.oMenu.getSelected();
-                    let nLength = 60,
-                        sAnimation = 'stand';
+                    let nLength = 30,
+                        sAnimation = 'move_5';
 
                     if( oMenu && oMenu.__oData ){
                         if( oMenu.__oData.sCheck == 'bAerial' ){
-                            sAnimation = 'jump_neutral';
+                            sAnimation = 'move_8';
                         }
                         if( this.oAnimation ){
                             if( this.oAnimation.isMovement() ){

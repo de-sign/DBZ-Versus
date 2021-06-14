@@ -42,7 +42,11 @@ Object.assign(
                     const oChar = GameData.oCharacter[ SceneManager.oTransverseData.BTL__aCharacter[this.nCharacter] ][ SceneManager.oTransverseData.BTL__aColor[this.nCharacter] ];
                     this.addStepText( 'Loading frames ' + oChar.sName );
                     for( let sFrame in oChar.oFrames ){
-                        this.oAssetManager.add('image', oChar.oPath.sFrames + '/' + oChar.oFrames[sFrame].sPath);
+                        if(oChar.oFrames[sFrame].sPath){
+                            this.oAssetManager.add('image', oChar.oPath.sFrames + '/' + oChar.oFrames[sFrame].sPath);
+                        } else {
+                            console.log(sFrame, 'Impossible de charger une image sans chemin !', oChar, oChar.oFrames[sFrame]);
+                        }
                     }
                     this.nCharacter++;
                 },

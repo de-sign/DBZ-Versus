@@ -169,10 +169,10 @@ Object.assign(
                 }
 
                 // Trop en bas
-                if( oEntity.oCheck.bLunch ){
+                if( oEntity.oCheck.bLaunch ){
                     const nDown = this.oArea.oPosition.nY + (oBoxArea.bottom - oBoxArea.originY) - oEntity.oPositionPoint.nGapY;
                     if( nDown < oEntity.oLayer.oPosition.nY + ( oBoxEntity.nY + oBoxEntity.nHeight ) ){
-                        oEntity.setStance( oEntity.oAnimation.sName == 'fall' ? 'down' : 'landing', true);
+                        oEntity.setStance( oEntity.oAnimation.sName == 'launch_1' ? 'launch_2' : 'move_0', true);
                         oBoxEntity = oEntity.getBox('oPositionBox')[0];
                         oEntity.oLayer.oPosition.nY = nDown - ( oBoxEntity.nY + oBoxEntity.nHeight );
                     }

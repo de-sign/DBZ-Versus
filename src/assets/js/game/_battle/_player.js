@@ -43,14 +43,14 @@ Object.assign(
                             switch( sDirection ){
                                 case 'DB':
                                 case 'BW':
-                                    this.setStance('recovery_backward');
+                                    this.setStance('launch_4');
                                     break;
                                 case 'DF':
                                 case 'FW':
-                                    this.setStance('recovery_forward');
+                                    this.setStance('launch_6');
                                     break;
                                 default:
-                                    this.setStance('recovery');
+                                    this.setStance('launch_5');
                                     break;
                             }
                             OutputManager.getChannel('CHN__SFX').play('ADO__Recovery');
@@ -68,25 +68,25 @@ Object.assign(
                             else if( this.canMove() ){
                                 switch( sDirection ){
                                     case 'DB':
-                                        this.setStance('block');
+                                        this.setStance('move_1');
                                         break;
                                     case 'BW':
-                                        this.setStance('backward');
+                                        this.setStance('move_4');
                                         break;
                                     case 'FW':
-                                        this.setStance('forward');
+                                        this.setStance('move_6');
                                         break;
                                     case 'UB':
-                                        this.setStance('jump_backward');
+                                        this.setStance('move_7');
                                         break;
                                     case 'UP':
-                                        this.setStance('jump_neutral');
+                                        this.setStance('move_8');
                                         break;
                                     case 'UF':
-                                        this.setStance('jump_forward');
+                                        this.setStance('move_9');
                                         break;
                                     default:
-                                        this.setStance('stand');
+                                        this.setStance('move_5');
                                         break;
                                 }
                             }
@@ -94,13 +94,13 @@ Object.assign(
                             else if( this.oGatling.isJumpCancellable() && !oCanAction.bStack ){
                                 switch( sDirection ){
                                     case 'UB':
-                                        this.setStance('jump_backward');
+                                        this.setStance('move_7');
                                         break;
                                     case 'UP':
-                                        this.setStance('jump_neutral');
+                                        this.setStance('move_8');
                                         break;
                                     case 'UF':
-                                        this.setStance('jump_forward');
+                                        this.setStance('move_9');
                                         break;
                                 }
                             }
@@ -122,7 +122,7 @@ Object.assign(
                 takeHit: function(oEntity, oData){
                     const aNewEntity = [];
                     if( !oData.bUnblockable && this.oStatus.bGuard ){
-                        this.setHurt('guard', oData.oStun.nBlock, !oEntity.bReverse);
+                        this.setHurt('defense_4', oData.oStun.nBlock, !oEntity.bReverse);
                         oEntity.confirmHit(this, oData, true);
                         if( oData.oStun.sImpactAnimation !== false ){
                             aNewEntity.push( {
@@ -147,9 +147,9 @@ Object.assign(
                             this.addKi( 2 * nDamage );
                         }
 
-                        const bLunch = oData.oStun.bLunch && !this.oStatus.bLunch,
+                        const bLaunch = oData.oStun.bLaunch && !this.oStatus.bLaunch,
                             bDeath = this.nLife <= 0,
-                            sHitAnim = bLunch || bDeath ? 'lunch' : oData.oStun.sHitAnimation;
+                            sHitAnim = bLaunch || bDeath ? 'launch_0' : oData.oStun.sHitAnimation;
                             
                         sHitAnim && this.setHurt(sHitAnim, oData.oStun.nHit, !oEntity.bReverse);
                         oEntity.confirmHit(this, oData);
@@ -187,24 +187,24 @@ Object.assign(
                     else {
                         // Gestion en fonction de l'animation
                         switch( this.oAnimation.sName ){
-                            case 'jump_backward':
-                            case 'jump_neutral':
-                            case 'jump_forward':
+                            case 'move_7':
+                            case 'move_8':
+                            case 'move_9':
                                 this.oMemory = {
                                     sType: 'jump',
                                     oAnimation: this.oAnimation,
                                     oMovement: this.oMovement
                                 };
                                 break;
-                            case 'fall':
+                            case 'launch_1':
                                 this.oMemory = {
                                     sType: 'fall',
                                     oAnimation: this.oAnimation,
                                     oMovement: this.oMovement
                                 };
                                 break;
-                            case 'down':
-                            case 'landing':
+                            case 'launch_2':
+                            case 'move_0':
                                 this.oMemory = {
                                     sType: null,
                                     oAnimation: null,
@@ -290,7 +290,7 @@ Object.assign(
                             nCode: 5
                         };
                     }
-                    // Gestion STACK pour ACTION en HIT ou DASH
+                    // Gestion STACK pour ACTION en HIT ou DASH et LANDING
                     else if( this.aHit.length || this.oAnimation.isStack() ){
                         const bCancel = this.oStatus.bCancel && !bFreeze;
                         oCanAction = {
@@ -315,13 +315,13 @@ Object.assign(
 
                 // Fonction OUTPUT
                 pushBack: function(oPushback, bReverse, bDivide){
-                    if( this.oAnimation.sName != 'lunch' ){
+                    if( this.oAnimation.sName != 'launch_0' ){
                         BattleEntity.prototype.pushBack.call(this, oPushback, bReverse, bDivide);
                     }
                 },
                 setAnimation: function(sAnimation, bUpdate, bReverse){
                     const bChanged = BattleEntity.prototype.setAnimation.call(this, sAnimation, bUpdate, bReverse);
-                    if( bChanged && ( !this.oAnimation.isHurt() || this.oAnimation.sName == 'guard' ) ){
+                    if( bChanged && ( !this.oAnimation.isHurt() || this.oAnimation.sType == 'guard' ) ){
                         this.nHitting = 0;
                     }
                     return bChanged;
@@ -334,7 +334,7 @@ Object.assign(
                 },
                 setHurt: function(sHurt, nFramesLength, bReverse){
                     this.setStance(sHurt, true, bReverse);
-                    if( this.oAnimation.sName != 'lunch' ){
+                    if( this.oAnimation.sName != 'launch_0' ){
                         this.oAnimation.setLength(nFramesLength);
                     }
                 },
@@ -346,7 +346,7 @@ Object.assign(
                             this.oAnimation = this.oMemory.oAnimation;
                             this.oMovement = this.oMemory.oMovement;
                         } else {
-                            this.setStance('fall');
+                            this.setStance('launch_1');
                         }
                     }
                     // Gestion JUMP

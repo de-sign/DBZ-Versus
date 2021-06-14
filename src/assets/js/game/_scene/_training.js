@@ -67,7 +67,7 @@ Object.assign(
                         {
                             sContextClass: '--training',
                             aController: SceneManager.oTransverseData.MNU__aController,
-                            sAnimation: 'stand'
+                            sAnimation: 'move_5'
                         }
                     );
 

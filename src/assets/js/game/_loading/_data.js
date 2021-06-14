@@ -16,7 +16,7 @@ Object.assign(
                         this.createFrames(sType, oEntity);
                         this.createAnimations(sType, oEntity);
                         if( sType == 'oCharacter' ){
-                            this.createLunch(oEntity);
+                            this.createLaunch(oEntity);
                             this.createJump(oEntity);
                             this.createRecovery(oEntity);
                             this.createCommands(oEntity);
@@ -49,7 +49,7 @@ Object.assign(
             } )
             .forEach( sFrame => {
                 if( oEntity.oFrames[sFrame] != null ){
-                    oFrames[sFrame] = Object.assign({}, this.oData[sType].oFrames[sFrame] || {}, oEntity.oFrames[sFrame] || {});
+                    oFrames[sFrame] = Object.assign({ sPath: sFrame + '.png' }, this.oData[sType].oFrames[sFrame] || {}, oEntity.oFrames[sFrame] || {});
                     for( let sProp in oFrames[sFrame] ){
                         if( this.oData[sType].oFrames[sFrame] && this.isPlainObject(this.oData[sType].oFrames[sFrame][sProp]) ){
                             if( this.isPlainObject(oEntity.oFrames[sFrame][sProp]) ){
@@ -159,38 +159,38 @@ Object.assign(
         },
 
         // CHARACTER
-        createLunch: function(oChar){
+        createLaunch: function(oChar){
             let nLastY = 0,
                 oLastFrame = null;
 
             const oAnim = {
-                    lunch: {
+                    launch_0: {
                         aAnim: [],
                         aMove: []
                     },
-                    fall: {
+                    launch_1: {
                         aAnim: [],
                         aMove: []
                     }
                 },
-                nDemiLength = (GameSettings.oLuncher.nLength - 1) / 2,
-                nX = GameSettings.oLuncher.oMove.nX / GameSettings.oLuncher.nLength;
+                nDemiLength = (GameSettings.oLauncher.nLength - 1) / 2,
+                nX = GameSettings.oLauncher.oMove.nX / GameSettings.oLauncher.nLength;
 
             // Ajout de 10 FRAMES supplémentaire pour gérer le DOWN
-            for( let nIndex = 1; nIndex <= GameSettings.oLuncher.nLength + 10; nIndex++ ){
+            for( let nIndex = 1; nIndex <= GameSettings.oLauncher.nLength + 10; nIndex++ ){
                 const nParabolX = (nIndex - 1 - nDemiLength) / nDemiLength,
                     nParabolY = -1 * (nParabolX * nParabolX - 1),
-                    nTargetY = Math.round(nParabolY * GameSettings.oLuncher.oMove.nY),
+                    nTargetY = Math.round(nParabolY * GameSettings.oLauncher.oMove.nY),
                     nY = nTargetY - nLastY,
-                    bInvulnerable = GameSettings.oLuncher.nInvulnerable >= nIndex,
-                    bFall = nIndex > GameSettings.oLuncher.nLength / 2,
-                    sAnim = bFall ? 'fall' : 'lunch';
+                    bInvulnerable = GameSettings.oLauncher.nInvulnerable >= nIndex,
+                    bFall = nIndex > GameSettings.oLauncher.nLength / 2,
+                    sAnim = bFall ? 'launch_1' : 'launch_0';
                 
-                let sFrame = GameSettings.oLuncher.oFrames[ bFall ? 'sFall' : 'sLunch' ];
+                let sFrame = GameSettings.oLauncher.oFrames[ bFall ? 'sFall' : 'sLaunch' ];
                 if( nIndex == 1 ){
-                    sFrame += '_filter';
+                    sFrame += '__1';
                 } else if (bInvulnerable){
-                    sFrame += '_invul';
+                    sFrame += '__0';
                 }
 
                 if( oLastFrame && oLastFrame.sFrame == sFrame ){
@@ -201,7 +201,7 @@ Object.assign(
                         sFrame,
                         oStatus: {
                             bAerial: true,
-                            bLunch: true,
+                            bLaunch: true,
                             bInvul: bInvulnerable,
                             bReverse: nIndex == 1
                         }
@@ -221,9 +221,9 @@ Object.assign(
 
         createJump: function(oChar){
             const oCoef = {
-                backward: -1,
-                neutral: 0,
-                forward: 1
+                _7: -1,
+                _8: 0,
+                _9: 1
             };
 
             for( let sType in oCoef ){
@@ -232,12 +232,21 @@ Object.assign(
 
                 const aAnim = [ {
                         nFrame: 2,
-                        sFrame: 'blur',
+                        sFrame: 'stand_1',
+                        oStatus: {
+                            bAerial: true
+                        }
+                    },
+                    {
+                        nFrame: 2,
+                        sFrame: 'jump_0',
                         oStatus: {
                             bAerial: true
                         }
                     } ],
-                    aMove = [{}],
+                    aMove = [
+                        { nLength: 4 }
+                    ],
                     nDemiLength = (GameSettings.oJump.nLength - 1) / 2,
                     nX = GameSettings.oJump.oMove.nX / GameSettings.oJump.nLength;
 
@@ -275,7 +284,7 @@ Object.assign(
                     nLastY = nTargetY;
                 }
                 
-                oChar.oAnimations['jump_' + sType] = {
+                oChar.oAnimations['move' + sType] = {
                     oMove: aMove,
                     aFrames: aAnim
                 };
@@ -283,8 +292,13 @@ Object.assign(
         },
 
         createRecovery: function(oChar){
-            const aRecovery = oChar.oAnimations.recovery.aFrames;
-            ['forward', 'backward'].forEach( sType => {
+            const aRecovery = oChar.oAnimations.launch_5.aFrames,
+                oRatio = {
+                    _4: -1,
+                    _6: 1
+                };
+            
+            for( let sType in oRatio ){
                 const aAnim = [];
                 aRecovery.forEach( (oFrame, nIndex) => {
                     aAnim.push( Object.assign(
@@ -292,11 +306,11 @@ Object.assign(
                         oFrame
                     ) );
                 } );
-                oChar.oAnimations['recovery_' + sType] = {
-                    oMove: GameSettings.oRecovery[sType],
+                oChar.oAnimations['launch' + sType] = {
+                    oMove: GameSettings.nRecovery * oRatio[sType],
                     aFrames: aAnim
                 };
-            } );
+            }
         },
 
         createCommands: function(oChar){
@@ -357,7 +371,7 @@ Object.assign(
         createThrow: function(oChar){
             let oThrow = null,
                 oBackThrow = null;
-                oLuncher = null;
+                oLauncher = null;
 
             oChar.oCommands.aOffense.forEach( oCommand => {
                 switch( oCommand.sCod ){
@@ -367,12 +381,12 @@ Object.assign(
                     case 'back_throw':
                         oBackThrow = oCommand;
                         break;
-                    case 'luncher':
-                        oLuncher = Object.assign(
+                    case 'launcher':
+                        oLauncher = Object.assign(
                             {},
                             oCommand,
                             {
-                                sCod: 'throw_luncher',
+                                sCod: 'throw_launcher',
                                 oManipulation: null
                             }
                         );
@@ -381,8 +395,8 @@ Object.assign(
             } );
 
             // BackThrow
-            oBackThrow.oFollowUp.oFollowUp = oLuncher;
-            oThrow.oFollowUp = Object.assign( { bFollowOnlyOnHurt: true }, oLuncher );
+            oBackThrow.oFollowUp.oFollowUp = oLauncher;
+            oThrow.oFollowUp = Object.assign( { bFollowOnlyOnHurt: true }, oLauncher );
         },
 
         // STAGE

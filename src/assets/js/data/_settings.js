@@ -25,7 +25,7 @@ Object.assign(
                 sRoot: 'assets/images/characters',
                 sFrames: 'assets/images/characters',
                 sFace: 'face.png',
-                sPreview: 'stand.png'
+                sPreview: 'stand_0.png'
             },
             oProjectile: {
                 sRoot: 'assets/images/projectiles',
@@ -57,8 +57,8 @@ Object.assign(
         /* ----- DETAILS Constante de filtre des effets visuels des SPRITES de personnage ----- */
         aFilter: [
             {
-                sSuffixe: 'invul',
-                aFrames: ['blur', 'hit_luncher', 'recovery', 'reflect'],
+                sSuffixe: '_0',
+                aFrames: ['stand_1', 'hit_2', 'hit_4', 'move_1', 'move_2', 'move_3', 'guard_0', 'guard_2'],
                 oData: {
                     oStatus: {
                         bInvul: true
@@ -67,13 +67,22 @@ Object.assign(
                 }
             },
             {
-                sSuffixe: 'throw',
-                aFrames: ['hit_light'],
+                sSuffixe: '_1',
+                aFrames: ['hit_0', 'hit_1', 'hit_2'],
                 oData: {}
             },
             {
-                sSuffixe: 'filter',
-                aFrames: ['hit_light', 'hit_heavy', 'hit_luncher', 'guard'],
+                sSuffixe: '_2',
+                aFrames: ['guard_0', 'guard_1'],
+                oData: {
+                    oStatus: {
+                        bGuard: true
+                    }
+                }
+            },
+            {
+                sSuffixe: '_3',
+                aFrames: ['hit_0', 'hit_1'],
                 oData: {}
             }
         ],
@@ -251,7 +260,7 @@ Object.assign(
         /* ----- DETAILS Nombre maximum de KI possible en combat ----- */
         nKi: 20,
         /* ----- DETAILS Paramétrage de l'animation d'un personnage LUNCHER ----- */
-        oLuncher: {
+        oLauncher: {
             nLength: 36,
             nInvulnerable: 8,
             oMove: {
@@ -259,8 +268,8 @@ Object.assign(
                 nY: -54 * 4
             },
             oFrames: {
-                sLunch: 'hit_luncher',
-                sFall: 'hit_fall'
+                sLaunch: 'hit_2',
+                sFall: 'hit_3'
             }
         },
         /* ----- DETAILS Paramétrage de l'animation d'un personnage JUMP ----- */
@@ -275,20 +284,13 @@ Object.assign(
                 nY: -54 * 3
             },
             oFrames: {
-                sPrejump: 'fall',
-                sJump: 'jump',
-                sPrelanding: 'fall',
+                sPrejump: 'jump_1',
+                sJump: 'jump_2',
+                sPrelanding: 'jump_3',
             }
         },
         /* ----- DETAILS Paramètrage de la distance de déplacement lors d'une relevé d'un personnage mis au sol ----- */
-        oRecovery: {
-            backward: {
-                nX: -14
-            },
-            forward: {
-                nX: 14
-            }
-        },
+        nRecovery: 14,
         /* ----- END PROPERTIES ----- */
         /* ----- END SINGLETON ----- */
     }
