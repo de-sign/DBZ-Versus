@@ -309,7 +309,7 @@ Nombre de point de vie pour chaque entité
 GameSettings.oLife = {
     player: 1000,
     character: 0,
-    projectile: 1,
+    projectile: 100,
     beam: 0
 };
 ```
@@ -371,6 +371,19 @@ Paramètrage de la distance de déplacement lors d'une relevé d'un personnage m
 
 ```javascript
 GameSettings.nRecovery = 14;
+```
+
+#### GameSettings.oDamage
+
+Parametrages des DAMAGES par défaut et du damage REDUCE 
+
+```javascript
+GameSettings.oDamage = {
+    nDefault: 25,
+    // Percent !
+    nReduce: 10,
+    nMinimumReduce: 10
+};
 ```
 
 

@@ -26,19 +26,21 @@ Object.assign(
             } );
         },
         update: function(){
-            const bResetLast = this.oPlayer.nHitting == 0 && this.nLastLife != this.nLife;
+            const bResetLast = this.oPlayer.nHitting == 0 && this.nLastLife != this.nLife,
+                nLife = Math.max(0, this.oPlayer.nLife);
 
             if( this.nLife != this.oPlayer.nLife || bResetLast ){
                 this.nLife = this.oPlayer.nLife;
                 bResetLast && (this.nLastLife = this.nLife);
                     
                 OutputManager.getElement('LAY__Battle_HUD_Bar_Lose_' + this.oPlayer.nPlayer).setStyle( {
-                    minWidth: ( (this.nLastLife - this.nLife) * 100 / GameSettings.oLife.player ) + '%'
+                    minWidth: ( (this.nLastLife - nLife) * 100 / GameSettings.oLife.player ) + '%'
                 } );
                 OutputManager.getElement('LAY__Battle_HUD_Bar_Life_' + this.oPlayer.nPlayer).setStyle( {
-                    minWidth: ( this.nLife * 100 / GameSettings.oLife.player ) + '%'
+                    minWidth: ( nLife * 100 / GameSettings.oLife.player ) + '%'
                 } );
             }
+
             if( this.nKi != this.oPlayer.nKi ){
                 const oLayer = OutputManager.getElement('LAY__Battle_HUD_Ki_' + this.oPlayer.nPlayer);
                 this.nKi = this.oPlayer.nKi;

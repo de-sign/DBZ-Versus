@@ -67,7 +67,6 @@ __Training__
 __General__
 * Méchaniques de jeu
     * Attack :
-        * Damage Reduce !!!
         * Guard Break ?
     * Defense :
         * Guard Cancel ?

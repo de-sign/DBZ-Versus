@@ -810,6 +810,7 @@ GameData.oCharacter.GHN = {
                 sListAnimation: 'list_236C',
                 nCost: 12,
                 nDamage: 300,
+                nMinimumReduce: 40,
                 nGatlingLevel: 3,
                 sCheck: 'bGround',
                 aEntity: {

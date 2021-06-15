@@ -754,6 +754,7 @@ GameData.oCharacter.GKU = {
                 sAnimation: 'attack_236C',
                 nCost: 12,
                 nDamage: 500,
+                nMinimumReduce: 40,
                 nGatlingLevel: 3,
                 sCheck: 'bGround',
                 aEntity: {

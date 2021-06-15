@@ -139,13 +139,19 @@ Object.assign(
                         } );
                     }
                     else {
-                        const nDamage = oData.nDamage == null ? 1 : oData.nDamage;
+                        const nRatio = Math.max(oData.nMinimumReduce || GameSettings.oDamage.nMinimumReduce, 100 - (this.nHitting * GameSettings.oDamage.nReduce)),
+                            nBaseDamage = oData.nDamage == null ?
+                                GameSettings.oDamage.nDefault :
+                                oData.nDamage,
+                            nDamage = Math.floor(nBaseDamage * nRatio / 100);
+                        
+                        console.log(oData, oData.nMinimumReduce || GameSettings.oDamage.nMinimumReduce, 100 - this.nHitting * GameSettings.oDamage.nReduce, nRatio, nBaseDamage);
 
                         if( nDamage ){
-                            this.nLife = Math.max(this.nLife - nDamage, 0);
-                            this.nHitting ++;
+                            this.nLife -= nDamage;
                             this.addKi(2);
                         }
+                        this.nHitting ++;
 
                         const bLaunch = oData.oStun.bLaunch && !this.oStatus.bLaunch,
                             bDeath = this.nLife <= 0,

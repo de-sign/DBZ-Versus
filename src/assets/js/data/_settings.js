@@ -249,7 +249,7 @@ Object.assign(
         oLife: {
             player: 1000,
             character: 0,
-            projectile: 1,
+            projectile: 100,
             beam: 0
         },
         /* ----- DETAILS Position lors d'un effet visuel sur une entité ----- */
@@ -282,6 +282,13 @@ Object.assign(
         },
         /* ----- DETAILS Paramètrage de la distance de déplacement lors d'une relevé d'un personnage mis au sol ----- */
         nRecovery: 14,
+        /* ----- DETAILS Parametrages des DAMAGES par défaut et du damage REDUCE ----- */
+        oDamage: {
+            nDefault: 25,
+            // Percent !
+            nReduce: 10,
+            nMinimumReduce: 10
+        },
         /* ----- END PROPERTIES ----- */
         /* ----- END SINGLETON ----- */
     }
