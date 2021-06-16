@@ -4,18 +4,19 @@
         <div class="Battle__Interface_Wrapper">
 
             <div class="Battle__HUDs">
+                <div id="TXT__Battle_Timer" class="outputLayer Battle__Timer">00</div>
                 <div id="LAY__Battle_HUD_" class="outputLayer Battle__HUD">
-                    <img id="SPT__Battle_HUD_Sprite_" class="outputSprite --change Battle__HUD_Sprite" />
                     <div class="Battle__HUD_Character">
+                        <h3 id="TXT__Battle_HUD_Number_" class="outputText --change Battle__HUD_Character_Number"></h3>
+                        <h2 id="TXT__Battle_HUD_Name_" class="outputText --change Battle__HUD_Character_Name"></h2>
                         <div id="LAY__Battle_HUD_Life_" class="outputLayer --change Battle__HUD_Character_Life">
                             <div id="LAY__Battle_HUD_Bar_Life_" class="outputLayer --change Battle__HUD_Bar_Life"></div>
                             <div id="LAY__Battle_HUD_Bar_Lose_" class="outputLayer --change Battle__HUD_Bar_Lose"></div>
                         </div>
                         <div id="LAY__Battle_HUD_Ki_" class="outputLayer --change Battle__HUD_Character_Ki"></div>
-                        <h2 id="TXT__Battle_HUD_Name_" class="outputText --change Battle__HUD_Character_Name"></h2>
-                        <h3 id="TXT__Battle_HUD_Number_" class="outputText --change Battle__HUD_Character_Number"></h3>
                         <div id="LAY__Training_Animation_" class="outputLayer --change Training__Animation"></div>
                     </div>
+                    <img id="SPT__Battle_HUD_Sprite_" class="outputSprite --change Battle__HUD_Sprite" />
                 </div>
             </div>
             <div class="Battle__Info">

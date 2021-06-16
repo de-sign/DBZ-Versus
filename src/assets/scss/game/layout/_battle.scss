@@ -27,24 +27,37 @@
 .Battle__HUDs {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: flex-end;
+}
+
+.Battle__Timer {
+    order: 1;
+    text-align: center;
+    font-size: 2.4em;
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    margin: 0 -25px -5px;
+    z-index: 10;
+    min-width: 60px;
+    flex: 0 0 auto;
 }
 
 .Battle__HUD {
     flex: 1 1 auto;
     display: flex;
     align-items: flex-start;
-    position: relative;
+    order: 0;
+    text-align: right;
+    justify-content: flex-end;
 
     &:last-child {
-        justify-content: flex-end;
-
-        .Battle__HUD_Sprite {
-            order: 1;
-        }
+        justify-content: flex-start;
+        order: 2;
 
         .Battle__HUD_Character {
-            text-align: right;
+            text-align: left;
+            order: 1;
         }
 
         .Battle__HUD_Character_Life {
@@ -57,30 +70,23 @@
     }
     
     &_Character {
-        .Battle__HUD:last-child & {
-            text-align: right;
+        
+        &_Number {
+            font-size: 1em;
+            margin: 15px 10px 5px;
         }
     
         &_Name {
             font-size: 2.4em;
-            margin: 15px 10px 0;
-        }
-        
-        &_Number {
-            font-size: 1em;
-            margin: 5px 10px 5px;
+            margin: 5px 10px 15px;
         }
 
         &_Life {
             border: 2px solid Black;
-            margin: 5px 0 2px;
+            margin: 5px -30px 2px;
             position: relative;
             display: flex;
-            width: 300px;
-
-            .Battle__HUD:first-child &{
-                flex-direction: row-reverse;
-            }
+            width: 400px;
         
             & > * {
                 flex: 0 0 auto;
@@ -101,6 +107,10 @@
             flex-direction: row;
             text-align: center;
             margin: 1px;
+            position: absolute;
+            bottom: 125px;
+            left: 50px;
+            right: 50px;
         
             & > * {
                 width: 14px;

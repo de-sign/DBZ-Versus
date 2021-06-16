@@ -307,7 +307,7 @@ Nombre de point de vie pour chaque entité
 
 ```javascript
 GameSettings.oLife = {
-    player: 1000,
+    player: 1500,
     character: 0,
     projectile: 100,
     beam: 0
@@ -330,6 +330,24 @@ Nombre maximum de KI possible en combat
 
 ```javascript
 GameSettings.nKi = 20;
+```
+
+#### GameSettings.oKi
+
+Paramétrage du gain de KI 
+
+```javascript
+GameSettings.oKi = {
+    nMax: 50,
+    oAttack: {
+        nHit: 2,
+        nGuard: 1
+    },
+    oDefend: {
+        nHit: 1,
+        nGuard: 1
+    }
+};
 ```
 
 #### GameSettings.oLauncher

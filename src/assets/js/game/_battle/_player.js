@@ -144,8 +144,6 @@ Object.assign(
                                 GameSettings.oDamage.nDefault :
                                 oData.nDamage,
                             nDamage = Math.floor(nBaseDamage * nRatio / 100);
-                        
-                        console.log(oData, oData.nMinimumReduce || GameSettings.oDamage.nMinimumReduce, 100 - this.nHitting * GameSettings.oDamage.nReduce, nRatio, nBaseDamage);
 
                         if( nDamage ){
                             this.nLife -= nDamage;
