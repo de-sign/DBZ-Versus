@@ -47,11 +47,8 @@ __Stage__
 <br/>*N/A*
 
 __Battle__
-* Revoir la logique de KI
-* Revoir l'HUD
-    * KI
 * Gestion de TIMER
-    * Gestion de ROUND ?
+* Gestion de ROUND ?
 * Fin de match
     * Gestion slow motion KO
     * Animation de victoire

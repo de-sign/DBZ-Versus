@@ -35,7 +35,6 @@ Object.assign(
                 for( let nIndex = 0; nIndex < GameSettings.nPlayer; nIndex++ ){
                     const nPlayer = nIndex + 1;
                     this.createHUDPlayer(nPlayer);
-                    this.createHUDKi(nPlayer);
                     this.createTrainingParameters(nPlayer);
                 }
                 this.createTrainingList();
@@ -71,12 +70,6 @@ Object.assign(
                 // Ajout dans le context
                 this.oContext.add(new OutputManager.OutputLayer(hLayer), '.Battle__HUDs');
                 this.oContext.update();
-            },
-            createHUDKi: function(nPlayer){
-                const oLayer = OutputManager.getElement('LAY__Battle_HUD_Ki_' + nPlayer);
-                for( let nIndex = 0; nIndex < GameSettings.nKi; nIndex++ ){
-                    oLayer.add( new OutputManager.OutputText() );
-                }
             },
             createTrainingParameters: function(nPlayer){
                 // Clone du LAYER
@@ -164,7 +157,7 @@ Object.assign(
                 hCommand.removeAttribute('id');
                 hCommand.classList.remove(OutputManager.oConfig.class.created);
 
-                hCommand.querySelector('.Training__Menu_List_Ki').innerHTML = oCommand.nCost ? ( oCommand.nCost / 2 ) + ' Ki' : '';
+                hCommand.querySelector('.Training__Menu_List_Ki').innerHTML = oCommand.nCost ? ( oCommand.nCost / GameSettings.oKi.nBar ) + ' Ki' : '';
 
                 const hListCommand = hCommand.querySelector('.Training__Menu_List_Command');
                 let sName = oCommand.sName;

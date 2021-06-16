@@ -13,8 +13,11 @@
                             <div id="LAY__Battle_HUD_Bar_Life_" class="outputLayer --change Battle__HUD_Bar_Life"></div>
                             <div id="LAY__Battle_HUD_Bar_Lose_" class="outputLayer --change Battle__HUD_Bar_Lose"></div>
                         </div>
-                        <div id="LAY__Battle_HUD_Ki_" class="outputLayer --change Battle__HUD_Character_Ki"></div>
                         <div id="LAY__Training_Animation_" class="outputLayer --change Training__Animation"></div>
+                        <div id="LAY__Battle_HUD_Ki_" class="outputLayer --change Battle__HUD_Character_Ki">
+                            <div id="TXT__Battle_HUD_Ki_Number_" class="outputText --change Battle__HUD_Ki_Number"></div>
+                            <div id="LAY__Battle_HUD_Ki_Bar_" class="outputLayer --change Battle__HUD_Ki_Bar"></div>
+                        </div>
                     </div>
                     <img id="SPT__Battle_HUD_Sprite_" class="outputSprite --change Battle__HUD_Sprite" />
                 </div>
@@ -24,8 +27,8 @@
                 <span id="TXT__Battle_Info_Text" class="outputText Battle__Info_Text --text-border">
             </div>
             <div class="Battle__Combo">
-                <span id="TXT__Battle_Combo_Text_2" class="outputText Battle__Combo_Text --text-border"></span>
-                <span id="TXT__Battle_Combo_Text_1" class="outputText Battle__Combo_Text --text-border"></span>
+                <span id="TXT__Battle_Combo_Text_2" class="outputText Battle__Combo_Text"></span>
+                <span id="TXT__Battle_Combo_Text_1" class="outputText Battle__Combo_Text"></span>
             </div>
 
             {% include "index/_scenes/_training.html" %}

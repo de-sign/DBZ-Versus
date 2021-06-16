@@ -835,7 +835,7 @@ GameData.oCharacter.FRZ = {
                     CTM_MTL_KRA: 'Sūpānova Kūra'
                 },
                 sAnimation: 'attack_236C',
-                nCost: 12,
+                nCost: 30,
                 nDamage: 300,
                 nMinimumReduce: 40,
                 nGatlingLevel: 3,
@@ -877,7 +877,7 @@ GameData.oCharacter.FRZ = {
                 sName: 'Desubīmu',
                 sAnimation: 'attack_C',
                 sListAnimation: 'list_C',
-                nCost: 4,
+                nCost: 10,
                 nGatlingLevel: 2,
                 nDamage: 100,
                 sCheck: 'bGround',

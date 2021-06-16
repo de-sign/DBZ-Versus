@@ -117,13 +117,14 @@ Object.assign(
                     return this.oGatling.oCurrent;
                 },
                 addKi: function(nKi){
-                    this.nKi = Math.min(this.nKi + nKi, GameSettings.nKi);
+                    this.nKi = Math.min(this.nKi + nKi, GameSettings.oKi.nMax);
                 },
                 takeHit: function(oEntity, oData){
                     const aNewEntity = [];
                     if( !oData.bUnblockable && this.oStatus.bGuard ){
                         this.setHurt('defense_4', oData.oStun.nBlock, !oEntity.bReverse);
                         oEntity.confirmHit(this, oData, true);
+                        this.addKi( ( oData.oKi ? oData : GameSettings ).oKi.oDefend.nGuard );
                         if( oData.oStun.sImpactAnimation !== false ){
                             aNewEntity.push( {
                                 sType: 'effect',
@@ -147,7 +148,7 @@ Object.assign(
 
                         if( nDamage ){
                             this.nLife -= nDamage;
-                            this.addKi(2);
+                            this.addKi( ( oData.oKi ? oData : GameSettings ).oKi.oDefend.nHit );
                         }
                         this.nHitting ++;
 
@@ -177,7 +178,7 @@ Object.assign(
                     BattleEntity.prototype.confirmHit.call(this, oEntityHurt, oData, bGuard);
                     this.oGatling.confirmHit(bGuard);
                     const nDamage = oData.nDamage == null ? 1 : oData.nDamage;
-                    bGuard || oData.nCost || this.addKi(1);
+                    oData.nCost || this.addKi( ( oData.oKi ? oData : GameSettings ).oKi.oAttack[ bGuard ? 'nGuard' : 'nHit' ] );
                 },
                 setMemory: function(){
                     // Annulation du JUMP en cas de HIT en l'air

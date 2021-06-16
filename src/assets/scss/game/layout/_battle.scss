@@ -37,7 +37,7 @@
     background-color: #333;
     color: #fff;
     padding: 5px;
-    margin: 0 -25px -5px;
+    margin: 0 -25px -10px;
     z-index: 10;
     min-width: 60px;
     flex: 0 0 auto;
@@ -66,6 +66,13 @@
 
         .Battle__HUD_Character_Ki {
             flex-direction: row-reverse;
+            right: 100px;
+            left: auto;
+        }
+
+        .Battle__HUD_Ki_Number {
+            right: auto;
+            left: 100%;
         }
     }
     
@@ -87,6 +94,8 @@
             position: relative;
             display: flex;
             width: 400px;
+            flex-direction: row-reverse;
+            background-color: rgba(255, 255, 255, 0.5);
         
             & > * {
                 flex: 0 0 auto;
@@ -103,49 +112,47 @@
         }
 
         &_Ki {
-            display: flex;
-            flex-direction: row;
-            text-align: center;
-            margin: 1px;
             position: absolute;
             bottom: 125px;
-            left: 50px;
-            right: 50px;
+            left: 100px;
+            width: 250px;
+            display: flex;
+            flex-direction: row;
+            border: 2px solid #333;
+            background-color: rgba(255, 255, 255, 0.5);
+
+            .Battle__HUD_Ki_Number {
+                background-color: #333;
+                color: #fff;
+                font-size: 2.4em;
+                padding: 5px 10px;
+                position: absolute;
+                bottom: -2px;
+                right: 100%;
+            }
         
-            & > * {
-                width: 14px;
-                height: 14px;
-                margin: 0 -1px;
-                
-                &.Battle__HUD_Bar_Ki {
-                    background-color: #6699FF;
-                    display: block;
-                    border-top: 2px solid Black;
-                    border-bottom: 2px solid Black;
-
-                    &:nth-child(2n) {
-                        border-right: 2px solid Black;
-                    }
-
-                    &:nth-child(2n+1) {
-                        border-left: 2px solid Black;
-                    }
-                }
-
-                .Battle__HUD:last-child &.Battle__HUD_Bar_Ki {
-                    
-                    &:nth-child(2n) {
-                        border-right: none;
-                        border-left: 2px solid Black;
-                    }
-
-                    &:nth-child(2n+1) {
-                        border-right: 2px solid Black;
-                        border-left: none;
-                    }
-                }
+            .Battle__HUD_Ki_Bar {
+                height: 20px;
+                background-color: #6699FF;
             }
         }
+    }
+}
+
+.Battle__HUD_Bar_Life,
+.Battle__HUD_Bar_Lose,
+.Battle__HUD_Ki_Bar {
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: block;
+        height: 5px;
+        background-color: rgba(0, 0, 0, 0.25);
     }
 }
 

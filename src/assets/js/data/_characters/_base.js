@@ -971,7 +971,7 @@ GameData.oEntity.oCharacter = {
                 },
                 {
                     nFrame: 2,
-                    sFrame: 'move_3'
+                    sFrame: 'move_2'
                 },
                 {
                     nFrame: 10,
@@ -990,7 +990,7 @@ GameData.oEntity.oCharacter = {
                 },
                 {
                     nFrame: 8,
-                    sFrame: 'move_3'
+                    sFrame: 'move_2'
                 },
                 {
                     nFrame: 4,
@@ -1139,7 +1139,7 @@ GameData.oEntity.oCharacter = {
                 },
                 {
                     nFrame: 2,
-                    sFrame: 'move_3'
+                    sFrame: 'move_2'
                 },
                 {
                     nFrame: 10,
@@ -1189,7 +1189,7 @@ GameData.oEntity.oCharacter = {
                 sFrame: 'attack_1_2'
             },
             {
-                nFrame: 6,
+                nFrame: 8,
                 sFrame: 'attack_1_3'
             },
             {
@@ -1443,6 +1443,16 @@ GameData.oEntity.oCharacter = {
                     sHitAnimation: 'hit_0',
                     sImpactAnimation: false
                 },
+                oKi: {
+                    oAttack: {
+                        nHit: 0,
+                        nGuard: 0
+                    },
+                    oDefend: {
+                        nHit: 0,
+                        nGuard: 0
+                    }
+                },
                 oPushback: {
                     nLength: 4,
                     nX: -98,
@@ -1460,11 +1470,21 @@ GameData.oEntity.oCharacter = {
                 sCod: 'defence_BC',
                 sAnimation: 'defence_BC',
                 sCheck: 'bGuard',
-                nCost: 4,
+                nCost: 10,
                 nDamage: 0,
                 sCollisionBox: 'oPositionBox',
                 oStun: {
                     sImpactAnimation: false
+                },
+                oKi: {
+                    oAttack: {
+                        nHit: 0,
+                        nGuard: 0
+                    },
+                    oDefend: {
+                        nHit: 0,
+                        nGuard: 0
+                    }
                 },
                 oPushback: {
                     nLength: 4,
@@ -1520,7 +1540,7 @@ GameData.oEntity.oCharacter = {
                 sCod: 'move_66', // dash_cancel
                 sAnimation: 'attack_66',
                 bNotInCommandList: true,
-                nCost: 8,
+                nCost: 20,
                 bResetGatling: true,
                 nGatlingLevel: 1,
                 sCheck: 'bGround',
@@ -1548,6 +1568,16 @@ GameData.oEntity.oCharacter = {
                 oStun: {
                     nHit: 30,
                     sHitAnimation: 'hit_AB'
+                },
+                oKi: {
+                    oAttack: {
+                        nHit: 0,
+                        nGuard: 0
+                    },
+                    oDefend: {
+                        nHit: 0,
+                        nGuard: 0
+                    }
                 },
                 oPushback: {},
                 bLast: true,
@@ -1578,6 +1608,16 @@ GameData.oEntity.oCharacter = {
                 oStun: {
                     nHit: 30,
                     sHitAnimation: 'hit_AB'
+                },
+                oKi: {
+                    oAttack: {
+                        nHit: 0,
+                        nGuard: 0
+                    },
+                    oDefend: {
+                        nHit: 0,
+                        nGuard: 0
+                    }
                 },
                 oPushback: {},
                 bLast: true,

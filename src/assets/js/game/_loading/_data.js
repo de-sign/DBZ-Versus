@@ -306,7 +306,9 @@ Object.assign(
                     ) );
                 } );
                 oChar.oAnimations['launch' + sType] = {
-                    oMove: GameSettings.nRecovery * oRatio[sType],
+                    oMove: {
+                        nX: GameSettings.nRecovery * oRatio[sType]
+                    },
                     aFrames: aAnim
                 };
             }

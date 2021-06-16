@@ -257,11 +257,10 @@ Object.assign(
             nX: -24
         },
         // CHARACTER
-        /* ----- DETAILS Nombre maximum de KI possible en combat ----- */
-        nKi: 20,
         /* ----- DETAILS Paramétrage du gain de KI ----- */
         oKi: {
             nMax: 50,
+            nBar: 10,
             oAttack: {
                 nHit: 2,
                 nGuard: 1

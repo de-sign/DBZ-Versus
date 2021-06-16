@@ -104,7 +104,7 @@ Object.assign(
                                 oLayer[sType].aChildElement[0].setText( oParam[sType] ? 'Yes' : 'No' );
                             }
                             else if( sType == 'nKi' ) {
-                                oLayer[sType].aChildElement[0].setText( oParam[sType] / 2 );
+                                oLayer[sType].aChildElement[0].setText( oParam[sType] / GameSettings.oKi.nBar );
                             }
                             else if( sType == 'nLife' ) {
                                 oLayer[sType].aChildElement[0].setText( oParam[sType] );
@@ -144,7 +144,7 @@ Object.assign(
                     nIndex++;
                     this.aParam.push( StoreEngine.get('Parameters_' + nIndex) || {
                         nLife: GameSettings.oLife.player,
-                        nKi: GameSettings.nKi,
+                        nKi: GameSettings.oKi.nMax,
                         bRegenLife: true,
                         bRegenKi: true
                     } );
@@ -184,11 +184,11 @@ Object.assign(
                     },
                     oMaxStat = {
                         nLife: GameSettings.oLife.player,
-                        nKi: GameSettings.nKi
+                        nKi: GameSettings.oKi.nMax
                     },
                     oRatio = {
                         nLife: 10 * GameSettings.oLife.player / 100,
-                        nKi: 1
+                        nKi: GameSettings.oKi.nBar
                     };
 
                 oParam[sStat] += nChange * oRatio[sStat];

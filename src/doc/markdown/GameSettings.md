@@ -324,14 +324,6 @@ GameSettings.oPositionEffect = {
 };
 ```
 
-#### GameSettings.nKi
-
-Nombre maximum de KI possible en combat 
-
-```javascript
-GameSettings.nKi = 20;
-```
-
 #### GameSettings.oKi
 
 Paramétrage du gain de KI 
@@ -339,6 +331,7 @@ Paramétrage du gain de KI
 ```javascript
 GameSettings.oKi = {
     nMax: 50,
+    nBar: 10,
     oAttack: {
         nHit: 2,
         nGuard: 1

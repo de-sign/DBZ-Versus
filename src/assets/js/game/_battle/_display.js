@@ -42,16 +42,18 @@ Object.assign(
             }
 
             if( this.nKi != this.oPlayer.nKi ){
-                const oLayer = OutputManager.getElement('LAY__Battle_HUD_Ki_' + this.oPlayer.nPlayer);
                 this.nKi = this.oPlayer.nKi;
+                const nKiBar = (this.nKi % GameSettings.oKi.nBar),
+                    nDisplayBar = nKiBar || (
+                        this.nKi == GameSettings.oKi.nMax ?
+                        GameSettings.oKi.nBar :
+                        0
+                    );
 
-                for( let nIndex = 0; nIndex < oLayer.aChildElement.length; nIndex++ ){
-                    const oBar = oLayer.aChildElement[nIndex];
-                    oBar.hElement.classList.remove('Battle__HUD_Bar_Ki');
-                    if( nIndex < this.nKi ){
-                        oBar.hElement.classList.add('Battle__HUD_Bar_Ki');
-                    }
-                }
+                OutputManager.getElement('TXT__Battle_HUD_Ki_Number_' + this.oPlayer.nPlayer).setText( Math.floor(this.nKi / GameSettings.oKi.nBar) );
+                OutputManager.getElement('LAY__Battle_HUD_Ki_Bar_' + this.oPlayer.nPlayer).setStyle( {
+                    minWidth: ( nDisplayBar * 100 / GameSettings.oKi.nBar ) + '%'
+                } );
             }
         },
         destroy: function(){
@@ -188,7 +190,10 @@ Object.assign(
 
         show: function(nIndex){
             const oText = this.aText[nIndex];
-            oText.setText( this.aLast[nIndex].nHit + ' hits !<i>' + ( this.aLast[nIndex].nLastLife - this.aPlayer[nIndex].nLife ) + '</i>' );
+            oText.setText(
+                this.aLast[nIndex].nHit + ' hits !'
+                + '<i>' + ( this.aLast[nIndex].nLastLife - this.aPlayer[nIndex].nLife ) + ' damages</i>'
+            );
             oText.addTickUpdate( () => {
                 oText.hElement.classList.add('--show');
                 oText.hElement.classList.remove('--hide');
