@@ -1427,6 +1427,120 @@ GameData.oEntity.oCharacter = {
             {
                 sFrame: 'stand_0'
             }
+        ],
+        anim_death: [
+            {
+                sFrame: 'hit_4'
+            }
+        ],
+        anim_victory: [
+            {
+                sFrame: 'stand_1',
+                nFrame: 2
+            },
+            {
+                sFrame: 'guard_2',
+                nFrame: 24,
+                aHitBox: null
+            },
+            {
+                sFrame: 'guard_0',
+                nFrame: 32
+            },
+            // STAND
+            {
+                sFrame: 'stand_1',
+                nFrame: 2
+            },
+            {
+                sFrame: 'stand_0'
+            }
+        ],
+        anim_lose: [
+            {
+                sFrame: 'stand_1',
+                nFrame: 2
+            },
+            {
+                nFrame: 6,
+                sFrame: 'throw_2'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'throw_3'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'throw_2'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'throw_3'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'throw_2'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'throw_3'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'throw_2'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'throw_3'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'throw_2'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'throw_3'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'throw_2'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'throw_3'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'throw_2'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'throw_3'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'throw_2'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'throw_3'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'throw_2'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'throw_3'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'throw_2'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'throw_3'
+            }
         ]
     },
     /* ----- DETAILS Données des commandes ----- */

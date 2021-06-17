@@ -208,6 +208,7 @@ Object.assign(
                                     oMovement: this.oMovement
                                 };
                                 break;
+                            case 'launch_0':
                             case 'launch_2':
                             case 'move_0':
                                 this.oMemory = {

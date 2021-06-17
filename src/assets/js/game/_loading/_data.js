@@ -223,31 +223,39 @@ Object.assign(
             const oCoef = {
                 _7: -1,
                 _8: 0,
-                _9: 1
+                _9: 1,
+                _fall_4: -1,
+                _fall_6: 1
             };
 
             for( let sType in oCoef ){
                 let nLastY = 0,
                     oLastFrame = null;
 
-                const aAnim = [ {
-                        nFrame: 2,
-                        sFrame: 'stand_1',
-                        oStatus: {
-                            bAerial: true
+                const aAnim = [],
+                    aMove = [];
+
+                if( sType.indexOf('_fall_') == -1 ){
+                    aAnim.push(
+                        {
+                            nFrame: 2,
+                            sFrame: 'stand_1',
+                            oStatus: {
+                                bAerial: true
+                            }
+                        },
+                        {
+                            nFrame: 2,
+                            sFrame: 'jump_0',
+                            oStatus: {
+                                bAerial: true
+                            }
                         }
-                    },
-                    {
-                        nFrame: 2,
-                        sFrame: 'jump_0',
-                        oStatus: {
-                            bAerial: true
-                        }
-                    } ],
-                    aMove = [
-                        { nLength: 4 }
-                    ],
-                    nDemiLength = (GameSettings.oJump.nLength - 1) / 2,
+                    );
+                    aMove.push({ nLength: 4 });
+                }
+                
+                const nDemiLength = (GameSettings.oJump.nLength - 1) / 2,
                     nX = GameSettings.oJump.oMove.nX / GameSettings.oJump.nLength;
 
                 // Ajout de 10 FRAMES supplémentaire pour gérer le LANDING
@@ -259,27 +267,29 @@ Object.assign(
                         bPrejump = nIndex <= GameSettings.oJump.oPre.nJump,
                         bPrelanding = nIndex >= GameSettings.oJump.nLength - GameSettings.oJump.oPre.nLanding;
                     
-                    let sFrame = 'jump_2';
-                    if( bPrejump ){
-                        sFrame = 'jump_1';
-                    } else if( bPrelanding ){
-                        sFrame = 'jump_3';
-                    }
+                    if( sType.indexOf('_fall_') == -1 || nIndex > GameSettings.oJump.nLength / 2 ){
+                        let sFrame = 'jump_2';
+                        if( bPrejump ){
+                            sFrame = 'jump_1';
+                        } else if( bPrelanding ){
+                            sFrame = 'jump_3';
+                        }
 
-                    if( oLastFrame && oLastFrame.sFrame == sFrame ){
-                        oLastFrame.nFrame++;
-                    } else {
-                        aAnim.push( oLastFrame = {
-                            nFrame: 1,
-                            sFrame,
-                            oStatus: {
-                                bAerial: true,
-                                bReverse: true,
-                                bCancel: !bPrejump
-                            }
-                        } );
+                        if( oLastFrame && oLastFrame.sFrame == sFrame ){
+                            oLastFrame.nFrame++;
+                        } else {
+                            aAnim.push( oLastFrame = {
+                                nFrame: 1,
+                                sFrame,
+                                oStatus: {
+                                    bAerial: true,
+                                    bReverse: true,
+                                    bCancel: !bPrejump
+                                }
+                            } );
+                        }
+                        aMove.push( { nX: nX * oCoef[sType], nY } );
                     }
-                    aMove.push( { nX: nX * oCoef[sType], nY } );
                     nLastY = nTargetY;
                 }
                 

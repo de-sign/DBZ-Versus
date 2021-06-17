@@ -47,10 +47,8 @@ __Stage__
 <br/>*N/A*
 
 __Battle__
-* Gestion de TIMER
 * Gestion de ROUND ?
 * Fin de match
-    * Gestion slow motion KO
     * Animation de victoire
     * Menu de choix
         * Rematch

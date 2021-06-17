@@ -1,5 +1,6 @@
 function VersusScene() {
     BattleScene.call(this);
+    this.bSlow = false;
     this.bEnd = false;
 }
 
@@ -15,7 +16,8 @@ Object.assign(
                         {
                             sContextClass: '--versus',
                             aController: [],
-                            sAnimation: 'opening'
+                            sAnimation: 'anim_open',
+                            nTimer: GameSettings.nTimer
                         }
                     );
 
@@ -24,6 +26,7 @@ Object.assign(
                         {
                             sText: 'Ready ?',
                             fCallback: () => {
+                                this.oTimer.start();
                                 this.aPlayer.forEach( (oPlayer, nIndex) => {
                                     oPlayer.oInputBuffer.init( SceneManager.oTransverseData.MNU__aController[nIndex] );
                                 } );
@@ -35,21 +38,84 @@ Object.assign(
                         }
                     );
                 },
-                endBattle: function(aPlayerWin){
-                    if( !this.bEnd && aPlayerWin.length ){
-                        this.bEnd = true;
-                        this.oInfo.add( {
-                            sText: aPlayerWin.length == 2 ?
-                                'Double KO !' :
-                                aPlayerWin[0].oData.sName + ' win !',
-                            bFreeze: true,
-                            nLength: 120,
-                            fCallback: () => {
-                                SceneManager.change( new MenuScene() );
-                            }
-                        } );
-                        OutputManager.getChannel('CHN__BGM').play('ADO__Victory', true, false);
+/*
+                update: function(){
+                    if( this.bEnd ){
+                        this.oInfo.update();
+                    } else {
+                        BattleScene.prototype.update.call(this);
                     }
+                },
+*/
+                endBattle: function(oEndGame){
+                    if( oEndGame.bEnd && !this.bEnd ){
+
+                        this.oTimer.pause();
+                        if( !this.bSlow ){
+                            this.bSlow = true;
+                            this.aPlayer.forEach( oPlayer => oPlayer.oInputBuffer.destroy() );
+
+                            if( oEndGame.bTimer ){
+                                this.oInfo.add( {
+                                    sText: 'Time Up !',
+                                    nLength: 120,
+                                    fCallback: () => {
+                                        this.showEndBattle(oEndGame);
+                                    }
+                                } );
+                            }
+                            else {
+                                TimerEngine.setFPS(30);
+                                this.oInfo.add( {
+                                    sText: 'K.O. !'
+                                } );
+                                setTimeout(
+                                    () => {
+                                        TimerEngine.setFPS(60);
+                                    },
+                                    1000
+                                )
+                            }
+                        }
+
+                        else {
+                            let bDeath = false;
+                            this.aPlayer.forEach( oPlayer => {
+                                if( oPlayer.oAnimation.sType == 'animation' ){
+                                    bDeath = true;
+                                }
+                            } );
+                            bDeath && this.showEndBattle(oEndGame);
+                        }
+                    }
+                },
+                showEndBattle: function(oEndGame){
+
+                    let sText = oEndGame.aPlayerWin.length ?
+                            oEndGame.aPlayerWin[0].oData.sName + ' win !':
+                            ( oEndGame.bTimer ?
+                                'Nobody wins !' :
+                                'Double K.O. !' );
+
+                    this.bEnd = true;
+                    this.aPlayer.forEach( oPlayer => {
+                        if( oEndGame.aPlayerWin.indexOf(oPlayer) == -1 ){
+                            if( oPlayer.oAnimation.sType != 'animation' ){
+                                oPlayer.setStance('anim_lose', true);
+                            }
+                        } else {
+                            oPlayer.setStance('anim_victory', true);
+                        }
+                    } );
+
+                    this.oInfo.add( {
+                        sText: sText,
+                        nLength: 120,
+                        fCallback: () => {
+                            SceneManager.change( new MenuScene() );
+                        }
+                    } );
+                    OutputManager.getChannel('CHN__BGM').play('ADO__Victory', true, false);
                 }
             }
         )

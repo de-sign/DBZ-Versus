@@ -1,53 +1,49 @@
 /* ----- BattleEngine ----- */
-function BattleEngine(aPlayer, oArea){
+function BattleEngine(aPlayer, oArea, oTimer){
     this.aPlayer = null;
     this.oArea = null;
+    this.oTimer = null;
 
-    this.init(aPlayer, oArea);
+    this.init(aPlayer, oArea, oTimer);
 }
 
 Object.assign(
     BattleEngine.prototype, {
-        init: function(aPlayer, oArea) {
+        init: function(aPlayer, oArea, oTimer) {
             this.aPlayer = aPlayer;
             this.oArea = oArea;
+            this.oTimer = oTimer;
         },
         update: function(){
             // Gestion Fin de partie
-            const aPlayerWin = [];
-            this.aPlayer.forEach( (oPlayer, nIndex) => {
-                if( oPlayer.nLife <= 0 && oPlayer.oAnimation.sType == 'down' ){
-                    aPlayerWin.push( this.aPlayer[ nIndex ? 0 : 1 ] );
+            const oEndGame = this.checkEnd(),
+                aEntity = BattleEntity.get().filter( oEntity => !oEntity.isDead() ),
+                oCollapse = {};
+
+            // Gestion PositionBox / Area
+            aEntity.forEach( (oEntity, nIndex) => {
+                if( oEntity.oCheck.bCollapse ){
+                    const oReferent = this.aPlayer[ (oEntity.oParent || oEntity).nPlayer == 1 ? 1 : 0 ];
+                    oCollapse[oEntity.sId] = {
+                        nIndex,
+                        oEntity,
+                        nOrientation: this.getOrientation(oEntity, oReferent),
+                        nPriority: this.stayInArea(oEntity)
+                    };
                 }
             } );
 
-            if( !aPlayerWin.length ){
-                const aEntity = BattleEntity.get().filter( oEntity => !oEntity.isDead() ),
-                    oCollapse = {};
+            // Gestion Reverse
+            aEntity.forEach( (oEntity, nIndex) => {
+                if( oEntity.oCheck.bReverse && oEntity.canReverse() && oCollapse[oEntity.sId] ){
+                    oEntity.bReverse = oCollapse[oEntity.sId].nOrientation == 1;
+                }
+            } );
+            
+            // Gestion PositionBox / Entity
+            this.moveCollapsed(oCollapse);
 
-                // Gestion PositionBox / Area
-                aEntity.forEach( (oEntity, nIndex) => {
-                    if( oEntity.oCheck.bCollapse ){
-                        const oReferent = this.aPlayer[ (oEntity.oParent || oEntity).nPlayer == 1 ? 1 : 0 ];
-                        oCollapse[oEntity.sId] = {
-                            nIndex,
-                            oEntity,
-                            nOrientation: this.getOrientation(oEntity, oReferent),
-                            nPriority: this.stayInArea(oEntity)
-                        };
-                    }
-                } );
-
-                // Gestion Reverse
-                aEntity.forEach( (oEntity, nIndex) => {
-                    if( oEntity.oCheck.bReverse && oEntity.canReverse() && oCollapse[oEntity.sId] ){
-                        oEntity.bReverse = oCollapse[oEntity.sId].nOrientation == 1;
-                    }
-                } );
-                
-                // Gestion PositionBox / Entity
-                this.moveCollapsed(oCollapse);
-
+            if( !oEndGame.bEnd ){
                 // Gestion Hitbox
                 this.checkHit(aEntity, oCollapse);
 
@@ -55,7 +51,7 @@ Object.assign(
                 this.commandFreeze(aEntity);
             }
 
-            return aPlayerWin;
+            return oEndGame;
         },
         destroy: function(){},
         
@@ -101,6 +97,31 @@ Object.assign(
         },
         hasSameParent: function(oEntityA, oEntityB){
             return (oEntityA.oParent || oEntityA).sId == (oEntityB.oParent || oEntityB).sId;
+        },
+
+        checkEnd: function(){
+            const oEndGame = {
+                bEnd: false,
+                bTimer: false,
+                aPlayerWin: []
+            };
+                
+            if( this.oTimer.isEnd() ){
+                oEndGame.bTimer = true;
+                if( this.aPlayer[0].nLife != this.aPlayer[1].nLife ){
+                    oEndGame.aPlayerWin.push( this.aPlayer[ this.aPlayer[0].nLife > this.aPlayer[1].nLife ? 0 : 1 ] );
+                }
+            }
+            else {
+                this.aPlayer.forEach( (oPlayer, nIndex) => {
+                    if( oPlayer.nLife <= 0 ){
+                        oEndGame.aPlayerWin.push( this.aPlayer[ nIndex ? 0 : 1 ] );
+                    }
+                } );
+            }
+            oEndGame.bEnd = oEndGame.bTimer || oEndGame.aPlayerWin.length > 0;
+
+            return oEndGame;
         },
 
         generateEntity: function(aEffect){
@@ -172,7 +193,11 @@ Object.assign(
                 if( oEntity.oCheck.bLaunch ){
                     const nDown = this.oArea.oPosition.nY + (oBoxArea.bottom - oBoxArea.originY) - oEntity.oPositionPoint.nGapY;
                     if( nDown < oEntity.oLayer.oPosition.nY + ( oBoxEntity.nY + oBoxEntity.nHeight ) ){
-                        oEntity.setStance( oEntity.oAnimation.sName == 'launch_1' ? 'launch_2' : 'move_0', true);
+                        if( oEntity.nLife > 0 ){
+                            oEntity.setStance( oEntity.oAnimation.sName == 'launch_1' ? 'launch_2' : 'move_0', true);
+                        } else {
+                            oEntity.setStance('anim_death', true);
+                        }
                         oBoxEntity = oEntity.getBox('oPositionBox')[0];
                         oEntity.oLayer.oPosition.nY = nDown - ( oBoxEntity.nY + oBoxEntity.nHeight );
                     }

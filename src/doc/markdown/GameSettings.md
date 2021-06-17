@@ -274,6 +274,14 @@ GameSettings.oAudio = {
 
 Données paramétrables de jeu, comme la vie, le KI, etc
 
+#### GameSettings.nTimer
+
+Temps du TIMER 
+
+```javascript
+GameSettings.nTimer = 99;
+```
+
 #### GameSettings.nFreeze
 
 Nombre de FRAME lors d'un HIT FREEZE 

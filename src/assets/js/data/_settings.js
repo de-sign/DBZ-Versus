@@ -235,6 +235,8 @@ Object.assign(
         DETAILS Données paramétrables de jeu, comme la vie, le KI, etc
         ----- */
 
+        /* ----- DETAILS Temps du TIMER ----- */
+        nTimer: 99,
         /* ----- DETAILS Nombre de FRAME lors d'un HIT FREEZE ----- */
         nFreeze: 6,
         /* ----- DETAILS PUSHBACK par défault appliqué lors d'un coup ----- */

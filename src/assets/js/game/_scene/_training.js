@@ -67,7 +67,8 @@ Object.assign(
                         {
                             sContextClass: '--training',
                             aController: SceneManager.oTransverseData.MNU__aController,
-                            sAnimation: 'move_5'
+                            sAnimation: 'move_5',
+                            nTimer: -1
                         }
                     );
 
@@ -106,6 +107,16 @@ Object.assign(
                     return {
                         MNU__nIndex: 1
                     };
+                },
+
+                endBattle: function(oEndGame){
+                    if( oEndGame.bEnd ){
+                        this.aPlayer.forEach( oPlayer => {
+                            if( oPlayer.oAnimation.sType == 'animation' ){
+                                oPlayer.setStance('launch_2', true);
+                            }
+                        } )
+                    }
                 },
 
                 allPlayerActive: function(){

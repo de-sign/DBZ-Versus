@@ -3,6 +3,7 @@ function BattleScene(){
 	this.oContext = null;
     this.oInfo = null;
 	this.oArea = null;
+    this.oTimer = null;
     
     this.aPlayer = [];
     this.aHUD = [];
@@ -19,7 +20,7 @@ Object.assign(
 				init: function( oOptions ){
                     /*
                         oLastData: BTL__sStage, sTypeBattle, aController, BTL__aCharacterSelected, BTL__aColor
-                        oOptions: aController, sContextClass, sAnimation
+                        oOptions: aController, sContextClass, sAnimation, nTimer
                     */
                     Scene.prototype.init.call(this, 'CTX__Battle');
                     this.oContext.hElement.classList.add( oOptions.sContextClass );
@@ -51,7 +52,8 @@ Object.assign(
                     // Engine init
                     this.oInfo = new BattleInfo(this.oContext, this.aPlayer);
                     this.oCombo = new BattleCombo(this.aPlayer);
-                    this.oEngine = new BattleEngine(this.aPlayer, this.oArea);
+                    this.oTimer = new BattleTimer(oOptions.nTimer);
+                    this.oEngine = new BattleEngine(this.aPlayer, this.oArea, this.oTimer);
 				},
 				update: function(){
                     // Entity
@@ -65,8 +67,9 @@ Object.assign(
                     this.endBattle( this.oEngine.update() );
                     // Display
                     BattleEntity.get().forEach( oEntity => oEntity.render() );
-                    this.oInfo.update();
                     this.aHUD.forEach( oHUD => oHUD.update() );
+                    this.oTimer.update();
+                    this.oInfo.update();
                     this.oCombo.update();
 				},
                 destroy: function(){
@@ -74,7 +77,7 @@ Object.assign(
                     this.oInfo.destroy();
                 },
 
-                endBattle: function(aPlayerWin){},
+                endBattle: function(oEndGame){},
                 setBackground: function(sCod){
                     this.oContext.setStyle( {
                         backgroundColor: GameData.oStage[sCod].sColor,

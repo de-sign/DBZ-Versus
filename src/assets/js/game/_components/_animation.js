@@ -43,7 +43,12 @@ Object.assign(
 
             // DOWN
             launch_2: 'down',
-            launch_5: 'recovery'
+            launch_5: 'recovery',
+
+            // Animation
+            anim_open: 'animation',
+            anim_death: 'animation',
+            anim_victory: 'animation'
         },
 
         aAllType: ['action', 'movement', 'jump', 'landing', 'dash', 'guard', 'hit', 'launch', 'down', 'recovery'],

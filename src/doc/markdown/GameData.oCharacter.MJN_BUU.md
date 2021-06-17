@@ -614,24 +614,14 @@ GameData.oCharacter.MJN_BUU.oFrames = {
             nWidth: 60,
             nHeight: 60
         }, {
-            nX: 42,
-            nY: -106,
-            nWidth: 52,
-            nHeight: 32
-        }, {
             nX: -30,
             nY: -98,
             nWidth: 56,
             nHeight: 100
         }, {
-            nX: 90,
-            nY: -98,
-            nWidth: 40,
-            nHeight: 28
-        }, {
-            nX: 110,
-            nY: -90,
-            nWidth: 56,
+            nX: 22,
+            nY: -94,
+            nWidth: 144,
             nHeight: 32
         }]
     },
