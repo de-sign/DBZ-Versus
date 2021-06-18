@@ -274,7 +274,7 @@ Object.assign(
                 if( this.oParameters.oShow.bAnimation ){
                     this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                         const oAnimation = this.aAnimation[nIndex];
-                        if( !oPlayer.oAnimation.isMovement() ){
+                        if( oPlayer.oAnimation.isTraining() ){
                             if( oPlayer.oAnimation != oAnimation.oLast ){
                                 oAnimation.oLast = oPlayer.oAnimation;
                                 oAnimation.oLayer.hElement.innerHTML = '';
@@ -288,6 +288,8 @@ Object.assign(
                                 sClass = '--damage';
                             } else if( oPlayer.isInvulnerable() ){
                                 sClass = '--invulnerable';
+                            } else if( oPlayer.oStatus.bAerialInvul ){
+                                sClass = '--aerial-invulnerable';
                             }
                             oAnimation.oLayer.hElement.innerHTML += '<span class="' + sClass + '"></span>';
                         }

@@ -400,7 +400,7 @@ Parametrages des DAMAGES par défaut et du damage REDUCE
 GameSettings.oDamage = {
     nDefault: 25,
     // Percent !
-    nReduce: 10,
+    nReduce: 5,
     nMinimumReduce: 10
 };
 ```

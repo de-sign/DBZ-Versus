@@ -299,7 +299,7 @@ Object.assign(
         oDamage: {
             nDefault: 25,
             // Percent !
-            nReduce: 10,
+            nReduce: 5,
             nMinimumReduce: 10
         },
         /* ----- END PROPERTIES ----- */

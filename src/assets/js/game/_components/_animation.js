@@ -51,10 +51,11 @@ Object.assign(
             anim_victory: 'animation'
         },
 
-        aAllType: ['action', 'movement', 'jump', 'landing', 'dash', 'guard', 'hit', 'launch', 'down', 'recovery'],
+        aAllType: ['action', 'movement', 'stand', 'jump', 'landing', 'dash', 'guard', 'hit', 'launch', 'down', 'recovery'],
         aTypeHurt: ['guard', 'hit', 'launch'],
         aTypeMove: ['stand', 'movement', 'jump'],
         aTypeStack: ['dash', 'landing'],
+        aTypeTraining: ['action', 'dash', 'guard', 'hit', 'launch', 'down', 'recovery'],
 
         getType: function(sName){
             return GameAnimation.oType[sName] || 'action';
@@ -67,6 +68,9 @@ Object.assign(
         },
         isTypeStack: function(sName){
             return this.aTypeStack.indexOf( this.getType(sName) ) != -1;
+        },
+        isTypeTraining: function(sName){
+            return this.aTypeTraining.indexOf( this.getType(sName) ) != -1;
         },
 
         prototype: Object.assign(
@@ -122,6 +126,9 @@ Object.assign(
                 },
                 isStack: function(){
                     return GameAnimation.isTypeStack(this.sName);
+                },
+                isTraining: function(){
+                    return GameAnimation.isTypeTraining(this.sName);
                 }
             }
         )

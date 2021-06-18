@@ -194,6 +194,7 @@
         background-color: rgba(Plum, 0.25);
     }
     
+    &.--launch .Training__HurtBox > *,
     &.--hit .Training__HurtBox > * {
         border-color: Orange;
         background-color: rgba(Orange, 0.25);
@@ -215,10 +216,17 @@
 // Animation
 .Training__Animation {
     position: absolute;
-    left: 88px;
-    right: 88px;
+    left: 50px;
+    width: 400px;
     line-height: 5px;
     display: none;
+    text-align: left;
+
+    .Battle__HUD:last-child & {
+        right: 50px;
+        left: auto;
+        text-align: right;
+    }
     
     .--bAnimation & {
         display: block;
@@ -230,6 +238,7 @@
         height: 4px;
         margin: 1px;
         background-color: Lime;
+        box-shadow: 0 0 0 1px Black;
 
         &.--freeze {
             background-color: deepskyblue;
@@ -247,7 +256,12 @@
             background-color: White;
         }
 
-        &.--hit {
+        &.--aerial-invulnerable {
+            background-color: grey;
+        }
+
+        &.--hit,
+        &.--launch {
             background-color: orange;
         }
     }

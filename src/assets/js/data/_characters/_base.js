@@ -986,7 +986,7 @@ GameData.oEntity.oCharacter = {
             aFrames: [
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1'
+                    sFrame: 'stand_1__0'
                 },
                 {
                     nFrame: 8,
