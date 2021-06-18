@@ -48,12 +48,6 @@ __Stage__
 
 __Battle__
 * Gestion de ROUND
-* Fin de match
-    * Menu de choix
-        * Rematch
-        * Select Character
-        * Select Stage
-        * Quit
 
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
 

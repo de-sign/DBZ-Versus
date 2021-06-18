@@ -285,8 +285,8 @@ Object.assign(
         oJump: {
             nLength: 36,
             oPre: {
-                nJump: 8,
-                nLanding: 8
+                nJump: 4,
+                nLanding: 4
             },
             oMove: {
                 nX: 63 * 4,

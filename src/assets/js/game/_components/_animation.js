@@ -30,6 +30,8 @@ Object.assign(
             move_7: 'jump',
             move_8: 'jump',
             move_9: 'jump',
+            move_fall_4: 'jump',
+            move_fall_6: 'jump',
             move_0: 'landing',
 
             // HURT

@@ -1,11 +1,34 @@
 function VersusScene() {
     BattleScene.call(this);
-    this.bSlow = false;
-    this.bEnd = false;
+    // 0: Battle, 1: SlowMotion, 2: Victory, 3: Menu
+    this.nStep = 0;
+    this.oMenu = null;
 }
 
 Object.assign(
     VersusScene, {
+
+        oStep: {
+            Battle: 0,    
+            SlowMotion: 1,    
+            Victory: 2,    
+            Rematch: 3,    
+        },
+
+        aHelper: 
+            [ {
+                aButton: ['UP', 'DOWN'],
+                sText: 'Move'
+            },
+            {
+                aButton: ['A'],
+                sText: 'Validate'
+            },
+            {
+                aButton: ['START'],
+                sText: 'Quit'
+            } ],
+
         prototype: Object.assign(
             Object.create(BattleScene.prototype), {
                 constructor: VersusScene,
@@ -20,6 +43,8 @@ Object.assign(
                             nTimer: GameSettings.nTimer
                         }
                     );
+
+                    this.oMenu = new GameMenu('LAY__Battle_Menu');
 
                     // Texte début de match
                     this.oInfo.add(
@@ -38,21 +63,59 @@ Object.assign(
                         }
                     );
                 },
-/*
                 update: function(){
-                    if( this.bEnd ){
-                        this.oInfo.update();
+                    if( this.isStep('Rematch') ){
+                        SceneManager.oTransverseData.MNU__aController[0].ifPressedNow( {
+                            // Gestion validation
+                            A: () => {
+                                let sMenuSelected = this.oMenu.getSelected().sId;
+                                OutputManager.getChannel('CHN__SFX').play('ADO__Validate');
+                                switch( sMenuSelected ){
+                                    case 'TXT__Battle_Menu_Rematch':
+                                        SceneManager.change( new PreBattleScene() );
+                                        break;
+                                    case 'TXT__Battle_Menu_Select':
+                                        SceneManager.change( new SelectScene() );
+                                        break;
+                                    case 'TXT__Battle_Menu_Stage':
+                                        SceneManager.change( new StageScene() );
+                                        break;
+                                    case 'TXT__Battle_Menu_Quit':
+                                        SceneManager.change( new MenuScene() );
+                                        break;
+                                }
+                            },
+                            // Gestion déplacement
+                            UP: () => {
+                                this.oMenu.prev();
+                            },
+                            DOWN: () => {
+                                this.oMenu.next();
+                            },
+                            START: () => {
+                                SceneManager.change( new MenuScene() );
+                            }
+                        } );
+    
+                        this.oMenu.update();
+                        GameHelper.update();
                     } else {
                         BattleScene.prototype.update.call(this);
                     }
                 },
-*/
+                destroy: function(){
+                    this.oMenu.destroy();
+                    GameHelper.destroy();
+                    this.oContext.hElement.classList.remove('--menu');
+                    BattleScene.prototype.destroy.call(this);
+                },
+  
                 endBattle: function(oEndGame){
-                    if( oEndGame.bEnd && !this.bEnd ){
+                    if( oEndGame.bEnd && !this.isStep('Victory') ){
 
                         this.oTimer.pause();
-                        if( !this.bSlow ){
-                            this.bSlow = true;
+                        if( !this.isStep('SlowMotion') ){
+                            this.nStep++;
                             this.aPlayer.forEach( oPlayer => oPlayer.oInputBuffer.destroy() );
 
                             if( oEndGame.bTimer ){
@@ -89,6 +152,7 @@ Object.assign(
                         }
                     }
                 },
+                
                 showEndBattle: function(oEndGame){
 
                     let sText = oEndGame.aPlayerWin.length ?
@@ -97,7 +161,7 @@ Object.assign(
                                 'Nobody wins !' :
                                 'Double K.O. !' );
 
-                    this.bEnd = true;
+                    this.nStep++;
                     this.aPlayer.forEach( oPlayer => {
                         if( oEndGame.aPlayerWin.indexOf(oPlayer) == -1 ){
                             if( oPlayer.oAnimation.sType != 'animation' ){
@@ -112,10 +176,19 @@ Object.assign(
                         sText: sText,
                         nLength: 120,
                         fCallback: () => {
-                            SceneManager.change( new MenuScene() );
+                            this.nStep++;
+                            GameHelper.set(VersusScene.aHelper, SceneManager.oTransverseData.MNU__aController[0]);
+                            this.oContext.addTickUpdate( () => {
+                                this.oContext.hElement.classList.add('--menu');
+                            } );
                         }
                     } );
                     OutputManager.getChannel('CHN__BGM').play('ADO__Victory', true, false);
+                },
+                isStep: function(sStep, bStrict){
+                    return bStrict ?
+                        VersusScene.oStep[sStep] == this.nStep :
+                        VersusScene.oStep[sStep] <= this.nStep;
                 }
             }
         )

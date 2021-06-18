@@ -200,7 +200,7 @@ Object.assign(
                         oPlayer.setFreeze();
                     } );
                     this.oScene.oContext.addTickUpdate( () => {
-                        this.oScene.oContext.hElement.classList.add('--menu');
+                        this.oScene.oContext.hElement.classList.add('--menu', '--training');
                     } );
                     this.trigger('onOpen');
                 
@@ -227,7 +227,7 @@ Object.assign(
                 } );
                 this.oScene.oContext.addTickUpdate( () => {
                     oCurrent.hide();
-                    this.oScene.oContext.hElement.classList.remove('--menu');
+                    this.oScene.oContext.hElement.classList.remove('--menu', '--training');
                 } );
                 this.trigger('onClose');
                 GameHelper.set(TrainingScene.oHelper.aBattle, this.aHelperController);

@@ -8,14 +8,14 @@ Object.assign(
     MenuScene, {
 
         aHelper: 
-        [ {
-            aButton: ['UP', 'DOWN'],
-            sText: 'Move'
-        },
-        {
-            aButton: ['A'],
-            sText: 'Validate'
-        } ],
+            [ {
+                aButton: ['UP', 'DOWN'],
+                sText: 'Move'
+            },
+            {
+                aButton: ['A'],
+                sText: 'Validate'
+            } ],
 
         prototype: Object.assign(
             Object.create(Scene.prototype), {
