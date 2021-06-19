@@ -72,7 +72,7 @@ Object.assign(
                                 OutputManager.getChannel('CHN__SFX').play('ADO__Validate');
                                 switch( sMenuSelected ){
                                     case 'TXT__Battle_Menu_Rematch':
-                                        SceneManager.change( new PreBattleScene() );
+                                        SceneManager.change( new VersusScene() );
                                         break;
                                     case 'TXT__Battle_Menu_Select':
                                         SceneManager.change( new SelectScene() );
