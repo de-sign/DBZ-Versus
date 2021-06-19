@@ -21,13 +21,14 @@ Object.assign(
         prototype: Object.assign(
             Object.create(BattleEntity.prototype), {
                 constructor: BattlePlayer,
-                init: function(nPlayer, sChar, sColor, sAnimation, oPosition, bReverse, oController) {
+                init: function(nPlayer, sChar, sColor, sAnimation, oPosition, bReverse, oController, nRound) {
                     BattleEntity.prototype.init.call(this, 'character', GameData.oCharacter[sChar][sColor], sAnimation, oPosition, bReverse);
 
                     this.nLife = GameSettings.oLife.player;
                     this.nPlayer = nPlayer;
                     this.oInputBuffer = new BattleInputBuffer(oController);
                     this.oGatling = new BattleGatling(this.oInputBuffer, this.oData.oCommands);
+                    this.nRound = nRound;
                 },
                 update: function(){
                     // Gestion des INPUTs

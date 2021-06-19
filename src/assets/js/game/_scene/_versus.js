@@ -12,7 +12,7 @@ Object.assign(
             Battle: 0,    
             SlowMotion: 1,    
             Victory: 2,    
-            Rematch: 3,    
+            Rematch: 3
         },
 
         aHelper: 
@@ -40,7 +40,8 @@ Object.assign(
                             sContextClass: '--versus',
                             aController: [],
                             sAnimation: 'anim_open',
-                            nTimer: GameSettings.nTimer
+                            nTimer: GameSettings.nTimer,
+                            aRound: SceneManager.oTransverseData.BTL__aRound
                         }
                     );
 
@@ -108,6 +109,11 @@ Object.assign(
                     GameHelper.destroy();
                     this.oContext.hElement.classList.remove('--menu');
                     BattleScene.prototype.destroy.call(this);
+                    return {
+                        BTL__aRound: this.isStep('Rematch') ?
+                            [0, 0] :
+                            SceneManager.oTransverseData.BTL__aRound
+                    }
                 },
   
                 endBattle: function(oEndGame){
@@ -155,36 +161,57 @@ Object.assign(
                 
                 showEndBattle: function(oEndGame){
 
-                    let sText = oEndGame.aPlayerWin.length ?
-                            oEndGame.aPlayerWin[0].oData.sName + ' win !':
+                    let sText = oEndGame.oPlayerWin ?
+                        oEndGame.oPlayerWin.oData.sName + ' win !':
                             ( oEndGame.bTimer ?
                                 'Nobody wins !' :
                                 'Double K.O. !' );
 
+                    oEndGame.oPlayerWin && oEndGame.oPlayerWin.nRound++;
                     this.nStep++;
                     this.aPlayer.forEach( oPlayer => {
-                        if( oEndGame.aPlayerWin.indexOf(oPlayer) == -1 ){
+                        if( oEndGame.oPlayerWin == oPlayer ){
+                            oPlayer.setStance('anim_victory', true);
+                        } else {
                             if( oPlayer.oAnimation.sType != 'animation' ){
                                 oPlayer.setStance('anim_lose', true);
                             }
-                        } else {
-                            oPlayer.setStance('anim_victory', true);
                         }
                     } );
 
                     this.oInfo.add( {
                         sText: sText,
                         nLength: 120,
-                        fCallback: () => {
+                        fCallback: this.checkEndBattle(oEndGame.oPlayerWin)
+                    } );
+                    OutputManager.getChannel('CHN__BGM').play('ADO__Victory', true, false);
+                },
+
+                checkEndBattle: function(oWinner){
+                    let bMenu = false;
+                    if( oWinner ){
+                        const nRoundWin = ++SceneManager.oTransverseData.BTL__aRound[ oWinner.nPlayer == 1 ? 0 : 1 ];
+                        if( nRoundWin >= (StoreEngine.get('Rounds') || GameSettings.oRound.nDefault) ){
+                            bMenu = true;
+                        }
+                    }
+
+                    if( bMenu ){
+                        return () => {
                             this.nStep++;
                             GameHelper.set(VersusScene.aHelper, SceneManager.oTransverseData.MNU__aController[0]);
                             this.oContext.addTickUpdate( () => {
                                 this.oContext.hElement.classList.add('--menu');
                             } );
-                        }
-                    } );
-                    OutputManager.getChannel('CHN__BGM').play('ADO__Victory', true, false);
+                        };
+                    }
+                    else {
+                        return () => {
+                            SceneManager.change( new VersusScene() );
+                        };
+                    }
                 },
+
                 isStep: function(sStep, bStrict){
                     return bStrict ?
                         VersusScene.oStep[sStep] == this.nStep :

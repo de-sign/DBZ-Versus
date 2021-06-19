@@ -103,23 +103,23 @@ Object.assign(
             const oEndGame = {
                 bEnd: false,
                 bTimer: false,
-                aPlayerWin: []
+                oPlayerWin: null
             };
                 
             if( this.oTimer.isEnd() ){
                 oEndGame.bTimer = true;
                 if( this.aPlayer[0].nLife != this.aPlayer[1].nLife ){
-                    oEndGame.aPlayerWin.push( this.aPlayer[ this.aPlayer[0].nLife > this.aPlayer[1].nLife ? 0 : 1 ] );
+                    oEndGame.oPlayerWin = this.aPlayer[ this.aPlayer[0].nLife > this.aPlayer[1].nLife ? 0 : 1 ];
                 }
             }
             else {
                 this.aPlayer.forEach( (oPlayer, nIndex) => {
                     if( oPlayer.nLife <= 0 ){
-                        oEndGame.aPlayerWin.push( this.aPlayer[ nIndex ? 0 : 1 ] );
+                        oEndGame.oPlayerWin =  this.aPlayer[ nIndex ? 0 : 1 ];
                     }
                 } );
             }
-            oEndGame.bEnd = oEndGame.bTimer || oEndGame.aPlayerWin.length > 0;
+            oEndGame.bEnd = oEndGame.bTimer || oEndGame.oPlayerWin;
 
             return oEndGame;
         },
@@ -367,7 +367,8 @@ Object.assign(
                     // Texte
                     SceneManager.oCurrent.oInfo.add( {
                         sImg: oPlayer.oData.oPath.sFace,
-                        sText: oPlayer.oGatling.oCurrent.sName + '&nbsp;!'
+                        sText: oPlayer.oGatling.oCurrent.sName + '&nbsp;!',
+                        sDirection: oPlayer.nPlayer == '1' ? 'left' : 'right'
                     } );
                     break;
                 }

@@ -47,8 +47,6 @@ __Stage__
 <br/>*N/A*
 
 __Battle__
-* Gestion de ROUND
-
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
 
 __Training__

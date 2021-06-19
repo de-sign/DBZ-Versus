@@ -1,6 +1,7 @@
 function SettingMenu(nIndex){
     this.oLayer = {};
     this.oMenu = null;
+    this.nRound = 0;
 
     this.init(nIndex);
 }
@@ -30,6 +31,9 @@ Object.assign(
                 for( let sChannel in OutputManager.oAudio.oChannel ){
                     this.oLayer[sChannel] = OutputManager.getElement('LAY__Setting_Channel_' + sChannel);
                 }
+                this.oLayer.nRound = OutputManager.getElement('LAY__Setting_Round');
+                
+                this.nRound = StoreEngine.get('Rounds') || GameSettings.oRound.nDefault;
 
                 GameHelper.set(SettingMenu.aHelper);
             },
@@ -62,8 +66,11 @@ Object.assign(
                                     SceneManager.change( new MenuScene() );
                                     sSFX = 'ADO__Cancel';
                                     break;
+                                case 'LAY__Setting_Round':
+                                    this.change('round', 1) && (sSFX = 'ADO__Validate');
+                                    break;
                                 default:
-                                    this.change(1);
+                                    this.change('channel', 1) && (sSFX = 'ADO__Validate');
                                     break;
                             }
                         },
@@ -74,10 +81,12 @@ Object.assign(
                         },
                         // Gestion changement
                         LEFT: () => {
-                            this.change(-1) && (sSFX = 'ADO__Validate');
+                            const sMenuSelected = this.oMenu.getSelected().sId;
+                            this.change(sMenuSelected == 'LAY__Setting_Round' ? 'round' : 'channel', -1) && (sSFX = 'ADO__Validate');
                         },
                         RIGHT: () => {
-                            this.change(1) && (sSFX = 'ADO__Validate');
+                            const sMenuSelected = this.oMenu.getSelected().sId;
+                            this.change(sMenuSelected == 'LAY__Setting_Round' ? 'round' : 'channel', 1) && (sSFX = 'ADO__Validate');
                         },
                         // Gestion déplacement
                         UP: () => {
@@ -91,25 +100,46 @@ Object.assign(
                 sSFX && OutputManager.getChannel('CHN__SFX').play(sSFX);
             },
             display: function(){
-                for( let sChannel in this.oLayer ){
-                    this.oLayer[sChannel].aChildElement[0].setText( OutputManager.getChannel(sChannel).getStepGain() );
+                for( let sLayer in this.oLayer ){
+                    this.oLayer[sLayer].aChildElement[0].setText(
+                        sLayer == 'nRound' ?
+                            this.nRound :
+                            OutputManager.getChannel(sLayer).getStepGain()
+                    );
                 }
             },
-            change: function(nChange){
+            change: function(sType, nChange){
                 let sChange = false;
-                const sChannel = this.oMenu.getSelected().__sChannel,
-                    oChannel = OutputManager.getChannel(sChannel);
 
-                if( oChannel ){
-                    let nStep = oChannel.getStepGain() + nChange;
+                switch( sType ){
+                    case 'channel':
+                        const sChannel = this.oMenu.getSelected().__sChannel,
+                            oChannel = OutputManager.getChannel(sChannel);
+
+                        if( oChannel ){
+                            let nStep = oChannel.getStepGain() + nChange;
+                            
+                            if( nStep > OutputChannel.nStepGain ){
+                                nStep = 0;
+                            } else if( nStep < 0 ){
+                                nStep = OutputChannel.nStepGain;
+                            }
+                            oChannel.setGainAtStep(nStep);
+                            sChange = true;
+                        }
+                        break;
                     
-                    if( nStep > OutputChannel.nStepGain ){
-                        nStep = 0;
-                    } else if( nStep < 0 ){
-                        nStep = OutputChannel.nStepGain;
-                    }
-                    oChannel.setGainAtStep(nStep);
-                    sChange = true;
+                    case 'round':
+                        this.nRound += nChange;
+                        if( this.nRound > GameSettings.oRound.nMax ){
+                            this.nRound = 1;
+                        }
+                        else if( this.nRound < 1 ){
+                            this.nRound = GameSettings.oRound.nMax;
+                        }
+                        StoreEngine.update('Rounds', this.nRound);
+                        sChange = true;
+                        break;
                 }
 
                 return sChange;

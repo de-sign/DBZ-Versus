@@ -6,6 +6,7 @@ function BattleHUD(oPlayer){
     this.nLife = -1;
     this.nLastLife = -1;
     this.nKi = -1;
+    this.nRound = -1;
 
     this.init(oPlayer);
 }
@@ -53,6 +54,14 @@ Object.assign(
                 OutputManager.getElement('TXT__Battle_HUD_Ki_Number_' + this.oPlayer.nPlayer).setText( Math.floor(this.nKi / GameSettings.oKi.nBar) );
                 OutputManager.getElement('LAY__Battle_HUD_Ki_Bar_' + this.oPlayer.nPlayer).setStyle( {
                     minWidth: ( nDisplayBar * 100 / GameSettings.oKi.nBar ) + '%'
+                } );
+            }
+
+            if( this.nRound != this.oPlayer.nRound ){
+                OutputManager.getElement('LAY__Battle_HUD_Round_' + this.oPlayer.nPlayer).aChildElement.forEach(  (oText, nIndex) => {
+                    oText.addTickUpdate( () => {
+                        oText.hElement.classList[ nIndex < this.oPlayer.nRound ? 'add' : 'remove']('--show');
+                    } );
                 } );
             }
         },
@@ -109,6 +118,7 @@ Object.assign(
                         nLength: oOptions.nLength || BattleInfo.nLength,
                         sImg: oOptions.sImg || null,
                         sText: oOptions.sText || '',
+                        sDirection: oOptions.sDirection || 'center',
                         bFreeze: oOptions.bFreeze || false,
                         fCallback: oOptions.fCallback || null
                     } );
@@ -134,7 +144,8 @@ Object.assign(
                     }
                     // Show
                     this.oContext.addTickUpdate( () => {
-                        this.oContext.hElement.classList.add('--info');
+                        this.oContext.hElement.classList.remove('--info-left', '--info-center', '--info-right');
+                        this.oContext.hElement.classList.add('--info', '--info-' + this.oCurrent.sDirection);
                     } );
                 }
             },

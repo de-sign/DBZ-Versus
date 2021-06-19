@@ -60,6 +60,10 @@ GameSettings.oPath = {
         sRoot: 'assets/images/controllers',
         sFrames: 'assets/images/controllers'
     },
+    oHud: {
+        sRoot: 'assets/images/hud',
+        sRound: 'assets/images/hud/round.png'
+    },
     oAudio: {
         sRoot: 'assets/audios',
         sBGM: 'assets/audios/BGM',
@@ -129,6 +133,17 @@ GameSettings.oPositionPoint = {
         nX: 128,
         nY: 210
     }
+};
+```
+
+#### GameSettings.oRound
+
+Constante des ROUNDS 
+
+```javascript
+GameSettings.oRound = {
+    nDefault: 2,
+    nMax: 10
 };
 ```
 

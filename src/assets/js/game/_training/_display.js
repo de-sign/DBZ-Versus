@@ -140,7 +140,7 @@ Object.assign(
                 C: 'C'
             }
         },
-        aFrameRate: [ 60, 30, 15, 6 ],
+        aFrameRate: [ 6, 15, 30, 60 ],
 
         prototype: {
             init: function(oScene){

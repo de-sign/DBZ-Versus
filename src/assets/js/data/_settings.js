@@ -48,6 +48,10 @@ Object.assign(
                 sRoot: 'assets/images/controllers',
                 sFrames: 'assets/images/controllers'
             },
+            oHud: {
+                sRoot: 'assets/images/hud',
+                sRound: 'assets/images/hud/round.png'
+            },
             oAudio: {
                 sRoot: 'assets/audios',
                 sBGM: 'assets/audios/BGM',
@@ -105,6 +109,11 @@ Object.assign(
                 nX: 128,
                 nY: 210
             }
+        },
+        /* ----- DETAILS Constante des ROUNDS ----- */
+        oRound: {
+            nDefault: 2,
+            nMax: 10
         },
         /* ----- DETAILS Constante des choix de position sur le terrain en TRAINING ----- */
         oSide: {

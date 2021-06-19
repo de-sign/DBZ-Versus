@@ -70,6 +70,13 @@ Object.assign(
                 // Ajout dans le context
                 this.oContext.add(new OutputManager.OutputLayer(hLayer), '.Battle__HUDs');
                 this.oContext.update();
+
+                // Ajout des ROUNDS
+                const oRound = OutputManager.getElement('LAY__Battle_HUD_Round_' + nPlayer);
+                for( let nRound = 0; nRound < GameSettings.oRound.nMax; nRound++ ){
+                    oRound.add( new OutputManager.OutputText() );
+                }
+                this.oContext.update();
             },
             createTrainingParameters: function(nPlayer){
                 // Clone du LAYER

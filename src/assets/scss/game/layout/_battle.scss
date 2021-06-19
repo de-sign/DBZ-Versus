@@ -66,8 +66,13 @@
 
         .Battle__HUD_Character_Ki {
             flex-direction: row-reverse;
-            right: 100px;
+            right: 90px;
             left: auto;
+        }
+
+        .Battle__HUD_Character_Round {
+            display: flex;
+            flex-direction: row;
         }
 
         .Battle__HUD_Ki_Number {
@@ -114,7 +119,7 @@
         &_Ki {
             position: absolute;
             bottom: 125px;
-            left: 100px;
+            left: 90px;
             width: 250px;
             display: flex;
             flex-direction: row;
@@ -134,6 +139,24 @@
             .Battle__HUD_Ki_Bar {
                 height: 20px;
                 background-color: #6699FF;
+            }
+        }
+
+        &_Round {
+            display: flex;
+            flex-direction: row-reverse;
+            
+            span {
+                margin: 5px 5px -15px;
+                height: 10px;
+                width: 25px;
+                background-color: #fff;
+                border-bottom: 5px solid rgba(0, 0, 0, 0.25);
+                box-shadow: 0 0 0 2px #333;
+
+                &:not(.--show){
+                    display: none;
+                }
             }
         }
     }
@@ -157,27 +180,64 @@
 }
 
 .Battle__Info {
-    display: none;
+    display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     position: absolute;
     top: 300px;
-    left: 0;
-    right: 0;
+    left: 50px;
+    right: 50px;
     z-index: 500;
+    height: 150px;
+    transition: opacity 1s ease;
+    opacity: 0;
+
+    &::before {
+        content: '';
+        display: block;
+        left: 25%;
+        right: 25%;
+        bottom: -30px;
+        height: 15px;
+        background-color: #fff;
+        border-bottom: 5px solid rgba(0, 0, 0, 0.25);
+        box-shadow: 0 0 0 2px #333;
+        position: absolute;
+        z-index: -1;
+    }
 
     .--info & {
-        display: flex;
+        opacity: 1;
+        transition: none;
+    }
+
+    .--info-left & {
+        justify-content: flex-start;
+        text-align: left;
+
+        &::before {
+            left: 0;
+        }
+    }
+
+    .--info-right & {
+        justify-content: flex-start;
+        text-align: right;
+        flex-direction: row-reverse;
+
+        &::before {
+            right: 0;
+        }
     }
 
     &_Sprite {
-        margin: 25px;
-        background-color: White;
+        margin: 0 20px -23px;
     }
 
     &_Text {
         text-transform: capitalize;
-        font-size: 4.8em;
+        font-size: 4em;
+        white-space: nowrap;
     }
 }
 
@@ -191,7 +251,8 @@
         font-size: 2.4em;
         opacity: 0;
         transition: opacity 2s ease;
-        padding: 4px;
+        padding: 4px 20px;
+        position: relative;
 
         &.--show {
             opacity: 1;
@@ -201,6 +262,7 @@
         &:last-child {
             text-align: right;
         }
+
         i {
             font-size: 0.5em;
             display: block;

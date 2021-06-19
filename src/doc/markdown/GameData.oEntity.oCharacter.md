@@ -897,7 +897,10 @@ GameData.oEntity.oCharacter.oAnimations = {
         },
         {
             nFrame: 2,
-            sFrame: 'stand_1'
+            sFrame: 'stand_1',
+            oStatus: {
+                bReverse: true
+            }
         }
     ],
     move_5: [
@@ -976,8 +979,15 @@ GameData.oEntity.oCharacter.oAnimations = {
                 sFrame: 'move_2'
             },
             {
-                nFrame: 10,
+                nFrame: 8,
                 sFrame: 'move_1'
+            },
+            {
+                nFrame: 2,
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             }
         ]
     },
@@ -995,8 +1005,15 @@ GameData.oEntity.oCharacter.oAnimations = {
                 sFrame: 'move_2'
             },
             {
-                nFrame: 4,
+                nFrame: 2,
                 sFrame: 'move_0'
+            },
+            {
+                nFrame: 2,
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             }
         ]
     },
@@ -1542,6 +1559,9 @@ GameData.oEntity.oCharacter.oAnimations = {
         {
             nFrame: 6,
             sFrame: 'throw_3'
+        },
+        {
+            sFrame: 'throw_2'
         }
     ]
 };
