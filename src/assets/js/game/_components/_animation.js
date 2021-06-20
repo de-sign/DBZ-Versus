@@ -58,6 +58,7 @@ Object.assign(
         aTypeMove: ['stand', 'movement', 'jump'],
         aTypeStack: ['dash', 'landing'],
         aTypeTraining: ['action', 'dash', 'guard', 'hit', 'launch', 'down', 'recovery'],
+        aTypeCommand: ['action', 'dash'],
 
         getType: function(sName){
             return GameAnimation.oType[sName] || 'action';
@@ -73,6 +74,9 @@ Object.assign(
         },
         isTypeTraining: function(sName){
             return this.aTypeTraining.indexOf( this.getType(sName) ) != -1;
+        },
+        isTypeCommand: function(sName){
+            return this.aTypeCommand.indexOf( this.getType(sName) ) != -1;
         },
 
         prototype: Object.assign(
@@ -131,6 +135,9 @@ Object.assign(
                 },
                 isTraining: function(){
                     return GameAnimation.isTypeTraining(this.sName);
+                },
+                isCommand: function(){
+                    return GameAnimation.isTypeCommand(this.sName);
                 }
             }
         )

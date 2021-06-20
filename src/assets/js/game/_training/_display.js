@@ -12,9 +12,9 @@ Object.assign(
                 init: function(){
                     TrainingMenu.prototype.init.apply(this, arguments);
                     this.oLayer = {
+                        bData: OutputManager.getElement('LAY__Training_Menu_Display_Data'),
                         bHistory: OutputManager.getElement('LAY__Training_Menu_Display_Input'),
                         bBox: OutputManager.getElement('LAY__Training_Menu_Display_Box'),
-                        bAnimation: OutputManager.getElement('LAY__Training_Menu_Display_Animations'),
 
                         oFrameRate: OutputManager.getElement('LAY__Training_Menu_Display_Framerate')
                     };
@@ -58,14 +58,14 @@ Object.assign(
                 change: function(nChange){
                     let oMenuSelected = this.oMenu.getSelected();
                     switch( oMenuSelected.sId ){
+                        case 'LAY__Training_Menu_Display_Data':
+                            this.oEngine.toogle('bData');
+                            break;
                         case 'LAY__Training_Menu_Display_Input':
                             this.oEngine.toogle('bHistory');
                             break;
                         case 'LAY__Training_Menu_Display_Box':
                             this.oEngine.toogle('bBox');
-                            break;
-                        case 'LAY__Training_Menu_Display_Animations':
-                            this.oEngine.toogle('bAnimation');
                             break;
                         case 'LAY__Training_Menu_Display_Framerate':
                             this.oEngine.changeFrame(nChange);
@@ -94,13 +94,14 @@ function TrainingEngineDisplay(oScene){
     this.aBox = [];
     this.aHistory = [];
     this.aAnimation = [];
+    this.aData = [];
 
     this.oParameters = {
         nFrameRate: 0,
         oShow: {
+            bData: true,
             bHistory: true,
-            bBox: true,
-            bAnimation: true
+            bBox: true
         }
     };
 
@@ -141,6 +142,23 @@ Object.assign(
             }
         },
         aFrameRate: [ 6, 15, 30, 60 ],
+        aDataInfo: [
+            {
+                sType: 'damages',
+                sPattern: '<span class="--pattern">Real (Scaling %, Base)</span>',
+                sBlank: '- (-%, -)'
+            },
+            {
+                sType: 'frames',
+                sPattern: '<span class="--pattern">S.Up + Act. + Rcv. (Tot.)</span>',
+                sBlank: '- + - + - (-)'
+            },
+            {
+                sType: 'advantage',
+                sPattern: '<span class="--pattern">Advantage (Frame on hit)</span>',
+                sBlank: '- (-)'
+            },
+        ],
 
         prototype: {
             init: function(oScene){
@@ -150,9 +168,14 @@ Object.assign(
 
                 oScene.aPlayer.forEach( oPlayer => {
                     const oHistory = OutputManager.getElement('LAY__Training_History_' + oPlayer.nPlayer),
-                        oAnim = OutputManager.getElement('LAY__Training_Animation_' + oPlayer.nPlayer);
+                        oAnim = OutputManager.getElement('LAY__Training_Animation_' + oPlayer.nPlayer),
+                        oData = OutputManager.getElement('LAY__Training_Data_' + oPlayer.nPlayer);
 
                     this.aHistory.push( oHistory );
+                    this.aData.push( {
+                        oLayer: oData,
+                        oLast: {}
+                    } );
                     this.aAnimation.push( {
                         oLayer: oAnim,
                         oLast: null
@@ -160,6 +183,9 @@ Object.assign(
 
                     oHistory.clean();
                     oAnim.hElement.innerHTML = '';
+                    for( let nInfo = 0; nInfo < TrainingEngineDisplay.aDataInfo.length; nInfo++ ){
+                        oData.aChildElement[nInfo + 1].setText( TrainingEngineDisplay.aDataInfo[nInfo].sPattern );
+                    }
                 } );
 
                 for( let sType in this.oParameters.oShow ){
@@ -172,7 +198,7 @@ Object.assign(
             update: function(){
                 this.updateHistory();
                 this.updateBox();
-                this.updateAnimation();
+                this.updateData();
             },
             destroy: function(){
                 for( let sType in this.oParameters.oShow ){
@@ -269,33 +295,131 @@ Object.assign(
                 return hBox;
             },
 
-            // Animation
-            updateAnimation: function(){
-                if( this.oParameters.oShow.bAnimation ){
+            // Data
+            updateData: function(){
+                if( this.oParameters.oShow.bData ){
                     this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
-                        const oAnimation = this.aAnimation[nIndex];
                         if( oPlayer.oAnimation.isTraining() ){
-                            if( oPlayer.oAnimation != oAnimation.oLast ){
-                                oAnimation.oLast = oPlayer.oAnimation;
-                                oAnimation.oLayer.hElement.innerHTML = '';
-                            }
-                            let sClass = '--' + oPlayer.oAnimation.sType;
-                            if( oPlayer.oAnimation.oFrame.bFreeze ){
-                                sClass = '--freeze';
-                            } else if( oPlayer.oStatus.bGuard ){
-                                sClass = '--guard';
-                            } else if( oPlayer.oAnimation.oFrame.aHitBox ){
-                                sClass = '--damage';
-                            } else if( oPlayer.isInvulnerable() ){
-                                sClass = '--invulnerable';
-                            } else if( oPlayer.oStatus.bAerialInvul ){
-                                sClass = '--aerial-invulnerable';
-                            }
-                            oAnimation.oLayer.hElement.innerHTML += '<span class="' + sClass + '"></span>';
+                            this.showData(oPlayer, nIndex);
+                            this.showAnimation(oPlayer, nIndex);
                         }
                     } );
                 }
             },
+            showData: function(oPlayer, nIndex){
+                // Data
+                const oData = this.aData[nIndex],
+                    oOpponent = this.oScene.aPlayer[ nIndex == 1 ? 0 : 1 ],
+                    bHit = oPlayer.aHit.indexOf( oOpponent.sId ) != -1,
+                    oNewData = {
+                        sType: oPlayer.oAnimation.isCommand() ? 'offense' : 'defense',
+                        oHitData: oPlayer.getHitData(),
+                        oAnimation: oPlayer.oAnimation,
+                        bHit: bHit,
+                        nHitting: oOpponent.nHitting,
+                        nLastHitting: oOpponent.nHitting ? oData.oLast.nHitting : null
+                    };
+
+                if( this.compareLastData(oData, oNewData) ){
+
+                    for( let nInfo = 0; nInfo < TrainingEngineDisplay.aDataInfo.length; nInfo++ ){
+
+                        const oText = oData.oLayer.aChildElement[nInfo + 1],
+                            oInfo = TrainingEngineDisplay.aDataInfo[nInfo];
+
+                        switch( oInfo.sType ){
+                            case 'damages':
+                                if( oNewData.sType == 'offense' && oNewData.oHitData ){
+                                    if( oNewData.bHit ){
+                                        if( oNewData.nLastHitting ){
+                                            const nRatio = Math.max(oNewData.oHitData.nMinimumReduce || GameSettings.oDamage.nMinimumReduce, 100 - ( (oOpponent.nHitting - 1) * GameSettings.oDamage.nReduce)),
+                                                nBaseDamage = oNewData.oHitData.nDamage || '-',
+                                                nDamage = nBaseDamage == '-' ? '-' : Math.floor(nBaseDamage * nRatio / 100);
+                                            oText.setText( nDamage + ' (' + nRatio + '%, ' + nBaseDamage + ')' );
+                                        }
+                                    }
+                                    else if( oNewData.nHitting != oNewData.nLastHitting ) {
+                                        oText.setText( '- (-%, ' + (oNewData.oHitData.nDamage || '-') + ')' );
+                                    }
+                                } else {
+                                    oText.setText(oInfo.sBlank);
+                                }
+                                break;
+                                
+                            case 'frames':
+                                if( oNewData.sType == 'offense' && oNewData.oAnimation.sType != 'dash' ){
+                                    const aValue = [];
+                                    let nValue = 0;
+                                    oNewData.oAnimation.aStep.forEach( oStep => {
+                                        const oFrame = oNewData.oAnimation.oFrameData[oStep.sFrame];
+                                        switch( nValue ){
+                                            case 0:
+                                                if( oFrame.aHitBox ){
+                                                    nValue++;
+                                                }
+                                                break;
+                                            case 1:
+                                                if( !oFrame.aHitBox ){
+                                                    nValue++;
+                                                }
+                                                break;
+                                        }
+                                        aValue[nValue] = (aValue[nValue] || 0) + oStep.nFrame;
+                                    } );
+                                    oText.setText( aValue.join(' + ') + ' (' + oNewData.oAnimation.nLength + ')' );
+                                }
+                                else {
+                                    oText.setText( '- + - + - (' + oNewData.oAnimation.nLength + ')' );
+                                }
+                                break;
+                                
+                            case 'advantage':
+                                if( oNewData.sType == 'defense' || oNewData.bHit || oNewData.nHitting != oNewData.nLastHitting ){
+                                    const oPlayerFrame = oPlayer.oAnimation.nLength - oPlayer.oAnimation.nTick + 1,
+                                        oOpponentFrame = ( oNewData.sType == 'defense' || oNewData.bHit ) && oOpponent.oAnimation.nLength ?
+                                            oOpponent.oAnimation.nLength - oOpponent.oAnimation.nTick + 1 :
+                                            0,
+                                        nText = oOpponentFrame - oPlayerFrame;
+                                    oText.setText( (nText < 0 ? nText : '+' + nText) + ' (' + ( oNewData.bHit ? oPlayer.oAnimation.nTick : '-' ) + ')' );
+                                }
+                                break;
+                        }
+                    }
+                }
+            },
+            compareLastData: function(oData, oNewData){
+                let bChange = false;
+                for( let sProp in oNewData ){
+                    if( oData.oLast[sProp] != oNewData[sProp] ){
+                        bChange = true;
+                        break;
+                    }
+                }
+                bChange && ( oData.oLast = oNewData );
+                return bChange;
+            },
+            showAnimation: function(oPlayer, nIndex){
+                // Animation
+                const oAnimation = this.aAnimation[nIndex];
+                if( oPlayer.oAnimation != oAnimation.oLast ){
+                    oAnimation.oLast = oPlayer.oAnimation;
+                    oAnimation.oLayer.hElement.innerHTML = '';
+                }
+                let sClass = '--' + oPlayer.oAnimation.sType;
+                if( oPlayer.oAnimation.oFrame.bFreeze ){
+                    sClass = '--freeze';
+                } else if( oPlayer.oStatus.bGuard ){
+                    sClass = '--guard';
+                } else if( oPlayer.oAnimation.oFrame.aHitBox ){
+                    sClass = '--damage';
+                } else if( oPlayer.isInvulnerable() ){
+                    sClass = '--invulnerable';
+                } else if( oPlayer.oStatus.bAerialInvul ){
+                    sClass = '--aerial-invulnerable';
+                }
+                oAnimation.oLayer.hElement.innerHTML += '<span class="' + sClass + '"></span>';
+            },
+
             // Gestion Affichage
             show: function(sType){
                 this.oParameters.oShow[sType] = true;

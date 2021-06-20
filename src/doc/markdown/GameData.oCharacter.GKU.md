@@ -780,7 +780,7 @@ GameData.oCharacter.GKU.oCommands = {
             sName: 'Genki-dama',
             sAnimation: 'attack_236C',
             nCost: 30,
-            nDamage: 500,
+            nDamage: 400,
             nMinimumReduce: 40,
             nGatlingLevel: 3,
             sCheck: 'bGround',

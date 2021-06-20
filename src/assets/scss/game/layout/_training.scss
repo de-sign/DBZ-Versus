@@ -52,7 +52,7 @@
         }
     }
 
-    &_Parameters {
+    .Training__Menu_Parameters {
         min-width: 550px !important; 
     }
 }
@@ -194,24 +194,46 @@
     }
 }
 
+// Data
+.Training__Data {
+    display: none;
+
+    .--bData & {
+        display: flex;
+    }
+
+    & > * {
+        flex: 1 1 50%;
+        max-width: 50%;
+    }
+
+    &_Info {
+        display: flex !important;
+        align-items: flex-start;
+        text-align: left;
+        font-size: 1.2em !important;
+        line-height: 1em;
+        padding: 5px 20px !important;
+    
+        & > *:first-child {
+            flex: 0 0 auto;
+        }
+        
+        & > *:last-child {
+            color: #666;
+            flex: 1 1 100%;
+            text-align: right;
+            margin-left: 25px;
+        }
+    }
+}
+
 // Animation
 .Training__Animation {
-    position: absolute;
-    left: 50px;
-    width: 399px;
     line-height: 5px;
-    display: none;
+    display: block;
     text-align: left;
-
-    .Battle__HUD:last-child & {
-        right: 50px;
-        left: auto;
-        text-align: right;
-    }
-    
-    .--bAnimation & {
-        display: block;
-    }
+    padding: 5px 20px !important;
 
     span {
         display: inline-block;
