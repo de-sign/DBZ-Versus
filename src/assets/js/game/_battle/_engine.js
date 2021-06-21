@@ -27,8 +27,8 @@ Object.assign(
                     oCollapse[oEntity.sId] = {
                         nIndex,
                         oEntity,
-                        nOrientation: this.getOrientation(oEntity, oReferent),
-                        nPriority: this.stayInArea(oEntity)
+                        nPriority: this.stayInArea(oEntity),
+                        nOrientation: this.getOrientation(oEntity, oReferent)
                     };
                 }
             } );
@@ -192,7 +192,7 @@ Object.assign(
                 // Trop en bas
                 if( oEntity.oCheck.bLaunch ){
                     const nDown = this.oArea.oPosition.nY + (oBoxArea.bottom - oBoxArea.originY) - oEntity.oPositionPoint.nGapY;
-                    if( nDown < oEntity.oLayer.oPosition.nY + ( oBoxEntity.nY + oBoxEntity.nHeight ) ){
+                    if( nDown < oEntity.oLayer.oPosition.nY /* + ( oBoxEntity.nY + oBoxEntity.nHeight )*/ ){
                         if( oEntity.nLife > 0 ){
                             oEntity.setStance( oEntity.oAnimation.sName == 'launch_1' ? 'launch_2' : 'move_0', true);
                         } else {
@@ -243,11 +243,17 @@ Object.assign(
                                 }
                                 // Movement RIGHT
                                 else if( oLeft.nPriority > oRight.nPriority ) {
-                                    oRight.oEntity.oLayer.oPosition.nX += nDiff;
+                                    oRight.oEntity.oLayer.oPosition.nX +=
+                                        oRight.oEntity.oPositionPoint.nGapX && oRight.oEntity.oPositionPoint.nGapX < nDiff ?
+                                            Math.ceil(nDiff / 2) :
+                                            nDiff;
                                 }
                                 // Movement LEFT
                                 else {
-                                    oLeft.oEntity.oLayer.oPosition.nX -= nDiff;
+                                    oLeft.oEntity.oLayer.oPosition.nX -= 
+                                        oLeft.oEntity.oPositionPoint.nGapX && oLeft.oEntity.oPositionPoint.nGapX < nDiff ?
+                                            Math.ceil(nDiff / 2) :
+                                            nDiff;
                                 }
                             }
 

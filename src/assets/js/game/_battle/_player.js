@@ -297,7 +297,7 @@ Object.assign(
                             nCode: 5
                         };
                     }
-                    // Gestion STACK pour ACTION en HIT ou DASH et LANDING
+                    // Gestion STACK pour ACTION en HIT ou DASH, LANDING et RECOVERY
                     else if( this.aHit.length || this.oAnimation.isStack() ){
                         const bCancel = this.oStatus.bCancel && !bFreeze;
                         oCanAction = {

@@ -76,7 +76,7 @@ __General__
     * GAME
 
 * Optimisation du Code
-    * Classe PLAYER avec pour enfant LOCAL et DUMMY ( et AI ? )
+    * Classe BATTLEINPUTBUFFER avec pour enfant LOCAL et DUMMY ( et AI ? )
 
 * Paramétrages
     * Animations

@@ -45,7 +45,9 @@ Object.assign(
 
             // DOWN
             launch_2: 'down',
+            launch_4: 'recovery',
             launch_5: 'recovery',
+            launch_6: 'recovery',
 
             // Animation
             anim_open: 'animation',
@@ -56,7 +58,7 @@ Object.assign(
         aAllType: ['action', 'movement', 'stand', 'jump', 'landing', 'dash', 'guard', 'hit', 'launch', 'down', 'recovery'],
         aTypeHurt: ['guard', 'hit', 'launch'],
         aTypeMove: ['stand', 'movement', 'jump'],
-        aTypeStack: ['dash', 'landing'],
+        aTypeStack: ['dash', 'landing', 'recovery'],
         aTypeTraining: ['action', 'dash', 'guard', 'hit', 'launch', 'down', 'recovery'],
         aTypeCommand: ['action', 'dash'],
 

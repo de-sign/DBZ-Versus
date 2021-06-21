@@ -119,6 +119,7 @@ GameSettings.oPositionPoint = {
     character: {
         nX: 98,
         nY: 182,
+        nGapX: 4 * 4,
         nGapY: 200 - 182 - 2
     },
     projectile: {

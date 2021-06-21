@@ -124,7 +124,7 @@ GameData.oEntity.oCharacter = {
                 nX: -22,
                 nY: -110,
                 nWidth: 68,
-                nHeight: 112
+                nHeight: 76
             },
             aHurtBox: [{
                 nX: -26,
@@ -144,7 +144,7 @@ GameData.oEntity.oCharacter = {
                 nX: -22,
                 nY: -110,
                 nWidth: 68,
-                nHeight: 112
+                nHeight: 76
             },
             aHurtBox: [{
                 nX: -26,
@@ -164,7 +164,7 @@ GameData.oEntity.oCharacter = {
                 nX: -22,
                 nY: -110,
                 nWidth: 68,
-                nHeight: 112
+                nHeight: 76
             },
             aHurtBox: [{
                 nX: -26,
@@ -469,7 +469,7 @@ GameData.oEntity.oCharacter = {
                 nX: -30,
                 nY: -110,
                 nWidth: 72,
-                nHeight: 112
+                nHeight: 76
             },
             aHurtBox: [{
                 nX: -34,
@@ -494,7 +494,7 @@ GameData.oEntity.oCharacter = {
                 nX: -30,
                 nY: -110,
                 nWidth: 72,
-                nHeight: 112
+                nHeight: 76
             },
             aHitBox: {
                 nX: 30,
@@ -524,7 +524,7 @@ GameData.oEntity.oCharacter = {
                 nX: -30,
                 nY: -110,
                 nWidth: 72,
-                nHeight: 112
+                nHeight: 76
             },
             aHurtBox: [{
                 nX: -30,
@@ -553,7 +553,7 @@ GameData.oEntity.oCharacter = {
                 nX: -30,
                 nY: -110,
                 nWidth: 72,
-                nHeight: 112
+                nHeight: 76
             },
             aHurtBox: [{
                 nX: -30,
@@ -594,7 +594,7 @@ GameData.oEntity.oCharacter = {
                 nX: -22,
                 nY: -110,
                 nWidth: 68,
-                nHeight: 112
+                nHeight: 76
             },
             aHurtBox: [{
                 nX: -26,
@@ -615,7 +615,7 @@ GameData.oEntity.oCharacter = {
                 nX: -22,
                 nY: -110,
                 nWidth: 68,
-                nHeight: 112
+                nHeight: 76
             },
             aHurtBox: [{
                 nX: -26,
@@ -635,7 +635,7 @@ GameData.oEntity.oCharacter = {
                 nX: -22,
                 nY: -110,
                 nWidth: 68,
-                nHeight: 112
+                nHeight: 76
             },
             aHurtBox: [{
                 nX: -26,
@@ -655,7 +655,7 @@ GameData.oEntity.oCharacter = {
                 nX: -22,
                 nY: -110,
                 nWidth: 68,
-                nHeight: 112
+                nHeight: 76
             },
             aHurtBox: [{
                 nX: -42,
@@ -676,7 +676,7 @@ GameData.oEntity.oCharacter = {
                 nX: -22,
                 nY: -110,
                 nWidth: 68,
-                nHeight: 112
+                nHeight: 76
             },
             aHurtBox: [{
                 nX: -42,
@@ -703,7 +703,7 @@ GameData.oEntity.oCharacter = {
                 nX: -22,
                 nY: -110,
                 nWidth: 68,
-                nHeight: 112
+                nHeight: 76
             },
             aHurtBox: [{
                 nX: -26,
@@ -1134,7 +1134,7 @@ GameData.oEntity.oCharacter = {
         launch_5: [
             {
                 nFrame: 6,
-                sFrame: 'move_3__0',
+                sFrame: 'move_2__0',
                 oStatus: {
                     bReverse: true
                 }
@@ -1601,8 +1601,8 @@ GameData.oEntity.oCharacter = {
                 }
             },
             {
-                sCod: 'defence_BC',
-                sAnimation: 'defence_BC',
+                sCod: 'defense_BC',
+                sAnimation: 'defense_BC',
                 sCheck: 'bGuard',
                 nCost: 10,
                 nDamage: 0,

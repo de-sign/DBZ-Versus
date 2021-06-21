@@ -348,23 +348,16 @@ Object.assign(
                                 
                             case 'frames':
                                 if( oNewData.sType == 'offense' && oNewData.oAnimation.sType != 'dash' ){
-                                    const aValue = [];
-                                    let nValue = 0;
+                                    const aValue = [],
+                                        aCheckHitbox = [false, true, false];
+                                    let nValue = 0,
+                                        nFrames = 0;
+
                                     oNewData.oAnimation.aStep.forEach( oStep => {
-                                        const oFrame = oNewData.oAnimation.oFrameData[oStep.sFrame];
-                                        switch( nValue ){
-                                            case 0:
-                                                if( oFrame.aHitBox ){
-                                                    nValue++;
-                                                }
-                                                break;
-                                            case 1:
-                                                if( !oFrame.aHitBox ){
-                                                    nValue++;
-                                                }
-                                                break;
-                                        }
-                                        aValue[nValue] = (aValue[nValue] || 0) + oStep.nFrame;
+                                        const oFrame = Object.assign( {}, oNewData.oAnimation.oFrameData[oStep.sFrame], oStep);
+                                        aCheckHitbox[nValue] == !!oFrame.aHitBox || (nValue++);
+                                        aValue[nValue] = (aValue[nValue] || 0) + oFrame.nFrame;
+                                        nFrames += oFrame.nFrame;
                                     } );
                                     oText.setText( aValue.join(' + ') + ' (' + oNewData.oAnimation.nLength + ')' );
                                 }
