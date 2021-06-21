@@ -70,6 +70,9 @@ Object.assign(
                                 case 'TXT__Training_Menu_Select':
                                     sRedirection = 'select';
                                     break;
+                                case 'TXT__Training_Menu_Stage':
+                                    sRedirection = 'stage';
+                                    break;
                                 case 'TXT__Training_Menu_Restart':
                                     sRedirection = 'restart';
                                     break;
@@ -155,6 +158,10 @@ Object.assign(
                         case 'select':
                             sSFX = 'ADO__Validate';
                             SceneManager.change( new SelectScene() );
+                            break;
+                        case 'stage':
+                            sSFX = 'ADO__Validate';
+                            SceneManager.change( new StageScene() );
                             break;
                         case 'close':
                             sSFX = 'ADO__Cancel';

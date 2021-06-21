@@ -78,7 +78,7 @@ Object.assign(
                         if( sType == 'oFrameRate' ){
                             this.oLayer[sType].aChildElement[0].setText( this.oEngine.getFrameRate() + 'fps' );
                         } else {
-                            this.oLayer[sType].aChildElement[0].setText( this.oEngine.oParameters.oShow[sType] ? 'Show' : 'Hide' );
+                            this.oLayer[sType].aChildElement[0].setText( this.oEngine.oParameters[sType] ? 'Show' : 'Hide' );
                         }
                     }
                 }
@@ -98,11 +98,9 @@ function TrainingEngineDisplay(oScene){
 
     this.oParameters = {
         nFrameRate: 0,
-        oShow: {
-            bData: true,
-            bHistory: true,
-            bBox: true
-        }
+        bData: true,
+        bHistory: true,
+        bBox: true
     };
 
     this.init(oScene);
@@ -110,6 +108,8 @@ function TrainingEngineDisplay(oScene){
 
 Object.assign(
     TrainingEngineDisplay, {
+
+        aShow: [ 'bData','bHistory','bBox' ],
 
         oSymbolHistory: {
             oNormal: {
@@ -188,11 +188,11 @@ Object.assign(
                     }
                 } );
 
-                for( let sType in this.oParameters.oShow ){
-                    if( this.oParameters.oShow[sType] ){
+                TrainingEngineDisplay.aShow.forEach( sType => {
+                    if( this.oParameters[sType] ){
                         this.show(sType);
                     }
-                }
+                } );
                 this.setFrameRate();
             },
             update: function(){
@@ -201,9 +201,9 @@ Object.assign(
                 this.updateData();
             },
             destroy: function(){
-                for( let sType in this.oParameters.oShow ){
+                TrainingEngineDisplay.aShow.forEach( sType => {
                     this.hide(sType);
-                }
+                } );
                 this.setFrameRate(60);
                 this.oScene.oContext.update();
             },
@@ -218,7 +218,7 @@ Object.assign(
 
             // History
             updateHistory: function(){
-                if( this.oParameters.oShow.bHistory ){
+                if( this.oParameters.bHistory ){
                     this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                         oPlayer.oInputBuffer.aHistory.forEach( (oHistory, nHistory, aHistory) => {
                             const aBtn = Object.keys( oHistory.oButtons ),
@@ -255,7 +255,7 @@ Object.assign(
             },
             // Box
             updateBox: function(){
-                if( this.oParameters.oShow.bBox ){
+                if( this.oParameters.bBox ){
                     BattleEntity.get().forEach( oEntity => {
                         ['oPositionBox', 'aHurtBox', 'aHitBox'].forEach( sBox => {
                             const aBox = oEntity.getBox(sBox),
@@ -297,7 +297,7 @@ Object.assign(
 
             // Data
             updateData: function(){
-                if( this.oParameters.oShow.bData ){
+                if( this.oParameters.bData ){
                     this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                         if( oPlayer.oAnimation.isTraining() ){
                             this.showData(oPlayer, nIndex);
@@ -422,20 +422,26 @@ Object.assign(
 
             // Gestion Affichage
             show: function(sType){
-                this.oParameters.oShow[sType] = true;
-                this.oScene.oContext.addTickUpdate( () => {
-                    this.oScene.oContext.hElement.classList.add('--' + sType);
-                } );
+                if( TrainingEngineDisplay.aShow.indexOf(sType) != -1 ){
+                    this.oParameters[sType] = true;
+                    this.oScene.oContext.addTickUpdate( () => {
+                        this.oScene.oContext.hElement.classList.add('--' + sType);
+                    } );
+                }
             },
             hide: function(sType){
-                this.oParameters.oShow[sType] = false;
-                this.oScene.oContext.addTickUpdate( () => {
-                    this.oScene.oContext.hElement.classList.remove('--' + sType);
-                } );
+                if( TrainingEngineDisplay.aShow.indexOf(sType) != -1 ){
+                    this.oParameters[sType] = false;
+                    this.oScene.oContext.addTickUpdate( () => {
+                        this.oScene.oContext.hElement.classList.remove('--' + sType);
+                    } );
+                }
             },
             toogle: function(sType){
-                this[ this.oParameters.oShow[sType] ? 'hide' : 'show' ](sType);
-                StoreEngine.update('Display', this.oParameters);
+                if( TrainingEngineDisplay.aShow.indexOf(sType) != -1 ){
+                    this[ this.oParameters[sType] ? 'hide' : 'show' ](sType);
+                    StoreEngine.update('Display', this.oParameters);
+                }
             },
 
             // FrameRate

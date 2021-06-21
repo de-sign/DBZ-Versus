@@ -55,7 +55,6 @@ __Training__
         * Guard
         * Reversal
         * Record ?
-    * Frame Data
 
 __General__
 * Méchaniques de jeu
