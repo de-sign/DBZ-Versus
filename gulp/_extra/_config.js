@@ -341,7 +341,7 @@ Object.assign(
             BJT: {
                 sType: 'oChar',
                 sChar: 'BJT',
-                aColor: ['LSW_SSJ', 'LSW_BAD'],
+                aColor: ['CTM_SSJ', 'LSW_SSJ', 'LSW_BAD'],
                 aFrames: [
                     ['stand', 'blur', 'backward', 'forward', 'forward_inverse'],
                     ['jump', 'fall', null, 'guard', 'reflect', 'burst'],
