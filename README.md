@@ -59,12 +59,47 @@ __Battle__
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
 
 __Training__
-* Terminer Menu
-    * Dummy ?
-        * Guard
-        * Reversal
-        * Record ?
-    * Frame Data
+* Refonte Menu
+    * Training settings
+        * Gauges settings
+            * P1, P2
+                * Life
+                * Ki
+                * Regen life
+                * Regen Ki
+        * Dummy settings
+            * Controller
+                * Dummy, Keyboard2 [ ... Liste des controllers ]
+            * Stance
+                * Stand, Jump, Forward Jump, Backward Jump
+            * Guard
+                * No guard, After 1st hit, Only 1st hit, All, Reflect, Random
+            * Tech throw
+                * Yes, No
+            * Counter
+                * No counter, A [ ... Liste des commandes ]
+            * Reversal
+                * No reversal, Forward, Backward
+            * Record ?
+        * Restart settings
+            * Position
+                * Left, Middle, Right
+            * Reverse
+                * No, Yes
+        * Display settings
+            * Command details
+            * Box visibility
+            * Input history
+            * Framerate
+                * 60, 30, 15, 6 
+    * Command list
+    
+    * Select character
+    * Select stage
+    
+    * Restart
+    * Continue
+    * Quit
 
 __General__
 * Méchaniques de jeu
