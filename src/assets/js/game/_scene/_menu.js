@@ -2,6 +2,7 @@
 function MenuScene(){
 	this.oContext = null;
     this.oMenu = null;
+    this.oController = null;
 }
 
 Object.assign(
@@ -29,6 +30,7 @@ Object.assign(
                     OutputManager.getChannel('CHN__BGM').play('ADO__Menu', false, true);
 				},
 				update: function(){
+                    this.oController = null;
                     for( let sController in ControllerManager.oController ){
                         const oController = ControllerManager.getController(sController);
                         oController.ifPressedNow( {
@@ -41,7 +43,8 @@ Object.assign(
                                         SceneManager.change( new SideScene() );
                                         break;
                                     case 'TXT__Menu_Training':
-                                        SceneManager.change( new SideScene() );
+                                        this.oController = oController;
+                                        SceneManager.change( new SelectScene() );
                                         break;
                                     case 'TXT__Menu_Setting':
                                         SceneManager.change( new SettingScene() );
@@ -71,7 +74,8 @@ Object.assign(
 
                     return {
                         MNU__nIndex: nIndex,
-                        BTL__sType: aName[nIndex]
+                        BTL__sType: aName[nIndex],
+                        MNU__aController: [this.oController, null]
                     };
                 }
             }

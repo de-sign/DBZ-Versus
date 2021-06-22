@@ -201,7 +201,7 @@ Object.assign(
                     
                     if( this.oStatus.bSwitch ) {
                         this.switchController();
-                    } else if( this.oStatus.bQuit ) {
+                    } else if( this.oStatus.bQuit || ( this.oStatus.bReturn && SceneManager.oTransverseData.BTL__sType == 'Training' ) ) {
                         SceneManager.change( new MenuScene() );
                     } else if( this.oStatus.bReturn ) {
                         SceneManager.change( new SideScene() );
