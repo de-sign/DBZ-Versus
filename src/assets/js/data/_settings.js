@@ -48,6 +48,10 @@ Object.assign(
                 sRoot: 'assets/images/controllers',
                 sFrames: 'assets/images/controllers'
             },
+            oHud: {
+                sRoot: 'assets/images/hud',
+                sRound: 'assets/images/hud/round.png'
+            },
             oAudio: {
                 sRoot: 'assets/audios',
                 sBGM: 'assets/audios/BGM',
@@ -91,6 +95,7 @@ Object.assign(
             character: {
                 nX: 98,
                 nY: 182,
+                nGapX: 4 * 4,
                 nGapY: 200 - 182 - 2
             },
             projectile: {
@@ -105,6 +110,11 @@ Object.assign(
                 nX: 128,
                 nY: 210
             }
+        },
+        /* ----- DETAILS Constante des ROUNDS ----- */
+        oRound: {
+            nDefault: 2,
+            nMax: 10
         },
         /* ----- DETAILS Constante des choix de position sur le terrain en TRAINING ----- */
         oSide: {
@@ -285,8 +295,8 @@ Object.assign(
         oJump: {
             nLength: 36,
             oPre: {
-                nJump: 8,
-                nLanding: 8
+                nJump: 4,
+                nLanding: 4
             },
             oMove: {
                 nX: 63 * 4,
@@ -299,7 +309,7 @@ Object.assign(
         oDamage: {
             nDefault: 25,
             // Percent !
-            nReduce: 10,
+            nReduce: 5,
             nMinimumReduce: 10
         },
         /* ----- END PROPERTIES ----- */

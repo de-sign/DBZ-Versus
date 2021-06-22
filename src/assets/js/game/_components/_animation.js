@@ -30,6 +30,8 @@ Object.assign(
             move_7: 'jump',
             move_8: 'jump',
             move_9: 'jump',
+            move_fall_4: 'jump',
+            move_fall_6: 'jump',
             move_0: 'landing',
 
             // HURT
@@ -43,7 +45,9 @@ Object.assign(
 
             // DOWN
             launch_2: 'down',
+            launch_4: 'recovery',
             launch_5: 'recovery',
+            launch_6: 'recovery',
 
             // Animation
             anim_open: 'animation',
@@ -51,10 +55,12 @@ Object.assign(
             anim_victory: 'animation'
         },
 
-        aAllType: ['action', 'movement', 'jump', 'landing', 'dash', 'guard', 'hit', 'launch', 'down', 'recovery'],
+        aAllType: ['action', 'movement', 'stand', 'jump', 'landing', 'dash', 'guard', 'hit', 'launch', 'down', 'recovery'],
         aTypeHurt: ['guard', 'hit', 'launch'],
         aTypeMove: ['stand', 'movement', 'jump'],
-        aTypeStack: ['dash', 'landing'],
+        aTypeStack: ['dash', 'landing', 'recovery'],
+        aTypeTraining: ['action', 'dash', 'guard', 'hit', 'launch', 'down', 'recovery'],
+        aTypeCommand: ['action', 'dash'],
 
         getType: function(sName){
             return GameAnimation.oType[sName] || 'action';
@@ -67,6 +73,12 @@ Object.assign(
         },
         isTypeStack: function(sName){
             return this.aTypeStack.indexOf( this.getType(sName) ) != -1;
+        },
+        isTypeTraining: function(sName){
+            return this.aTypeTraining.indexOf( this.getType(sName) ) != -1;
+        },
+        isTypeCommand: function(sName){
+            return this.aTypeCommand.indexOf( this.getType(sName) ) != -1;
         },
 
         prototype: Object.assign(
@@ -122,6 +134,12 @@ Object.assign(
                 },
                 isStack: function(){
                     return GameAnimation.isTypeStack(this.sName);
+                },
+                isTraining: function(){
+                    return GameAnimation.isTypeTraining(this.sName);
+                },
+                isCommand: function(){
+                    return GameAnimation.isTypeCommand(this.sName);
                 }
             }
         )

@@ -60,6 +60,10 @@ GameSettings.oPath = {
         sRoot: 'assets/images/controllers',
         sFrames: 'assets/images/controllers'
     },
+    oHud: {
+        sRoot: 'assets/images/hud',
+        sRound: 'assets/images/hud/round.png'
+    },
     oAudio: {
         sRoot: 'assets/audios',
         sBGM: 'assets/audios/BGM',
@@ -115,6 +119,7 @@ GameSettings.oPositionPoint = {
     character: {
         nX: 98,
         nY: 182,
+        nGapX: 4 * 4,
         nGapY: 200 - 182 - 2
     },
     projectile: {
@@ -129,6 +134,17 @@ GameSettings.oPositionPoint = {
         nX: 128,
         nY: 210
     }
+};
+```
+
+#### GameSettings.oRound
+
+Constante des ROUNDS 
+
+```javascript
+GameSettings.oRound = {
+    nDefault: 2,
+    nMax: 10
 };
 ```
 
@@ -374,8 +390,8 @@ Paramétrage de l'animation d'un personnage JUMP
 GameSettings.oJump = {
     nLength: 36,
     oPre: {
-        nJump: 8,
-        nLanding: 8
+        nJump: 4,
+        nLanding: 4
     },
     oMove: {
         nX: 63 * 4,
@@ -400,7 +416,7 @@ Parametrages des DAMAGES par défaut et du damage REDUCE
 GameSettings.oDamage = {
     nDefault: 25,
     // Percent !
-    nReduce: 10,
+    nReduce: 5,
     nMinimumReduce: 10
 };
 ```

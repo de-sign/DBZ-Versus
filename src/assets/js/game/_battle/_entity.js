@@ -224,10 +224,8 @@ Object.assign(
                     }
 
                     // Type
-                    if( !this.oLayer.hElement.classList.contains('--' + this.oAnimation.sType) ){
-                        DOMTokenList.prototype.remove.apply( this.oLayer.hElement.classList, GameAnimation.aAllType.map( sType => '--' + sType ) );
-                        this.oLayer.hElement.classList.add('--' + this.oAnimation.sType);
-                    }
+                    DOMTokenList.prototype.remove.apply( this.oLayer.hElement.classList, GameAnimation.aAllType.map( sType => '--' + sType ) );
+                    this.oLayer.hElement.classList.add('--' + this.oAnimation.sType);
                     this.oLayer.hElement.classList[ this.oStatus.bGuard ? 'add' : 'remove' ]('--guard');
                     
                     // Frame
@@ -295,7 +293,7 @@ Object.assign(
                 return this.oHitData;
             },
             isInvulnerable: function(){
-                return this.oStatus.bInvul;
+                return this.oStatus.bInvul || !this.oAnimation.oFrame.aHurtBox;
             },
 
             isDead: function(){

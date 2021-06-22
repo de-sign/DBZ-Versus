@@ -41,7 +41,8 @@ Object.assign(
                                 oOptions.sAnimation,
                                 GameSettings.oSide.aSide[ GameSettings.oSide.nDefault ].fPosition(this.oArea, nIndex),
                                 !!nIndex,
-                                oOptions.aController[nIndex]
+                                oOptions.aController[nIndex],
+                                SceneManager.oTransverseData.BTL__aRound[nIndex]
                             );
                         this.aPlayer.push(oPlayer);
                         

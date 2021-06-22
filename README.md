@@ -26,7 +26,7 @@ Une documentation technique est disponnible ici : [References.md](https://github
 
 ## TODO
 __BUG__
-* Problème de LOOP avec GKU et attack_C
+* Problème de LOOP avec GKU et attack_C ?
 
 __Menu__
 * Ajout du ONLINE ?
@@ -47,15 +47,6 @@ __Stage__
 <br/>*N/A*
 
 __Battle__
-* Gestion de ROUND ?
-* Fin de match
-    * Animation de victoire
-    * Menu de choix
-        * Rematch
-        * Select Character
-        * Select Stage
-        * Quit
-
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
 
 __Training__
@@ -121,7 +112,7 @@ __General__
     * GAME
 
 * Optimisation du Code
-    * Classe PLAYER avec pour enfant LOCAL et DUMMY ( et AI ? )
+    * Classe BATTLEINPUTBUFFER avec pour enfant LOCAL et DUMMY ( et AI ? )
 
 * Paramétrages
     * Animations

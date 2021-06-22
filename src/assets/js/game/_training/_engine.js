@@ -70,6 +70,9 @@ Object.assign(
                                 case 'TXT__Training_Menu_Select':
                                     sRedirection = 'select';
                                     break;
+                                case 'TXT__Training_Menu_Stage':
+                                    sRedirection = 'stage';
+                                    break;
                                 case 'TXT__Training_Menu_Restart':
                                     sRedirection = 'restart';
                                     break;
@@ -156,6 +159,10 @@ Object.assign(
                             sSFX = 'ADO__Validate';
                             SceneManager.change( new SelectScene() );
                             break;
+                        case 'stage':
+                            sSFX = 'ADO__Validate';
+                            SceneManager.change( new StageScene() );
+                            break;
                         case 'close':
                             sSFX = 'ADO__Cancel';
                             this.close();
@@ -200,7 +207,7 @@ Object.assign(
                         oPlayer.setFreeze();
                     } );
                     this.oScene.oContext.addTickUpdate( () => {
-                        this.oScene.oContext.hElement.classList.add('--menu');
+                        this.oScene.oContext.hElement.classList.add('--menu', '--training');
                     } );
                     this.trigger('onOpen');
                 
@@ -227,7 +234,7 @@ Object.assign(
                 } );
                 this.oScene.oContext.addTickUpdate( () => {
                     oCurrent.hide();
-                    this.oScene.oContext.hElement.classList.remove('--menu');
+                    this.oScene.oContext.hElement.classList.remove('--menu', '--training');
                 } );
                 this.trigger('onClose');
                 GameHelper.set(TrainingScene.oHelper.aBattle, this.aHelperController);

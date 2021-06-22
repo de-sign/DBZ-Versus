@@ -824,7 +824,7 @@ GameData.oCharacter.SRU.oCommands = {
     aOffense: [
         {
             sCod: 'attack_236C',
-            sName: 'Taiyōkei Hakai Kamehameha',
+            sName: 'Taiyōkei Hakai K.',
             sAnimation: 'attack_236C',
             sListAnimation: 'list_236C',
             nCost: 30,

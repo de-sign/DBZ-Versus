@@ -13,7 +13,7 @@
                             <div id="LAY__Battle_HUD_Bar_Life_" class="outputLayer --change Battle__HUD_Bar_Life"></div>
                             <div id="LAY__Battle_HUD_Bar_Lose_" class="outputLayer --change Battle__HUD_Bar_Lose"></div>
                         </div>
-                        <div id="LAY__Training_Animation_" class="outputLayer --change Training__Animation"></div>
+                        <div id="LAY__Battle_HUD_Round_" class="outputLayer --change Battle__HUD_Character_Round"></div>
                         <div id="LAY__Battle_HUD_Ki_" class="outputLayer --change Battle__HUD_Character_Ki">
                             <div id="TXT__Battle_HUD_Ki_Number_" class="outputText --change Battle__HUD_Ki_Number"></div>
                             <div id="LAY__Battle_HUD_Ki_Bar_" class="outputLayer --change Battle__HUD_Ki_Bar"></div>
@@ -22,16 +22,38 @@
                     <img id="SPT__Battle_HUD_Sprite_" class="outputSprite --change Battle__HUD_Sprite" />
                 </div>
             </div>
+            <div class="Battle__Combo">
+                <span id="TXT__Battle_Combo_Text_2" class="outputText Battle__Combo_Text">0 hit !<i>0 damages</i></span>
+                <span id="TXT__Battle_Combo_Text_1" class="outputText Battle__Combo_Text">0 hit !<i>0 damages</i></span>
+            </div>
+            <div class="Training__Data">
+                <div id="LAY__Training_Data_" class="outputLayer Menu__Layer Training__Data_Character">
+                    <ul>
+                        <li class="Training__Data_Info">
+                            <span>Damages</span>
+                            <span class="outputText --change"></span>
+                        </li>
+                        <li  class="Training__Data_Info">
+                            <span>Frames</span>
+                            <span class="outputText --change"></span>
+                        </li>
+                        <li  class="Training__Data_Info">
+                            <span>Advantage</span>
+                            <span class="outputText --change"></span>
+                        </li>
+                        <li id="LAY__Training_Animation_" class="outputLayer --change Training__Animation"></li>
+                    </ul>
+                </div>
+            </div>
             <div class="Battle__Info">
                 <img id="SPT__Battle_Info_Sprite" class="outputSprite Battle__Info_Sprite" />
-                <span id="TXT__Battle_Info_Text" class="outputText Battle__Info_Text --text-border">
-            </div>
-            <div class="Battle__Combo">
-                <span id="TXT__Battle_Combo_Text_2" class="outputText Battle__Combo_Text"></span>
-                <span id="TXT__Battle_Combo_Text_1" class="outputText Battle__Combo_Text"></span>
+                <span id="TXT__Battle_Info_Text" class="outputText Battle__Info_Text">
             </div>
 
-            {% include "index/_scenes/_training.html" %}
+            <section class="Battle__Menu">
+                {% include "index/_scenes/_training.html" %}
+                {% include "index/_scenes/_rematch.html" %}
+            </div>
         </div>
     </div>
 

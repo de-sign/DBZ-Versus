@@ -23,6 +23,12 @@ Liste des couleurs de l'entité.
 GameData.oCharacter.BJT.aColor = [
     {
         sName: 'Bejīta SSJ',
+        sColor: 'CTM_SSJ',
+        sColorName: 'Custom color',
+        sEntityColor: 'ORG'
+    },
+    {
+        sName: 'Bejīta SSJ',
         sColor: 'LSW_SSJ',
         sColorName: 'Legendary Super Warrior color',
         sEntityColor: 'ORG'
@@ -903,7 +909,7 @@ Données des commandes.
 GameData.oCharacter.BJT.oCommands = {
     aOffense: [
         {
-            aFilter: ['LSW_SSJ'],
+            aFilter: ['CTM_SSJ', 'LSW_SSJ'],
             sCod: 'attack_236C',
             sName: 'Fainaru Furasshu',
             sAnimation: 'attack_236C',

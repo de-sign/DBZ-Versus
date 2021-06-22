@@ -19,36 +19,17 @@
 }
 
 // Menu
-.Training__Menu {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.25);
-
-    .--menu & {
-        display: flex;
+.Battle__Menu {
+    
+    .--menu.--training & .Battle__Menu_Principal {
+        display: none;
     }
 
-    .Menu__Layer:not(.Training__Menu_List_Character) {
+    & > .Training__Menu {
         display: none;
-        min-width: 300px;
-        background-color: White;
-        text-align: center;
-        border: 2px solid Black;
-        box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25);
 
         &.--show {
             display: block;
-        }
-
-        ul {
-            margin: 25px;
         }
     }
     
@@ -71,7 +52,7 @@
         }
     }
 
-    &_Parameters {
+    .Training__Menu_Parameters {
         min-width: 550px !important; 
     }
 }
@@ -194,6 +175,7 @@
         background-color: rgba(Plum, 0.25);
     }
     
+    &.--launch .Training__HurtBox > *,
     &.--hit .Training__HurtBox > * {
         border-color: Orange;
         background-color: rgba(Orange, 0.25);
@@ -212,24 +194,54 @@
     }
 }
 
+// Data
+.Training__Data {
+    display: none;
+
+    .--bData & {
+        display: flex;
+    }
+
+    & > * {
+        flex: 1 1 50%;
+        max-width: 50%;
+    }
+
+    &_Info {
+        display: flex !important;
+        align-items: flex-start;
+        text-align: left;
+        font-size: 1.2em !important;
+        line-height: 1em;
+        padding: 5px 20px !important;
+    
+        & > *:first-child {
+            flex: 0 0 auto;
+        }
+        
+        & > *:last-child {
+            color: #666;
+            flex: 1 1 100%;
+            text-align: right;
+            margin-left: 25px;
+        }
+    }
+}
+
 // Animation
 .Training__Animation {
-    position: absolute;
-    left: 88px;
-    right: 88px;
     line-height: 5px;
-    display: none;
-    
-    .--bAnimation & {
-        display: block;
-    }
+    display: block;
+    text-align: left;
+    padding: 5px 20px !important;
 
     span {
         display: inline-block;
         width: 4px;
         height: 4px;
-        margin: 1px;
+        margin: 1px 0 1px 1px;
         background-color: Lime;
+        box-shadow: 0 0 0 1px Black;
 
         &.--freeze {
             background-color: deepskyblue;
@@ -247,7 +259,12 @@
             background-color: White;
         }
 
-        &.--hit {
+        &.--aerial-invulnerable {
+            background-color: grey;
+        }
+
+        &.--hit,
+        &.--launch {
             background-color: orange;
         }
     }

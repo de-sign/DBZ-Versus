@@ -35,6 +35,7 @@ Object.assign(
                 for( let nIndex = 0; nIndex < GameSettings.nPlayer; nIndex++ ){
                     const nPlayer = nIndex + 1;
                     this.createHUDPlayer(nPlayer);
+                    this.createTrainingData(nPlayer);
                     this.createTrainingParameters(nPlayer);
                 }
                 this.createTrainingList();
@@ -45,6 +46,7 @@ Object.assign(
             getPattern: function(){
                 this.oPattern = {
                     oHUD: OutputManager.getElement('LAY__Battle_HUD_'),
+                    oData: OutputManager.getElement('LAY__Training_Data_'),
                     oParameters: OutputManager.getElement('LAY__Training_Menu_Parameters_Player'),
                     oCommand: OutputManager.getElement('LAY__Training_Menu_List_Command_'),
                     oList: OutputManager.getElement('LAY__Training_Menu_List_Character_')
@@ -69,6 +71,30 @@ Object.assign(
 
                 // Ajout dans le context
                 this.oContext.add(new OutputManager.OutputLayer(hLayer), '.Battle__HUDs');
+                this.oContext.update();
+
+                // Ajout des ROUNDS
+                const oRound = OutputManager.getElement('LAY__Battle_HUD_Round_' + nPlayer);
+                for( let nRound = 0; nRound < GameSettings.oRound.nMax; nRound++ ){
+                    oRound.add( new OutputManager.OutputText() );
+                }
+                this.oContext.update();
+            },
+            createTrainingData: function(nPlayer){
+                // Clone du LAYER
+                let hLayer = this.oPattern.oData.hElement.cloneNode(true);
+                hLayer.id += nPlayer;
+                hLayer.classList.remove(OutputManager.oConfig.class.created);
+                [].forEach.call(
+                    hLayer.querySelectorAll('.--change'),
+                    hElement => {
+                        hElement.id && (hElement.id += nPlayer);
+                        hElement.classList.remove('--change', OutputManager.oConfig.class.created);
+                    }
+                );
+
+                // Ajout dans le context
+                this.oContext.add(new OutputManager.OutputLayer(hLayer), '.Training__Data');
                 this.oContext.update();
             },
             createTrainingParameters: function(nPlayer){

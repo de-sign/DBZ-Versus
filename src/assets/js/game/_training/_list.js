@@ -75,7 +75,7 @@ Object.assign(
 
                     if( oMenu && oMenu.__oData ){
                         if( oMenu.__oData.sCheck == 'bAerial' ){
-                            sAnimation = 'move_8';
+                            sAnimation = 'move_fall_6';
                         }
                         if( this.oAnimation ){
                             if( this.oAnimation.isMovement() ){

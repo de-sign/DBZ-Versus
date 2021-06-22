@@ -256,7 +256,25 @@ GameData.oCharacter.GKU_SSJ = {
                 nHeight: 44
             }
         },
-        attack_3_2: false,
+        attack_3_2: {
+            oPositionBox: {
+                nX: -26,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
+            },
+            aHurtBox: [{
+                nX: -10,
+                nY: -146,
+                nWidth: 52,
+                nHeight: 60
+            }, {
+                nX: -22,
+                nY: -98,
+                nWidth: 52,
+                nHeight: 100
+            }]
+        },
         attack_3_3: {
             oPositionBox: {
                 nX: -30,

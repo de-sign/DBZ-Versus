@@ -1,90 +1,94 @@
-<section class="Training__Menu">
-    <nav id="LAY__Training_Menu_Principal" class="outputLayer Menu__Layer Training__Menu_Principal">
-        <ul>
-            <li id="TXT__Training_Menu_Parameters" class="outputText">Parameters</li>
-            <li id="TXT__Training_Menu_Display" class="outputText">Display</li>
-            <li id="TXT__Training_Menu_List" class="outputText">Command list</li>
-        </ul>
-        <ul>
-            <li id="TXT__Training_Menu_Select" class="outputText">Select character</li>
-            <li id="TXT__Training_Menu_Restart" class="outputText">Restart</li>
-            <li id="TXT__Training_Menu_Continue" class="outputText">Continue</li>
-            <li id="TXT__Training_Menu_Quit" class="outputText">Quit</li>
-        </ul>
-    </nav>
+<nav id="LAY__Training_Menu_Principal" class="outputLayer Menu__Layer Training__Menu Training__Menu_Principal">
+    <ul>
+        <li id="TXT__Training_Menu_Parameters" class="outputText">Parameters</li>
+        <li id="TXT__Training_Menu_Display" class="outputText">Display</li>
+        <li id="TXT__Training_Menu_List" class="outputText">Command list</li>
+    </ul>
+    <ul>
+        <li id="TXT__Training_Menu_Select" class="outputText">Select character</li>
+        <li id="TXT__Training_Menu_Stage" class="outputText">Select stage</li>
+    </ul>
+    <ul>
+        <li id="TXT__Training_Menu_Restart" class="outputText">Restart</li>
+        <li id="TXT__Training_Menu_Continue" class="outputText">Continue</li>
+        <li id="TXT__Training_Menu_Quit" class="outputText">Quit</li>
+    </ul>
+</nav>
 
-    <nav id="LAY__Training_Menu_Parameters" class="outputLayer Menu__Layer Training__Menu_Parameters">
-        <ul id="LAY__Training_Menu_Parameters_Player" class="outputLayer">
-            <li class="Training__Menu_Parameters_Number">Player #</li>
-            <li id="LAY__Training_Menu_Parameters_Life_" class="outputLayer --change Training__Button">
-                <span>Life</span>
-                <span class="outputText --change"></span>
-            </li>
-            <li id="LAY__Training_Menu_Parameters_Ki_" class="outputLayer --change Training__Button">
-                <span>Ki</span>
-                <span class="outputText --change"></span>
-            </li>
-            <li id="LAY__Training_Menu_Parameters_RegenLife_" class="outputLayer --change Training__Button">
-                <span>Regenerate Life</span>
-                <span class="outputText --change"></span>
-            </li>
-            <li id="LAY__Training_Menu_Parameters_RegenKi_" class="outputLayer --change Training__Button">
-                <span>Regenerate Ki</span>
-                <span class="outputText --change"></span>
-            </li>
-        </ul>
-        <ul class="Training__Menu_Parameters_All">
-            <li id="LAY__Training_Menu_Parameters_Side" class="outputLayer --uncreate --outputCreated Training__Button">
-                <span>Restart side</span>
-                <span class="outputText --uncreate --outputCreated"></span>
-            </li>
-        </ul>
-        <ul>
-            <li id="LAY__Training_Menu_Parameters_Return" class="outputText --uncreate --outputCreated">Return</li>
-        </ul>
-    </nav>
-
-    <nav id="LAY__Training_Menu_Display" class="outputLayer Menu__Layer Training__Menu_Display">
-        <ul>
-            <li id="LAY__Training_Menu_Display_Input" class="outputLayer Training__Button">
-                <span>Inputs history</span>
-                <span class="outputText"></span>
-            </li>
-            <li id="LAY__Training_Menu_Display_Box" class="outputLayer Training__Button">
-                <span>Box visibility</span>
-                <span class="outputText"></span>
-            </li>
-            <li id="LAY__Training_Menu_Display_Animations" class="outputLayer Training__Button">
-                <span>Animations timeline</span>
-                <span class="outputText"></span>
-            </li>
-            <li id="LAY__Training_Menu_Display_Framerate" class="outputLayer Training__Button">
-                <span>Framerate</span>
-                <span class="outputText"></span>
-            </li>
-        </ul>
-        <ul>
-            <li id="LAY__Training_Menu_Display_Return" class="outputText --outputCreated">Return</li>
-        </ul>
-    </nav>
-
-    <nav id="LAY__Training_Menu_List" class="outputLayer Menu__Layer Training__Menu_List">
-        <div class="Training__Menu_List_Sprite" >
-            <img id="SPT__Training_Menu_List" class="outputSprite" />
-        </div>
-        <div id="LAY__Training_Menu_List_Character_" class="outputLayer Menu__Layer Training__Menu_List_Character">
-            <ul class="Training__Menu_List_Character_Command">
-                <li class="Training__Menu_List_Name"></li>
-            </ul>
-            <ul>
-                <li id="LAY__Training_Menu_List_Return_" class="outputText --change --outputCreated">Return</li>
-            </ul>
-        </div>
-        <!-- Pattern COMMAND -->
-        <li id="LAY__Training_Menu_List_Command_" class="outputLayer Training__Button">
-            <span class="Training__Button_Option Training__Menu_List_Ki"></span>
-            <span class="Training__Button_Label Training__Menu_List_Command"></span>
-            <span class="Training__Button_Option Training__Menu_List_Button"></span>
+<nav id="LAY__Training_Menu_Parameters" class="outputLayer Menu__Layer Training__Menu Training__Menu_Parameters">
+    <ul id="LAY__Training_Menu_Parameters_Player" class="outputLayer">
+        <li class="Training__Menu_Parameters_Number">Player #</li>
+        <li id="LAY__Training_Menu_Parameters_Life_" class="outputLayer --change Training__Button">
+            <span>Life</span>
+            <span class="outputText --change"></span>
         </li>
-    </nav>
-</section>
+        <li id="LAY__Training_Menu_Parameters_Ki_" class="outputLayer --change Training__Button">
+            <span>Ki</span>
+            <span class="outputText --change"></span>
+        </li>
+        <li id="LAY__Training_Menu_Parameters_RegenLife_" class="outputLayer --change Training__Button">
+            <span>Regenerate Life</span>
+            <span class="outputText --change"></span>
+        </li>
+        <li id="LAY__Training_Menu_Parameters_RegenKi_" class="outputLayer --change Training__Button">
+            <span>Regenerate Ki</span>
+            <span class="outputText --change"></span>
+        </li>
+    </ul>
+    <ul class="Training__Menu_Parameters_All">
+        <li id="LAY__Training_Menu_Parameters_Side" class="outputLayer --uncreate --outputCreated Training__Button">
+            <span>Restart side</span>
+            <span class="outputText --uncreate --outputCreated"></span>
+        </li>
+    </ul>
+    <ul>
+        <li id="LAY__Training_Menu_Parameters_Return" class="outputText --uncreate --outputCreated">Return</li>
+    </ul>
+</nav>
+
+<nav id="LAY__Training_Menu_Display" class="outputLayer Menu__Layer Training__Menu Training__Menu_Display">
+    <ul>
+        <li>Frame Data</li>
+        <li id="LAY__Training_Menu_Display_Data" class="outputLayer Training__Button">
+            <span>Command details</span>
+            <span class="outputText"></span>
+        </li>
+        <li id="LAY__Training_Menu_Display_Box" class="outputLayer Training__Button">
+            <span>Box visibility</span>
+            <span class="outputText"></span>
+        </li>
+    </ul>
+    <ul>
+        <li id="LAY__Training_Menu_Display_Input" class="outputLayer Training__Button">
+            <span>Inputs history</span>
+            <span class="outputText"></span>
+        </li>
+        <li id="LAY__Training_Menu_Display_Framerate" class="outputLayer Training__Button">
+            <span>Framerate</span>
+            <span class="outputText"></span>
+        </li>
+    </ul>
+    <ul>
+        <li id="LAY__Training_Menu_Display_Return" class="outputText">Return</li>
+    </ul>
+</nav>
+
+<nav id="LAY__Training_Menu_List" class="outputLayer Menu__Layer Training__Menu Training__Menu_List">
+    <div class="Training__Menu_List_Sprite" >
+        <img id="SPT__Training_Menu_List" class="outputSprite" />
+    </div>
+    <div id="LAY__Training_Menu_List_Character_" class="outputLayer Menu__Layer Training__Menu Training__Menu_List_Character">
+        <ul class="Training__Menu_List_Character_Command">
+            <li class="Training__Menu_List_Name"></li>
+        </ul>
+        <ul>
+            <li id="LAY__Training_Menu_List_Return_" class="outputText --change --outputCreated">Return</li>
+        </ul>
+    </div>
+    <!-- Pattern COMMAND -->
+    <li id="LAY__Training_Menu_List_Command_" class="outputLayer Training__Button">
+        <span class="Training__Button_Option Training__Menu_List_Ki"></span>
+        <span class="Training__Button_Label Training__Menu_List_Command"></span>
+        <span class="Training__Button_Option Training__Menu_List_Button"></span>
+    </li>
+</nav>

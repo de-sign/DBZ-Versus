@@ -107,6 +107,7 @@ Object.assign(
                     return {
                         BTL__sStage: sStage,
                         BTL__sBGM: sBGM,
+                        BTL__aRound: [0, 0],
                         STG__nStageIndex: this.oMenu.oStage.destroy()[0],
                         STG__nBGMIndex: this.oMenu.oBGM.destroy()[0],
                     };
