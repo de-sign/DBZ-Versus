@@ -118,62 +118,40 @@ Object.assign(
         },
         /* ----- DETAILS Constante des choix de position sur le terrain en TRAINING ----- */
         oSide: {
-            nDefault: 2,
+            nDefault: 1,
             aSide: [
                 {
                     sName: 'Left',
-                    fPosition: (oArea, nIndex) => {
+                    fPosition: (nIndex, bReverse, oArea) => {
                         const oBoxArea = oArea.getBox(),
-                            nLeft = oArea.oPosition.nX + (oBoxArea.left - oBoxArea.originX);
+                            nLeft = oArea.oPosition.nX + (oBoxArea.left - oBoxArea.originX),
+                            aValue = bReverse ?
+                                [32, 88] :
+                                [88, 32];
 
                         return {
-                            nX: nIndex ? nLeft + 88 : -nLeft - 32
-                        };
-                    }
-                },
-                {
-                    sName: 'Left reverse',
-                    fPosition: (oArea, nIndex) => {
-                        const oBoxArea = oArea.getBox(),
-                            nLeft = oArea.oPosition.nX + (oBoxArea.left - oBoxArea.originX);
-
-                        return {
-                            nX: nIndex ? nLeft + 32 : -nLeft - 88 
+                            nX: nIndex ? nLeft + aValue[0] : -nLeft - aValue[1]
                         };
                     }
                 },
                 {
                     sName: 'Middle',
-                    fPosition: () => {
-                        return { nX: 192 };
-                    }
-                },
-                {
-                    sName: 'Middle reverse',
-                    fPosition: () => {
-                        return { nX: -192 };
+                    fPosition: (nIndex, bReverse, oArea) => {
+                        return { nX: 192 * (bReverse ? -1 : 1) };
                     }
                 },
                 {
                     sName: 'Right',
-                    fPosition: (oArea, nIndex) => {
+                    fPosition: (nIndex, bReverse, oArea) => {
                         const oBoxArea = oArea.getBox(),
-                            nRight = oArea.oPosition.nX + (oBoxArea.right - oBoxArea.originX);
+                            nRight = oArea.oPosition.nX + (oBoxArea.right - oBoxArea.originX),
+                            aValue = bReverse ?
+                                [88, 32] :
+                                [32, 88];
 
-                            return {
-                                nX: nIndex ? nRight - 32 : -nRight + 88
-                            };
-                    }
-                },
-                {
-                    sName: 'Right reverse',
-                    fPosition: (oArea, nIndex) => {
-                        const oBoxArea = oArea.getBox(),
-                            nRight = oArea.oPosition.nX + (oBoxArea.right - oBoxArea.originX);
-
-                            return {
-                                nX: nIndex ? nRight - 88 : -nRight + 32
-                            };
+                        return {
+                            nX: nIndex ? nRight - aValue[0] : -nRight + aValue[1]
+                        };
                     }
                 }
             ]

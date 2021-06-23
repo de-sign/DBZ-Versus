@@ -33,7 +33,7 @@ Object.assign(
                 }
                 this.oLayer.nRound = OutputManager.getElement('LAY__Setting_Round');
                 
-                this.nRound = StoreEngine.get('Rounds') || GameSettings.oRound.nDefault;
+                this.nRound = StoreEngine.get('BTL__Rounds') || GameSettings.oRound.nDefault;
 
                 GameHelper.set(SettingMenu.aHelper);
             },
@@ -137,7 +137,7 @@ Object.assign(
                         else if( this.nRound < 1 ){
                             this.nRound = GameSettings.oRound.nMax;
                         }
-                        StoreEngine.update('Rounds', this.nRound);
+                        StoreEngine.update('BTL__Rounds', this.nRound);
                         sChange = true;
                         break;
                 }

@@ -21,6 +21,7 @@ Object.assign(
                                 'stepContext_Select',
                                 'stepContext_Stage',
                                 'stepContext_Battle',
+                                'stepContext_Training',
                                 'stepContext_Setting',
                                 'stepContext_Input',
                     

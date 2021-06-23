@@ -1,27 +1,23 @@
-/* TrainingMenu - Parameters */
-function TrainingMenuParameters(){
+/* TrainingMenu - Gauges */
+function TrainingMenuGauges(){
     this.aLayer = [];
     TrainingMenu.apply(this, arguments);
 }
 
 Object.assign(
-    TrainingMenuParameters, {
+    TrainingMenuGauges, {
         prototype: Object.assign(
             Object.create(TrainingMenu.prototype), {
-                constructor: TrainingMenuParameters,
+                constructor: TrainingMenuGauges,
                 init: function(){
                     TrainingMenu.prototype.init.apply(this, arguments);
-
-                    this.aLayer.push( {
-                        nSide: OutputManager.getElement('LAY__Training_Menu_Parameters_Side')
-                    } );
-
+                    
                     this.oScene.aPlayer.forEach( oPlayer => {
                         this.aLayer.push( {
-                            nLife: OutputManager.getElement('LAY__Training_Menu_Parameters_Life_' + oPlayer.nPlayer),
-                            nKi: OutputManager.getElement('LAY__Training_Menu_Parameters_Ki_' + oPlayer.nPlayer),
-                            bRegenLife: OutputManager.getElement('LAY__Training_Menu_Parameters_RegenLife_' + oPlayer.nPlayer),
-                            bRegenKi: OutputManager.getElement('LAY__Training_Menu_Parameters_RegenKi_' + oPlayer.nPlayer)
+                            nLife: OutputManager.getElement('LAY__Training_Menu_Gauges_Life_' + oPlayer.nPlayer),
+                            nKi: OutputManager.getElement('LAY__Training_Menu_Gauges_Ki_' + oPlayer.nPlayer),
+                            bRegenLife: OutputManager.getElement('LAY__Training_Menu_Gauges_Regen_Life_' + oPlayer.nPlayer),
+                            bRegenKi: OutputManager.getElement('LAY__Training_Menu_Gauges_Regen_Ki_' + oPlayer.nPlayer)
                         } );
                     } );
                 },
@@ -34,10 +30,8 @@ Object.assign(
                     this.oScene.oController.ifPressedNow( {
                         // Gestion validation
                         A: () => {
-                            if( this.oMenu.getSelected().sId == 'LAY__Training_Menu_Parameters_Return' ){
+                            if( this.oMenu.getSelected().sId == 'TXT__Training_Menu_Gauges_Return' ){
                                 sRedirection = 'return';
-                            } else if( this.oMenu.getSelected().sId == 'LAY__Training_Menu_Parameters_Side' ){
-                                sRedirection = 'restart';
                             } else {
                                 this.change(1);
                             }
@@ -64,36 +58,13 @@ Object.assign(
                     return sRedirection;
                 },
                 change: function(nChange){
-                    let oMenuSelected = this.oMenu.getSelected();
-                    switch( oMenuSelected.sId ){
-                        case 'LAY__Training_Menu_Parameters_Life_1':
-                            this.oEngine.changeStat(1, 'Life', nChange);
-                            break;
-                        case 'LAY__Training_Menu_Parameters_Life_2':
-                            this.oEngine.changeStat(2, 'Life', nChange);
-                            break;
-                        case 'LAY__Training_Menu_Parameters_Ki_1':
-                            this.oEngine.changeStat(1, 'Ki', nChange);
-                            break;
-                        case 'LAY__Training_Menu_Parameters_Ki_2':
-                            this.oEngine.changeStat(2, 'Ki', nChange);
-                            break;
-                        case 'LAY__Training_Menu_Parameters_RegenLife_1':
-                            this.oEngine.changeRegen(1, 'Life');
-                            break;
-                        case 'LAY__Training_Menu_Parameters_RegenLife_2':
-                            this.oEngine.changeRegen(2, 'Life');
-                            break;
-                        case 'LAY__Training_Menu_Parameters_RegenKi_1':
-                            this.oEngine.changeRegen(1, 'Ki');
-                            break;
-                        case 'LAY__Training_Menu_Parameters_RegenKi_2':
-                            this.oEngine.changeRegen(2, 'Ki');
-                            break;
-                        case 'LAY__Training_Menu_Parameters_Side':
-                            this.oEngine.changeSide(nChange);
-                            break;
-                    }
+                    const oMenuSelected = this.oMenu.getSelected(),
+                        aMenu = oMenuSelected.sId.split('_'),
+                        nPlayer = parseInt( aMenu.pop() ) - 1,
+                        sType = aMenu.pop(),
+                        bRegen = oMenuSelected.sId.indexOf('_Regen_') != -1;
+
+                    this.oEngine[ bRegen ? 'changeRegen' : 'changeStat' ](nPlayer, sType, nChange);
                     OutputManager.getChannel('CHN__SFX').play('ADO__Validate');
                 },
                 display: function(){
@@ -109,9 +80,6 @@ Object.assign(
                             else if( sType == 'nLife' ) {
                                 oLayer[sType].aChildElement[0].setText( oParam[sType] );
                             }
-                            else if( sType == 'nSide' ) {
-                                oLayer[sType].aChildElement[0].setText( GameSettings.oSide.aSide[oParam[sType]].sName );
-                            }
                         }
                     } );
                 }
@@ -120,8 +88,8 @@ Object.assign(
     }
 );
 
-/* ----- TrainingEngineParameters ----- */
-function TrainingEngineParameters(oScene){
+/* ----- TrainingEngineGauges ----- */
+function TrainingEngineGauges(oScene){
     this.oScene = null;
     
     this.aParam = [];
@@ -129,20 +97,15 @@ function TrainingEngineParameters(oScene){
 }
 
 Object.assign(
-    TrainingEngineParameters, {
+    TrainingEngineGauges, {
 
         prototype: {
-            constructor: TrainingEngineParameters,
+            constructor: TrainingEngineGauges,
             init: function(oScene){
                 this.oScene = oScene;
 
-                this.aParam.push( StoreEngine.get('Parameters') || {
-                    nSide: GameSettings.oSide.nDefault
-                } );
-
                 this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
-                    nIndex++;
-                    this.aParam.push( StoreEngine.get('Parameters_' + nIndex) || {
+                    this.aParam.push( StoreEngine.get('TNG_Gauges_' + nIndex) || {
                         nLife: GameSettings.oLife.player,
                         nKi: GameSettings.oKi.nMax,
                         bRegenLife: true,
@@ -150,13 +113,10 @@ Object.assign(
                     } );
                     this.setStat(nIndex, 'Life');
                     this.setStat(nIndex, 'Ki');
-
-                    this.setPosition(nIndex - 1);
                 } );
             },
             update: function(){
                 this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
-                    nIndex++;
                     const oParam = this.aParam[nIndex];
                     if( oPlayer.oAnimation.isMovement() && oPlayer.oAnimation.nTick == 1 ){
                         if( oPlayer.nLife <= 0 || ( oParam.bRegenLife && oPlayer.nLife < oParam.nLife ) ){
@@ -199,39 +159,19 @@ Object.assign(
                     oParam[sStat] = oMaxStat[sStat];
                 }
 
-                StoreEngine.update('Parameters_' + nIndex, oParam);
+                StoreEngine.update('TNG_Gauges_' + nIndex, oParam);
             },
             setStat: function(nIndex, sStat){
                 const oParam = this.aParam[nIndex];
                 sStat = 'n' + sStat;
-                this.oScene.aPlayer[nIndex - 1][sStat] = oParam[sStat];
+                this.oScene.aPlayer[nIndex][sStat] = oParam[sStat];
             },
 
             changeRegen: function(nIndex, sRegen){
                 sRegen = 'bRegen' + sRegen;
                 this.aParam[nIndex][sRegen] = !this.aParam[nIndex][sRegen];
 
-                StoreEngine.update('Parameters_' + nIndex, this.aParam[nIndex]);
-            },
-
-            changeSide: function(nChange){
-                const oParam = this.aParam[0];
-                oParam.nSide += nChange;
-
-                if( oParam.nSide >= GameSettings.oSide.aSide.length ){
-                    oParam.nSide = 0;
-                }
-                else if( oParam.nSide < 0 ){
-                    oParam.nSide = GameSettings.oSide.aSide.length - 1;
-                }
-
-                StoreEngine.update('Parameters', oParam);
-            },
-            setPosition: function(nIndex){
-                const oPlayer = this.oScene.aPlayer[nIndex];
-                oPlayer.bReverse = oPlayer.nPlayer == 2;
-                oPlayer.oLayer.resetPosition();
-                oPlayer.moveLayer( GameSettings.oSide.aSide[ this.aParam[0].nSide ].fPosition(this.oScene.oArea, nIndex) );
+                StoreEngine.update('TNG_Gauges_' + nIndex, this.aParam[nIndex]);
             }
         }
     }

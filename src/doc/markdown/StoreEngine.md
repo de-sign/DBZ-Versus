@@ -41,6 +41,14 @@ Mets à jour les données du localStorage de la clef transmise.
 StoreEngine.update(sKey, uData);
 ```
 
+#### StoreEngine.remove()
+
+Supprimer les données du localStorage de la clef transmise. 
+
+```javascript
+StoreEngine.remove(sKey);
+```
+
 #### StoreEngine.get()
 
 Donne les données de la clef transmise récupéré du localStorage.  Lors de l'appel des fonctions `StoreEngine.init()` et `StoreEngine.update()`, un nouvel objet `StoreEngine.oData` est créé !    **A utiliser avec abus !**

@@ -191,7 +191,7 @@ Object.assign(
                     let bMenu = false;
                     if( oWinner ){
                         const nRoundWin = ++SceneManager.oTransverseData.BTL__aRound[ oWinner.nPlayer == 1 ? 0 : 1 ];
-                        if( nRoundWin >= (StoreEngine.get('Rounds') || GameSettings.oRound.nDefault) ){
+                        if( nRoundWin >= (StoreEngine.get('BTL__Rounds') || GameSettings.oRound.nDefault) ){
                             bMenu = true;
                         }
                     }

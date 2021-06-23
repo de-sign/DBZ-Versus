@@ -27,6 +27,7 @@
 
     & > .Training__Menu {
         display: none;
+        min-width: 500px !important; 
 
         &.--show {
             display: block;
@@ -50,10 +51,6 @@
             min-width: 15px;
             margin-left: 25px;
         }
-    }
-
-    .Training__Menu_Parameters {
-        min-width: 550px !important; 
     }
 }
 

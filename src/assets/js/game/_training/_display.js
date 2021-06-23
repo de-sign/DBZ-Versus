@@ -28,7 +28,7 @@ Object.assign(
                     this.oScene.oController.ifPressedNow( {
                         // Gestion validation
                         A: () => {
-                            if( this.oMenu.getSelected().sId == 'LAY__Training_Menu_Display_Return' ){
+                            if( this.oMenu.getSelected().sId == 'TXT__Training_Menu_Display_Return' ){
                                 sRedirection = 'return';
                             } else {
                                 this.change(1);
@@ -97,7 +97,7 @@ function TrainingEngineDisplay(oScene){
     this.aData = [];
 
     this.oParameters = {
-        nFrameRate: 0,
+        nFrameRate: 3,
         bData: true,
         bHistory: true,
         bBox: true
@@ -164,7 +164,7 @@ Object.assign(
             init: function(oScene){
                 this.oScene = oScene;
 
-                Object.assign( this.oParameters, StoreEngine.get('Display') );
+                Object.assign( this.oParameters, StoreEngine.get('TNG_Display') );
 
                 oScene.aPlayer.forEach( oPlayer => {
                     const oHistory = OutputManager.getElement('LAY__Training_History_' + oPlayer.nPlayer),
@@ -433,7 +433,7 @@ Object.assign(
             toogle: function(sType){
                 if( TrainingEngineDisplay.aShow.indexOf(sType) != -1 ){
                     this[ this.oParameters[sType] ? 'hide' : 'show' ](sType);
-                    StoreEngine.update('Display', this.oParameters);
+                    StoreEngine.update('TNG_Display', this.oParameters);
                 }
             },
 
@@ -446,7 +446,7 @@ Object.assign(
                 else if( this.oParameters.nFrameRate < 0 ){
                     this.oParameters.nFrameRate = TrainingEngineDisplay.aFrameRate.length - 1;
                 }
-                StoreEngine.update('Display', this.oParameters);
+                StoreEngine.update('TNG_Display', this.oParameters);
             },
             setFrameRate: function(nFrameRate){
                 TimerEngine.setFPS(nFrameRate || this.getFrameRate());

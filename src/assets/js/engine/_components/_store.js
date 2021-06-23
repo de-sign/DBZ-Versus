@@ -42,6 +42,11 @@ Object.assign(
             localStorage.setItem(sKey, sData);
             this.oData[sKey] = JSON.parse(sData);
         },
+        /* ----- DETAILS Supprimer les données du localStorage de la clef transmise. ----- */
+        remove: function(sKey){
+            localStorage.removeItem(sKey);
+            delete this.oData[sKey];
+        },
         /* ----- DETAILS
         Donne les données de la clef transmise récupéré du localStorage.  
         Lors de l'appel des fonctions `StoreEngine.init()` et `StoreEngine.update()`, un nouvel objet `StoreEngine.oData` est créé !    
@@ -49,7 +54,7 @@ Object.assign(
         ----- */
         get: function(sKey){
             return this.oData[sKey];
-        },
+        }
         /* ----- END METHODS ----- */
         /* ----- END SINGLETON ----- */
     }

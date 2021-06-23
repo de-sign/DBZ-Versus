@@ -10,6 +10,7 @@
 //=include _loading/_select.js
 //=include _loading/_stage.js
 //=include _loading/_battle.js
+//=include _loading/_training.js
 //=include _loading/_setting.js
 //=include _loading/_input.js
 //=include _scene/_prebattle.js
@@ -23,7 +24,11 @@
 //=include _scene/_versus.js
 
 //=include _training/_engine.js
-//=include _training/_parameters.js
+//=include _training/_menu.js
+//=include _training/_settings.js
+//=include _training/_gauges.js
+//=include _training/_dummy.js
+//=include _training/_restart.js
 //=include _training/_display.js
 //=include _training/_list.js
 //=include _scene/_training.js
@@ -43,20 +48,29 @@
 window.addEventListener('load', oEvent => {
 	// Store
 	StoreEngine.init();
+
 	/* ----- START PATCH ----- */
-	// Modification du 07/05/2021
 	Object.keys(StoreEngine.oData).forEach( sKey => {
-		let aData = StoreEngine.get(sKey),
-			bSet = false;
-		const bArray = Array.isArray(aData),
-			aNewData = [];
-		(bArray ? aData : [aData]).forEach( oData => {
-			if( (oData.sType == 'keyboard' || oData.sType == 'gamepad') && !oData.aOrder ){
-				bSet = true;
-				aNewData.push(Object.assign( { aOrder: GameSettings.oController.aOrderButtons }, oData ));
-			};
-		} );
-		bSet && StoreEngine.update( sKey, bArray ? aNewData : aNewData[0] );
+
+		// Modification du 23/06/2021
+		const aKey = sKey.split('_');
+		if( aKey[0] == 'Parameters' || aKey.length == 1 ){
+			StoreEngine.remove(sKey);
+		}
+		// Modification du 07/05/2021
+		else {
+			let aData = StoreEngine.get(sKey),
+				bSet = false;
+			const bArray = Array.isArray(aData),
+				aNewData = [];
+			(bArray ? aData : [aData]).forEach( oData => {
+				if( (oData.sType == 'keyboard' || oData.sType == 'gamepad') && !oData.aOrder ){
+					bSet = true;
+					aNewData.push(Object.assign( { aOrder: GameSettings.oController.aOrderButtons }, oData ));
+				};
+			} );
+			bSet && StoreEngine.update( sKey, bArray ? aNewData : aNewData[0] );
+		}
 	} );
 	/* ----- END PATCH ----- */
 

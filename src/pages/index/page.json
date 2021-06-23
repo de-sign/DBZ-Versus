@@ -22,6 +22,16 @@
             "input.html",
 
             "dev.html"
+        ],
+
+        "training": [
+            "_menu.html",
+            "_settings.html",
+            "_gauges.html",
+            "_dummy.html",
+            "_restart.html",
+            "_display.html",
+            "_list.html"
         ]
     }
 }

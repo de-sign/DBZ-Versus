@@ -41,68 +41,6 @@ Object.assign(
     }
 );
 
-/*  ----- TrainingMenu - Principal ----- */
-function TrainingMenuPrincipal(){
-    TrainingMenu.apply(this, arguments);
-}
-
-Object.assign(
-    TrainingMenuPrincipal, {
-        prototype: Object.assign(
-            Object.create(TrainingMenu.prototype), {
-                constructor: TrainingMenuPrincipal,
-                controls: function(){
-                    let sRedirection = null;
-                    this.oScene.oController.ifPressedNow( {
-                        // Gestion validation
-                        A: () => {
-                            let oMenuSelected = this.oMenu.getSelected();
-                            switch( oMenuSelected.sId ){
-                                case 'TXT__Training_Menu_Parameters':
-                                    sRedirection = 'oParameters';
-                                    break;
-                                case 'TXT__Training_Menu_Display':
-                                    sRedirection = 'oDisplay';
-                                    break;
-                                case 'TXT__Training_Menu_List':
-                                    sRedirection = 'oList';
-                                    break;
-                                case 'TXT__Training_Menu_Select':
-                                    sRedirection = 'select';
-                                    break;
-                                case 'TXT__Training_Menu_Stage':
-                                    sRedirection = 'stage';
-                                    break;
-                                case 'TXT__Training_Menu_Restart':
-                                    sRedirection = 'restart';
-                                    break;
-                                case 'TXT__Training_Menu_Continue':
-                                    sRedirection = 'close';
-                                    break;
-                                case 'TXT__Training_Menu_Quit':
-                                    sRedirection = 'quit';
-                                    break;
-                            }
-                        },
-                        B: () => {
-                            sRedirection = 'close';
-                        },
-                        // Gestion déplacement
-                        UP: () => {
-                            this.oMenu.prev();
-                        },
-                        DOWN: () => {
-                            this.oMenu.next();
-                        }
-                    } );
-
-                    return sRedirection;
-                }
-            }
-        )
-    }
-);
-
 /* ----- Training ----- */
 function TrainingEngine(oScene){
     this.oScene = null;
@@ -111,7 +49,8 @@ function TrainingEngine(oScene){
     this.oModule = {};
     this.oMenu = {
         oLast: null,
-        oCurrent: null
+        oCurrent: null,
+        oReturn: {}
     };
 
     this.init(oScene);
@@ -121,7 +60,10 @@ Object.assign(
     TrainingEngine, {
         aModule: [
             'Principal',
-            'Parameters',
+            'Settings',
+            'Gauges',
+            'Dummy',
+            'Restart',
             'Display',
             'List'
         ],
@@ -147,8 +89,9 @@ Object.assign(
                     const sRedir = this.oMenu.oCurrent.update();
                     switch( sRedir ){
                         case 'return':
+                            const sMenu = this.oMenu.oReturn[ this.oMenu.oCurrent.sCod ];
                             sSFX = 'ADO__Cancel';
-                            this.open(this.oMenu.oLast.sCod);
+                            this[ sMenu ? 'open' : 'close' ](sMenu);
                             break;
                         case 'restart':
                             sSFX = 'ADO__Validate';
@@ -162,10 +105,6 @@ Object.assign(
                         case 'stage':
                             sSFX = 'ADO__Validate';
                             SceneManager.change( new StageScene() );
-                            break;
-                        case 'close':
-                            sSFX = 'ADO__Cancel';
-                            this.close();
                             break;
                         case 'quit':
                             sSFX = 'ADO__Cancel';
@@ -202,7 +141,7 @@ Object.assign(
                     oMenu = this.oModule[sMenu].oMenu;
                 }
                 else {
-                    oMenu = this.oModule.oPrincipal.oMenu;
+                    oMenu = this.oMenu.oLast || this.oModule.oPrincipal.oMenu;
                     this.oScene.aPlayer.forEach( oPlayer => {
                         oPlayer.setFreeze();
                     } );
@@ -218,6 +157,11 @@ Object.assign(
 
                 this.oMenu.oLast = this.oMenu.oCurrent;
                 this.oMenu.oCurrent = oMenu;
+                if( this.oMenu.oReturn[oMenu.sCod] == null ){
+                    this.oMenu.oReturn[oMenu.sCod] = this.oMenu.oLast ?
+                        this.oMenu.oLast.sCod :
+                        false;
+                }
                 this.oScene.oContext.addTickUpdate( () => {
                     this.oMenu.oLast && this.oMenu.oLast.hide();
                     this.oMenu.oCurrent.show();
@@ -225,10 +169,8 @@ Object.assign(
             },
             close: function(){
                 const oCurrent = this.oMenu.oCurrent;
-                this.oMenu = {
-                    oLast: null,
-                    oCurrent: null
-                };
+                this.oMenu.oLast = oCurrent;
+                this.oMenu.oCurrent = null;
                 this.oScene.aPlayer.forEach( oPlayer => {
                     oPlayer.unFreeze();
                 } );
@@ -263,17 +205,17 @@ Object.assign(
                 } );
                 this.oScene.oInfo.destroy();
 
-                const oParameters = this.oModule.oParameters.oEngine;
-                this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
-                    nIndex++;
+                const oGauges = this.oModule.oGauges.oEngine,
+                    oRestart = this.oModule.oRestart.oEngine;
 
+                this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                     // Bars
-                    oParameters.setStat(nIndex, 'Life');
-                    oParameters.setStat(nIndex, 'Ki');
+                    oGauges.setStat(nIndex, 'Life');
+                    oGauges.setStat(nIndex, 'Ki');
 
                     // Perso
                     oPlayer.setStance('move_0', true);
-                    oParameters.setPosition(nIndex - 1);
+                    oRestart.setPosition(nIndex);
                 } );
             }
         }
