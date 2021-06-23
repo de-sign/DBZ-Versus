@@ -59,7 +59,7 @@ __Training__
         * Guard
             * No guard, After 1st hit, Only 1st hit, All, Reflect, Random
         * Tech throw
-            * Yes, No
+            * No, Yes
         * Counter
             * No counter, A [ ... Liste des commandes ]
         * Reversal
@@ -87,6 +87,7 @@ __General__
     * GAME
 
 * Optimisation du Code
+    * Séparer les CLASS ENTITY par fichier
     * Classe BATTLEINPUTBUFFER avec pour enfant LOCAL et DUMMY ( et AI ? )
 
 * Paramétrages

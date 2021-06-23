@@ -36,7 +36,11 @@ Object.assign(
             // Gestion Reverse
             aEntity.forEach( (oEntity, nIndex) => {
                 if( oEntity.oCheck.bReverse && oEntity.canReverse() && oCollapse[oEntity.sId] ){
-                    oEntity.bReverse = oCollapse[oEntity.sId].nOrientation == 1;
+                    if( oCollapse[oEntity.sId].nOrientation ){
+                        oEntity.bReverse = oCollapse[oEntity.sId].nOrientation == 1;
+                    } else {
+                        oCollapse[oEntity.sId].nOrientation = oEntity.bReverse ? 1 : 0;
+                    }
                 }
             } );
             
