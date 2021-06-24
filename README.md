@@ -87,7 +87,6 @@ __General__
     * GAME
 
 * Optimisation du Code
-    * Séparer les CLASS ENTITY par fichier
     * Classe BATTLEINPUTBUFFER avec pour enfant LOCAL et DUMMY ( et AI ? )
 
 * Paramétrages
