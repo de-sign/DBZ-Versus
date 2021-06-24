@@ -1347,6 +1347,11 @@ GameData.oEntity.oCharacter.oAnimations = {
     },
 
     // List
+    list_8: [
+        {
+            sFrame: 'jump_2'
+        }
+    ],
     list_C: [
         {
             nFrame: 2,
@@ -1575,7 +1580,42 @@ Données des commandes
 GameData.oEntity.oCharacter.oCommands = {
     aDefense: [
         {
+            sCod: 'defense_BC',
+            sName: 'Reflect <span class="--cancel">- On guard</span>',
+            sAnimation: 'defense_BC',
+            sCheck: 'bGuard',
+            nCost: 10,
+            nDamage: 0,
+            sCollisionBox: 'oPositionBox',
+            oStun: {
+                sImpactAnimation: false
+            },
+            oKi: {
+                oAttack: {
+                    nHit: 0,
+                    nGuard: 0
+                },
+                oDefend: {
+                    nHit: 0,
+                    nGuard: 0
+                }
+            },
+            oPushback: {
+                nLength: 4,
+                nX: -192,
+                bNotDivide: true
+            },
+            bLast: true,
+            oManipulation: {
+                nMaxLengthFrame: 2,
+                aButtons: [
+                    { B: false, C: true }
+                ]
+            }
+        },
+        {
             sCod: 'defense_AB',
+            sName: 'Tech Throw <span class="--cancel">- On throw</span>',
             sAnimation: 'defense_AB',
             sCheck: 'bThrow',
             nDamage: 0,
@@ -1607,48 +1647,16 @@ GameData.oEntity.oCharacter.oCommands = {
                     { A: false, B: true }
                 ]
             }
-        },
-        {
-            sCod: 'defense_BC',
-            sAnimation: 'defense_BC',
-            sCheck: 'bGuard',
-            nCost: 10,
-            nDamage: 0,
-            sCollisionBox: 'oPositionBox',
-            oStun: {
-                sImpactAnimation: false
-            },
-            oKi: {
-                oAttack: {
-                    nHit: 0,
-                    nGuard: 0
-                },
-                oDefend: {
-                    nHit: 0,
-                    nGuard: 0
-                }
-            },
-            oPushback: {
-                nLength: 4,
-                nX: -192,
-                bNotDivide: true
-            },
-            bLast: true,
-            oManipulation: {
-                nMaxLengthFrame: 2,
-                aButtons: [
-                    { B: false, C: true }
-                ]
-            }
         }
     ],
     aOffense: [
         {
             sCod: 'move_66',
+            sName: 'Forward Dash',
             sAnimation: 'move_66',
-            bNotInCommandList: true,
             nGatlingLevel: 0,
             sCheck: 'bGround',
+            bNotInCommandList: true,
             oStun: {},
             oPushback: {},
             oManipulation: {
@@ -1662,10 +1670,11 @@ GameData.oEntity.oCharacter.oCommands = {
         },
         {
             sCod: 'move_44',
+            sName: 'Backward Dash',
             sAnimation: 'move_44',
-            bNotInCommandList: true,
             nGatlingLevel: 0,
             sCheck: 'bGround',
+            bNotInCommandList: true,
             oStun: {},
             oPushback: {},
             oManipulation: {
@@ -1680,8 +1689,8 @@ GameData.oEntity.oCharacter.oCommands = {
         {
             // Même code que DASH pour ne pas dash_cancel un dash
             sCod: 'move_66', // dash_cancel
+            sName: 'Dash Cancel <span class="--cancel">- On gatling</span>',
             sAnimation: 'attack_66',
-            bNotInCommandList: true,
             nCost: 20,
             bResetGatling: true,
             nGatlingLevel: 1,
@@ -1700,11 +1709,11 @@ GameData.oEntity.oCharacter.oCommands = {
         },
         {
             sCod: 'attack_4AB_0',
+            sName: 'Backward Throw',
             sAnimation: 'attack_4AB_0',
             nDamage: 0,
             bUnblockable: true,
             bOnlyOnGround: true,
-            bNotInCommandList: true,
             sCheck: 'bGround',
             sCollisionBox: 'oPositionBox',
             oStun: {
@@ -1731,8 +1740,10 @@ GameData.oEntity.oCharacter.oCommands = {
             },
             oFollowUp: {
                 sCod: 'attack_4AB_1',
+                sName: '2nd',
                 sAnimation: 'attack_4AB_1',
                 bFollowOnlyOnHurt: true,
+                bNotInCommandList: true,
                 oStun: {},
                 oPushback: {},
                 bLast: true
@@ -1741,10 +1752,10 @@ GameData.oEntity.oCharacter.oCommands = {
         {
             sCod: 'attack_AB',
             sAnimation: 'attack_AB',
+            sName: 'Throw',
             nDamage: 0,
             bUnblockable: true,
             bOnlyOnGround: true,
-            bNotInCommandList: true,
             sCheck: 'bGround',
             sCollisionBox: 'oPositionBox',
             oStun: {
@@ -1772,7 +1783,7 @@ GameData.oEntity.oCharacter.oCommands = {
         },
         {
             sCod: 'attack_jB',
-            sName: 'Jump attack heavy',
+            sName: 'Heavy <span class="--cancel">- On jump</span>',
             sAnimation: 'attack_jB',
             nDamage: 50,
             nGatlingLevel: 1,
@@ -1791,7 +1802,7 @@ GameData.oEntity.oCharacter.oCommands = {
         },
         {
             sCod: 'attack_jA',
-            sName: 'Jump attack light',
+            sName: 'Light <span class="--cancel">- On jump</span>',
             sAnimation: 'attack_jA',
             nDamage: 25,
             nGatlingLevel: 1,

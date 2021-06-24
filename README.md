@@ -65,7 +65,6 @@ __Training__
         * Reversal
             * No reversal, Forward, Backward
         * Record ?
-    * Command list
 
 __General__
 * Méchaniques de jeu

@@ -103,54 +103,86 @@ Object.assign(
             },
 
             createTrainingList: function(){
+
+                const aCommonRows = [
+                    ...GameData.oEntity.oCharacter.oCommands.aDefense,
+                    ...GameData.oEntity.oCharacter.oCommands.aOffense
+                ];
+
+                // Base 
+                this.createCommandWindows( {
+                    sId: 'ALL',
+                    sName: 'Common commands',
+                    aRows: aCommonRows
+                } );
+
+                // Character
                 for( let sChar in GameData.oCharacter ){
                     const oChar = GameData.oCharacter[sChar];
                     oChar.aColor.forEach( oColor => {
 
                         const oCharColor = oChar[oColor.sColor];
                         if( oCharColor.oCommands.aOffense && oCharColor.oCommands.aOffense.length ){
-
-                            // Clone du LAYER CHAR
-                            const hLayer = this.oPattern.oList.hElement.cloneNode(true);
-                            hLayer.id += oCharColor.sCod;
-                            hLayer.classList.remove(OutputManager.oConfig.class.created);
-                            hLayer.querySelector('.Training__Menu_List_Name').innerHTML = oCharColor.sName;
-                            [].forEach.call(
-                                hLayer.querySelectorAll('.--change'),
-                                hElement => {
-                                    hElement.id += oCharColor.sCod;
-                                    hElement.classList.remove('--change', OutputManager.oConfig.class.created);
-                                }
-                            );
-                            const oLayer = new OutputManager.OutputLayer(hLayer);
-
-                            for( let nIndex = oCharColor.oCommands.aOffense.length - 1; nIndex >= 0; nIndex-- ){
-                                const aCommand = [];
-                                let oCommand = oCharColor.oCommands.aOffense[nIndex];
-
-                                if( !oCommand.bNotInCommandList ){
-                                    do {
-                                        aCommand.push(oCommand);
-                                        oCommand = oCommand.oFollowUp;
-                                    }
-                                    while( oCommand );
-                                    
-                                    aCommand.forEach( (oCommand, nDeep) => {
-                                        const oListCommand = this.createCommandList(oCommand, nDeep);
-                                        oListCommand.__oData = oCommand;
-                                        oLayer.add(oListCommand, '.Training__Menu_List_Character_Command');
-                                    } );
-                                }
-                            }
-
-                            // Ajout au menu
-                            OutputManager.getElement('LAY__Training_Menu_List').add(oLayer);
+                            this.createCommandWindows( {
+                                sId: oCharColor.sCod,
+                                sName: oCharColor.sName,
+                                aRows: oCharColor.oCommands.aOffense,
+                                aExclude: aCommonRows.reduce( (aAccu, oRow) => {
+                                    aAccu.push( oRow.sCod );
+                                    return aAccu;
+                                }, [] )
+                            } );
                         }
                     } );
+
                     this.oContext.update();
                 }
             },
-            createCommandList: function(oCommand, nDeep){
+
+            createCommandWindows: function(oOptions){
+
+                // Clone du LAYER CHAR
+                const hLayer = this.oPattern.oList.hElement.cloneNode(true);
+                hLayer.id += oOptions.sId;
+                hLayer.classList.remove(OutputManager.oConfig.class.created);
+                hLayer.querySelector('.Training__Menu_List_Name').innerHTML = oOptions.sName;
+                [].forEach.call(
+                    hLayer.querySelectorAll('.--change'),
+                    hElement => {
+                        hElement.id += oOptions.sId;
+                        hElement.classList.remove('--change', OutputManager.oConfig.class.created);
+                    }
+                );
+
+                const oLayer = new OutputManager.OutputLayer(hLayer);
+                for( let nIndex = oOptions.aRows.length - 1; nIndex >= 0; nIndex-- ){
+                    const aRow = [];
+                    let oRow = oOptions.aRows[nIndex];
+
+                    if(
+                        oOptions.aExclude ?
+                            oOptions.aExclude.indexOf( oRow.sCod ) == -1 :
+                            !oRow.bNotInCommandList 
+                    ){
+                        do {
+                            aRow.push(oRow);
+                            oRow = oRow.oFollowUp;
+                        }
+                        while( oRow && !oRow.bNotInCommandList );
+                        
+                        aRow.forEach( (oRow, nDeep) => {
+                            const oListCommand = this.createCommandRow(oRow, nDeep);
+                            oListCommand.__oData = oRow;
+                            oLayer.add(oListCommand, '.Training__Menu_List_Character_Command');
+                        } );
+                    }
+                }
+
+                // Ajout au menu
+                OutputManager.getElement('LAY__Training_Menu_List').add(oLayer);
+            },
+
+            createCommandRow: function(oCommand, nDeep){
                 const oBtn = { A: true, B: true, C: true },
                     hCommand = this.oPattern.oCommand.hElement.cloneNode(true);
 
@@ -173,7 +205,9 @@ Object.assign(
                 let sButtons = '';
                 oCommand.oManipulation && oCommand.oManipulation.aButtons.forEach( oButton => {
                     Object.keys(oButton).forEach( sBtn => {
-                        sButtons += '<b class="Training__InputButton ' + ( ( oBtn[sBtn] ? '--btn' : '--dir' ) )  + '">' + InitializeTraining.oSymbol[sBtn] + '</b>';
+                        if( InitializeTraining.oSymbol[sBtn] ){
+                            sButtons += '<b class="Training__InputButton ' + ( ( oBtn[sBtn] ? '--btn' : '--dir' ) )  + '">' + InitializeTraining.oSymbol[sBtn] + '</b>';
+                        }
                     } );
                 } );
                 hCommand.querySelector('.Training__Menu_List_Button').innerHTML = sButtons;

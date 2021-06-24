@@ -94,10 +94,11 @@
 
     &_Command {
         min-width: 300px;
+    }
 
-        &.--cancel {
-            color: DarkGray;
-        }
+    .--cancel {
+        color: DarkGray;
+        font-size: 0.75em;
     }
 }
 

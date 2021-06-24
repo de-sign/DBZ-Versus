@@ -59,7 +59,7 @@ Object.assign(
                     return sRedirection;
                 },
                 display: function(){
-                    this.oAnimation && this.oSprite.setSource( this.oEngine.oPlayer.oData.oPath.sFrames + '/' + this.oAnimation.oFrame.sPath );
+                    this.oAnimation && this.oSprite.setSource( this.oEngine.oList.oData.oPath.sFrames + '/' + this.oAnimation.oFrame.sPath );
                 },
                 show: function(){
                     this.oLastLayer.hElement.classList.add('--show');
@@ -74,11 +74,19 @@ Object.assign(
                         sAnimation = 'move_5';
 
                     if( oMenu && oMenu.__oData ){
-                        if( oMenu.__oData.sCheck == 'bAerial' ){
-                            sAnimation = 'move_fall_6';
+                        switch( oMenu.__oData.sCheck ){
+                            case 'bThrow':
+                                sAnimation = 'hit_AB';
+                                break;
+                            case 'bGuard':
+                                sAnimation = 'defense_4';
+                                break;
+                            case 'bAerial':
+                                sAnimation = 'list_8';
+                                break;
                         }
                         if( this.oAnimation ){
-                            if( this.oAnimation.isMovement() ){
+                            if( this.oAnimation.isMovement() || this.oAnimation.isHurt() ){
                                 if( this.oAnimation.sName == sAnimation && this.oAnimation.isEnd() ){
                                     sAnimation = oMenu.__oData.sListAnimation || oMenu.__oData.sAnimation;
                                     nLength = 0;
@@ -96,8 +104,8 @@ Object.assign(
                     if( !this.oAnimation || this.oAnimation.sName != sAnimation ){
                         this.oAnimation = new GameAnimation(
                             sAnimation,
-                            this.oEngine.oPlayer.oData.oFrames,
-                            this.oEngine.oPlayer.oData.oAnimations[sAnimation].aFrames
+                            this.oEngine.oList.oData.oFrames,
+                            this.oEngine.oList.oData.oAnimations[sAnimation].aFrames
                         );
                         nLength && (this.oAnimation.nLength = nLength);
                     }
@@ -110,9 +118,11 @@ Object.assign(
 /* ----- TrainingEngineList ----- */
 function TrainingEngineList(oScene){
     this.oScene = null;
-    
-    this.nPlayer = -1;
-    this.oPlayer = null;
+    this.oList = {
+        nCurrent: -1,
+        aData: [],
+        oData: null
+    };
     this.init(oScene);
 }
 
@@ -123,6 +133,10 @@ Object.assign(
             constructor: TrainingEngineList,
             init: function(oScene){
                 this.oScene = oScene;
+                this.oList.aData.push( Object.assign( {}, GameData.oCharacter.GKU_SSJ.CTM_SSJ, { sCod: 'ALL' }) );
+                this.oScene.aPlayer.forEach( oPlayer => {
+                    this.oList.aData.push( oPlayer.oData );
+                } );
             },
             update: function(){
             },
@@ -131,7 +145,7 @@ Object.assign(
             
             // onInit: function(){}
             onOpen: function(){
-                if( this.nPlayer == -1 ){
+                if( this.oList.nCurrent == -1 ){
                     this.change(1);
                 } else {
                     this.getMenu().oLayer.hElement.classList.add('--show');
@@ -143,19 +157,19 @@ Object.assign(
 
             change: function(nChange){
                 const oMenu = this.getMenu(),
-                    oLastLayer = this.nPlayer == -1 ? null : oMenu.oLayer;
-                this.nPlayer == -1 || oMenu.destroy();
+                    oLastLayer = this.oList.nCurrent == -1 ? null : oMenu.oLayer;
+                this.oList.nCurrent == -1 || oMenu.destroy();
 
-                this.nPlayer += nChange;
-                if( this.nPlayer > this.oScene.aPlayer.length - 1 ){
-                    this.nPlayer = 0;
-                } else if( this.nPlayer < 0 ) {
-                    this.nPlayer = this.oScene.aPlayer.length - 1;
+                this.oList.nCurrent += nChange;
+                if( this.oList.nCurrent > this.oList.aData.length - 1 ){
+                    this.oList.nCurrent = 0;
+                } else if( this.oList.nCurrent < 0 ) {
+                    this.oList.nCurrent = this.oList.aData.length - 1;
                 }
-                this.oPlayer = this.oScene.aPlayer[this.nPlayer];
+                this.oList.oData = this.oList.aData[this.oList.nCurrent];
 
                 oMenu.aCursor = [];
-                oMenu.init('LAY__Training_Menu_List_Character_' + this.oPlayer.oData.sCod, [0]);
+                oMenu.init('LAY__Training_Menu_List_Character_' + this.oList.oData.sCod, [0]);
                 oMenu.update();
                 oMenu.oLayer.addTickUpdate( () => {
                     oLastLayer && oLastLayer.hElement.classList.remove('--show');
