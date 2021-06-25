@@ -101,11 +101,11 @@ Object.assign(
 
                 Object.assign(
                     this.oParam,
-                    StoreEngine.get('TNG_Restart'),
                     {
                         nPosition: GameSettings.oSide.nDefault,
                         nSide: 0
-                    }
+                    },
+                    StoreEngine.get('TNG_Restart') || {}
                 );
 
                 this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {

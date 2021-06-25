@@ -7,17 +7,6 @@ function TrainingScene() {
     this.oCurrentMenu = null;
     this.oMenu = {};
     this.bMenu = false;
-
-    this.fCheckNewController = oController => {
-        if( !this.allPlayerActive() && SceneManager.oTransverseData.MNU__aController.indexOf(oController) == -1 ){
-            this.oContext.addTickUpdate( () => {
-                const nIndex = SceneManager.oTransverseData.MNU__aController.indexOf(null);
-                SceneManager.oTransverseData.MNU__aController[nIndex] = oController;
-                this.aPlayer[nIndex].oInputBuffer.init(oController);
-                GameHelper.aController.push(oController);
-            } );
-        }
-    };
 }
 
 Object.assign(
@@ -66,7 +55,10 @@ Object.assign(
                         this,
                         {
                             sContextClass: '--training',
-                            aController: SceneManager.oTransverseData.MNU__aController,
+                            aSourceBuffer: [
+                                new BattleInputSourceBufferLocal( SceneManager.oTransverseData.MNU__aController[0] ),
+                                null
+                            ],
                             sAnimation: 'move_5',
                             nTimer: -1,
                             aRound: [0, 0]
@@ -74,8 +66,6 @@ Object.assign(
                     );
 
                     GameHelper.set(TrainingScene.oHelper.aBattle, SceneManager.oTransverseData.MNU__aController.filter( oController => oController ) );
-                    
-                    ControllerManager.on('create addEvent', this.fCheckNewController);
 
                     this.oTraining = new TrainingEngine(this);
                     this.oTraining.trigger('onInit');
@@ -103,7 +93,6 @@ Object.assign(
                 destroy: function(){
                     BattleScene.prototype.destroy.call(this);
                     this.oTraining.destroy();
-                    ControllerManager.off('create addEvent', this.fCheckNewController);
                     GameHelper.destroy();
                     return {
                         MNU__nIndex: 1
@@ -118,14 +107,6 @@ Object.assign(
                             }
                         } )
                     }
-                },
-
-                allPlayerActive: function(){
-                    let bAllActive = true;
-                    SceneManager.oTransverseData.MNU__aController.forEach( oController => {
-                        !oController && ( bAllActive = false );
-                    } );
-                    return bAllActive;
                 }
             }
         )

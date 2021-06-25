@@ -38,7 +38,7 @@ Object.assign(
                         this,
                         {
                             sContextClass: '--versus',
-                            aController: [],
+                            aSourceBuffer: [],
                             sAnimation: 'anim_open',
                             nTimer: GameSettings.nTimer,
                             aRound: SceneManager.oTransverseData.BTL__aRound
@@ -54,7 +54,7 @@ Object.assign(
                             fCallback: () => {
                                 this.oTimer.start();
                                 this.aPlayer.forEach( (oPlayer, nIndex) => {
-                                    oPlayer.oInputBuffer.init( SceneManager.oTransverseData.MNU__aController[nIndex] );
+                                    oPlayer.oInputBuffer.init( new BattleInputSourceBufferLocal(SceneManager.oTransverseData.MNU__aController[nIndex]) );
                                 } );
                             }
                         },

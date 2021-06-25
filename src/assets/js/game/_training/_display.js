@@ -223,7 +223,7 @@ Object.assign(
                         oPlayer.oInputBuffer.aHistory.forEach( (oHistory, nHistory, aHistory) => {
                             const aBtn = Object.keys( oHistory.oButtons ),
                                 oBtn = { A: true, B: true, C: true },
-                                oSymbol = TrainingEngineDisplay.oSymbolHistory[ oPlayer.bReverse ? 'oReverse' : 'oNormal' ];
+                                oSymbol = TrainingEngineDisplay.oSymbolHistory[ oHistory.bReverse ? 'oReverse' : 'oNormal' ];
                                 
                             let oTextHist = this.aHistory[nIndex].aChildElement[nHistory],
                                 sText = '',
