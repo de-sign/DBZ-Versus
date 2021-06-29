@@ -108,8 +108,8 @@
     top: 175px;
     bottom: 0;
     width: 175px;
-    flex-direction: column-reverse;
-    justify-content: flex-end;
+    flex-direction: column;
+    justify-content: flex-start;
     display: none;
 
     .--bHistory & {

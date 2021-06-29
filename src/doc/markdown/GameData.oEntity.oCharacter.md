@@ -1588,7 +1588,8 @@ GameData.oEntity.oCharacter.oCommands = {
             nDamage: 0,
             sCollisionBox: 'oPositionBox',
             oStun: {
-                sImpactAnimation: false
+                nHit: 12,
+                sHitAnimation: 'hit_0'
             },
             oKi: {
                 oAttack: {
@@ -1622,8 +1623,7 @@ GameData.oEntity.oCharacter.oCommands = {
             sCollisionBox: 'oPositionBox',
             oStun: {
                 nHit: 12,
-                sHitAnimation: 'hit_0',
-                sImpactAnimation: false
+                sHitAnimation: 'hit_0'
             },
             oKi: {
                 oAttack: {

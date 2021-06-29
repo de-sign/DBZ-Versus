@@ -14,14 +14,20 @@ Object.assign(
                 },
                 controls: function(){
                     let sRedirection = null;
+                    const oMenuSelected = this.oMenu.getSelected();
                     this.oScene.oController.ifPressedNow( {
                         // Gestion validation
                         A: () => {
-                            let oMenuSelected = this.oMenu.getSelected();
-                            if( oMenuSelected.sId == 'TXT__Training_Menu_Dummy_Return' ){
-                                sRedirection = 'return';
-                            } else {
-                                this.change(-1);
+                            switch(oMenuSelected.sId){
+                                case 'TXT__Training_Menu_Dummy_Return':
+                                    sRedirection = 'return';
+                                    break;
+                                case 'LAY__Training_Menu_Dummy_Record':
+                                    sRedirection = 'record';
+                                    break;
+                                default:
+                                    this.change(1);
+                                    break;
                             }
                         },
                         B: () => {
@@ -29,10 +35,14 @@ Object.assign(
                         },
                         // Gestion changement
                         LEFT: () => {
-                            this.change(-1);
+                            if( oMenuSelected.sId != 'LAY__Training_Menu_Dummy_Record' ){
+                                this.change(-1);
+                            }
                         },
                         RIGHT: () => {
-                            this.change(1);
+                            if( oMenuSelected.sId != 'LAY__Training_Menu_Dummy_Record' ){
+                                this.change(1);
+                            }
                         },
                         // Gestion déplacement
                         UP: () => {
@@ -68,6 +78,9 @@ Object.assign(
                             case 'sCounter':
                                 oText.setText( uParam ? this.oEngine.oCounter[uParam] : 'No counter' );
                                 break;
+                            case 'aRecord':
+                                oText.setText( uParam ? 'Record found' : 'No record' );
+                                break;
                             default:
                                 oText.setText( TrainingEngineDummy.oParameter[sParam][uParam] );
                                 break;
@@ -83,12 +96,15 @@ Object.assign(
 function TrainingEngineDummy(oScene){
     this.oScene = null;
     this.oSourceBuffer = {
+        oPlayer: null,
         oLocal: new BattleInputSourceBufferLocal(null),
         oDummy: null
     };
 
     this.oParam = {};
-    this.oCounter = {};
+    this.oCounter = {
+        'record': 'Play record'
+    };
 
     this.init(oScene);
 }
@@ -97,7 +113,7 @@ Object.assign(
     TrainingEngineDummy, {
 
         oParameter: {
-            nStance: ['Stand', 'Jump', 'Forward Jump', 'Backward Jump'],
+            nStance: ['Stand', 'Play record', 'Jump', 'Forward Jump', 'Backward Jump'],
             nGuard: ['No guard', 'After 1st hit', 'Only 1st hit', 'All', 'Reflect', 'Random'],
             nReversal: ['No reversal', 'Forward', 'Backward']
         },
@@ -115,11 +131,13 @@ Object.assign(
                         nGuard: 0,
                         bTechThrow: false,
                         sCounter: null,
-                        nReversal: 0
+                        nReversal: 0,
+                        aRecord: null
                     },
                     StoreEngine.get('TNG_Dummy') || {}
                 );
 
+                this.oSourceBuffer.oPlayer = this.oScene.aPlayer[0].oInputBuffer.oSource;
                 this.oSourceBuffer.oDummy = new BattleInputSourceBufferDummy(this.oScene.aPlayer[1], this.oScene.aPlayer[0], this.oParam);
 
                 this.initCounter();
@@ -202,6 +220,44 @@ Object.assign(
                     this.oParam.sController = null;
                     this.oScene.aPlayer[1].oInputBuffer.init(this.oSourceBuffer.oDummy);
                 }
+            },
+            switchSource: function(bStart){
+                const sIndex = bStart ? 'start' : 'stop',
+                    oIndex = {
+                        start: [1, 0],
+                        stop: [0, 1]
+                    };
+
+                this.oScene.aPlayer[ oIndex[sIndex][0] ].oInputBuffer.init(this.oSourceBuffer.oPlayer);
+                this.oScene.aPlayer[ oIndex[sIndex][1] ].oInputBuffer.init(this.oSourceBuffer[ this.oParam.sController ? 'oLocal' : 'oDummy' ]);
+            },
+
+            saveRecord: function(){
+                let nFrame = 0;
+                this.oParam.aRecord = [];
+                this.oScene.aPlayer[1].oInputBuffer.aHistory.forEach( (oHistory, nIndex) => {
+
+                    let oCopy = Object.assign( {}, oHistory );
+
+                    // Suppréssion du NEUTRAL superflux en début et fin
+                    if( nIndex == 0 || ( nIndex == this.oScene.aPlayer[1].oInputBuffer.aHistory.nLength - 1 ) ){
+                        const aBtn = Object.keys(oHistory.oButtons);
+                        if( aBtn.length == 1 && aBtn[0] == 'NT' ){
+                            oCopy = null;
+                        }
+                    }
+
+                    if( oCopy ){
+                        nFrame || ( nFrame = oHistory.nFrame );
+                        oCopy.nFrame -= nFrame - 1;
+                        for( let sBtn in oCopy.oButtons ){
+                            oCopy.oButtons[sBtn] = Math.max(0, oCopy.oButtons[sBtn] - nFrame);
+                        }
+                        this.oParam.aRecord.push(oCopy);
+                    }
+                } );
+                StoreEngine.update('TNG_Dummy', this.oParam);
+                this.switchSource();
             }
         }
     }

@@ -13,7 +13,7 @@ function BattleInputBuffer(oSource){
 Object.assign(
     BattleInputBuffer,
     {
-        nLengthHistory: 20,
+        nLengthHistory: 100,
         oMapDirection: {
             aNormal: ['DB', 'DN', 'DF', 'BW', 'NT', 'FW', 'UB', 'UP', 'UF'],
             aReverse: ['DF', 'DN', 'DB', 'FW', 'NT', 'BW', 'UF', 'UP', 'UB']
@@ -45,11 +45,15 @@ Object.assign(
                 }
             },
             destroy: function(){
+                this.reset();
                 this.oSource = null;
-                this.nDirection = 5;
-                this.aHistory = [];
             },
 
+            reset: function(){
+                this.nDirection = 5;
+                this.aHistory = [];
+                this.oSource && this.oSource.reset();
+            },
             getDirection: function(){
                 return BattleInputBuffer.getDirection(this.nDirection, this.bReverse);
             },
@@ -123,6 +127,8 @@ Object.assign(
         constructor: BattleInputSourceBuffer,
         init: function(){ },
         update: function(){ },
-        destroy: function(){ }
+        destroy: function(){ },
+
+        reset: function(){ }
     }
 );

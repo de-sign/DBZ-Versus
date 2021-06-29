@@ -107,7 +107,8 @@ Object.assign(
                 this.show();
             },
             destroy: function(){
-                this.hide();
+                this.aInfo = [];
+                this.hide(true);
                 this.oContext.update();
             },
 
@@ -149,10 +150,10 @@ Object.assign(
                     } );
                 }
             },
-            hide: function(){
+            hide: function(bDestroy){
                 // Hide
-                if( this.oCurrent ){
-                    const fCallback = this.oCurrent && this.oCurrent.fCallback;
+                if( this.oCurrent || bDestroy ){
+                    const fCallback = !bDestroy && this.oCurrent && this.oCurrent.fCallback;
                     this.oCurrent = null;
                     
                     this.oContext.addTickUpdate( () => {

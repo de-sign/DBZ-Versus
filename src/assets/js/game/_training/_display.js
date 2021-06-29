@@ -110,6 +110,7 @@ Object.assign(
     TrainingEngineDisplay, {
 
         aShow: [ 'bData','bHistory','bBox' ],
+        nHistory: 20,
 
         oSymbolHistory: {
             oNormal: {
@@ -220,12 +221,14 @@ Object.assign(
             updateHistory: function(){
                 if( this.oParameters.bHistory ){
                     this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
-                        oPlayer.oInputBuffer.aHistory.forEach( (oHistory, nHistory, aHistory) => {
-                            const aBtn = Object.keys( oHistory.oButtons ),
+                        let nHistory = Math.max(0, oPlayer.oInputBuffer.aHistory.length - TrainingEngineDisplay.nHistory);
+                        for( ; nHistory < oPlayer.oInputBuffer.aHistory.length; nHistory++ ){
+                            const oHistory = oPlayer.oInputBuffer.aHistory[nHistory],
+                                aBtn = Object.keys( oHistory.oButtons ),
                                 oBtn = { A: true, B: true, C: true },
                                 oSymbol = TrainingEngineDisplay.oSymbolHistory[ oHistory.bReverse ? 'oReverse' : 'oNormal' ];
                                 
-                            let oTextHist = this.aHistory[nIndex].aChildElement[nHistory],
+                            let oTextHist = this.aHistory[nIndex].aChildElement[oPlayer.oInputBuffer.aHistory.length - nHistory - 1],
                                 sText = '',
                                 sFrame = '';
                             
@@ -236,10 +239,10 @@ Object.assign(
                                 }
                             } );
                             
-                            if( nHistory == aHistory.length - 1 ){
+                            if( nHistory == oPlayer.oInputBuffer.aHistory.length - 1 ){
                                 sFrame = '<i>' + ( TimerEngine.nFrames - oHistory.nFrame + 1 ) + '</i>';
                             } else {
-                                sFrame = '<i>' + ( aHistory[ nHistory + 1 ].nFrame - oHistory.nFrame ) + '</i>';
+                                sFrame = '<i>' + ( oPlayer.oInputBuffer.aHistory[ nHistory + 1 ].nFrame - oHistory.nFrame ) + '</i>';
                             }
                             nIndex ? (sText = sFrame + sText) : (sText += sFrame);
                             
@@ -249,10 +252,14 @@ Object.assign(
                                 oTextHist = new OutputManager.OutputText(sText);
                                 this.aHistory[nIndex].add(oTextHist);
                             }
-                        } );
+                        }
                     } );
                 }
             },
+            cleanHistory: function(){
+                this.aHistory.forEach( oHistory => oHistory.clean() );
+            },
+
             // Box
             updateBox: function(){
                 if( this.oParameters.bBox ){

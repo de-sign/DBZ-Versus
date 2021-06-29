@@ -1,5 +1,6 @@
 /* ----- BattleInputSourceBuffer - Local ----- */
 function BattleInputSourceBufferLocal(oController){
+    this.sType = 'local';
     this.oController = null;
     BattleInputSourceBuffer.apply(this, arguments);
 }

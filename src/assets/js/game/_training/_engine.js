@@ -95,8 +95,13 @@ Object.assign(
                             break;
                         case 'restart':
                             sSFX = 'ADO__Validate';
-                            this.restart();
                             this.close();
+                            this.restart();
+                            break;
+                        case 'record':
+                            sSFX = 'ADO__Validate';
+                            this.close();
+                            this.startRecord();
                             break;
                         case 'select':
                             sSFX = 'ADO__Validate';
@@ -208,6 +213,8 @@ Object.assign(
                 const oGauges = this.oModule.oGauges.oEngine,
                     oRestart = this.oModule.oRestart.oEngine;
 
+                this.oModule.oDisplay.oEngine.cleanHistory()
+
                 this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                     // Bars
                     oGauges.setStat(nIndex, 'Life');
@@ -215,8 +222,34 @@ Object.assign(
 
                     // Perso
                     oPlayer.setStance('move_0', true);
+                    oPlayer.oInputBuffer.reset();
                     oRestart.setPosition(nIndex);
                 } );
+            },
+
+            startRecord: function(){
+                this.oScene.bRecord = true;
+                this.oModule.oDummy.oEngine.switchSource(true);
+                this.restart();
+                
+                this.oScene.oInfo.add( {
+                    nLength: 60 * 10,
+                    sText: 'Recording ...',
+                    fCallback: () => {
+                        this.stopRecord();
+                    }
+                } );
+                GameHelper.set(TrainingScene.oHelper.aRecord);
+            },
+
+            stopRecord: function(){
+                if( this.oScene.bRecord ){
+                    this.oScene.bRecord = false;
+                    this.oModule.oDummy.oEngine.saveRecord();
+                    
+                    this.oScene.oInfo.destroy();
+                    GameHelper.set(TrainingScene.oHelper.aBattle);
+                }
             }
         }
     }

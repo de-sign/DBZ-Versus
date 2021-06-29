@@ -7,6 +7,7 @@ function TrainingScene() {
     this.oCurrentMenu = null;
     this.oMenu = {};
     this.bMenu = false;
+    this.bRecord = false;
 }
 
 Object.assign(
@@ -44,6 +45,16 @@ Object.assign(
                     aButton: ['START'],
                     sText: 'Close menu'
                 }
+            ],
+            aRecord: [
+                {
+                    aButton: ['START'],
+                    sText: 'Stop record'
+                },
+                {
+                    aButton: ['DOWN', 'START'],
+                    sText: 'Restart record'
+                }
             ]
         },
 
@@ -71,17 +82,33 @@ Object.assign(
                     this.oTraining.trigger('onInit');
                 },
                 update: function(){
-                    SceneManager.oTransverseData.MNU__aController.forEach( oController => {
-                        oController && oController.ifPressedNow( {
-                            START: () => {
-                                if( oController.isPressed('DOWN') && !this.oTraining.isOpen() ){
-                                    this.oTraining.restart();
-                                } else {
-                                    this.oController = oController;
-                                    this.oTraining.toggle();
-                                }
+                    this.aPlayer.forEach( oPlayer => {
+                        const oSourceBuffer = oPlayer.oInputBuffer.oSource;
+                        if( oSourceBuffer.oController ){
+                            if( this.bRecord ){
+                                oSourceBuffer.oController.ifPressedNow( {
+                                    START: () => {
+                                        if( oSourceBuffer.oController.isPressed('DOWN') ){
+                                            this.oTraining.startRecord();
+                                        } else {
+                                            this.oTraining.stopRecord();
+                                        }
+                                    }
+                                } );
                             }
-                        } );
+                            else {
+                                oSourceBuffer.oController.ifPressedNow( {
+                                    START: () => {
+                                        if( oSourceBuffer.oController.isPressed('DOWN') && !this.oTraining.isOpen() ){
+                                            this.oTraining.restart();
+                                        } else {
+                                            this.oController = oSourceBuffer.oController;
+                                            this.oTraining.toggle();
+                                        }
+                                    }
+                                } );
+                            }
+                        }
                     } );
 
                     if( !this.oTraining.isOpen() ){

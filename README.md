@@ -27,6 +27,7 @@ Une documentation technique est disponnible ici : [References.md](https://github
 ## TODO
 __BUG__
 * Problème de LOOP avec GKU et attack_C ?
+* Problème avec RECORD ?
 
 __Menu__
 * Ajout du ONLINE ?
@@ -50,21 +51,7 @@ __Battle__
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
 
 __Training__
-* Refonte Menu
-    * Dummy settings
-        * Controller
-            * Dummy, Keyboard2 [ ... Liste des controllers ]
-        * Stance
-            * Stand, Jump, Forward Jump, Backward Jump
-        * Guard
-            * No guard, After 1st hit, Only 1st hit, All, Reflect, Random
-        * Tech throw
-            * No, Yes
-        * Counter
-            * No counter, A [ ... Liste des commandes ]
-        * Reversal
-            * No reversal, Forward, Backward
-        * Record ?
+<br/>*N/A*
 
 __General__
 * Méchaniques de jeu
@@ -86,7 +73,7 @@ __General__
     * GAME
 
 * Optimisation du Code
-    * Classe BATTLEINPUTBUFFER avec pour enfant LOCAL et DUMMY ( et AI ? )
+    * Classe BATTLEINPUTBUFFER avec pour enfant AI ?
 
 * Paramétrages
     * Animations
