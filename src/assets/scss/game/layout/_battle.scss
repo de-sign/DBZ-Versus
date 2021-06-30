@@ -80,6 +80,10 @@
             right: auto;
             left: 100%;
         }
+
+        .Battle__HUD_Sprite {
+            transform: scaleX(-1);
+        }
     }
     
     &_Character {

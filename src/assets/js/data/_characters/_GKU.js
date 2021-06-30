@@ -19,6 +19,12 @@ GameData.oCharacter.GKU = {
             sEntityColor: 'BLU',
         },
         {
+            sName: 'Gokū Kaiōken',
+            sColor: 'CTM_KOK',
+            sColorName: 'Custom color',
+            sEntityColor: 'BLU',
+        },
+        {
             sName: 'Gokū',
             sColor: 'LSW_TRN',
             sColorName: 'Legendary Super Warrior color',

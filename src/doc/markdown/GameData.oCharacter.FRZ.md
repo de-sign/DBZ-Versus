@@ -30,7 +30,7 @@ GameData.oCharacter.FRZ.aColor = [
     {
         sName: 'Frost',
         sColor: 'SWP_FRT',
-        sColorName: 'Swap color',
+        sColorName: 'Swap Legendary Super Warrior color',
         sEntityColor: 'PNK'
     }
     /*

@@ -341,7 +341,7 @@ Object.assign(
             BJT: {
                 sType: 'oChar',
                 sChar: 'BJT',
-                aColor: ['CTM_SSJ', 'LSW_SSJ', 'LSW_BAD'],
+                aColor: ['CTM_SSJ', 'CTM_BAD','LSW_SSJ', 'LSW_BAD'],
                 aFrames: [
                     ['stand', 'blur', 'backward', 'forward', 'forward_inverse'],
                     ['jump', 'fall', null, 'guard', 'reflect', 'burst'],
@@ -441,7 +441,7 @@ Object.assign(
             GKU: {
                 sType: 'oChar',
                 sChar: 'GKU',
-                aColor: ['CTM_TRN', 'LSW_TRN', 'LSW_GNU'],
+                aColor: ['CTM_TRN', 'CTM_KOK'/*, 'LSW_TRN', 'LSW_GNU'*/],
                 aFrames: [
                     ['stand', 'blur', 'backward', 'forward'],
                     ['jump', 'fall', null, 'guard', 'reflect', 'burst'],

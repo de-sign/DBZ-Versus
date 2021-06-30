@@ -28,6 +28,12 @@ GameData.oCharacter.BJT.aColor = [
         sEntityColor: 'ORG'
     },
     {
+        sName: 'Bejīta',
+        sColor: 'CTM_BAD',
+        sColorName: 'Custom color',
+        sEntityColor: 'PRP'
+    },
+    {
         sName: 'Bejīta SSJ',
         sColor: 'LSW_SSJ',
         sColorName: 'Legendary Super Warrior color',
@@ -952,7 +958,7 @@ GameData.oCharacter.BJT.oCommands = {
             }
         },
         {
-            aFilter: ['LSW_BAD'],
+            aFilter: ['CTM_BAD', 'LSW_BAD'],
             sCod: 'attack_236C',
             sName: 'Gyarikku-hō',
             sAnimation: 'attack_236C',
