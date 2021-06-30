@@ -178,7 +178,7 @@ GameData.oCharacter.GHN.oFrames = {
             nX: -30,
             nY: -98,
             nWidth: 56,
-            nHeight: 32
+            nHeight: 100
         }, {
             nX: 22,
             nY: -98,
@@ -202,7 +202,7 @@ GameData.oCharacter.GHN.oFrames = {
             nX: -30,
             nY: -98,
             nWidth: 56,
-            nHeight: 32
+            nHeight: 100
         }, {
             nX: 22,
             nY: -98,

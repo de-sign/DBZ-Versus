@@ -662,7 +662,7 @@ GameData.oEntity.oCharacter.oFrames = {
         {
             nX: -10,
             nY: -78,
-            nWidth: 52,
+            nWidth: 64,
             nHeight: 56
         }]
     },
@@ -683,13 +683,13 @@ GameData.oEntity.oCharacter.oFrames = {
         {
             nX: -10,
             nY: -78,
-            nWidth: 52,
+            nWidth: 64,
             nHeight: 56
         }],
         aHitBox: [{
             nX: -10,
             nY: -78,
-            nWidth: 52,
+            nWidth: 64,
             nHeight: 56
         }]
     },

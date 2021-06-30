@@ -177,7 +177,7 @@ GameData.oCharacter.BUU.oFrames = {
             nX: -30,
             nY: -98,
             nWidth: 56,
-            nHeight: 32
+            nHeight: 100
         }, {
             nX: 22,
             nY: -98,
@@ -201,7 +201,7 @@ GameData.oCharacter.BUU.oFrames = {
             nX: -30,
             nY: -98,
             nWidth: 56,
-            nHeight: 32
+            nHeight: 100
         }, {
             nX: 22,
             nY: -98,
@@ -487,6 +487,12 @@ GameData.oCharacter.BUU.oFrames = {
             nY: -110,
             nWidth: 60,
             nHeight: 112
+        },
+        aHurtBox: {
+            nX: -14,
+            nY: -126,
+            nWidth: 72,
+            nHeight: 112
         }
     },
     attack_6_2: {
@@ -494,6 +500,12 @@ GameData.oCharacter.BUU.oFrames = {
             nX: -30,
             nY: -110,
             nWidth: 60,
+            nHeight: 112
+        },
+        aHurtBox: {
+            nX: -14,
+            nY: -126,
+            nWidth: 72,
             nHeight: 112
         },
         aHitBox: {

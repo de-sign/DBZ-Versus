@@ -259,7 +259,7 @@ GameData.oCharacter.SRU = {
                 nX: -22,
                 nY: -138,
                 nWidth: 60,
-                nHeight: 124
+                nHeight: 140
             }]
         },
         attack_4_2: {
@@ -278,7 +278,7 @@ GameData.oCharacter.SRU = {
                 nX: -22,
                 nY: -138,
                 nWidth: 60,
-                nHeight: 124
+                nHeight: 140
             }],
             aHitBox: {
                 nX: 22,
@@ -343,6 +343,12 @@ GameData.oCharacter.SRU = {
                 nY: -110,
                 nWidth: 60,
                 nHeight: 112
+            },
+            aHurtBox: {
+                nX: -14,
+                nY: -126,
+                nWidth: 72,
+                nHeight: 112
             }
         },
         attack_6_2: {
@@ -350,6 +356,12 @@ GameData.oCharacter.SRU = {
                 nX: -30,
                 nY: -110,
                 nWidth: 60,
+                nHeight: 112
+            },
+            aHurtBox: {
+                nX: -14,
+                nY: -126,
+                nWidth: 72,
                 nHeight: 112
             },
             aHitBox: {
