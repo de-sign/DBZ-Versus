@@ -17,7 +17,7 @@ Object.assign(
         update: function(){
             // Gestion Fin de partie
             const oEndGame = this.checkEnd(),
-                aEntity = BattleEntity.get().filter( oEntity => !oEntity.isDead() ),
+                aEntity = BattleEntity.get().filter( oEntity => oEntity.oCheck && !oEntity.isDead() ),
                 oCollapse = {};
 
             // Gestion PositionBox / Area

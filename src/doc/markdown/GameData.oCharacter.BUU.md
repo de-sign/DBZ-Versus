@@ -1016,7 +1016,7 @@ GameData.oCharacter.BUU.oCommands = {
                 }
             },
             oStun: {
-                nFreeze: 46,
+                nFreeze: 45,
                 nBlock: 36,
                 nHit: 36,
                 bLaunch: true,
@@ -1059,7 +1059,7 @@ GameData.oCharacter.BUU.oCommands = {
                 }
             },
             oStun: {
-                nFreeze: 46,
+                nFreeze: 45,
                 nBlock: 36,
                 nHit: 36,
                 bLaunch: true,

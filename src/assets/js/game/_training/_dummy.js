@@ -138,7 +138,7 @@ Object.assign(
                 );
 
                 this.oSourceBuffer.oPlayer = this.oScene.aPlayer[0].oInputBuffer.oSource;
-                this.oSourceBuffer.oDummy = new BattleInputSourceBufferDummy(this.oScene.aPlayer[1], this.oScene.aPlayer[0], this.oParam);
+                this.oSourceBuffer.oDummy = new BattleInputSourceBufferDummy(this.oScene.aPlayer[1], this.oParam);
 
                 this.initCounter();
                 this.setSource(SceneManager.oTransverseData.MNU__aController[1]);
@@ -229,7 +229,11 @@ Object.assign(
                     };
 
                 this.oScene.aPlayer[ oIndex[sIndex][0] ].oInputBuffer.init(this.oSourceBuffer.oPlayer);
-                this.oScene.aPlayer[ oIndex[sIndex][1] ].oInputBuffer.init(this.oSourceBuffer[ this.oParam.sController ? 'oLocal' : 'oDummy' ]);
+                this.oScene.aPlayer[ oIndex[sIndex][1] ].oInputBuffer.init(
+                    bStart ?
+                        null :
+                        this.oSourceBuffer[ this.oParam.sController ? 'oLocal' : 'oDummy' ]
+                );
             },
 
             saveRecord: function(){

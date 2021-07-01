@@ -68,9 +68,6 @@ Object.assign(
                 bHit: true,
                 oHurt: {},
                 bPushback: true
-            },
-            effect: {
-                oHurt: {}
             }
         },
 

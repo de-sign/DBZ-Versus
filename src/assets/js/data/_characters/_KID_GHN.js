@@ -1026,7 +1026,7 @@ GameData.oCharacter.KID_GHN = {
                     }
                 ],
                 oStun: {
-                    nFreeze: 46,
+                    nFreeze: 45,
                     nBlock: 36,
                     nHit: 36,
                     bLaunch: true,
@@ -1069,7 +1069,7 @@ GameData.oCharacter.KID_GHN = {
                     }
                 },
                 oStun: {
-                    nFreeze: 46,
+                    nFreeze: 45,
                     nBlock: 36,
                     nHit: 36,
                     bLaunch: true,

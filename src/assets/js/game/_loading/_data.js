@@ -201,11 +201,14 @@ Object.assign(
                         sFrame,
                         oStatus: {
                             bAerial: true,
-                            bLaunch: true,
                             bInvul: bInvulnerable,
                             bReverse: nIndex == 1
                         }
                     } );
+
+                    if( nIndex == 1 ){
+                        oLastFrame.oStatus.bLaunch = true;
+                    }
                 }
                 oAnim[sAnim].aMove.push( { nX, nY } );
                 nLastY = nTargetY;

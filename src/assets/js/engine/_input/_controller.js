@@ -133,7 +133,7 @@ Object.assign(
                 let bFirstPressed = false;
                 for( let sBtn in oCallback ){
                     if( !bOnlyFirst || !bFirstPressed ){
-                        if( this.hasPressed(sBtn) ){
+                        if( this.isPressed(sBtn) ){
                             oCallback[sBtn]( this.oButtons[sBtn] );
                             bFirstPressed = true;
                         }

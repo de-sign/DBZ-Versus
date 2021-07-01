@@ -851,7 +851,7 @@ GameData.oCharacter.FRZ = {
                     }
                 },
                 oStun: {
-                    nFreeze: 46,
+                    nFreeze: 45,
                     nBlock: 36,
                     nHit: 36,
                     bLaunch: true,

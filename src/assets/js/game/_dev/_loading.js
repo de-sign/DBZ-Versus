@@ -81,9 +81,24 @@ Object.assign(
                         oCharacter = GameData.oCharacter[sChar],
                         oDefaultColor = oCharacter[ oCharacter.sDefaultColor ];
 
+                    let sPrefixFrame = null,
+                        oLayerWrapper = null;
+
                     Object.keys(oDefaultColor.oFrames).sort().forEach( sFrame => {
 
                         if( sFrame.indexOf('list_') == -1 ){
+
+                            // Wrapper
+                            if( !sPrefixFrame || sFrame.indexOf(sPrefixFrame) != 0 ) {
+                                const aFrameName = sFrame.split('_');
+                                aFrameName.pop();
+                                sPrefixFrame = aFrameName.join('_');
+
+                                oLayerWrapper = new OutputManager.OutputLayer();
+                                oContent.add(oLayerWrapper);
+                                oContent.update();
+                            }
+
                             const oFrame = oDefaultColor.oFrames[sFrame],
                                 sId = sChar + '_' + sFrame;
 
@@ -120,8 +135,8 @@ Object.assign(
                             } );
         
                             // Ajout dans le context
-                            oContent.add(oLayer);
-                            oContent.update();
+                            oLayerWrapper.add(oLayer);
+                            oLayerWrapper.update();
 
                             // Box
                             ['oPositionBox', 'aHurtBox', 'aHitBox'].forEach( sBox => {

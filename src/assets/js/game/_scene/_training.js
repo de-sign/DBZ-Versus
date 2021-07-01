@@ -84,7 +84,7 @@ Object.assign(
                 update: function(){
                     this.aPlayer.forEach( oPlayer => {
                         const oSourceBuffer = oPlayer.oInputBuffer.oSource;
-                        if( oSourceBuffer.oController ){
+                        if( oSourceBuffer && oSourceBuffer.oController ){
                             if( this.bRecord ){
                                 oSourceBuffer.oController.ifPressedNow( {
                                     START: () => {

@@ -59,7 +59,9 @@ Object.assign(
                                 this.oMenu.next();
                             },
                             START: () => {
-                                SceneManager.change( new PreDevScene() );
+                                if( oController.isPressed('LEFT') && oController.isPressed('RIGHT') ){
+                                    SceneManager.change( new PreDevScene() );
+                                }
                             }
                         } );
                     }

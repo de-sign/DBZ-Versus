@@ -979,13 +979,21 @@ GameData.oEntity.oCharacter.oAnimations = {
                 sFrame: 'move_2'
             },
             {
-                nFrame: 8,
+                nFrame: 7,
                 sFrame: 'move_1'
+            },
+            {
+                nFrame: 1,
+                sFrame: 'move_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 2,
                 sFrame: 'stand_1',
                 oStatus: {
+                    bCancel: true,
                     bReverse: true
                 }
             }
@@ -998,7 +1006,7 @@ GameData.oEntity.oCharacter.oAnimations = {
         aFrames: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1__0'
+                sFrame: 'stand_1'
             },
             {
                 nFrame: 8,
