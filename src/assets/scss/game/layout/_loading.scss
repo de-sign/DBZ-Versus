@@ -22,6 +22,16 @@
         font-size: 1.5em;
         color: DarkGray;
     }
+
+    .Loading__Information {
+        margin: 15px auto;
+        max-width: 500px;
+
+        p {
+            margin: 25px 0;
+            color: darkgray;
+        }
+    }
 }
 
 #LAY__LoadingStep {

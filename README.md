@@ -22,7 +22,7 @@ Utilise un moteur de jeu fait maison et FOX Website :
 <br/>
 
 ## Documentation
-Une documentation technique est disponnible ici : [References.md](https://github.com/de-sign/DBZ-Versus/blob/master/src/doc/markdown/References.md)
+Une documentation technique est disponible ici : [References.md](https://github.com/de-sign/DBZ-Versus/blob/master/src/doc/markdown/References.md)
 
 ## TODO
 __BUG__
@@ -30,7 +30,20 @@ __BUG__
 * Problème avec RECORD ?
 
 __Menu__
-* Ajout du ONLINE ?
+* Encart en cas de problème
+    * Général
+    * GAMEPAD
+    
+* Refonte du menu
+    * Versus
+        * Local
+        * Online ?
+    * Solo
+        * How to play
+        * Challenge
+        * Training
+    * Setting
+        * Input
 
 __Setting__
 <br/>*N/A*
@@ -49,6 +62,7 @@ __Stage__
 
 __Battle__
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
+* Ajout d'effet de texte en JAP !
 
 __Training__
 <br/>*N/A*
@@ -56,6 +70,7 @@ __Training__
 __General__
 * Méchaniques de jeu
     * Attack :
+        * Air Dash ?
         * Guard Break ?
     * Defense :
         * Guard Cancel ?
