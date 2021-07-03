@@ -160,6 +160,7 @@ Object.assign(
         /* ----- DETAILS Configuration des différents périphériques d'entrées ----- */
         oController: {
             aOrderButtons: ['UP', 'DOWN', 'LEFT', 'RIGHT', 'A', 'B', 'C', 'START'],
+            nNeededButtons: 8,
             aKeyboard: [
                 {
                     UP: 'KeyW',
@@ -197,7 +198,7 @@ Object.assign(
                 B: 'Button3',
                 C: 'Button1',
                 START: 'Button9'
-            }
+            },
         },
         // OUTPUT
         /* ----- DETAILS Constante du volume par défaut de chaque canal de sortie AUDIO ----- */

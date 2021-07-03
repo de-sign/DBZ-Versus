@@ -30,10 +30,6 @@ __BUG__
 * Problème avec RECORD ?
 
 __Menu__
-* Encart en cas de problème
-    * Général
-    * GAMEPAD
-    
 * Refonte du menu
     * Versus
         * Local
@@ -55,7 +51,7 @@ __Side__
 <br/>*N/A*
 
 __Select__
-* Faire des SWAP COLOR
+* Faire des CUSTOM COLOR
 
 __Stage__
 <br/>*N/A*

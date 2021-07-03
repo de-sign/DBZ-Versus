@@ -6,6 +6,7 @@ Object.assign(
     {
         nTimer: 180, 
         oLayer: null,
+        oWrapper: null,
         aController: null,
         aText: null,
         nController: -1,
