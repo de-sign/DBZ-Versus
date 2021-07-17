@@ -71,17 +71,23 @@ Object.assign(
                 } );
             }
         },
-        /* ----- DETAILS Démarre l'horloge si ce n'est pas le cas ----- */
+        /* ----- DETAILS Démarre ou redémarre l'horloge si ce n'est pas le cas ----- */
         run: function() {
-            if (!this.isStarted()) {
-                this.dStart = Date.now();
+            if( !this.isStarted() ) {
+                this.dStart = this.dLastUpdate || Date.now();
                 this.tick();
+            }
+        },
+        /* ----- DETAILS Mets en pause l'horloge si ce n'est pas le cas ----- */
+        pause: function() {
+            if( this.isStarted() ) {
+                this.dStart = null;
             }
         },
         /* ----- DETAILS Arrete l'horloge si ce n'est pas le cas ----- */
         stop: function() {
-            if (this.isStarted()) {
-                this.dStart = this.dLast = null;
+            if( this.isStarted() ) {
+                this.dStart = this.dLastUpdate = null;
                 this.nFrames = 0;
             }
         },

@@ -1,4 +1,5 @@
 //=include _components/_timer.js
+//=include _components/_alert.js
 //=include _components/_animation.js
 //=include _components/_helper.js
 //=include _components/_menu.js
@@ -55,34 +56,8 @@
 
 /* Init */
 window.addEventListener('load', oEvent => {
-	// Store
+	// Component
 	StoreEngine.init();
-
-	/* ----- START PATCH ----- */
-	Object.keys(StoreEngine.oData).forEach( sKey => {
-
-		// Modification du 23/06/2021
-		const aKey = sKey.split('_');
-		if( aKey[0] == 'Parameters' || aKey.length == 1 ){
-			StoreEngine.remove(sKey);
-		}
-		// Modification du 07/05/2021
-		else {
-			let aData = StoreEngine.get(sKey),
-				bSet = false;
-			const bArray = Array.isArray(aData),
-				aNewData = [];
-			(bArray ? aData : [aData]).forEach( oData => {
-				if( (oData.sType == 'keyboard' || oData.sType == 'gamepad') && !oData.aOrder ){
-					bSet = true;
-					aNewData.push(Object.assign( { aOrder: GameSettings.oController.aOrderButtons }, oData ));
-				};
-			} );
-			bSet && StoreEngine.update( sKey, bArray ? aNewData : aNewData[0] );
-		}
-	} );
-	/* ----- END PATCH ----- */
-
 	// Input
 	for( let nPlayer = 0; nPlayer < GameSettings.nPlayer; nPlayer++ ){
 		KeyboardController.recover('IC_' + ( nPlayer + 1 ), GameSettings.oController.aKeyboard[nPlayer]);
@@ -95,4 +70,10 @@ window.addEventListener('load', oEvent => {
 	SceneManager.set( new window[ GameSettings.sStartScene ]() );
 	// Start
 	GameEngine.start();
+	GameAlert.init();
+}, false);
+
+/* Error */
+window.addEventListener('error', oEvent => {
+	GameAlert.show(oEvent.error.stack);
 }, false);

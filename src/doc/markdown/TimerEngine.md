@@ -80,10 +80,18 @@ TimerEngine.tick();
 
 #### TimerEngine.run()
 
-Démarre l'horloge si ce n'est pas le cas 
+Démarre ou redémarre l'horloge si ce n'est pas le cas 
 
 ```javascript
 TimerEngine.run();
+```
+
+#### TimerEngine.pause()
+
+Mets en pause l'horloge si ce n'est pas le cas 
+
+```javascript
+TimerEngine.pause();
 ```
 
 #### TimerEngine.stop()

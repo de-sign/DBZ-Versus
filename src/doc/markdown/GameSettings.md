@@ -201,6 +201,7 @@ Configuration des différents périphériques d'entrées
 ```javascript
 GameSettings.oController = {
     aOrderButtons: ['UP', 'DOWN', 'LEFT', 'RIGHT', 'A', 'B', 'C', 'START'],
+    nNeededButtons: 8,
     aKeyboard: [
         {
             UP: 'KeyW',
@@ -238,7 +239,7 @@ GameSettings.oController = {
         B: 'Button3',
         C: 'Button1',
         START: 'Button9'
-    }
+    },
 };
 ```
 

@@ -1,0 +1,63 @@
+.Alert__Layer {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.25);
+
+    &.--show {
+        display: flex;
+    }
+    
+    .Alert__Wrapper {
+        max-width: 750px;
+        background-color: #fff;
+        text-align: center;
+        padding: 50px;
+        border: 2px solid Black;
+        box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.25);
+        position: relative;
+
+        h1 {
+            font-size: 4em;
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: 2em;
+        }
+
+        pre {
+            background-color: #FF9;
+            text-align: left;
+            padding: 25px; 
+            margin: 0;
+        }
+
+        .Alert__Information {
+            margin: 25px auto;
+
+            p {
+                margin: 25px 0;
+                color: darkgray;
+            }
+        }
+
+        .Alert__Close {
+            color: darkgray;
+            font-size: 2em;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+
+            &:hover {
+                color: Red;
+            }
+        }
+    }
+}
