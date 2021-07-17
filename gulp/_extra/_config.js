@@ -366,7 +366,7 @@ Object.assign(
             BUU: {
                 sType: 'oChar',
                 sChar: 'BUU',
-                aColor: ['LSW_MBU', 'LSW_SBU'],
+                aColor: ['CTM_MBU', 'LSW_MBU', 'LSW_SBU'],
                 aFrames: [
                     ['stand', 'blur', 'backward', 'forward'],
                     ['jump', 'fall', 'pre_jump', 'guard', 'reflect', 'burst'],

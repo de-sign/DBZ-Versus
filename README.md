@@ -42,7 +42,7 @@ __Side__
 <br/>*N/A*
 
 __Select__
-* Faire des SWAP COLOR
+* Faire des CUSTOM COLOR
 
 __Stage__
 <br/>*N/A*
@@ -54,6 +54,16 @@ __Training__
 <br/>*N/A*
 
 __General__
+* Revoir le Menu
+    * Versus
+        * Local
+        * Online ?
+    * Solo
+        * Tutorial
+        * Challenge
+        * Training
+    * Settings
+
 * Méchaniques de jeu
     * Attack :
         * Guard Break ?

@@ -16,6 +16,11 @@ GameData.oCharacter.BUU = {
     aColor: [
         {
             sName: 'Mister Buu',
+            sColor: 'CTM_MBU',
+            sColorName: 'Custom color',
+        },
+        {
+            sName: 'Mister Buu',
             sColor: 'LSW_MBU',
             sColorName: 'Legendary Super Warrior color',
         },
@@ -962,7 +967,7 @@ GameData.oCharacter.BUU = {
     oCommands: {
         aOffense: [
             {
-                aFilter: ['LSW_MBU'],
+                aFilter: ['CTM_MBU', 'LSW_MBU'],
                 sCod: 'attack_236C',
                 sName: 'Chônoryoku',
                 sAnimation: 'attack_236C',
