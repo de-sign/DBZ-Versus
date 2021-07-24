@@ -1,6 +1,6 @@
 # GameData.oCharacter.GKU
 
-**Gokū**  Définition du personnage possédant toutes les informations comme les couleurs, les FRAMES, les animations, etc  Prévue pour compléter les informations contenues dans [GameData.oEntity.oCharacter](GameData.oEntity.oCharacter.md).
+**Goku**  Définition du personnage possédant toutes les informations comme les couleurs, les FRAMES, les animations, etc  Prévue pour compléter les informations contenues dans [GameData.oEntity.oCharacter](GameData.oEntity.oCharacter.md).
 
 
 _System :_ DATA  
@@ -22,25 +22,25 @@ Liste des couleurs de l'entité.
 ```javascript
 GameData.oCharacter.GKU.aColor = [
     {
-        sName: 'Gokū',
+        sName: 'Goku',
         sColor: 'CTM_TRN',
         sColorName: 'Custom color',
         sEntityColor: 'BLU',
     },
     {
-        sName: 'Gokū Kaiōken',
+        sName: 'Goku Kaioken',
         sColor: 'CTM_KOK',
         sColorName: 'Custom color',
         sEntityColor: 'BLU',
     },
     {
-        sName: 'Gokū',
+        sName: 'Goku',
         sColor: 'LSW_TRN',
         sColorName: 'Legendary Super Warrior color',
         sEntityColor: 'BLU',
     },
     {
-        sName: 'Ginyū',
+        sName: 'Ginyu',
         sColor: 'LSW_GNU',
         sColorName: 'Legendary Super Warrior color',
         sEntityColor: 'PRP',
@@ -790,6 +790,10 @@ GameData.oCharacter.GKU.oCommands = {
             nMinimumReduce: 40,
             nGatlingLevel: 3,
             sCheck: 'bGround',
+            oFreeze: {
+                bInfo: true,
+                nLength: 45
+            },
             aEntity: {
                 sType: 'projectile',
                 sSFX: 'ADO__Beam',
@@ -801,7 +805,6 @@ GameData.oCharacter.GKU.oCommands = {
                 }
             },
             oStun: {
-                nFreeze: 45,
                 nBlock: 36,
                 nHit: 36,
                 bLaunch: true,
@@ -824,7 +827,7 @@ GameData.oCharacter.GKU.oCommands = {
         },
         {
             sCod: 'attack_C',
-            sName: 'Taiyōken',
+            sName: 'Taiyoken',
             sAnimation: 'attack_C',
             nCost: 10,
             nGatlingLevel: 1,

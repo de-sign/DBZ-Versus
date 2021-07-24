@@ -6,6 +6,7 @@
     right: 0;
     background-color: rgba(255, 255, 255, 0.5);
     display: none;
+    font-size: $font-size-small;
     
     &.--show {
         display: block;

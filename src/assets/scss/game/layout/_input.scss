@@ -1,26 +1,17 @@
 /* Input */
 #CTX__Input {
-	display: flex;
-	flex-direction: column;
-	text-align: center;
-	justify-content: center;
-	padding: 20px;
-
-    h1 {
-        font-size: 7em;
-    }
     
     .Input__Controllers {
         display: flex;
         justify-content: center;
     
         .Input__Controller {
-            flex: 1 1 400px;
-            max-width: 400px;
-            margin: 0 25px;
+            flex: 1 1 $width-small;
+            max-width: $width-small;
+            margin: 0 $space-medium;
         
             &_Number {
-                font-size: 2.4em;
+                font-size: 1.25em;
             }
 
             .Input__Button {
@@ -33,7 +24,7 @@
                 
                 & > *:last-child {
                     flex: 0 0 auto;
-                    color: DarkGray;
+                    color: $font-disable-color;
                     min-width: 15px;
                 }
             }

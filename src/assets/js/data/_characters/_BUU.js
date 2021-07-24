@@ -25,7 +25,7 @@ GameData.oCharacter.BUU = {
             sColorName: 'Legendary Super Warrior color',
         },
         {
-            sName: 'Sūpā Buu',
+            sName: 'Supa Buu',
             sColor: 'LSW_SBU',
             sColorName: 'Legendary Super Warrior color'
         }
@@ -969,7 +969,7 @@ GameData.oCharacter.BUU = {
             {
                 aFilter: ['CTM_MBU', 'LSW_MBU'],
                 sCod: 'attack_236C',
-                sName: 'Chônoryoku',
+                sName: 'Chonoryoku',
                 sAnimation: 'attack_236C',
                 sListAnimation: 'list_236C',
                 nCost: 30,
@@ -977,6 +977,10 @@ GameData.oCharacter.BUU = {
                 nMinimumReduce: 40,
                 nGatlingLevel: 3,
                 sCheck: 'bGround',
+                oFreeze: {
+                    bInfo: true,
+                    nLength: 45
+                },
                 aEntity: {
                     sType: 'beam',
                     sSFX: 'ADO__Beam',
@@ -989,7 +993,6 @@ GameData.oCharacter.BUU = {
                     }
                 },
                 oStun: {
-                    nFreeze: 45,
                     nBlock: 36,
                     nHit: 36,
                     bLaunch: true,
@@ -1012,7 +1015,7 @@ GameData.oCharacter.BUU = {
             {
                 aFilter: ['LSW_SBU'],
                 sCod: 'attack_236C',
-                sName: 'Chônoryoku',
+                sName: 'Chonoryoku',
                 sAnimation: 'attack_236C',
                 sListAnimation: 'list_236C',
                 nCost: 30,
@@ -1020,6 +1023,10 @@ GameData.oCharacter.BUU = {
                 nMinimumReduce: 40,
                 nGatlingLevel: 3,
                 sCheck: 'bGround',
+                oFreeze: {
+                    bInfo: true,
+                    nLength: 45
+                },
                 aEntity:  {
                     sType: 'beam',
                     sSFX: 'ADO__Beam',
@@ -1032,7 +1039,6 @@ GameData.oCharacter.BUU = {
                     }
                 },
                 oStun: {
-                    nFreeze: 45,
                     nBlock: 36,
                     nHit: 36,
                     bLaunch: true,

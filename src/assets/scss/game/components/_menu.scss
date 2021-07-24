@@ -1,36 +1,85 @@
 .Menu__Layer {
+
+    font-family: $font-family;
+
     ul {
         padding: 0;
-        margin: 25px auto;
+        margin: $space-medium auto;
     }
 
     li {
         display: block;
         margin: 1px auto;
-        padding: 10px 25px;
-        font-size: 1.5em;
+        padding: ($space-medium - $space-small) ($space-medium + $space-small);
+        position: relative;
 
-        &.disable {
-            color: lightgrey;
+        &.Menu__Title {
+            font-family: $font-emphasis-family;
+            font-size: 1.25em;
+            font-weight: bold;
+        }
+
+        &.Menu__Button {
+            font-family: $font-emphasis-family;
+            font-size: 1.25em;
+        }
+
+        &.--disable {
+            color: $font-disable-color;
         }
     }
 
     &:not(.--noCursor) {
-        &.Menu__nb_cursor_1 {
-            .Menu__cursor_0 {
-                box-shadow: 0 0 0 1px Black;
-            } 
-        }
         
-        &.Menu__nb_cursor_2 {
-            .Menu__cursor_0 {
-                box-shadow: -2px -2px 0 0 Black;
+        .Menu__cursor_0::before,
+        .Menu__cursor_1::after {
+            font-family: $font-emphasis-family;
+            font-size: $font-size;
+            display: block;
+            padding: 5px;
+            width: $space-medium;
+            text-align: center;
+
+            background-color: #333;
+            color: #FFF;
+            position: absolute;
+        }
+
+        .Menu__cursor_0 {
+            box-shadow: -1px -1px 0 0 $font-color;
+
+            &::before {
+                content: 'dV';
+                box-shadow: 1px 1px 0 0 #FFF;
+                top: -1px;
+                left: -1px;
             }
-            .Menu__cursor_1 {
-                box-shadow: 2px 2px 0 0 Black;
+
+            &.--disable {
+                box-shadow: -1px -1px 0 0 $font-disable-color;
             }
-            .Menu__cursor_0.Menu__cursor_1 {
-                box-shadow: -2px -2px 0 0 Black, 2px 2px 0 0 Black;
+        }
+
+        .Menu__cursor_1 {
+            box-shadow: 1px 1px 0 0 $font-color;
+
+            &::after {
+                content: 'dV';
+                box-shadow: -1px -1px 0 0 #FFF;
+                bottom: -1px;
+                right: -1px;
+            }
+
+            &.--disable {
+                box-shadow: 1px 1px 0 0 $font-disable-color;
+            }
+        }
+
+        .Menu__cursor_0.Menu__cursor_1 {
+            box-shadow: -1px -1px 0 0 $font-color, 1px 1px 0 0 $font-color;
+
+            &.--disable {
+                box-shadow: -1px -1px 0 0 $font-disable-color, 1px 1px 0 0 $font-disable-color;
             }
         }
     }

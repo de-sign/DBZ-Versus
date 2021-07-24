@@ -64,16 +64,6 @@ __Training__
 <br/>*N/A*
 
 __General__
-* Revoir le Menu
-    * Versus
-        * Local
-        * Online ?
-    * Solo
-        * Tutorial
-        * Challenge
-        * Training
-    * Settings
-
 * Méchaniques de jeu
     * Attack :
         * Air Dash ?

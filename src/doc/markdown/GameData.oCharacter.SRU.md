@@ -836,7 +836,7 @@ GameData.oCharacter.SRU.oCommands = {
     aOffense: [
         {
             sCod: 'attack_236C',
-            sName: 'Taiyōkei Hakai K.',
+            sName: 'Taiyokei Hakai K.',
             sAnimation: 'attack_236C',
             sListAnimation: 'list_236C',
             nCost: 30,
@@ -844,6 +844,10 @@ GameData.oCharacter.SRU.oCommands = {
             nMinimumReduce: 40,
             nGatlingLevel: 3,
             sCheck: 'bGround',
+            oFreeze: {
+                bInfo: true,
+                nLength: 45
+            },
             aEntity: {
                 sType: 'beam',
                 sSFX: 'ADO__Beam',
@@ -856,7 +860,6 @@ GameData.oCharacter.SRU.oCommands = {
                 }
             },
             oStun: {
-                nFreeze: 45,
                 nBlock: 36,
                 nHit: 36,
                 bLaunch: true,

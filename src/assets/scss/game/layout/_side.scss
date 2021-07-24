@@ -1,32 +1,21 @@
 /* Side */
 #CTX__Side {
-	display: flex;
-	flex-direction: column;
-	text-align: center;
-	justify-content: center;
-	padding: 20px;
-    
-    h1 {
-        font-size: 7em;
-        margin: 0;
-    }
 
     /* Player */
     .Side__Players {
         display: flex;
         justify-content: center;
-        align-items: flex-start;
-        margin: 90px 0 0;
+        align-items: center;
         
         & > * {
             display: flex;
-            flex: 1 1 300px;
-            max-width: 300px;
+            flex: 1 1 $width-small;
+            max-width: $width-small;
             order: 0;
         }
 
         .Side__Player {
-            min-height: 286px;
+            height: $height-small;
             flex-direction: column-reverse;
             align-items: flex-start;
 
@@ -36,35 +25,37 @@
             }
 
             &_Number {
-                font-size: 2.4em;
+                font-size: $font-size-large;
                 margin: 0;
             }
 
             &_State {
-                font-size: 1.5em;
                 margin: 0;
-                color: DarkGray;
+                color: $font-disable-color;
             }
         }
 
         .Side__Empty {
+            height: $height-large;
             order: 1;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 521px;
         }
     }
-}
 
-.Side__Controller {
-    font-size: 1.5em;
-    margin: 25px 0;
-    color: DarkGray;
-    text-align: center;
-    width: 200px;
+    .Side__Controller {
+        margin: $space-small auto;
+        text-align: center;
+        width: $width-tiny;
+    
+        .Side__Player & {
+            margin: $space-large 0;
+        }
 
-    .Side__Player & {
-        margin: 75px 0;
+        &_Name {
+            font-size: 1.25em;
+        }
     }
+    
 }

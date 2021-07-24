@@ -17,7 +17,7 @@
     .Battle__Interface_Wrapper {
         max-width: 1024px;
         margin: 0 auto;
-        padding: 50px;
+        padding: $space-large;
         position: relative;
         height: 100%;
         overflow: hidden;
@@ -34,14 +34,16 @@
 .Battle__Timer {
     order: 1;
     text-align: center;
-    font-size: 2.4em;
-    background-color: #333;
-    color: #fff;
-    padding: 5px 5px 3px 8px;
-    margin: 0 -25px -10px;
+    margin: 0 -45px -40px;
     z-index: 10;
-    min-width: 60px;
+    width: $width-tiny / 2;
     flex: 0 0 auto;
+    font-family: $font-design-family;
+    font-size: $font-size-large;
+    text-shadow:
+        1px 1px 0 $font-inverse-color,
+        1px 0px 0 $font-inverse-color,
+        0px 1px 0 $font-inverse-color;
 }
 
 .Battle__HUD {
@@ -77,8 +79,8 @@
         }
 
         .Battle__HUD_Ki_Number {
-            right: auto;
-            left: 100%;
+            left: auto;
+            right: -25px;
         }
 
         .Battle__HUD_Sprite {
@@ -89,19 +91,25 @@
     &_Character {
         
         &_Number {
-            font-size: 1em;
-            margin: 15px 10px 5px;
+            font-size: $font-size-small;
+            margin: $space-small / 2 $space-small 0;
         }
     
         &_Name {
-            font-size: 2.4em;
-            margin: 5px 10px 15px;
+            font-family: $font-design-family;
+            font-size: $font-size-medium;
+            margin: 0 $space-small $space-small / 2;
+            text-shadow:
+                1px 1px 0 $font-inverse-color,
+                1px 0px 0 $font-inverse-color,
+                0px 1px 0 $font-inverse-color;
         }
 
         &_Life {
             border: 2px solid Black;
             margin: 5px -30px 2px;
             position: relative;
+            z-index: 100;
             display: flex;
             width: 400px;
             flex-direction: row-reverse;
@@ -132,13 +140,19 @@
             background-color: rgba(255, 255, 255, 0.5);
 
             .Battle__HUD_Ki_Number {
-                background-color: #333;
-                color: #fff;
-                font-size: 2.4em;
-                padding: 7px 7px 5px 10px;
+                font-family: $font-design-family;
+                font-size: $font-size-large;
+                text-shadow:
+                    1px 1px 0 $font-inverse-color,
+                    1px 0px 0 $font-inverse-color,
+                    0px 1px 0 $font-inverse-color;
+                padding: 5px;
                 position: absolute;
-                bottom: -2px;
-                right: 100%;
+                bottom: -25px;
+                left: -25px;
+                min-width: 50px;
+                z-index: 100;
+                text-align: center;
             }
         
             .Battle__HUD_Ki_Bar {
@@ -209,6 +223,10 @@
         box-shadow: 0 0 0 2px #333;
         position: absolute;
         z-index: -1;
+
+        .--info-blank &{
+            display: none;    
+        }
     }
 
     .--info & {
@@ -240,9 +258,13 @@
     }
 
     &_Text {
-        text-transform: capitalize;
-        font-size: 4em;
+        font-family: $font-design-family;
+        font-size: $font-size-large;
         white-space: nowrap;
+        text-shadow:
+            1px 1px 0 $font-inverse-color,
+            1px 0px 0 $font-inverse-color,
+            0px 1px 0 $font-inverse-color;
     }
 }
 
@@ -253,11 +275,16 @@
 
     &_Text {
         flex: 1 1 auto;
-        font-size: 2.4em;
+        font-size: $font-size * 2;
+        font-family: $font-design-family;
         opacity: 0;
         transition: opacity 2s ease;
         padding: 4px 20px;
         position: relative;
+        text-shadow:
+            1px 1px 0 $font-inverse-color,
+            1px 0px 0 $font-inverse-color,
+            0px 1px 0 $font-inverse-color;
 
         &.--show {
             opacity: 1;
@@ -269,8 +296,11 @@
         }
 
         i {
-            font-size: 0.5em;
+            font-family: $font-family;
+            font-size: $font-size;
             display: block;
+            margin-top: -$space-small;
+            text-shadow: none;
         }
     }
 }
@@ -440,7 +470,6 @@
 }
 
 /* Menu */
-
 .Battle__Menu {
     position: fixed;
     top: 0;
@@ -458,7 +487,7 @@
     }
 
     & > * {
-        min-width: 300px;
+        min-width: $width-small;
         background-color: White;
         text-align: center;
         border: 2px solid Black;

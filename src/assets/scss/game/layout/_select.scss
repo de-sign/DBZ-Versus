@@ -1,26 +1,15 @@
 /* Select */
 #CTX__Select {
-	display: flex;
-	flex-direction: column;
-	text-align: center;
-	justify-content: center;
-	padding: 20px;
-    
-    h1 {
-        font-size: 7em;
-        margin: 0;
-    }
 
     /* Player */
     .Select__Players {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 90px 0;
         
         & > * {
-            flex: 1 1 450px;
-            max-width: 450px;
+            flex: 1 1 ($width-medium / 2) + $width-tiny;
+            max-width: ($width-medium / 2) + $width-tiny;
             text-align: left;
             order: 0;
         }
@@ -37,24 +26,28 @@
             }
                 
             &_Character_Sprite {
-                margin: 0 0 25px;
+                margin: 0 0 $space-medium;
                 display: inline-block;
             }
             
             &_Character_Name {
-                font-size: 2.4em;
+                font-family: $font-design-family;
+                font-size: $font-size-large;
                 margin: 0;
 
                 i {
+                    font-family: $font-family;
                     display: block;
-                    font-size: 9px;
+                    font-size: $font-size-small;
+                    color: $font-disable-color;
+                    margin-top: -$space-small;
                 }
             }
 
             &_Number {
-                font-size: 1.5em;
-                margin: 0;
-                color: DarkGray;
+                font-size: 1.25em;
+                margin: $space-small 0 0;
+                color: $font-disable-color;
             }
         }
     }
@@ -63,34 +56,21 @@
     .Select__Characters {
         display: flex;
         justify-content: center;
+        margin: $space-large 0;
 
         & > * {
             margin: 5px;
             position: relative;
         }
 
-        .Menu__cursor_0::before,
-        .Menu__cursor_1::after {
-            display: block;
-            padding: 5px;
-
-            background-color: #333;
-            color: #FFF;
-            position: absolute;
-        }
-
         .Menu__cursor_0::before {
             content: 'P1';
-            box-shadow: 1px 1px 0 0 #FFF;
-            top: -1px;
-            left: -1px;
+            font-family: $font-family;
         }
 
         .Menu__cursor_1::after {
             content: 'P2';
-            box-shadow: -1px -1px 0 0 #FFF;
-            bottom: -1px;
-            right: -1px;
+            font-family: $font-family;
         }
     }
 }

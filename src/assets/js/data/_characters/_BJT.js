@@ -2,7 +2,7 @@
 /* ----- START INITIALIZE ----- */
 /* ----- MENU GameData/GameData.oCharacter ----- */
 /* ----- DETAILS
-**Bejīta**  
+**Bejita**  
 Définition du personnage possédant toutes les informations comme les couleurs, les FRAMES, les animations, etc  
 Prévue pour compléter les informations contenues dans [GameData.oEntity.oCharacter](GameData.oEntity.oCharacter.md).
 ----- */
@@ -13,25 +13,25 @@ GameData.oCharacter.BJT = {
     /* ----- DETAILS Liste des couleurs de l'entité. ----- */
     aColor: [
         {
-            sName: 'Bejīta SSJ',
+            sName: 'Bejita SSJ',
             sColor: 'CTM_SSJ',
             sColorName: 'Custom color',
             sEntityColor: 'ORG'
         },
         {
-            sName: 'Bejīta',
+            sName: 'Bejita',
             sColor: 'CTM_BAD',
             sColorName: 'Custom color',
             sEntityColor: 'PRP'
         },
         {
-            sName: 'Bejīta SSJ',
+            sName: 'Bejita SSJ',
             sColor: 'LSW_SSJ',
             sColorName: 'Legendary Super Warrior color',
             sEntityColor: 'ORG'
         },
         {
-            sName: 'Bejīta',
+            sName: 'Bejita',
             sColor: 'LSW_BAD',
             sColorName: 'Legendary Super Warrior color',
             sEntityColor: 'PRP'
@@ -898,6 +898,10 @@ GameData.oCharacter.BJT = {
                 nMinimumReduce: 40,
                 nGatlingLevel: 3,
                 sCheck: 'bGround',
+                oFreeze: {
+                    bInfo: true,
+                    nLength: 45
+                },
                 aEntity: {
                     sType: 'beam',
                     sSFX: 'ADO__Beam',
@@ -910,7 +914,6 @@ GameData.oCharacter.BJT = {
                     }
                 },
                 oStun: {
-                    nFreeze: 45,
                     nBlock: 36,
                     nHit: 36,
                     bLaunch: true,
@@ -933,7 +936,7 @@ GameData.oCharacter.BJT = {
             {
                 aFilter: ['CTM_BAD', 'LSW_BAD'],
                 sCod: 'attack_236C',
-                sName: 'Gyarikku-hō',
+                sName: 'Gyarikku-ho',
                 sAnimation: 'attack_236C',
                 sListAnimation: 'list_236C',
                 nCost: 30,
@@ -941,6 +944,10 @@ GameData.oCharacter.BJT = {
                 nMinimumReduce: 40,
                 nGatlingLevel: 3,
                 sCheck: 'bGround',
+                oFreeze: {
+                    bInfo: true,
+                    nLength: 45
+                },
                 aEntity: {
                     sType: 'beam',
                     sSFX: 'ADO__Beam',
@@ -953,7 +960,6 @@ GameData.oCharacter.BJT = {
                     }
                 },
                 oStun: {
-                    nFreeze: 45,
                     nBlock: 36,
                     nHit: 36,
                     bLaunch: true,

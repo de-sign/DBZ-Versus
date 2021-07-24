@@ -169,12 +169,10 @@ Object.assign(
                             oRow = oRow.oFollowUp;
                         }
                         while( oRow && !oRow.bNotInCommandList );
-                        
-                        aRow.forEach( (oRow, nDeep) => {
-                            const oListCommand = this.createCommandRow(oRow, nDeep);
-                            oListCommand.__oData = oRow;
-                            oLayer.add(oListCommand, '.Training__Menu_List_Character_Command');
-                        } );
+
+                        const oListCommand = this.createCommandRow(aRow);
+                        oListCommand.__oData = aRow[ aRow.length - 1 ];
+                        oLayer.add(oListCommand, '.Training__Menu_List_Character_Command');
                     }
                 }
 
@@ -182,8 +180,9 @@ Object.assign(
                 OutputManager.getElement('LAY__Training_Menu_List').add(oLayer);
             },
 
-            createCommandRow: function(oCommand, nDeep){
-                const oBtn = { A: true, B: true, C: true },
+            createCommandRow: function(aCommand){
+                const oCommand = aCommand[0], 
+                    oBtn = { A: true, B: true, C: true },
                     hCommand = this.oPattern.oCommand.hElement.cloneNode(true);
 
                 hCommand.removeAttribute('id');
@@ -192,22 +191,16 @@ Object.assign(
                 hCommand.querySelector('.Training__Menu_List_Ki').innerHTML = oCommand.nCost ? ( oCommand.nCost / GameSettings.oKi.nBar ) + ' Ki' : '';
 
                 const hListCommand = hCommand.querySelector('.Training__Menu_List_Command');
-                let sName = oCommand.sName;
-                if( nDeep ){
-                    sName = '- ' + sName;
-                    for( let nIndexDeep = 0; nIndexDeep < nDeep; nIndexDeep++ ){
-                        sName = '&nbsp;' + sName;
-                    }
-                    hListCommand.classList.add('--cancel');
-                }
-                hListCommand.innerHTML = sName;
+                hListCommand.innerHTML = oCommand.sName;
 
                 let sButtons = '';
-                oCommand.oManipulation && oCommand.oManipulation.aButtons.forEach( oButton => {
-                    Object.keys(oButton).forEach( sBtn => {
-                        if( InitializeTraining.oSymbol[sBtn] ){
-                            sButtons += '<b class="Training__InputButton ' + ( ( oBtn[sBtn] ? '--btn' : '--dir' ) )  + '">' + InitializeTraining.oSymbol[sBtn] + '</b>';
-                        }
+                aCommand.forEach( oStepCommand => {
+                    oStepCommand.oManipulation && oStepCommand.oManipulation.aButtons.forEach( oButton => {
+                        Object.keys(oButton).forEach( sBtn => {
+                            if( InitializeTraining.oSymbol[sBtn] ){
+                                sButtons += '<b class="Training__InputButton ' + ( ( oBtn[sBtn] ? '--btn' : '--dir' ) )  + '">' + InitializeTraining.oSymbol[sBtn] + '</b>';
+                            }
+                        } );
                     } );
                 } );
                 hCommand.querySelector('.Training__Menu_List_Button').innerHTML = sButtons;

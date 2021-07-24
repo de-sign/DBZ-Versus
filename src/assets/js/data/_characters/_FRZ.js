@@ -2,7 +2,7 @@
 /* ----- START INITIALIZE ----- */
 /* ----- MENU GameData/GameData.oCharacter ----- */
 /* ----- DETAILS
-**Furīza**  
+**Furiza**  
 Définition du personnage possédant toutes les informations comme les couleurs, les FRAMES, les animations, etc  
 Prévue pour compléter les informations contenues dans [GameData.oEntity.oCharacter](GameData.oEntity.oCharacter.md).
 ----- */
@@ -13,7 +13,7 @@ GameData.oCharacter.FRZ = {
     /* ----- DETAILS Liste des couleurs de l'entité. ----- */
     aColor: [
         {
-            sName: 'Furīza',
+            sName: 'Furiza',
             sColor: 'LSW_FRZ',
             sColorName: 'Legendary Super Warrior color',
             sEntityColor: 'PRP'
@@ -26,7 +26,7 @@ GameData.oCharacter.FRZ = {
         }
         /*
         {
-            sName: 'Metaru Kūra',
+            sName: 'Metaru Kura',
             sColor: 'CTM_MKR',
             sColorName: 'Custom color',
             sEntityColor: 'ORG'
@@ -829,17 +829,24 @@ GameData.oCharacter.FRZ = {
         aOffense: [
             {
                 sCod: 'attack_236C',
+                /*
                 oName: {
-                    LSW_FRZ: 'Desu Bōru',
-                    SWP_FRT: 'Desu Bōru',
-                    CTM_MTL_KRA: 'Sūpānova Kūra'
+                    LSW_FRZ: 'Desu Boru',
+                    SWP_FRT: 'Desu Boru',
+                    CTM_MTL_KRA: 'Supanova Kura'
                 },
+                */
+                sName: 'Desu Boru',
                 sAnimation: 'attack_236C',
                 nCost: 30,
                 nDamage: 300,
                 nMinimumReduce: 40,
                 nGatlingLevel: 3,
                 sCheck: 'bGround',
+                oFreeze: {
+                    bInfo: true,
+                    nLength: 45
+                },
                 aEntity: {
                     sType: 'projectile',
                     sSFX: 'ADO__Beam',
@@ -851,7 +858,6 @@ GameData.oCharacter.FRZ = {
                     }
                 },
                 oStun: {
-                    nFreeze: 45,
                     nBlock: 36,
                     nHit: 36,
                     bLaunch: true,
@@ -874,7 +880,7 @@ GameData.oCharacter.FRZ = {
             },
             {
                 sCod: 'attack_C',
-                sName: 'Desubīmu',
+                sName: 'Desubimu',
                 sAnimation: 'attack_C',
                 sListAnimation: 'list_C',
                 nCost: 10,

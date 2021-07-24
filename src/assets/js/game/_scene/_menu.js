@@ -39,7 +39,7 @@ Object.assign(
                                 let sMenuSelected = this.oMenu.getSelected().sId;
                                 OutputManager.getChannel('CHN__SFX').play('ADO__Validate');
                                 switch( sMenuSelected ){
-                                    case 'TXT__Menu_Versus':
+                                    case 'TXT__Menu_Local':
                                         SceneManager.change( new SideScene() );
                                         break;
                                     case 'TXT__Menu_Training':
@@ -71,7 +71,7 @@ Object.assign(
 				},
                 destroy: function(){
                     GameHelper.destroy();
-                    const aName = [ 'Versus', 'Training' ],
+                    const aName = [ 'Versus', 'Online', null, 'Challenge', 'Training' ],
                         nIndex = this.oMenu.destroy()[0];
 
                     return {

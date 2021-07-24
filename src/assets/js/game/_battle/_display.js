@@ -145,8 +145,8 @@ Object.assign(
                     }
                     // Show
                     this.oContext.addTickUpdate( () => {
-                        this.oContext.hElement.classList.remove('--info-left', '--info-center', '--info-right');
-                        this.oContext.hElement.classList.add('--info', '--info-' + this.oCurrent.sDirection);
+                        this.oContext.hElement.classList.remove('--info-left', '--info-center', '--info-right', '--info-blank');
+                        this.oContext.hElement.classList.add('--info', '--info-' + this.oCurrent.sDirection, this.oCurrent.sText ? '--info-text' : '--info-blank');
                     } );
                 }
             },

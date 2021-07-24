@@ -51,7 +51,7 @@ Object.assign(
         oStage: {
             GZA: {
                 sCod: 'GZA',
-                sName: 'Gizādo Arano <i>Legendary Super Warrior background</i>',
+                sName: 'Gizado Arano <i>Legendary Super Warrior background</i>',
                 sColor: '#90D0F8'
             },
             NMK: {
@@ -70,7 +70,7 @@ Object.assign(
             },
             KSK: {
                 sCod: 'KSK',
-                sName: 'Kaiōshin-kai <i>Legendary Super Warrior background</i>',
+                sName: 'Kaioshin-kai <i>Legendary Super Warrior background</i>',
                 sColor: '#F098F8'
             }
         },

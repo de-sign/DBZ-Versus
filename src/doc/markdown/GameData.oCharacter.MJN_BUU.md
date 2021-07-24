@@ -1021,13 +1021,17 @@ GameData.oCharacter.MJN_BUU.oCommands = {
         {
             aFilter: ['LSW_MJB'],
             sCod: 'attack_236C',
-            sName: 'Puranetto Bāsuto',
+            sName: 'Puranetto Basuto',
             sAnimation: 'attack_236C',
             nCost: 30,
             nDamage: 300,
             nMinimumReduce: 40,
             nGatlingLevel: 3,
             sCheck: 'bGround',
+            oFreeze: {
+                bInfo: true,
+                nLength: 45
+            },
             aEntity: {
                 sType: 'projectile',
                 sSFX: 'ADO__Beam',
@@ -1039,7 +1043,6 @@ GameData.oCharacter.MJN_BUU.oCommands = {
                 }
             },
             oStun: {
-                nFreeze: 45,
                 nBlock: 36,
                 nHit: 36,
                 bLaunch: true,
@@ -1064,13 +1067,17 @@ GameData.oCharacter.MJN_BUU.oCommands = {
             
             aFilter: ['LSW_PKR'],
             sCod: 'attack_236C',
-            sName: 'Makūhōidan',
+            sName: 'Makuhoidan',
             sAnimation: 'attack_236C',
             nCost: 30,
             nDamage: 300,
             nMinimumReduce: 40,
             nGatlingLevel: 3,
             sCheck: 'bGround',
+            oFreeze: {
+                bInfo: true,
+                nLength: 45
+            },
             aEntity: {
                 sType: 'projectile',
                 sSFX: 'ADO__Beam',
@@ -1082,7 +1089,6 @@ GameData.oCharacter.MJN_BUU.oCommands = {
                 }
             },
             oStun: {
-                nFreeze: 45,
                 nBlock: 36,
                 nHit: 36,
                 bLaunch: true,

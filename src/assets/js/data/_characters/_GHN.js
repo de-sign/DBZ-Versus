@@ -805,7 +805,7 @@ GameData.oCharacter.GHN = {
             // GHS
             {
                 sCod: 'attack_236C',
-                sName: 'Masenkō',
+                sName: 'Masenko',
                 sAnimation: 'attack_236C',
                 sListAnimation: 'list_236C',
                 nCost: 30,
@@ -813,6 +813,10 @@ GameData.oCharacter.GHN = {
                 nMinimumReduce: 40,
                 nGatlingLevel: 3,
                 sCheck: 'bGround',
+                oFreeze: {
+                    bInfo: true,
+                    nLength: 45
+                },
                 aEntity: {
                     sType: 'beam',
                     sSFX: 'ADO__Beam',
@@ -825,7 +829,6 @@ GameData.oCharacter.GHN = {
                     }
                 },
                 oStun: {
-                    nFreeze: 45,
                     nBlock: 36,
                     nHit: 36,
                     bLaunch: true,

@@ -1,49 +1,36 @@
 /* Stage */
 #CTX__Stage {
-	display: flex;
-	flex-direction: column;
-	text-align: center;
-	justify-content: center;
-	padding: 20px;
-    
-    h1 {
-        font-size: 7em;
-        margin: 0;
-    }
     
     h2 {
-        font-size: 2.4em;
+        font-size: $font-size-medium;
     }
             
     h3 {
-        font-size: 1.5em;
-        text-align: center;
 
+        font-size: 1.25em;
+        text-align: center;
+        font-family: $font-family;
             
         i {
             display: block;
-            font-size: 9px;
-            color: DarkGray;
+            font-size: $font-size-small;
+            color: $font-disable-color;
         }
-    }
-
-    & > * {
-        margin: 50.5px 0;
     }
 
     /* Stage */
     .Stage__Stages {
-        min-height: 108px;
+        min-height: $height-tiny;
 
         .Menu__Layer {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 15px 0;
+            margin: $space-small 0;
 
             & > * {
                 transform: scale(0.75) !important;
-                margin: 0 -15px;
+                margin: 0 -$space-small;
                 
                 &.Menu__cursor_0 {
                     transform: scale(1) !important;
@@ -54,7 +41,7 @@
     }
 
     .Stage__BGMs {
-        margin-top: 0;
+        margin-top: $space-medium;
 
         .Menu__Layer {
 
@@ -66,6 +53,7 @@
                 margin: 0 auto;
                 transform: scale(0.75) !important;
                 opacity: 0.4;
+                width: $width-small;
 
                 &.Menu__cursor_0 {
                     transform: scale(1) !important;
@@ -73,7 +61,7 @@
                     position: relative;
                     z-index: 100;
                     order: 1;
-                    margin: 15px auto;
+                    margin: $space-small auto;
                 }
                 
                 &.Menu__cursor_prev {

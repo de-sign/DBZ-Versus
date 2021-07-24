@@ -1,36 +1,17 @@
 /* Title */
 #CTX__Title {
-	display: flex;
-	flex-direction: column;
-	text-align: center;
-	justify-content: center;
-	padding: 20px;
 
-    h1 {
-        font-size: 7em;
-
-        span {
-            display: block;
-            font-size: 10px;
-            color: DarkGray;
-        }
+    .DS-Information {
+        animation: 2s ease-in 0s 1 DS-KF-Appear;  
+        height: $height-medium;
     }
-
+    
     ul {
-        height: 128px;
+        animation: 2s ease-out 0s infinite DS-KF-Blink;  
+        margin-top: $space-large;
 
         li {
             display: block;
-        }
-    }
-
-    .Title__Information {
-        margin: 15px auto;
-        max-width: 500px;
-
-        p {
-            margin: 25px 0;
-            color: darkgray;
         }
     }
 }

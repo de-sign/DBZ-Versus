@@ -4,7 +4,6 @@ function BattleGatling(oInputBuffer, oCommandData){
     this.oCommandData = null;
 
     this.oCurrent = null;
-    this.bFreeze = false;
     this.oNext = null;
     this.oUsed = {};
     this.aTimerEntity = [];
@@ -53,7 +52,6 @@ Object.assign(
 
         reset: function(){
             this.oCurrent = null;
-            this.bFreeze = false;
             this.oNext = null;
             this.oUsed = {};
             this.aTimerEntity = [];
@@ -62,10 +60,15 @@ Object.assign(
             if( oCommand.bResetGatling ){
                 this.reset();
             } else {
-                this.bFreeze = false;
                 this.oNext = null;
             }
-            this.oCurrent = Object.assign({ nFrameStart: TimerEngine.nFrames }, oCommand);
+            this.oCurrent = Object.assign(
+                {
+                    nFrameStart: TimerEngine.nFrames,
+                    bFreeze: false
+                },
+                oCommand
+            );
             this.oUsed[oCommand.sCod] = true;
             if( oCommand.aEntity ){
                 this.aTimerEntity = [];
@@ -158,7 +161,13 @@ Object.assign(
             return bCanUse;
         },
         needFreeze: function(){
-            return this.oCurrent && this.oCurrent.oStun.nFreeze && !this.bFreeze;
+            let bFreeze = false;
+            if( this.oCurrent && this.oCurrent.oFreeze && !this.oCurrent.bFreeze ){
+                if( !this.oCurrent.oFreeze.nFrameStart || ( this.oCurrent.nFrameStart + this.oCurrent.oFreeze.nFrameStart <= TimerEngine.nFrames ) ){
+                    bFreeze = true;
+                }
+            }
+            return bFreeze;
         },
         isJumpCancellable: function(){
             return this.oCurrent && this.oCurrent.bJumpCancellable;

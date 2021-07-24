@@ -1,23 +1,8 @@
 /* Setting */
 #CTX__Setting {
-	display: flex;
-	flex-direction: column;
-	text-align: center;
-	justify-content: center;
-	padding: 20px;
-
-    h1 {
-        font-size: 7em;
-
-        span {
-            display: block;
-            font-size: 10px;
-            color: DarkGray;
-        }
-    }
 
     ul {
-        width: 400px;
+        width: $width-small;
     }
     
     .Setting__Button {

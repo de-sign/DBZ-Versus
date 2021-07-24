@@ -1,0 +1,104 @@
+body {
+	font-size: $font-size;
+	font-family: $font-family;
+	color: $font-color;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: $font-emphasis-family;
+    color: $font-emphasis-color;
+}
+
+.--font {
+    &-design {
+        font-size: $font-size-extra;
+        font-family: $font-design-family;
+        color: $font-design-color;
+    }
+
+    &-japan {
+        font-size: $font-size-small;
+        font-family: $font-japan-family;
+        color: $font-japan-color;
+        text-shadow:
+            1px 1px 0 $font-color,
+            1px 0px 0 $font-color,
+            1px -1px 0 $font-color,
+            0px 1px 0 $font-color,
+            0px 0px 0 $font-color,
+            0px -1px 0 $font-color,
+            -1px 1px 0 $font-color,
+            -1px 0px 0 $font-color,
+            -1px -1px 0 $font-color;
+    }
+}
+
+.DS-Page {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	justify-content: flex-start;
+	padding: $space-large $space-medium;
+}
+
+.DS-Title {
+    font-family: $font-design-family;
+    font-size: $font-size-extra;
+    margin: $space-large 0;
+}
+
+.DS-Logo {
+
+    margin: $space-large 0;
+
+    * {
+        display: block;
+        font-size: $font-size-extra;
+        max-width: $width-small;
+        margin: 0 auto;
+        text-align: right;
+    }
+
+    b {
+        font-family: $font-design-family;
+        text-align: left;
+        margin-bottom: -$space-large;
+    }
+    
+    span {
+        margin-top: $space-small;
+        font-weight: normal;
+    }
+
+    i {
+        font-style: normal;
+        font-size: $font-size-small;
+        color: DarkGray;
+    }
+}
+
+.DS-Information {
+    font-size: $font-size-small;
+    font-weight: normal;
+    margin: $space-medium auto;
+    max-width: $width-medium;
+
+    > *:first-child {
+        margin-top: 0;
+    }
+
+    p {
+        margin: $space-medium 0;
+    }
+}
+
+@keyframes DS-KF-Blink {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes DS-KF-Appear {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}

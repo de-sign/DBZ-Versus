@@ -1,39 +1,13 @@
 /* Loading */
-#CTX__Loading {
-	display: flex;
-	flex-direction: column;
-	text-align: center;
-	justify-content: center;
-	padding: 20px;
+#CTX__Loading {}
 
-    h1 {
-        font-size: 7em;
-
-        span {
-            display: block;
-            font-size: 10px;
-            color: DarkGray;
-        }
-    }
+#LAY__LoadingStep {
+    margin: $space-medium auto;
+    height: $height-medium;
 
     span {
         display: block;
         text-align: center;
-        font-size: 1.5em;
         color: DarkGray;
     }
-
-    .Loading__Information {
-        margin: 15px auto;
-        max-width: 500px;
-
-        p {
-            margin: 25px 0;
-            color: darkgray;
-        }
-    }
-}
-
-#LAY__LoadingStep {
-    height: 178px;
 }

@@ -1,13 +1,23 @@
-<section id="CTX__Menu" class="outputContext">
-    <h1>
-        DBZ-Versus
-        <span>{{ FW.version }}.{{ FW.date }}.{{ FW.time }}</span>
+<section id="CTX__Menu" class="outputContext DS-Page">
+    <h1 class="DS-Logo">
+        <b>DBZ</b>
+        <span>Versus</span>
+        <i>{{ FW.version }}.{{ FW.date }}.{{ FW.time }}</i>
     </h1>
     <nav id="LAY__Menu" class="outputLayer">
         <ul>
-            <li id="TXT__Menu_Versus" class="outputText">Versus</li>
-            <li id="TXT__Menu_Training" class="outputText">Training</li>
-            <li id="TXT__Menu_Setting" class="outputText">Settings</li>
+            <li class="Menu__Title">Versus</li>
+            <li id="TXT__Menu_Local" class="outputText Menu__Button">Local</li>
+            <li class="outputText --disable Menu__Button">Online</li>
+        </ul>
+        <ul>
+            <li class="Menu__Title">Solo</li>
+            <li class="outputText --disable Menu__Button">How to play</li>
+            <li class="outputText --disable Menu__Button">Challenge</li>
+            <li id="TXT__Menu_Training" class="outputText Menu__Button">Training</li>
+        </ul>
+        <ul>
+            <li id="TXT__Menu_Setting" class="outputText Menu__Button">Settings</li>
         </ul>
     </nav>
 </section>

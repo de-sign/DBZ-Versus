@@ -73,7 +73,7 @@ function LoadingScene(){
 
 Object.assign(
     LoadingScene, {
-        nStepPrint: 6,
+        nStepPrint: 9,
 
         prototype: Object.assign(
             Object.create(Scene.prototype), {

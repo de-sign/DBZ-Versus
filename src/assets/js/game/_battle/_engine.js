@@ -367,19 +367,26 @@ Object.assign(
             for( let nIndex = 0; nIndex < this.aPlayer.length; nIndex++ ){
                 const oPlayer = this.aPlayer[nIndex];
                 if( oPlayer.oGatling.needFreeze() ){
-                    oPlayer.oGatling.bFreeze = true;
+                    oPlayer.oGatling.oCurrent.bFreeze = true;
 
                     // Freeze
                     aEntity.forEach( oEntity => {
-                        oEntity.sId != oPlayer.sId && oEntity.setFreeze(oPlayer.oGatling.oCurrent.oStun.nFreeze);
+                        oEntity.sId != oPlayer.sId && oEntity.setFreeze(oPlayer.oGatling.oCurrent.oFreeze.nLength);
                     } );
 
                     // Texte
-                    SceneManager.oCurrent.oInfo.add( {
-                        sImg: oPlayer.oData.oPath.sFace,
-                        sText: oPlayer.oGatling.oCurrent.sName + '&nbsp;!',
-                        sDirection: oPlayer.nPlayer == '1' ? 'left' : 'right'
-                    } );
+                    SceneManager.oCurrent.oInfo.add(
+                        oPlayer.oGatling.oCurrent.oFreeze.bInfo ?
+                        {
+                            nLength: oPlayer.oGatling.oCurrent.oFreeze.nLength,
+                            sImg: oPlayer.oData.oPath.sFace,
+                            sText: oPlayer.oGatling.oCurrent.sName + '&nbsp;!',
+                            sDirection: oPlayer.nPlayer == '1' ? 'left' : 'right',
+                        } :
+                        {
+                            nLength: oPlayer.oGatling.oCurrent.oFreeze.nLength
+                        }
+                    );
                     break;
                 }
             }

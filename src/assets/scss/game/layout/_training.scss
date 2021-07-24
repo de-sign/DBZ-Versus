@@ -1,21 +1,17 @@
 // Input
 .Training__InputButton {
-    padding: 13px 0 0 8px;
+    padding: 5px;
     color: White;
     background-color: Black;
     margin: 0 2px;
     display: inline-block;
     width: 25px;
     height: 25px;
-    line-height: 0;
+    line-height: 14px;
     border-radius: 50%;
-    text-align: left;
-    font-size: 10px;
-
-    &.--dir {
-        font-family: monospace;
-        font-size: 16px;
-    }
+    text-align: center;
+    font-size: 16px;
+    vertical-align: middle;
 }
 
 // Menu
@@ -74,7 +70,7 @@
     }
 
     &_Sprite {
-        margin-left: 25px;
+        margin-left: $space-medium;
         position: relative;
         width: 200px;
         height: 200px;
@@ -89,16 +85,16 @@
     
     &_Ki {
         width: 60px;
-        margin: 0 25px 0 0 !important;
+        margin: 0 $space-medium 0 0 !important;
     }
 
     &_Command {
-        min-width: 300px;
+        min-width: $width-small;
     }
 
     .--cancel {
-        color: DarkGray;
-        font-size: 0.75em;
+        color: $font-disable-color;
+        font-size: $font-size-small;
     }
 }
 
@@ -209,7 +205,6 @@
         display: flex !important;
         align-items: flex-start;
         text-align: left;
-        font-size: 1.2em !important;
         line-height: 1em;
         padding: 5px 20px !important;
     
@@ -218,10 +213,10 @@
         }
         
         & > *:last-child {
-            color: #666;
+            font-weight: bold;
             flex: 1 1 100%;
             text-align: right;
-            margin-left: 25px;
+            margin-left: $space-medium;
         }
     }
 }

@@ -1,6 +1,6 @@
 # GameData.oCharacter.GKU_SSJ
 
-**Gokū SSJ**  Définition du personnage possédant toutes les informations comme les couleurs, les FRAMES, les animations, etc  Prévue pour compléter les informations contenues dans [GameData.oEntity.oCharacter](GameData.oEntity.oCharacter.md).
+**Goku SSJ**  Définition du personnage possédant toutes les informations comme les couleurs, les FRAMES, les animations, etc  Prévue pour compléter les informations contenues dans [GameData.oEntity.oCharacter](GameData.oEntity.oCharacter.md).
 
 
 _System :_ DATA  
@@ -22,7 +22,7 @@ Liste des couleurs de l'entité.
 ```javascript
 GameData.oCharacter.GKU_SSJ.aColor = [
     {
-        sName: 'Gokū SSJ',
+        sName: 'Goku SSJ',
         sColor: 'CTM_SSJ',
         sColorName: 'Custom color',
         sEntityColor: 'BLU'
@@ -34,7 +34,7 @@ GameData.oCharacter.GKU_SSJ.aColor = [
         sEntityColor: 'PRP'
     },
     {
-        sName: 'Gokū SSJ',
+        sName: 'Goku SSJ',
         sColor: 'LSW_SSJ',
         sColorName: 'Legendary Super Warrior color',
         sEntityColor: 'BLU'
@@ -914,7 +914,7 @@ GameData.oCharacter.GKU_SSJ.oCommands = {
     aOffense: [
         {
             sCod: 'attack_236C',
-            sName: 'Chô Kamehameha',
+            sName: 'Cho Kamehameha',
             sAnimation: 'attack_236C',
             sListAnimation: 'list_236C',
             nCost: 30,
@@ -922,6 +922,10 @@ GameData.oCharacter.GKU_SSJ.oCommands = {
             nMinimumReduce: 40,
             nGatlingLevel: 3,
             sCheck: 'bGround',
+            oFreeze: {
+                bInfo: true,
+                nLength: 45
+            },
             aEntity: {
                 sType: 'beam',
                 sSFX: 'ADO__Beam',
@@ -934,7 +938,6 @@ GameData.oCharacter.GKU_SSJ.oCommands = {
                 }
             },
             oStun: {
-                nFreeze: 45,
                 nBlock: 36,
                 nHit: 36,
                 bLaunch: true,
