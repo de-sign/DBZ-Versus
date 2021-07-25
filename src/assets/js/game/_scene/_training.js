@@ -121,9 +121,6 @@ Object.assign(
                     BattleScene.prototype.destroy.call(this);
                     this.oTraining.destroy();
                     GameHelper.destroy();
-                    return {
-                        MNU__nIndex: 1
-                    };
                 },
 
                 endBattle: function(oEndGame){

@@ -1,8 +1,34 @@
 /* Menu */
-#CTX__Menu {}
+#CTX__Menu {
 
-#LAY__Menu {
-    ul {
-        width: $width-medium / 2;
+    .DS-Information {
+        animation: 2s ease-in 0s 1 DS-KF-Appear;  
+        height: $height-medium;
+    
+        ul {
+            animation: 2s ease-out 0s infinite DS-KF-Blink;  
+            margin-top: $space-large;
+    
+            li {
+                display: block;
+            }
+        }
+    }
+
+    #LAY__Menu {
+        display: none;
+        ul {
+            width: $width-medium / 2;
+        }
+    }
+
+    &.--menu {
+        .DS-Information {
+            display: none;
+        }
+
+        #LAY__Menu {
+            display: block;
+        }
     }
 }

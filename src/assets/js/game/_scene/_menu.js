@@ -3,6 +3,7 @@ function MenuScene(){
 	this.oContext = null;
     this.oMenu = null;
     this.oController = null;
+    this.nController = 0;
 }
 
 Object.assign(
@@ -24,12 +25,57 @@ Object.assign(
 				init: function(){
                     Scene.prototype.init.call(this, 'CTX__Menu');
 
-                    this.oMenu = new GameMenu('LAY__Menu', SceneManager.oTransverseData.MNU__nIndex || 0);
-                    GameHelper.set(MenuScene.aHelper);
+                    this.nController = ControllerManager.nController;
 
-                    OutputManager.getChannel('CHN__BGM').play('ADO__Menu', false, true);
+                    this.oMenu = new GameMenu('LAY__Menu', SceneManager.oTransverseData.MNU__nIndex || 0);
+
+                    if( SceneManager.oTransverseData.MNU__Title ){
+                        GameHelper.set(MenuScene.aHelper);
+                        OutputManager.getChannel('CHN__BGM').play('ADO__Menu', false, true);
+                    }
 				},
 				update: function(){
+                    this[ SceneManager.oTransverseData.MNU__Title ? 'updateMenu' : 'updateTitle' ]();
+				},
+                destroy: function(){
+                    GameHelper.destroy();
+                    const aName = [ 'Versus', 'Online', null, 'Challenge', 'Training' ],
+                        nIndex = this.oMenu.destroy()[0];
+
+                    return {
+                        MNU__nIndex: nIndex,
+                        BTL__sType: aName[nIndex],
+                        MNU__aController: [this.oController, null]
+                    };
+                },
+
+                updateTitle: function(){
+                    let bPress = false;
+                    if( this.nController < ControllerManager.nController ){
+                        bPress = true;
+                    } else {
+                        for( let sController in ControllerManager.oController ){
+                            const oController = ControllerManager.getController(sController);
+                            if( this.nFrameCreated < oController.nFrameChange ){
+                                bPress = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if( bPress ){
+                        OutputManager.oAudio.resume();
+                        OutputManager.getChannel('CHN__SFX').play('ADO__Validate');
+                        OutputManager.getChannel('CHN__BGM').play('ADO__Menu', false, true);
+
+                        SceneManager.oTransverseData.MNU__Title = true;
+                        this.oContext.hElement.classList.add('--menu');
+
+                        GameHelper.set(MenuScene.aHelper);
+                    }
+                },
+
+                updateMenu: function(){
                     this.oController = null;
                     for( let sController in ControllerManager.oController ){
                         const oController = ControllerManager.getController(sController);
@@ -68,17 +114,6 @@ Object.assign(
 
                     this.oMenu.update();
                     GameHelper.update();
-				},
-                destroy: function(){
-                    GameHelper.destroy();
-                    const aName = [ 'Versus', 'Online', null, 'Challenge', 'Training' ],
-                        nIndex = this.oMenu.destroy()[0];
-
-                    return {
-                        MNU__nIndex: nIndex,
-                        BTL__sType: aName[nIndex],
-                        MNU__aController: [this.oController, null]
-                    };
                 }
             }
         )

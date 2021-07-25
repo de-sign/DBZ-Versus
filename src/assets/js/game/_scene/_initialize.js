@@ -11,7 +11,7 @@ Object.assign(
                     LoadingScene.prototype.init.call(
                         this,
                         {
-                            sRedirection: 'Title',
+                            sRedirection: 'Menu',
                             aStep: [
                                 'stepData',
                     
