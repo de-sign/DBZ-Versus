@@ -969,7 +969,7 @@ GameData.oCharacter.BUU = {
             {
                 aFilter: ['CTM_MBU', 'LSW_MBU'],
                 sCod: 'attack_236C',
-                sName: 'Chonoryoku',
+                sName: 'Cho ?oryoku',
                 sAnimation: 'attack_236C',
                 sListAnimation: 'list_236C',
                 nCost: 30,
@@ -984,6 +984,7 @@ GameData.oCharacter.BUU = {
                 aEntity: {
                     sType: 'beam',
                     sSFX: 'ADO__Beam',
+                    sText: '超能力',
                     sAnimation: 'zigzag',
                     nFrameStart: 43,
                     bLink: true,
@@ -1015,7 +1016,7 @@ GameData.oCharacter.BUU = {
             {
                 aFilter: ['LSW_SBU'],
                 sCod: 'attack_236C',
-                sName: 'Chonoryoku',
+                sName: 'Cho Noryoku',
                 sAnimation: 'attack_236C',
                 sListAnimation: 'list_236C',
                 nCost: 30,
@@ -1030,6 +1031,7 @@ GameData.oCharacter.BUU = {
                 aEntity:  {
                     sType: 'beam',
                     sSFX: 'ADO__Beam',
+                    sText: '超能力',
                     sAnimation: 'zigzag',
                     nFrameStart: 43,
                     bLink: true,
@@ -1069,6 +1071,7 @@ GameData.oCharacter.BUU = {
                 aEntity: {
                     sType: 'projectile',
                     sSFX: 'ADO__Projectile',
+                    sText: '気功波',
                     sAnimation: 'kikoha',
                     nFrameStart: 10,
                     oPosition: {

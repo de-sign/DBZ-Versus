@@ -1009,6 +1009,7 @@ GameData.oCharacter.MJN_BUU = {
                 aEntity: {
                     sType: 'projectile',
                     sSFX: 'ADO__Beam',
+                    sText: 'プラネットバスト',
                     sAnimation: 'ball',
                     nFrameStart: 13,
                     oPosition: {
@@ -1055,6 +1056,7 @@ GameData.oCharacter.MJN_BUU = {
                 aEntity: {
                     sType: 'projectile',
                     sSFX: 'ADO__Beam',
+                    sText: '魔空包囲弾',
                     sAnimation: 'death',
                     nFrameStart: 13,
                     oPosition: {
@@ -1094,6 +1096,7 @@ GameData.oCharacter.MJN_BUU = {
                 aEntity: {
                     sType: 'projectile',
                     sSFX: 'ADO__Projectile',
+                    sText: '気功波',
                     sAnimation: 'kikoha',
                     nFrameStart: 10,
                     oPosition: {

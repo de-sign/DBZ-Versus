@@ -932,6 +932,7 @@ GameData.oCharacter.BJT.oCommands = {
             aEntity: {
                 sType: 'beam',
                 sSFX: 'ADO__Beam',
+                sText: 'ファイナルフラッシュ',
                 sAnimation: 'big_triangle',
                 nFrameStart: 43,
                 bLink: true,
@@ -978,6 +979,7 @@ GameData.oCharacter.BJT.oCommands = {
             aEntity: {
                 sType: 'beam',
                 sSFX: 'ADO__Beam',
+                sText: 'ギャリック砲',
                 sAnimation: 'triangle',
                 nFrameStart: 43,
                 bLink: true,
@@ -1017,6 +1019,7 @@ GameData.oCharacter.BJT.oCommands = {
             aEntity: {
                 sType: 'projectile',
                 sSFX: 'ADO__Projectile',
+                sText: '気功波',
                 sAnimation: 'kikoha',
                 nFrameStart: 10,
                 oPosition: {

@@ -264,19 +264,20 @@ Object.assign(
             updateBox: function(){
                 if( this.oParameters.bBox ){
                     BattleEntity.get().forEach( oEntity => {
-                        ['oPositionBox', 'aHurtBox', 'aHitBox'].forEach( sBox => {
-                            const aBox = oEntity.getBox(sBox),
+                        if( oEntity.oCheck && !oEntity.isDead() ){
+                            ['oPositionBox', 'aHurtBox', 'aHitBox'].forEach( sBox => {
+                                const aBox = oEntity.getBox(sBox),
                                 oLayer = OutputManager.getElement('LAY__Training_' + sBox.slice(1) + '_' + oEntity.sId),
                                 nMaxElement = Math.max( oLayer.hElement.children.length, aBox.length );
-
-                            oLayer.addTickUpdate( () => {
-                                for( let nElement = 0; nElement < nMaxElement; nElement++ ){
-                                    const oBox = aBox[nElement],
+                                
+                                oLayer.addTickUpdate( () => {
+                                    for( let nElement = 0; nElement < nMaxElement; nElement++ ){
+                                        const oBox = aBox[nElement],
                                         hElement = this.getBox(oLayer, nElement);
 
-                                    Object.assign(
-                                        hElement.style,
-                                        oBox ? 
+                                        Object.assign(
+                                            hElement.style,
+                                            oBox ? 
                                             {
                                                 display: null,
                                                 left: ( oEntity.oPositionPoint.nX + oBox.nX ) + 'px',
@@ -287,10 +288,11 @@ Object.assign(
                                             {
                                                 display: 'none'
                                             }
-                                    );
-                                }
+                                        );
+                                    }
+                                } );
                             } );
-                        } );
+                        }
                     } );
                 }
             },

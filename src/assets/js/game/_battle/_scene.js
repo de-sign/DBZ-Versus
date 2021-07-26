@@ -39,7 +39,7 @@ Object.assign(
                                 SceneManager.oTransverseData.BTL__aCharacter[nIndex],
                                 SceneManager.oTransverseData.BTL__aColor[nIndex],
                                 oOptions.sAnimation,
-                                GameSettings.oSide.aSide[ GameSettings.oSide.nDefault ].fPosition(this.oArea, nIndex),
+                                GameSettings.oSide.aSide[ GameSettings.oSide.nDefault ].fPosition(nIndex, false, this.oArea),
                                 !!nIndex,
                                 oOptions.aSourceBuffer[nIndex],
                                 SceneManager.oTransverseData.BTL__aRound[nIndex]
@@ -59,11 +59,7 @@ Object.assign(
 				update: function(){
                     // Entity
                     const aNewEntity = [];
-                    BattleEntity.get().forEach( oEntity => {
-                        const aEntity = oEntity.update();
-                        aEntity && [].push.apply(aNewEntity, aEntity);
-                    } );
-                    this.oEngine.generateEntity(aNewEntity);
+                    BattleEntity.get().forEach( oEntity => oEntity.update(this.oEngine) );
                     // Engine
                     this.endBattle( this.oEngine.update() );
                     // Display

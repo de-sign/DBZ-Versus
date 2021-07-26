@@ -818,6 +818,7 @@ GameData.oCharacter.SRU = {
                 aEntity: {
                     sType: 'beam',
                     sSFX: 'ADO__Beam',
+                    sText: '太陽系破壊かめはめ波',
                     sAnimation: 'circle',
                     nFrameStart: 43,
                     bLink: true,
@@ -858,6 +859,7 @@ GameData.oCharacter.SRU = {
                 aEntity: {
                     sType: 'beam',
                     sSFX: 'ADO__Projectile',
+                    sText: 'デスビーム',
                     sAnimation: 'beam',
                     nFrameStart: 13,
                     bLink: true,

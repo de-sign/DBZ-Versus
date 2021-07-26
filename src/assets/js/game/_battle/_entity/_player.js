@@ -30,7 +30,7 @@ Object.assign(
                     this.oGatling = new BattleGatling(this.oInputBuffer, this.oData.oCommands);
                     this.nRound = nRound;
                 },
-                update: function(){
+                update: function(oEngine){
                     // Gestion des INPUTs
                     this.oInputBuffer.update(this.bReverse);
 
@@ -109,7 +109,10 @@ Object.assign(
                     }
 
                     this.updateMemory();
-                    return this.updateAnimation();
+                    this.updateAnimation();
+                    if( !this.oAnimation.isFreeze() ){
+                        this.generateEntity('command', this, this.oGatling.getEntity(), oEngine);
+                    }
                 },
                 // destroy: function(){},
 
@@ -120,25 +123,13 @@ Object.assign(
                 addKi: function(nKi){
                     this.nKi = Math.min(this.nKi + nKi, GameSettings.oKi.nMax);
                 },
-                takeHit: function(oEntity, oData){
+                takeHit: function(oEntity, oData, oEngine){
                     const aNewEntity = [];
                     if( !oData.bUnblockable && this.oStatus.bGuard ){
                         this.setHurt('defense_4', oData.oStun.nBlock, !oEntity.bReverse);
                         oEntity.confirmHit(this, oData, true);
                         this.addKi( ( oData.oKi ? oData : GameSettings ).oKi.oDefend.nGuard );
-                        if( oData.oStun.sImpactAnimation !== false ){
-                            aNewEntity.push( {
-                                sType: 'effect',
-                                sAnimation: oData.oStun.sImpactAnimation || 'impact_guard',
-                                oPosition: GameSettings.oPositionEffect,
-                                bReverse: !this.bReverse,
-                                oParent: this
-                            } );
-                        }
-                        aNewEntity.push( {
-                            sType: 'sound',
-                            sEntity: 'ADO__Guard'
-                        } );
+                        this.generateEntity('guard', this, oData, oEngine);
                     }
                     else {
                         const nRatio = Math.max(oData.nMinimumReduce || GameSettings.oDamage.nMinimumReduce, 100 - (this.nHitting * GameSettings.oDamage.nReduce)),
@@ -159,19 +150,7 @@ Object.assign(
                             
                         sHitAnim && this.setHurt(sHitAnim, oData.oStun.nHit, !oEntity.bReverse);
                         oEntity.confirmHit(this, oData);
-                        if( oData.oStun.sImpactAnimation !== false ){
-                            aNewEntity.push( {
-                                sType: 'effect',
-                                sAnimation: oData.oStun.sImpactAnimation || 'impact_hit',
-                                oPosition: GameSettings.oPositionEffect,
-                                bReverse: !this.bReverse,
-                                oParent: this
-                            } );
-                        }
-                        aNewEntity.push( {
-                            sType: 'sound',
-                            sEntity: 'ADO__Hit'
-                        } );
+                        this.generateEntity('hit', this, oData, oEngine);
                     }
                     return aNewEntity;
                 },
@@ -368,37 +347,6 @@ Object.assign(
                             this.oMemory.oAnimation.update();
                         }
                     }
-                },
-                updateAnimation: function(){
-                    let aNewEntity = null;
-                    if( !this.oAnimation.isFreeze() ){
-                        const aCommandEntity = this.oGatling.getEntity();
-                        if( aCommandEntity.length ){
-                            aNewEntity = [];
-                            aCommandEntity.forEach( oCommandEntity => {
-                                aNewEntity.push( {
-                                    sType: oCommandEntity.sType,
-                                    bLink: oCommandEntity.bLink,
-
-                                    sEntity: oCommandEntity.sEntity || 'ALL',
-                                    sColor: oCommandEntity.sColor || this.oData.sEntityColor,
-                                    sAnimation: oCommandEntity.sAnimation,
-                                    oPosition: oCommandEntity.oPosition,
-                                    bReverse: this.bReverse,
-                                    oHitData: this.oGatling.oCurrent,
-                                    oParent: this
-                                } );
-
-                                oCommandEntity.sSFX && aNewEntity.push( {
-                                    sType: 'sound',
-                                    sEntity: oCommandEntity.sSFX
-                                } );
-                            } );
-                        }
-                    }
-                    BattleEntity.prototype.updateAnimation.call(this);
-
-                    return aNewEntity;
                 }
             }
         )

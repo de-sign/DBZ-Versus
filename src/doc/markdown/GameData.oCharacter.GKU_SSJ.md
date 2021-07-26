@@ -928,7 +928,8 @@ GameData.oCharacter.GKU_SSJ.oCommands = {
             },
             aEntity: {
                 sType: 'beam',
-                sSFX: 'ADO__Beam',
+                sSFX: 'ADO__Beam', 
+                sText: '超かめはめ波', 
                 sAnimation: 'circle',
                 nFrameStart: 43,
                 bLink: true,
@@ -969,6 +970,7 @@ GameData.oCharacter.GKU_SSJ.oCommands = {
             aEntity: {
                 sType: 'projectile',
                 sSFX: 'ADO__Projectile',
+                sText: '気功波',
                 sAnimation: 'kikoha',
                 nFrameStart: 10,
                 oPosition: {

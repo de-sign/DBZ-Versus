@@ -1008,6 +1008,7 @@ GameData.oCharacter.KID_GHN = {
                     {
                         sType: 'beam',
                         sSFX: 'ADO__Beam',
+                        sText: '親子かめはめ波',
                         sAnimation: 'circle',
                         nFrameStart: 43,
                         bLink: true,
@@ -1067,6 +1068,7 @@ GameData.oCharacter.KID_GHN = {
                 aEntity:  {
                     sType: 'beam',
                     sSFX: 'ADO__Beam',
+                    sText: '魔閃光',
                     sAnimation: 'triangle',
                     nFrameStart: 43,
                     bLink: true,
@@ -1106,6 +1108,7 @@ GameData.oCharacter.KID_GHN = {
                 aEntity: {
                     sType: 'projectile',
                     sSFX: 'ADO__Projectile',
+                    sText: '気功波',
                     sAnimation: 'kikoha',
                     nFrameStart: 10,
                     oPosition: {

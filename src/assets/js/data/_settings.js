@@ -241,11 +241,17 @@ Object.assign(
             player: 1500,
             character: 0,
             projectile: 100,
-            beam: 0
+            beam: 0,
+            text: 20 // Nombre de Frames avant disparition
         },
         /* ----- DETAILS Position lors d'un effet visuel sur une entité ----- */
         oPositionEffect: {
-            nX: -24
+            effect: {
+                nX: -24
+            },
+            text: {
+                nY: -192
+            }
         },
         // CHARACTER
         /* ----- DETAILS Paramétrage du gain de KI ----- */

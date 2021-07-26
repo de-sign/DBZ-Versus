@@ -1,4 +1,4 @@
-function BattleEntity(sType, oData, oPosition, bReverse, oParent) {
+function BattleEntity(/*sType, oData, oPosition, bReverse, oParent*/) {
     this.sType = '';
     this.sId = '';
     this.oParent = null;
@@ -6,7 +6,8 @@ function BattleEntity(sType, oData, oPosition, bReverse, oParent) {
         beam: [],
         character: [],
         projectile: [],
-        effect: []
+        effect: [],
+        text: []
     };
     this.oCheck = null;
     this.oPositionPoint = null;
@@ -179,22 +180,16 @@ Object.assign(
                 return this.oLayer;
             },
             moveLayer: function(oPosition){
-                const oPos = Object.assign({}, this.oParent ? this.oParent.oLayer.oPosition : this.oLayer.oPosition );
-                if( this.oParent ){
-                    if( oPosition.nX ){
-                        oPos.nX += oPosition.nX * (this.bReverse ? -1 : 1);
-                    }
-                    if( oPosition.nY ){
-                        oPos.nY += oPosition.nY;
-                    }
-                } else {
-                    if( oPosition.nX ){
-                        oPos.nX += oPosition.nX * (this.bReverse ? 1 : -1);
-                    }
-                    if( oPosition.nY ){
-                        oPos.nY += oPosition.nY;
-                    }
+                const oPos = Object.assign({}, this.oParent ? this.oParent.oLayer.oPosition : this.oLayer.oPosition ),
+                    aRatio = this.oParent ? [-1, 1] : [1, -1];
+
+                if( oPosition.nX ){
+                    oPos.nX += oPosition.nX * aRatio[this.bReverse ? 0 : 1];
                 }
+                if( oPosition.nY ){
+                    oPos.nY += oPosition.nY;
+                }
+            
                 this.oLayer.setPosition(oPos);
             },
             render: function(){
@@ -235,6 +230,83 @@ Object.assign(
                 this.nLife -= oData.nDamage == null ? 1 : oData.nDamage;
                 oEntity.confirmHit(this, oData);
             },
+            generateEntity: function(sType, oParent, uData, oEngine){
+                const aNewEntity = [];
+
+                switch(sType) {
+                    case 'hit':
+                        if( uData.oStun.sImpactAnimation !== false ){
+                            aNewEntity.push( {
+                                sType: 'effect',
+                                sAnimation: uData.oStun.sImpactAnimation || 'impact_hit',
+                                bReverse: !oParent.bReverse,
+                                oParent: oParent
+                            } );
+                        }
+                        aNewEntity.push( {
+                            sType: 'text',
+                            sText: uData.oStun.sImpactText || 'パフ', // PAF
+                            oParent: oParent
+                        } );
+                        aNewEntity.push( {
+                            sType: 'sound',
+                            sEntity: 'ADO__Hit'
+                        } );
+                        break;
+                        
+                    case 'guard':
+                        if( uData.oStun.sImpactAnimation !== false ){
+                            aNewEntity.push( {
+                                sType: 'effect',
+                                sAnimation: uData.oStun.sImpactAnimation || 'impact_guard',
+                                bReverse: !oParent.bReverse,
+                                oParent: oParent
+                            } );
+                        }
+                        aNewEntity.push( {
+                            sType: 'text',
+                            sText: uData.oStun.sImpactText || 'バム', // BAM
+                            oParent: oParent
+                        } );
+                        aNewEntity.push( {
+                            sType: 'sound',
+                            sEntity: 'ADO__Guard'
+                        } );
+                        break;
+                        
+                    case 'command':
+                        if( uData.length ){
+                            uData.forEach( oCommandEntity => {
+                                aNewEntity.push( {
+                                    sType: oCommandEntity.sType,
+                                    bLink: oCommandEntity.bLink,
+
+                                    sEntity: oCommandEntity.sEntity || 'ALL',
+                                    sColor: oCommandEntity.sColor || oParent.oData.sEntityColor,
+                                    sAnimation: oCommandEntity.sAnimation,
+                                    oPosition: oCommandEntity.oPosition,
+                                    bReverse: oParent.bReverse,
+                                    oHitData: oParent.oGatling.oCurrent,
+                                    oParent: oParent
+                                } );
+
+                                oCommandEntity.sText && aNewEntity.push( {
+                                    sType: 'text',
+                                    sText: oCommandEntity.sText,
+                                    oParent: oParent
+                                } );
+
+                                oCommandEntity.sSFX && aNewEntity.push( {
+                                    sType: 'sound',
+                                    sEntity: oCommandEntity.sSFX
+                                } );
+                            } );
+                        }
+                        break;
+                }
+                
+                aNewEntity.length && oEngine.generateEntity(aNewEntity);
+            },
             setAnimation: function(sAnimation, bUpdate, bReverse){
                 let sSet = false;
                 if( !this.oAnimation || GameAnimation.isTypeHurt(sAnimation) || this.oAnimation.sName != sAnimation ){
@@ -271,7 +343,7 @@ Object.assign(
             },
 
             getBox: function(sBox){
-                let aBox = this.oAnimation.oFrame[sBox];
+                let aBox = this.oAnimation && this.oAnimation.oFrame[sBox];
                 if( aBox ){
                     Array.isArray(aBox) || ( aBox = [aBox] );
                     aBox = aBox.map( oBox => {
@@ -281,10 +353,8 @@ Object.assign(
                             this.bReverse ? { nX: -(oBox.nWidth + oBox.nX - 4) } : {}
                         );
                     } );
-                } else {
-                    aBox = [];
                 }
-                return aBox;
+                return aBox || [];
             },
             getHitData: function(){
                 return this.oHitData;

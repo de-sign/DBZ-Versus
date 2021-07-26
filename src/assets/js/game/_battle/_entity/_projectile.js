@@ -23,18 +23,11 @@ Object.assign(
                     return aNewEntity;
                 },
                 // destroy: function(){}
-                takeHit: function(oEntity, oData){
+
+                takeHit: function(oEntity, oData, oEngine){
                     this.nLife -= oData.nDamage == null ? 1 : oData.nDamage;
                     oEntity.confirmHit(this, oData, false, true);
-                    return aNewEntity = [
-                        {
-                            sType: 'effect',
-                            sAnimation: oData.oStun.sImpactAnimation || 'impact_hit',
-                            oPosition: GameSettings.oPositionEffect,
-                            bReverse: !this.bReverse,
-                            oParent: this
-                        }
-                    ];
+                    this.generateEntity('hit', this, oData, oEngine);
                 },
                 confirmHit: function(oEntityHurt, oData, bGuard, bNotDestroy){
                     BattleEntity.prototype.confirmHit.call(this, oEntityHurt, oData, bGuard);

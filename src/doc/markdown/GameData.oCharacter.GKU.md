@@ -797,6 +797,7 @@ GameData.oCharacter.GKU.oCommands = {
             aEntity: {
                 sType: 'projectile',
                 sSFX: 'ADO__Beam',
+                sText: '元気玉',
                 sAnimation: 'ball',
                 nFrameStart: 13,
                 oPosition: {
@@ -837,6 +838,7 @@ GameData.oCharacter.GKU.oCommands = {
             aEntity: {
                 sType: 'projectile',
                 sSFX: 'ADO__Projectile',
+                sText: '太陽',
                 sAnimation: 'flash',
                 sColor: 'ORG',
                 nFrameStart: 13,

@@ -850,6 +850,7 @@ GameData.oCharacter.FRZ = {
                 aEntity: {
                     sType: 'projectile',
                     sSFX: 'ADO__Beam',
+                    sText: 'デスボール',
                     sAnimation: 'death',
                     nFrameStart: 13,
                     oPosition: {
@@ -890,6 +891,7 @@ GameData.oCharacter.FRZ = {
                 aEntity: {
                     sType: 'beam',
                     sSFX: 'ADO__Projectile',
+                    sText: 'デスビーム',
                     sAnimation: 'beam',
                     nFrameStart: 13,
                     bLink: true,

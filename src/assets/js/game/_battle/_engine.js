@@ -150,7 +150,13 @@ Object.assign(
 
                         // sAnimation, oPosition, bReverse, oParent
                         case 'effect':
-                            oEntity = new BattleEffect( oEffect.sAnimation, oEffect.oPosition, oEffect.bReverse, oEffect.oParent );
+                            oEntity = new BattleEffect( oEffect.sAnimation, GameSettings.oPositionEffect.effect, oEffect.bReverse, oEffect.oParent );
+                            oEntity.update();
+                            break;
+
+                        // sText, oPosition, oParent
+                        case 'text':
+                            oEntity = new BattleText( oEffect.sText, oEffect.oPosition, oEffect.oParent );
                             oEntity.update();
                             break;
                     }
@@ -326,11 +332,7 @@ Object.assign(
             if( aHurt.length ){
                 const aNewEntity = [];
                 // Gestion Hurt
-                aHurt.forEach( oHurt => {
-                    const aEntity = oHurt.oEntityHurt.takeHit(oHurt.oEntityHit, oHurt.oData);
-                    aEntity && [].push.apply(aNewEntity, aEntity);
-                } );
-                [].push.apply( aEntity, this.generateEntity(aNewEntity) );
+                aHurt.forEach( oHurt => oHurt.oEntityHurt.takeHit(oHurt.oEntityHit, oHurt.oData, this) );
                 // Gestion PushBack
                 this.movePushback(aPushback, oCollapse);
                 // Gestion hit freeze

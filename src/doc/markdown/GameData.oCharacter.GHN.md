@@ -853,6 +853,7 @@ GameData.oCharacter.GHN.oCommands = {
             aEntity: {
                 sType: 'beam',
                 sSFX: 'ADO__Beam',
+                sText: '魔閃光',
                 sAnimation: 'triangle',
                 nFrameStart: 43,
                 bLink: true,
@@ -892,6 +893,7 @@ GameData.oCharacter.GHN.oCommands = {
             aEntity: {
                 sType: 'projectile',
                 sSFX: 'ADO__Projectile',
+                sText: '気功波',
                 sAnimation: 'kikoha',
                 nFrameStart: 10,
                 oPosition: {

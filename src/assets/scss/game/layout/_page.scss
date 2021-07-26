@@ -17,19 +17,20 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     &-japan {
-        font-size: $font-size-small;
+        font-size: $font-size-medium;
         font-family: $font-japan-family;
+        font-weight: bold;
         color: $font-japan-color;
         text-shadow:
-            1px 1px 0 $font-color,
-            1px 0px 0 $font-color,
-            1px -1px 0 $font-color,
-            0px 1px 0 $font-color,
+            2px 2px 0 $font-color,
+            2px 0px 0 $font-color,
+            2px -2px 0 $font-color,
+            0px 2px 0 $font-color,
             0px 0px 0 $font-color,
-            0px -1px 0 $font-color,
-            -1px 1px 0 $font-color,
-            -1px 0px 0 $font-color,
-            -1px -1px 0 $font-color;
+            0px -2px 0 $font-color,
+            -2px 2px 0 $font-color,
+            -2px 0px 0 $font-color,
+            -2px -2px 0 $font-color;
     }
 }
 
