@@ -26,20 +26,17 @@ Une documentation technique est disponible ici : [References.md](https://github.
 
 ## TODO
 __BUG__
-* Problème de LOOP avec GKU et attack_C ?
 * Problème avec RECORD ?
+* Problème tremblement lors des FREEZES sans message
+* Problème lors d'un REFLECT quand adversaire en mouvement
+    * P1: Kikoha
+    * P1: Forward
+    * P2: Reflect
+    * P1: Pushback
+    * P1: Forward sans mouvement !!!
 
 __Menu__
-* Refonte du menu
-    * Versus
-        * Local
-        * Online ?
-    * Solo
-        * How to play
-        * Challenge
-        * Training
-    * Setting
-        * Input
+<br/>*N/A*
 
 __Setting__
 <br/>*N/A*
@@ -58,12 +55,13 @@ __Stage__
 
 __Battle__
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
-* Ajout d'effet de texte en JAP !
 
 __Training__
 <br/>*N/A*
 
 __General__
+* HUD de KI avec ICON
+
 * Méchaniques de jeu
     * Attack :
         * Air Dash ?

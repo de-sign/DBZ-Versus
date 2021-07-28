@@ -125,7 +125,8 @@ Object.assign(
                 UF: '&#8599;',
                 A: 'A',
                 B: 'B',
-                C: 'C'
+                C: 'C',
+                D: 'D'
             },
             oReverse: {
                 DB: '&#8600;',
@@ -139,7 +140,8 @@ Object.assign(
                 UF: '&#8598;',
                 A: 'A',
                 B: 'B',
-                C: 'C'
+                C: 'C',
+                D: 'D'
             }
         },
         aFrameRate: [ 6, 15, 30, 60 ],

@@ -159,7 +159,7 @@ Object.assign(
         // INPUT
         /* ----- DETAILS Configuration des différents périphériques d'entrées ----- */
         oController: {
-            aOrderButtons: ['UP', 'DOWN', 'LEFT', 'RIGHT', 'A', 'B', 'C', 'START'],
+            aOrderButtons: ['UP', 'DOWN', 'LEFT', 'RIGHT', 'A', 'B', 'C', 'D', 'START'],
             nNeededButtons: 8,
             aKeyboard: [
                 {
@@ -170,6 +170,7 @@ Object.assign(
                     A: 'KeyU',
                     B: 'KeyI',
                     C: 'KeyO',
+                    D: 'KeyJ',
                     START: 'Enter'
                 },
                 {
@@ -180,7 +181,8 @@ Object.assign(
                     A: 'Numpad1',
                     B: 'Numpad2',
                     C: 'Numpad3',
-                    START: 'Numpad0'
+                    D: 'Numpad0',
+                    START: 'Numpad5'
                 }
             ],
             oGamepad: {
@@ -197,6 +199,7 @@ Object.assign(
                 A: 'Button2',
                 B: 'Button3',
                 C: 'Button1',
+                D: 'Button0',
                 START: 'Button9'
             },
         },

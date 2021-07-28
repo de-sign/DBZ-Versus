@@ -149,7 +149,7 @@ Object.assign(
 
                         // sAnimation, oPosition, bReverse, oParent
                         case 'effect':
-                            oEntity = new BattleEffect( oEffect.sAnimation, GameSettings.oPositionEffect.effect, oEffect.bReverse, oEffect.oParent );
+                            oEntity = new BattleEffect( oEffect.sAnimation, oEffect.oPosition, oEffect.bReverse, oEffect.oParent );
                             oEntity.update();
                             break;
 
@@ -351,16 +351,12 @@ Object.assign(
             } );
         },
         pushbackEntity: function(oEntity, oData, bReverse, bDivide){
-            if( oEntity.isLinked() ){
-                oEntity.oParent.oCheck.bPushback && oEntity.oParent.pushBack(oData, bReverse, bDivide);
-                for( let sType in oEntity.oParent.oLink ){
-                    oEntity.oParent.oLink[sType].forEach( oLinkEntity => {
-                        oLinkEntity.oCheck.bPushback && oLinkEntity.pushBack(oData, bReverse, bDivide);
-                    } );
-                }
-            }
-            else if( oEntity.oCheck.bPushback ){
-                oEntity.pushBack(oData, bReverse, bDivide);
+            const oRootEntity = oEntity.isLinked() ? oEntity.oParent : oEntity;
+            oRootEntity.oCheck.bPushback && oRootEntity.pushBack(oData, bReverse, bDivide);
+            for( let sType in oRootEntity.oLink ){
+                oRootEntity.oLink[sType].forEach( oLinkEntity => {
+                    oLinkEntity.oCheck.bPushback && oLinkEntity.pushBack(oData, bReverse, bDivide);
+                } );
             }
         },
 

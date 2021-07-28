@@ -18,9 +18,9 @@ Object.assign(
         oType: {
             // ACTION
             // undefined: 'action' 
+            attack_D: 'cancel',
             move_44: 'dash',
             move_66: 'dash',
-            attack_66: 'dash',
 
             // MOVEMENT
             move_5: 'stand',
@@ -59,7 +59,7 @@ Object.assign(
         aAllType: ['action', 'movement', 'stand', 'jump', 'landing', 'dash', 'guard', 'hit', 'launch', 'down', 'recovery'],
         aTypeHurt: ['guard', 'hit', 'launch'],
         aTypeMove: ['stand', 'movement', 'jump'],
-        aTypeStack: ['dash', 'landing', 'recovery'],
+        aTypeStack: ['dash', 'landing', 'recovery', 'cancel'],
         aTypeTraining: ['action', 'dash', 'guard', 'hit', 'launch', 'down', 'recovery'],
         aTypeCommand: ['action', 'dash'],
 

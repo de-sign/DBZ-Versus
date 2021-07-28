@@ -20,7 +20,8 @@ Object.assign(
             UF: '&#8599;',
             A: 'A',
             B: 'B',
-            C: 'C'
+            C: 'C',
+            D: 'D'
         },
 
         prototype: {

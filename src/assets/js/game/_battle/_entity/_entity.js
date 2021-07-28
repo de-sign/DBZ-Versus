@@ -288,7 +288,7 @@ Object.assign(
                                     sEntity: oCommandEntity.sEntity || 'ALL',
                                     sColor: oCommandEntity.sColor || oParent.oData.sEntityColor,
                                     sAnimation: oCommandEntity.sAnimation,
-                                    bReverse: oParent.bReverse,
+                                    bReverse: oCommandEntity.bReverse == null ? oParent.bReverse : oCommandEntity.bReverse,
                                     // Entity Text
                                     sText: oCommandEntity.sText,
                                     nLength: oCommandEntity.nLength

@@ -222,7 +222,7 @@ Object.assign(
                     else if ( this.oOptions.nGuard == 4 && this.oPlayer.oAnimation.sType == 'guard' ){
                         oStep = {
                             sType: 'oButtons',
-                            uValue: { B: TimerEngine.nFrames, C: TimerEngine.nFrames, NT: TimerEngine.nFrames }
+                            uValue: { D: TimerEngine.nFrames, NT: TimerEngine.nFrames }
                         };
                     }
                         // Guard others
@@ -310,7 +310,7 @@ Object.assign(
                     if( this.oOptions.bTechThrow && this.oPlayer.oAnimation.sName == 'hit_AB' ){
                         oStep = {
                             sType: 'oButtons',
-                            uValue: { A: TimerEngine.nFrames, B: TimerEngine.nFrames, NT: TimerEngine.nFrames }
+                            uValue: { D: TimerEngine.nFrames, NT: TimerEngine.nFrames }
                         };
                     }
 

@@ -389,10 +389,10 @@ Object.assign(
 
             oChar.oCommands.aOffense.forEach( oCommand => {
                 switch( oCommand.sCod ){
-                    case 'attack_AB':
+                    case 'attack_6D':
                         oThrow = oCommand;
                         break;
-                    case 'attack_4AB_0':
+                    case 'attack_4D_0':
                         oBackThrow = oCommand;
                         break;
                     case 'attack_2B':
@@ -400,7 +400,7 @@ Object.assign(
                             {},
                             oCommand,
                             {
-                                sCod: 'attack_4AB_2',
+                                sCod: 'attack_4D_2',
                                 oManipulation: null
                             }
                         );

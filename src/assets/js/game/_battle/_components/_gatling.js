@@ -153,7 +153,11 @@ Object.assign(
                 // Gestion GATLING
                 if( !this.oUsed[oCommand.sCod] ){
                     // Gestion LEVEL
-                    if( !this.oCurrent || this.oCurrent.nGatlingLevel <= oCommand.nGatlingLevel || (this.oCurrent.sRoot || this.oCurrent.sCod ) == oCommand.sRoot ) {
+                    if(
+                        !this.oCurrent // None
+                        || this.oCurrent.bIgnoreGatlingLevel || oCommand.bIgnoreGatlingLevel || this.oCurrent.nGatlingLevel <= oCommand.nGatlingLevel // Level
+                        || (this.oCurrent.sRoot || this.oCurrent.sCod ) == oCommand.sRoot // Follow Up 
+                    ) {
                         bCanUse = true;
                     }
                 }
