@@ -24,7 +24,6 @@
     }
 }
 
-
 .Battle__HUDs {
     display: flex;
     justify-content: center;
@@ -471,6 +470,12 @@
 
 .Battle__Text {
     z-index: 0;
+    animation: 0.15s ease-in 0s 1 DS-KF-Appear;
+
+    &.--dead {
+        display: inline-block;
+        animation: 0.5s ease-out 0s 1 reverse forwards DS-KF-Appear;
+    }
 }
 
 /* Menu */

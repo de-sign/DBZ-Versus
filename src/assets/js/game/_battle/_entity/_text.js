@@ -1,5 +1,5 @@
 /* ----- BattleText ----- */
-function BattleText(sText, oPosition, oParent){
+function BattleText(sText, nLength, oPosition, oParent){
     BattleEntity.apply(this, arguments);
 }
 
@@ -8,8 +8,8 @@ Object.assign(
         prototype: Object.assign(
             Object.create(BattleEntity.prototype), {
                 constructor: BattleEntity,
-                init: function(sText, oPosition, oParent){
-                    BattleEntity.prototype.init.call(this, 'text', { sText }, null, oPosition || GameSettings.oPositionEffect.text, false, oParent);
+                init: function(sText, nLength, oPosition, oParent){
+                    BattleEntity.prototype.init.call(this, 'text', { sText, nLife: nLength }, null, oPosition || GameSettings.oPositionEffect.text, false, oParent);
                 },
                 update: function(){
                     // Destruction après 1s pour prévention du ROLLBACK

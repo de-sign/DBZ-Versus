@@ -929,18 +929,35 @@ GameData.oCharacter.BJT.oCommands = {
                 bInfo: true,
                 nLength: 45
             },
-            aEntity: {
-                sType: 'beam',
-                sSFX: 'ADO__Beam',
-                sText: 'ファイナルフラッシュ',
-                sAnimation: 'big_triangle',
-                nFrameStart: 43,
-                bLink: true,
-                oPosition: {
-                    nX: -32,
-                    nY: -12
+            aEntity: [
+                {
+                    sType: 'text',
+                    sText: 'ファイ',
+                    nFrameStart: 1
+                },
+                {
+                    sType: 'text',
+                    sText: 'ファイナルフラ',
+                    nFrameStart: 22
+                },
+                {
+                    sType: 'text',
+                    sText: 'ファイナルフラッシュ',
+                    nFrameStart: 43,
+                    nLength: 36
+                },
+                {
+                    sType: 'beam',
+                    sSFX: 'ADO__Beam',
+                    sAnimation: 'big_triangle',
+                    nFrameStart: 43,
+                    bLink: true,
+                    oPosition: {
+                        nX: -32,
+                        nY: -12
+                    }
                 }
-            },
+            ],
             oStun: {
                 nBlock: 36,
                 nHit: 36,
@@ -976,23 +993,41 @@ GameData.oCharacter.BJT.oCommands = {
                 bInfo: true,
                 nLength: 45
             },
-            aEntity: {
-                sType: 'beam',
-                sSFX: 'ADO__Beam',
-                sText: 'ギャリック砲',
-                sAnimation: 'triangle',
-                nFrameStart: 43,
-                bLink: true,
-                oPosition: {
-                    nX: -12,
-                    nY: -12
+            aEntity: [
+                {
+                    sType: 'text',
+                    sText: 'ギャ',
+                    nFrameStart: 1
+                },
+                {
+                    sType: 'text',
+                    sText: 'ギャリッ',
+                    nFrameStart: 22
+                },
+                {
+                    sType: 'text',
+                    sText: 'ギャリック砲',
+                    nFrameStart: 43,
+                    nLength: 36
+                },
+                {
+                    sType: 'beam',
+                    sSFX: 'ADO__Beam',
+                    sAnimation: 'triangle',
+                    nFrameStart: 43,
+                    bLink: true,
+                    oPosition: {
+                        nX: -12,
+                        nY: -12
+                    }
                 }
-            },
+            ],
             oStun: {
                 nBlock: 36,
                 nHit: 36,
                 bLaunch: true,
-                sHitAnimation: 'hit_1'
+                sHitAnimation: 'hit_1',
+                sImpactText: 'ブーム'
             },
             oPushback: {
                 nLength: 4,
@@ -1016,17 +1051,24 @@ GameData.oCharacter.BJT.oCommands = {
             nGatlingLevel: 2,
             nDamage: 100,
             sCheck: 'bGround',
-            aEntity: {
-                sType: 'projectile',
-                sSFX: 'ADO__Projectile',
-                sText: '気功波',
-                sAnimation: 'kikoha',
-                nFrameStart: 10,
-                oPosition: {
-                    nX: 58,
-                    nY: -28
+            aEntity: [
+                {
+                    sType: 'text',
+                    sText: '気功波',
+                    nLength: 40,
+                    nFrameStart: 1
+                },
+                {
+                    sType: 'projectile',
+                    sSFX: 'ADO__Projectile',
+                    sAnimation: 'kikoha',
+                    nFrameStart: 10,
+                    oPosition: {
+                        nX: 58,
+                        nY: -28
+                    }
                 }
-            },
+            ],
             oStun: {
                 nBlock: 12,
                 nHit: 16,

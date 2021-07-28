@@ -848,23 +848,41 @@ GameData.oCharacter.SRU.oCommands = {
                 bInfo: true,
                 nLength: 45
             },
-            aEntity: {
-                sType: 'beam',
-                sSFX: 'ADO__Beam',
-                sText: '太陽系破壊かめはめ波',
-                sAnimation: 'circle',
-                nFrameStart: 43,
-                bLink: true,
-                oPosition: {
-                    nX: 0,
-                    nY: 0
+            aEntity: [
+                {
+                    sType: 'text',
+                    sText: '太陽系破',
+                    nFrameStart: 1
+                },
+                {
+                    sType: 'text',
+                    sText: '太陽系破壊かめ',
+                    nFrameStart: 22
+                },
+                {
+                    sType: 'text',
+                    sText: '太陽系破壊かめはめ波',
+                    nFrameStart: 43,
+                    nLength: 36
+                },
+                {
+                    sType: 'beam',
+                    sSFX: 'ADO__Beam',
+                    sAnimation: 'circle',
+                    nFrameStart: 43,
+                    bLink: true,
+                    oPosition: {
+                        nX: 0,
+                        nY: 0
+                    }
                 }
-            },
+            ],
             oStun: {
                 nBlock: 36,
                 nHit: 36,
                 bLaunch: true,
-                sHitAnimation: 'hit_1'
+                sHitAnimation: 'hit_1',
+                sImpactText: 'ブーム'
             },
             oPushback: {
                 nLength: 4,
@@ -889,18 +907,25 @@ GameData.oCharacter.SRU.oCommands = {
             nGatlingLevel: 2,
             nDamage: 100,
             sCheck: 'bGround',
-            aEntity: {
-                sType: 'beam',
-                sSFX: 'ADO__Projectile',
-                sText: 'デスビーム',
-                sAnimation: 'beam',
-                nFrameStart: 13,
-                bLink: true,
-                oPosition: {
-                    nX: 16,
-                    nY: -12
+            aEntity: [
+                {
+                    sType: 'text',
+                    sText: 'デスビーム',
+                    nLength: 40,
+                    nFrameStart: 1
+                },
+                {
+                    sType: 'beam',
+                    sSFX: 'ADO__Projectile',
+                    sAnimation: 'beam',
+                    nFrameStart: 13,
+                    bLink: true,
+                    oPosition: {
+                        nX: 16,
+                        nY: -12
+                    }
                 }
-            },
+            ],
             oStun: {
                 nBlock: 12,
                 nHit: 18,

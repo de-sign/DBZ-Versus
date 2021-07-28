@@ -102,7 +102,7 @@ Object.assign(
                 this.bReverse = bReverse;
                 this.oParent = oParent;
 
-                this.nLife = GameSettings.oLife[sType];
+                this.nLife = (oData && oData.nLife) || GameSettings.oLife[sType];
                 this.createLayer();
                 this.moveLayer(oPosition || {});
 
@@ -278,22 +278,20 @@ Object.assign(
                         if( uData.length ){
                             uData.forEach( oCommandEntity => {
                                 aNewEntity.push( {
+                                    // Entity Common
                                     sType: oCommandEntity.sType,
                                     bLink: oCommandEntity.bLink,
-
+                                    oPosition: oCommandEntity.oPosition,
+                                    oHitData: oParent.oGatling.oCurrent,
+                                    oParent: oParent,
+                                    // Entity Sprite
                                     sEntity: oCommandEntity.sEntity || 'ALL',
                                     sColor: oCommandEntity.sColor || oParent.oData.sEntityColor,
                                     sAnimation: oCommandEntity.sAnimation,
-                                    oPosition: oCommandEntity.oPosition,
                                     bReverse: oParent.bReverse,
-                                    oHitData: oParent.oGatling.oCurrent,
-                                    oParent: oParent
-                                } );
-
-                                oCommandEntity.sText && aNewEntity.push( {
-                                    sType: 'text',
+                                    // Entity Text
                                     sText: oCommandEntity.sText,
-                                    oParent: oParent
+                                    nLength: oCommandEntity.nLength
                                 } );
 
                                 oCommandEntity.sSFX && aNewEntity.push( {

@@ -1703,6 +1703,12 @@ GameData.oEntity.oCharacter.oCommands = {
             bResetGatling: true,
             nGatlingLevel: 1,
             sCheck: 'bGround',
+            /*
+            oFreeze: {
+                bInfo: false,
+                nLength: 8
+            },
+            */
             oStun: {},
             oPushback: {},
             bLast: true,

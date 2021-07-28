@@ -1006,23 +1006,37 @@ GameData.oCharacter.MJN_BUU = {
                     bInfo: true,
                     nLength: 45
                 },
-                aEntity: {
-                    sType: 'projectile',
-                    sSFX: 'ADO__Beam',
-                    sText: 'プラネットバスト',
-                    sAnimation: 'ball',
-                    nFrameStart: 13,
-                    oPosition: {
-                        nX: -48,
-                        nY: -256
+                aEntity: [
+                    {
+                        sType: 'text',
+                        sText: 'プラネット',
+                        nFrameStart: 13,
+                        nLength: 30
+                    },
+                    {
+                        sType: 'text',
+                        sText: 'バスト',
+                        nFrameStart: 43,
+                        nLength: 36
+                    },
+                    {
+                        sType: 'projectile',
+                        sSFX: 'ADO__Beam',
+                        sAnimation: 'ball',
+                        nFrameStart: 13,
+                        oPosition: {
+                            nX: -48,
+                            nY: -256
+                        }
                     }
-                },
+                ],
                 oStun: {
                     nBlock: 36,
                     nHit: 36,
                     bLaunch: true,
                     sHitAnimation: 'hit_1',
-                    sImpactAnimation: 'explode_heavy'
+                    sImpactAnimation: 'explode_heavy',
+                    sImpactText: 'ブーム'
                 },
                 oPushback: {
                     nLength: 4,
@@ -1053,23 +1067,37 @@ GameData.oCharacter.MJN_BUU = {
                     bInfo: true,
                     nLength: 45
                 },
-                aEntity: {
-                    sType: 'projectile',
-                    sSFX: 'ADO__Beam',
-                    sText: '魔空包囲弾',
-                    sAnimation: 'death',
-                    nFrameStart: 13,
-                    oPosition: {
-                        nX: 0,
-                        nY: -230
+                aEntity: [
+                    {
+                        sType: 'text',
+                        sText: '魔空包',
+                        nFrameStart: 13,
+                        nLength: 30
+                    },
+                    {
+                        sType: 'text',
+                        sText: '魔空包囲弾',
+                        nFrameStart: 43,
+                        nLength: 36
+                    },
+                    {
+                        sType: 'projectile',
+                        sSFX: 'ADO__Beam',
+                        sAnimation: 'death',
+                        nFrameStart: 13,
+                        oPosition: {
+                            nX: 0,
+                            nY: -230
+                        }
                     }
-                },
+                ],
                 oStun: {
                     nBlock: 36,
                     nHit: 36,
                     bLaunch: true,
                     sHitAnimation: 'hit_1',
-                    sImpactAnimation: 'explode_heavy'
+                    sImpactAnimation: 'explode_heavy',
+                    sImpactText: 'ブーム'
                 },
                 oPushback: {
                     nLength: 4,
@@ -1093,17 +1121,25 @@ GameData.oCharacter.MJN_BUU = {
                 nGatlingLevel: 2,
                 nDamage: 100,
                 sCheck: 'bGround',
-                aEntity: {
-                    sType: 'projectile',
-                    sSFX: 'ADO__Projectile',
-                    sText: '気功波',
-                    sAnimation: 'kikoha',
-                    nFrameStart: 10,
-                    oPosition: {
-                        nX: 58,
-                        nY: -28
+                aEntity: [
+                    {
+                        sType: 'text',
+                        sText: '気功波',
+                        nLength: 40,
+                        nFrameStart: 1
+                    },
+                    {
+                        sType: 'projectile',
+                        sSFX: 'ADO__Projectile',
+                        sText: '気功波',
+                        sAnimation: 'kikoha',
+                        nFrameStart: 10,
+                        oPosition: {
+                            nX: 58,
+                            nY: -28
+                        }
                     }
-                },
+                ],
                 oStun: {
                     nBlock: 12,
                     nHit: 16,

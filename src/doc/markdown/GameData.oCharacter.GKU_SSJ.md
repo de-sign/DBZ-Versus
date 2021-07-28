@@ -926,23 +926,41 @@ GameData.oCharacter.GKU_SSJ.oCommands = {
                 bInfo: true,
                 nLength: 45
             },
-            aEntity: {
-                sType: 'beam',
-                sSFX: 'ADO__Beam', 
-                sText: '超かめはめ波', 
-                sAnimation: 'circle',
-                nFrameStart: 43,
-                bLink: true,
-                oPosition: {
-                    nX: 0,
-                    nY: 0
+            aEntity: [
+                {
+                    sType: 'text',
+                    sText: '超か',
+                    nFrameStart: 1
+                },
+                {
+                    sType: 'text',
+                    sText: '超かめは',
+                    nFrameStart: 22
+                },
+                {
+                    sType: 'text',
+                    sText: '超かめはめ波',
+                    nFrameStart: 43,
+                    nLength: 36
+                },
+                {
+                    sType: 'beam',
+                    sSFX: 'ADO__Beam', 
+                    sAnimation: 'circle',
+                    nFrameStart: 43,
+                    bLink: true,
+                    oPosition: {
+                        nX: 0,
+                        nY: 0
+                    }
                 }
-            },
+            ],
             oStun: {
                 nBlock: 36,
                 nHit: 36,
                 bLaunch: true,
-                sHitAnimation: 'hit_1'
+                sHitAnimation: 'hit_1',
+                sImpactText: 'ブーム'
             },
             oPushback: {
                 nLength: 4,
@@ -967,17 +985,24 @@ GameData.oCharacter.GKU_SSJ.oCommands = {
             nGatlingLevel: 2,
             nDamage: 100,
             sCheck: 'bGround',
-            aEntity: {
-                sType: 'projectile',
-                sSFX: 'ADO__Projectile',
-                sText: '気功波',
-                sAnimation: 'kikoha',
-                nFrameStart: 10,
-                oPosition: {
-                    nX: 58,
-                    nY: -28
+            aEntity:  [
+                {
+                    sType: 'text',
+                    sText: '気功波',
+                    nLength: 40,
+                    nFrameStart: 1
+                },
+                {
+                    sType: 'projectile',
+                    sSFX: 'ADO__Projectile',
+                    sAnimation: 'kikoha',
+                    nFrameStart: 10,
+                    oPosition: {
+                        nX: 58,
+                        nY: -28
+                    }
                 }
-            },
+            ],
             oStun: {
                 nBlock: 12,
                 nHit: 16,

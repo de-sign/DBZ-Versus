@@ -847,23 +847,37 @@ GameData.oCharacter.FRZ = {
                     bInfo: true,
                     nLength: 45
                 },
-                aEntity: {
-                    sType: 'projectile',
-                    sSFX: 'ADO__Beam',
-                    sText: 'デスボール',
-                    sAnimation: 'death',
-                    nFrameStart: 13,
-                    oPosition: {
-                        nX: -24,
-                        nY: -230
+                aEntity: [
+                    {
+                        sType: 'text',
+                        sText: 'デス',
+                        nFrameStart: 13,
+                        nLength: 30
+                    },
+                    {
+                        sType: 'text',
+                        sText: 'ボール',
+                        nFrameStart: 43,
+                        nLength: 36
+                    },
+                    {
+                        sType: 'projectile',
+                        sSFX: 'ADO__Beam',
+                        sAnimation: 'death',
+                        nFrameStart: 13,
+                        oPosition: {
+                            nX: -24,
+                            nY: -230
+                        }
                     }
-                },
+                ],
                 oStun: {
                     nBlock: 36,
                     nHit: 36,
                     bLaunch: true,
                     sHitAnimation: 'hit_1',
-                    sImpactAnimation: 'explode_heavy'
+                    sImpactAnimation: 'explode_heavy',
+                    sImpactText: 'ブーム'
                 },
                 oPushback: {
                     nLength: 4,
@@ -888,18 +902,25 @@ GameData.oCharacter.FRZ = {
                 nGatlingLevel: 2,
                 nDamage: 100,
                 sCheck: 'bGround',
-                aEntity: {
-                    sType: 'beam',
-                    sSFX: 'ADO__Projectile',
-                    sText: 'デスビーム',
-                    sAnimation: 'beam',
-                    nFrameStart: 13,
-                    bLink: true,
-                    oPosition: {
-                        nX: 16,
-                        nY: -12
+                aEntity: [
+                    {
+                        sType: 'text',
+                        sText: 'デスビーム',
+                        nLength: 40,
+                        nFrameStart: 1
+                    },
+                    {
+                        sType: 'beam',
+                        sSFX: 'ADO__Projectile',
+                        sAnimation: 'beam',
+                        nFrameStart: 13,
+                        bLink: true,
+                        oPosition: {
+                            nX: 16,
+                            nY: -12
+                        }
                     }
-                },
+                ],
                 oStun: {
                     nBlock: 12,
                     nHit: 18,

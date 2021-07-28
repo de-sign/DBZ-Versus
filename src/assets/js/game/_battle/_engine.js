@@ -50,7 +50,6 @@ Object.assign(
             if( !oEndGame.bEnd ){
                 // Gestion Hitbox
                 this.checkHit(aEntity, oCollapse);
-
                 // Gestion Super Freeze
                 this.commandFreeze(aEntity);
             }
@@ -156,7 +155,7 @@ Object.assign(
 
                         // sText, oPosition, oParent
                         case 'text':
-                            oEntity = new BattleText( oEffect.sText, oEffect.oPosition, oEffect.oParent );
+                            oEntity = new BattleText( oEffect.sText, oEffect.nLength, oEffect.oPosition, oEffect.oParent );
                             oEntity.update();
                             break;
                     }

@@ -794,23 +794,37 @@ GameData.oCharacter.GKU.oCommands = {
                 bInfo: true,
                 nLength: 45
             },
-            aEntity: {
-                sType: 'projectile',
-                sSFX: 'ADO__Beam',
-                sText: '元気玉',
-                sAnimation: 'ball',
-                nFrameStart: 13,
-                oPosition: {
-                    nX: 0,
-                    nY: -256
+            aEntity: [
+                {
+                    sType: 'text',
+                    sText: '元気',
+                    nFrameStart: 13,
+                    nLength: 30
+                },
+                {
+                    sType: 'text',
+                    sText: '玉',
+                    nFrameStart: 43,
+                    nLength: 36
+                },
+                {
+                    sType: 'projectile',
+                    sSFX: 'ADO__Beam',
+                    sAnimation: 'ball',
+                    nFrameStart: 13,
+                    oPosition: {
+                        nX: 0,
+                        nY: -256
+                    }
                 }
-            },
+            ],
             oStun: {
                 nBlock: 36,
                 nHit: 36,
                 bLaunch: true,
                 sHitAnimation: 'hit_1',
-                sImpactAnimation: 'explode_heavy'
+                sImpactAnimation: 'explode_heavy',
+                sImpactText: 'ブーム'
             },
             oPushback: {
                 nLength: 4,
@@ -835,18 +849,25 @@ GameData.oCharacter.GKU.oCommands = {
             bResetGatling: true,
             sCheck: 'bGround',
             nDamage: 0,
-            aEntity: {
-                sType: 'projectile',
-                sSFX: 'ADO__Projectile',
-                sText: '太陽',
-                sAnimation: 'flash',
-                sColor: 'ORG',
-                nFrameStart: 13,
-                oPosition: {
-                    nX: 8,
-                    nY: -64
+            aEntity: [
+                {
+                    sType: 'text',
+                    sText: '太陽',
+                    nLength: 40,
+                    nFrameStart: 1
+                },
+                {
+                    sType: 'projectile',
+                    sSFX: 'ADO__Projectile',
+                    sAnimation: 'flash',
+                    sColor: 'ORG',
+                    nFrameStart: 13,
+                    oPosition: {
+                        nX: 8,
+                        nY: -64
+                    }
                 }
-            },
+            ],
             oStun: {
                 nBlock: 16,
                 nHit: 26,

@@ -64,9 +64,11 @@ Object.assign(
 
                         oChar.oCommands.aOffense.forEach( oCommand => {
                             oCommand.aEntity && oCommand.aEntity.forEach( oCommandEntity => {
-                                const oEntity = GameData[ 'o' + oCommandEntity.sType[0].toUpperCase() + oCommandEntity.sType.slice(1) ][ oCommandEntity.sEntity || 'ALL' ][ oCommandEntity.sColor || oChar.sEntityColor ];
-                                for( let sFrame in oEntity.oFrames ){
-                                    this.oAssetManager.add('image', oEntity.oPath.sFrames + '/' + oEntity.oFrames[sFrame].sPath);
+                                if( oCommandEntity.sType != 'text' ){
+                                    const oEntity = GameData[ 'o' + oCommandEntity.sType[0].toUpperCase() + oCommandEntity.sType.slice(1) ][ oCommandEntity.sEntity || 'ALL' ][ oCommandEntity.sColor || oChar.sEntityColor ];
+                                    for( let sFrame in oEntity.oFrames ){
+                                        this.oAssetManager.add('image', oEntity.oPath.sFrames + '/' + oEntity.oFrames[sFrame].sPath);
+                                    }
                                 }
                             } );
                         } );
