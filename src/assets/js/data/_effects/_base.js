@@ -65,6 +65,22 @@ GameData.oEntity.oEffect = {
         impact_guard_4: {
             sPath: 'impact_guard_4.png'
         },
+
+        cancel_1: {
+            sPath: 'cancel_1.png'
+        },
+        cancel_2: {
+            sPath: 'cancel_2.png'
+        },
+        cancel_3: {
+            sPath: 'cancel_3.png'
+        },
+        cancel_4: {
+            sPath: 'cancel_4.png'
+        },
+        cancel_5: {
+            sPath: 'cancel_5.png'
+        }
     },
     /* ----- DETAILS Données des animations ----- */
     oAnimations: {
@@ -160,6 +176,31 @@ GameData.oEntity.oEffect = {
                 },
                 {
                     sFrame: 'impact_guard_4',
+                    nFrame: 2
+                }
+            ]
+        },
+
+        cancel: {
+            aFrames: [
+                {
+                    sFrame: 'cancel_1',
+                    nFrame: 2
+                },
+                {
+                    sFrame: 'cancel_2',
+                    nFrame: 4
+                },
+                {
+                    sFrame: 'cancel_3',
+                    nFrame: 6
+                },
+                {
+                    sFrame: 'cancel_4',
+                    nFrame: 4
+                },
+                {
+                    sFrame: 'cancel_5',
                     nFrame: 2
                 }
             ]

@@ -267,6 +267,50 @@ GameSettings.oAudio = {
 };
 ```
 
+#### GameSettings.oAnimations
+
+```javascript
+GameSettings.oAnimations = {
+    oType: {
+        sDefault: 'action',
+        aAll: [
+            'action', 'dash', 'cancel',
+            'stand', 'movement', 'jump', 'landing',
+            'guard', 'hit', 'launch',
+            'down', 'recovery',
+            'animation'
+        ],
+        oMap: {
+            // frame: type
+        }
+    },
+    oCategory: {
+        aAll: [
+            'stack',
+            'movement',
+            'hurt'
+        ],
+        aCanSetLength: ['hurt'],
+        oMap: {
+            // type: category
+            'action': null,
+            'dash': 'stack',
+            'cancel': 'stack',
+            'stand': 'movement',
+            'movement': 'movement',
+            'jump': 'movement',
+            'landing': 'stack',
+            'guard': 'hurt',
+            'hit': 'hurt',
+            'launch': 'hurt',
+            'down': null,
+            'recovery': null,
+            'animation': null,
+        }
+    }
+};
+```
+
 
 ### Game Settings
 
@@ -304,7 +348,7 @@ GameSettings.oPushback = {
 Temps avant suppression d'un entité pour futur ROLLBACK 
 
 ```javascript
-GameSettings.nDie = 60;
+GameSettings.nDie = 1;
 ```
 
 #### GameSettings.oLife

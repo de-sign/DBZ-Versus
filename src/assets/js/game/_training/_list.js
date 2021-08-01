@@ -76,7 +76,7 @@ Object.assign(
                     if( oMenu && oMenu.__oData ){
                         switch( oMenu.__oData.sCheck ){
                             case 'bThrow':
-                                sAnimation = 'hit_AB';
+                                sAnimation = 'hit_D';
                                 break;
                             case 'bGuard':
                                 sAnimation = 'defense_4';
@@ -86,7 +86,7 @@ Object.assign(
                                 break;
                         }
                         if( this.oAnimation ){
-                            if( this.oAnimation.isMovement() || this.oAnimation.isHurt() ){
+                            if( this.oAnimation.is('movement') || this.oAnimation.is('hurt') ){
                                 if( this.oAnimation.sName == sAnimation && this.oAnimation.isEnd() ){
                                     sAnimation = oMenu.__oData.sListAnimation || oMenu.__oData.sAnimation;
                                     nLength = 0;
@@ -104,6 +104,7 @@ Object.assign(
                     if( !this.oAnimation || this.oAnimation.sName != sAnimation ){
                         this.oAnimation = new GameAnimation(
                             sAnimation,
+                            this.oEngine.oList.oData.oAnimations[sAnimation].sType,
                             this.oEngine.oList.oData.oFrames,
                             this.oEngine.oList.oData.oAnimations[sAnimation].aFrames
                         );

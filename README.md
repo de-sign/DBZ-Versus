@@ -1,5 +1,7 @@
 # DBZ-Versus
 
+Play the game : [https://dbz-versus.netlify.app](https://dbz-versus.netlify.app)
+
 Jeu de versus en 2D basé sur l'univers de __DragonBall__ utilisant les ASSETS du jeu GameBoy Color __Dragon Ball Z : les guerriers légendaires__.
 
 Utilise un moteur de jeu fait maison et FOX Website :
@@ -26,14 +28,7 @@ Une documentation technique est disponible ici : [References.md](https://github.
 
 ## TODO
 __BUG__
-* Problème avec RECORD ?
-* Problème tremblement lors des FREEZES sans message
-* Problème lors d'un REFLECT quand adversaire en mouvement
-    * P1: Kikoha
-    * P1: Forward
-    * P2: Reflect
-    * P1: Pushback
-    * P1: Forward sans mouvement !!!
+* Problème avec RECORD
 
 __Menu__
 <br/>*N/A*
@@ -64,7 +59,6 @@ __General__
 
 * Méchaniques de jeu
     * Attack :
-        * Air Dash ?
         * Guard Break ?
     * Defense :
         * Guard Cancel ?

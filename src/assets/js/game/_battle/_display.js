@@ -127,7 +127,7 @@ Object.assign(
             },
             show: function(){
                 if( !this.oCurrent && this.aInfo.length ){
-                    this.oCurrent = this.aInfo.shift();
+                    const oCurrent = this.oCurrent = this.aInfo.shift();
                     // Image
                     if( this.oCurrent.sImg ){
                         this.oImg.setSource(this.oCurrent.sImg);
@@ -146,7 +146,7 @@ Object.assign(
                     // Show
                     this.oContext.addTickUpdate( () => {
                         this.oContext.hElement.classList.remove('--info-left', '--info-center', '--info-right', '--info-blank');
-                        this.oContext.hElement.classList.add('--info', '--info-' + this.oCurrent.sDirection, this.oCurrent.sText ? '--info-text' : '--info-blank');
+                        this.oContext.hElement.classList.add('--info', '--info-' + oCurrent.sDirection, oCurrent.sText ? '--info-text' : '--info-blank');
                     } );
                 }
             },

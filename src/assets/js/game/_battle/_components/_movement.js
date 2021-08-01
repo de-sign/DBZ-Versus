@@ -5,6 +5,7 @@ function BattleMovement(nDelay, uMove, nLength, bReverse){
     this.aStep = [];
     this.oMove = null;
     this.bReverse = false;
+    this.bEmpty = false;
 
     this.init(nDelay, uMove, nLength, bReverse);
 }
@@ -13,7 +14,9 @@ Object.assign(
     BattleMovement,
     {
         empty: function(){
-            return new BattleMovement(-1, []);
+            const oMovement = new BattleMovement(-1, []);
+            oMovement.bEmpty = true;
+            return oMovement;
         },
 
         prototype: Object.assign(

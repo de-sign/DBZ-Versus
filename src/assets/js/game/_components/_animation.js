@@ -1,5 +1,5 @@
 // Animations
-function GameAnimation(sName, oFrameData, aStep){
+function GameAnimation(sName, sType, oFrameData, aStep){
     GameTimer.call(this);
 
     this.sName = null;
@@ -9,89 +9,30 @@ function GameAnimation(sName, oFrameData, aStep){
     this.aStep = [];
     this.oFrame = null;
 
-    this.init(sName, oFrameData, aStep);
+    this.init(sName, sType, oFrameData, aStep);
 }
 
 Object.assign(
     GameAnimation, {
-        
-        oType: {
-            // ACTION
-            // undefined: 'action' 
-            attack_D: 'cancel',
-            move_44: 'dash',
-            move_66: 'dash',
 
-            // MOVEMENT
-            move_5: 'stand',
-            move_1: 'stand',
-            move_4: 'movement',
-            move_6: 'movement',
-            move_7: 'jump',
-            move_8: 'jump',
-            move_9: 'jump',
-            move_fall_4: 'jump',
-            move_fall_6: 'jump',
-            list_8: 'jump',
-            move_0: 'landing',
-
-            // HURT
-            defense_4: 'guard',
-            hit_0: 'hit',
-            hit_1: 'hit',
-            hit_2: 'hit',
-            hit_AB: 'hit',
-            launch_0: 'launch',
-            launch_1: 'launch',
-
-            // DOWN
-            launch_2: 'down',
-            launch_4: 'recovery',
-            launch_5: 'recovery',
-            launch_6: 'recovery',
-
-            // Animation
-            anim_open: 'animation',
-            anim_death: 'animation',
-            anim_victory: 'animation'
+        getType: function(oAnim){
+            return GameSettings.oAnimations.oType.oMap[oAnim.sName] || GameSettings.oAnimations.oType.sDefault;
         },
-
-        aAllType: ['action', 'movement', 'stand', 'jump', 'landing', 'dash', 'guard', 'hit', 'launch', 'down', 'recovery'],
-        aTypeHurt: ['guard', 'hit', 'launch'],
-        aTypeMove: ['stand', 'movement', 'jump'],
-        aTypeStack: ['dash', 'landing', 'recovery', 'cancel'],
-        aTypeTraining: ['action', 'dash', 'guard', 'hit', 'launch', 'down', 'recovery'],
-        aTypeCommand: ['action', 'dash'],
-
-        getType: function(sName){
-            return GameAnimation.oType[sName] || 'action';
-        },
-        isTypeHurt: function(sName){
-            return this.aTypeHurt.indexOf( this.getType(sName) ) != -1;
-        },
-        isTypeMove: function(sName){
-            return this.aTypeMove.indexOf( this.getType(sName) ) != -1;
-        },
-        isTypeStack: function(sName){
-            return this.aTypeStack.indexOf( this.getType(sName) ) != -1;
-        },
-        isTypeTraining: function(sName){
-            return this.aTypeTraining.indexOf( this.getType(sName) ) != -1;
-        },
-        isTypeCommand: function(sName){
-            return this.aTypeCommand.indexOf( this.getType(sName) ) != -1;
+        getCategory: function(oAnim){
+            return GameSettings.oAnimations.oCategory.oMap[oAnim.sType];
         },
 
         prototype: Object.assign(
             Object.create(GameTimer.prototype), {
                 constructor: GameAnimation,
-                init: function(sName, oFrameData, aStep){
+                init: function(sName, sType, oFrameData, aStep){
                     GameTimer.prototype.init.call(this, aStep.reduce( (nResult, oFrame) => nResult + (oFrame.nFrame || 0), 0));
 
                     this.sName = sName;
-                    this.sType = GameAnimation.getType(sName);
                     this.oFrameData = oFrameData;
                     this.aStep = aStep;
+                    this.sType = sType || GameAnimation.getType(this);
+                    this.sCategory = GameAnimation.getCategory(this);
                 },
                 update: function(){
                     const bUpdate = GameTimer.prototype.update.call(this);
@@ -121,26 +62,18 @@ Object.assign(
                     }
                     return bUpdate;
                 },
-
+                
+                is: function(sCategory){
+                    return this.sCategory == sCategory;
+                },
+                
+                canSetLength: function(){
+                    return GameSettings.oAnimations.oCategory.aCanSetLength.indexOf(this.sCategory) != -1;
+                },
                 setLength: function(nLength){
-                    if( nLength && this.isHurt() ){
+                    if( nLength && this.canSetLength() ){
                         this.nLength = nLength;
                     }
-                },
-                isHurt: function(){
-                    return GameAnimation.isTypeHurt(this.sName);
-                },
-                isMovement: function(){
-                    return GameAnimation.isTypeMove(this.sName);
-                },
-                isStack: function(){
-                    return GameAnimation.isTypeStack(this.sName);
-                },
-                isTraining: function(){
-                    return GameAnimation.isTypeTraining(this.sName);
-                },
-                isCommand: function(){
-                    return GameAnimation.isTypeCommand(this.sName);
                 }
             }
         )

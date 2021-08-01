@@ -219,6 +219,45 @@ Object.assign(
                 SFX: ['Hit', 'Guard', 'Recovery', 'Beam', 'Projectile']
             }
         },
+        oAnimations: {
+            oType: {
+                sDefault: 'action',
+                aAll: [
+                    'action', 'dash', 'cancel',
+                    'stand', 'movement', 'jump', 'landing',
+                    'guard', 'hit', 'launch',
+                    'down', 'recovery',
+                    'animation'
+                ],
+                oMap: {
+                    // frame: type
+                }
+            },
+            oCategory: {
+                aAll: [
+                    'stack',
+                    'movement',
+                    'hurt'
+                ],
+                aCanSetLength: ['hurt'],
+                oMap: {
+                    // type: category
+                    'action': null,
+                    'dash': 'stack',
+                    'cancel': 'stack',
+                    'stand': 'movement',
+                    'movement': 'movement',
+                    'jump': 'movement',
+                    'landing': 'stack',
+                    'guard': 'hurt',
+                    'hit': 'hurt',
+                    'launch': 'hurt',
+                    'down': null,
+                    'recovery': null,
+                    'animation': null,
+                }
+            }
+        },
         /* ----- END PROPERTIES ----- */
 
         /* ----- START PROPERTIES ----- */
@@ -238,7 +277,7 @@ Object.assign(
         },
         // ENTITY
         /* ----- DETAILS Temps avant suppression d'un entité pour futur ROLLBACK ----- */
-        nDie: 60,
+        nDie: 1, // 60
         /* ----- DETAILS Nombre de point de vie pour chaque entité ----- */
         oLife: {
             player: 1500,

@@ -352,10 +352,10 @@ Object.assign(
         },
         pushbackEntity: function(oEntity, oData, bReverse, bDivide){
             const oRootEntity = oEntity.isLinked() ? oEntity.oParent : oEntity;
-            oRootEntity.oCheck.bPushback && oRootEntity.pushBack(oData, bReverse, bDivide);
+            oRootEntity.oCheck.bPushback && oRootEntity.setPushback(oData, bReverse, bDivide);
             for( let sType in oRootEntity.oLink ){
                 oRootEntity.oLink[sType].forEach( oLinkEntity => {
-                    oLinkEntity.oCheck.bPushback && oLinkEntity.pushBack(oData, bReverse, bDivide);
+                    oLinkEntity.oCheck.bPushback && oLinkEntity.setPushback(oData, bReverse, bDivide);
                 } );
             }
         },

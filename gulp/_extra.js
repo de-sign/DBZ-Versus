@@ -19,7 +19,6 @@ module.exports = function(config){
         Object.keys(extra[sType]).forEach( sEntity => {
             _extra['sprite_' + sEntity] = _extra._sprite['sprite_' + sEntity] = gulp.series( sprite.generate(sType, sEntity) );
             if( sType == 'oChar') {
-                _extra['migrate_' + sEntity] = _extra._migrate['migrate_' + sEntity] = gulp.series( sprite.migrate(sType, sEntity) );
                 _extra['char_' + sEntity] = _extra._char['char_' + sEntity] = gulp.parallel( sprite.generate(sType, sEntity), gulp.series( data.parse(sEntity), data.clean(sEntity) ) );
                 _extra['data_' + sEntity] = _extra._data['data_' + sEntity] = gulp.series( data.parse(sEntity), data.clean(sEntity) );
             } 
@@ -29,7 +28,6 @@ module.exports = function(config){
     _extra.char = gulp.parallel.apply(gulp, Object.values(_extra._char) );
     _extra.sprite = gulp.series.apply(gulp, Object.values(_extra._sprite) );
     _extra.data = gulp.parallel.apply(gulp, Object.values(_extra._data) );
-    _extra.migrate = gulp.parallel.apply(gulp, Object.values(_extra._migrate) );
 
     _extra.doc_reference = gulp.series( doc.json, doc.clean, doc.reference );
     _extra.doc_pages = gulp.series( doc.json, doc.clean, doc.pages );

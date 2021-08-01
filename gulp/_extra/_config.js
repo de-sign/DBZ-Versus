@@ -331,7 +331,8 @@ Object.assign(
                     ['explode_light_1', 'explode_light_2', 'explode_light_3', 'explode_light_4', 'explode_light_5'],
                     ['explode_heavy_1', 'explode_heavy_2', 'explode_heavy_3', 'explode_heavy_4', 'explode_heavy_5'],
                     ['impact_hit_1', 'impact_hit_2', 'impact_hit_3', 'impact_hit_4'],
-                    ['impact_guard_1', 'impact_guard_2', 'impact_guard_3', 'impact_guard_4']
+                    ['impact_guard_1', 'impact_guard_2', 'impact_guard_3', 'impact_guard_4'],
+                    ['cancel_1', 'cancel_2', 'cancel_3', 'cancel_4', 'cancel_5']
                 ],
                 oRatio: {}
             }

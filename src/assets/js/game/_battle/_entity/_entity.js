@@ -19,7 +19,8 @@ function BattleEntity(/*sType, oData, oPosition, bReverse, oParent*/) {
     this.oHitData = null;
     this.oDeadTimer = null;
     this.oAnimation = null;
-    this.oMovement = null;
+    this.oMovement = BattleMovement.empty();
+    this.oPushback = BattleMovement.empty();
 
     this.oStatus = {
         bReverse: false, // Possibilité de se retourner : stand, tp, etc
@@ -194,31 +195,40 @@ Object.assign(
             },
             render: function(){
                 if( !this.isDead() ){
-                    // Reverse
-                    this.oLayer.hElement.classList[ this.bReverse ? 'add' : 'remove' ]('--reverse');
+
+                    const oClass = {
+                        // Reverse
+                        reverse: this.bReverse,
+
+                        // Freeze
+                        freeze_pair: false,
+                        freeze_impair: false,
+
+                        // Float
+                        float_up: false,
+                        float_down: false
+                    };
                     
                     // Animation Freeze en HURT
-                    if( this.oAnimation.isHurt() ){
-                        if( this.oAnimation.oFrame.bFreeze ){
-                            this.oLayer.hElement.classList.remove(this.oAnimation.nFreeze % 2 ? '--freeze_impair' : '--freeze_pair');
-                            this.oLayer.hElement.classList.add(this.oAnimation.nFreeze % 2 ? '--freeze_pair' : '--freeze_impair');
-                        } else {
-                            this.oLayer.hElement.classList.remove('--freeze_pair', '--freeze_impair');
-                        }
+                    if( this.oAnimation.is('hurt') && this.oAnimation.oFrame.bFreeze ){
+                        oClass[this.oAnimation.nFreeze % 2 ? 'freeze_pair' : 'freeze_impair'] = true;
                     }
                     
                     // Animation Float en MOVEMENT
-                    this.oLayer.hElement.classList.remove('--float_up', '--float_down');
                     if( this.oAnimation.sType == 'movement' ){
                         const nPart = Math.floor((this.oAnimation.nTick % 32) / 8),
                             aClass = [null, '--float_up', null, '--float_down'];
-                        aClass[nPart] && this.oLayer.hElement.classList.add( aClass[nPart] );
+                        aClass[nPart] && (oClass[ aClass[nPart] ] = true);
                     }
 
                     // Type
-                    DOMTokenList.prototype.remove.apply( this.oLayer.hElement.classList, GameAnimation.aAllType.map( sType => '--' + sType ) );
-                    this.oLayer.hElement.classList.add('--' + this.oAnimation.sType);
-                    this.oLayer.hElement.classList[ this.oStatus.bGuard ? 'add' : 'remove' ]('--guard');
+                    GameSettings.oAnimations.oType.aAll.forEach( sType => oClass[sType] = false );
+                    oClass[ this.oAnimation.sType ] = true;
+                    oClass.guard = this.oStatus.bGuard;
+
+                    for( let sClass in oClass ){
+                        this.oLayer.hElement.classList[ oClass[sClass] ? 'add' : 'remove' ]('--' + sClass);
+                    }
                     
                     // Frame
                     this.oAnimation.oFrame.nZIndex && this.oLayer.setStyle( { zIndex: this.oAnimation.oFrame.nZIndex } );
@@ -306,11 +316,16 @@ Object.assign(
                 aNewEntity.length && oEngine.generateEntity(aNewEntity);
             },
             setAnimation: function(sAnimation, bUpdate, bReverse){
-                let sSet = false;
-                if( !this.oAnimation || GameAnimation.isTypeHurt(sAnimation) || this.oAnimation.sName != sAnimation ){
+                let bSet = false;
+                if(
+                    !this.oAnimation
+                    || this.oAnimation.sName != sAnimation
+                    || GameAnimation.getCategory( this.oData.oAnimations[sAnimation] ) == 'hurt'
+                ){
                     this.killLink();
                     this.oAnimation = new GameAnimation(
                         sAnimation,
+                        this.oData.oAnimations[sAnimation].sType,
                         this.oData.oFrames,
                         this.oData.oAnimations[sAnimation].aFrames
                     );
@@ -322,9 +337,9 @@ Object.assign(
                     );
                     bUpdate && this.updateAnimation();
                     this.aHit = [];
-                    sSet = true;
+                    bSet = true;
                 }
-                return sSet;
+                return bSet;
             },
             setMovement: function(oMove, bReverse){
                 this.oMovement = oMove ?
@@ -333,11 +348,11 @@ Object.assign(
             },
             setFreeze: function(nFreeze){
                 this.oAnimation.setFreeze(nFreeze);
-                this.oMovement.setFreeze(nFreeze);
+                ['oMovement', 'oPushback'].forEach( sProp => this[sProp].setFreeze(nFreeze) );
             },
             unFreeze: function(){
                 this.oAnimation.unFreeze();
-                this.oMovement.unFreeze();
+                ['oMovement', 'oPushback'].forEach( sProp => this[sProp].unFreeze() );
             },
 
             getBox: function(sBox){
@@ -389,28 +404,30 @@ Object.assign(
             },
             updateAnimation: function(){
                 this.oAnimation.update();
-                this.oMovement.update();
+                ['oMovement', 'oPushback'].forEach( sProp => this[sProp].update() );
                 this.updateStatus();
                 this.move();
             },
             move: function(){
-                if( this.oMovement.oMove ){
-                    if( this.oMovement.oMove.nX ){
-                        this.oLayer.oPosition.nX += this.oMovement.oMove.nX * (this.oMovement.bReverse ? -1 : 1);
+                ['oMovement', 'oPushback'].forEach( sProp => {
+                    if( this[sProp].oMove ){
+                        if( this[sProp].oMove.nX ){
+                            this.oLayer.oPosition.nX += this[sProp].oMove.nX * (this[sProp].bReverse ? -1 : 1);
+                        }
+                        if( this[sProp].oMove.nY ){
+                            this.oLayer.oPosition.nY += this[sProp].oMove.nY;
+                        }
                     }
-                    if( this.oMovement.oMove.nY ){
-                        this.oLayer.oPosition.nY += this.oMovement.oMove.nY;
-                    }
-                }
+                } );
             },
             confirmHit: function(oEntityHurt, oData, bGuard){
                 this.aHit.push(oEntityHurt.sId);
                 this.oParent && this.oParent.confirmHit(oEntityHurt, oData, bGuard);
             },
-            pushBack: function(oPushback, bReverse, bDivide){
+            setPushback: function(oPushback, bReverse, bDivide){
                 oPushback = Object.assign({}, oPushback);
                 bDivide && (oPushback.nX /= 2);
-                this.setMovement(oPushback, bReverse);
+                this.oPushback = new BattleMovement(oPushback.nDelay, oPushback, oPushback.nLength, bReverse);
             }
         }
     }

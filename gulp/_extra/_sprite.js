@@ -218,63 +218,6 @@ module.exports = function(config){
             };
 
             return sType == 'oChar' ? newGenerate : generate;
-        },
-
-        migrate: function(sType, sName){
-
-            return function migrate(done) {
-                const oEntity = extra[sType][sName],
-                    aPromise = [],
-                    oFramePos = {};
-
-                oEntity.aFrames.forEach( (aRow, nY) => {
-                    aRow.forEach( (sFrame, nX) => {
-                        if( sFrame ){
-                            oFramePos[sFrame] = [nX, nY];
-                        }
-                    } );
-                } );
-        
-                oEntity.aColor.forEach( sColor => {
-                    aPromise.push(
-                        new Promise( (fResolveColor, fRejectColor) => {
-                            const sPath = config.paths.src.images + '/' + extra.oPath.oFrames[sType] + '/' + ( sType == 'oChar' ? sName + '/' + sColor : '' ),
-                                oCanvas = canvas.createCanvas(extra.oMigrate.oCanvas.nWidth * ( sName == 'MJN_BUU' ? 2 : 1 ), extra.oMigrate.oCanvas.nHeight),
-                                oContext = oCanvas.getContext('2d');
-        
-                            canvas.loadImage(sPath + '/__frameset.png').then( oImage => {
-                                extra.oMigrate.aFrames.forEach( (aRow, nY) => {
-                                    aRow && aRow.forEach( (sFrame, nX) => {
-                                        const sLastFrame = getMigrateFrame(sType, sName, extra.oMigrate.oMapping[sFrame]),
-                                            aPos = oFramePos[sLastFrame];
-
-                                        if( aPos && ( extra.aFilterFrames.length == 0 || extra.aFilterFrames.indexOf(sFrame) != -1 ) ){
-                                            const oSize = getMigrateSize(oEntity, sFrame, aPos[0], aPos[1], nX, nY);
-                                            oContext.drawImage(oImage, oSize.nSrcX, oSize.nSrcY, oSize.nSrcW, oSize.nSrcH, oSize.nDstX, oSize.nDstY, oSize.nSrcW, oSize.nSrcH);
-                                        }
-                                    } );
-                                } );
-
-                                fs.writeFile(
-                                    sPath + '/_frameset.png',
-                                    oCanvas.toBuffer('image/png'),
-                                    oErr => {
-                                        oErr ? fRejectColor(oErr) : fResolveColor();
-                                    }
-                                );
-                            } );
-                        } )
-                    );
-                } );
-        
-                Promise
-                    .all(aPromise)
-                    .then( () =>  done() )
-                    .catch( oError => {
-                        console.log('"' + sName + '" ' + oError.message);
-                        done();
-                    } );
-            };
         }
     };
 };

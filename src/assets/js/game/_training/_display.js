@@ -109,9 +109,8 @@ function TrainingEngineDisplay(oScene){
 Object.assign(
     TrainingEngineDisplay, {
 
-        aShow: [ 'bData','bHistory','bBox' ],
+        aShow: [ 'bData', 'bHistory', 'bBox' ],
         nHistory: 20,
-
         oSymbolHistory: {
             oNormal: {
                 DB: '&#8601;',
@@ -144,7 +143,9 @@ Object.assign(
                 D: 'D'
             }
         },
+
         aFrameRate: [ 6, 15, 30, 60 ],
+
         aDataInfo: [
             {
                 sType: 'damages',
@@ -162,6 +163,8 @@ Object.assign(
                 sBlank: '- (-)'
             },
         ],
+        aDataAnimation: ['action', 'dash', 'guard', 'hit', 'launch', 'down', 'recovery'],
+        aOffenseAnimation: ['action', 'dash'],
 
         prototype: {
             init: function(oScene){
@@ -310,7 +313,7 @@ Object.assign(
             updateData: function(){
                 if( this.oParameters.bData ){
                     this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
-                        if( oPlayer.oAnimation.isTraining() ){
+                        if( TrainingEngineDisplay.aDataAnimation.indexOf( oPlayer.oAnimation.sType ) != -1 ){
                             this.showData(oPlayer, nIndex);
                             this.showAnimation(oPlayer, nIndex);
                         }
@@ -323,7 +326,9 @@ Object.assign(
                     oOpponent = this.oScene.aPlayer[ nIndex == 1 ? 0 : 1 ],
                     bHit = oPlayer.aHit.indexOf( oOpponent.sId ) != -1,
                     oNewData = {
-                        sType: oPlayer.oAnimation.isCommand() ? 'offense' : 'defense',
+                        sType: TrainingEngineDisplay.aOffenseAnimation.indexOf( oPlayer.oAnimation.sType ) == -1 ?
+                            'defense' :
+                            'offense',
                         oHitData: oPlayer.getHitData(),
                         oAnimation: oPlayer.oAnimation,
                         bHit: bHit,

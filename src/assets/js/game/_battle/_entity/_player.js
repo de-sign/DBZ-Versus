@@ -160,9 +160,28 @@ Object.assign(
                     const nDamage = oData.nDamage == null ? 1 : oData.nDamage;
                     oData.nCost || this.addKi( ( oData.oKi ? oData : GameSettings ).oKi.oAttack[ bGuard ? 'nGuard' : 'nHit' ] );
                 },
-                setMemory: function(){
+                setMemory: function(sAnimation){
+                    // FALL en fin d'animation avec un move
+                    if( sAnimation ){
+                        const oAnimation = this.oData.oAnimations[sAnimation];
+                        this.oMemory = {
+                            sType: 'jump',
+                            oAnimation: new GameAnimation(
+                                sAnimation,
+                                oAnimation.sType,
+                                this.oData.oFrames,
+                                oAnimation.aFrames
+                            ),
+                            oMovement: new BattleMovement(
+                                oAnimation.oMove.nDelay,
+                                oAnimation.oMove,
+                                oAnimation.oMove.nLength,
+                                this.bReverse
+                            )
+                        };
+                    }
                     // Annulation du JUMP en cas de HIT en l'air
-                    if( this.oAnimation.isHurt() && this.oMemory.sType == 'jump' ){
+                    else if( this.oAnimation.is('hurt') && this.oMemory.sType && this.oMemory.sType != 'fall' ){
                         this.oMemory = {
                             sType: null,
                             oAnimation: null,
@@ -217,7 +236,7 @@ Object.assign(
                     const bFreeze = this.oAnimation.isFreeze();
 
                     // Gestion MOVEMENT
-                    if( !bFreeze && this.oAnimation.isMovement() ){
+                    if( !bFreeze && this.oAnimation.is('movement') ){
                         const bCancel = this.oAnimation.sType != 'jump' || this.oStatus.bCancel;
                         oCanAction = {
                             sCommand: 'aOffense',
@@ -248,7 +267,7 @@ Object.assign(
                             };
                         }
                         // STAND => ALL action
-                        else if( !(this.oStatus.bAerial && this.oAnimation.isHurt()) ){
+                        else if( !(this.oStatus.bAerial && this.oAnimation.is('hurt')) ){
                             oCanAction = {
                                 sCommand: 'aOffense',
                                 bStack: false,
@@ -263,7 +282,7 @@ Object.assign(
                         }
                     }
                     // Gestion HURT
-                    else if( this.oAnimation.isHurt() ){
+                    else if( this.oAnimation.is('hurt') ){
                         oCanAction = {
                             sCommand: 'aDefense',
                             bStack: bFreeze,
@@ -277,7 +296,7 @@ Object.assign(
                         };
                     }
                     // Gestion STACK pour ACTION en HIT ou DASH, LANDING et RECOVERY
-                    else if( this.aHit.length || this.oAnimation.isStack() ){
+                    else if( this.aHit.length || this.oAnimation.is('stack') ){
                         const bCancel = this.oStatus.bCancel && !bFreeze;
                         oCanAction = {
                             sCommand: 'aOffense',
@@ -300,15 +319,24 @@ Object.assign(
                 },
 
                 // Fonction OUTPUT
-                pushBack: function(oPushback, bReverse, bDivide){
+                setPushback: function(oPushback, bReverse, bDivide){
                     if( this.oAnimation.sName != 'launch_0' ){
-                        BattleEntity.prototype.pushBack.call(this, oPushback, bReverse, bDivide);
+                        BattleEntity.prototype.setPushback.call(this, oPushback, bReverse, bDivide);
                     }
                 },
                 setAnimation: function(sAnimation, bUpdate, bReverse){
                     const bChanged = BattleEntity.prototype.setAnimation.call(this, sAnimation, bUpdate, bReverse);
-                    if( bChanged && ( !this.oAnimation.isHurt() || this.oAnimation.sType == 'guard' ) ){
-                        this.nHitting = 0;
+                    if( bChanged ){
+                        if( !this.oAnimation.is('hurt') || this.oAnimation.sType == 'guard' ){
+                            this.nHitting = 0;
+                        }
+                        if( this.oStatus.bAerial && !this.oAnimation.is('hurt') && !this.oMovement.bEmpty ){
+                            this.oMemory = {
+                                sType: 'aerial_move',
+                                oAnimation: this.oAnimation,
+                                oMovement: this.oMovement
+                            };
+                        }
                     }
                     return bChanged;
                 },
@@ -326,25 +354,51 @@ Object.assign(
                 },
 
                 updateMemory: function(){
-                    // Gestion FALL
-                    if( this.oStatus.bAerial && this.oAnimation.isHurt() && this.oAnimation.isEnd() ){
-                        if( this.oMemory.sType == 'fall' ){
-                            this.oAnimation = this.oMemory.oAnimation;
-                            this.oMovement = this.oMemory.oMovement;
-                        } else {
-                            this.setStance('launch_1');
+                    if( this.oStatus.bAerial ){
+                        // Gestion FALL
+                        if( this.oAnimation.isEnd() && this.oAnimation.is('hurt') ){
+                            switch( this.oMemory.sType ){
+                                case 'fall':
+                                    this.oAnimation = this.oMemory.oAnimation;
+                                    this.oMovement = this.oMemory.oMovement;
+                                    break;
+                                default:
+                                    this.setStance('launch_1');
+                                    break;
+                            }
                         }
-                    }
-                    // Gestion JUMP
-                    else if( !this.oAnimation.isFreeze() && this.oMemory.sType == 'jump' ){
-                        if( this.oAnimation.isEnd() ){
-                            this.oAnimation = this.oMemory.oAnimation;
-                            this.oMovement = this.oMemory.oMovement;
-                            this.oGatling.reset();
-                        }
-                        else if( this.oAnimation.sType != 'jump' ){
-                            this.oMovement = this.oMemory.oMovement;
-                            this.oMemory.oAnimation.update();
+                        // Gestion JUMP
+                        else if( !this.oAnimation.isFreeze() ){
+                            switch( this.oMemory.sType ){
+                                case 'jump':
+                                    if( this.oAnimation.isEnd() ){
+                                        this.oAnimation = this.oMemory.oAnimation;
+                                        this.oMovement = this.oMemory.oMovement;
+                                    }
+                                    else if( this.oAnimation.sType != 'jump' ){
+                                        this.oMovement = this.oMemory.oMovement;
+                                        this.oMemory.oAnimation.update();
+                                    }
+                                    break;
+                                case 'aerial_move':
+                                    const bSameAnim = this.oAnimation.sName == this.oMemory.oAnimation.sName;
+                                    if( !bSameAnim || this.oAnimation.isEnd() ){
+                                        const aFall = ['move_fall_4', 'move_fall_5', 'move_fall_6'],
+                                            nMove = Math.min( 1, Math.max( -1, this.oMemory.oMovement.aStep[ this.oMemory.oMovement.aStep.length - 1 ].nX ) ),
+                                            nFall = nMove * (this.oMemory.oMovement.bReverse ? -1 : 1) * (this.bReverse ? -1 : 1),
+                                            sAnimation = aFall[nFall + 1];
+
+                                        if( bSameAnim ){
+                                            this.setAnimation(sAnimation);
+                                        } else {
+                                            this.setMemory(sAnimation);
+                                            this.oMovement = this.oMemory.oMovement;
+                                            this.oMemory.oAnimation.update();
+                                        }
+                                    }
+                                    break;
+                            }
+                            
                         }
                     }
                 }

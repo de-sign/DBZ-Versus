@@ -122,12 +122,12 @@ Object.assign(
                             this.oOptions.nStance == 1
                             && this.oOptions.sCounter != 'record'
                         ){
-                            if( this.oPlayer.oAnimation.isHurt() ){
+                            if( this.oPlayer.oAnimation.is('hurt') ){
                                 this.oRecord.bLock = true;
                             }
                         }
                         else if(
-                            this.oPlayer.oAnimation.isHurt()
+                            this.oPlayer.oAnimation.is('hurt')
                             || (
                                 this.oRecord.isEnd()
                                 && this.oOptions.sCounter == 'record'
@@ -161,7 +161,7 @@ Object.assign(
                         && this.oPlayer.oAnimation.isEnd()
                         && !this.oPlayer.oStatus.bAerial
                         && (
-                            this.oPlayer.oAnimation.isHurt()
+                            this.oPlayer.oAnimation.is('hurt')
                             || this.oPlayer.oAnimation.sType == 'recovery'
                         )
                         && (
@@ -230,7 +230,7 @@ Object.assign(
                         this.oOptions.nGuard
                         && (
                             this.oPlayer.oAnimation.isEnd()
-                            || this.oPlayer.oAnimation.isMovement()
+                            || this.oPlayer.oAnimation.is('movement')
                         )
                     ){
                         // Check HitBox
@@ -307,7 +307,7 @@ Object.assign(
                     let oStep = null;
 
                     // Tech throw
-                    if( this.oOptions.bTechThrow && this.oPlayer.oAnimation.sName == 'hit_AB' ){
+                    if( this.oOptions.bTechThrow && this.oPlayer.oAnimation.sName == 'hit_D' ){
                         oStep = {
                             sType: 'oButtons',
                             uValue: { D: TimerEngine.nFrames, NT: TimerEngine.nFrames }

@@ -216,6 +216,7 @@ Object.assign(
 
             for( let sAnim in oAnim ){
                 oChar.oAnimations[sAnim] = {
+                    sType: 'launch',
                     oMove: oAnim[sAnim].aMove,
                     aFrames: oAnim[sAnim].aAnim
                 };
@@ -228,6 +229,7 @@ Object.assign(
                 _8: 0,
                 _9: 1,
                 _fall_4: -1,
+                _fall_5: 0,
                 _fall_6: 1
             };
 
@@ -297,6 +299,7 @@ Object.assign(
                 }
                 
                 oChar.oAnimations['move' + sType] = {
+                    sType: 'jump',
                     oMove: aMove,
                     aFrames: aAnim
                 };
@@ -319,6 +322,7 @@ Object.assign(
                     ) );
                 } );
                 oChar.oAnimations['launch' + sType] = {
+                    sType: 'recovery',
                     oMove: {
                         nX: GameSettings.nRecovery * oRatio[sType]
                     },

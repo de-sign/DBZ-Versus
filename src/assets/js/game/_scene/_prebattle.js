@@ -62,16 +62,18 @@ Object.assign(
                     SceneManager.oTransverseData.BTL__aCharacter.forEach( (sChar, nIndex) => {
                         const oChar = GameData.oCharacter[sChar][ SceneManager.oTransverseData.BTL__aColor[nIndex] ];
 
-                        oChar.oCommands.aOffense.forEach( oCommand => {
-                            oCommand.aEntity && oCommand.aEntity.forEach( oCommandEntity => {
-                                if( oCommandEntity.sType != 'text' ){
-                                    const oEntity = GameData[ 'o' + oCommandEntity.sType[0].toUpperCase() + oCommandEntity.sType.slice(1) ][ oCommandEntity.sEntity || 'ALL' ][ oCommandEntity.sColor || oChar.sEntityColor ];
-                                    for( let sFrame in oEntity.oFrames ){
-                                        this.oAssetManager.add('image', oEntity.oPath.sFrames + '/' + oEntity.oFrames[sFrame].sPath);
+                        for( let sCommandType in oChar.oCommands ){
+                            oChar.oCommands[sCommandType].forEach( oCommand => {
+                                oCommand.aEntity && oCommand.aEntity.forEach( oCommandEntity => {
+                                    if( oCommandEntity.sType != 'text' && oCommandEntity.sType != 'effect' ){
+                                        const oEntity = GameData[ 'o' + oCommandEntity.sType[0].toUpperCase() + oCommandEntity.sType.slice(1) ][ oCommandEntity.sEntity || 'ALL' ][ oCommandEntity.sColor || oChar.sEntityColor ];
+                                        for( let sFrame in oEntity.oFrames ){
+                                            this.oAssetManager.add('image', oEntity.oPath.sFrames + '/' + oEntity.oFrames[sFrame].sPath);
+                                        }
                                     }
-                                }
+                                } );
                             } );
-                        } );
+                        }
                     } );
                 },
 
