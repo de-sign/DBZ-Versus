@@ -914,9 +914,13 @@ GameData.oCharacter.GKU_SSJ.oCommands = {
     aOffense: [
         {
             sCod: 'attack_236C',
-            sName: 'Cho Kamehameha',
+            oList: {
+                sName: 'Cho Kamehameha',
+                sGroup: 'ki',
+                sAnimation: 'list_236C'
+            },
+
             sAnimation: 'attack_236C',
-            sListAnimation: 'list_236C',
             nCost: 30,
             nDamage: 300,
             nMinimumReduce: 40,
@@ -979,7 +983,11 @@ GameData.oCharacter.GKU_SSJ.oCommands = {
         
         {
             sCod: 'attack_C',
-            sName: 'Kikoha',
+            oList: {
+                sName: 'Kikoha',
+                sGroup: 'ki'
+            },
+
             sAnimation: 'attack_C',
             nCost: 10,
             nGatlingLevel: 2,
@@ -1019,7 +1027,12 @@ GameData.oCharacter.GKU_SSJ.oCommands = {
         },
         {
             sCod: 'attack_2B',
-            sName: 'Launcher',
+            oList: {
+                sName: 'Launcher',
+                sInfo: 'Aerial invulnerable',
+                sGroup: 'command'
+            },
+
             sAnimation: 'attack_2B',
             nDamage: 100,
             nGatlingLevel: 1,
@@ -1041,7 +1054,11 @@ GameData.oCharacter.GKU_SSJ.oCommands = {
         },
         {
             sCod: 'attack_6A',
-            sName: 'Tracker',
+            oList: {
+                sName: 'Tracker',
+                sGroup: 'command'
+            },
+
             sAnimation: 'attack_6A',
             nDamage: 75,
             nGatlingLevel: 1,
@@ -1061,14 +1078,17 @@ GameData.oCharacter.GKU_SSJ.oCommands = {
         },
         {
             sCod: 'attack_B_0',
-            sName: 'Heavy',
+            oList: {
+                sName: 'Heavy',
+                sGroup: 'normal'
+            },
+
             sAnimation: 'attack_B_0',
             nDamage: 50,
             nGatlingLevel: 1,
             sCheck: 'bGround',
             oFollowUp: {
                 sCod: 'attack_B_1',
-                sName: '2nd',
                 sAnimation: 'attack_B_1',
                 nDamage: 50,
                 nGatlingLevel: 1,
@@ -1095,14 +1115,17 @@ GameData.oCharacter.GKU_SSJ.oCommands = {
         },
         {
             sCod: 'attack_A_0',
-            sName: 'Light',
+            oList: {
+                sName: 'Light',
+                sGroup: 'normal'
+            },
+
             sAnimation: 'attack_A_0',
             nDamage: 25,
             nGatlingLevel: 1,
             sCheck: 'bGround',
             oFollowUp: {
                 sCod: 'attack_A_1',
-                sName: '2nd',
                 sAnimation: 'attack_A_1',
                 nDamage: 25,
                 nGatlingLevel: 1,

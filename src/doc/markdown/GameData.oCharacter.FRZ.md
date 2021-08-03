@@ -856,6 +856,11 @@ GameData.oCharacter.FRZ.oCommands = {
     aOffense: [
         {
             sCod: 'attack_236C',
+            oList: {
+                sName: 'Desu Boru',
+                sGroup: 'ki'
+            },
+
             /*
             oName: {
                 LSW_FRZ: 'Desu Boru',
@@ -863,7 +868,6 @@ GameData.oCharacter.FRZ.oCommands = {
                 CTM_MTL_KRA: 'Supanova Kura'
             },
             */
-            sName: 'Desu Boru',
             sAnimation: 'attack_236C',
             nCost: 30,
             nDamage: 300,
@@ -922,9 +926,13 @@ GameData.oCharacter.FRZ.oCommands = {
         },
         {
             sCod: 'attack_C',
-            sName: 'Desubimu',
+            oList: {
+                sName: 'Desubimu',
+                sGroup: 'ki',
+                sAnimation: 'list_C'
+            },
+
             sAnimation: 'attack_C',
-            sListAnimation: 'list_C',
             nCost: 10,
             nGatlingLevel: 2,
             nDamage: 100,
@@ -963,7 +971,12 @@ GameData.oCharacter.FRZ.oCommands = {
         },
         {
             sCod: 'attack_2B',
-            sName: 'Launcher',
+            oList: {
+                sName: 'Launcher',
+                sInfo: 'Aerial invulnerable',
+                sGroup: 'command'
+            },
+
             sAnimation: 'attack_2B',
             nDamage: 100,
             nGatlingLevel: 1,
@@ -985,7 +998,11 @@ GameData.oCharacter.FRZ.oCommands = {
         },
         {
             sCod: 'attack_6B',
-            sName: 'Palm',
+            oList: {
+                sName: 'Palm',
+                sGroup: 'command'
+            },
+
             sAnimation: 'attack_6B',
             nDamage: 75,
             nGatlingLevel: 1,
@@ -1009,7 +1026,11 @@ GameData.oCharacter.FRZ.oCommands = {
         },
         {
             sCod: 'attack_6A',
-            sName: 'Tracker',
+            oList: {
+                sName: 'Tracker',
+                sGroup: 'command'
+            },
+
             sAnimation: 'attack_6A',
             nDamage: 75,
             nGatlingLevel: 1,
@@ -1029,7 +1050,11 @@ GameData.oCharacter.FRZ.oCommands = {
         },
         {
             sCod: 'attack_B',
-            sName: 'Heavy',
+            oList: {
+                sName: 'Heavy',
+                sGroup: 'normal'
+            },
+
             sAnimation: 'attack_B',
             nDamage: 50,
             nGatlingLevel: 1,
@@ -1049,13 +1074,16 @@ GameData.oCharacter.FRZ.oCommands = {
         },
         {
             sCod: 'attack_A_0',
-            sName: 'Light',
+            oList: {
+                sName: 'Light',
+                sGroup: 'normal'
+            },
+
             sAnimation: 'attack_A_0',
             nDamage: 25,
             nGatlingLevel: 1,
             sCheck: 'bGround',
             oFollowUp: {
-                sName: '2nd',
                 sCod: 'attack_A_1',
                 sAnimation: 'attack_A_1',
                 nDamage: 25,

@@ -28,7 +28,7 @@ Une documentation technique est disponible ici : [References.md](https://github.
 
 ## TODO
 __BUG__
-* Problème avec RECORD
+* Problème avec AUDIO uniquement à gauche
 
 __Menu__
 <br/>*N/A*

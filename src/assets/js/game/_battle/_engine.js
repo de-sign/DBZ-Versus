@@ -374,15 +374,15 @@ Object.assign(
                     // Texte
                     SceneManager.oCurrent.oInfo.add(
                         oPlayer.oGatling.oCurrent.oFreeze.bInfo ?
-                        {
-                            nLength: oPlayer.oGatling.oCurrent.oFreeze.nLength,
-                            sImg: oPlayer.oData.oPath.sFace,
-                            sText: oPlayer.oGatling.oCurrent.sName + '&nbsp;!',
-                            sDirection: oPlayer.nPlayer == '1' ? 'left' : 'right',
-                        } :
-                        {
-                            nLength: oPlayer.oGatling.oCurrent.oFreeze.nLength
-                        }
+                            {
+                                nLength: oPlayer.oGatling.oCurrent.oFreeze.nLength,
+                                sImg: oPlayer.oData.oPath.sFace,
+                                sText: oPlayer.oGatling.oCurrent.oList.sName + '&nbsp;!',
+                                sDirection: oPlayer.nPlayer == '1' ? 'left' : 'right',
+                            } :
+                            {
+                                nLength: oPlayer.oGatling.oCurrent.oFreeze.nLength
+                            }
                     );
                     break;
                 }

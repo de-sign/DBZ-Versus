@@ -59,6 +59,12 @@
         display: flex !important;
     }
 
+    &_Name {
+        margin-left: -( 200px + $space-medium ) !important;
+        font-family: $font-design-family !important;
+        font-size: $font-size-medium !important;
+    }
+
     &_Character {
         position: relative;
         display: none;
@@ -66,6 +72,14 @@
 
         &.--show {
             display: block;
+        }
+
+        .Menu__Title:not( .Training__Menu_List_Name ) {
+            padding-top: $space-medium;
+        }
+
+        &_Command {
+            min-width: $width-medium;
         }
     }
 
@@ -84,12 +98,8 @@
     }
     
     &_Ki {
-        width: 60px;
-        margin: 0 $space-medium 0 0 !important;
-    }
-
-    &_Command {
-        min-width: $width-small;
+        width: $width-small / 10;
+        margin: 0 0 0 $space-small !important;
     }
 
     .--cancel {

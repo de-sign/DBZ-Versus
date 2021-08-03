@@ -156,6 +156,18 @@ Object.assign(
                 }
             ]
         },
+        /* ----- DETAILS Constante des groupes de commande dans la COMMAND LIST ----- */
+        oList: {
+            oGroup: {
+                offense: 'Offensif options',
+                defense: 'Defensif options',
+                normal: 'Normal attacks',
+                command: 'Command attacks',
+                aerial: 'Aerial attacks',
+                ki: 'Ki attacks'
+            },
+            aOrder: ['offense', 'normal', 'command', 'aerial', 'ki', 'defense']
+        },
         // INPUT
         /* ----- DETAILS Configuration des différents périphériques d'entrées ----- */
         oController: {

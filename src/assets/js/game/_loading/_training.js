@@ -155,27 +155,50 @@ Object.assign(
                     }
                 );
 
-                const oLayer = new OutputManager.OutputLayer(hLayer);
+                const oLayer = new OutputManager.OutputLayer(hLayer),
+                    oGroup = {};
+
+                // Création des groupes
                 for( let nIndex = oOptions.aRows.length - 1; nIndex >= 0; nIndex-- ){
-                    const aRow = [];
                     let oRow = oOptions.aRows[nIndex];
+                    const sGroup = oRow.oList.sGroup,
+                        aRow = [];
 
                     if(
                         oOptions.aExclude ?
                             oOptions.aExclude.indexOf( oRow.sCod ) == -1 :
-                            !oRow.bNotInCommandList 
+                            !oRow.oList.bHidden 
                     ){
                         do {
                             aRow.push(oRow);
                             oRow = oRow.oFollowUp;
                         }
-                        while( oRow && !oRow.bNotInCommandList );
+                        while( oRow );
 
-                        const oListCommand = this.createCommandRow(aRow);
-                        oListCommand.__oData = aRow[ aRow.length - 1 ];
-                        oLayer.add(oListCommand, '.Training__Menu_List_Character_Command');
+                        oGroup[sGroup] || ( oGroup[sGroup] = [] );
+                        oGroup[sGroup].push(aRow);
                     }
                 }
+                
+                // Affichage des groupes
+                GameSettings.oList.aOrder.forEach( sGroup => {
+                    if( oGroup[sGroup] ){
+                        // Ajout du TITLE
+                        oLayer.addTickUpdate( () => {
+                            const hLi = document.createElement('li');
+                            hLi.classList.add('Menu__Title');
+                            hLi.innerHTML = GameSettings.oList.oGroup[sGroup];
+                            oLayer.hElement.querySelector('.Training__Menu_List_Character_Command').appendChild(hLi);
+                        } );
+
+                        // Ajjout des commandes
+                        oGroup[sGroup].forEach( aRow => {
+                            const oListCommand = this.createCommandRow(aRow);
+                            oListCommand.__oData = aRow[ aRow.length - 1 ];
+                            oLayer.add(oListCommand, '.Training__Menu_List_Character_Command');
+                        } );
+                    }
+                } );
 
                 // Ajout au menu
                 OutputManager.getElement('LAY__Training_Menu_List').add(oLayer);
@@ -189,10 +212,11 @@ Object.assign(
                 hCommand.removeAttribute('id');
                 hCommand.classList.remove(OutputManager.oConfig.class.created);
 
-                hCommand.querySelector('.Training__Menu_List_Ki').innerHTML = oCommand.nCost ? ( oCommand.nCost / GameSettings.oKi.nBar ) + ' Ki' : '';
-
-                const hListCommand = hCommand.querySelector('.Training__Menu_List_Command');
-                hListCommand.innerHTML = oCommand.sName;
+                hCommand.querySelector('.Training__Menu_List_Command').innerHTML = oCommand.oList.sName + (
+                    oCommand.oList.sInfo ?
+                        '<span class="--cancel"> - ' + oCommand.oList.sInfo + '</span>' :
+                        ''
+                );
 
                 let sButtons = '';
                 aCommand.forEach( oStepCommand => {
@@ -205,6 +229,8 @@ Object.assign(
                     } );
                 } );
                 hCommand.querySelector('.Training__Menu_List_Button').innerHTML = sButtons;
+
+                hCommand.querySelector('.Training__Menu_List_Ki').innerHTML = oCommand.nCost ? ( oCommand.nCost / GameSettings.oKi.nBar ) + ' Ki' : '';
 
                 return new OutputManager.OutputLayer(hCommand);
             }

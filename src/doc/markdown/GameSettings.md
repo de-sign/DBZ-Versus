@@ -194,6 +194,24 @@ GameSettings.oSide = {
 };
 ```
 
+#### GameSettings.oList
+
+Constante des groupes de commande dans la COMMAND LIST 
+
+```javascript
+GameSettings.oList = {
+    oGroup: {
+        offense: 'Offensif options',
+        defense: 'Defensif options',
+        normal: 'Normal attacks',
+        command: 'Command attacks',
+        aerial: 'Aerial attacks',
+        ki: 'Ki attacks'
+    },
+    aOrder: ['offense', 'normal', 'command', 'aerial', 'ki', 'defense']
+};
+```
+
 #### GameSettings.oController
 
 Configuration des différents périphériques d'entrées 

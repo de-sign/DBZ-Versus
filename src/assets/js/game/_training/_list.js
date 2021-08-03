@@ -88,7 +88,7 @@ Object.assign(
                         if( this.oAnimation ){
                             if( this.oAnimation.is('movement') || this.oAnimation.is('hurt') ){
                                 if( this.oAnimation.sName == sAnimation && this.oAnimation.isEnd() ){
-                                    sAnimation = oMenu.__oData.sListAnimation || oMenu.__oData.sAnimation;
+                                    sAnimation = oMenu.__oData.oList.sAnimation || oMenu.__oData.sAnimation;
                                     nLength = 0;
                                 }
                             }

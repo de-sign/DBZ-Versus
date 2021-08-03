@@ -756,6 +756,11 @@ GameData.oCharacter.GKU = {
         aOffense: [
             {
                 sCod: 'attack_236C',
+                oList: {
+                    sName: 'Genki-dama',
+                    sGroup: 'ki'
+                },
+
                 sName: 'Genki-dama',
                 sAnimation: 'attack_236C',
                 nCost: 30,
@@ -815,6 +820,11 @@ GameData.oCharacter.GKU = {
             },
             {
                 sCod: 'attack_C',
+                oList: {
+                    sName: 'Taiyoken',
+                    sGroup: 'ki'
+                },
+
                 sName: 'Taiyoken',
                 sAnimation: 'attack_C',
                 nCost: 10,
@@ -890,6 +900,12 @@ GameData.oCharacter.GKU = {
             */
             {
                 sCod: 'attack_2B',
+                oList: {
+                    sName: 'Launcher',
+                    sInfo: 'Aerial invulnerable',
+                    sGroup: 'command'
+                },
+
                 sName: 'Launcher',
                 sAnimation: 'attack_2B',
                 nDamage: 100,
@@ -912,6 +928,11 @@ GameData.oCharacter.GKU = {
             },
             {
                 sCod: 'attack_6A',
+                oList: {
+                    sName: 'Tracker',
+                    sGroup: 'command'
+                },
+
                 sName: 'Tracker',
                 sAnimation: 'attack_6A',
                 nDamage: 75,
@@ -932,6 +953,11 @@ GameData.oCharacter.GKU = {
             },
             {
                 sCod: 'attack_B',
+                oList: {
+                    sName: 'Heavy',
+                    sGroup: 'normal'
+                },
+
                 sName: 'Heavy',
                 sAnimation: 'attack_B',
                 nDamage: 50,
@@ -952,6 +978,11 @@ GameData.oCharacter.GKU = {
             },
             {
                 sCod: 'attack_A_0',
+                oList: {
+                    sName: 'Light',
+                    sGroup: 'normal'
+                },
+
                 sName: 'Light',
                 sAnimation: 'attack_A_0',
                 nDamage: 25,

@@ -20,8 +20,8 @@ Object.assign(
                             this.createJump(oEntity);
                             this.createRecovery(oEntity);
                             this.createCommands(oEntity);
-                            this.createAnimationsList(oEntity);
                             this.createThrow(oEntity);
+                            this.createAnimationsList(oEntity);
                         }
                         this.createColor(sType, oEntity);
                     }
@@ -130,9 +130,9 @@ Object.assign(
                 // COMMANDS
                 if( oEntity.oCommands ){
                     oEntityColor.oCommands = {};
-                    for( let sTypeCMD in oEntity.oCommands ){
-                        oEntityColor.oCommands[sTypeCMD] = [];
-                        oEntity.oCommands[sTypeCMD].forEach( oCommand => {
+                    for( let sTypeCmd in oEntity.oCommands ){
+                        oEntityColor.oCommands[sTypeCmd] = [];
+                        oEntity.oCommands[sTypeCmd].forEach( oCommand => {
                             if( !oCommand.aFilter || oCommand.aFilter.indexOf(oColor.sColor) != -1 ){
                                 if( oCommand.oName ){
                                     oCommand = Object.assign( {}, {
@@ -140,7 +140,7 @@ Object.assign(
                                     }, oCommand );
                                     delete oCommand.oName;
                                 }
-                                oEntityColor.oCommands[sTypeCMD].push(oCommand);
+                                oEntityColor.oCommands[sTypeCmd].push(oCommand);
                                 
                                 const sRoot = oCommand.sCod;
                                 while( oCommand.oFollowUp ) {
@@ -155,7 +155,7 @@ Object.assign(
 
             delete oEntity.oFrames;
             delete oEntity.oAnimations;
-            delete oEntity.oCommands;
+            // delete oEntity.oCommands;
         },
 
         // CHARACTER
@@ -350,7 +350,7 @@ Object.assign(
 
         createAnimationsList: function(oChar){
             oChar.oCommands.aOffense.forEach( oCommand => {
-                if( !oCommand.bNotInCommandList ){
+                if( !oCommand.oList.bHidden ){
                     do {
                         if( oCommand.oFollowUp ){
                             // Creation de l'animation LIST pour les FOLLOWUP
@@ -377,7 +377,9 @@ Object.assign(
                             oChar.oAnimations[sListAnimation] = {
                                 aFrames: aListFrames
                             };
-                            oCommand.oFollowUp.sListAnimation = sListAnimation;
+                            oCommand.oFollowUp.oList = {
+                                sAnimation: sListAnimation
+                            };
                         }
                         oCommand = oCommand.oFollowUp;
                     }

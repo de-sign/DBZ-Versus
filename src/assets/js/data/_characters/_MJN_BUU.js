@@ -995,6 +995,11 @@ GameData.oCharacter.MJN_BUU = {
             {
                 aFilter: ['LSW_MJB'],
                 sCod: 'attack_236C',
+                oList: {
+                    sName: 'Puranetto Basuto',
+                    sGroup: 'ki'
+                },
+
                 sName: 'Puranetto Basuto',
                 sAnimation: 'attack_236C',
                 nCost: 30,
@@ -1056,6 +1061,11 @@ GameData.oCharacter.MJN_BUU = {
                 
                 aFilter: ['LSW_PKR'],
                 sCod: 'attack_236C',
+                oList: {
+                    sName: 'Makuhoidan',
+                    sGroup: 'ki'
+                },
+
                 sName: 'Makuhoidan',
                 sAnimation: 'attack_236C',
                 nCost: 30,
@@ -1115,6 +1125,11 @@ GameData.oCharacter.MJN_BUU = {
             },
             {
                 sCod: 'attack_C',
+                oList: {
+                    sName: 'Kikoha',
+                    sGroup: 'ki'
+                },
+
                 sName: 'Kikoha',
                 sAnimation: 'attack_C',
                 nCost: 10,
@@ -1156,6 +1171,12 @@ GameData.oCharacter.MJN_BUU = {
             },
             {
                 sCod: 'attack_2B',
+                oList: {
+                    sName: 'Launcher',
+                    sInfo: 'Aerial invulnerable',
+                    sGroup: 'command'
+                },
+
                 sName: 'Launcher',
                 sAnimation: 'attack_2B',
                 nDamage: 100,
@@ -1179,6 +1200,11 @@ GameData.oCharacter.MJN_BUU = {
 
             {
                 sCod: 'attack_6A',
+                oList: {
+                    sName: 'Tracker',
+                    sGroup: 'command'
+                },
+
                 sName: 'Tracker',
                 sAnimation: 'attack_6A_0',
                 nDamage: 75,
@@ -1224,6 +1250,11 @@ GameData.oCharacter.MJN_BUU = {
             },
             {
                 sCod: 'attack_B',
+                oList: {
+                    sName: 'Heavy',
+                    sGroup: 'normal'
+                },
+
                 sName: 'Heavy',
                 sAnimation: 'attack_B',
                 nDamage: 50,
@@ -1244,6 +1275,11 @@ GameData.oCharacter.MJN_BUU = {
             },
             {
                 sCod: 'attack_A_0',
+                oList: {
+                    sName: 'Light',
+                    sGroup: 'normal'
+                },
+
                 sName: 'Light',
                 sAnimation: 'attack_A_0',
                 nDamage: 25,

@@ -803,9 +803,13 @@ GameData.oCharacter.SRU = {
         aOffense: [
             {
                 sCod: 'attack_236C',
-                sName: 'Taiyokei Hakai K.',
+                oList: {
+                    sName: 'Taiyokei Hakai K.',
+                    sGroup: 'ki',
+                    sAnimation: 'list_236C'
+                },
+
                 sAnimation: 'attack_236C',
-                sListAnimation: 'list_236C',
                 nCost: 30,
                 nDamage: 300,
                 nMinimumReduce: 40,
@@ -867,9 +871,13 @@ GameData.oCharacter.SRU = {
             },
             {
                 sCod: 'attack_C',
-                sName: 'Desubīmu',
+                oList: {
+                    sName: 'Desubīmu',
+                    sGroup: 'ki',
+                    sAnimation: 'list_C'
+                },
+
                 sAnimation: 'attack_C',
-                sListAnimation: 'list_C',
                 nCost: 10,
                 nGatlingLevel: 2,
                 nDamage: 100,
@@ -908,7 +916,12 @@ GameData.oCharacter.SRU = {
             },
             {
                 sCod: 'attack_2B',
-                sName: 'Launcher',
+                oList: {
+                    sName: 'Launcher',
+                    sInfo: 'Aerial invulnerable',
+                    sGroup: 'command'
+                },
+                
                 sAnimation: 'attack_2B',
                 nDamage: 100,
                 nGatlingLevel: 1,
@@ -930,7 +943,11 @@ GameData.oCharacter.SRU = {
             },
             {
                 sCod: 'extra',
-                sName: 'Shoulder dash',
+                oList: {
+                    sName: 'Shoulder dash',
+                    sGroup: 'command'
+                },
+
                 sAnimation: 'attack_6B',
                 nDamage: 75,
                 nGatlingLevel: 1,
@@ -954,7 +971,11 @@ GameData.oCharacter.SRU = {
             },
             {
                 sCod: 'attack_6A',
-                sName: 'Slide',
+                oList: {
+                    sName: 'Slide',
+                    sGroup: 'command'
+                },
+
                 sAnimation: 'attack_2A',
                 nDamage: 75,
                 nGatlingLevel: 1,
@@ -974,7 +995,11 @@ GameData.oCharacter.SRU = {
             },
             {
                 sCod: 'attack_B',
-                sName: 'Heavy',
+                oList: {
+                    sName: 'Heavy',
+                    sGroup: 'normal'
+                },
+
                 sAnimation: 'attack_B',
                 nDamage: 50,
                 nGatlingLevel: 1,
@@ -994,13 +1019,16 @@ GameData.oCharacter.SRU = {
             },
             {
                 sCod: 'attack_A_0',
-                sName: 'Light',
+                oList: {
+                    sName: 'Light',
+                    sGroup: 'normal'
+                },
+                
                 sAnimation: 'attack_A_0',
                 nDamage: 25,
                 nGatlingLevel: 1,
                 sCheck: 'bGround',
                 oFollowUp: {
-                    sName: '2nd',
                     sCod: 'attack_A_1',
                     sAnimation: 'attack_A_1',
                     nDamage: 25,

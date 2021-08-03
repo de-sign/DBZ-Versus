@@ -110,7 +110,7 @@ Object.assign(
                 sAnimation && this.setAnimation(sAnimation);
             },
             update: function(){
-                // Destruction après 1s pour prévention du ROLLBACK
+                // Destruction après n Frames pour prévention du ROLLBACK
                 if( this.isDead() ) {
                     this.oDeadTimer.update();
                     if( this.oDeadTimer.isEnd() ){
@@ -199,11 +199,9 @@ Object.assign(
                     const oClass = {
                         // Reverse
                         reverse: this.bReverse,
-
                         // Freeze
                         freeze_pair: false,
                         freeze_impair: false,
-
                         // Float
                         float_up: false,
                         float_down: false
@@ -251,13 +249,12 @@ Object.assign(
                                 sAnimation: uData.oStun.sImpactAnimation || 'impact_hit',
                                 bReverse: !oParent.bReverse,
                                 oParent: oParent
+                            }, {
+                                sType: 'text',
+                                sText: uData.oStun.sImpactText || 'パフ', // PAF
+                                oParent: oParent
                             } );
                         }
-                        aNewEntity.push( {
-                            sType: 'text',
-                            sText: uData.oStun.sImpactText || 'パフ', // PAF
-                            oParent: oParent
-                        } );
                         aNewEntity.push( {
                             sType: 'sound',
                             sEntity: 'ADO__Hit'
@@ -271,13 +268,12 @@ Object.assign(
                                 sAnimation: uData.oStun.sImpactAnimation || 'impact_guard',
                                 bReverse: !oParent.bReverse,
                                 oParent: oParent
+                            }, {
+                                sType: 'text',
+                                sText: uData.oStun.sImpactText || 'バム', // BAM
+                                oParent: oParent
                             } );
                         }
-                        aNewEntity.push( {
-                            sType: 'text',
-                            sText: uData.oStun.sImpactText || 'バム', // BAM
-                            oParent: oParent
-                        } );
                         aNewEntity.push( {
                             sType: 'sound',
                             sEntity: 'ADO__Guard'
