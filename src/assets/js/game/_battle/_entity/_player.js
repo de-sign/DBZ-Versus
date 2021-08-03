@@ -229,24 +229,21 @@ Object.assign(
                         bRecovery: false,
                         bGuard: false,
                         bThrow: false,
-                        bAerial: this.oStatus.bAerial,
-                        bGround: !this.oStatus.bAerial,
                         nCode: 0
                     };
-                    const bFreeze = this.oAnimation.isFreeze();
+                    const bFreeze = this.oAnimation.isFreeze(),
+                        sCommand = this.oStatus.bAerial ? 'aAerial' : 'aGround';
 
                     // Gestion MOVEMENT
                     if( !bFreeze && this.oAnimation.is('movement') ){
                         const bCancel = this.oAnimation.sType != 'jump' || this.oStatus.bCancel;
                         oCanAction = {
-                            sCommand: 'aOffense',
+                            sCommand: sCommand,
                             bStack: !bCancel,
                             bMove: !this.oStatus.bAerial,
                             bRecovery: false,
                             bGuard: false,
                             bThrow: false,
-                            bAerial: this.oStatus.bAerial,
-                            bGround: !this.oStatus.bAerial,
                             nCode: bCancel ? 1 : 2
                         };
                     }
@@ -261,22 +258,18 @@ Object.assign(
                                 bRecovery: true,
                                 bGuard: false,
                                 bThrow: false,
-                                bAerial: false,
-                                bGround: true,
                                 nCode: 3
                             };
                         }
                         // STAND => ALL action
                         else if( !(this.oStatus.bAerial && this.oAnimation.is('hurt')) ){
                             oCanAction = {
-                                sCommand: 'aOffense',
+                                sCommand: sCommand,
                                 bStack: false,
                                 bMove: !this.oStatus.bAerial,
                                 bRecovery: false,
                                 bGuard: false, 
                                 bThrow: false, 
-                                bAerial: this.oStatus.bAerial,
-                                bGround: !this.oStatus.bAerial,
                                 nCode: 4
                             };
                         }
@@ -290,8 +283,6 @@ Object.assign(
                             bRecovery: false,
                             bGuard: this.oStatus.bGuard,
                             bThrow: this.oStatus.bThrow,
-                            bAerial: this.oStatus.bAerial,
-                            bGround: !this.oStatus.bAerial,
                             nCode: 5
                         };
                     }
@@ -299,14 +290,12 @@ Object.assign(
                     else if( this.aHit.length || this.oAnimation.is('stack') ){
                         const bCancel = this.oStatus.bCancel && !bFreeze;
                         oCanAction = {
-                            sCommand: 'aOffense',
+                            sCommand: sCommand,
                             bStack: !bCancel,
                             bMove: false,
                             bRecovery: false,
                             bGuard: false,
                             bThrow: false,
-                            bAerial: this.oStatus.bAerial,
-                            bGround: !this.oStatus.bAerial,
                             nCode: bCancel ? 6 : 7
                         };
                     }

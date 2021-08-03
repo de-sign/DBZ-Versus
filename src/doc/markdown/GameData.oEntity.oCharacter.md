@@ -1801,7 +1801,7 @@ GameData.oEntity.oCharacter.oCommands = {
             }
         }
     ],
-    aOffense: [
+    aGround: [
         {
             sCod: 'move_66',
             oList: {
@@ -1811,7 +1811,6 @@ GameData.oEntity.oCharacter.oCommands = {
 
             sAnimation: 'move_66',
             nGatlingLevel: 0,
-            sCheck: 'bGround',
             oStun: {},
             oPushback: {},
             oManipulation: {
@@ -1832,7 +1831,6 @@ GameData.oEntity.oCharacter.oCommands = {
 
             sAnimation: 'move_44',
             nGatlingLevel: 0,
-            sCheck: 'bGround',
             oStun: {},
             oPushback: {},
             oManipulation: {
@@ -1855,7 +1853,6 @@ GameData.oEntity.oCharacter.oCommands = {
             nDamage: 0,
             bUnblockable: true,
             bOnlyOnGround: true,
-            sCheck: 'bGround',
             sCollisionBox: 'oPositionBox',
             oStun: {
                 nHit: 30,
@@ -1900,7 +1897,6 @@ GameData.oEntity.oCharacter.oCommands = {
             nDamage: 0,
             bUnblockable: true,
             bOnlyOnGround: true,
-            sCheck: 'bGround',
             sCollisionBox: 'oPositionBox',
             oStun: {
                 nHit: 30,
@@ -1936,7 +1932,6 @@ GameData.oEntity.oCharacter.oCommands = {
             nCost: 20,
             bResetGatling: true,
             bIgnoreGatlingLevel: true,
-            sCheck: 'bGround',
             aEntity: [
                 {
                     sType: 'effect',
@@ -1959,6 +1954,8 @@ GameData.oEntity.oCharacter.oCommands = {
                 ]
             }
         },
+    ],
+    aAerial: [
         {
             sCod: 'move_j66',
             oList: {
@@ -1968,7 +1965,6 @@ GameData.oEntity.oCharacter.oCommands = {
 
             sAnimation: 'move_66',
             nGatlingLevel: 0,
-            sCheck: 'bAerial',
             oStun: {},
             oPushback: {},
             oManipulation: {
@@ -1989,7 +1985,6 @@ GameData.oEntity.oCharacter.oCommands = {
 
             sAnimation: 'move_44',
             nGatlingLevel: 0,
-            sCheck: 'bAerial',
             oStun: {},
             oPushback: {},
             oManipulation: {
@@ -2011,7 +2006,6 @@ GameData.oEntity.oCharacter.oCommands = {
             sAnimation: 'attack_jB',
             nDamage: 50,
             nGatlingLevel: 1,
-            sCheck: 'bAerial',
             oStun: {
                 nBlock: 16,
                 nHit: 20,
@@ -2034,7 +2028,6 @@ GameData.oEntity.oCharacter.oCommands = {
             sAnimation: 'attack_jA',
             nDamage: 25,
             nGatlingLevel: 1,
-            sCheck: 'bAerial',
             oStun: {
                 nBlock: 12,
                 nHit: 16,
@@ -2046,7 +2039,7 @@ GameData.oEntity.oCharacter.oCommands = {
                     { A: true }
                 ]
             }
-        },
+        }
     ]
 };
 ```

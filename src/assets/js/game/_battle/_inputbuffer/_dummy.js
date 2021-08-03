@@ -38,7 +38,7 @@ Object.assign(
                     this.oPlayer = oPlayer;
                     this.oOptions = oOptions;
 
-                    this.oPlayer.oData.oCommands.aOffense.forEach( oCommand => {
+                    this.oPlayer.oData.oCommands.aGround.forEach( oCommand => {
                         this.oCounter[oCommand.sCod] || ( this.oCounter[oCommand.sCod] = oCommand.oManipulation.aButtons );
                     } );
                 },

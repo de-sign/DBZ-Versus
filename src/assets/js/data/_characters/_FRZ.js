@@ -826,7 +826,7 @@ GameData.oCharacter.FRZ = {
     },
     /* ----- DETAILS Données des commandes. ----- */
     oCommands: {
-        aOffense: [
+        aGround: [
             {
                 sCod: 'attack_236C',
                 oList: {
@@ -846,7 +846,6 @@ GameData.oCharacter.FRZ = {
                 nDamage: 300,
                 nMinimumReduce: 40,
                 nGatlingLevel: 3,
-                sCheck: 'bGround',
                 oFreeze: {
                     bInfo: true,
                     nLength: 45
@@ -909,7 +908,6 @@ GameData.oCharacter.FRZ = {
                 nCost: 10,
                 nGatlingLevel: 2,
                 nDamage: 100,
-                sCheck: 'bGround',
                 aEntity: [
                     {
                         sType: 'text',
@@ -953,7 +951,6 @@ GameData.oCharacter.FRZ = {
                 sAnimation: 'attack_2B',
                 nDamage: 100,
                 nGatlingLevel: 1,
-                sCheck: 'bGround',
                 bJumpCancellable: true,
                 oStun: {
                     nBlock: 12,
@@ -979,7 +976,6 @@ GameData.oCharacter.FRZ = {
                 sAnimation: 'attack_6B',
                 nDamage: 75,
                 nGatlingLevel: 1,
-                sCheck: 'bGround',
                 oStun: {
                     nBlock: 12,
                     nHit: 18,
@@ -1007,7 +1003,6 @@ GameData.oCharacter.FRZ = {
                 sAnimation: 'attack_6A',
                 nDamage: 75,
                 nGatlingLevel: 1,
-                sCheck: 'bGround',
                 oStun: {
                     nBlock: 12,
                     nHit: 18,
@@ -1031,7 +1026,6 @@ GameData.oCharacter.FRZ = {
                 sAnimation: 'attack_B',
                 nDamage: 50,
                 nGatlingLevel: 1,
-                sCheck: 'bGround',
                 oStun: {
                     nBlock: 10,
                     nHit: 16,
@@ -1055,13 +1049,11 @@ GameData.oCharacter.FRZ = {
                 sAnimation: 'attack_A_0',
                 nDamage: 25,
                 nGatlingLevel: 1,
-                sCheck: 'bGround',
                 oFollowUp: {
                     sCod: 'attack_A_1',
                     sAnimation: 'attack_A_1',
                     nDamage: 25,
                     nGatlingLevel: 1,
-                    sCheck: 'bGround',
                     oStun: {
                         nBlock: 12,
                         nHit: 13,

@@ -349,7 +349,11 @@ Object.assign(
         },
 
         createAnimationsList: function(oChar){
-            oChar.oCommands.aOffense.forEach( oCommand => {
+            [
+                ...oChar.oCommands.aGround,
+                ...oChar.oCommands.aAerial
+            ]
+            .forEach( oCommand => {
                 if( !oCommand.oList.bHidden ){
                     do {
                         if( oCommand.oFollowUp ){
@@ -393,7 +397,7 @@ Object.assign(
                 oBackThrow = null;
                 oLauncher = null;
 
-            oChar.oCommands.aOffense.forEach( oCommand => {
+            oChar.oCommands.aGround.forEach( oCommand => {
                 switch( oCommand.sCod ){
                     case 'attack_6D':
                         oThrow = oCommand;

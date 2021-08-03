@@ -199,10 +199,10 @@ Object.assign(
             },
 
             initCounter: function(){
-                const aCommands = this.oScene.aPlayer[1].oData.oCommands.aOffense;
+                const aCommands = this.oScene.aPlayer[1].oData.oCommands.aGround;
                 for( let nIndex = aCommands.length - 1; nIndex >= 0; nIndex-- ){
                     const oCommand = aCommands[nIndex];
-                    if( oCommand.sAnimation != 'attack_66' && oCommand.sCheck != 'bAerial' ){
+                    if( oCommand.sAnimation != 'attack_D' ){
                         this.oCounter[oCommand.sCod] = oCommand.sName;
                     }
                 }

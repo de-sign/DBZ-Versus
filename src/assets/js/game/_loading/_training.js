@@ -107,7 +107,8 @@ Object.assign(
 
                 const aCommonRows = [
                     ...GameData.oEntity.oCharacter.oCommands.aDefense,
-                    ...GameData.oEntity.oCharacter.oCommands.aOffense
+                    ...GameData.oEntity.oCharacter.oCommands.aGround,
+                    ...GameData.oEntity.oCharacter.oCommands.aAerial
                 ];
 
                 // Base 
@@ -122,12 +123,17 @@ Object.assign(
                     const oChar = GameData.oCharacter[sChar];
                     oChar.aColor.forEach( oColor => {
 
-                        const oCharColor = oChar[oColor.sColor];
-                        if( oCharColor.oCommands.aOffense && oCharColor.oCommands.aOffense.length ){
+                        const oCharColor = oChar[oColor.sColor],
+                            aCommands = [
+                                ...oCharColor.oCommands.aGround,
+                                ...oCharColor.oCommands.aAerial
+                            ];
+
+                        if( aCommands.length ){
                             this.createCommandWindows( {
                                 sId: oCharColor.sCod,
                                 sName: oCharColor.sName,
-                                aRows: oCharColor.oCommands.aOffense,
+                                aRows: aCommands,
                                 aExclude: aCommonRows.reduce( (aAccu, oRow) => {
                                     aAccu.push( oRow.sCod );
                                     return aAccu;
