@@ -2030,7 +2030,7 @@ GameData.oEntity.oCharacter.oCommands = {
                 },
                 oStun: {
                     nStun: 16,
-                    sAnimation: 'defense_j4'
+                    sAnimation: 'defense_4'
                 }
             }
         },

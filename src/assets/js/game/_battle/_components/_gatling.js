@@ -177,7 +177,7 @@ Object.assign(
             return bFreeze;
         },
         isJumpCancellable: function(){
-            return this.oCurrent && this.oCurrent.oGatling.bJumpCancellable;
+            return this.oCurrent && this.oCurrent.oGatling.bJumpCancellable && this.oCurrent.sHurt == 'bHit';
         }
     }
 );
