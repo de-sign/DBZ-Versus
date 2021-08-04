@@ -24,7 +24,7 @@ Object.assign(
 
             for( let nIndex = 0; nIndex < aCommand.length; nIndex++ ){
                 const oCommand = aCommand[nIndex];
-                if( !oCommand.sCheck || oCanAction[oCommand.sCheck] ){
+                if( !oCommand.oGatling.sCheck || oCanAction[oCommand.oGatling.sCheck] ){
                     if( this.canUseCommand(nKi, oCommand) ){
                         if( oCanAction.bStack ){
                             this.oNext = oCommand;
@@ -57,7 +57,7 @@ Object.assign(
             this.aTimerEntity = [];
         },
         use: function(oCommand){
-            if( oCommand.bResetGatling ){
+            if( oCommand.oGatling.bReset ){
                 this.reset();
             } else {
                 this.oNext = null;
@@ -70,9 +70,9 @@ Object.assign(
                 oCommand
             );
             this.oUsed[oCommand.sCod] = true;
-            if( oCommand.aEntity ){
+            if( oCommand.oGatling.aEntity ){
                 this.aTimerEntity = [];
-                oCommand.aEntity.forEach( oEntity => {
+                oCommand.oGatling.aEntity.forEach( oEntity => {
                     const oTimer = new GameTimer();
                     oTimer.init( oEntity.nFrameStart );
                     this.aTimerEntity.push(oTimer);
@@ -94,10 +94,12 @@ Object.assign(
                     if(
                         oFollow &&
                         (
-                            !oFollow.bFollowOnlyOnHurt
-                            || ( typeof oFollow.bFollowOnlyOnHurt == 'string' ?
-                                oFollow.bFollowOnlyOnHurt == this.oCurrent.sHurt :
-                                this.oCurrent.sHurt )
+                            !oFollow.sCheck
+                            || (
+                                typeof oFollow.sCheck == 'string' ?
+                                    oFollow.sCheck == this.oCurrent.sHurt :
+                                    this.oCurrent.sHurt
+                            )
                         )
                     ){
                         oCommand = this.oCurrent.oFollowUp;
@@ -106,18 +108,19 @@ Object.assign(
                     }
                 }
                 if( oCommand ){
-                    if( !oCommand.oManipulation ){
+                    const oManip = oCommand.oGatling.oManipulation;
+                    if( !oManip.aButtons ){
                         if( !this.oNext && !bLastNoManip ){
                             aCommandNoManip.push( Object.assign({}, oCommand) );
-                            bLastNoManip = oCommand.bLast;
+                            bLastNoManip = oManip && oManip.bLast;
                         }
                     }
                     else if(
                         this.oInputBuffer.nFrameLastUpdate == nFrameCheck
-                        && this.oInputBuffer.checkManipulation(nFrameCheck, oCommand.oManipulation)
+                        && this.oInputBuffer.checkManipulation(nFrameCheck, oManip)
                     ){
                         aCommand.push( Object.assign({}, oCommand) );
-                        if( oCommand.bLast ){
+                        if( oManip.bLast ){
                             bAddNoManip = false;
                             break;
                         }
@@ -129,12 +132,12 @@ Object.assign(
         },
         getEntity: function(){
             let aEntity = [];
-            if( this.oCurrent && this.oCurrent.aEntity && this.aTimerEntity.length ){
+            if( this.oCurrent && this.oCurrent.oGatling.aEntity && this.aTimerEntity.length ){
                 this.aTimerEntity.forEach( (oTimer, nIndex) => {
                     if( oTimer ){
                         oTimer.update(this);
                         if( oTimer.isEnd() ){
-                            aEntity.push( this.oCurrent.aEntity[nIndex] );
+                            aEntity.push( this.oCurrent.oGatling.aEntity[nIndex] );
                             this.aTimerEntity[nIndex] = null;
                         }
                     }
@@ -143,19 +146,19 @@ Object.assign(
             return aEntity;
         },
         confirmHit: function(bGuard){
-            this.oCurrent && ( this.oCurrent.sHurt = bGuard ? 'guard' : 'hit');
+            this.oCurrent && ( this.oCurrent.sHurt = bGuard ? 'bGuard' : 'bHit');
         },
 
         canUseCommand: function(nKi, oCommand){
             let bCanUse = false;
             // Gestion KI
-            if( !oCommand.nCost || nKi >= oCommand.nCost ){
+            if( !oCommand.oGatling.nCost || nKi >= oCommand.oGatling.nCost ){
                 // Gestion GATLING
                 if( !this.oUsed[oCommand.sCod] ){
                     // Gestion LEVEL
                     if(
                         !this.oCurrent // None
-                        || this.oCurrent.bIgnoreGatlingLevel || oCommand.bIgnoreGatlingLevel || this.oCurrent.nGatlingLevel <= oCommand.nGatlingLevel // Level
+                        || this.oCurrent.oGatling.bIgnoreLevel || oCommand.oGatling.bIgnoreLevel || this.oCurrent.oGatling.nLevel <= oCommand.oGatling.nLevel // Level
                         || (this.oCurrent.sRoot || this.oCurrent.sCod ) == oCommand.sRoot // Follow Up 
                     ) {
                         bCanUse = true;
@@ -174,7 +177,7 @@ Object.assign(
             return bFreeze;
         },
         isJumpCancellable: function(){
-            return this.oCurrent && this.oCurrent.bJumpCancellable;
+            return this.oCurrent && this.oCurrent.oGatling.bJumpCancellable;
         }
     }
 );

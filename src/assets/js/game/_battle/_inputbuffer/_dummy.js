@@ -39,7 +39,7 @@ Object.assign(
                     this.oOptions = oOptions;
 
                     this.oPlayer.oData.oCommands.aGround.forEach( oCommand => {
-                        this.oCounter[oCommand.sCod] || ( this.oCounter[oCommand.sCod] = oCommand.oManipulation.aButtons );
+                        this.oCounter[oCommand.sCod] || ( this.oCounter[oCommand.sCod] = oCommand.oGatling.oManipulation.aButtons );
                     } );
                 },
                 update: function(bReverse, bForce){

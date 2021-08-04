@@ -350,17 +350,6 @@ Nombre de FRAME lors d'un HIT FREEZE
 GameSettings.nFreeze = 6;
 ```
 
-#### GameSettings.oPushback
-
-PUSHBACK par défault appliqué lors d'un coup 
-
-```javascript
-GameSettings.oPushback = {
-    nLength: 4,
-    nX: -24
-};
-```
-
 #### GameSettings.nDie
 
 Temps avant suppression d'un entité pour futur ROLLBACK 
@@ -398,28 +387,70 @@ GameSettings.oPositionEffect = {
 };
 ```
 
+#### GameSettings.oCommand
+
+Parametrages des COMMAND par défaut 
+
+```javascript
+GameSettings.oCommand = {
+    /* ----- Parametrages des DAMAGES par défaut et du damage REDUCE ----- */
+    oDamage: {
+        nDamage: 25,
+        // Percent !
+        nReduce: 5,
+        nMinimumReduce: 10
+    },
+    /* ----- Paramétrage du gain de KI ----- */
+    oKi: {
+        nMax: 50,
+        nBar: 10,
+        oHit: {
+            nGain: 2, // oAttack.nHit
+            nGive: 1 // oDefend.nHit
+        },
+        oGuard: {
+            nGain: 1, // oAttack.nGuard
+            nGive: 1 // oDefend.nGuard
+        }
+    },
+    /* ----- Paramétrage du stun ----- */
+    oStun: {
+        oHit: {
+            nStun: 12,
+            sAnimation: 'hit_0',
+            sImpact: 'impact_hit',
+            sText: 'パフ', // PAF
+        },
+        oGuard: {
+            nStun: 6,
+            sAnimation: 'defense_4',
+            sImpact: 'impact_guard',
+            sText: 'バム', // BAM
+        }
+    },
+    /* -----  PUSHBACK par défault appliqué lors d'un coup ----- */
+    oPushback: {
+        nLength: 4,
+        nX: -24,
+        bDivide: true
+    }
+};
+```
+
 #### GameSettings.oKi
 
-Paramétrage du gain de KI 
+Paramétrage de l'animation d'un personnage LUNCHER 
 
 ```javascript
 GameSettings.oKi = {
     nMax: 50,
-    nBar: 10,
-    oAttack: {
-        nHit: 2,
-        nGuard: 1
-    },
-    oDefend: {
-        nHit: 1,
-        nGuard: 1
-    }
+    nBar: 10
 };
 ```
 
 #### GameSettings.oLauncher
 
-Paramétrage de l'animation d'un personnage LUNCHER 
+Paramétrage de l'animation d'un personnage JUMP 
 
 ```javascript
 GameSettings.oLauncher = {
@@ -434,7 +465,7 @@ GameSettings.oLauncher = {
 
 #### GameSettings.oJump
 
-Paramétrage de l'animation d'un personnage JUMP 
+Paramètrage de la distance de déplacement lors d'une relevé d'un personnage mis au sol 
 
 ```javascript
 GameSettings.oJump = {
@@ -452,23 +483,8 @@ GameSettings.oJump = {
 
 #### GameSettings.nRecovery
 
-Paramètrage de la distance de déplacement lors d'une relevé d'un personnage mis au sol 
-
 ```javascript
 GameSettings.nRecovery = 14;
-```
-
-#### GameSettings.oDamage
-
-Parametrages des DAMAGES par défaut et du damage REDUCE 
-
-```javascript
-GameSettings.oDamage = {
-    nDefault: 25,
-    // Percent !
-    nReduce: 5,
-    nMinimumReduce: 10
-};
 ```
 
 

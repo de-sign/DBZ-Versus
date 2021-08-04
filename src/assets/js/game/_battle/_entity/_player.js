@@ -62,7 +62,7 @@ Object.assign(
                             // Gestion MANIP
                             const oCommand = this.oGatling.update(this.nKi, oCanAction);
                             if( oCommand ){
-                                oCommand.nCost && (this.nKi -= oCommand.nCost);
+                                oCommand.oGatling.nCost && (this.nKi -= oCommand.oGatling.nCost);
                                 this.setAnimation(oCommand.sAnimation);
                             }
                             // Gestion DIR
@@ -117,48 +117,50 @@ Object.assign(
                 // destroy: function(){},
 
                 // Fonction ENGINE
-                getHitData: function(){
+                getCommandData: function(){
                     return this.oGatling.oCurrent;
                 },
                 addKi: function(nKi){
                     this.nKi = Math.min(this.nKi + nKi, GameSettings.oKi.nMax);
                 },
-                takeHit: function(oEntity, oData, oEngine){
-                    const aNewEntity = [];
-                    if( !oData.bUnblockable && this.oStatus.bGuard ){
-                        this.setHurt('defense_4', oData.oStun.nBlock, !oEntity.bReverse);
-                        oEntity.confirmHit(this, oData, true);
-                        this.addKi( ( oData.oKi ? oData : GameSettings ).oKi.oDefend.nGuard );
-                        this.generateEntity('guard', this, oData, oEngine);
-                    }
-                    else {
-                        const nRatio = Math.max(oData.nMinimumReduce || GameSettings.oDamage.nMinimumReduce, 100 - (this.nHitting * GameSettings.oDamage.nReduce)),
-                            nBaseDamage = oData.nDamage == null ?
-                                GameSettings.oDamage.nDefault :
-                                oData.nDamage,
-                            nDamage = Math.floor(nBaseDamage * nRatio / 100);
+                takeHit: function(oEntity, oCommandData, oEngine){
 
-                        if( nDamage ){
-                            this.nLife -= nDamage;
-                            this.addKi( ( oData.oKi ? oData : GameSettings ).oKi.oDefend.nHit );
+                    let bLaunch = false;
+                    const bGuard = !oCommandData.oProperty.bUnblockable && this.oStatus.bGuard,
+                        sData = bGuard ? 'oGuard' : 'oHit',
+                        oData = oCommandData[sData],
+                        oDamage = Object.assign( {}, oData.oDamage ),
+                        oStun = Object.assign( {}, oData.oStun );
+
+                    if( !bGuard ){
+                        bLaunch = oCommandData.oProperty.bLaunch && !this.oStatus.bLaunch;
+                        if( oDamage.nDamage ){
+                            const nRatio = Math.max(oDamage.nMinimumReduce, 100 - (this.nHitting * GameSettings.oCommand.oDamage.nReduce));
+                            oDamage.nDamage = Math.floor(oDamage.nDamage * nRatio / 100);
                         }
                         this.nHitting ++;
-
-                        const bLaunch = oData.oStun.bLaunch && !this.oStatus.bLaunch,
-                            bDeath = this.nLife <= 0,
-                            sHitAnim = bLaunch || bDeath ? 'launch_0' : oData.oStun.sHitAnimation;
-                            
-                        sHitAnim && this.setHurt(sHitAnim, oData.oStun.nHit, !oEntity.bReverse);
-                        oEntity.confirmHit(this, oData);
-                        this.generateEntity('hit', this, oData, oEngine);
                     }
-                    return aNewEntity;
+
+                    this.nLife -= oDamage.nDamage;
+                    if( bLaunch || this.nLife <= 0 ){
+                        oStun.sAnimation = 'launch_0';
+                    }
+                    if( oStun.sAnimation ){
+                        this.setHurt(oStun.sAnimation, oStun.nStun, !oEntity.bReverse);
+                    }
+                    this.addKi( oData.oKi.nGive );
+                    oEntity.confirmHit(this, oCommandData, bGuard);
+                    this.generateEntity(bGuard ? 'guard' : 'hit', this, oStun, oEngine);
+
+                    return bGuard;
                 },
-                confirmHit: function(oEntityHurt, oData, bGuard){
-                    BattleEntity.prototype.confirmHit.call(this, oEntityHurt, oData, bGuard);
+                confirmHit: function(oEntityHurt, oCommandData, bGuard){
+                    BattleEntity.prototype.confirmHit.call(this, oEntityHurt, oCommandData, bGuard);
                     this.oGatling.confirmHit(bGuard);
-                    const nDamage = oData.nDamage == null ? 1 : oData.nDamage;
-                    oData.nCost || this.addKi( ( oData.oKi ? oData : GameSettings ).oKi.oAttack[ bGuard ? 'nGuard' : 'nHit' ] );
+
+                    if( !oCommandData.oGatling.nCost ){
+                        this.addKi( oCommandData[bGuard ? 'oGuard' : 'oHit'].oKi.nGain );
+                    }
                 },
                 setMemory: function(sAnimation){
                     // FALL en fin d'animation avec un move
@@ -194,6 +196,9 @@ Object.assign(
                             case 'move_7':
                             case 'move_8':
                             case 'move_9':
+                            case 'move_fall_4':
+                            case 'move_fall_5':
+                            case 'move_fall_6':
                                 this.oMemory = {
                                     sType: 'jump',
                                     oAnimation: this.oAnimation,
@@ -379,6 +384,7 @@ Object.assign(
 
                                         if( bSameAnim ){
                                             this.setAnimation(sAnimation);
+                                            this.setMemory();
                                         } else {
                                             this.setMemory(sAnimation);
                                             this.oMovement = this.oMemory.oMovement;

@@ -141,12 +141,6 @@ Object.assign(
                                     delete oCommand.oName;
                                 }
                                 oEntityColor.oCommands[sTypeCmd].push(oCommand);
-                                
-                                const sRoot = oCommand.sCod;
-                                while( oCommand.oFollowUp ) {
-                                    oCommand.oFollowUp.sRoot = sRoot;
-                                    oCommand = oCommand.oFollowUp;
-                                }
                             }
                         } );
                     }
@@ -155,7 +149,7 @@ Object.assign(
 
             delete oEntity.oFrames;
             delete oEntity.oAnimations;
-            // delete oEntity.oCommands;
+            delete oEntity.oCommands;
         },
 
         // CHARACTER
@@ -338,11 +332,39 @@ Object.assign(
                 this.oData.oCharacter.oCommands[sType].forEach( oCommand => {
                     oCommands[sType].push( Object.assign({}, oCommand) );
                 } );
-                oChar.oCommands && oChar.oCommands[sType] && [].push.apply(oCommands[sType], oChar.oCommands[sType]);
+                if( oChar.oCommands && oChar.oCommands[sType] ){
+                    [].push.apply(oCommands[sType], oChar.oCommands[sType]);
+                }
+
                 oCommands[sType].forEach( oCommand => {
-                    if( oCommand.aEntity && !Array.isArray(oCommand.aEntity) ){
-                        oCommand.aEntity = [oCommand.aEntity];
+                    // ROOT pour FOllOW
+                    const sRoot = oCommand.sCod;
+                    do {
+                        // GATLING ENTITY
+                        if( oCommand.oGatling.aEntity && !Array.isArray(oCommand.oGatling.aEntity) ){
+                            oCommand.oGatling.aEntity = [oCommand.oGatling.aEntity];
+                        }
+
+                        // HIT et GUARD DATA
+                        ['oHit', 'oGuard'].forEach( sProp => {
+                            if( oCommand[sProp] ){
+                                oCommand[sProp] = {
+                                    oDamage: Object.assign( {}, GameSettings.oCommand.oDamage, oCommand[sProp].oDamage || {} ),
+                                    oKi: Object.assign( {}, GameSettings.oCommand.oKi[sProp], oCommand[sProp].oKi || {} ),
+                                    oStun: Object.assign( {}, GameSettings.oCommand.oStun[sProp], oCommand[sProp].oStun || {} ),
+                                    oPushback: Object.assign( {}, GameSettings.oCommand.oPushback, oCommand[sProp].oPushback || {} )
+                                };
+                            }
+                        } );
+
+                        // FOLLOWUP ROOT
+                        if( oCommand.oFollowUp ){
+                            oCommand.oFollowUp.sRoot = sRoot;
+                        }
+
+                        oCommand = oCommand.oFollowUp;
                     }
+                    while( oCommand );
                 } );
             }
             oChar.oCommands = oCommands;
@@ -399,7 +421,7 @@ Object.assign(
 
             oChar.oCommands.aGround.forEach( oCommand => {
                 switch( oCommand.sCod ){
-                    case 'attack_6D':
+                    case 'attack_6D_0':
                         oThrow = oCommand;
                         break;
                     case 'attack_4D_0':
@@ -410,8 +432,18 @@ Object.assign(
                             {},
                             oCommand,
                             {
+                                sCHeck: true,
                                 sCod: 'attack_4D_2',
-                                oManipulation: null
+                                sRoot: 'attack_4D_0',
+                                oGatling: Object.assign(
+                                    {},
+                                    oCommand.oGatling,
+                                    {
+                                        oManipulation: {
+                                            bLast: true
+                                        }
+                                    }
+                                )
                             }
                         );
                         break;
@@ -420,7 +452,14 @@ Object.assign(
 
             // BackThrow
             oBackThrow.oFollowUp.oFollowUp = oLauncher;
-            oThrow.oFollowUp = Object.assign( { bFollowOnlyOnHurt: true }, oLauncher );
+            oThrow.oFollowUp = Object.assign(
+                {},
+                oLauncher,
+                {
+                    sCod: 'attack_6D_1',
+                    sRoot: 'attack_6D_0'
+                }
+            );
         },
 
         // STAGE

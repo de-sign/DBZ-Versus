@@ -81,19 +81,22 @@ Object.assign(
         },
         checkInvulnerable: function(oEntityHit, oEntityHurt){
             let bInvul = false;
-            const oData = oEntityHit.getHitData();
-            if( oData ){
-                // Gestion INVULNERABLE
-                if( oEntityHurt.isInvulnerable() ){
-                    bInvul = true;
-                }
-                // Gestion THROW contre adversaire en l'air
-                else if( oData.bOnlyOnGround && oEntityHurt.oStatus.bAerial ){
-                    bInvul = true;
-                }
-                // Gestion courp aérien contre ANTI AIR
-                else if( oEntityHit.oStatus.bAerial && oEntityHurt.oStatus.bAerialInvul ){
-                    bInvul = true;
+            // Gestion INVULNERABLE contre COMMAND
+            if( oEntityHurt.isInvulnerable(oEntityHit) ){
+                bInvul = true;
+            }
+            else {
+                // Gestion COMMAND contre adversaire
+                const oData = oEntityHit.getCommandData();
+                if( oData && oData.oProperty.sOpponentCheck ){
+                    switch( oData.oProperty.sOpponentCheck ){
+                        case 'bGround':
+                            bInvul = oEntityHurt.bAerial;
+                            break;
+                        case 'bAerial':
+                            bInvul = !oEntityHurt.bAerial;
+                            break;
+                    }
                 }
             }
             return bInvul;
@@ -138,11 +141,11 @@ Object.assign(
                             OutputManager.getChannel('CHN__SFX').play(oEffect.sEntity);
                             break;
                         
-                        // sEntity, sColor, sAnimation, oPosition, bReverse, oHitData, oParent, bLink
+                        // sEntity, sColor, sAnimation, oPosition, bReverse, oCommandData, oParent, bLink
                         case 'projectile':
                         case 'beam':
                         case 'character':
-                            oEntity = new window['Battle' + oEffect.sType[0].toUpperCase() + oEffect.sType.slice(1)]( oEffect.sEntity, oEffect.sColor, oEffect.sAnimation, oEffect.oPosition, oEffect.bReverse, oEffect.oHitData, oEffect.oParent );
+                            oEntity = new window['Battle' + oEffect.sType[0].toUpperCase() + oEffect.sType.slice(1)]( oEffect.sEntity, oEffect.sColor, oEffect.sAnimation, oEffect.oPosition, oEffect.bReverse, oEffect.oCommandData, oEffect.oParent );
                             oEffect.bLink && oEffect.oParent.add(oEntity);
                             oEntity.update();
                             break;
@@ -280,7 +283,9 @@ Object.assign(
 
             // Gestion HIT
             aEntity.forEach( oEntityHit => {
-                if( oEntityHit.oCheck.bHit ){
+                const oCommandData = oEntityHit.getCommandData();
+                if( oEntityHit.oCheck.bHit && oCommandData ){
+
                     aEntity.forEach( oEntityHurt => {
                         if(
                             !this.hasSameParent(oEntityHit, oEntityHurt)
@@ -290,9 +295,8 @@ Object.assign(
                             && !this.checkInvulnerable(oEntityHit, oEntityHurt)
                         ){
                             let bHit = false;
-                            const oData = oEntityHit.getHitData(),
-                                aHitBox = this.getCollisionBox(oEntityHit, 'aHitBox'),
-                                aHurtBox = this.getCollisionBox(oEntityHurt, ( oData && oData.sCollisionBox ) || 'aHurtBox');
+                            const aHitBox = this.getCollisionBox(oEntityHit, 'aHitBox'),
+                                aHurtBox = this.getCollisionBox(oEntityHurt, oCommandData.oProperty.sCollisionBox || 'aHurtBox');
 
                             if( aHitBox.length && aHurtBox.length ){
                                 for( let nHitBox = 0; nHitBox < aHitBox.length; nHitBox++ ){
@@ -302,7 +306,7 @@ Object.assign(
                                             aHurt.push( {
                                                 oEntityHit,
                                                 oEntityHurt,
-                                                oData: oData
+                                                oCommandData: oCommandData
                                             } );
                                             // PUSHBACK
                                             aPushback.push( {
@@ -312,7 +316,8 @@ Object.assign(
                                                 },
                                                 oEntityHit,
                                                 oEntityHurt,
-                                                oData: oData.oPushback || GameSettings.oPushback
+                                                oCommandData: oCommandData,
+                                                sType: null
                                             } );
                                             bHit = true;
                                             break;
@@ -331,8 +336,11 @@ Object.assign(
             if( aHurt.length ){
                 const aNewEntity = [];
                 // Gestion Hurt
-                aHurt.forEach( oHurt => oHurt.oEntityHurt.takeHit(oHurt.oEntityHit, oHurt.oData, this) );
-                // Gestion PushBack
+                aHurt.forEach( (oHurt, nIndex) => {
+                    const bGuard = oHurt.oEntityHurt.takeHit(oHurt.oEntityHit, oHurt.oCommandData, this);
+                    aPushback[nIndex].sType = bGuard ? 'oGuard' : 'oHit';
+                } );
+                // Gestion Pushback
                 this.movePushback(aPushback, oCollapse);
                 // Gestion hit freeze
                 aEntity.forEach( oEntity => {
@@ -343,45 +351,56 @@ Object.assign(
 
         movePushback: function(aPushback, oCollapse){
             aPushback.forEach( oPushback => {
-                if( oPushback.oPriority.nHit < oPushback.oPriority.nHurt && oPushback.oData.nX < 0 ){
-                    this.pushbackEntity( oPushback.oEntityHit, oPushback.oData, oPushback.oEntityHit.bReverse, !oPushback.oData.bNotDivide );
-                } else {
-                    this.pushbackEntity( oPushback.oEntityHurt, oPushback.oData, !oPushback.oEntityHit.bReverse, false );
+                const oData = oPushback.oCommandData[ oPushback.sType ].oPushback;
+                if( oPushback.oPriority.nHit < oPushback.oPriority.nHurt && oData.nX < 0 ){
+                    this.pushbackEntity( oPushback.oEntityHit, oData, oPushback.oEntityHit.bReverse, oData.bDivide );
+                }
+                else {
+                    this.pushbackEntity( oPushback.oEntityHurt, oData, !oPushback.oEntityHit.bReverse, false );
                 }
             } );
         },
         pushbackEntity: function(oEntity, oData, bReverse, bDivide){
+            // PUSHBACK du parent
             const oRootEntity = oEntity.isLinked() ? oEntity.oParent : oEntity;
-            oRootEntity.oCheck.bPushback && oRootEntity.setPushback(oData, bReverse, bDivide);
+            if( oRootEntity.oCheck.bPushback ){
+                oRootEntity.setPushback(oData, bReverse, bDivide);
+            }
+
+            // PUSHBACK des LINKS
             for( let sType in oRootEntity.oLink ){
                 oRootEntity.oLink[sType].forEach( oLinkEntity => {
-                    oLinkEntity.oCheck.bPushback && oLinkEntity.setPushback(oData, bReverse, bDivide);
+                    if( oLinkEntity.oCheck.bPushback ){
+                        oLinkEntity.setPushback(oData, bReverse, bDivide);
+                    }
                 } );
             }
         },
 
         commandFreeze: function(aEntity){
             for( let nIndex = 0; nIndex < this.aPlayer.length; nIndex++ ){
-                const oPlayer = this.aPlayer[nIndex];
+                const oPlayer = this.aPlayer[nIndex],
+                    oCommandData = oPlayer.getCommandData();
+
                 if( oPlayer.oGatling.needFreeze() ){
-                    oPlayer.oGatling.oCurrent.bFreeze = true;
+                    oCommandData.bFreeze = true;
 
                     // Freeze
                     aEntity.forEach( oEntity => {
-                        oEntity.sId != oPlayer.sId && oEntity.setFreeze(oPlayer.oGatling.oCurrent.oFreeze.nLength);
+                        oEntity.sId != oPlayer.sId && oEntity.setFreeze(oCommandData.oFreeze.nLength);
                     } );
 
                     // Texte
                     SceneManager.oCurrent.oInfo.add(
-                        oPlayer.oGatling.oCurrent.oFreeze.bInfo ?
+                        oCommandData.oFreeze.bInfo ?
                             {
-                                nLength: oPlayer.oGatling.oCurrent.oFreeze.nLength,
+                                nLength: oCommandData.oFreeze.nLength,
                                 sImg: oPlayer.oData.oPath.sFace,
-                                sText: oPlayer.oGatling.oCurrent.oList.sName + '&nbsp;!',
+                                sText: oCommandData.oList.sName + '&nbsp;!',
                                 sDirection: oPlayer.nPlayer == '1' ? 'left' : 'right',
                             } :
                             {
-                                nLength: oPlayer.oGatling.oCurrent.oFreeze.nLength
+                                nLength: oCommandData.oFreeze.nLength
                             }
                     );
                     break;

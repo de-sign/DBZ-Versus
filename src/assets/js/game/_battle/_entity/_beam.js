@@ -1,5 +1,5 @@
 /* ----- BattleBeam ----- */
-function BattleBeam(sEntity, sColor, sAnimation, oPosition, bReverse, oHitData, oParent){
+function BattleBeam(sEntity, sColor, sAnimation, oPosition, bReverse, oCommandData, oParent){
     BattleEntity.apply(this, arguments);
 }
 
@@ -8,9 +8,9 @@ Object.assign(
         prototype: Object.assign(
             Object.create(BattleEntity.prototype), {
                 constructor: BattleEntity,
-                init: function(sEntity, sColor, sAnimation, oPosition, bReverse, oHitData, oParent){
+                init: function(sEntity, sColor, sAnimation, oPosition, bReverse, oCommandData, oParent){
                     BattleEntity.prototype.init.call(this, 'beam', GameData.oBeam[sEntity][sColor], null, oPosition, bReverse, oParent);
-                    this.oHitData = oHitData;
+                    this.oCommandData = oCommandData;
 
                     this.generateAnimation(sAnimation, oPosition);
                     this.setAnimation(sAnimation + '_' + this.sId);

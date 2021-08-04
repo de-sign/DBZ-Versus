@@ -66,7 +66,7 @@ const oBefore = {
     },
     */
     /*
-    oPushBack: {
+    oPushback: {
         nLength: 4,
         nX: -24,
         // bNotDivide: false
@@ -152,7 +152,7 @@ const oAfter = {
         },
         
         /*
-        oPushBack: {
+        oPushback: {
             nLength: 4,
             nX: -24,
             // bNotDivide: false
@@ -180,7 +180,7 @@ const oAfter = {
         },
         
         /*
-        oPushBack: {
+        oPushback: {
             nLength: 4,
             nX: -24,
             // bNotDivide: false

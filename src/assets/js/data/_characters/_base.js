@@ -1064,6 +1064,24 @@ GameData.oEntity.oCharacter = {
                 }
             ]
         },
+        defense_j4: {
+            sType: 'guard',
+            aFrames: [
+                {
+                    nFrame: 1,
+                    sFrame: 'guard_1__2',
+                    oStatus: {
+                        bGuard: true
+                    }
+                },
+                {
+                    sFrame: 'guard_1',
+                    oStatus: {
+                        bGuard: true
+                    }
+                }
+            ]
+        },
         defense_D: {
             sType: 'action',
             aFrames: [
@@ -1201,7 +1219,7 @@ GameData.oEntity.oCharacter = {
             ]
         },
         
-        attack_D: {
+        attack_2D: {
             sType: 'cancel',
             aFrames: [
                 {
@@ -1294,53 +1312,7 @@ GameData.oEntity.oCharacter = {
         },
 
         // Choppe
-        attack_6D: {
-            sType: 'action',
-            aFrames: [
-                {
-                    nFrame: 2,
-                    sFrame: 'stand_1'
-                },
-                {
-                    nFrame: 6,
-                    sFrame: 'throw_0'
-                },
-                {
-                    nFrame: 3,
-                    sFrame: 'throw_1'
-                },
-                {
-                    nFrame: 3,
-                    sFrame: 'throw_1',
-                    aHitBox: {
-                        nX: 22,
-                        nY: -110,
-                        nWidth: 32,
-                        nHeight: 112
-                    }
-                },
-                {
-                    nFrame: 1,
-                    sFrame: 'throw_1',
-                    oStatus: {
-                        bCancel: true
-                    }
-                },
-                {
-                    nFrame: 6,
-                    sFrame: 'throw_2'
-                },
-                {
-                    nFrame: 6,
-                    sFrame: 'throw_3'
-                },
-                {
-                    nFrame: 6,
-                    sFrame: 'throw_2'
-                }
-            ]
-        },
-        attack_4D_0: {
+        attack_nD_0: {
             sType: 'action',
             aFrames: [
                 {
@@ -1669,367 +1641,426 @@ GameData.oEntity.oCharacter = {
         aDefense: [
             {
                 sCod: 'defense_4D',
+                sAnimation: 'defense_4D',
                 oList: {
                     sName: 'Reflect',
                     sInfo: 'On guard',
                     sGroup: 'defense'
                 },
-
-                sAnimation: 'defense_4D',
-                sCheck: 'bGuard',
-                nCost: 10,
-                nDamage: 0,
-                sCollisionBox: 'oPositionBox',
-                aEntity: [
-                    {
-                        sType: 'effect',
-                        sAnimation: 'impact_hit',
-                        oPosition: {
-                            nX: 72
+                oProperty: {
+                    sCollisionBox: 'oPositionBox'
+                },
+                oGatling: {
+                    sCheck: 'bGuard',
+                    nCost: 10,
+                    oManipulation: {
+                        nMaxLengthFrame: 2,
+                        aButtons: [
+                            { D: true }
+                        ]
+                    },
+                    aEntity: [
+                        {
+                            sType: 'effect',
+                            sAnimation: 'impact_hit',
+                            oPosition: {
+                                nX: 72
+                            },
+                            bReverse: true,
+                            nFrameStart: 7
                         },
-                        bReverse: true,
-                        nFrameStart: 7
-                    }, 
-                    {
-                        sType: 'effect',
-                        sAnimation: 'impact_hit',
-                        oPosition: {
-                            nX: 72
-                        },
-                        bReverse: false,
-                        nFrameStart: 7
-                    }
-                ],
+                        {
+                            sType: 'effect',
+                            sAnimation: 'impact_hit',
+                            oPosition: {
+                                nX: 72
+                            },
+                            bReverse: false,
+                            nFrameStart: 7
+                        }
+                    ]
+                },
                 oFreeze: {
                     bInfo: false,
                     nLength: 14
                 },
-                oStun: {
-                    sImpactAnimation: false
-                },
-                oKi: {
-                    oAttack: {
-                        nHit: 0,
-                        nGuard: 0
+                oHit: {
+                    oDamage: {
+                        nDamage: 0
                     },
-                    oDefend: {
-                        nHit: 0,
-                        nGuard: 0
+                    oKi: {
+                        nGain: 0,
+                        nGive: 0
+                    },
+                    oStun: {
+                        sImpact: false
+                    },
+                    oPushback: {
+                        nLength: 4,
+                        nX: -192,
+                        bDivide: false
                     }
                 },
-                oPushback: {
-                    nLength: 4,
-                    nX: -192,
-                    bNotDivide: true
-                },
-                oManipulation: {
-                    nMaxLengthFrame: 2,
-                    aButtons: [
-                        { D: true }
-                    ]
+                oGuard: {
+                    oDamage: {
+                        nDamage: 0
+                    },
+                    oKi: {
+                        nGain: 0,
+                        nGive: 0
+                    },
+                    oStun: {
+                        sImpact: false
+                    },
+                    oPushback: {
+                        nLength: 4,
+                        nX: -192,
+                        bDivide: false
+                    }
                 }
             },
             {
                 sCod: 'defense_D',
+                sAnimation: 'defense_D',
                 oList: {
                     sName: 'Tech Throw',
                     sInfo: 'On throw',
                     sGroup: 'defense'
                 },
-
-                sAnimation: 'defense_D',
-                sCheck: 'bThrow',
-                nDamage: 0,
-                sCollisionBox: 'oPositionBox',
-                aEntity: [
-                    {
-                        sType: 'effect',
-                        sAnimation: 'impact_hit',
-                        oPosition: {
-                            nX: 72
+                oProperty: {
+                    sCollisionBox: 'oPositionBox'
+                },
+                oGatling: {
+                    sCheck: 'bThrow',
+                    oManipulation: {
+                        nMaxLengthFrame: 2,
+                        aButtons: [
+                            { D: true }
+                        ]
+                    },
+                    aEntity: [
+                        {
+                            sType: 'effect',
+                            sAnimation: 'impact_hit',
+                            oPosition: {
+                                nX: 72
+                            },
+                            bReverse: true,
+                            nFrameStart: 7
                         },
-                        bReverse: true,
-                        nFrameStart: 7
-                    }, 
-                    {
-                        sType: 'effect',
-                        sAnimation: 'impact_hit',
-                        oPosition: {
-                            nX: 72
-                        },
-                        bReverse: false,
-                        nFrameStart: 7
-                    }
-                ],
+                        {
+                            sType: 'effect',
+                            sAnimation: 'impact_hit',
+                            oPosition: {
+                                nX: 72
+                            },
+                            bReverse: false,
+                            nFrameStart: 7
+                        }
+                    ]
+                },
                 oFreeze: {
                     bInfo: false,
                     nLength: 14
                 },
-                oStun: {
-                    nHit: 12,
-                    sHitAnimation: 'hit_0',
-                    sImpactAnimation: false
-                },
-                oKi: {
-                    oAttack: {
-                        nHit: 0,
-                        nGuard: 0
+                oHit: {
+                    oDamage: {
+                        nDamage: 0
                     },
-                    oDefend: {
-                        nHit: 0,
-                        nGuard: 0
+                    oKi: {
+                        nGain: 0,
+                        nGive: 0
+                    },
+                    oStun: {
+                        nStun: 12,
+                        sAnimation: 'hit_0',
+                        sImpact: false
+                    },
+                    oPushback: {
+                        nLength: 4,
+                        nX: -98,
+                        bDivide: false
                     }
-                },
-                oPushback: {
-                    nLength: 4,
-                    nX: -98,
-                    bNotDivide: true
-                },
-                oManipulation: {
-                    nMaxLengthFrame: 2,
-                    aButtons: [
-                        { D: true }
-                    ]
                 }
             }
         ],
         aGround: [
             {
                 sCod: 'move_66',
+                sAnimation: 'move_66',
                 oList: {
                     sName: 'Forward Dash',
                     bHidden: true
                 },
-
-                sAnimation: 'move_66',
-                nGatlingLevel: 0,
-                oStun: {},
-                oPushback: {},
-                oManipulation: {
-                    nMaxLengthFrame: 15,
-                    aButtons: [
-                        { FW: false },
-                        { NT: false },
-                        { FW: false }
-                    ]
+                oProperty: {},
+                oGatling: {
+                    nLevel: 0,
+                    oManipulation: {
+                        nMaxLengthFrame: 15,
+                        aButtons: [
+                            { FW: false },
+                            { NT: false },
+                            { FW: false }
+                        ]
+                    }
                 }
             },
             {
                 sCod: 'move_44',
+                sAnimation: 'move_44',
                 oList: {
                     sName: 'Backward Dash',
                     bHidden: true
                 },
-
-                sAnimation: 'move_44',
-                nGatlingLevel: 0,
-                oStun: {},
-                oPushback: {},
-                oManipulation: {
-                    nMaxLengthFrame: 15,
-                    aButtons: [
-                        { BW: false },
-                        { NT: false },
-                        { BW: false }
-                    ]
-                }
-            },
-            {
-                sCod: 'attack_4D_0',
-                oList: {
-                    sName: 'Backward Throw',
-                    sGroup: 'offense'
-                },
-
-                sAnimation: 'attack_4D_0',
-                nDamage: 0,
-                bUnblockable: true,
-                bOnlyOnGround: true,
-                sCollisionBox: 'oPositionBox',
-                oStun: {
-                    nHit: 30,
-                    sHitAnimation: 'hit_D'
-                },
-                oKi: {
-                    oAttack: {
-                        nHit: 0,
-                        nGuard: 0
-                    },
-                    oDefend: {
-                        nHit: 0,
-                        nGuard: 0
+                oProperty: {},
+                oGatling: {
+                    nLevel: 0,
+                    oManipulation: {
+                        nMaxLengthFrame: 15,
+                        aButtons: [
+                            { BW: false },
+                            { NT: false },
+                            { BW: false }
+                        ]
                     }
-                },
-                oPushback: {},
-                bLast: true,
-                oManipulation: {
-                    nMaxLengthFrame: 2,
-                    aButtons: [
-                        { BW: false, D: true }
-                    ]
-                },
-                oFollowUp: {
-                    sCod: 'attack_4D_1',
-                    sName: '2nd',
-                    sAnimation: 'attack_4D_1',
-                    bFollowOnlyOnHurt: true,
-                    oStun: {},
-                    oPushback: {},
-                    bLast: true
                 }
             },
             {
-                sCod: 'attack_6D',
+                sCod: 'attack_6D_0',
+                sAnimation: 'attack_nD_0',
                 oList: {
                     sName: 'Throw',
                     sGroup: 'offense'
                 },
-
-                sAnimation: 'attack_6D',
-                nDamage: 0,
-                bUnblockable: true,
-                bOnlyOnGround: true,
-                sCollisionBox: 'oPositionBox',
-                oStun: {
-                    nHit: 30,
-                    sHitAnimation: 'hit_D'
+                oProperty: {
+                    bUnblockable: true,
+                    sOpponentCheck: 'bGround',
+                    sCollisionBox: 'oPositionBox'
                 },
-                oKi: {
-                    oAttack: {
-                        nHit: 0,
-                        nGuard: 0
-                    },
-                    oDefend: {
-                        nHit: 0,
-                        nGuard: 0
+                oGatling: {
+                    oManipulation: {
+                        nMaxLengthFrame: 2,
+                        aButtons: [
+                            { FW: false, D: true }
+                        ],
+                        bLast: true
                     }
                 },
-                oPushback: {},
-                bLast: true,
-                oManipulation: {
-                    nMaxLengthFrame: 2,
-                    aButtons: [
-                        { FW: false, D: true }
-                    ]
+                oHit: {
+                    oDamage: {
+                        nDamage: 0
+                    },
+                    oKi: {
+                        nGain: 0,
+                        nGive: 0
+                    },
+                    oStun: {
+                        nStun: 30,
+                        sAnimation: 'hit_D'
+                    },
+                    oPushback: {
+                        nLength: 0,
+                        nX: 0
+                    }
                 }
             },
             {
-                sCod: 'attack_D',
+                sCod: 'attack_4D_0',
+                sAnimation: 'attack_nD_0',
+                oList: {
+                    sName: 'Backward Throw',
+                    sGroup: 'offense'
+                },
+                oProperty: {
+                    bUnblockable: true,
+                    sOpponentCheck: 'bGround',
+                    sCollisionBox: 'oPositionBox'
+                },
+                oGatling: {
+                    oManipulation: {
+                        nMaxLengthFrame: 2,
+                        aButtons: [
+                            { BW: false, D: true }
+                        ],
+                        bLast: true
+                    }
+                },
+                oHit: {
+                    oDamage: {
+                        nDamage: 0
+                    },
+                    oKi: {
+                        nGain: 0,
+                        nGive: 0
+                    },
+                    oStun: {
+                        nStun: 30,
+                        sAnimation: 'hit_D'
+                    },
+                    oPushback: {
+                        nLength: 0,
+                        nX: 0
+                    }
+                },
+                oFollowUp: {
+                    sCheck: true,
+                    sCod: 'attack_4D_1',
+                    sAnimation: 'attack_4D_1',
+                    oProperty: {},
+                    oGatling: {
+                        oManipulation: {
+                            bLast: true
+                        }
+                    }
+                }
+            },
+            {
+                sCod: 'attack_2D',
+                sAnimation: 'attack_2D',
                 oList: {
                     sName: 'Freeze Cancel',
                     sGroup: 'offense'
                 },
-
-                sAnimation: 'attack_D',
-                nCost: 20,
-                bResetGatling: true,
-                bIgnoreGatlingLevel: true,
-                aEntity: [
-                    {
-                        sType: 'effect',
-                        sAnimation: 'cancel',
-                        oPosition: {},
-                        nFrameStart: 9
-                    }
-                ],
+                oProperty: {},
+                oGatling: {
+                    nCost: 20,
+                    bReset: true,
+                    bIgnoreLevel: true,
+                    oManipulation: {
+                        nMaxLengthFrame: 1,
+                        aButtons: [
+                            { DN: false, D: true }
+                        ],
+                        bLast: true
+                    },
+                    aEntity: [
+                        {
+                            sType: 'effect',
+                            sAnimation: 'cancel',
+                            oPosition: {},
+                            nFrameStart: 9
+                        }
+                    ]
+                },
                 oFreeze: {
                     bInfo: false,
                     nLength: 30
-                },
-                oStun: {},
-                oPushback: {},
-                bLast: true,
-                oManipulation: {
-                    nMaxLengthFrame: 1,
-                    aButtons: [
-                        { D: true }
-                    ]
                 }
-            },
+            }
         ],
         aAerial: [
             {
                 sCod: 'move_j66',
+                sAnimation: 'move_66',
                 oList: {
                     sName: 'Forward Air Dash',
                     bHidden: true
                 },
-
-                sAnimation: 'move_66',
-                nGatlingLevel: 0,
-                oStun: {},
-                oPushback: {},
-                oManipulation: {
-                    nMaxLengthFrame: 15,
-                    aButtons: [
-                        { FW: false },
-                        { NT: false },
-                        { FW: false }
-                    ]
+                oProperty: {},
+                oGatling: {
+                    nLevel: 0,
+                    oManipulation: {
+                        nMaxLengthFrame: 15,
+                        aButtons: [
+                            { FW: false },
+                            { NT: false },
+                            { FW: false }
+                        ]
+                    }
                 }
             },
             {
                 sCod: 'move_j44',
+                sAnimation: 'move_44',
                 oList: {
                     sName: 'Backward Air Dash',
                     bHidden: true
                 },
-
-                sAnimation: 'move_44',
-                nGatlingLevel: 0,
-                oStun: {},
-                oPushback: {},
-                oManipulation: {
-                    nMaxLengthFrame: 15,
-                    aButtons: [
-                        { BW: false },
-                        { NT: false },
-                        { BW: false }
-                    ]
+                oProperty: {},
+                oGatling: {
+                    nLevel: 0,
+                    oManipulation: {
+                        nMaxLengthFrame: 15,
+                        aButtons: [
+                            { BW: false },
+                            { NT: false },
+                            { BW: false }
+                        ]
+                    }
                 }
             },
             {
                 sCod: 'attack_jB',
+                sAnimation: 'attack_jB',
                 oList: {
                     sName: 'Jump Heavy',
                     sGroup: 'aerial'
                 },
-
-                sAnimation: 'attack_jB',
-                nDamage: 50,
-                nGatlingLevel: 1,
-                oStun: {
-                    nBlock: 16,
-                    nHit: 20,
-                    sHitAnimation: 'hit_1'
+                oProperty: {},
+                oGatling: {
+                    nLevel: 1,
+                    oManipulation: {
+                        nMaxLengthFrame: 1,
+                        aButtons: [
+                            { B: true }
+                        ],
+                        bLast: true
+                    }
                 },
-                oManipulation: {
-                    nMaxLengthFrame: 1,
-                    aButtons: [
-                        { B: true }
-                    ]
+                oHit: {
+                    oDamage: {
+                        nDamage: 50
+                    },
+                    oStun: {
+                        nStun: 20,
+                        sAnimation: 'hit_1'
+                    }
+                },
+                oGuard: {
+                    oDamage: {
+                        nDamage: 0
+                    },
+                    oStun: {
+                        nStun: 16,
+                        sAnimation: 'defense_j4'
+                    }
                 }
             },
             {
                 sCod: 'attack_jA',
+                sAnimation: 'attack_jA',
                 oList: {
                     sName: 'Jump Light',
                     sGroup: 'aerial'
                 },
-
-                sAnimation: 'attack_jA',
-                nDamage: 25,
-                nGatlingLevel: 1,
-                oStun: {
-                    nBlock: 12,
-                    nHit: 16,
-                    sHitAnimation: 'hit_1'
+                oProperty: {},
+                oGatling: {
+                    nLevel: 1,
+                    oManipulation: {
+                        nMaxLengthFrame: 1,
+                        aButtons: [
+                            { A: true }
+                        ],
+                        bLast: true
+                    }
                 },
-                oManipulation: {
-                    nMaxLengthFrame: 1,
-                    aButtons: [
-                        { A: true }
-                    ]
+                oHit: {
+                    oDamage: {
+                        nDamage: 25
+                    },
+                    oStun: {
+                        nStun: 16,
+                        sAnimation: 'hit_1'
+                    }
+                },
+                oGuard: {
+                    oDamage: {
+                        nDamage: 0
+                    },
+                    oStun: {
+                        nStun: 12,
+                        sAnimation: 'defense_j4'
+                    }
                 }
             }
         ]

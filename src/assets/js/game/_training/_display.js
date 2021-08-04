@@ -329,7 +329,7 @@ Object.assign(
                         sType: TrainingEngineDisplay.aOffenseAnimation.indexOf( oPlayer.oAnimation.sType ) == -1 ?
                             'defense' :
                             'offense',
-                        oHitData: oPlayer.getHitData(),
+                        oCommandData: oPlayer.getCommandData(),
                         oAnimation: oPlayer.oAnimation,
                         bHit: bHit,
                         nHitting: oOpponent.nHitting,
@@ -345,17 +345,18 @@ Object.assign(
 
                         switch( oInfo.sType ){
                             case 'damages':
-                                if( oNewData.sType == 'offense' && oNewData.oHitData ){
+                                if( oNewData.sType == 'offense' && oNewData.oCommandData ){
+                                    const oDamage = (oNewData.oCommandData.oHit && oNewData.oCommandData.oHit.oDamage) || {};
                                     if( oNewData.bHit ){
                                         if( oNewData.nLastHitting ){
-                                            const nRatio = Math.max(oNewData.oHitData.nMinimumReduce || GameSettings.oDamage.nMinimumReduce, 100 - ( (oOpponent.nHitting - 1) * GameSettings.oDamage.nReduce)),
-                                                nBaseDamage = oNewData.oHitData.nDamage || '-',
+                                            const nRatio = Math.max(oDamage.nMinimumReduce, 100 - ( (oOpponent.nHitting - 1) * GameSettings.oCommand.oDamage.nReduce)),
+                                                nBaseDamage = oDamage.nDamage || '-',
                                                 nDamage = nBaseDamage == '-' ? '-' : Math.floor(nBaseDamage * nRatio / 100);
                                             oText.setText( nDamage + ' (' + nRatio + '%, ' + nBaseDamage + ')' );
                                         }
                                     }
                                     else if( oNewData.nHitting != oNewData.nLastHitting ) {
-                                        oText.setText( '- (-%, ' + (oNewData.oHitData.nDamage || '-') + ')' );
+                                        oText.setText( '- (-%, ' + (oDamage.nDamage || '-') + ')' );
                                     }
                                 } else {
                                     oText.setText(oInfo.sBlank);

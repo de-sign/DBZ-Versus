@@ -992,339 +992,490 @@ GameData.oCharacter.KID_GHN = {
             {
                 aFilter: ['LSW_SSJT'],
                 sCod: 'attack_236C',
+                sAnimation: 'attack_236C',
                 oList: {
                     sName: 'Oyako Kamehameha',
                     sGroup: 'ki',
                     sAnimation: 'list_236C'
                 },
-
-                sAnimation: 'attack_236C',
-                nCost: 30,
-                nDamage: 300,
-                nMinimumReduce: 40,
-                nGatlingLevel: 3,
+                oProperty: {
+                    bLaunch: true
+                },
+                oGatling: {
+                    nCost: 30,
+                    nLevel: 3,
+                    oManipulation: {
+                        nMaxLengthFrame: 15,
+                        aButtons: [
+                            { DN: false },
+                            { DF: false },
+                            { FW: false, C: true }
+                        ],
+                        bLast: false
+                    },
+                    aEntity: [
+                        {
+                            sType: 'text',
+                            sText: '親子',
+                            nFrameStart: 1
+                        },
+                        {
+                            sType: 'text',
+                            sText: '親子かめ',
+                            nFrameStart: 22
+                        },
+                        {
+                            sType: 'text',
+                            sText: '親子かめはめ波',
+                            nFrameStart: 43,
+                            nLength: 36
+                        },
+                        {
+                            sType: 'beam',
+                            sSFX: 'ADO__Beam',
+                            sAnimation: 'circle',
+                            nFrameStart: 43,
+                            bLink: true,
+                            oPosition: {
+                                nX: -4,
+                                nY: 12
+                            }
+                        },
+                        {
+                            sType: 'character',
+                            sEntity: 'GKU_SSJ',
+                            sColor: 'LSW_SSJ',
+                            sAnimation: 'anim_GHN_SSJT',
+                            nFrameStart: 13,
+                            bLink: true,
+                            oPosition: {
+                                nX: -52,
+                                nY: 0
+                            }
+                        }
+                    ]
+                },
                 oFreeze: {
                     bInfo: true,
                     nLength: 45
                 },
-                aEntity: [
-                    {
-                        sType: 'text',
-                        sText: '親子',
-                        nFrameStart: 1
+                oHit: {
+                    oDamage: {
+                        nDamage: 300,
+                        nMinimumReduce: 40
                     },
-                    {
-                        sType: 'text',
-                        sText: '親子かめ',
-                        nFrameStart: 22
+                    oStun: {
+                        nStun: 36,
+                        sAnimation: 'hit_1',
+                        sText: 'ブーム'
                     },
-                    {
-                        sType: 'text',
-                        sText: '親子かめはめ波',
-                        nFrameStart: 43,
-                        nLength: 36
-                    },
-                    {
-                        sType: 'beam',
-                        sSFX: 'ADO__Beam',
-                        sAnimation: 'circle',
-                        nFrameStart: 43,
-                        bLink: true,
-                        oPosition: {
-                            nX: -4,
-                            nY: 12
-                        }
-                    },
-                    {
-                        sType: 'character',
-                        sEntity: 'GKU_SSJ',
-                        sColor: 'LSW_SSJ',
-                        sAnimation: 'anim_GHN_SSJT',
-                        nFrameStart: 13,
-                        bLink: true,
-                        oPosition: {
-                            nX: -52,
-                            nY: 0
-                        }
+                    oPushback: {
+                        nLength: 4,
+                        nX: -192
                     }
-                ],
-                oStun: {
-                    nBlock: 36,
-                    nHit: 36,
-                    bLaunch: true,
-                    sHitAnimation: 'hit_1',
-                    sImpactText: 'ブーム'
                 },
-                oPushback: {
-                    nLength: 4,
-                    nX: -192
-                },
-                bLast: false,
-                oManipulation: {
-                    nMaxLengthFrame: 15,
-                    aButtons: [
-                        { DN: false },
-                        { DF: false },
-                        { FW: false, C: true }
-                    ]
+                oGuard: {
+                    oDamage: {
+                        nDamage: 0
+                    },
+                    oStun: {
+                        nStun: 36,
+                        sAnimation: 'defense_4',
+                        sText: 'ブーム'
+                    },
+                    oPushback: {
+                        nLength: 4,
+                        nX: -192
+                    }
                 }
             },
             {
                 aFilter: ['LSW_TRN'],
                 sCod: 'attack_236C',
+                sAnimation: 'attack_236C',
                 oList: {
                     sName: 'Masenko',
                     sGroup: 'ki',
                     sAnimation: 'list_236C'
                 },
-
-                sAnimation: 'attack_236C',
-                nCost: 30,
-                nDamage: 300,
-                nMinimumReduce: 40,
-                nGatlingLevel: 3,
+                oProperty: {
+                    bLaunch: true
+                },
+                oGatling: {
+                    nCost: 30,
+                    nLevel: 3,
+                    oManipulation: {
+                        nMaxLengthFrame: 15,
+                        aButtons: [
+                            { DN: false },
+                            { DF: false },
+                            { FW: false, C: true }
+                        ],
+                        bLast: false
+                    },
+                    aEntity: [
+                        {
+                            sType: 'text',
+                            sText: '魔',
+                            nFrameStart: 1
+                        },
+                        {
+                            sType: 'text',
+                            sText: '魔閃',
+                            nFrameStart: 22
+                        },
+                        {
+                            sType: 'text',
+                            sText: '魔閃光',
+                            nFrameStart: 43,
+                            nLength: 36
+                        },
+                        {
+                            sType: 'beam',
+                            sSFX: 'ADO__Beam',
+                            sAnimation: 'triangle',
+                            nFrameStart: 43,
+                            bLink: true,
+                            oPosition: {
+                                nX: -8,
+                                nY: 8
+                            }
+                        }
+                    ]
+                },
                 oFreeze: {
                     bInfo: true,
                     nLength: 45
                 },
-                aEntity:[
-                    {
-                        sType: 'text',
-                        sText: '魔',
-                        nFrameStart: 1
+                oHit: {
+                    oDamage: {
+                        nDamage: 300,
+                        nMinimumReduce: 40
                     },
-                    {
-                        sType: 'text',
-                        sText: '魔閃',
-                        nFrameStart: 22
+                    oStun: {
+                        nStun: 36,
+                        sAnimation: 'hit_1',
+                        sText: 'ブーム'
                     },
-                    {
-                        sType: 'text',
-                        sText: '魔閃光',
-                        nFrameStart: 43,
-                        nLength: 36
-                    },
-                    {
-                        sType: 'beam',
-                        sSFX: 'ADO__Beam',
-                        sAnimation: 'triangle',
-                        nFrameStart: 43,
-                        bLink: true,
-                        oPosition: {
-                            nX: -8,
-                            nY: 8
-                        }
+                    oPushback: {
+                        nLength: 4,
+                        nX: -192
                     }
-                ],
-                oStun: {
-                    nBlock: 36,
-                    nHit: 36,
-                    bLaunch: true,
-                    sHitAnimation: 'hit_1',
-                    sImpactText: 'ブーム'
                 },
-                oPushback: {
-                    nLength: 4,
-                    nX: -192
-                },
-                bLast: false,
-                oManipulation: {
-                    nMaxLengthFrame: 15,
-                    aButtons: [
-                        { DN: false },
-                        { DF: false },
-                        { FW: false, C: true }
-                    ]
+                oGuard: {
+                    oDamage: {
+                        nDamage: 0
+                    },
+                    oStun: {
+                        nStun: 36,
+                        sAnimation: 'defense_4',
+                        sText: 'ブーム'
+                    },
+                    oPushback: {
+                        nLength: 4,
+                        nX: -192
+                    }
                 }
             },
             {
                 sCod: 'attack_C',
+                sAnimation: 'attack_C',
                 oList: {
                     sName: 'Kikoha',
                     sGroup: 'ki'
                 },
-
-                sAnimation: 'attack_C',
-                nCost: 10,
-                nGatlingLevel: 2,
-                nDamage: 100,
-                aEntity: [
-                    {
-                        sType: 'text',
-                        sText: '気功波',
-                        nLength: 40,
-                        nFrameStart: 1
+                oProperty: {},
+                oGatling: {
+                    nCost: 10,
+                    nLevel: 2,
+                    oManipulation: {
+                        nMaxLengthFrame: 1,
+                        aButtons: [
+                            { C: true }
+                        ],
+                        bLast: true
                     },
-                    {
-                        sType: 'projectile',
-                        sSFX: 'ADO__Projectile',
-                        sAnimation: 'kikoha',
-                        nFrameStart: 10,
-                        oPosition: {
-                            nX: 58,
-                            nY: -24
+                    aEntity: [
+                        {
+                            sType: 'text',
+                            sText: '気功波',
+                            nLength: 40,
+                            nFrameStart: 1
+                        },
+                        {
+                            sType: 'projectile',
+                            sSFX: 'ADO__Projectile',
+                            sAnimation: 'kikoha',
+                            nFrameStart: 10,
+                            oPosition: {
+                                nX: 58,
+                                nY: -24
+                            }
                         }
-                    }
-                ],
-                oStun: {
-                    nBlock: 12,
-                    nHit: 16,
-                    sHitAnimation: 'hit_0',
-                    sImpactAnimation: 'explode_light'
-                },
-                bLast: true,
-                oManipulation: {
-                    nMaxLengthFrame: 1,
-                    aButtons: [
-                        { C: true }
                     ]
+                },
+                oHit: {
+                    oDamage: {
+                        nDamage: 100
+                    },
+                    oStun: {
+                        nStun: 16,
+                        sAnimation: 'hit_0',
+                        sImpact: 'explode_light'
+                    }
+                },
+                oGuard: {
+                    oDamage: {
+                        nDamage: 0
+                    },
+                    oStun: {
+                        nStun: 12,
+                        sAnimation: 'defense_j4',
+                        sImpact: 'explode_light'
+                    }
                 }
             },
             {
                 sCod: 'attack_2B',
+                sAnimation: 'attack_2B',
                 oList: {
                     sName: 'Launcher',
                     sInfo: 'Aerial invulnerable',
                     sGroup: 'command'
                 },
-                
-                sAnimation: 'attack_2B',
-                nDamage: 100,
-                nGatlingLevel: 1,
-                bJumpCancellable: true,
-                oStun: {
-                    nBlock: 12,
-                    nHit: 22,
-                    bLaunch: true,
-                    sHitAnimation: 'hit_2'
+                oProperty: {
+                    bLaunch: true
                 },
-                bLast: true,
-                oManipulation: {
-                    nMaxLengthFrame: 1,
-                    aButtons: [
-                        { DN: false, B: true }
-                    ]
+                oGatling: {
+                    nLevel: 1,
+                    bJumpCancellable: true,
+                    oManipulation: {
+                        nMaxLengthFrame: 1,
+                        aButtons: [
+                            { DN: false, B: true }
+                        ],
+                        bLast: true
+                    }
+                },
+                oHit: {
+                    oDamage: {
+                        nDamage: 100
+                    },
+                    oStun: {
+                        nStun: 22,
+                        sAnimation: 'hit_2'
+                    }
+                },
+                oGuard: {
+                    oDamage: {
+                        nDamage: 0
+                    },
+                    oStun: {
+                        nStun: 12,
+                        sAnimation: 'defense_4'
+                    }
                 }
             },
             {
                 sCod: 'attack_6A_0',
+                sAnimation: 'attack_6A_0',
                 oList: {
                     sName: 'Tracker',
                     sGroup: 'command'
                 },
-
-                sAnimation: 'attack_6A_0',
-                nDamage: 75,
-                nGatlingLevel: 1,
+                oProperty: {},
+                oGatling: {
+                    nLevel: 1,
+                    oManipulation: {
+                        nMaxLengthFrame: 1,
+                        aButtons: [
+                            { FW: false, A: true }
+                        ],
+                        bLast: true
+                    }
+                },
+                oHit: {
+                    oDamage: {
+                        nDamage: 75
+                    },
+                    oStun: {
+                        nStun: 18,
+                        sAnimation: 'hit_1'
+                    }
+                },
+                oGuard: {
+                    oDamage: {
+                        nDamage: 0
+                    },
+                    oStun: {
+                        nStun: 12,
+                        sAnimation: 'defense_j4'
+                    }
+                },
                 oFollowUp: {
+                    sCheck: true,
                     sCod: 'attack_6A_1',
                     sAnimation: 'attack_6A_1',
-                    bFollowOnlyOnHurt: true,
-                    nGatlingLevel: 1,
-                    oStun: {
-                        nBlock: 12,
-                        nHit: 18,
-                        sHitAnimation: 'hit_0'
+                    oProperty: {},
+                    oGatling: {
+                        nLevel: 1,
+                        oManipulation: {}
                     },
-                    bLast: true
-                },
-                oStun: {
-                    nBlock: 12,
-                    nHit: 18,
-                    sHitAnimation: 'hit_1'
-                },
-                oPushback: {
-                    nLength: 4,
-                    nX: -36
-                },
-                bLast: true,
-                oManipulation: {
-                    nMaxLengthFrame: 1,
-                    aButtons: [
-                        { FW: false, A: true }
-                    ]
+                    oHit: {
+                        oStun: {
+                            nStun: 18,
+                            sAnimation: 'hit_0'
+                        }
+                    },
+                    oGuard: {
+                        oDamage: {
+                            nDamage: 0
+                        },
+                        oStun: {
+                            nStun: 12,
+                            sAnimation: 'defense_4'
+                        }
+                    }
                 }
             },
             {
                 sCod: 'attack_B',
+                sAnimation: 'attack_B',
                 oList: {
                     sName: 'Heavy',
                     sGroup: 'normal'
                 },
-
-                sAnimation: 'attack_B',
-                nDamage: 50,
-                nGatlingLevel: 1,
-                oStun: {
-                    nBlock: 10,
-                    nHit: 16,
-                    sHitAnimation: 'hit_1'
+                oProperty: {},
+                oGatling: {
+                    nLevel: 1,
+                    oManipulation: {
+                        nMaxLengthFrame: 1,
+                        aButtons: [
+                            { B: true }
+                        ],
+                        bLast: true
+                    }
                 },
-                bLast: true,
-                oManipulation: {
-                    nMaxLengthFrame: 1,
-                    aButtons: [
-                        { B: true }
-                    ]
+                oHit: {
+                    oDamage: {
+                        nDamage: 50
+                    },
+                    oStun: {
+                        nStun: 16,
+                        sAnimation: 'hit_1'
+                    }
+                },
+                oGuard: {
+                    oDamage: {
+                        nDamage: 0
+                    },
+                    oStun: {
+                        nStun: 10,
+                        sAnimation: 'defense_4'
+                    }
                 }
             },
             {
                 sCod: 'attack_A_0',
+                sAnimation: 'attack_A_0',
                 oList: {
                     sName: 'Light',
                     sGroup: 'normal'
                 },
-
-                sAnimation: 'attack_A_0',
-                nDamage: 25,
-                nGatlingLevel: 1,
-                oFollowUp: {
-                    sCod: 'attack_A_1',
-                    sAnimation: 'attack_A_1',
-                    nDamage: 25,
-                    nGatlingLevel: 1,
-                    oStun: {
-                        nBlock: 12,
-                        nHit: 13,
-                        sHitAnimation: 'hit_0'
-                    },
-                    bLast: true,
+                oProperty: {},
+                oGatling: {
+                    nLevel: 1,
                     oManipulation: {
                         nMaxLengthFrame: 1,
                         aButtons: [
                             { A: true }
-                        ]
+                        ],
+                        bLast: true
+                    }
+                },
+                oHit: {
+                    oDamage: {
+                        nDamage: 25
                     },
-                    oFollowUp: {
-                        sCod: 'attack_A_2',
-                        sAnimation: 'attack_A_2',
-                        nDamage: 25,
-                        nGatlingLevel: 1,
-                        oStun: {
-                            nBlock: 12,
-                            nHit: 13,
-                            sHitAnimation: 'hit_0'
-                        },
-                        bLast: true,
+                    oStun: {
+                        nStun: 13,
+                        sAnimation: 'hit_0'
+                    }
+                },
+                oGuard: {
+                    oDamage: {
+                        nDamage: 0
+                    },
+                    oStun: {
+                        nStun: 12,
+                        sAnimation: 'defense_j4'
+                    }
+                },
+                oFollowUp: {
+                    sCod: 'attack_A_1',
+                    sAnimation: 'attack_A_1',
+                    oProperty: {},
+                    oGatling: {
+                        nLevel: 1,
                         oManipulation: {
                             nMaxLengthFrame: 1,
                             aButtons: [
                                 { A: true }
-                            ]
+                            ],
+                            bLast: true
+                        }
+                    },
+                    oHit: {
+                        oDamage: {
+                            nDamage: 25
+                        },
+                        oStun: {
+                            nStun: 13,
+                            sAnimation: 'hit_0'
+                        }
+                    },
+                    oGuard: {
+                        oDamage: {
+                            nDamage: 0
+                        },
+                        oStun: {
+                            nStun: 12,
+                            sAnimation: 'defense_j4'
+                        }
+                    },
+                    oFollowUp: {
+                        sCod: 'attack_A_2',
+                        sAnimation: 'attack_A_2',
+                        oProperty: {},
+                        oGatling: {
+                            nLevel: 1,
+                            oManipulation: {
+                                nMaxLengthFrame: 1,
+                                aButtons: [
+                                    { A: true }
+                                ],
+                                bLast: true
+                            }
+                        },
+                        oHit: {
+                            oDamage: {
+                                nDamage: 25
+                            },
+                            oStun: {
+                                nStun: 13,
+                                sAnimation: 'hit_0'
+                            }
+                        },
+                        oGuard: {
+                            oDamage: {
+                                nDamage: 0
+                            },
+                            oStun: {
+                                nStun: 12,
+                                sAnimation: 'defense_j4'
+                            }
                         }
                     }
-                },
-                oStun: {
-                    nBlock: 12,
-                    nHit: 13,
-                    sHitAnimation: 'hit_0'
-                },
-                bLast: true,
-                oManipulation: {
-                    nMaxLengthFrame: 1,
-                    aButtons: [
-                        { A: true }
-                    ]
                 }
             }
         ]

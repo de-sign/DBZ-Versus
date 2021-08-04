@@ -202,7 +202,7 @@ Object.assign(
                 const aCommands = this.oScene.aPlayer[1].oData.oCommands.aGround;
                 for( let nIndex = aCommands.length - 1; nIndex >= 0; nIndex-- ){
                     const oCommand = aCommands[nIndex];
-                    if( oCommand.sAnimation != 'attack_D' ){
+                    if( oCommand.sAnimation != 'attack_2D' ){
                         this.oCounter[oCommand.sCod] = oCommand.sName;
                     }
                 }

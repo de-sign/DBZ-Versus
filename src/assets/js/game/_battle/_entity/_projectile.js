@@ -1,5 +1,5 @@
 /* ----- BattleProjectile ----- */
-function BattleProjectile(sEntity, sColor, sAnimation, oPosition, bReverse, oHitData, oParent){
+function BattleProjectile(sEntity, sColor, sAnimation, oPosition, bReverse, oCommandData, oParent){
     BattleEntity.apply(this, arguments);
 }
 
@@ -8,10 +8,10 @@ Object.assign(
         prototype: Object.assign(
             Object.create(BattleEntity.prototype), {
                 constructor: BattleEntity,
-                init: function(sEntity, sColor, sAnimation, oPosition, bReverse, oHitData, oParent){
+                init: function(sEntity, sColor, sAnimation, oPosition, bReverse, oCommandData, oParent){
                     BattleEntity.prototype.init.call(this, 'projectile', GameData.oProjectile[sEntity][sColor], sAnimation, oPosition, bReverse, oParent);
-                    this.nLife = oHitData.nDamage || 1;
-                    this.oHitData = oHitData;
+                    this.nLife = oCommandData.oHit.oDamage.nDamage;
+                    this.oCommandData = oCommandData;
                 },
                 update: function(){
                     let aNewEntity = null;
@@ -24,13 +24,13 @@ Object.assign(
                 },
                 // destroy: function(){}
 
-                takeHit: function(oEntity, oData, oEngine){
-                    this.nLife -= oData.nDamage == null ? 1 : oData.nDamage;
-                    oEntity.confirmHit(this, oData, false, true);
-                    this.generateEntity('hit', this, oData, oEngine);
+                takeHit: function(oEntity, oCommandData, oEngine, bGuard){
+                    this.nLife -= oCommandData[ bGuard ? 'oGuard' : 'oHit' ].oDamage.nDamage;
+                    oEntity.confirmHit(this, oCommandData, false, true);
+                    this.generateEntity('hit', this, oCommandData, oEngine);
                 },
-                confirmHit: function(oEntityHurt, oData, bGuard, bNotDestroy){
-                    BattleEntity.prototype.confirmHit.call(this, oEntityHurt, oData, bGuard);
+                confirmHit: function(oEntityHurt, oCommandData, bGuard, bNotDestroy){
+                    BattleEntity.prototype.confirmHit.call(this, oEntityHurt, oCommandData, bGuard);
                     bNotDestroy || (this.nLife = 0);
                 }
             }

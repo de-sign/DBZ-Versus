@@ -16,7 +16,7 @@ function BattleEntity(/*sType, oData, oPosition, bReverse, oParent*/) {
     this.oSprite = null;
     this.oData = null;
     
-    this.oHitData = null;
+    this.oCommandData = null;
     this.oDeadTimer = null;
     this.oAnimation = null;
     this.oMovement = BattleMovement.empty();
@@ -234,24 +234,25 @@ Object.assign(
                 }
             },
             
-            takeHit: function(oEntity, oData){
-                this.nLife -= oData.nDamage == null ? 1 : oData.nDamage;
-                oEntity.confirmHit(this, oData);
+            takeHit: function(oEntity, oCommandData, oEngine, bGuard){
+                this.nLife -= oCommandData[ bGuard ? 'oGuard' : 'oHit' ].oDamage.nDamage;
+                oEntity.confirmHit(this, oCommandData, bGuard);
+                return bGuard;
             },
             generateEntity: function(sType, oParent, uData, oEngine){
                 const aNewEntity = [];
 
                 switch(sType) {
                     case 'hit':
-                        if( uData.oStun.sImpactAnimation !== false ){
+                        if( uData.sImpact !== false ){
                             aNewEntity.push( {
                                 sType: 'effect',
-                                sAnimation: uData.oStun.sImpactAnimation || 'impact_hit',
+                                sAnimation: uData.sImpact || 'impact_hit',
                                 bReverse: !oParent.bReverse,
                                 oParent: oParent
                             }, {
                                 sType: 'text',
-                                sText: uData.oStun.sImpactText || 'パフ', // PAF
+                                sText: uData.sText || 'パフ', // PAF
                                 oParent: oParent
                             } );
                         }
@@ -262,15 +263,15 @@ Object.assign(
                         break;
                         
                     case 'guard':
-                        if( uData.oStun.sImpactAnimation !== false ){
+                        if( uData.sImpact !== false ){
                             aNewEntity.push( {
                                 sType: 'effect',
-                                sAnimation: uData.oStun.sImpactAnimation || 'impact_guard',
+                                sAnimation: uData.sImpact || 'impact_guard',
                                 bReverse: !oParent.bReverse,
                                 oParent: oParent
                             }, {
                                 sType: 'text',
-                                sText: uData.oStun.sImpactText || 'バム', // BAM
+                                sText: uData.sText || 'バム', // BAM
                                 oParent: oParent
                             } );
                         }
@@ -288,13 +289,15 @@ Object.assign(
                                     sType: oCommandEntity.sType,
                                     bLink: oCommandEntity.bLink,
                                     oPosition: oCommandEntity.oPosition,
-                                    oHitData: oParent.oGatling.oCurrent,
+                                    oCommandData: oParent.getCommandData(),
                                     oParent: oParent,
                                     // Entity Sprite
                                     sEntity: oCommandEntity.sEntity || 'ALL',
                                     sColor: oCommandEntity.sColor || oParent.oData.sEntityColor,
                                     sAnimation: oCommandEntity.sAnimation,
-                                    bReverse: oCommandEntity.bReverse == null ? oParent.bReverse : oCommandEntity.bReverse,
+                                    bReverse: oCommandEntity.bReverse == null ?
+                                        oParent.bReverse :
+                                        oCommandEntity.bReverse,
                                     // Entity Text
                                     sText: oCommandEntity.sText,
                                     nLength: oCommandEntity.nLength
@@ -318,15 +321,16 @@ Object.assign(
                     || this.oAnimation.sName != sAnimation
                     || GameAnimation.getCategory( this.oData.oAnimations[sAnimation] ) == 'hurt'
                 ){
+                    const oAnim = this.oData.oAnimations[sAnimation];
                     this.killLink();
                     this.oAnimation = new GameAnimation(
                         sAnimation,
-                        this.oData.oAnimations[sAnimation].sType,
+                        oAnim.sType,
                         this.oData.oFrames,
-                        this.oData.oAnimations[sAnimation].aFrames
+                        oAnim.aFrames
                     );
                     this.setMovement(
-                        this.oData.oAnimations[sAnimation].oMove,
+                        oAnim.oMove,
                         bReverse == null ?
                             this.bReverse :
                             bReverse
@@ -365,11 +369,18 @@ Object.assign(
                 }
                 return aBox || [];
             },
-            getHitData: function(){
-                return this.oHitData;
+            getCommandData: function(){
+                return this.oCommandData;
             },
-            isInvulnerable: function(){
-                return this.oStatus.bInvul || !this.oAnimation.oFrame.aHurtBox;
+            isInvulnerable: function(oEntityHit){
+                let bInvul = this.oStatus.bInvul || !this.oAnimation.oFrame.aHurtBox;
+
+                if( !bInvul && oEntityHit ){
+                    // TODO Faire via oStatus.sInvul avec gestion plus complète : aerial, projectile, beam, phisical, ki, etc
+                    // Gestion coups aérien contre ANTI AIR
+                    bInvul = this.oStatus.bAerialInvul && oEntityHit.oStatus.bAerial;
+                }
+                return bInvul;
             },
 
             isDead: function(){
@@ -416,9 +427,9 @@ Object.assign(
                     }
                 } );
             },
-            confirmHit: function(oEntityHurt, oData, bGuard){
+            confirmHit: function(oEntityHurt, oCommandData, bGuard){
                 this.aHit.push(oEntityHurt.sId);
-                this.oParent && this.oParent.confirmHit(oEntityHurt, oData, bGuard);
+                this.oParent && this.oParent.confirmHit(oEntityHurt, oCommandData, bGuard);
             },
             setPushback: function(oPushback, bReverse, bDivide){
                 oPushback = Object.assign({}, oPushback);
