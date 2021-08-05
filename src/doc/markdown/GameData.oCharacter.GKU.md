@@ -805,19 +805,19 @@ GameData.oCharacter.GKU.oCommands = {
                 },
                 aEntity: [
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '元気',
                         nFrameStart: 13,
                         nLength: 30
                     },
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '玉',
                         nFrameStart: 43,
                         nLength: 36
                     },
                     {
-                        sType: 'projectile',
+                        sType: 'Projectile',
                         sSFX: 'ADO__Beam',
                         sAnimation: 'ball',
                         nFrameStart: 13,
@@ -885,13 +885,13 @@ GameData.oCharacter.GKU.oCommands = {
                 },
                 aEntity: [
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '太陽',
                         nLength: 40,
                         nFrameStart: 1
                     },
                     {
-                        sType: 'projectile',
+                        sType: 'Projectile',
                         sSFX: 'ADO__Projectile',
                         sAnimation: 'flash',
                         sColor: 'ORG',

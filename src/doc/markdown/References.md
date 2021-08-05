@@ -57,4 +57,14 @@ and enable the extension for the ```https://raw.githubusercontent.com``` origin 
         - [StoreEngine](StoreEngine.md)
         - [TimerEngine](TimerEngine.md)
 
+## GAME
+- [BattleElement](BattleElement.md)
+    - [BattleEffect](BattleEffect.md)
+        - [BattleText](BattleText.md)
+    - [BattleEntity](BattleEntity.md)
+        - [BattleBeam](BattleBeam.md)
+        - [BattleCharacter](BattleCharacter.md)
+            - [BattlePlayer](BattlePlayer.md)
+        - [BattleProjectile](BattleProjectile.md)
+
 <link rel="stylesheet" href="../_doc.css" />

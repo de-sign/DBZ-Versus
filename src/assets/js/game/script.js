@@ -24,13 +24,14 @@
 //=include _battle/_components/_gatling.js
 //=include _battle/_components/_movement.js
 //=include _battle/_components/_timer.js
+//=include _battle/_entity/_element.js
+//=include _battle/_entity/_effect.js
+//=include _battle/_entity/_text.js
 //=include _battle/_entity/_entity.js
-//=include _battle/_entity/_player.js
 //=include _battle/_entity/_beam.js
 //=include _battle/_entity/_projectile.js
 //=include _battle/_entity/_character.js
-//=include _battle/_entity/_effect.js
-//=include _battle/_entity/_text.js
+//=include _battle/_entity/_player.js
 //=include _battle/_engine.js
 //=include _scene/_versus.js
 

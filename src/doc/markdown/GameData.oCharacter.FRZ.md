@@ -878,19 +878,19 @@ GameData.oCharacter.FRZ.oCommands = {
                 },
                 aEntity: [
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: 'デス',
                         nFrameStart: 13,
                         nLength: 30
                     },
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: 'ボール',
                         nFrameStart: 43,
                         nLength: 36
                     },
                     {
-                        sType: 'projectile',
+                        sType: 'Projectile',
                         sSFX: 'ADO__Beam',
                         sAnimation: 'death',
                         nFrameStart: 13,
@@ -958,13 +958,13 @@ GameData.oCharacter.FRZ.oCommands = {
                 },
                 aEntity: [
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: 'デスビーム',
                         nLength: 40,
                         nFrameStart: 1
                     },
                     {
-                        sType: 'beam',
+                        sType: 'Beam',
                         sSFX: 'ADO__Projectile',
                         sAnimation: 'beam',
                         nFrameStart: 13,

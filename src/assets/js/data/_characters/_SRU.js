@@ -826,23 +826,23 @@ GameData.oCharacter.SRU = {
                     },
                     aEntity: [
                         {
-                            sType: 'text',
+                            sType: 'Text',
                             sText: '太陽系破',
                             nFrameStart: 1
                         },
                         {
-                            sType: 'text',
+                            sType: 'Text',
                             sText: '太陽系破壊かめ',
                             nFrameStart: 22
                         },
                         {
-                            sType: 'text',
+                            sType: 'Text',
                             sText: '太陽系破壊かめはめ波',
                             nFrameStart: 43,
                             nLength: 36
                         },
                         {
-                            sType: 'beam',
+                            sType: 'Beam',
                             sSFX: 'ADO__Beam',
                             sAnimation: 'circle',
                             nFrameStart: 43,
@@ -909,13 +909,13 @@ GameData.oCharacter.SRU = {
                     },
                     aEntity: [
                         {
-                            sType: 'text',
+                            sType: 'Text',
                             sText: 'デスビーム',
                             nLength: 40,
                             nFrameStart: 1
                         },
                         {
-                            sType: 'beam',
+                            sType: 'Beam',
                             sSFX: 'ADO__Projectile',
                             sAnimation: 'beam',
                             nFrameStart: 13,

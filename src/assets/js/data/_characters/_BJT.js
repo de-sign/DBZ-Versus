@@ -913,23 +913,23 @@ GameData.oCharacter.BJT = {
                     },
                     aEntity: [
                         {
-                            sType: 'text',
+                            sType: 'Text',
                             sText: 'ファイ',
                             nFrameStart: 1
                         },
                         {
-                            sType: 'text',
+                            sType: 'Text',
                             sText: 'ファイナルフラ',
                             nFrameStart: 22
                         },
                         {
-                            sType: 'text',
+                            sType: 'Text',
                             sText: 'ファイナルフラッシュ',
                             nFrameStart: 43,
                             nLength: 36
                         },
                         {
-                            sType: 'beam',
+                            sType: 'Beam',
                             sSFX: 'ADO__Beam',
                             sAnimation: 'big_triangle',
                             nFrameStart: 43,
@@ -999,23 +999,23 @@ GameData.oCharacter.BJT = {
                     },
                     aEntity: [
                         {
-                            sType: 'text',
+                            sType: 'Text',
                             sText: 'ギャ',
                             nFrameStart: 1
                         },
                         {
-                            sType: 'text',
+                            sType: 'Text',
                             sText: 'ギャリッ',
                             nFrameStart: 22
                         },
                         {
-                            sType: 'text',
+                            sType: 'Text',
                             sText: 'ギャリック砲',
                             nFrameStart: 43,
                             nLength: 36
                         },
                         {
-                            sType: 'beam',
+                            sType: 'Beam',
                             sSFX: 'ADO__Beam',
                             sAnimation: 'triangle',
                             nFrameStart: 43,
@@ -1081,13 +1081,13 @@ GameData.oCharacter.BJT = {
                     },
                     aEntity: [
                         {
-                            sType: 'text',
+                            sType: 'Text',
                             sText: '気功波',
                             nLength: 40,
                             nFrameStart: 1
                         },
                         {
-                            sType: 'projectile',
+                            sType: 'Projectile',
                             sSFX: 'ADO__Projectile',
                             sAnimation: 'kikoha',
                             nFrameStart: 10,

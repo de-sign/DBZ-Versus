@@ -22,7 +22,7 @@ Object.assign(
         setText: function(aText){
             this.aText = Array.isArray(aText ) ? aText : [aText];
             this.oWrapper.clean();
-            this.oWrapper.add( new OutputManager.OutputText(aText.join('\n'), { tag: 'pre' }) );
+            this.oWrapper.add( new OutputManager.OutputText(this.aText.join('\n'), { tag: 'pre' }) );
             this.oLayer.update();
         },
 

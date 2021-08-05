@@ -1669,7 +1669,7 @@ GameData.oEntity.oCharacter.oCommands = {
                 },
                 aEntity: [
                     {
-                        sType: 'effect',
+                        sType: 'Effect',
                         sAnimation: 'impact_hit',
                         oPosition: {
                             nX: 72
@@ -1678,7 +1678,7 @@ GameData.oEntity.oCharacter.oCommands = {
                         nFrameStart: 7
                     },
                     {
-                        sType: 'effect',
+                        sType: 'Effect',
                         sAnimation: 'impact_hit',
                         oPosition: {
                             nX: 72
@@ -1748,7 +1748,7 @@ GameData.oEntity.oCharacter.oCommands = {
                 },
                 aEntity: [
                     {
-                        sType: 'effect',
+                        sType: 'Effect',
                         sAnimation: 'impact_hit',
                         oPosition: {
                             nX: 72
@@ -1757,7 +1757,7 @@ GameData.oEntity.oCharacter.oCommands = {
                         nFrameStart: 7
                     },
                     {
-                        sType: 'effect',
+                        sType: 'Effect',
                         sAnimation: 'impact_hit',
                         oPosition: {
                             nX: 72
@@ -1804,7 +1804,7 @@ GameData.oEntity.oCharacter.oCommands = {
             oGatling: {
                 nLevel: 0,
                 oManipulation: {
-                    nMaxLengthFrame: 15,
+                    nMaxLengthFrame: 10,
                     aButtons: [
                         { FW: false },
                         { NT: false },
@@ -1824,7 +1824,7 @@ GameData.oEntity.oCharacter.oCommands = {
             oGatling: {
                 nLevel: 0,
                 oManipulation: {
-                    nMaxLengthFrame: 15,
+                    nMaxLengthFrame: 10,
                     aButtons: [
                         { BW: false },
                         { NT: false },
@@ -1943,7 +1943,7 @@ GameData.oEntity.oCharacter.oCommands = {
                 },
                 aEntity: [
                     {
-                        sType: 'effect',
+                        sType: 'Effect',
                         sAnimation: 'cancel',
                         oPosition: {},
                         nFrameStart: 9
@@ -1968,7 +1968,7 @@ GameData.oEntity.oCharacter.oCommands = {
             oGatling: {
                 nLevel: 0,
                 oManipulation: {
-                    nMaxLengthFrame: 15,
+                    nMaxLengthFrame: 10,
                     aButtons: [
                         { FW: false },
                         { NT: false },
@@ -1988,7 +1988,7 @@ GameData.oEntity.oCharacter.oCommands = {
             oGatling: {
                 nLevel: 0,
                 oManipulation: {
-                    nMaxLengthFrame: 15,
+                    nMaxLengthFrame: 10,
                     aButtons: [
                         { BW: false },
                         { NT: false },

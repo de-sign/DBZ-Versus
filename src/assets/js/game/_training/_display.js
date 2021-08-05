@@ -269,7 +269,7 @@ Object.assign(
             updateBox: function(){
                 if( this.oParameters.bBox ){
                     BattleEntity.get().forEach( oEntity => {
-                        if( oEntity.oCheck && !oEntity.isDead() ){
+                        if( !oEntity.isDead() ){
                             ['oPositionBox', 'aHurtBox', 'aHitBox'].forEach( sBox => {
                                 const aBox = oEntity.getBox(sBox),
                                 oLayer = OutputManager.getElement('LAY__Training_' + sBox.slice(1) + '_' + oEntity.sId),

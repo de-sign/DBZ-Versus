@@ -35,10 +35,10 @@ Object.assign(
                 bResetLast && (this.nLastLife = this.nLife);
                     
                 OutputManager.getElement('LAY__Battle_HUD_Bar_Lose_' + this.oPlayer.nPlayer).setStyle( {
-                    minWidth: ( (this.nLastLife - nLife) * 100 / GameSettings.oLife.player ) + '%'
+                    minWidth: ( (this.nLastLife - nLife) * 100 / GameSettings.oBattleElement.Player.nLife ) + '%'
                 } );
                 OutputManager.getElement('LAY__Battle_HUD_Bar_Life_' + this.oPlayer.nPlayer).setStyle( {
-                    minWidth: ( nLife * 100 / GameSettings.oLife.player ) + '%'
+                    minWidth: ( nLife * 100 / GameSettings.oBattleElement.Player.nLife ) + '%'
                 } );
             }
 
@@ -139,7 +139,7 @@ Object.assign(
                     this.oText.setText(this.oCurrent.sText);
                     // Freeze
                     if( this.oCurrent.bFreeze ){
-                        BattleEntity.get().forEach( oEntity => {
+                        BattleElement.get().forEach( oEntity => {
                             oEntity.setFreeze(this.oCurrent.nLength);
                         } );
                     }

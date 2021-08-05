@@ -1024,23 +1024,23 @@ GameData.oCharacter.BUU.oCommands = {
                 },
                 aEntity: [
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '超',
                         nFrameStart: 1
                     },
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '超能',
                         nFrameStart: 22
                     },
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '超能力',
                         nFrameStart: 43,
                         nLength: 36
                     },
                     {
-                        sType: 'beam',
+                        sType: 'Beam',
                         sSFX: 'ADO__Beam',
                         sAnimation: 'zigzag',
                         nFrameStart: 43,
@@ -1110,23 +1110,23 @@ GameData.oCharacter.BUU.oCommands = {
                 },
                 aEntity: [
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '超',
                         nFrameStart: 1
                     },
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '超能',
                         nFrameStart: 22
                     },
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '超能力',
                         nFrameStart: 43,
                         nLength: 36
                     },
                     {
-                        sType: 'beam',
+                        sType: 'Beam',
                         sSFX: 'ADO__Beam',
                         sAnimation: 'zigzag',
                         nFrameStart: 43,
@@ -1192,13 +1192,13 @@ GameData.oCharacter.BUU.oCommands = {
                 },
                 aEntity: [
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '気功波',
                         nLength: 40,
                         nFrameStart: 1
                     },
                     {
-                        sType: 'projectile',
+                        sType: 'Projectile',
                         sSFX: 'ADO__Projectile',
                         sAnimation: 'kikoha',
                         nFrameStart: 10,

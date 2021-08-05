@@ -1,6 +1,19 @@
-/* ----- BattlePlayer ----- */
+/* ----- START CLASS ----- */
+/* ----- START CONSTRUCTOR ----- */
 function BattlePlayer(nPlayer, sChar, sColor, sAnimation, oPosition, bReverse, oSourceBuffer){
+    /* ----- START PROPERTIES ----- */
     this.nPlayer = null;
+    
+    this.oStatus = {
+        bReverse: false, // Possibilité de se retourner : stand, tp, etc
+        bGuard: false, // Possibilité de guarder : backdash, block
+        bThrow: false, // Possibilité de TechThrow : hit_throw
+        bInvul: false, // Impossibilité de prendre un coup : launch
+        bAerialInvul: false, // Impossibilité de prendre un coup aérien : launcher
+        bCancel: false, // Coup cancellable : ligth, etc
+        bAerial: false, // Personnage en l'air : jump, launch, fall, etc
+        bLaunch: false // Personnage en l'air via un coup : launch
+    };
 
     this.oInputBuffer = null;
     this.oMemory = {
@@ -12,19 +25,31 @@ function BattlePlayer(nPlayer, sChar, sColor, sAnimation, oPosition, bReverse, o
 
     this.nHitting = 0;
     this.nKi = 0;
+    /* ----- END PROPERTIES ----- */
 
-    BattleEntity.apply(this, arguments);
+    BattleCharacter.apply(this, arguments);
 }
+/* ----- END CONSTRUCTOR ----- */
 
 Object.assign(
     BattlePlayer, {
         prototype: Object.assign(
-            Object.create(BattleEntity.prototype), {
+            /* ----- START EXTENDS ----- */
+            Object.create(BattleCharacter.prototype), {
+            /* ----- END EXTENDS ----- */
                 constructor: BattlePlayer,
+                /* ----- START PROTOTYPE ----- */
+                /* ----- START METHODS ----- */
                 init: function(nPlayer, sChar, sColor, sAnimation, oPosition, bReverse, oSourceBuffer, nRound) {
-                    BattleEntity.prototype.init.call(this, 'character', GameData.oCharacter[sChar][sColor], sAnimation, oPosition, bReverse);
+                    BattleCharacter.prototype.init.call(
+                        this,
+                        sChar,
+                        sColor,
+                        sAnimation,
+                        oPosition,
+                        bReverse
+                    );
 
-                    this.nLife = GameSettings.oLife.player;
                     this.nPlayer = nPlayer;
                     this.oInputBuffer = new BattleInputBuffer(oSourceBuffer);
                     this.oGatling = new BattleGatling(this.oInputBuffer, this.oData.oCommands);
@@ -111,57 +136,29 @@ Object.assign(
                     this.updateMemory();
                     this.updateAnimation();
                     if( !this.oAnimation.isFreeze() ){
-                        this.generateEntity('command', this, this.oGatling.getEntity(), oEngine);
+                        this.generateEntity('command', this.oGatling.getEntity(), oEngine);
                     }
                 },
                 // destroy: function(){},
 
                 // Fonction ENGINE
-                getCommandData: function(){
-                    return this.oGatling.oCurrent;
+                updateStatus: function(oForce){
+                    this.oStatus = Object.assign(
+                        {
+                            bReverse: false, // Possibilité de se retourner : stand, tp, etc
+                            bGuard: false, // Possibilité de guarder : backdash, block
+                            bThrow: false, // Possibilité de TechThrow : hit_throw
+                            bInvul: false, // Impossibilité de prendre un coup : launch
+                            bAerialInvul: false, // Impossibilité de prendre un coup aérien : launcher
+                            bCancel: false, // Coup cancellable : ligth, etc
+                            bAerial: this.oStatus.bAerial, // Personnage en l'air : jump, launch, fall, etc
+                            bLaunch: this.oStatus.bLaunch // Personnage en l'air via un coup : launch
+                        },
+                        this.oAnimation.oFrame.oStatus,
+                        oForce || {}
+                    );
                 },
-                addKi: function(nKi){
-                    this.nKi = Math.min(this.nKi + nKi, GameSettings.oKi.nMax);
-                },
-                takeHit: function(oEntity, oCommandData, oEngine){
 
-                    let bLaunch = false;
-                    const bGuard = !oCommandData.oProperty.bUnblockable && this.oStatus.bGuard,
-                        sData = bGuard ? 'oGuard' : 'oHit',
-                        oData = oCommandData[sData],
-                        oDamage = Object.assign( {}, oData.oDamage ),
-                        oStun = Object.assign( {}, oData.oStun );
-
-                    if( !bGuard ){
-                        bLaunch = oCommandData.oProperty.bLaunch && !this.oStatus.bLaunch;
-                        if( oDamage.nDamage ){
-                            const nRatio = Math.max(oDamage.nMinimumReduce, 100 - (this.nHitting * GameSettings.oCommand.oDamage.nReduce));
-                            oDamage.nDamage = Math.floor(oDamage.nDamage * nRatio / 100);
-                        }
-                        this.nHitting ++;
-                    }
-
-                    this.nLife -= oDamage.nDamage;
-                    if( bLaunch || this.nLife <= 0 ){
-                        oStun.sAnimation = 'launch_0';
-                    }
-                    if( oStun.sAnimation ){
-                        this.setHurt(oStun.sAnimation, oStun.nStun, !oEntity.bReverse);
-                    }
-                    this.addKi( oData.oKi.nGive );
-                    oEntity.confirmHit(this, oCommandData, bGuard);
-                    this.generateEntity(bGuard ? 'guard' : 'hit', this, oStun, oEngine);
-
-                    return bGuard;
-                },
-                confirmHit: function(oEntityHurt, oCommandData, bGuard){
-                    BattleEntity.prototype.confirmHit.call(this, oEntityHurt, oCommandData, bGuard);
-                    this.oGatling.confirmHit(bGuard);
-
-                    if( !oCommandData.oGatling.nCost ){
-                        this.addKi( oCommandData[bGuard ? 'oGuard' : 'oHit'].oKi.nGain );
-                    }
-                },
                 setMemory: function(sAnimation){
                     // FALL en fin d'animation avec un move
                     if( sAnimation ){
@@ -224,129 +221,6 @@ Object.assign(
                         }
                     }
                 },
-
-                // Fonction INPUT
-                canAction: function(){
-                    let oCanAction = {
-                        sCommand: null,
-                        bStack: false,
-                        bMove: false,
-                        bRecovery: false,
-                        bGuard: false,
-                        bThrow: false,
-                        nCode: 0
-                    };
-                    const bFreeze = this.oAnimation.isFreeze(),
-                        sCommand = this.oStatus.bAerial ? 'aAerial' : 'aGround';
-
-                    // Gestion MOVEMENT
-                    if( !bFreeze && this.oAnimation.is('movement') ){
-                        const bCancel = this.oAnimation.sType != 'jump' || this.oStatus.bCancel;
-                        oCanAction = {
-                            sCommand: sCommand,
-                            bStack: !bCancel,
-                            bMove: !this.oStatus.bAerial,
-                            bRecovery: false,
-                            bGuard: false,
-                            bThrow: false,
-                            nCode: bCancel ? 1 : 2
-                        };
-                    }
-                    // Gestion END ANIMATION
-                    else if( this.oAnimation.isEnd() ){
-                        // DOWN => RECOVERY
-                        if( this.oAnimation.sType == 'down' ){
-                            oCanAction = {
-                                sCommand: 'aRecovery',
-                                bStack: false,
-                                bMove: false,
-                                bRecovery: true,
-                                bGuard: false,
-                                bThrow: false,
-                                nCode: 3
-                            };
-                        }
-                        // STAND => ALL action
-                        else if( !(this.oStatus.bAerial && this.oAnimation.is('hurt')) ){
-                            oCanAction = {
-                                sCommand: sCommand,
-                                bStack: false,
-                                bMove: !this.oStatus.bAerial,
-                                bRecovery: false,
-                                bGuard: false, 
-                                bThrow: false, 
-                                nCode: 4
-                            };
-                        }
-                    }
-                    // Gestion HURT
-                    else if( this.oAnimation.is('hurt') ){
-                        oCanAction = {
-                            sCommand: 'aDefense',
-                            bStack: bFreeze,
-                            bMove: false,
-                            bRecovery: false,
-                            bGuard: this.oStatus.bGuard,
-                            bThrow: this.oStatus.bThrow,
-                            nCode: 5
-                        };
-                    }
-                    // Gestion STACK pour ACTION en HIT ou DASH, LANDING et RECOVERY
-                    else if( this.aHit.length || this.oAnimation.is('stack') ){
-                        const bCancel = this.oStatus.bCancel && !bFreeze;
-                        oCanAction = {
-                            sCommand: sCommand,
-                            bStack: !bCancel,
-                            bMove: false,
-                            bRecovery: false,
-                            bGuard: false,
-                            bThrow: false,
-                            nCode: bCancel ? 6 : 7
-                        };
-                    }
-                    
-                    return oCanAction;
-                },
-                canMove: function(){
-                    oCanAction = this.canAction();
-                    return !this.oAnimation.isFreeze() && oCanAction.bMove;
-                },
-
-                // Fonction OUTPUT
-                setPushback: function(oPushback, bReverse, bDivide){
-                    if( this.oAnimation.sName != 'launch_0' ){
-                        BattleEntity.prototype.setPushback.call(this, oPushback, bReverse, bDivide);
-                    }
-                },
-                setAnimation: function(sAnimation, bUpdate, bReverse){
-                    const bChanged = BattleEntity.prototype.setAnimation.call(this, sAnimation, bUpdate, bReverse);
-                    if( bChanged ){
-                        if( !this.oAnimation.is('hurt') || this.oAnimation.sType == 'guard' ){
-                            this.nHitting = 0;
-                        }
-                        if( this.oStatus.bAerial && !this.oAnimation.is('hurt') && !this.oMovement.bEmpty ){
-                            this.oMemory = {
-                                sType: 'aerial_move',
-                                oAnimation: this.oAnimation,
-                                oMovement: this.oMovement
-                            };
-                        }
-                    }
-                    return bChanged;
-                },
-                setStance: function(sMovement, bUpdate, bReverse){
-                    if( this.setAnimation(sMovement, bUpdate, bReverse) ){
-                        this.oGatling.reset();
-                        this.setMemory();
-                    }
-                },
-                setHurt: function(sHurt, nFramesLength, bReverse){
-                    this.setStance(sHurt, true, bReverse);
-                    if( this.oAnimation.sName != 'launch_0' ){
-                        this.oAnimation.setLength(nFramesLength);
-                    }
-                },
-
                 updateMemory: function(){
                     if( this.oStatus.bAerial ){
                         // Gestion FALL
@@ -396,8 +270,173 @@ Object.assign(
                             
                         }
                     }
-                }
+                },
+
+                getCommandData: function(){
+                    return this.oGatling.oCurrent;
+                },
+                canAction: function(){
+                    let oCanAction = {
+                        sCommand: null,
+                        bStack: false,
+                        bGuard: false,
+                        bThrow: false,
+                        nCode: 0
+                    };
+                    const bFreeze = this.oAnimation.isFreeze(),
+                        sCommand = this.oStatus.bAerial ? 'aAerial' : 'aGround';
+
+                    // Gestion MOVEMENT
+                    if( !bFreeze && this.oAnimation.is('movement') ){
+                        const bCancel = this.oAnimation.sType != 'jump' || this.oStatus.bCancel;
+                        oCanAction = {
+                            sCommand: sCommand,
+                            bStack: !bCancel,
+                            bGuard: false,
+                            bThrow: false
+                        };
+                    }
+                    // Gestion END ANIMATION
+                    else if( this.oAnimation.isEnd() ){
+                        // DOWN => RECOVERY
+                        if( this.oAnimation.sType == 'down' ){
+                            oCanAction = {
+                                sCommand: 'aRecovery',
+                                bStack: false,
+                                bGuard: false,
+                                bThrow: false
+                            };
+                        }
+                        // STAND => ALL action
+                        else if( !(this.oStatus.bAerial && this.oAnimation.is('hurt')) ){
+                            oCanAction = {
+                                sCommand: sCommand,
+                                bStack: false,
+                                bGuard: false, 
+                                bThrow: false
+                            };
+                        }
+                    }
+                    // Gestion HURT
+                    else if( this.oAnimation.is('hurt') ){
+                        oCanAction = {
+                            sCommand: 'aDefense',
+                            bStack: bFreeze,
+                            bGuard: this.oStatus.bGuard,
+                            bThrow: this.oStatus.bThrow
+                        };
+                    }
+                    // Gestion STACK pour ACTION en HIT ou DASH, LANDING et RECOVERY
+                    else if( this.aHit.length || this.oAnimation.is('stack') ){
+                        const bCancel = this.oStatus.bCancel && !bFreeze;
+                        oCanAction = {
+                            sCommand: sCommand,
+                            bStack: !bCancel,
+                            bGuard: false,
+                            bThrow: false
+                        };
+                    }
+                    
+                    return oCanAction;
+                },
+                canMove: function(){
+                    return !this.oStatus.bAerial
+                        && !this.oAnimation.isFreeze()
+                        && (
+                            this.oAnimation.isEnd()
+                            || this.oAnimation.is('movement')
+                        );
+                },
+                addKi: function(nKi){
+                    this.nKi = Math.min(this.nKi + nKi, GameSettings.oKi.nMax);
+                },
+
+                // Output
+                render: function(){
+                    BattleCharacter.prototype.render.call(this);
+                    this.oLayer.hElement.classList[ this.oStatus.bGuard ? 'add' : 'remove' ]('--guard');
+                },
+                setAnimation: function(sAnimation, bUpdate, bReverse){
+                    const bChanged = BattleCharacter.prototype.setAnimation.call(this, sAnimation, bUpdate, bReverse);
+                    if( bChanged ){
+                        if( !this.oAnimation.is('hurt') || this.oAnimation.sType == 'guard' ){
+                            this.nHitting = 0;
+                        }
+                        if( this.oStatus.bAerial && !this.oAnimation.is('hurt') && !this.oMovement.bEmpty ){
+                            this.oMemory = {
+                                sType: 'aerial_move',
+                                oAnimation: this.oAnimation,
+                                oMovement: this.oMovement
+                            };
+                        }
+                    }
+                    return bChanged;
+                },
+                setStance: function(sMovement, bUpdate, bReverse){
+                    if( this.setAnimation(sMovement, bUpdate, bReverse) ){
+                        this.oGatling.reset();
+                        this.setMemory();
+                    }
+                },
+                setHurt: function(sHurt, nFramesLength, bReverse){
+                    this.setStance(sHurt, true, bReverse);
+                    if( this.oAnimation.sName != 'launch_0' ){
+                        this.oAnimation.setLength(nFramesLength);
+                    }
+                },
+                updateAnimation: function(){
+                    BattleEntity.prototype.updateAnimation.call(this);
+                    this.updateStatus();
+                },
+                setPushback: function(oPushback, bReverse, bDivide){
+                    if( this.oAnimation.sName != 'launch_0' ){
+                        BattleEntity.prototype.setPushback.call(this, oPushback, bReverse, bDivide);
+                    }
+                },
+
+                takeHit: function(oEntity, oCommandData, oEngine){
+
+                    let bLaunch = false;
+                    const bGuard = !oCommandData.oProperty.bUnblockable && this.oStatus.bGuard,
+                        sData = bGuard ? 'oGuard' : 'oHit',
+                        oData = oCommandData[sData],
+                        oDamage = Object.assign( {}, oData.oDamage ),
+                        oStun = Object.assign( {}, oData.oStun );
+
+                    if( !bGuard ){
+                        bLaunch = oCommandData.oProperty.bLaunch && !this.oStatus.bLaunch;
+                        if( oDamage.nDamage ){
+                            const nRatio = Math.max(oDamage.nMinimumReduce, 100 - (this.nHitting * GameSettings.oCommand.oDamage.nReduce));
+                            oDamage.nDamage = Math.floor(oDamage.nDamage * nRatio / 100);
+                        }
+                        this.nHitting ++;
+                    }
+
+                    this.nLife -= oDamage.nDamage;
+                    if( bLaunch || this.nLife <= 0 ){
+                        oStun.sAnimation = 'launch_0';
+                    }
+                    if( oStun.sAnimation ){
+                        this.setHurt(oStun.sAnimation, oStun.nStun, !oEntity.bReverse);
+                    }
+                    this.addKi( oData.oKi.nGive );
+                    oEntity.confirmHit(this, oCommandData, bGuard);
+                    this.generateEntity(bGuard ? 'guard' : 'hit', oStun, oEngine);
+
+                    return bGuard;
+                },
+                confirmHit: function(oEntityHurt, oCommandData, bGuard){
+                    BattleEntity.prototype.confirmHit.call(this, oEntityHurt, oCommandData, bGuard);
+                    this.oGatling.confirmHit(bGuard);
+
+                    if( !oCommandData.oGatling.nCost ){
+                        this.addKi( oCommandData[bGuard ? 'oGuard' : 'oHit'].oKi.nGain );
+                    }
+                },
+                /* ----- END METHODS ----- */
+                /* ----- END PROTOTYPE ----- */
             }
         )
     }
 );
+/* ----- END CLASS ----- */

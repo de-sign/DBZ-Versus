@@ -1043,19 +1043,19 @@ GameData.oCharacter.MJN_BUU.oCommands = {
                 },
                 aEntity: [
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: 'プラネット',
                         nFrameStart: 13,
                         nLength: 30
                     },
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: 'バスト',
                         nFrameStart: 43,
                         nLength: 36
                     },
                     {
-                        sType: 'projectile',
+                        sType: 'Projectile',
                         sSFX: 'ADO__Beam',
                         sAnimation: 'ball',
                         nFrameStart: 13,
@@ -1127,19 +1127,19 @@ GameData.oCharacter.MJN_BUU.oCommands = {
                 },
                 aEntity: [
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '魔空包',
                         nFrameStart: 13,
                         nLength: 30
                     },
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '魔空包囲弾',
                         nFrameStart: 43,
                         nLength: 36
                     },
                     {
-                        sType: 'projectile',
+                        sType: 'Projectile',
                         sSFX: 'ADO__Beam',
                         sAnimation: 'death',
                         nFrameStart: 13,
@@ -1206,13 +1206,13 @@ GameData.oCharacter.MJN_BUU.oCommands = {
                 },
                 aEntity: [
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '気功波',
                         nLength: 40,
                         nFrameStart: 1
                     },
                     {
-                        sType: 'projectile',
+                        sType: 'Projectile',
                         sSFX: 'ADO__Projectile',
                         sText: '気功波',
                         sAnimation: 'kikoha',

@@ -13,7 +13,7 @@ Object.assign(
             this.oContext = OutputManager.getElement('CTX__Battle');
 
             this.getPattern();
-            BattleEntity.init('LAY__Battle_Entity_');
+            BattleElement.init('LAY__Battle_Entity_');
             for( let nIndex = 0; nIndex < GameSettings.nPlayer; nIndex++ ){
                 this.createHUDPlayer(nIndex + 1);
             }

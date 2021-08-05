@@ -17,7 +17,7 @@ Object.assign(
         update: function(){
             // Gestion Fin de partie
             const oEndGame = this.checkEnd(),
-                aEntity = BattleEntity.get().filter( oEntity => oEntity.oCheck && !oEntity.isDead() ),
+                aEntity = BattleEntity.get().filter( oEntity => !oEntity.isDead() ),
                 oCollapse = {};
 
             // Gestion PositionBox / Area
@@ -34,12 +34,12 @@ Object.assign(
             } );
 
             // Gestion Reverse
-            aEntity.forEach( (oEntity, nIndex) => {
-                if( oEntity.oCheck.bReverse && oEntity.canReverse() && oCollapse[oEntity.sId] ){
-                    if( oCollapse[oEntity.sId].nOrientation ){
-                        oEntity.bReverse = oCollapse[oEntity.sId].nOrientation == 1;
+            this.aPlayer.forEach( oPlayer => {
+                if( oPlayer.oStatus.bReverse && oCollapse[oPlayer.sId] ){
+                    if( oCollapse[oPlayer.sId].nOrientation ){
+                        oPlayer.bReverse = oCollapse[oPlayer.sId].nOrientation == 1;
                     } else {
-                        oCollapse[oEntity.sId].nOrientation = oEntity.bReverse ? 1 : 0;
+                        oCollapse[oPlayer.sId].nOrientation = oPlayer.bReverse ? 1 : 0;
                     }
                 }
             } );
@@ -51,18 +51,22 @@ Object.assign(
                 // Gestion Hitbox
                 this.checkHit(aEntity, oCollapse);
                 // Gestion Super Freeze
-                this.commandFreeze(aEntity);
+                this.commandFreeze();
             }
 
             return oEndGame;
         },
         destroy: function(){},
         
-        getCollisionBox: function(oPlayer, sBox){
-            const aBox = oPlayer.getBox(sBox);
+        getCollisionBox: function(oEntity, sBox){
+            if( sBox == 'oPositionBox' ){
+                oEntity = oEntity.getRootParent();
+            }
+
+            const aBox = oEntity.getBox(sBox);
             aBox.length && aBox.forEach( oBox => {
-                oBox.nX += oPlayer.oLayer.oPosition.nX;
-                oBox.nY += oPlayer.oLayer.oPosition.nY;
+                oBox.nX += oEntity.oLayer.oPosition.nX;
+                oBox.nY += oEntity.oLayer.oPosition.nY;
             } );
             return aBox;
         },
@@ -102,7 +106,7 @@ Object.assign(
             return bInvul;
         },
         hasSameParent: function(oEntityA, oEntityB){
-            return (oEntityA.oParent || oEntityA).sId == (oEntityB.oParent || oEntityB).sId;
+            return oEntityA.getRootParent().sId == oEntityB.getRootParent().sId;
         },
 
         checkEnd: function(){
@@ -137,32 +141,40 @@ Object.assign(
                     let oEntity = null;
                     switch(oEffect.sType){
                         // sEntity
-                        case 'sound':
+                        case 'Sound':
                             OutputManager.getChannel('CHN__SFX').play(oEffect.sEntity);
                             break;
                         
                         // sEntity, sColor, sAnimation, oPosition, bReverse, oCommandData, oParent, bLink
-                        case 'projectile':
-                        case 'beam':
-                        case 'character':
-                            oEntity = new window['Battle' + oEffect.sType[0].toUpperCase() + oEffect.sType.slice(1)]( oEffect.sEntity, oEffect.sColor, oEffect.sAnimation, oEffect.oPosition, oEffect.bReverse, oEffect.oCommandData, oEffect.oParent );
+                        case 'Projectile':
+                        case 'Beam':
+                        case 'Character':
+                            oEntity = new window['Battle' + oEffect.sType](
+                                oEffect.sEntity,
+                                oEffect.sColor,
+                                oEffect.sAnimation,
+                                oEffect.oPosition,
+                                oEffect.bReverse,
+                                oEffect.oParent,
+                                oEffect.oCommandData
+                            );
                             oEffect.bLink && oEffect.oParent.add(oEntity);
-                            oEntity.update();
                             break;
 
                         // sAnimation, oPosition, bReverse, oParent
-                        case 'effect':
-                            oEntity = new BattleEffect( oEffect.sAnimation, oEffect.oPosition, oEffect.bReverse, oEffect.oParent );
-                            oEntity.update();
+                        case 'Effect':
+                            oEntity = new BattleEffect( null, oEffect.sAnimation, oEffect.oPosition, oEffect.bReverse, oEffect.oParent );
                             break;
 
                         // sText, oPosition, oParent
-                        case 'text':
+                        case 'Text':
                             oEntity = new BattleText( oEffect.sText, oEffect.nLength, oEffect.oPosition, oEffect.oParent );
-                            oEntity.update();
                             break;
                     }
-                    oEntity && aEntity.push(oEntity);
+                    if(oEntity){
+                        oEntity.update();
+                        aEntity.push(oEntity);
+                    }
                 } );
             }
             return aEntity;
@@ -171,16 +183,17 @@ Object.assign(
         // ENTITY dans AREA : LEFT, RIGHT et DOWN
         stayInArea: function(oEntity){
             // Check
-            let oBoxEntity = oEntity.getBox('oPositionBox')[0],
+            let oBoxEntity = oEntity.getRootParent().getBox('oPositionBox')[0],
                 nPriority = oEntity.oAnimation.sType == 'action' ? 2 :
                     ( oEntity.canMove() ? 0 : 1 ),
                 sMove = null;
-                
-            const oBoxArea = this.oArea.getBox(),
-                nLeft = this.oArea.oPosition.nX + (oBoxArea.left - oBoxArea.originX),
-                nRight = this.oArea.oPosition.nX + (oBoxArea.right - oBoxArea.originX);
 
             if( oBoxEntity ){
+                
+                const oBoxArea = this.oArea.getBox(),
+                    nLeft = this.oArea.oPosition.nX + (oBoxArea.left - oBoxArea.originX),
+                    nRight = this.oArea.oPosition.nX + (oBoxArea.right - oBoxArea.originX);
+
                 // Trop à gauche
                 if( nLeft >= oEntity.oLayer.oPosition.nX + oBoxEntity.nX ){
                     nPriority = oEntity.bReverse ? 3 : 4;
@@ -203,6 +216,7 @@ Object.assign(
 
                 // Trop en bas
                 if( oEntity.oCheck.bLaunch ){
+
                     const nDown = this.oArea.oPosition.nY + (oBoxArea.bottom - oBoxArea.originY) - oEntity.oPositionPoint.nGapY;
                     if( nDown < oEntity.oLayer.oPosition.nY /* + ( oBoxEntity.nY + oBoxEntity.nHeight )*/ ){
                         if( oEntity.nLife > 0 ){
@@ -284,13 +298,13 @@ Object.assign(
             // Gestion HIT
             aEntity.forEach( oEntityHit => {
                 const oCommandData = oEntityHit.getCommandData();
-                if( oEntityHit.oCheck.bHit && oCommandData ){
+                if( oCommandData ){
 
                     aEntity.forEach( oEntityHurt => {
                         if(
                             !this.hasSameParent(oEntityHit, oEntityHurt)
-                            && oEntityHurt.oCheck.oHurt[ oEntityHit.sType ]
                             && oEntityHurt.nLife > 0
+                            && oEntityHurt.oCheck.oHurt[ oEntityHit.sType ]
                             && oEntityHit.aHit.indexOf(oEntityHurt.sId) == -1
                             && !this.checkInvulnerable(oEntityHit, oEntityHurt)
                         ){
@@ -306,18 +320,11 @@ Object.assign(
                                             aHurt.push( {
                                                 oEntityHit,
                                                 oEntityHurt,
-                                                oCommandData: oCommandData
-                                            } );
-                                            // PUSHBACK
-                                            aPushback.push( {
+                                                oCommandData: oCommandData,
                                                 oPriority: {
                                                     nHit: oCollapse[oEntityHit.sId] ? oCollapse[oEntityHit.sId].nPriority : 2,
                                                     nHurt: oCollapse[oEntityHurt.sId] ? oCollapse[oEntityHurt.sId].nPriority : 0
                                                 },
-                                                oEntityHit,
-                                                oEntityHurt,
-                                                oCommandData: oCommandData,
-                                                sType: null
                                             } );
                                             bHit = true;
                                             break;
@@ -334,50 +341,33 @@ Object.assign(
             } );
 
             if( aHurt.length ){
-                const aNewEntity = [];
-                // Gestion Hurt
                 aHurt.forEach( (oHurt, nIndex) => {
-                    const bGuard = oHurt.oEntityHurt.takeHit(oHurt.oEntityHit, oHurt.oCommandData, this);
-                    aPushback[nIndex].sType = bGuard ? 'oGuard' : 'oHit';
+                    // Gestion Hurt
+                    const bGuard = oHurt.oEntityHurt.takeHit(oHurt.oEntityHit, oHurt.oCommandData, this),
+                        oPushback = oHurt.oCommandData[ bGuard ? 'oGuard' : 'oHit' ].oPushback;
+
+                    // Gestion Pushback
+                    if( oHurt.oPriority.nHit < oHurt.oPriority.nHurt && oPushback.nX < 0 ){
+                        this.pushbackEntity( oHurt.oEntityHit, oPushback, oHurt.oEntityHit.bReverse, oPushback.bDivide );
+                    } else {
+                        this.pushbackEntity( oHurt.oEntityHurt, oPushback, !oHurt.oEntityHit.bReverse, false );
+                    }
                 } );
-                // Gestion Pushback
-                this.movePushback(aPushback, oCollapse);
+                
                 // Gestion hit freeze
-                aEntity.forEach( oEntity => {
+                BattleElement.get().forEach( oEntity => {
                     oEntity.setFreeze(GameSettings.nFreeze);
                 } );
             }
         },
 
-        movePushback: function(aPushback, oCollapse){
-            aPushback.forEach( oPushback => {
-                const oData = oPushback.oCommandData[ oPushback.sType ].oPushback;
-                if( oPushback.oPriority.nHit < oPushback.oPriority.nHurt && oData.nX < 0 ){
-                    this.pushbackEntity( oPushback.oEntityHit, oData, oPushback.oEntityHit.bReverse, oData.bDivide );
-                }
-                else {
-                    this.pushbackEntity( oPushback.oEntityHurt, oData, !oPushback.oEntityHit.bReverse, false );
-                }
-            } );
-        },
         pushbackEntity: function(oEntity, oData, bReverse, bDivide){
             // PUSHBACK du parent
-            const oRootEntity = oEntity.isLinked() ? oEntity.oParent : oEntity;
-            if( oRootEntity.oCheck.bPushback ){
-                oRootEntity.setPushback(oData, bReverse, bDivide);
-            }
-
-            // PUSHBACK des LINKS
-            for( let sType in oRootEntity.oLink ){
-                oRootEntity.oLink[sType].forEach( oLinkEntity => {
-                    if( oLinkEntity.oCheck.bPushback ){
-                        oLinkEntity.setPushback(oData, bReverse, bDivide);
-                    }
-                } );
-            }
+            const oRootEntity = oEntity.isLinked() ? oEntity.getRootParent() : oEntity;
+            oRootEntity.setPushback(oData, bReverse, bDivide);
         },
 
-        commandFreeze: function(aEntity){
+        commandFreeze: function(){
             for( let nIndex = 0; nIndex < this.aPlayer.length; nIndex++ ){
                 const oPlayer = this.aPlayer[nIndex],
                     oCommandData = oPlayer.getCommandData();
@@ -386,7 +376,7 @@ Object.assign(
                     oCommandData.bFreeze = true;
 
                     // Freeze
-                    aEntity.forEach( oEntity => {
+                    BattleElement.get().forEach( oEntity => {
                         oEntity.sId != oPlayer.sId && oEntity.setFreeze(oCommandData.oFreeze.nLength);
                     } );
 

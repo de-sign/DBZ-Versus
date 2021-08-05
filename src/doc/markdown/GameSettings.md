@@ -110,33 +110,6 @@ GameSettings.aFilter = [
 ];
 ```
 
-#### GameSettings.oPositionPoint
-
-Constante des POSITION_POINT de chaque entité 
-
-```javascript
-GameSettings.oPositionPoint = {
-    character: {
-        nX: 98,
-        nY: 182,
-        nGapX: 4 * 4,
-        nGapY: 200 - 182 - 2
-    },
-    projectile: {
-        nX: 128,
-        nY: 190
-    },
-    beam: {
-        nX: 98,
-        nY: 232
-    },
-    effect: {
-        nX: 128,
-        nY: 210
-    }
-};
-```
-
 #### GameSettings.oRound
 
 Constante des ROUNDS 
@@ -358,38 +331,110 @@ Temps avant suppression d'un entité pour futur ROLLBACK
 GameSettings.nDie = 1;
 ```
 
-#### GameSettings.oLife
+#### GameSettings.oBattleElement
 
-Nombre de point de vie pour chaque entité 
+Information pour chaque entité :Nombre de point de viePosition lors d'un effet visuelPositionPointInformation de vérification des collisions
 
 ```javascript
-GameSettings.oLife = {
-    player: 1500,
-    character: 0,
-    projectile: 100,
-    beam: 0,
-    text: 20 // Nombre de Frames avant disparition
+GameSettings.oBattleElement = {
+    Effect: {
+        nLife: 0,
+        oPosition: {
+            nX: -24
+        },
+        oCheck: {}
+    },
+    Text: {
+        nLength: 20,
+        oPosition: {
+            nY: -192
+        },
+        oCheck: {}
+    },
+    Beam: {
+        nLife: 0,
+        oPositionPoint: {
+            nX: 98,
+            nY: 232
+        },
+        oCheck: {
+            bCollapse: true,
+            oHurt: {},
+            bPushback: true
+        }
+    },
+    Projectile: {
+        nLife: 100,
+        oPositionPoint: {
+            nX: 128,
+            nY: 190
+        },
+        oCheck: {
+            oHurt: {
+                Projectile: true,
+                Beam: true
+            }
+        }
+    },
+    Character: {
+        nLife: 0,
+        oPositionPoint: {
+            nX: 98,
+            nY: 182,
+            nGapX: 4 * 4,
+            nGapY: 200 - 182 - 2
+        },
+        oCheck: {
+            bCollapse: true,
+            bReverse: true,
+            oHurt: {
+                Projectile: true,
+                Beam: true,
+                Character: true,
+                Player: true
+            },
+            bLaunch: true,
+            bPushback: true
+        }
+    },
+    Player: {
+        nLife: 1500,
+        oPositionPoint: {
+            nX: 98,
+            nY: 182,
+            nGapX: 4 * 4,
+            nGapY: 200 - 182 - 2
+        },
+        oCheck: {
+            bCollapse: true,
+            bReverse: true,
+            oHurt: {
+                Projectile: true,
+                Beam: true,
+                Character: true,
+                Player: true
+            },
+            bLaunch: true,
+            bPushback: true
+        }
+    }
 };
 ```
 
-#### GameSettings.oPositionEffect
+#### GameSettings.oKi
 
-Position lors d'un effet visuel sur une entité 
+Parametrages des COMMAND par défaut 
 
 ```javascript
-GameSettings.oPositionEffect = {
-    effect: {
-        nX: -24
-    },
-    text: {
-        nY: -192
-    }
+GameSettings.oKi = {
+    nMax: 50,
+    nBar: 10
 };
 ```
 
 #### GameSettings.oCommand
 
-Parametrages des COMMAND par défaut 
+Paramétrage de l'animation d'un personnage LUNCHER 
 
 ```javascript
 GameSettings.oCommand = {
@@ -434,17 +479,6 @@ GameSettings.oCommand = {
         nX: -24,
         bDivide: true
     }
-};
-```
-
-#### GameSettings.oKi
-
-Paramétrage de l'animation d'un personnage LUNCHER 
-
-```javascript
-GameSettings.oKi = {
-    nMax: 50,
-    nBar: 10
 };
 ```
 

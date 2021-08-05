@@ -1,29 +1,36 @@
-/* ----- BattleText ----- */
+/* ----- START CLASS ----- */
+/* ----- START CONSTRUCTOR ----- */
 function BattleText(sText, nLength, oPosition, oParent){
-    BattleEntity.apply(this, arguments);
+    BattleEffect.apply(this, arguments);
 }
+/* ----- END CONSTRUCTOR ----- */
 
 Object.assign(
     BattleText, {
         prototype: Object.assign(
-            Object.create(BattleEntity.prototype), {
-                constructor: BattleEntity,
+            /* ----- START EXTENDS ----- */
+            Object.create(BattleEffect.prototype), {
+                /* ----- END EXTENDS ----- */
+                constructor: BattleText,
+                /* ----- START PROTOTYPE ----- */
+                /* ----- START METHODS ----- */
                 init: function(sText, nLength, oPosition, oParent){
-                    BattleEntity.prototype.init.call(this, 'text', { sText, nLife: nLength }, null, oPosition || GameSettings.oPositionEffect.text, false, oParent);
+                    BattleEffect.prototype.init.call(
+                        this,
+                        { sText },
+                        null,
+                        oPosition,
+                        false,
+                        oParent
+                    );
+
+                    this.oDeadTimer = new GameTimer();
+                    this.oDeadTimer.init( GameSettings.nDie, nLength || GameSettings.oBattleElement.Text.nLength );
                 },
                 update: function(){
-                    // Destruction après 1s pour prévention du ROLLBACK
-                    if( this.isDead() ) {
-                        this.oDeadTimer.update();
-                        if( this.oDeadTimer.isEnd() ){
-                            this.destroy();
-                        }
-                    } else {
-                        if( this.nLife > 0 ){
-                            this.nLife--;
-                        } else {
-                            this.die();
-                        }
+                    this.oDeadTimer.update();
+                    if( this.oDeadTimer.isEnd() ){
+                        this.destroy();
                     }
                 },
                 // destroy: function(){}
@@ -48,8 +55,20 @@ Object.assign(
 
                     return this.oLayer;
                 },
-                render: function(){}
+                render: function(){
+                    if( this.isDead() == 1 ){
+                        this.oLayer.addTickUpdate( () => {
+                            this.oLayer.hElement.classList.add('--dead');
+                        } );
+                    }
+                },
+
+                setFreeze: function(){},
+                unFreeze: function(){}
+                /* ----- END METHODS ----- */
+                /* ----- END PROTOTYPE ----- */
             }
         )
     }
 );
+/* ----- END CLASS ----- */

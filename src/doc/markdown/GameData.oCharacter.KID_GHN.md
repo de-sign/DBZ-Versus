@@ -1042,23 +1042,23 @@ GameData.oCharacter.KID_GHN.oCommands = {
                 },
                 aEntity: [
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '親子',
                         nFrameStart: 1
                     },
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '親子かめ',
                         nFrameStart: 22
                     },
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '親子かめはめ波',
                         nFrameStart: 43,
                         nLength: 36
                     },
                     {
-                        sType: 'beam',
+                        sType: 'Beam',
                         sSFX: 'ADO__Beam',
                         sAnimation: 'circle',
                         nFrameStart: 43,
@@ -1069,7 +1069,7 @@ GameData.oCharacter.KID_GHN.oCommands = {
                         }
                     },
                     {
-                        sType: 'character',
+                        sType: 'Character',
                         sEntity: 'GKU_SSJ',
                         sColor: 'LSW_SSJ',
                         sAnimation: 'anim_GHN_SSJT',
@@ -1142,23 +1142,23 @@ GameData.oCharacter.KID_GHN.oCommands = {
                 },
                 aEntity: [
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '魔',
                         nFrameStart: 1
                     },
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '魔閃',
                         nFrameStart: 22
                     },
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '魔閃光',
                         nFrameStart: 43,
                         nLength: 36
                     },
                     {
-                        sType: 'beam',
+                        sType: 'Beam',
                         sSFX: 'ADO__Beam',
                         sAnimation: 'triangle',
                         nFrameStart: 43,
@@ -1224,13 +1224,13 @@ GameData.oCharacter.KID_GHN.oCommands = {
                 },
                 aEntity: [
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '気功波',
                         nLength: 40,
                         nFrameStart: 1
                     },
                     {
-                        sType: 'projectile',
+                        sType: 'Projectile',
                         sSFX: 'ADO__Projectile',
                         sAnimation: 'kikoha',
                         nFrameStart: 10,

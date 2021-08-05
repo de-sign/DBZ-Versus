@@ -203,7 +203,7 @@ Object.assign(
 
             restart: function(){
                 // Entity
-                BattleEntity.get().forEach( oEntity => {
+                BattleElement.get().forEach( oEntity => {
                     if( oEntity.constructor != BattlePlayer ){
                         oEntity.destroy();
                     }
@@ -222,6 +222,7 @@ Object.assign(
 
                     // Perso
                     oPlayer.setStance('move_0', true);
+                    oPlayer.oPushback = BattleMovement.empty();
                     oPlayer.oInputBuffer.reset();
                     oRestart.setPosition(nIndex);
                 } );

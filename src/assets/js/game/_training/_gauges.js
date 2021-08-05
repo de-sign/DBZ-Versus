@@ -106,7 +106,7 @@ Object.assign(
 
                 this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                     this.aParam.push( StoreEngine.get('TNG_Gauges_' + nIndex) || {
-                        nLife: GameSettings.oLife.player,
+                        nLife: GameSettings.oBattleElement.Player.nLife,
                         nKi: GameSettings.oKi.nMax,
                         bRegenLife: true,
                         bRegenKi: true
@@ -139,15 +139,15 @@ Object.assign(
                 sStat = 'n' + sStat;
                 const oParam = this.aParam[nIndex],
                     oMinStat = {
-                        nLife: 10 * GameSettings.oLife.player / 100,
+                        nLife: 10 * GameSettings.oBattleElement.Player.nLife / 100,
                         nKi: 0
                     },
                     oMaxStat = {
-                        nLife: GameSettings.oLife.player,
+                        nLife: GameSettings.oBattleElement.Player.nLife,
                         nKi: GameSettings.oKi.nMax
                     },
                     oRatio = {
-                        nLife: 10 * GameSettings.oLife.player / 100,
+                        nLife: 10 * GameSettings.oBattleElement.Player.nLife / 100,
                         nKi: GameSettings.oKi.nBar
                     };
 

@@ -235,7 +235,7 @@ Object.assign(
                     ){
                         // Check HitBox
                         const aOpponentEntity = BattleEntity.get().filter( oEntity => {
-                            return oEntity.oCheck && oEntity.oCheck.bHit && !oEntity.isDead() && (oEntity.oParent || oEntity).sId != this.oPlayer.sId;
+                            return !oEntity.isDead() && (oEntity.oParent || oEntity).sId != this.oPlayer.sId;
                         } );
 
                         let bHitBox = false;

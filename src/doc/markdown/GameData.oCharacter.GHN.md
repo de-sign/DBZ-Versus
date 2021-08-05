@@ -860,23 +860,23 @@ GameData.oCharacter.GHN.oCommands = {
                 },
                 aEntity: [
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '魔',
                         nFrameStart: 1
                     },
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '魔閃',
                         nFrameStart: 22
                     },
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '魔閃光',
                         nFrameStart: 43,
                         nLength: 36
                     },
                     {
-                        sType: 'beam',
+                        sType: 'Beam',
                         sSFX: 'ADO__Beam',
                         sText: '魔閃光',
                         sAnimation: 'triangle',
@@ -943,13 +943,13 @@ GameData.oCharacter.GHN.oCommands = {
                 },
                 aEntity: [
                     {
-                        sType: 'text',
+                        sType: 'Text',
                         sText: '気功波',
                         nLength: 40,
                         nFrameStart: 1
                     },
                     {
-                        sType: 'projectile',
+                        sType: 'Projectile',
                         sSFX: 'ADO__Projectile',
                         sAnimation: 'kikoha',
                         nFrameStart: 10,

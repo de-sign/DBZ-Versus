@@ -149,8 +149,8 @@ Object.assign(
                                     Object.assign(
                                         hElement.style,
                                         {
-                                            left: ( GameSettings.oPositionPoint.character.nX + oBox.nX ) + 'px',
-                                            top: ( GameSettings.oPositionPoint.character.nY + oBox.nY ) + 'px',
+                                            left: ( GameSettings.oBattleElement.Player.oPositionPoint.nX + oBox.nX ) + 'px',
+                                            top: ( GameSettings.oBattleElement.Player.oPositionPoint.nY + oBox.nY ) + 'px',
                                             width: oBox.nWidth + 'px',
                                             height: oBox.nHeight + 'px'
                                         }

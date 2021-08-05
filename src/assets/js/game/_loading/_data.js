@@ -432,7 +432,6 @@ Object.assign(
                             {},
                             oCommand,
                             {
-                                sCHeck: true,
                                 sCod: 'attack_4D_2',
                                 sRoot: 'attack_4D_0',
                                 oGatling: Object.assign(
@@ -456,6 +455,7 @@ Object.assign(
                 {},
                 oLauncher,
                 {
+                    sCheck: true,
                     sCod: 'attack_6D_1',
                     sRoot: 'attack_6D_0'
                 }

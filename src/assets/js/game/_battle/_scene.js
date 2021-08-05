@@ -59,18 +59,18 @@ Object.assign(
 				update: function(){
                     // Entity
                     const aNewEntity = [];
-                    BattleEntity.get().forEach( oEntity => oEntity.update(this.oEngine) );
+                    BattleElement.get().forEach( oEntity => oEntity.update(this.oEngine) );
                     // Engine
                     this.endBattle( this.oEngine.update() );
                     // Display
-                    BattleEntity.get().forEach( oEntity => oEntity.render() );
+                    BattleElement.get().forEach( oEntity => oEntity.render() );
                     this.aHUD.forEach( oHUD => oHUD.update() );
                     this.oTimer.update();
                     this.oInfo.update();
                     this.oCombo.update();
 				},
                 destroy: function(){
-                    BattleEntity.get().forEach( oEntity => oEntity.destroy() );
+                    BattleElement.get().forEach( oEntity => oEntity.destroy() );
                     this.oInfo.destroy();
                 },
 
