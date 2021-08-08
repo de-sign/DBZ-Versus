@@ -235,14 +235,14 @@ Object.assign(
                     ){
                         // Check HitBox
                         const aOpponentEntity = BattleEntity.get().filter( oEntity => {
-                            return !oEntity.isDead() && (oEntity.oParent || oEntity).sId != this.oPlayer.sId;
+                            return !oEntity.isDead() && oEntity.getRootParent().sId != this.oPlayer.sId;
                         } );
 
                         let bHitBox = false;
                         for( let nIndex = 0; nIndex < aOpponentEntity.length; nIndex++ ){
                             const oEntity = aOpponentEntity[nIndex];
                             if(
-                                oEntity.sType != 'character'
+                                oEntity.oParent
                                 || ( oEntity.oAnimation.oFrame && oEntity.oAnimation.oFrame.aHitBox )
                             ){
                                 bHitBox = true;

@@ -90,13 +90,12 @@ Object.assign(
                                 // Gestion en l'air
                                 else {
                                     switch( sDirection ){
-                                        /* Guard AERIAL ?
+                                        // Guard AERIAL
                                         case 'UB':
                                         case 'BW':
                                         case 'DB':
                                             this.setStance('move_j4');
                                             break;
-                                        */
                                         default:
                                             this.setStance('move_j5');
                                             break;
@@ -312,7 +311,12 @@ Object.assign(
                         oDamage = Object.assign( {}, oData.oDamage ),
                         oStun = Object.assign( {}, oData.oStun );
 
-                    if( !bGuard ){
+                    if( bGuard ){
+                        if( this.oStatus.bAerial ){
+                            oStun.sAnimation = 'defense_j4';
+                        }
+                    }
+                    else {
                         bLaunch = oCommandData.oProperty.bLaunch && !this.oStatus.bLaunch;
                         if( oDamage.nDamage ){
                             const nRatio = Math.max(oDamage.nMinimumReduce, 100 - (this.nHitting * GameSettings.oCommand.oDamage.nReduce));

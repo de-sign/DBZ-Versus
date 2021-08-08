@@ -203,7 +203,7 @@ Object.assign(
                 for( let nIndex = aCommands.length - 1; nIndex >= 0; nIndex-- ){
                     const oCommand = aCommands[nIndex];
                     if( oCommand.sAnimation != 'attack_2D' ){
-                        this.oCounter[oCommand.sCod] = oCommand.sName;
+                        this.oCounter[oCommand.sCod] = oCommand.oList.sName;
                     }
                 }
                 if( !this.oCounter[ this.oParam.sCounter ] ){
