@@ -7,8 +7,7 @@ function BattleEntity(/*oData, oPosition, bReverse, oParent, oCommandData*/) {
     this.oPositionPoint = null;
     this.oCommandData = null;
 
-    this.oMovement = BattleMovement.empty();
-    this.oPushback = BattleMovement.empty();
+    this.oMovement = new BattleMovementManager();
 
     this.nLife = 0;
     this.aHit = [];
@@ -65,7 +64,7 @@ Object.assign(
                 getCommandData: function(){
                     return this.oCommandData;
                 },
-                canMove: function(){
+                canBeMoved: function(){
                     return this.oCheck.bCollapse && this.oCheck.bReverse;
                 },
                 canReverse: function(){
@@ -165,7 +164,7 @@ Object.assign(
                 },
 
                 setAnimation: function(bForce, sAnimation, bUpdate, bReverse){
-                    let bSet = false;
+                    let oSet = false;
                     if( typeof bForce != 'boolean' ){
                         bReverse = bUpdate;
                         bUpdate = sAnimation;
@@ -173,47 +172,48 @@ Object.assign(
                         bForce = false;
                     }
 
-                    if( BattleElement.prototype.setAnimation.call(this, bForce, sAnimation, bUpdate) ){
+                    if( BattleElement.prototype.setAnimation.call(this, bForce, sAnimation, false) ){
                         const oAnim = this.oData.oAnimations[sAnimation];
                         this.killLink();
-                        this.setMovement(
-                            oAnim.oMove,
-                            bReverse == null ?
-                                this.bReverse :
-                                bReverse
-                        );
-                        this.aHit = [];
-                        bSet = true;
+                        oSet = {
+                            oAnimation: this.oAnimation,
+                            oMovement: this.setMovement(
+                                oAnim.oMove,
+                                bReverse == null ?
+                                    this.bReverse :
+                                    bReverse
+                            )
+                        };
+                        bUpdate && this.updateAnimation();
+                        this.aHit = [];;
                     }
-                    return bSet;
+                    return oSet;
                 },
                 updateAnimation: function(){
                     BattleElement.prototype.updateAnimation.call(this);
-                    ['oMovement', 'oPushback'].forEach( sProp => this[sProp].update() );
+                    this.oMovement.update();
                     this.move();
                 },
 
                 setMovement: function(oMove, bReverse){
-                    this.oMovement = oMove ?
-                        new BattleMovement(oMove.nDelay, oMove, oMove.nLength, bReverse) :
-                        BattleMovement.empty();
+                    return this.oMovement.set(oMove, bReverse);
                 },
                 setPushback: function(oPushback, bReverse, bDivide){
                     if( this.oCheck.bPushback ){
                         const oNewPushback = Object.assign({}, oPushback);
-                        bDivide && (oNewPushback.nX /= 2);
-                        this.oPushback = new BattleMovement(oNewPushback.nDelay, oNewPushback, oNewPushback.nLength, bReverse);
+                        bDivide && (oNewPushback.nLength /= 2);
+                        this.oMovement.parallel(oNewPushback, bReverse);
                     }
                     this.aLink.forEach( oLinkEntity => oLinkEntity.setPushback(oPushback, bReverse, bDivide) );
                 },
                 move: function(){
-                    ['oMovement', 'oPushback'].forEach( sProp => {
-                        if( this[sProp].oMove ){
-                            if( this[sProp].oMove.nX ){
-                                this.oLayer.oPosition.nX += this[sProp].oMove.nX * (this[sProp].bReverse ? -1 : 1);
+                    this.oMovement.forEach( oMovement => {
+                        if( oMovement.oMove ){
+                            if( oMovement.oMove.nX ){
+                                this.oLayer.oPosition.nX += oMovement.oMove.nX * (oMovement.bReverse ? -1 : 1);
                             }
-                            if( this[sProp].oMove.nY ){
-                                this.oLayer.oPosition.nY += this[sProp].oMove.nY;
+                            if( oMovement.oMove.nY ){
+                                this.oLayer.oPosition.nY += oMovement.oMove.nY;
                             }
                         }
                     } );
@@ -221,11 +221,11 @@ Object.assign(
 
                 setFreeze: function(nFreeze){
                     BattleElement.prototype.setFreeze.call(this, nFreeze);
-                    ['oMovement', 'oPushback'].forEach( sProp => this[sProp].setFreeze(nFreeze) );
+                    this.oMovement.setFreeze(nFreeze);
                 },
                 unFreeze: function(){
                     BattleElement.prototype.unFreeze.call(this);
-                    ['oMovement', 'oPushback'].forEach( sProp => this[sProp].unFreeze() );
+                    this.oMovement.unFreeze();
                 },
 
                 getBox: function(sBox){

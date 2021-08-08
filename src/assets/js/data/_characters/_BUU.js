@@ -636,7 +636,7 @@ GameData.oCharacter.BUU = {
         // 6, 4, 8
         attack_B: {
             
-            oMove: {
+            uMove: {
                 nDelay: 2,
                 nLength: 2,
                 nX: 16
@@ -672,7 +672,7 @@ GameData.oCharacter.BUU = {
         },
         // 8, 6, 10
         attack_6B: {
-            oMove: {
+            uMove: {
                 nDelay: 2,
                 nLength: 6,
                 nX: 48
@@ -719,7 +719,7 @@ GameData.oCharacter.BUU = {
         },
         // 10, 6, 8
         attack_6A_0: {
-            oMove: {
+            uMove: {
                 nDelay: 2,
                 nLength: 18,
                 nX: 96
@@ -766,7 +766,7 @@ GameData.oCharacter.BUU = {
         },
         // 8, 6, 10
         attack_6A_1: {
-            oMove: {
+            uMove: {
                 nLength: 4,
                 nX: 24
             },

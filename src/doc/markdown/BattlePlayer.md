@@ -94,22 +94,16 @@ this.update(oEngine);
 this.// destroy();
 ```
 
-### BattlePlayer.prototype.updateStatus()
+### BattlePlayer.prototype.canBeMoved()
 
 ```javascript
-this.updateStatus(oForce);
+this.canBeMoved();
 ```
 
-### BattlePlayer.prototype.setMemory()
+### BattlePlayer.prototype.addKi()
 
 ```javascript
-this.setMemory(sAnimation);
-```
-
-### BattlePlayer.prototype.updateMemory()
-
-```javascript
-this.updateMemory();
+this.addKi(nKi);
 ```
 
 ### BattlePlayer.prototype.getCommandData()
@@ -118,22 +112,16 @@ this.updateMemory();
 this.getCommandData();
 ```
 
-### BattlePlayer.prototype.canAction()
+### BattlePlayer.prototype.canCommand()
 
 ```javascript
-this.canAction();
+this.canCommand();
 ```
 
-### BattlePlayer.prototype.canMove()
+### BattlePlayer.prototype.useCommand()
 
 ```javascript
-this.canMove();
-```
-
-### BattlePlayer.prototype.addKi()
-
-```javascript
-this.addKi(nKi);
+this.useCommand(oCommand);
 ```
 
 ### BattlePlayer.prototype.render()
@@ -160,16 +148,34 @@ this.setStance(sMovement, bUpdate, bReverse);
 this.setHurt(sHurt, nFramesLength, bReverse);
 ```
 
-### BattlePlayer.prototype.updateAnimation()
+### BattlePlayer.prototype.setMovement()
 
 ```javascript
-this.updateAnimation();
+this.setMovement(oMove, bReverse);
 ```
 
 ### BattlePlayer.prototype.setPushback()
 
 ```javascript
 this.setPushback(oPushback, bReverse, bDivide);
+```
+
+### BattlePlayer.prototype.setFall()
+
+```javascript
+this.setFall(uMovement);
+```
+
+### BattlePlayer.prototype.updateAnimation()
+
+```javascript
+this.updateAnimation();
+```
+
+### BattlePlayer.prototype.updateStatus()
+
+```javascript
+this.updateStatus(oForce);
 ```
 
 ### BattlePlayer.prototype.takeHit()

@@ -238,12 +238,12 @@ Object.assign(
                     'cancel': 'stack',
                     'stand': 'movement',
                     'movement': 'movement',
-                    'jump': 'movement',
+                    'jump': 'stack',
                     'landing': 'stack',
                     'guard': 'hurt',
                     'hit': 'hurt',
                     'launch': 'hurt',
-                    'down': null,
+                    'down': 'stack',
                     'recovery': null,
                     'animation': null,
                 }
@@ -402,7 +402,12 @@ Object.assign(
             /* -----  PUSHBACK par défault appliqué lors d'un coup ----- */
             oPushback: {
                 nLength: 4,
-                nX: -24,
+                aStep: [
+                    { nX: -6 },
+                    { nX: -6 },
+                    { nX: -6 },
+                    { nX: -6 }
+                ],
                 bDivide: true
             }
         },
@@ -414,19 +419,20 @@ Object.assign(
             oMove: {
                 nX: -63 * 4,
                 nY: -54 * 4
-            }
+            },
+            // (nLength / 2) - 1 frame car UPDATE AUTO
+            nFallLength: (36 / 2) - 1
         },
         /* ----- DETAILS Paramétrage de l'animation d'un personnage JUMP ----- */
         oJump: {
             nLength: 36,
-            oPre: {
-                nJump: 4,
-                nLanding: 4
-            },
             oMove: {
+                nDelay: 4,
                 nX: 63 * 4,
                 nY: -54 * 3
-            }
+            },
+            // (nLength / 2) + nDelay - 1 frame car UPDATE AUTO
+            nFallLength: (36 / 2) + 4 - 1
         },
         /* ----- DETAILS Paramètrage de la distance de déplacement lors d'une relevé d'un personnage mis au sol ----- */
         nRecovery: 14,

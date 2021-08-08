@@ -542,7 +542,7 @@ GameData.oCharacter.SRU = {
         ],
         // 6, 4, 8
         attack_B: {
-            oMove: {
+            uMove: {
                 nLength: 2,
                 nX: 8
             },
@@ -578,7 +578,7 @@ GameData.oCharacter.SRU = {
 
         // 8, 6, 10
         attack_2A: {
-            oMove: {
+            uMove: {
                 nDelay: 2,
                 nLength: 12,
                 nX: 96
@@ -627,7 +627,7 @@ GameData.oCharacter.SRU = {
         // 8, 6, 10
         attack_6B: {
             
-            oMove: {
+            uMove: {
                 nDelay: 2,
                 nLength: 6,
                 nX: 48

@@ -52,13 +52,7 @@ this.oCommandData = null;
 ### this.oMovement
 
 ```javascript
-this.oMovement = BattleMovement.empty();
-```
-
-### this.oPushback
-
-```javascript
-this.oPushback = BattleMovement.empty();
+this.oMovement = new BattleMovementManager();
 ```
 
 ### this.nLife
@@ -89,10 +83,10 @@ this.init(oData, sAnimation, oPosition, bReverse, oParent, oCommandData);
 this.update();
 ```
 
-### BattleEntity.prototype.canMove()
+### BattleEntity.prototype.canBeMoved()
 
 ```javascript
-this.canMove();
+this.canBeMoved();
 ```
 
 ### BattleEntity.prototype.canReverse()

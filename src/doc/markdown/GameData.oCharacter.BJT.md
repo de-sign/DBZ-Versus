@@ -564,7 +564,7 @@ GameData.oCharacter.BJT.oAnimations = {
     // Command
     // 4, 4, 6
     attack_A_0: {
-        oMove: {
+        uMove: {
             nDelay: 2,
             nLength: 4,
             nX: 24
@@ -659,7 +659,7 @@ GameData.oCharacter.BJT.oAnimations = {
 
     // 6, 4, 8
     attack_B: {
-        oMove: {
+        uMove: {
             nDelay: 2,
             nLength: 4,
             nX: -24
@@ -695,7 +695,7 @@ GameData.oCharacter.BJT.oAnimations = {
     },
     // 8, 6, 10
     attack_6A: {
-        oMove: {
+        uMove: {
             nDelay: 2,
             nLength: 12,
             nX: 96

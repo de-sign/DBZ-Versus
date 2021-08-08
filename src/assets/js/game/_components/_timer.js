@@ -42,7 +42,7 @@ Object.assign(
             this.nFreeze = 0;
         },
         isEnd: function(){
-            return this.nLength && this.nTick >= this.nLength;
+            return !this.isFreeze() && this.nLength && this.nTick >= this.nLength;
         },
         isFreeze: function(){
             return this.nFreeze > 0;

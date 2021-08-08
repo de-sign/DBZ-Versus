@@ -1,5 +1,5 @@
 /* ----- BattleMovement ----- */
-function BattleMovement(nDelay, uMove, nLength, bReverse){
+function BattleMovement(oMove, bReverse){
     GameTimer.call(this);
     
     this.aStep = [];
@@ -7,44 +7,29 @@ function BattleMovement(nDelay, uMove, nLength, bReverse){
     this.bReverse = false;
     this.bEmpty = false;
 
-    this.init(nDelay, uMove, nLength, bReverse);
+    this.init(oMove, bReverse);
 }
 
 Object.assign(
     BattleMovement,
     {
-        empty: function(){
-            const oMovement = new BattleMovement(-1, []);
-            oMovement.bEmpty = true;
-            return oMovement;
+        empty: function(nLength){
+            return new BattleMovement( {
+                bEmpty: true,
+                aStep: [],
+                nDelay: nLength - 1,
+                nLength: 1
+            } );
         },
 
         prototype: Object.assign(
             Object.create(GameTimer.prototype), {
                 constructor: BattleMovement,
-                init: function(nDelay, uMove, nLength, bReverse){
-                    if( Array.isArray(uMove) ){
-                        nLength = uMove.length;
-                        this.aStep = uMove;
-                    } else {
-                        if( nLength > 1 ){
-                            // Linear timing function
-                            const oMove = {
-                                nX: uMove.nX / nLength,
-                                nY: uMove.nY / nLength
-                            };
-
-                            for( let nIndex = 0; nIndex < nLength; nIndex++ ){
-                                this.aStep.push(oMove);
-                            }
-                        } else {
-                            this.aStep.push(uMove);
-                        }
-                    }
-
+                init: function(oMove, bReverse){
+                    GameTimer.prototype.init.call(this, oMove.nLength, oMove.nDelay);
+                    this.bEmpty = oMove.bEmpty;
+                    this.aStep = oMove.aStep;
                     this.bReverse = bReverse;
-
-                    GameTimer.prototype.init.call(this, nLength, nDelay);
                 },
                 update: function(){
                     const bUpdate = GameTimer.prototype.update.call(this);
@@ -53,5 +38,90 @@ Object.assign(
                 }
             }
         )
+    }
+);
+
+/* ----- BattleMovement ----- */
+function BattleMovementManager(){
+    GameTimer.call(this);
+
+    this.aCurrent = [];
+    this.aParallel = [];
+}
+
+Object.assign(
+    BattleMovementManager.prototype, {
+        update: function(){
+            this.clean();
+            this.forEach( oMove => oMove.update() );
+        },
+
+        create: function(oMove, bReverse){
+            return oMove.bEmpty ?
+                BattleMovement.empty(oMove.nLength) :
+                new BattleMovement( oMove, bReverse );
+        },
+        forEach: function(fCallback, bForce){
+            ['aCurrent', 'aParallel'].forEach( sProp => {
+                const oMove = this[sProp][0];
+                if(oMove || bForce){
+                    fCallback(oMove, sProp, this[sProp]);
+                }
+            } );
+        },
+        setFreeze: function(nFreeze){
+            this.forEach( oMove => oMove.setFreeze(nFreeze) );
+        },
+        unFreeze: function(){
+            this.forEach( oMove => oMove.unFreeze() );
+        },
+
+        clean: function(){
+            this.forEach( (oMove, sProp, aProp) => {
+                if( oMove.isEnd() ){
+                    aProp.shift();
+                }
+            } );
+        },
+        reset: function(){
+            this.aCurrent = [];
+            this.aParallel = [];
+        },
+
+        // Current
+        set: function(oMove, bReverse){
+            this.aCurrent = [];
+            return this.after(oMove, bReverse);
+        },
+        before: function(oMove, bReverse){
+            let oReturn = null;
+            if( oMove ){
+                if( oMove.bEmpty && this.aCurrent[0] && this.aCurrent[0].bEmpty ){
+                    oReturn = this.aCurrent[0] = this.create(oMove, bReverse);
+                } else {
+                    oReturn = this.create(oMove, bReverse);
+                    this.aCurrent.unshift( oReturn );
+                }
+            }
+            return oReturn;
+        },
+        after: function(oMove, bReverse){
+            let oReturn = null;
+            if( oMove ){
+                oReturn = this.create(oMove, bReverse);
+                this.aCurrent.push( oReturn );
+            }
+            return oReturn;
+        },
+
+        // Parallel
+        parallel: function(oMove, bReverse){
+            let oReturn = null;
+            if( oMove ){
+                oReturn = this.create(oMove, bReverse);
+                this.aParallel.push( oReturn );
+            }
+            return oReturn;
+        }
     }
 );

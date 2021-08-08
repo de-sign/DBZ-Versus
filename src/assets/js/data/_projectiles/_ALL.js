@@ -129,7 +129,7 @@ GameData.oProjectile.ALL = {
     /* ----- DETAILS Données des animations. ----- */
     oAnimations: {
         kikoha: {
-            oMove: {
+            uMove: {
                 nX: 12
             },
             aFrames: [
@@ -141,7 +141,7 @@ GameData.oProjectile.ALL = {
         },
 
         death: {
-            oMove: {
+            uMove: {
                 nDelay: 30,
                 nX: 16,
                 nY: 4
@@ -165,7 +165,7 @@ GameData.oProjectile.ALL = {
         },
 
         ball: {
-            oMove: {
+            uMove: {
                 nDelay: 30,
                 nX: 16,
                 nY: 6

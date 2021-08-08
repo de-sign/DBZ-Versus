@@ -570,7 +570,7 @@ GameData.oCharacter.GKU = {
         ],
         // 8, 6, 10
         attack_6A: {
-            oMove: {
+            uMove: {
                 nDelay: 2,
                 nLength: 12,
                 nX: 96

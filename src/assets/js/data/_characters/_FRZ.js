@@ -621,7 +621,7 @@ GameData.oCharacter.FRZ = {
 
         // 6, 4, 8
         attack_6B: {
-            oMove: {
+            uMove: {
                 nLength: 2,
                 nX: 8
             },
@@ -656,7 +656,7 @@ GameData.oCharacter.FRZ = {
         },
         // 8, 6, 10
         attack_6A: {
-            oMove: {
+            uMove: {
                 nDelay: 2,
                 nLength: 12,
                 nX: 96

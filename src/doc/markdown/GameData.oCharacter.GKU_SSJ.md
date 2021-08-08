@@ -648,7 +648,7 @@ GameData.oCharacter.GKU_SSJ.oAnimations = {
     ],
     // 6, 4, 8
     attack_B_1: {
-        oMove: {
+        uMove: {
             nLength: 6,
             nX: 36
         },
@@ -683,7 +683,7 @@ GameData.oCharacter.GKU_SSJ.oAnimations = {
     },
     // 8, 6, 10
     attack_6A: {
-        oMove: {
+        uMove: {
             nDelay: 2,
             nLength: 12,
             nX: 96

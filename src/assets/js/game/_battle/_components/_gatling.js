@@ -19,7 +19,7 @@ Object.assign(
         },
         update: function(nKi, oCanAction){
             let bFind = false,
-                bUse = false;
+                oUse = null;
             const aCommand = this.getCommands(oCanAction.sCommand);
 
             for( let nIndex = 0; nIndex < aCommand.length; nIndex++ ){
@@ -30,9 +30,8 @@ Object.assign(
                             this.oNext = oCommand;
                             bFind = true;
                         } else {
-                            this.use(oCommand);
+                            oUse = oCommand;
                             bFind = true;
-                            bUse = true;
                         }
                         break;
                     }
@@ -41,11 +40,10 @@ Object.assign(
 
             // Gestion Gatling Buffer
             if( !bFind && this.oNext && !oCanAction.bStack ){
-                this.use(this.oNext);
-                bUse = true;
+                oUse = this.oNext;
             }
 
-            return bUse ? this.oCurrent : null;
+            return oUse;
 
         },
         destroy: function(){},

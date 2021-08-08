@@ -795,7 +795,7 @@ GameData.oCharacter.MJN_BUU = {
         ],
         // 8, 6, 10
         attack_6A_0: {
-            oMove: {
+            uMove: {
                 nLength: 2,
                 nX: 8
             },
@@ -1286,7 +1286,7 @@ GameData.oCharacter.MJN_BUU = {
                         nStun: 18,
                         sAnimation: 'hit_1'
                     },
-                    oPushback: {}
+                    oPushback: false
                 },
                 oGuard: {
                     oDamage: {
@@ -1296,7 +1296,7 @@ GameData.oCharacter.MJN_BUU = {
                         nStun: 12,
                         sAnimation: 'defense_4'
                     },
-                    oPushback: {}
+                    oPushback: false
                 },
                 oFollowUp: {
                     sCheck: true,

@@ -185,7 +185,7 @@ Object.assign(
             // Check
             let oBoxEntity = oEntity.getRootParent().getBox('oPositionBox')[0],
                 nPriority = oEntity.oAnimation.sType == 'action' ? 2 :
-                    ( oEntity.canMove() ? 0 : 1 ),
+                    ( oEntity.canBeMoved() ? 0 : 1 ),
                 sMove = null;
 
             if( oBoxEntity ){
@@ -216,11 +216,11 @@ Object.assign(
 
                 // Trop en bas
                 if( oEntity.oCheck.bLaunch ){
-
                     const nDown = this.oArea.oPosition.nY + (oBoxArea.bottom - oBoxArea.originY) - oEntity.oPositionPoint.nGapY;
-                    if( nDown < oEntity.oLayer.oPosition.nY /* + ( oBoxEntity.nY + oBoxEntity.nHeight )*/ ){
+                    if( nDown < oEntity.oLayer.oPosition.nY ){
+                        oEntity.oStatus && ( oEntity.oStatus.bAerial = false );
                         if( oEntity.nLife > 0 ){
-                            oEntity.setStance( oEntity.oAnimation.sName == 'launch_1' ? 'launch_2' : 'move_0', true);
+                            oEntity.setStance( oEntity.nHitting ? 'launch_2' : 'move_0', true);
                         } else {
                             oEntity.setStance('anim_death', true);
                         }
@@ -347,10 +347,12 @@ Object.assign(
                         oPushback = oHurt.oCommandData[ bGuard ? 'oGuard' : 'oHit' ].oPushback;
 
                     // Gestion Pushback
-                    if( oHurt.oPriority.nHit < oHurt.oPriority.nHurt && oPushback.nX < 0 ){
-                        this.pushbackEntity( oHurt.oEntityHit, oPushback, oHurt.oEntityHit.bReverse, oPushback.bDivide );
-                    } else {
-                        this.pushbackEntity( oHurt.oEntityHurt, oPushback, !oHurt.oEntityHit.bReverse, false );
+                    if( oPushback && !oPushback.bEmpty ){
+                        if( oHurt.oPriority.nHit < oHurt.oPriority.nHurt && !oPushback.bForward ){
+                            this.pushbackEntity( oHurt.oEntityHit, oPushback, oHurt.oEntityHit.bReverse, oPushback.bDivide );
+                        } else {
+                            this.pushbackEntity( oHurt.oEntityHurt, oPushback, !oHurt.oEntityHit.bReverse, false );
+                        }
                     }
                 } );
                 

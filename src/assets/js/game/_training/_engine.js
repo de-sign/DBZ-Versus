@@ -221,8 +221,8 @@ Object.assign(
                     oGauges.setStat(nIndex, 'Ki');
 
                     // Perso
-                    oPlayer.setStance('move_0', true);
-                    oPlayer.oPushback = BattleMovement.empty();
+                    oPlayer.setStance('move_5', true);
+                    oPlayer.oMovement.reset();
                     oPlayer.oInputBuffer.reset();
                     oRestart.setPosition(nIndex);
                 } );

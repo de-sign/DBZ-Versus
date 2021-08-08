@@ -600,7 +600,7 @@ GameData.oCharacter.GHN = {
         ],
         // 8, 6, 10
         attack_6A_0: {
-            oMove: {
+            uMove: {
                 nDelay: 2,
                 nLength: 8,
                 nX: 72
@@ -647,7 +647,7 @@ GameData.oCharacter.GHN = {
         },
         // 8, 6, 10
         attack_6A_1: {
-            oMove: {
+            uMove: {
                 nDelay: 2,
                 nLength: 4,
                 nX: 24

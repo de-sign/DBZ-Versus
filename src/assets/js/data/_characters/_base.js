@@ -911,7 +911,8 @@ GameData.oEntity.oCharacter = {
                     sFrame: 'stand_0',
                     oStatus: {
                         bReverse: true,
-                        bAerial: false
+                        bAerial: false,
+                        bLaunch: false
                     }
                 }
             ]
@@ -928,11 +929,37 @@ GameData.oEntity.oCharacter = {
                 }
             ]
         },
+        // stand AERIAL
+        move_j5: {
+            sType: 'stand',
+            aFrames: [
+                {
+                    sFrame: 'jump_2',
+                    oStatus: {
+                        bReverse: true,
+                        bAerial: true
+                    }
+                }
+            ]
+        },
+        move_j4: {
+            sType: 'stand',
+            aFrames: [
+                {
+                    sFrame: 'jump_2',
+                    oStatus: {
+                        bReverse: true,
+                        bAerial: true,
+                        bGuard: true
+                    }
+                }
+            ]
+        },
 
         // Move
         move_6: {
             sType: 'movement',
-            oMove: {
+            uMove: {
                 nX: 6
             },
             aFrames: [
@@ -953,7 +980,7 @@ GameData.oEntity.oCharacter = {
         },
         move_4: {
             sType: 'movement',
-            oMove: {
+            uMove: {
                 nX: -6
             },
             aFrames: [
@@ -976,8 +1003,9 @@ GameData.oEntity.oCharacter = {
         },
         move_66: {
             sType: 'dash',
-            oMove: {
-                nX: 12
+            uMove: {
+                nX: 12 * 14,
+                nLength: 14
             },
             aFrames: [
                 {
@@ -1011,8 +1039,9 @@ GameData.oEntity.oCharacter = {
         },
         move_44: {
             sType: 'dash',
-            oMove: {
-                nX: -12
+            uMove: {
+                nX: -12 * 14,
+                nLength: 14
             },
             aFrames: [
                 {
@@ -1045,6 +1074,37 @@ GameData.oEntity.oCharacter = {
             ]
         },
 
+        // jump
+        move_7: {
+            // Extend via LOADING
+            sType: 'jump'
+        },
+        move_8: {
+            // Extend via LOADING
+            sType: 'jump',
+            aFrames: [
+                {
+                    nFrame: 2,
+                    sFrame: 'stand_1',
+                    oStatus: {
+                        bAerial: true
+                    }
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'jump_0',
+                },
+                {
+                    nFrame: 4,
+                    sFrame: 'jump_1'
+                }
+            ]
+        },
+        move_9: {
+            // Extend via LOADING
+            sType: 'jump'
+        },
+
         // Hurt
         defense_4: {
             sType: 'guard',
@@ -1071,12 +1131,14 @@ GameData.oEntity.oCharacter = {
                     nFrame: 1,
                     sFrame: 'guard_1__2',
                     oStatus: {
+                        bReverse: true,
                         bGuard: true
                     }
                 },
                 {
                     sFrame: 'guard_1',
                     oStatus: {
+                        bReverse: true,
                         bGuard: true
                     }
                 }
@@ -1189,6 +1251,19 @@ GameData.oEntity.oCharacter = {
             ]
         },
         
+        
+        launch_0: {
+            // Extend via LOADING
+            sType: 'hit'
+        },
+        launch_1: {
+            sType: 'launch',
+            aFrames: [
+                {
+                    sFrame: 'hit_3'
+                }
+            ]
+        },
         launch_2: {
             sType: 'down',
             aFrames: [
@@ -1201,6 +1276,10 @@ GameData.oEntity.oCharacter = {
                     }
                 }
             ]
+        },
+        launch_4: {
+            // Extend via LOADING
+            sType: 'recovery'
         },
         launch_5: {
             sType: 'recovery',
@@ -1217,6 +1296,10 @@ GameData.oEntity.oCharacter = {
                     sFrame: 'stand_1__0'
                 }
             ]
+        },
+        launch_6: {
+            // Extend via LOADING
+            sType: 'recovery'
         },
         
         attack_2D: {
@@ -1360,7 +1443,7 @@ GameData.oEntity.oCharacter = {
         },
         attack_4D_1: {
             sType: 'action',
-            oMove: {
+            uMove: {
                 nDelay: 4,
                 nLength: 1,
                 nX: 84
@@ -1784,6 +1867,59 @@ GameData.oEntity.oCharacter = {
                 }
             }
         ],
+        aRecovery: [
+            {
+                sCod: 'launch_6',
+                sAnimation: 'launch_6',
+                oList: {
+                    sName: 'Forward Recovery',
+                    bHidden: true
+                },
+                oProperty: {},
+                oGatling: {
+                    nLevel: 0,
+                    oManipulation: {
+                        bLast: true,
+                        aButtons: [
+                            { FW: false }
+                        ]
+                    }
+                }
+            },
+            {
+                sCod: 'launch_4',
+                sAnimation: 'launch_4',
+                oList: {
+                    sName: 'Backward Recovery',
+                    bHidden: true
+                },
+                oProperty: {},
+                oGatling: {
+                    nLevel: 0,
+                    oManipulation: {
+                        bLast: true,
+                        aButtons: [
+                            { BW: false }
+                        ]
+                    }
+                }
+            },
+            {
+                sCod: 'launch_5',
+                sAnimation: 'launch_5',
+                oList: {
+                    sName: 'Recovery',
+                    bHidden: true
+                },
+                oProperty: {},
+                oGatling: {
+                    nLevel: 0,
+                    oManipulation: {
+                        bLast: true
+                    }
+                }
+            }
+        ],
         aGround: [
             {
                 sCod: 'move_66',
@@ -1858,10 +1994,7 @@ GameData.oEntity.oCharacter = {
                         nStun: 30,
                         sAnimation: 'hit_D'
                     },
-                    oPushback: {
-                        nLength: 0,
-                        nX: 0
-                    }
+                    oPushback: false
                 }
             },
             {
@@ -1897,10 +2030,7 @@ GameData.oEntity.oCharacter = {
                         nStun: 30,
                         sAnimation: 'hit_D'
                     },
-                    oPushback: {
-                        nLength: 0,
-                        nX: 0
-                    }
+                    oPushback: false
                 },
                 oFollowUp: {
                     sCheck: true,

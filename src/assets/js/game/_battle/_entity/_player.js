@@ -60,38 +60,51 @@ Object.assign(
                     this.oInputBuffer.update(this.bReverse);
 
                     // Si pas stun par Animation
-                    const oCanAction = this.canAction();
-                    if( oCanAction.sCommand ){
+                    const oCanCommand = this.canCommand(),
+                        bFreeze = this.oAnimation.isFreeze();
+
+                    // Gestion MANIP
+                    let oCommand = null;
+                    if( oCanCommand.sCommand ){
+                        oCommand = this.oGatling.update(this.nKi, oCanCommand);
+                        oCommand && this.useCommand(oCommand);
+                    }
+
+                    if( !oCommand ){
                         const sDirection = this.oInputBuffer.getDirection();
-
-                        // Gestion RECOVERY
-                        if( oCanAction.sCommand == 'aRecovery' ){
-                            switch( sDirection ){
-                                case 'DB':
-                                case 'BW':
-                                    this.setStance('launch_4');
-                                    break;
-                                case 'DF':
-                                case 'FW':
-                                    this.setStance('launch_6');
-                                    break;
-                                default:
-                                    this.setStance('launch_5');
-                                    break;
-                            }
-                            OutputManager.getChannel('CHN__SFX').play('ADO__Recovery');
-                        }
                         
-                        else {
-
-                            // Gestion MANIP
-                            const oCommand = this.oGatling.update(this.nKi, oCanAction);
-                            if( oCommand ){
-                                oCommand.oGatling.nCost && (this.nKi -= oCommand.oGatling.nCost);
-                                this.setAnimation(oCommand.sAnimation);
+                        // Gestion FALL / DIR / JUMPCANCEL
+                        if(
+                            this.canBeMoved()
+                            || (
+                                this.oGatling.isJumpCancellable()
+                                && !oCanCommand.bStack
+                                && sDirection[0] == 'U'
+                            )
+                        ){
+                            if( this.oStatus.bAerial ){
+                                // Gestion de chute
+                                if( this.oAnimation.is('hurt') && this.oAnimation.sType != 'guard' ){
+                                    this.setStance('launch_1');
+                                }
+                                // Gestion en l'air
+                                else {
+                                    switch( sDirection ){
+                                        /* Guard AERIAL ?
+                                        case 'UB':
+                                        case 'BW':
+                                        case 'DB':
+                                            this.setStance('move_j4');
+                                            break;
+                                        */
+                                        default:
+                                            this.setStance('move_j5');
+                                            break;
+                                    }
+                                }
                             }
-                            // Gestion DIR
-                            else if( this.canMove() ){
+                            else {
+                                // Gestion au sol
                                 switch( sDirection ){
                                     case 'DB':
                                         this.setStance('move_1');
@@ -116,24 +129,9 @@ Object.assign(
                                         break;
                                 }
                             }
-                            // Gestion JUMPCANCEL
-                            else if( this.oGatling.isJumpCancellable() && !oCanAction.bStack ){
-                                switch( sDirection ){
-                                    case 'UB':
-                                        this.setStance('move_7');
-                                        break;
-                                    case 'UP':
-                                        this.setStance('move_8');
-                                        break;
-                                    case 'UF':
-                                        this.setStance('move_9');
-                                        break;
-                                }
-                            }
                         }
                     }
 
-                    this.updateMemory();
                     this.updateAnimation();
                     if( !this.oAnimation.isFreeze() ){
                         this.generateEntity('command', this.oGatling.getEntity(), oEngine);
@@ -142,6 +140,152 @@ Object.assign(
                 // destroy: function(){},
 
                 // Fonction ENGINE
+                canBeMoved: function(){
+                    return this.oAnimation.isEnd()
+                        || (
+                            this.oAnimation.is('movement')
+                            && !this.oAnimation.isFreeze()
+                        );
+                },
+                addKi: function(nKi){
+                    this.nKi = Math.min(this.nKi + nKi, GameSettings.oKi.nMax);
+                },
+
+                // Gatling
+                getCommandData: function(){
+                    return this.oGatling.oCurrent;
+                },
+                canCommand: function(){
+
+                    const sCommand = this.oStatus.bAerial ? 'aAerial' : 'aGround',
+                        oCanCommand = {
+                            sCommand: null,
+                            bStack: false,
+                            bGuard: false,
+                            bThrow: false
+                        };
+
+                    // Gestion MOVEMENT
+                    if( this.canBeMoved() ){
+                        oCanCommand.sCommand = sCommand;
+                    } else {
+
+                        const bFreeze = this.oAnimation.isFreeze();
+
+                        // Gestion HURT
+                        if( this.oAnimation.is('hurt') ){
+                            Object.assign( oCanCommand, {
+                                sCommand: 'aDefense',
+                                bStack: bFreeze,
+                                bGuard: this.oStatus.bGuard,
+                                bThrow: this.oStatus.bThrow
+                            } );
+                        }
+                        // Gestion STACK pour ACTION en HIT ou STACK
+                        else if( this.aHit.length || this.oAnimation.is('stack') ){
+                            Object.assign( oCanCommand, {
+                                sCommand: this.oAnimation.sType == 'down' ?
+                                    'aRecovery' :
+                                    sCommand,
+                                bStack: !this.oStatus.bCancel || bFreeze
+                            } );
+                        }
+                    }
+                    
+                    return oCanCommand;
+                },
+                useCommand: function(oCommand){
+                    this.oGatling.use(oCommand);
+                    oCommand.oGatling.nCost && (this.nKi -= oCommand.oGatling.nCost);
+
+                    const oSet = this.setAnimation(oCommand.sAnimation);
+                    if( this.oStatus.bAerial && oSet && oSet.oMovement ){
+                        this.setFall(oSet.oMovement);
+                    }
+                },
+
+                // Output
+                render: function(){
+                    BattleCharacter.prototype.render.call(this);
+                    this.oLayer.hElement.classList[ this.oStatus.bGuard ? 'add' : 'remove' ]('--guard');
+                },
+                setAnimation: function(sAnimation, bUpdate, bReverse){
+                    const oChanged = BattleCharacter.prototype.setAnimation.call(this, sAnimation, bUpdate, bReverse);
+                    if( oChanged ){
+                        if( !this.oAnimation.is('hurt') || this.oAnimation.sType == 'guard' ){
+                            this.nHitting = 0;
+                        }
+                    }
+                    return oChanged;
+                },
+                setStance: function(sMovement, bUpdate, bReverse){
+                    if( this.setAnimation(sMovement, bUpdate, bReverse) ){
+                        this.oGatling.reset();
+                    }
+                },
+                setHurt: function(sHurt, nFramesLength, bReverse){
+                    this.setStance(sHurt, false, bReverse);
+
+                    if( this.oAnimation.sName != 'launch_0' ){
+                        this.oAnimation.setLength(nFramesLength);
+
+                        if( this.oStatus.bAerial ){
+                            // Gestion retombé / chute
+                            const oMove = {
+                                bEmpty: true,
+                                nLength: nFramesLength
+                            };
+
+                            // Guard 
+                            if( this.oAnimation.sType == 'guard' ){
+                                this.oMovement.set(oMove);
+                                this.setFall(true);
+                            }
+                            // Hit générant fall
+                            else if( this.nHitting == 1 ){
+                                this.oMovement.set(oMove);
+                                const oFall = this.oMovement.after( this.oData.oAnimations.launch_0.oMove, this.bReverse );
+                                oFall.nTick = GameSettings.oLauncher.nFallLength;
+                            }
+                            // Hit pendant fall
+                            else {
+                                this.oMovement.before(oMove);
+                            }
+                        }
+                    }
+                    
+                    this.updateAnimation();
+                },
+                setMovement: function(oMove, bReverse){
+                    let oMovement = null;
+                    if( !this.oStatus.bAerial || oMove ){
+                        oMovement = BattleEntity.prototype.setMovement.call(this, oMove, bReverse);
+                    }
+                    return oMovement;
+                },
+                setPushback: function(oPushback, bReverse, bDivide){
+                    if( this.oAnimation.sName != 'launch_0' ){
+                        BattleEntity.prototype.setPushback.call(this, oPushback, bReverse, bDivide);
+                    }
+                },
+                setFall: function(uMovement){
+                    let sAnimation = null,
+                        sSetting = uMovement ? 'oJump' : 'oLauncher';
+                    if( typeof uMovement == 'boolean' ){
+                        sAnimation = uMovement ? 'move_7' : 'launch_0';
+                    }
+                    if( !sAnimation ){
+                        const aFall = ['move_7', 'move_8', 'move_9'],
+                            nMove = Math.min( 1, Math.max( -1, uMovement.aStep[ uMovement.aStep.length - 1 ].nX ) );
+                        sAnimation = aFall[nMove + 1];
+                    }
+                    const oFall = this.oMovement.after( this.oData.oAnimations[sAnimation].oMove, this.bReverse );
+                    oFall.nTick = GameSettings[sSetting].nFallLength;
+                },
+                updateAnimation: function(){
+                    BattleEntity.prototype.updateAnimation.call(this);
+                    this.updateStatus();
+                },
                 updateStatus: function(oForce){
                     this.oStatus = Object.assign(
                         {
@@ -157,241 +301,6 @@ Object.assign(
                         this.oAnimation.oFrame.oStatus,
                         oForce || {}
                     );
-                },
-
-                setMemory: function(sAnimation){
-                    // FALL en fin d'animation avec un move
-                    if( sAnimation ){
-                        const oAnimation = this.oData.oAnimations[sAnimation];
-                        this.oMemory = {
-                            sType: 'jump',
-                            oAnimation: new GameAnimation(
-                                sAnimation,
-                                oAnimation.sType,
-                                this.oData.oFrames,
-                                oAnimation.aFrames
-                            ),
-                            oMovement: new BattleMovement(
-                                oAnimation.oMove.nDelay,
-                                oAnimation.oMove,
-                                oAnimation.oMove.nLength,
-                                this.bReverse
-                            )
-                        };
-                    }
-                    // Annulation du JUMP en cas de HIT en l'air
-                    else if( this.oAnimation.is('hurt') && this.oMemory.sType && this.oMemory.sType != 'fall' ){
-                        this.oMemory = {
-                            sType: null,
-                            oAnimation: null,
-                            oMove: null
-                        };
-                    }
-                    else {
-                        // Gestion en fonction de l'animation
-                        switch( this.oAnimation.sName ){
-                            case 'move_7':
-                            case 'move_8':
-                            case 'move_9':
-                            case 'move_fall_4':
-                            case 'move_fall_5':
-                            case 'move_fall_6':
-                                this.oMemory = {
-                                    sType: 'jump',
-                                    oAnimation: this.oAnimation,
-                                    oMovement: this.oMovement
-                                };
-                                break;
-                            case 'launch_1':
-                                this.oMemory = {
-                                    sType: 'fall',
-                                    oAnimation: this.oAnimation,
-                                    oMovement: this.oMovement
-                                };
-                                break;
-                            case 'launch_0':
-                            case 'launch_2':
-                            case 'move_0':
-                                this.oMemory = {
-                                    sType: null,
-                                    oAnimation: null,
-                                    oMove: null
-                                };
-                                break;
-                        }
-                    }
-                },
-                updateMemory: function(){
-                    if( this.oStatus.bAerial ){
-                        // Gestion FALL
-                        if( this.oAnimation.isEnd() && this.oAnimation.is('hurt') ){
-                            switch( this.oMemory.sType ){
-                                case 'fall':
-                                    this.oAnimation = this.oMemory.oAnimation;
-                                    this.oMovement = this.oMemory.oMovement;
-                                    break;
-                                default:
-                                    this.setStance('launch_1');
-                                    break;
-                            }
-                        }
-                        // Gestion JUMP
-                        else if( !this.oAnimation.isFreeze() ){
-                            switch( this.oMemory.sType ){
-                                case 'jump':
-                                    if( this.oAnimation.isEnd() ){
-                                        this.oAnimation = this.oMemory.oAnimation;
-                                        this.oMovement = this.oMemory.oMovement;
-                                    }
-                                    else if( this.oAnimation.sType != 'jump' ){
-                                        this.oMovement = this.oMemory.oMovement;
-                                        this.oMemory.oAnimation.update();
-                                    }
-                                    break;
-                                case 'aerial_move':
-                                    const bSameAnim = this.oAnimation.sName == this.oMemory.oAnimation.sName;
-                                    if( !bSameAnim || this.oAnimation.isEnd() ){
-                                        const aFall = ['move_fall_4', 'move_fall_5', 'move_fall_6'],
-                                            nMove = Math.min( 1, Math.max( -1, this.oMemory.oMovement.aStep[ this.oMemory.oMovement.aStep.length - 1 ].nX ) ),
-                                            nFall = nMove * (this.oMemory.oMovement.bReverse ? -1 : 1) * (this.bReverse ? -1 : 1),
-                                            sAnimation = aFall[nFall + 1];
-
-                                        if( bSameAnim ){
-                                            this.setAnimation(sAnimation);
-                                            this.setMemory();
-                                        } else {
-                                            this.setMemory(sAnimation);
-                                            this.oMovement = this.oMemory.oMovement;
-                                            this.oMemory.oAnimation.update();
-                                        }
-                                    }
-                                    break;
-                            }
-                            
-                        }
-                    }
-                },
-
-                getCommandData: function(){
-                    return this.oGatling.oCurrent;
-                },
-                canAction: function(){
-                    let oCanAction = {
-                        sCommand: null,
-                        bStack: false,
-                        bGuard: false,
-                        bThrow: false,
-                        nCode: 0
-                    };
-                    const bFreeze = this.oAnimation.isFreeze(),
-                        sCommand = this.oStatus.bAerial ? 'aAerial' : 'aGround';
-
-                    // Gestion MOVEMENT
-                    if( !bFreeze && this.oAnimation.is('movement') ){
-                        const bCancel = this.oAnimation.sType != 'jump' || this.oStatus.bCancel;
-                        oCanAction = {
-                            sCommand: sCommand,
-                            bStack: !bCancel,
-                            bGuard: false,
-                            bThrow: false
-                        };
-                    }
-                    // Gestion END ANIMATION
-                    else if( this.oAnimation.isEnd() ){
-                        // DOWN => RECOVERY
-                        if( this.oAnimation.sType == 'down' ){
-                            oCanAction = {
-                                sCommand: 'aRecovery',
-                                bStack: false,
-                                bGuard: false,
-                                bThrow: false
-                            };
-                        }
-                        // STAND => ALL action
-                        else if( !(this.oStatus.bAerial && this.oAnimation.is('hurt')) ){
-                            oCanAction = {
-                                sCommand: sCommand,
-                                bStack: false,
-                                bGuard: false, 
-                                bThrow: false
-                            };
-                        }
-                    }
-                    // Gestion HURT
-                    else if( this.oAnimation.is('hurt') ){
-                        oCanAction = {
-                            sCommand: 'aDefense',
-                            bStack: bFreeze,
-                            bGuard: this.oStatus.bGuard,
-                            bThrow: this.oStatus.bThrow
-                        };
-                    }
-                    // Gestion STACK pour ACTION en HIT ou DASH, LANDING et RECOVERY
-                    else if( this.aHit.length || this.oAnimation.is('stack') ){
-                        const bCancel = this.oStatus.bCancel && !bFreeze;
-                        oCanAction = {
-                            sCommand: sCommand,
-                            bStack: !bCancel,
-                            bGuard: false,
-                            bThrow: false
-                        };
-                    }
-                    
-                    return oCanAction;
-                },
-                canMove: function(){
-                    return !this.oStatus.bAerial
-                        && !this.oAnimation.isFreeze()
-                        && (
-                            this.oAnimation.isEnd()
-                            || this.oAnimation.is('movement')
-                        );
-                },
-                addKi: function(nKi){
-                    this.nKi = Math.min(this.nKi + nKi, GameSettings.oKi.nMax);
-                },
-
-                // Output
-                render: function(){
-                    BattleCharacter.prototype.render.call(this);
-                    this.oLayer.hElement.classList[ this.oStatus.bGuard ? 'add' : 'remove' ]('--guard');
-                },
-                setAnimation: function(sAnimation, bUpdate, bReverse){
-                    const bChanged = BattleCharacter.prototype.setAnimation.call(this, sAnimation, bUpdate, bReverse);
-                    if( bChanged ){
-                        if( !this.oAnimation.is('hurt') || this.oAnimation.sType == 'guard' ){
-                            this.nHitting = 0;
-                        }
-                        if( this.oStatus.bAerial && !this.oAnimation.is('hurt') && !this.oMovement.bEmpty ){
-                            this.oMemory = {
-                                sType: 'aerial_move',
-                                oAnimation: this.oAnimation,
-                                oMovement: this.oMovement
-                            };
-                        }
-                    }
-                    return bChanged;
-                },
-                setStance: function(sMovement, bUpdate, bReverse){
-                    if( this.setAnimation(sMovement, bUpdate, bReverse) ){
-                        this.oGatling.reset();
-                        this.setMemory();
-                    }
-                },
-                setHurt: function(sHurt, nFramesLength, bReverse){
-                    this.setStance(sHurt, true, bReverse);
-                    if( this.oAnimation.sName != 'launch_0' ){
-                        this.oAnimation.setLength(nFramesLength);
-                    }
-                },
-                updateAnimation: function(){
-                    BattleEntity.prototype.updateAnimation.call(this);
-                    this.updateStatus();
-                },
-                setPushback: function(oPushback, bReverse, bDivide){
-                    if( this.oAnimation.sName != 'launch_0' ){
-                        BattleEntity.prototype.setPushback.call(this, oPushback, bReverse, bDivide);
-                    }
                 },
 
                 takeHit: function(oEntity, oCommandData, oEngine){
