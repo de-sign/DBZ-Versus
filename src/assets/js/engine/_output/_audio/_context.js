@@ -21,8 +21,11 @@ Object.assign(
                 /* ----- START PROTOTYPE ----- */
                 /* ----- START METHODS ----- */
                 init: function(){
-                    const oMerger = OutputAudioElement.oAudioContext.createChannelMerger();
-                    oMerger.connect( OutputAudioElement.oAudioContext.destination );
+                    const oMerger = OutputAudioElement.oAudioContext.createChannelMerger(),
+                        oStereo = OutputAudioElement.oAudioContext.createChannelMerger();
+                    oMerger.connect( oStereo, 0, 0 ); // LEFT
+                    oMerger.connect( oStereo, 0, 1 ); // RIGHT
+                    oStereo.connect( OutputAudioElement.oAudioContext.destination);
                     this.setNode(oMerger, null);
                 },
                 update: function(){
