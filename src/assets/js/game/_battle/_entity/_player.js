@@ -40,7 +40,7 @@ Object.assign(
                 constructor: BattlePlayer,
                 /* ----- START PROTOTYPE ----- */
                 /* ----- START METHODS ----- */
-                init: function(nPlayer, sChar, sColor, sAnimation, oPosition, bReverse, oSourceBuffer, nRound) {
+                init: function(nPlayer, sChar, sColor, sAnimation, oPosition, bReverse, oSourceBuffer) {
                     BattleCharacter.prototype.init.call(
                         this,
                         sChar,
@@ -53,7 +53,6 @@ Object.assign(
                     this.nPlayer = nPlayer;
                     this.oInputBuffer = new BattleInputBuffer(oSourceBuffer);
                     this.oGatling = new BattleGatling(this.oInputBuffer, this.oData.oCommands);
-                    this.nRound = nRound;
                 },
                 update: function(oEngine){
                     // Gestion des INPUTs

@@ -48,11 +48,11 @@ Object.assign(
                     this.oMenu = new GameMenu('LAY__Battle_Menu');
 
                     // Texte début de match
-                    this.oInfo.add(
+                    this.oDisplay.show(
                         {
                             sText: 'Ready ?',
                             fCallback: () => {
-                                this.oTimer.start();
+                                this.oDisplay.start();
                                 this.aPlayer.forEach( (oPlayer, nIndex) => {
                                     oPlayer.oInputBuffer.init( new BattleInputSourceBufferLocal(SceneManager.oTransverseData.MNU__aController[nIndex]) );
                                 } );
@@ -119,13 +119,13 @@ Object.assign(
                 endBattle: function(oEndGame){
                     if( oEndGame.bEnd && !this.isStep('Victory') ){
 
-                        this.oTimer.pause();
+                        this.oDisplay.pause();
                         if( !this.isStep('SlowMotion') ){
                             this.nStep++;
                             this.aPlayer.forEach( oPlayer => oPlayer.oInputBuffer.destroy() );
 
                             if( oEndGame.bTimer ){
-                                this.oInfo.add( {
+                                this.oDisplay.show( {
                                     sText: 'Time Up !',
                                     nLength: 120,
                                     fCallback: () => {
@@ -135,7 +135,7 @@ Object.assign(
                             }
                             else {
                                 TimerEngine.setFPS(30);
-                                this.oInfo.add( {
+                                this.oDisplay.show( {
                                     sText: 'K.O. !'
                                 } );
                                 setTimeout(
@@ -179,7 +179,7 @@ Object.assign(
                         }
                     } );
 
-                    this.oInfo.add( {
+                    this.oDisplay.show( {
                         sText: sText,
                         nLength: 120,
                         fCallback: this.checkEndBattle(oEndGame.oPlayerWin)

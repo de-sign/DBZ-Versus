@@ -1,18 +1,18 @@
 /* ----- BattleEngine ----- */
-function BattleEngine(aPlayer, oArea, oTimer){
+function BattleEngine(oScene){
     this.aPlayer = null;
     this.oArea = null;
-    this.oTimer = null;
+    this.oDisplay = null;
 
-    this.init(aPlayer, oArea, oTimer);
+    this.init(oScene);
 }
 
 Object.assign(
     BattleEngine.prototype, {
-        init: function(aPlayer, oArea, oTimer) {
-            this.aPlayer = aPlayer;
-            this.oArea = oArea;
-            this.oTimer = oTimer;
+        init: function(oScene) {
+            this.aPlayer = oScene.aPlayer;
+            this.oArea = oScene.oArea;
+            this.oDisplay = oScene.oDisplay;
         },
         update: function(){
             // Gestion Fin de partie
@@ -23,7 +23,7 @@ Object.assign(
             // Gestion PositionBox / Area
             aEntity.forEach( (oEntity, nIndex) => {
                 if( oEntity.oCheck.bCollapse ){
-                    const oReferent = this.aPlayer[ (oEntity.oParent || oEntity).nPlayer == 1 ? 1 : 0 ];
+                    const oReferent = this.aPlayer[ oEntity.getRootParent().nPlayer == 1 ? 1 : 0 ];
                     oCollapse[oEntity.sId] = {
                         nIndex,
                         oEntity,
@@ -116,7 +116,7 @@ Object.assign(
                 oPlayerWin: null
             };
                 
-            if( this.oTimer.isEnd() ){
+            if( this.oDisplay.oModule.oTimer.isEnd() ){
                 oEndGame.bTimer = true;
                 if( this.aPlayer[0].nLife != this.aPlayer[1].nLife ){
                     oEndGame.oPlayerWin = this.aPlayer[ this.aPlayer[0].nLife > this.aPlayer[1].nLife ? 0 : 1 ];
@@ -383,7 +383,7 @@ Object.assign(
                     } );
 
                     // Texte
-                    SceneManager.oCurrent.oInfo.add(
+                    this.oDisplay.oModule.oText.add(
                         oCommandData.oFreeze.bInfo ?
                             {
                                 nLength: oCommandData.oFreeze.nLength,

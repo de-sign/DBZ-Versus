@@ -79,7 +79,7 @@ _Methods inherited :_ [BattleCharacter.prototype](BattleCharacter.md#instance-me
 ### BattlePlayer.prototype.init()
 
 ```javascript
-this.init(nPlayer, sChar, sColor, sAnimation, oPosition, bReverse, oSourceBuffer, nRound);
+this.init(nPlayer, sChar, sColor, sAnimation, oPosition, bReverse, oSourceBuffer);
 ```
 
 ### BattlePlayer.prototype.update()

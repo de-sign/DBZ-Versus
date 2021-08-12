@@ -1,14 +1,13 @@
 /* ----- BattleScene ----- */
 function BattleScene(){
 	this.oContext = null;
-    this.oInfo = null;
-	this.oArea = null;
-    this.oTimer = null;
-    
-    this.aPlayer = [];
-    this.aHUD = [];
 
+    this.oArea = null;
+    this.aPlayer = [];
+
+    this.oTimer = null;
     this.oEngine = null;
+    this.oDisplay = null;
     this.oTraining = null;
 }
 
@@ -41,37 +40,28 @@ Object.assign(
                                 oOptions.sAnimation,
                                 GameSettings.oSide.aSide[ GameSettings.oSide.nDefault ].fPosition(nIndex, false, this.oArea),
                                 !!nIndex,
-                                oOptions.aSourceBuffer[nIndex],
-                                SceneManager.oTransverseData.BTL__aRound[nIndex]
+                                oOptions.aSourceBuffer[nIndex]
                             );
                         this.aPlayer.push(oPlayer);
-                        
-                        // HUD init
-                        this.aHUD.push( new BattleHUD(oPlayer) );
                     }
 
                     // Engine init
-                    this.oInfo = new BattleInfo(this.oContext, this.aPlayer);
-                    this.oCombo = new BattleCombo(this.aPlayer);
-                    this.oTimer = new BattleTimer(oOptions.nTimer);
-                    this.oEngine = new BattleEngine(this.aPlayer, this.oArea, this.oTimer);
+                    this.oDisplay = new BattleDisplay(this, oOptions);
+                    this.oEngine = new BattleEngine(this);
 				},
 				update: function(){
-                    // Entity
-                    const aNewEntity = [];
+                    // Engine / Entity
                     BattleElement.get().forEach( oEntity => oEntity.update(this.oEngine) );
-                    // Engine
-                    this.endBattle( this.oEngine.update() );
+                    const oEndGame = this.oEngine.update();
                     // Display
                     BattleElement.get().forEach( oEntity => oEntity.render() );
-                    this.aHUD.forEach( oHUD => oHUD.update() );
-                    this.oTimer.update();
-                    this.oInfo.update();
-                    this.oCombo.update();
+                    this.oDisplay.update();
+                    // Check END
+                    this.endBattle(oEndGame);
 				},
                 destroy: function(){
                     BattleElement.get().forEach( oEntity => oEntity.destroy() );
-                    this.oInfo.destroy();
+                    this.oDisplay.destroy();
                 },
 
                 endBattle: function(oEndGame){},

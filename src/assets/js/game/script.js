@@ -17,13 +17,11 @@
 //=include _scene/_prebattle.js
 
 //=include _battle/_scene.js
-//=include _battle/_display.js
 //=include _battle/_inputbuffer/_engine.js
 //=include _battle/_inputbuffer/_local.js
 //=include _battle/_inputbuffer/_dummy.js
 //=include _battle/_components/_gatling.js
 //=include _battle/_components/_movement.js
-//=include _battle/_components/_timer.js
 //=include _battle/_entity/_element.js
 //=include _battle/_entity/_effect.js
 //=include _battle/_entity/_text.js
@@ -33,6 +31,10 @@
 //=include _battle/_entity/_character.js
 //=include _battle/_entity/_player.js
 //=include _battle/_engine.js
+//=include _battle/_display/_hud.js
+//=include _battle/_display/_text.js
+//=include _battle/_display/_timer.js
+//=include _battle/_display/_engine.js
 //=include _scene/_versus.js
 
 //=include _training/_engine.js

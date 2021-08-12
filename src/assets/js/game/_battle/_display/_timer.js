@@ -1,18 +1,18 @@
-/* ----- BattleTimer ----- */
-function BattleTimer(nTimer){
+/* ----- BattleDisplayTimer ----- */
+function BattleDisplayTimer(oScene, oOptions){
     this.dStart = null;
     this.dFreeze = null;
     this.nDeltaFreeze = 0;
     this.nTimer = -1;
 
-    this.init(nTimer);
+    this.init(oScene, oOptions);
 }
 
 Object.assign(
-    BattleTimer.prototype,
+    BattleDisplayTimer.prototype,
     {
-        init: function(nTimer){
-            this.nTimer = nTimer;
+        init: function(oScene, oOptions){
+            this.nTimer = oOptions.nTimer;
         },
         update: function(){
             let sTimer = '00';
@@ -22,6 +22,8 @@ Object.assign(
                 sTimer = (sTimer < 0 ? 0 : sTimer).toString().padStart(2, '0');
             }
             OutputManager.getElement('TXT__Battle_Timer').setText(sTimer);
+        },
+        destroy: function(){
         },
         
         start: function(){

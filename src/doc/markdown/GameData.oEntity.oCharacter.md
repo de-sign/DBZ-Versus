@@ -1341,7 +1341,7 @@ GameData.oEntity.oCharacter.oAnimations = {
                 sFrame: 'attack_0_1'
             },
             {
-                nFrame: 6,
+                nFrame: 4,
                 sFrame: 'attack_0_2'
             },
             {
@@ -1376,7 +1376,7 @@ GameData.oEntity.oCharacter.oAnimations = {
                 sFrame: 'attack_1_2'
             },
             {
-                nFrame: 8,
+                nFrame: 6,
                 sFrame: 'attack_1_3'
             },
             {
@@ -2104,7 +2104,18 @@ GameData.oEntity.oCharacter.oCommands = {
                         { NT: false },
                         { FW: false }
                     ]
-                }
+                },
+                aEntity: [
+                    {
+                        sType: 'Effect',
+                        sAnimation: 'impact_hit',
+                        oPosition: {
+                            nX: 72
+                        },
+                        bReverse: true,
+                        nFrameStart: 1
+                    }
+                ]
             }
         },
         {
