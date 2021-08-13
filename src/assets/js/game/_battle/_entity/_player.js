@@ -93,10 +93,10 @@ Object.assign(
                                         case 'UB':
                                         case 'BW':
                                         case 'DB':
-                                            this.setStance('move_j4');
+                                            this.setAnimation('move_j4');
                                             break;
                                         default:
-                                            this.setStance('move_j5');
+                                            this.setAnimation('move_j5');
                                             break;
                                     }
                                 }
@@ -197,7 +197,7 @@ Object.assign(
                     oCommand.oGatling.nCost && (this.nKi -= oCommand.oGatling.nCost);
 
                     const oSet = this.setAnimation(oCommand.sAnimation);
-                    if( this.oStatus.bAerial && oSet && oSet.oMovement ){
+                    if( oSet && oSet.oMovement && ( this.oStatus.bAerial || oSet.oMovement.bUpward ) ){
                         this.setFall(oSet.oMovement);
                     }
                 },
@@ -274,7 +274,8 @@ Object.assign(
                     }
                     if( !sAnimation ){
                         const aFall = ['move_7', 'move_8', 'move_9'],
-                            nMove = Math.min( 1, Math.max( -1, uMovement.aStep[ uMovement.aStep.length - 1 ].nX ) );
+                            oStep = uMovement.aStep[ uMovement.aStep.length - 1 ] || { nX: 0 },
+                            nMove = Math.min( 1, Math.max( -1, oStep.nX ) );
                         sAnimation = aFall[nMove + 1];
                     }
                     const oFall = this.oMovement.after( this.oData.oAnimations[sAnimation].oMove, this.bReverse );

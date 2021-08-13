@@ -2000,7 +2000,8 @@ GameData.oEntity.oCharacter.oCommands = {
                 },
                 oStun: {
                     nStun: 30,
-                    sAnimation: 'hit_D'
+                    sAnimation: 'hit_D',
+                    sImpact: false
                 },
                 oPushback: false
             }
@@ -2036,7 +2037,8 @@ GameData.oEntity.oCharacter.oCommands = {
                 },
                 oStun: {
                     nStun: 30,
-                    sAnimation: 'hit_D'
+                    sAnimation: 'hit_D',
+                    sImpact: false
                 },
                 oPushback: false
             },
@@ -2088,7 +2090,7 @@ GameData.oEntity.oCharacter.oCommands = {
     ],
     aAerial: [
         {
-            sCod: 'move_j66',
+            sCod: 'move_jnn', // Same code B.Dash
             sAnimation: 'move_66',
             oList: {
                 sName: 'Forward Air Dash',
@@ -2119,7 +2121,7 @@ GameData.oEntity.oCharacter.oCommands = {
             }
         },
         {
-            sCod: 'move_j44',
+            sCod: 'move_jnn', // Same code F.Dash
             sAnimation: 'move_44',
             oList: {
                 sName: 'Backward Air Dash',

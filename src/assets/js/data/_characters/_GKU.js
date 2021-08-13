@@ -457,24 +457,19 @@ GameData.oCharacter.GKU = {
             oPositionBox: {
                 nX: -30,
                 nY: -110,
-                nWidth: 64,
-                nHeight: 112
+                nWidth: 60,
+                nHeight: 88
             },
             aHurtBox: [{
-                nX: -14,
-                nY: -134,
-                nWidth: 60,
-                nHeight: 64
+                nX: -18,
+                nY: -122,
+                nWidth: 52,
+                nHeight: 60
             }, {
-                nX: 22,
+                nX: -58,
                 nY: -110,
-                nWidth: 64,
-                nHeight: 40
-            }, {
-                nX: -30,
-                nY: -98,
-                nWidth: 56,
-                nHeight: 100
+                nWidth: 92,
+                nHeight: 84
             }]
         }
     },
@@ -711,45 +706,61 @@ GameData.oCharacter.GKU = {
             },
         ],
         // Kameha
-        // 46, 36, 26
-        attack_236C: [
-            {
-                nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bInvul: true
+        // 58, 36, 26
+        attack_236C: {
+            uMove: {
+                nDelay: 8,
+                nMove: 1,
+                nLength: 100,
+                nX: -96,
+                nY: -96
+            },
+            aFrames: [
+                {
+                    nFrame: 2,
+                    sFrame: 'stand_1',
+                    oStatus: {
+                        bInvul: true
+                    }
+                },
+                {
+                    nFrame: 12,
+                    sFrame: 'move_3__0',
+                    oStatus: {
+                        bAerial: true
+                    }
+                },
+                {
+                    nFrame: 30,
+                    sFrame: 'ki_1_0',
+                    oStatus: {
+                        bInvul: true
+                    }
+                },
+                {
+                    nFrame: 10,
+                    sFrame: 'ki_1_1',
+                    oStatus: {
+                        bInvul: true
+                    }
+                },
+                {
+                    nFrame: 4,
+                    sFrame: 'ki_1_2',
+                    oStatus: {
+                        bInvul: true
+                    }
+                },
+                {
+                    nFrame: 48,
+                    sFrame: 'ki_1_2'
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'stand_1'
                 }
-            },
-            {
-                nFrame: 30,
-                sFrame: 'ki_1_0',
-                oStatus: {
-                    bInvul: true
-                }
-            },
-            {
-                nFrame: 10,
-                sFrame: 'ki_1_1',
-                oStatus: {
-                    bInvul: true
-                }
-            },
-            {
-                nFrame: 4,
-                sFrame: 'ki_1_2',
-                oStatus: {
-                    bInvul: true
-                }
-            },
-            {
-                nFrame: 60,
-                sFrame: 'ki_1_2'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'stand_1'
-            }
-        ]
+            ]
+        }
     },
     /* ----- DETAILS Données des commandes. ----- */
     oCommands: {
@@ -780,20 +791,20 @@ GameData.oCharacter.GKU = {
                         {
                             sType: 'Text',
                             sText: '元気',
-                            nFrameStart: 13,
+                            nFrameStart: 25,
                             nLength: 30
                         },
                         {
                             sType: 'Text',
                             sText: '玉',
-                            nFrameStart: 43,
+                            nFrameStart: 55,
                             nLength: 36
                         },
                         {
                             sType: 'Projectile',
                             sSFX: 'ADO__Beam',
-                            sAnimation: 'ball',
-                            nFrameStart: 13,
+                            sAnimation: 'aerial_ball',
+                            nFrameStart: 25,
                             oPosition: {
                                 nX: 0,
                                 nY: -256
@@ -803,7 +814,7 @@ GameData.oCharacter.GKU = {
                 },
                 oFreeze: {
                     bInfo: true,
-                    nLength: 45
+                    nLength: 57
                 },
                 oHit: {
                     oDamage: {

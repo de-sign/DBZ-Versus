@@ -61,12 +61,13 @@ Object.assign(
                     oMove.aStep = [];
                     // Linear timing function
                     if( uMove.nLength > 1 ){
-                        const oStep = {
-                            nX: uMove.nX ? uMove.nX / uMove.nLength : 0,
-                            nY: uMove.nY ? uMove.nY / uMove.nLength : 0
-                        };
+                        const nDivide = uMove.nMove || uMove.nLength,
+                            oStep = {
+                                nX: uMove.nX ? uMove.nX / nDivide : 0,
+                                nY: uMove.nY ? uMove.nY / nDivide : 0
+                            };
                         for( let nIndex = 0; nIndex < uMove.nLength; nIndex++ ){
-                            oMove.aStep.push(oStep);
+                            oMove.aStep.push( nIndex < nDivide ? oStep : null);
                         }
                     }
                     else {
@@ -79,10 +80,15 @@ Object.assign(
             }
 
             if( oMove.aStep ){
-                const nX = oMove.aStep.reduce( (nX, oStep) => {
-                    return nX + ( ( oStep && oStep.nX ) || 0 );
-                }, 0 );
+                const
+                    nX = oMove.aStep.reduce( (nX, oStep) => {
+                        return nX + ( ( oStep && oStep.nX ) || 0 );
+                    }, 0 ),
+                    nY = oMove.aStep.reduce( (nY, oStep) => {
+                        return nY + ( ( oStep && oStep.nY ) || 0 );
+                    }, 0 );
                 oMove.bForward = nX > 0;
+                oMove.bUpward = nY < 0;
             }
 
             return oMove;

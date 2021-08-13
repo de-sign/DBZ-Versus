@@ -442,7 +442,7 @@ Object.assign(
             GKU: {
                 sType: 'oChar',
                 sChar: 'GKU',
-                aColor: ['CTM_TRN', 'CTM_KOK'/*, 'LSW_TRN', 'LSW_GNU'*/],
+                aColor: ['CTM_TRN', 'CTM_KOK', 'LSW_TRN', 'LSW_GNU'],
                 aFrames: [
                     ['stand', 'blur', 'backward', 'forward'],
                     ['jump', 'fall', null, 'guard', 'reflect', 'burst'],

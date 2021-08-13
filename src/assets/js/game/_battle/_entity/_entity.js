@@ -143,9 +143,9 @@ Object.assign(
                                         sEntity: oCommandEntity.sEntity || 'ALL',
                                         sColor: oCommandEntity.sColor || this.oData.sEntityColor,
                                         sAnimation: oCommandEntity.sAnimation,
-                                        bReverse: oCommandEntity.bReverse == null ?
-                                            this.bReverse :
-                                            oCommandEntity.bReverse,
+                                        bReverse: oCommandEntity.bReverse ?
+                                            !this.bReverse :
+                                            this.bReverse,
                                         // Entity Text
                                         sText: oCommandEntity.sText,
                                         nLength: oCommandEntity.nLength

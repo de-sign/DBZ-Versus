@@ -352,6 +352,7 @@ GameSettings.oBattleElement = {
         oCheck: {}
     },
     Beam: {
+        bPreload: true,
         nLife: 0,
         oPositionPoint: {
             nX: 98,
@@ -364,6 +365,7 @@ GameSettings.oBattleElement = {
         }
     },
     Projectile: {
+        bPreload: true,
         nLife: 100,
         oPositionPoint: {
             nX: 128,
@@ -377,6 +379,7 @@ GameSettings.oBattleElement = {
         }
     },
     Character: {
+        bPreload: true,
         nLife: 0,
         oPositionPoint: {
             nX: 98,

@@ -6,6 +6,8 @@ function BattleMovement(oMove, bReverse){
     this.oMove = null;
     this.bReverse = false;
     this.bEmpty = false;
+    this.bForward = false;
+    this.bUpward = false;
 
     this.init(oMove, bReverse);
 }
@@ -29,6 +31,8 @@ Object.assign(
                     GameTimer.prototype.init.call(this, oMove.nLength, oMove.nDelay);
                     this.bEmpty = oMove.bEmpty;
                     this.aStep = oMove.aStep;
+                    this.bForward = oMove.bForward;
+                    this.bUpward = oMove.bUpward;
                     this.bReverse = bReverse;
                 },
                 update: function(){

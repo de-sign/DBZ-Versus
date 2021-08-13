@@ -188,6 +188,30 @@ GameData.oProjectile.ALL = {
             ]
         },
 
+        aerial_ball: {
+            uMove: {
+                nDelay: 30,
+                nX: 12,
+                nY: 12
+            },
+            aFrames: [
+                {
+                    sFrame: 'ball_first',
+                    nFrame: 15,
+                    aHitBox: null
+                },
+                {
+                    sFrame: 'ball_second',
+                    nFrame: 15,
+                    aHitBox: null
+                },
+                {
+                    sFrame: 'ball_second',
+                    nFrame: 90
+                }
+            ]
+        },
+
         flash: {
             aFrames: [
                 {
