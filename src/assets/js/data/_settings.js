@@ -288,6 +288,7 @@ Object.assign(
                 oCheck: {}
             },
             Beam: {
+                bPreload: true,
                 nLife: 0,
                 oPositionPoint: {
                     nX: 98,
@@ -300,6 +301,7 @@ Object.assign(
                 }
             },
             Projectile: {
+                bPreload: true,
                 nLife: 100,
                 oPositionPoint: {
                     nX: 128,
@@ -313,6 +315,7 @@ Object.assign(
                 }
             },
             Character: {
+                bPreload: true,
                 nLife: 0,
                 oPositionPoint: {
                     nX: 98,

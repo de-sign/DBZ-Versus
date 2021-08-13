@@ -66,7 +66,7 @@ Object.assign(
                             oChar.oCommands[sCommandType].forEach( oCommand => {
                                 if( oCommand.oGatling && oCommand.oGatling.aEntity ){
                                     oCommand.oGatling.aEntity.forEach( oCommandEntity => {
-                                        if( oCommandEntity.sType != 'text' && oCommandEntity.sType != 'effect' ){
+                                        if( GameSettings.oBattleElement[ oCommandEntity.sType ].bPreload ){
                                             const oEntity = GameData[ 'o' + oCommandEntity.sType[0].toUpperCase() + oCommandEntity.sType.slice(1) ][ oCommandEntity.sEntity || 'ALL' ][ oCommandEntity.sColor || oChar.sEntityColor ];
                                             for( let sFrame in oEntity.oFrames ){
                                                 this.oAssetManager.add('image', oEntity.oPath.sFrames + '/' + oEntity.oFrames[sFrame].sPath);
