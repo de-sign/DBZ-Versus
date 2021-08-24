@@ -28,6 +28,7 @@ this.nPlayer = null;
 ```javascript
 this.oStatus = {
         bReverse: false, // Possibilité de se retourner : stand, tp, etc
+        bThrough: false, // Possibilité de se retourner : stand, tp, etc
         bGuard: false, // Possibilité de guarder : backdash, block
         bThrow: false, // Possibilité de TechThrow : hit_throw
         bInvul: false, // Impossibilité de prendre un coup : launch
@@ -104,6 +105,12 @@ this.canBeMoved();
 
 ```javascript
 this.addKi(nKi);
+```
+
+### BattlePlayer.prototype.isState()
+
+```javascript
+this.isState(sState);
 ```
 
 ### BattlePlayer.prototype.getCommandData()

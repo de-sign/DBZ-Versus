@@ -119,6 +119,61 @@ GameData.oCharacter.BJT.oFrames = {
         oPositionBox: {
             nX: -30,
             nY: -110,
+            nWidth: 64,
+            nHeight: 112
+        },
+        aHurtBox: [{
+            nX: -14,
+            nY: -134,
+            nWidth: 60,
+            nHeight: 60
+        }, {
+            nX: -30,
+            nY: -98,
+            nWidth: 56,
+            nHeight: 100
+        }, {
+            nX: 22,
+            nY: -94,
+            nWidth: 64,
+            nHeight: 32
+        }]
+    },
+    attack_2_1: {
+        oPositionBox: {
+            nX: -30,
+            nY: -110,
+            nWidth: 64,
+            nHeight: 112
+        },
+        aHitBox: {
+            nX: 22,
+            nY: -94,
+            nWidth: 64,
+            nHeight: 32
+        },
+        aHurtBox: [{
+            nX: -14,
+            nY: -134,
+            nWidth: 60,
+            nHeight: 60
+        }, {
+            nX: -30,
+            nY: -98,
+            nWidth: 56,
+            nHeight: 100
+        }, {
+            nX: 22,
+            nY: -94,
+            nWidth: 64,
+            nHeight: 32
+        }]
+    },
+
+    attack_2_2: {
+        oPositionBox: {
+            nX: -30,
+            nY: -110,
             nWidth: 60,
             nHeight: 112
         },
@@ -134,7 +189,7 @@ GameData.oCharacter.BJT.oFrames = {
             nHeight: 108
         }]
     },
-    attack_2_1: {
+    attack_2_3: {
         oPositionBox: {
             nX: -30,
             nY: -110,
@@ -157,60 +212,6 @@ GameData.oCharacter.BJT.oFrames = {
             nY: -106,
             nWidth: 68,
             nHeight: 108
-        }]
-    },
-    attack_2_2: {
-        oPositionBox: {
-            nX: -30,
-            nY: -110,
-            nWidth: 64,
-            nHeight: 112
-        },
-        aHurtBox: [{
-            nX: -14,
-            nY: -134,
-            nWidth: 60,
-            nHeight: 60
-        }, {
-            nX: -30,
-            nY: -98,
-            nWidth: 56,
-            nHeight: 100
-        }, {
-            nX: 22,
-            nY: -94,
-            nWidth: 64,
-            nHeight: 32
-        }]
-    },
-    attack_2_3: {
-        oPositionBox: {
-            nX: -30,
-            nY: -110,
-            nWidth: 64,
-            nHeight: 112
-        },
-        aHitBox: {
-            nX: 22,
-            nY: -94,
-            nWidth: 64,
-            nHeight: 32
-        },
-        aHurtBox: [{
-            nX: -14,
-            nY: -134,
-            nWidth: 60,
-            nHeight: 60
-        }, {
-            nX: -30,
-            nY: -98,
-            nWidth: 56,
-            nHeight: 100
-        }, {
-            nX: 22,
-            nY: -94,
-            nWidth: 64,
-            nHeight: 32
         }]
     },
     attack_2_4: {
@@ -505,6 +506,30 @@ GameData.oCharacter.BJT.oFrames = {
             nHeight: 100
         }]
     },
+    ki_0_1: {
+        oPositionBox: {
+            nX: -30,
+            nY: -110,
+            nWidth: 64,
+            nHeight: 112
+        },
+        aHurtBox: [{
+            nX: -14,
+            nY: -134,
+            nWidth: 60,
+            nHeight: 64
+        }, {
+            nX: 22,
+            nY: -110,
+            nWidth: 64,
+            nHeight: 40
+        }, {
+            nX: -30,
+            nY: -98,
+            nWidth: 56,
+            nHeight: 100
+        }]
+    },
 
     ki_1_0: {
         oPositionBox: {
@@ -563,11 +588,40 @@ Données des animations.
 GameData.oCharacter.BJT.oAnimations = {
     // Command
     // 4, 4, 6
-    attack_A_0: {
+    attack_A_0: [
+        {
+            nFrame: 2,
+            sFrame: 'stand_1'
+        },
+        {
+            nFrame: 2,
+            sFrame: 'attack_2_0'
+        },
+        {
+            nFrame: 4,
+            sFrame: 'attack_2_1'
+        },
+        {
+            nFrame: 4,
+            sFrame: 'attack_2_0',
+            oStatus: {
+                bCancel: true
+            }
+        },
+        {
+            nFrame: 2,
+            sFrame: 'stand_1',
+            oStatus: {
+                bCancel: true
+            }
+        }
+    ],
+    // 4, 4, 6
+    attack_A_1: {
         uMove: {
             nDelay: 2,
             nLength: 4,
-            nX: 24
+            nX: 48
         },
         aFrames: [
             {
@@ -576,15 +630,15 @@ GameData.oCharacter.BJT.oAnimations = {
             },
             {
                 nFrame: 2,
-                sFrame: 'attack_2_0'
+                sFrame: 'attack_2_2'
             },
             {
                 nFrame: 4,
-                sFrame: 'attack_2_1'
+                sFrame: 'attack_2_3'
             },
             {
                 nFrame: 4,
-                sFrame: 'attack_2_0',
+                sFrame: 'attack_2_2',
                 oStatus: {
                     bCancel: true
                 }
@@ -598,35 +652,6 @@ GameData.oCharacter.BJT.oAnimations = {
             }
         ]
     },
-    // 4, 4, 6
-    attack_A_1: [
-        {
-            nFrame: 2,
-            sFrame: 'stand_1'
-        },
-        {
-            nFrame: 2,
-            sFrame: 'attack_2_2'
-        },
-        {
-            nFrame: 4,
-            sFrame: 'attack_2_3'
-        },
-        {
-            nFrame: 4,
-            sFrame: 'attack_2_2',
-            oStatus: {
-                bCancel: true
-            }
-        },
-        {
-            nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
-        }
-    ],
     // 4, 4, 6
     attack_A_2: [
         {
@@ -794,7 +819,7 @@ GameData.oCharacter.BJT.oAnimations = {
             sFrame: 'stand_1'
         },
         {
-            nFrame: 20,
+            nFrame: 8,
             sFrame: 'ki_0_0',
             oStatus: {
                 bCancel: true
@@ -807,6 +832,34 @@ GameData.oCharacter.BJT.oAnimations = {
                 bCancel: true
             }
         },
+        {
+            nFrame: 8,
+            sFrame: 'ki_0_1',
+            oStatus: {
+                bCancel: true
+            }
+        },
+        {
+            nFrame: 2,
+            sFrame: 'stand_1',
+            oStatus: {
+                bCancel: true
+            }
+        },
+        {
+            nFrame: 16,
+            sFrame: 'ki_0_0',
+            oStatus: {
+                bCancel: true
+            }
+        },
+        {
+            nFrame: 2,
+            sFrame: 'stand_1',
+            oStatus: {
+                bCancel: true
+            }
+        }
     ],
     // Final Flash / Garric Canon
     // 46, 36, 26
@@ -1092,7 +1145,7 @@ GameData.oCharacter.BJT.oCommands = {
             sCod: 'attack_C',
             sAnimation: 'attack_C',
             oList: {
-                sName: 'Kikoha',
+                sName: 'Renzoku Kikodan',
                 sGroup: 'ki'
             },
             oProperty: {},
@@ -1109,7 +1162,7 @@ GameData.oCharacter.BJT.oCommands = {
                 aEntity: [
                     {
                         sType: 'Text',
-                        sText: '気功波',
+                        sText: '連続気功弾',
                         nLength: 40,
                         nFrameStart: 1
                     },
@@ -1120,14 +1173,34 @@ GameData.oCharacter.BJT.oCommands = {
                         nFrameStart: 10,
                         oPosition: {
                             nX: 58,
-                            nY: -28
+                            nY: -24
+                        }
+                    },
+                    {
+                        sType: 'Projectile',
+                        sSFX: 'ADO__Projectile',
+                        sAnimation: 'kikoha',
+                        nFrameStart: 16,
+                        oPosition: {
+                            nX: 58,
+                            nY: -32
+                        }
+                    },
+                    {
+                        sType: 'Projectile',
+                        sSFX: 'ADO__Projectile',
+                        sAnimation: 'kikoha',
+                        nFrameStart: 22,
+                        oPosition: {
+                            nX: 58,
+                            nY: -24
                         }
                     }
                 ]
             },
             oHit: {
                 oDamage: {
-                    nDamage: 100
+                    nDamage: 50
                 },
                 oStun: {
                     nStun: 16,
@@ -1345,10 +1418,10 @@ GameData.oCharacter.BJT.oCommands = {
                     },
                     oHit: {
                         oDamage: {
-                            nDamage: 25
+                            nDamage: 50
                         },
                         oStun: {
-                            nStun: 13,
+                            nStun: 16,
                             sAnimation: 'hit_0'
                         }
                     },

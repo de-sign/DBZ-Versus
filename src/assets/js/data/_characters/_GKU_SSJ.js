@@ -57,6 +57,65 @@ GameData.oCharacter.GKU_SSJ = {
                 nHeight: 104
             }]
         },
+        /*
+        stand_0_1: {
+            oPositionBox: {
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
+            },
+            aHurtBox: [{
+                nX: -22,
+                nY: -146,
+                nWidth: 52,
+                nHeight: 60
+            }, {
+                nX: -38,
+                nY: -102,
+                nWidth: 76,
+                nHeight: 104
+            }]
+        },
+        stand_0_2: {
+            oPositionBox: {
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
+            },
+            aHurtBox: [{
+                nX: -22,
+                nY: -146,
+                nWidth: 52,
+                nHeight: 60
+            }, {
+                nX: -38,
+                nY: -102,
+                nWidth: 76,
+                nHeight: 104
+            }]
+        },
+        stand_0_3: {
+            oPositionBox: {
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
+            },
+            aHurtBox: [{
+                nX: -22,
+                nY: -146,
+                nWidth: 52,
+                nHeight: 60
+            }, {
+                nX: -38,
+                nY: -102,
+                nWidth: 76,
+                nHeight: 104
+            }]
+        },
+        */
         stand_1: false,
 
         move_0: false,
@@ -477,6 +536,25 @@ GameData.oCharacter.GKU_SSJ = {
                 nHeight: 100
             }]
         },
+        ki_0_1: {
+            oPositionBox: {
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
+            },
+            aHurtBox: [{
+                nX: -22,
+                nY: -146,
+                nWidth: 52,
+                nHeight: 60
+            }, {
+                nX: -38,
+                nY: -102,
+                nWidth: 76,
+                nHeight: 104
+            }]
+        },
 
         ki_1_0: {
             oPositionBox: {
@@ -538,6 +616,96 @@ GameData.oCharacter.GKU_SSJ = {
 
     /* ----- DETAILS Données des animations. ----- */
     oAnimations: {
+        /*
+        move_5: {
+            sType: 'stand',
+            bRepeat: true,
+            aFrames: [
+                {
+                    nFrame: 24,
+                    sFrame: 'stand_0',
+                    oStatus: {
+                        bReverse: true,
+                        bAerial: false,
+                        bLaunch: false
+                    }
+                },
+                {
+                    nFrame: 8,
+                    sFrame: 'stand_0_1',
+                    oStatus: {
+                        bReverse: true,
+                        bAerial: false,
+                        bLaunch: false
+                    }
+                },
+                {
+                    nFrame: 24,
+                    sFrame: 'stand_0_2',
+                    oStatus: {
+                        bReverse: true,
+                        bAerial: false,
+                        bLaunch: false
+                    }
+                },
+                {
+                    nFrame: 8,
+                    sFrame: 'stand_0_3',
+                    oStatus: {
+                        bReverse: true,
+                        bAerial: false,
+                        bLaunch: false
+                    }
+                }
+            ]
+        },
+        move_1: {
+            sType: 'stand',
+            bRepeat: true,
+            aFrames: [
+                {
+                    nFrame: 24,
+                    sFrame: 'stand_0',
+                    oStatus: {
+                        bReverse: true,
+                        bAerial: false,
+                        bLaunch: false,
+                        bGuard: true
+                    }
+                },
+                {
+                    nFrame: 8,
+                    sFrame: 'stand_0_1',
+                    oStatus: {
+                        bReverse: true,
+                        bAerial: false,
+                        bLaunch: false,
+                        bGuard: true
+                    }
+                },
+                {
+                    nFrame: 24,
+                    sFrame: 'stand_0_2',
+                    oStatus: {
+                        bReverse: true,
+                        bAerial: false,
+                        bLaunch: false,
+                        bGuard: true
+                    }
+                },
+                {
+                    nFrame: 8,
+                    sFrame: 'stand_0_3',
+                    oStatus: {
+                        bReverse: true,
+                        bAerial: false,
+                        bLaunch: false,
+                        bGuard: true
+                    }
+                }
+            ]
+        },
+        */
         // Command
         // 4, 4, 6
         attack_A_0: [
@@ -756,6 +924,7 @@ GameData.oCharacter.GKU_SSJ = {
             }
         ],
 
+        /*
         attack_C: [
             {
                 nFrame: 2,
@@ -776,6 +945,46 @@ GameData.oCharacter.GKU_SSJ = {
                 }
             },
         ],
+        */
+        attack_C: {
+            sType: 'dash',
+            uMove: {
+                nDelay: 11,
+                nLength: 1,
+                nX: 12 * 11
+            },
+            aFrames: [
+                {
+                    nFrame: 2,
+                    sFrame: 'stand_1'
+                },
+                {
+                    nFrame: 4,
+                    sFrame: 'ki_0_1'
+                },
+                {
+                    nFrame: 10,
+                    sFrame: 'move_2__0',
+                    oStatus: {
+                        bReverse: true
+                    }
+                },
+                {
+                    nFrame: 4,
+                    sFrame: 'ki_0_1',
+                    oStatus: {
+                        bCancel: true
+                    }
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'stand_1',
+                    oStatus: {
+                        bCancel: true
+                    }
+                }
+            ]
+        },
 
         // Kameha
         // 46, 36, 26
@@ -973,6 +1182,7 @@ GameData.oCharacter.GKU_SSJ = {
                     }
                 }
             },
+            /*
             {
                 sCod: 'attack_C',
                 sAnimation: 'attack_C',
@@ -1029,6 +1239,36 @@ GameData.oCharacter.GKU_SSJ = {
                         sAnimation: 'defense_j4',
                         sImpact: 'explode_light'
                     }
+                }
+            },
+            */
+            {
+                sCod: 'attack_C',
+                sAnimation: 'attack_C',
+                oList: {
+                    sName: 'Shunkan ido',
+                    sGroup: 'ki'
+                },
+                oProperty: {},
+                oGatling: {
+                    nCost: 10,
+                    nLevel: 1,
+                    bReset: true,
+                    oManipulation: {
+                        nMaxLengthFrame: 1,
+                        aButtons: [
+                            { C: true }
+                        ],
+                        bLast: true
+                    },
+                    aEntity: [
+                        {
+                            sType: 'Text',
+                            sText: '瞬間移動',
+                            nLength: 14,
+                            nFrameStart: 5
+                        }
+                    ]
                 }
             },
             {

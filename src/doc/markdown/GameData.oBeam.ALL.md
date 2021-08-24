@@ -46,6 +46,15 @@ Données des FRAMES.
 
 ```javascript
 GameData.oBeam.ALL.oFrames = {
+    kiai: {
+        aHitBox:  {
+            nX: 30,
+            nY: -102,
+            nHeight: 32,
+            nWidth: 1024
+        }
+    },
+
     beam: {
         aHitBox:  {
             nX: 30,
@@ -114,6 +123,13 @@ Données des animations.
 
 ```javascript
 GameData.oBeam.ALL.oAnimations = {
+    kiai: [
+        {
+            nFrame: 8,
+            sFrame: 'kiai'
+        }
+    ],
+
     beam: [
         {
             nFrame: 8,

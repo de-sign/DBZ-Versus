@@ -303,148 +303,135 @@ GameData.oCharacter.BUU = {
         attack_4_3: false,
 
         attack_5_0: {
+            nZIndex: 30,
             oPositionBox: {
-                nX: -30,
+                nX: -22,
                 nY: -110,
-                nWidth: 60,
-                nHeight: 112
+                nWidth: 68,
+                nHeight: 76
             },
             aHurtBox: [{
-                nX: -22,
+                nX: -26,
                 nY: -146,
-                nWidth: 52,
+                nWidth: 56,
                 nHeight: 60
             }, {
-                nX: -34,
+                nX: -26,
                 nY: -102,
-                nWidth: 76,
+                nWidth: 64,
                 nHeight: 104
             }]
         },
         attack_5_1: {
+            nZIndex: 30,
             oPositionBox: {
-                nX: -30,
+                nX: -22,
                 nY: -110,
-                nWidth: 72,
-                nHeight: 112
+                nWidth: 68,
+                nHeight: 76
             },
             aHurtBox: [{
-                nX: -30,
-                nY: -134,
-                nWidth: 60,
-                nHeight: 76
-            }, {
-                nX: 26,
-                nY: -106,
-                nWidth: 8,
-                nHeight: 44
-            }, {
+                nX: -42,
+                nY: -114,
+                nWidth: 96,
+                nHeight: 72
+            },
+            {
                 nX: -10,
-                nY: -62,
-                nWidth: 44,
-                nHeight: 64
+                nY: -78,
+                nWidth: 64,
+                nHeight: 56
             }]
         },
         attack_5_2: {
+            nZIndex: 30,
             oPositionBox: {
-                nX: -30,
+                nX: -22,
                 nY: -110,
-                nWidth: 72,
-                nHeight: 112
+                nWidth: 68,
+                nHeight: 76
             },
             aHurtBox: [{
-                nX: -30,
-                nY: -134,
-                nWidth: 60,
-                nHeight: 76
-            }, {
-                nX: 26,
-                nY: -106,
-                nWidth: 8,
-                nHeight: 44
-            }, {
-                nX: -10,
-                nY: -62,
-                nWidth: 44,
-                nHeight: 64
-            }],
-            aHitBox: {
-                nX: 26,
-                nY: -106,
-                nWidth: 76,
-                nHeight: 44
-            }
+                nX: -54,
+                nY: -114,
+                nWidth: 96,
+                nHeight: 72
+            },
+            {
+                nX: -22,
+                nY: -78,
+                nWidth: 64,
+                nHeight: 56
+            }]
         },
         attack_5_3: {
+            nZIndex: 30,
             oPositionBox: {
-                nX: -30,
+                nX: -22,
                 nY: -110,
-                nWidth: 72,
-                nHeight: 112
+                nWidth: 68,
+                nHeight: 76
             },
             aHurtBox: [{
-                nX: -30,
-                nY: -142,
-                nWidth: 60,
-                nHeight: 76
-            }, {
-                nX: 26,
+                nX: -38,
                 nY: -122,
-                nWidth: 80,
-                nHeight: 72
+                nWidth: 60,
+                nHeight: 52
             }, {
-                nX: 26,
-                nY: -86,
-                nWidth: 80,
-                nHeight: 36
-            }, {
-                nX: -10,
-                nY: -70,
-                nWidth: 44,
-                nHeight: 64
+                nX: -26,
+                nY: -122,
+                nWidth: 84,
+                nHeight: 92
             }]
         },
         attack_5_4: {
+            nZIndex: 30,
             oPositionBox: {
-                nX: -30,
+                nX: -22,
                 nY: -110,
-                nWidth: 72,
-                nHeight: 112
+                nWidth: 68,
+                nHeight: 76
             },
             aHurtBox: [{
-                nX: -30,
-                nY: -142,
-                nWidth: 60,
-                nHeight: 76
-            }, {
-                nX: 26,
-                nY: -122,
-                nWidth: 80,
-                nHeight: 72
-            }, {
-                nX: 26,
-                nY: -86,
-                nWidth: 80,
-                nHeight: 36
-            }, {
                 nX: -10,
-                nY: -70,
-                nWidth: 44,
-                nHeight: 64
-            }],
-            aHitBox: [{
-                nX: 26,
                 nY: -122,
-                nWidth: 80,
-                nHeight: 72
+                nWidth: 52,
+                nHeight: 60
             }, {
-                nX: 26,
-                nY: -86,
-                nWidth: 80,
-                nHeight: 36
+                nX: -50,
+                nY: -110,
+                nWidth: 92,
+                nHeight: 84
             }]
         },
         attack_5_5: {
+            nZIndex: 30,
+            oPositionBox: {
+                nX: -22,
+                nY: -110,
+                nWidth: 68,
+                nHeight: 76
+            },
+            aHurtBox: [{
+                nX: -10,
+                nY: -122,
+                nWidth: 52,
+                nHeight: 60
+            }, {
+                nX: -50,
+                nY: -110,
+                nWidth: 92,
+                nHeight: 84
+            }],
+            aHitBox: [{
+                nX: -58,
+                nY: -66,
+                nWidth: 104,
+                nHeight: 64
+            }]
+        },
+        attack_5_6: {
+            nZIndex: 30,
             oPositionBox: {
                 nX: -22,
                 nY: -110,
@@ -638,8 +625,8 @@ GameData.oCharacter.BUU = {
             
             uMove: {
                 nDelay: 2,
-                nLength: 2,
-                nX: 16
+                nLength: 4,
+                nX: 32
             },
             aFrames: [
                 {
@@ -691,11 +678,11 @@ GameData.oCharacter.BUU = {
                     sFrame: 'attack_6_1',
                 },
                 {
-                    nFrame: 6,
+                    nFrame: 4,
                     sFrame: 'attack_6_2'
                 },
                 {
-                    nFrame: 2,
+                    nFrame: 4,
                     sFrame: 'attack_6_1',
                     oStatus: {
                         bCancel: true
@@ -717,12 +704,33 @@ GameData.oCharacter.BUU = {
                 }
             ]
         },
-        // 10, 6, 8
-        attack_6A_0: {
+        //
+        attack_6A: {
             uMove: {
                 nDelay: 2,
-                nLength: 18,
-                nX: 96
+                nLength: 20,
+                aStep: [
+                    { nX: 8, nY: 0 },
+                    { nX: 8, nY: -18 },
+                    { nX: 8, nY: -16 },
+                    { nX: 8, nY: -15 },
+                    { nX: 8, nY: -13 },
+                    { nX: 8, nY: -11 },
+                    { nX: 8, nY: -10 },
+                    { nX: 8, nY: -8 },
+                    { nX: 8, nY: -7 },
+                    { nX: 8, nY: -5 },
+                    { nX: 8, nY: -3 },
+                    { nX: 8, nY: -2 },
+                    { nX: 8, nY: 0 },
+                    { nX: 8, nY: 5 },
+                    { nX: 8, nY: 9 },
+                    { nX: 8, nY: 13 },
+                    { nX: 8, nY: 16 },
+                    { nX: 8, nY: 19 },
+                    { nX: 8, nY: 22 },
+                    { nX: 8, nY: 24 }
+                ]
             },
             aFrames: [
                 {
@@ -730,85 +738,53 @@ GameData.oCharacter.BUU = {
                     sFrame: 'stand_1'
                 },
                 {
-                    nFrame: 6,
-                    sFrame: 'attack_5_0'
+                    nFrame: 4,
+                    sFrame: 'attack_5_0',
+                    oStatus: {
+                        bAerial: true
+                    }
                 },
                 {
-                    nFrame: 2,
+                    nFrame: 4,
                     sFrame: 'attack_5_1'
                 },
                 {
-                    nFrame: 6,
+                    nFrame: 4,
                     sFrame: 'attack_5_2'
                 },
                 {
                     nFrame: 4,
-                    sFrame: 'attack_5_1',
-                    oStatus: {
-                        bCancel: true
-                    }
-                },
-                {
-                    nFrame: 2,
-                    sFrame: 'attack_5_5',
-                    oStatus: {
-                        bCancel: true
-                    }
-                },
-                {
-                    nFrame: 2,
-                    sFrame: 'stand_1',
-                    oStatus: {
-                        bCancel: true
-                    }
-                }
-            ]
-        },
-        // 8, 6, 10
-        attack_6A_1: {
-            uMove: {
-                nLength: 4,
-                nX: 24
-            },
-            aFrames: [
-                {
-                    nFrame: 4,
-                    sFrame: 'attack_5_1',
-                },
-                {
-                    nFrame: 4,
-                    sFrame: 'attack_5_3',
+                    sFrame: 'attack_5_3'
                 },
                 {
                     nFrame: 6,
-                    sFrame: 'attack_5_4'
-                },
-                {
-                    nFrame: 2,
-                    sFrame: 'attack_5_3',
+                    sFrame: 'attack_5_5',
                     oStatus: {
-                        bCancel: true
+                        bAerial: false
                     }
                 },
                 {
                     nFrame: 4,
-                    sFrame: 'attack_5_1',
+                    sFrame: 'attack_5_4',
                     oStatus: {
-                        bCancel: true
+                        bCancel: true,
+                        bReverse: true
                     }
                 },
                 {
                     nFrame: 2,
-                    sFrame: 'attack_5_5',
+                    sFrame: 'attack_5_6',
                     oStatus: {
-                        bCancel: true
+                        bCancel: true,
+                        bReverse: true
                     }
                 },
                 {
                     nFrame: 2,
                     sFrame: 'stand_1',
                     oStatus: {
-                        bCancel: true
+                        bCancel: true,
+                        bReverse: true
                     }
                 }
             ]
@@ -1262,7 +1238,7 @@ GameData.oCharacter.BUU = {
                         nDamage: 75
                     },
                     oStun: {
-                        nStun: 18,
+                        nStun: 24,
                         sAnimation: 'hit_1'
                     },
                     oPushback: {
@@ -1285,10 +1261,10 @@ GameData.oCharacter.BUU = {
                 }
             },
             {
-                sCod: 'attack_6A_0',
-                sAnimation: 'attack_6A_0',
+                sCod: 'attack_6A',
+                sAnimation: 'attack_6A',
                 oList: {
-                    sName: 'Tracker',
+                    sName: 'Dive Bomb',
                     sGroup: 'command'
                 },
                 oProperty: {},
@@ -1300,7 +1276,15 @@ GameData.oCharacter.BUU = {
                             { FW: false, A: true }
                         ],
                         bLast: true
-                    }
+                    },
+                    aEntity: [
+                        {
+                            sType: 'Text',
+                            sText: 'マウントダイブ',
+                            nLength: 40,
+                            nFrameStart: 1
+                        }
+                    ]
                 },
                 oHit: {
                     oDamage: {
@@ -1317,37 +1301,8 @@ GameData.oCharacter.BUU = {
                     },
                     oStun: {
                         nStun: 12,
-                        sAnimation: 'defense_j4'
+                        sAnimation: 'defense_4'
                     }
-                },
-                oFollowUp: {
-                    sCod: 'attack_6A_1',
-                    sAnimation: 'attack_6A_1',
-                    oProperty: {},
-                    oGatling: {
-                        nLevel: 1,
-                        sCheck: true,
-                        oManipulation: {}
-                    },
-                    oHit: {
-                        oDamage: {
-                            nDamage: 75
-                        },
-                        oStun: {
-                            nStun: 18,
-                            sAnimation: 'hit_0'
-                        }
-                    },
-                    oGuard: {
-                        oDamage: {
-                            nDamage: 0
-                        },
-                        oStun: {
-                            nStun: 12,
-                            sAnimation: 'defense_4'
-                        }
-                    },
-                    sCheck: true
                 }
             },
             {

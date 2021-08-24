@@ -320,7 +320,7 @@ GameSettings.nTimer = 99;
 Nombre de FRAME lors d'un HIT FREEZE 
 
 ```javascript
-GameSettings.nFreeze = 6;
+GameSettings.nFreeze = 8;
 ```
 
 #### GameSettings.nDie
@@ -478,14 +478,20 @@ GameSettings.oCommand = {
     },
     /* -----  PUSHBACK par défault appliqué lors d'un coup ----- */
     oPushback: {
-        nLength: 4,
+        bEmpty: false,
         aStep: [
             { nX: -6 },
             { nX: -6 },
             { nX: -6 },
             { nX: -6 }
         ],
-        bDivide: true
+        nLength: 4,
+        nDelay: 0,
+        bDivide: true,
+        oDirection: {
+            nX: -24,
+            nY: 0
+        }
     }
 };
 ```

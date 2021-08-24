@@ -245,7 +245,14 @@ Object.assign(
                                 oCollapseA.nIndex + '_' + oCollapseB.nIndex :
                                 oCollapseB.nIndex + '_' + oCollapseA.nIndex;
                         
-                        if( !oCheck[sCheck] && !this.hasSameParent(oCollapseA.oEntity, oCollapseB.oEntity) ){
+                        if(
+                            !(
+                                oCheck[sCheck]
+                                || this.hasSameParent(oCollapseA.oEntity, oCollapseB.oEntity)
+                                || oCollapseA.oEntity.isState('Through')
+                                || oCollapseB.oEntity.isState('Through')
+                            )
+                        ){
 
                             let oLeft = oCollapseA,
                                 oRight = oCollapseB;
@@ -348,7 +355,7 @@ Object.assign(
 
                     // Gestion Pushback
                     if( oPushback && !oPushback.bEmpty ){
-                        if( oHurt.oPriority.nHit < oHurt.oPriority.nHurt && !oPushback.bForward ){
+                        if( oHurt.oPriority.nHit < oHurt.oPriority.nHurt && oPushback.oDirection.nX <= 0 ){
                             this.pushbackEntity( oHurt.oEntityHit, oPushback, oHurt.oEntityHit.bReverse, oPushback.bDivide );
                         } else {
                             this.pushbackEntity( oHurt.oEntityHurt, oPushback, !oHurt.oEntityHit.bReverse, false );

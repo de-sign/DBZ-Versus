@@ -9,6 +9,10 @@ GameData.oEntity.oBeam = {
     /* ----- START PROPERTIES ----- */
     /* ----- DETAILS Données des FRAMES ----- */
     oFrames: {
+        kiai: {
+            sPath: 'kiai.png'
+        },
+
         beam: {
             sPath: 'beam.png'
         },

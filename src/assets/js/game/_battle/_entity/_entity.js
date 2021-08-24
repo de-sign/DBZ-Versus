@@ -70,6 +70,9 @@ Object.assign(
                 canReverse: function(){
                     return false;
                 },
+                isState: function(sState){
+                    return false;
+                },
 
                 add: function(oEntity){
                     this.aLink.push(oEntity);

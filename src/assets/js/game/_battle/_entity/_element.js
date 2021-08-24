@@ -184,13 +184,15 @@ Object.assign(
                     sAnimation = bForce;
                     bForce = false;
                 }
+                
+                const oAnim = this.oData.oAnimations[sAnimation];
 
                 if(
                     bForce
                     || !this.oAnimation
                     || this.oAnimation.sName != sAnimation
+                    || ( oAnim.bRepeat && this.oAnimation.isEnd() )
                 ){
-                    const oAnim = this.oData.oAnimations[sAnimation];
                     this.oAnimation = new GameAnimation(
                         sAnimation,
                         oAnim.sType,

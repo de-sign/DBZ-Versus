@@ -570,8 +570,9 @@ GameData.oCharacter.SRU.oAnimations = {
     // 6, 4, 8
     attack_B: {
         uMove: {
-            nLength: 2,
-            nX: 8
+            nDelay: 2,
+            nLength: 4,
+            nX: 32
         },
         aFrames: [
             {
@@ -608,7 +609,7 @@ GameData.oCharacter.SRU.oAnimations = {
         uMove: {
             nDelay: 2,
             nLength: 12,
-            nX: 96
+            nX: 128
         },
         aFrames: [
             {
@@ -1021,7 +1022,7 @@ GameData.oCharacter.SRU.oCommands = {
             }
         },
         {
-            sCod: 'extra',
+            sCod: 'attack_6B',
             sAnimation: 'attack_6B',
             oList: {
                 sName: 'Shoulder dash',
@@ -1043,7 +1044,7 @@ GameData.oCharacter.SRU.oCommands = {
                     nDamage: 75
                 },
                 oStun: {
-                    nStun: 18,
+                    nStun: 24,
                     sAnimation: 'hit_1'
                 },
                 oPushback: {

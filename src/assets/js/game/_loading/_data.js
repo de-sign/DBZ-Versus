@@ -20,7 +20,6 @@ Object.assign(
                             this.createJump(oEntity);
                             this.createRecovery(oEntity);
                             this.createCommands(oEntity);
-                            this.createThrow(oEntity);
                             this.createAnimationsList(oEntity);
                         }
                         this.createColor(sType, oEntity);
@@ -41,10 +40,15 @@ Object.assign(
             let oMove = null;
             if( Array.isArray(uMove) ){
                 oMove = {
+                    bEmpty: false,
                     aStep: uMove,
                     nLength: uMove.length,
                     nDelay: 0,
-                    bDivide: true
+                    bDivide: true,
+                    oDirection: {
+                        nX: 0,
+                        nY: 0
+                    }
                 };
             }
             else {
@@ -53,7 +57,11 @@ Object.assign(
                     aStep: uMove.aStep,
                     nLength: uMove.nLength,
                     nDelay: uMove.nDelay,
-                    bDivide: uMove.bDivide
+                    bDivide: uMove.bDivide,
+                    oDirection: {
+                        nX: 0,
+                        nY: 0
+                    }
                 };
 
                 if( !oMove.bEmpty && !oMove.aStep ){
@@ -80,15 +88,14 @@ Object.assign(
             }
 
             if( oMove.aStep ){
-                const
-                    nX = oMove.aStep.reduce( (nX, oStep) => {
+                oMove.oDirection = {
+                    nX: oMove.aStep.reduce( (nX, oStep) => {
                         return nX + ( ( oStep && oStep.nX ) || 0 );
                     }, 0 ),
-                    nY = oMove.aStep.reduce( (nY, oStep) => {
+                    nY: oMove.aStep.reduce( (nY, oStep) => {
                         return nY + ( ( oStep && oStep.nY ) || 0 );
-                    }, 0 );
-                oMove.bForward = nX > 0;
-                oMove.bUpward = nY < 0;
+                    }, 0 )
+                };
             }
 
             return oMove;
@@ -107,16 +114,6 @@ Object.assign(
             .forEach( sFrame => {
                 if( oEntity.oFrames[sFrame] != null ){
                     oFrames[sFrame] = Object.assign({ sPath: sFrame + '.png' }, this.oData[sType].oFrames[sFrame] || {}, oEntity.oFrames[sFrame] || {});
-                    for( let sProp in oFrames[sFrame] ){
-                        if( this.oData[sType].oFrames[sFrame] && this.isPlainObject(this.oData[sType].oFrames[sFrame][sProp]) ){
-                            if( this.isPlainObject(oEntity.oFrames[sFrame][sProp]) ){
-                                Object.assign(oFrames[sFrame][sProp], this.oData[sType].oFrames[sFrame][sProp], oEntity.oFrames[sFrame][sProp]);
-                            }
-                            else if( this.oData[sType].oFrames[sFrame][sProp].bDelete && oEntity.oFrames[sFrame][sProp] == null ){
-                                delete oFrames[sFrame][sProp];
-                            }
-                        }
-                    }
                     GameSettings.aFilter.forEach( oFilter => {
                         if( oFilter.aFrames.indexOf(sFrame) != -1 ){
                             oFrames[sFrame + '_' + oFilter.sSuffixe] = Object.assign({}, oFrames[sFrame], oFilter.oData);
@@ -325,10 +322,7 @@ Object.assign(
             for( let sType in oRatio ){
                 const aFrames = [];
                 aRecovery.forEach( (oFrame, nIndex) => {
-                    aFrames.push( Object.assign(
-                        nIndex ? {} : { oPositionBox: null },
-                        oFrame
-                    ) );
+                    aFrames.push( Object.assign( {}, oFrame ) );
                 } );
                 Object.assign(
                     oChar.oAnimations['launch' + sType],
@@ -391,54 +385,6 @@ Object.assign(
                 } );
             }
             oChar.oCommands = oCommands;
-        },
-
-        createThrow: function(oChar){
-            let oThrow = null,
-                oBackThrow = null;
-                oLauncher = null;
-
-            oChar.oCommands.aGround.forEach( oCommand => {
-                switch( oCommand.sCod ){
-                    case 'attack_6D_0':
-                        oThrow = oCommand;
-                        break;
-                    case 'attack_4D_0':
-                        oBackThrow = oCommand;
-                        break;
-                    case 'attack_2B':
-                        oLauncher = Object.assign(
-                            {},
-                            oCommand,
-                            {
-                                sCod: 'attack_4D_2',
-                                sRoot: 'attack_4D_0',
-                                oGatling: Object.assign(
-                                    {},
-                                    oCommand.oGatling,
-                                    {
-                                        oManipulation: {
-                                            bLast: true
-                                        }
-                                    }
-                                )
-                            }
-                        );
-                        break;
-                }
-            } );
-
-            // BackThrow
-            oBackThrow.oFollowUp.oFollowUp = oLauncher;
-            oThrow.oFollowUp = Object.assign(
-                {},
-                oLauncher,
-                {
-                    sCheck: true,
-                    sCod: 'attack_6D_1',
-                    sRoot: 'attack_6D_0'
-                }
-            );
         },
 
         createAnimationsList: function(oChar){

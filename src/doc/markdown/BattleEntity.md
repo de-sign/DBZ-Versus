@@ -95,6 +95,12 @@ this.canBeMoved();
 this.canReverse();
 ```
 
+### BattleEntity.prototype.isState()
+
+```javascript
+this.isState(sState);
+```
+
 ### BattleEntity.prototype.add()
 
 ```javascript

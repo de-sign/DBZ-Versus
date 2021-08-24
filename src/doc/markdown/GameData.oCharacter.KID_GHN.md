@@ -732,22 +732,58 @@ GameData.oCharacter.KID_GHN.oAnimations = {
         }
     ],
     // 4, 4, 6
-    attack_A_2: [
-        {
-            nFrame: 2,
-            sFrame: 'stand_1',
+    attack_A_2: {
+        uMove: {
+            nDelay: 2,
+            nLength: 4,
+            nX: 48
         },
+        aFrames: [
+            {
+                nFrame: 2,
+                sFrame: 'stand_1',
+            },
+            {
+                nFrame: 2,
+                sFrame: 'attack_2_4'
+            },
+            {
+                nFrame: 4,
+                sFrame: 'attack_2_5'
+            },
+            {
+                nFrame: 4,
+                sFrame: 'attack_2_4',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'stand_1',
+                oStatus: {
+                    bCancel: true
+                }
+            }
+        ]
+    },
+    // 6, 4, 8
+    attack_B: [
         {
             nFrame: 2,
-            sFrame: 'attack_2_4'
+            sFrame: 'stand_1'
         },
         {
             nFrame: 4,
-            sFrame: 'attack_2_5'
+            sFrame: 'attack_3_0'
         },
         {
             nFrame: 4,
-            sFrame: 'attack_2_4',
+            sFrame: 'attack_3_1'
+        },
+        {
+            nFrame: 6,
+            sFrame: 'attack_3_0',
             oStatus: {
                 bCancel: true
             }
@@ -760,49 +796,12 @@ GameData.oCharacter.KID_GHN.oAnimations = {
             }
         }
     ],
-    // 6, 4, 8
-    attack_B: {
-        
-        uMove: {
-            nDelay: 2,
-            nLength: 2,
-            nX: 16
-        },
-        aFrames: [
-            {
-                nFrame: 2,
-                sFrame: 'stand_1'
-            },
-            {
-                nFrame: 4,
-                sFrame: 'attack_3_0'
-            },
-            {
-                nFrame: 4,
-                sFrame: 'attack_3_1'
-            },
-            {
-                nFrame: 6,
-                sFrame: 'attack_3_0',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
-            }
-        ]
-    },
     // 10, 6, 8
     attack_6A_0: {
         uMove: {
-            nDelay: 2,
-            nLength: 18,
-            nX: 96
+            nDelay: 8,
+            nLength: 12,
+            nX: 160
         },
         aFrames: [
             {
@@ -815,80 +814,98 @@ GameData.oCharacter.KID_GHN.oAnimations = {
             },
             {
                 nFrame: 2,
-                sFrame: 'attack_5_1'
+                sFrame: 'attack_5_1',
+                oStatus: {
+                    bThrough: true
+                }
             },
             {
                 nFrame: 6,
-                sFrame: 'attack_5_2'
+                sFrame: 'attack_5_2',
+                oStatus: {
+                    bThrough: true
+                }
             },
             {
                 nFrame: 4,
                 sFrame: 'attack_5_1',
                 oStatus: {
-                    bCancel: true
+                    bCancel: true,
+                    bReverse: true,
+                    bThrough: true
                 }
             },
             {
                 nFrame: 2,
                 sFrame: 'attack_5_5',
                 oStatus: {
-                    bCancel: true
+                    bCancel: true,
+                    bReverse: true
                 }
             },
             {
                 nFrame: 2,
                 sFrame: 'stand_1',
                 oStatus: {
-                    bCancel: true
+                    bCancel: true,
+                    bReverse: true
                 }
             }
         ]
     },
-    // 8, 6, 10
+    // 10, 6, 8
     attack_6A_1: {
         uMove: {
-            nLength: 8,
-            nX: 48
+            nDelay: 8,
+            nLength: 12,
+            nX: 160
         },
         aFrames: [
             {
-                nFrame: 4,
-                sFrame: 'attack_5_1',
-            },
-            {
-                nFrame: 4,
-                sFrame: 'attack_5_3',
+                nFrame: 2,
+                sFrame: 'stand_1'
             },
             {
                 nFrame: 6,
-                sFrame: 'attack_5_4'
+                sFrame: 'attack_5_0'
             },
             {
                 nFrame: 2,
-                sFrame: 'attack_5_3',
+                sFrame: 'attack_5_1',
                 oStatus: {
-                    bCancel: true
+                    bThrough: true
+                }
+            },
+            {
+                nFrame: 6,
+                sFrame: 'attack_5_2',
+                oStatus: {
+                    bThrough: true
                 }
             },
             {
                 nFrame: 4,
                 sFrame: 'attack_5_1',
                 oStatus: {
-                    bCancel: true
+                    bCancel: true,
+                    bReverse: true,
+                    bThrough: true
                 }
             },
             {
                 nFrame: 2,
                 sFrame: 'attack_5_5',
                 oStatus: {
-                    bCancel: true
+                    bCancel: true,
+                    bReverse: true
                 }
             },
             {
                 nFrame: 2,
                 sFrame: 'stand_1',
                 oStatus: {
-                    bCancel: true
+                    bCancel: true,
+                    bReverse: true
                 }
             }
         ]
@@ -1328,7 +1345,8 @@ GameData.oCharacter.KID_GHN.oCommands = {
                 oStun: {
                     nStun: 18,
                     sAnimation: 'hit_1'
-                }
+                },
+                oPushback: false
             },
             oGuard: {
                 oDamage: {
@@ -1337,7 +1355,8 @@ GameData.oCharacter.KID_GHN.oCommands = {
                 oStun: {
                     nStun: 12,
                     sAnimation: 'defense_j4'
-                }
+                },
+                oPushback: false
             },
             oFollowUp: {
                 sCheck: true,
@@ -1346,9 +1365,18 @@ GameData.oCharacter.KID_GHN.oCommands = {
                 oProperty: {},
                 oGatling: {
                     nLevel: 1,
-                    oManipulation: {}
+                    oManipulation: {
+                        nMaxLengthFrame: 1,
+                        aButtons: [
+                            { FW: false, A: true }
+                        ],
+                        bLast: true
+                    }
                 },
                 oHit: {
+                    oDamage: {
+                        nDamage: 50
+                    },
                     oStun: {
                         nStun: 18,
                         sAnimation: 'hit_0'
@@ -1486,10 +1514,10 @@ GameData.oCharacter.KID_GHN.oCommands = {
                     },
                     oHit: {
                         oDamage: {
-                            nDamage: 25
+                            nDamage: 50
                         },
                         oStun: {
-                            nStun: 13,
+                            nStun: 16,
                             sAnimation: 'hit_0'
                         }
                     },

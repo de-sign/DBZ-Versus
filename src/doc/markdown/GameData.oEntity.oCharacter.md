@@ -1290,7 +1290,8 @@ GameData.oEntity.oCharacter.oAnimations = {
                 nFrame: 6,
                 sFrame: 'move_2__0',
                 oStatus: {
-                    bReverse: true
+                    bReverse: true,
+                    bThrough: true
                 }
             },
             {
@@ -1475,6 +1476,45 @@ GameData.oEntity.oCharacter.oAnimations = {
             }
         ]
     },
+    attack_nD_2: [
+        {
+            nFrame: 2,
+            sFrame: 'stand_1'
+        },
+        {
+            nFrame: 6,
+            sFrame: 'attack_4_0'
+        },
+        {
+            nFrame: 2,
+            sFrame: 'attack_4_1'
+        },
+        {
+            nFrame: 8,
+            sFrame: 'attack_4_2'
+        },
+        {
+            nFrame: 4,
+            sFrame: 'attack_4_1',
+            oStatus: {
+                bCancel: true
+            }
+        },
+        {
+            nFrame: 6,
+            sFrame: 'attack_4_3',
+            oStatus: {
+                bCancel: true
+            }
+        },
+        {
+            nFrame: 2,
+            sFrame: 'stand_1',
+            oStatus: {
+                bCancel: true
+            }
+        }
+    ],
 
     // List
     list_8: {
@@ -2004,6 +2044,30 @@ GameData.oEntity.oCharacter.oCommands = {
                     sImpact: false
                 },
                 oPushback: false
+            },
+            oFollowUp: {
+                sCheck: true,
+                sCod: 'attack_6D_1',
+                sAnimation: 'attack_nD_2',
+                oProperty: {
+                    bLaunch: true
+                },
+                oGatling: {
+                    nLevel: 1,
+                    bJumpCancellable: true,
+                    oManipulation: {
+                        bLast: true
+                    }
+                },
+                oHit: {
+                    oDamage: {
+                        nDamage: 100
+                    },
+                    oStun: {
+                        nStun: 22,
+                        sAnimation: 'hit_2'
+                    }
+                }
             }
         },
         {
@@ -2050,6 +2114,29 @@ GameData.oEntity.oCharacter.oCommands = {
                 oGatling: {
                     oManipulation: {
                         bLast: true
+                    }
+                },
+                oFollowUp: {
+                    sCod: 'attack_4D_2',
+                    sAnimation: 'attack_nD_2',
+                    oProperty: {
+                        bLaunch: true
+                    },
+                    oGatling: {
+                        nLevel: 1,
+                        bJumpCancellable: true,
+                        oManipulation: {
+                            bLast: true
+                        }
+                    },
+                    oHit: {
+                        oDamage: {
+                            nDamage: 100
+                        },
+                        oStun: {
+                            nStun: 22,
+                            sAnimation: 'hit_2'
+                        }
                     }
                 }
             }
@@ -2186,7 +2273,7 @@ GameData.oEntity.oCharacter.oCommands = {
             },
             oProperty: {},
             oGatling: {
-                nLevel: 1,
+                nLevel: 2,
                 oManipulation: {
                     nMaxLengthFrame: 1,
                     aButtons: [

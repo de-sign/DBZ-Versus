@@ -260,7 +260,7 @@ Object.assign(
         /* ----- DETAILS Temps du TIMER ----- */
         nTimer: 99,
         /* ----- DETAILS Nombre de FRAME lors d'un HIT FREEZE ----- */
-        nFreeze: 6,
+        nFreeze: 8,
 
         // ENTITY
         /* ----- DETAILS Temps avant suppression d'un entité pour futur ROLLBACK ----- */
@@ -404,14 +404,20 @@ Object.assign(
             },
             /* -----  PUSHBACK par défault appliqué lors d'un coup ----- */
             oPushback: {
-                nLength: 4,
+                bEmpty: false,
                 aStep: [
                     { nX: -6 },
                     { nX: -6 },
                     { nX: -6 },
                     { nX: -6 }
                 ],
-                bDivide: true
+                nLength: 4,
+                nDelay: 0,
+                bDivide: true,
+                oDirection: {
+                    nX: -24,
+                    nY: 0
+                }
             }
         },
 

@@ -534,6 +534,44 @@ GameData.oCharacter.GKU = {
                 }
             }
         ],
+        attack_A_2: [
+            {
+                sFrame: 'stand_1',
+                nFrame: 2
+            },
+            {
+                sFrame: 'guard_0',
+                nFrame: 2
+            },
+            {
+                sFrame: 'guard_2',
+                nFrame: 2
+            },
+            {
+                sFrame: 'guard_2',
+                nFrame: 4,
+                aHitBox: {
+                    nX: -128,
+                    nY: (-39 * 4) - 2,
+                    nWidth: 256,
+                    nHeight: 40 * 4
+                }
+            },
+            {
+                sFrame: 'guard_2',
+                nFrame: 6,
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                sFrame: 'stand_1',
+                nFrame: 2,
+                oStatus: {
+                    bCancel: true
+                }
+            }
+        ],
         // 6, 4, 8
         attack_B: [
             {
@@ -689,7 +727,7 @@ GameData.oCharacter.GKU = {
                 sFrame: 'attack_6_0'
             },
             {
-                nFrame: 8,
+                nFrame: 6,
                 sFrame: 'attack_6_1'
             },
             {
@@ -879,7 +917,7 @@ GameData.oCharacter.GKU = {
                             sSFX: 'ADO__Projectile',
                             sAnimation: 'flash',
                             sColor: 'ORG',
-                            nFrameStart: 13,
+                            nFrameStart: 11,
                             oPosition: {
                                 nX: 8,
                                 nY: -64
@@ -1087,6 +1125,60 @@ GameData.oCharacter.GKU = {
                         oStun: {
                             nStun: 12,
                             sAnimation: 'defense_j4'
+                        }
+                    },
+                    oFollowUp: {
+                        sCod: 'attack_A_2',
+                        sAnimation: 'attack_A_2',
+                        oProperty: {},
+                        oGatling: {
+                            nLevel: 1,
+                            oManipulation: {
+                                nMaxLengthFrame: 1,
+                                aButtons: [
+                                    { A: true }
+                                ],
+                                bLast: true
+                            },
+                            aEntity: [
+                                {
+                                    sType: 'Effect',
+                                    sAnimation: 'impact_hit',
+                                    oPosition: {
+                                        nX: 72
+                                    },
+                                    bReverse: true,
+                                    nFrameStart: 7
+                                },
+                                {
+                                    sType: 'Effect',
+                                    sAnimation: 'impact_hit',
+                                    oPosition: {
+                                        nX: 72
+                                    },
+                                    bReverse: false,
+                                    nFrameStart: 7
+                                }
+                            ]
+                        },
+                        oHit: {
+                            oDamage: {
+                                nDamage: 50
+                            },
+                            oStun: {
+                                nStun: 16,
+                                sAnimation: 'hit_1',
+                                sImpact: false
+                            }
+                        },
+                        oGuard: {
+                            oDamage: {
+                                nDamage: 0
+                            },
+                            oStun: {
+                                nStun: 10,
+                                sAnimation: 'defense_4'
+                            }
                         }
                     }
                 }

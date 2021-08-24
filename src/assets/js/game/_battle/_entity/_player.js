@@ -6,6 +6,7 @@ function BattlePlayer(nPlayer, sChar, sColor, sAnimation, oPosition, bReverse, o
     
     this.oStatus = {
         bReverse: false, // Possibilité de se retourner : stand, tp, etc
+        bThrough: false, // Possibilité de se retourner : stand, tp, etc
         bGuard: false, // Possibilité de guarder : backdash, block
         bThrow: false, // Possibilité de TechThrow : hit_throw
         bInvul: false, // Impossibilité de prendre un coup : launch
@@ -148,6 +149,9 @@ Object.assign(
                 addKi: function(nKi){
                     this.nKi = Math.min(this.nKi + nKi, GameSettings.oKi.nMax);
                 },
+                isState: function(sState){
+                    return this.oStatus['b' + sState];
+                },
 
                 // Gatling
                 getCommandData: function(){
@@ -197,7 +201,7 @@ Object.assign(
                     oCommand.oGatling.nCost && (this.nKi -= oCommand.oGatling.nCost);
 
                     const oSet = this.setAnimation(oCommand.sAnimation);
-                    if( oSet && oSet.oMovement && ( this.oStatus.bAerial || oSet.oMovement.bUpward ) ){
+                    if( oSet && oSet.oMovement && ( this.oStatus.bAerial || oSet.oMovement.oDirection.nY < 0 ) ){
                         this.setFall(oSet.oMovement);
                     }
                 },
@@ -274,8 +278,7 @@ Object.assign(
                     }
                     if( !sAnimation ){
                         const aFall = ['move_7', 'move_8', 'move_9'],
-                            oStep = uMovement.aStep[ uMovement.aStep.length - 1 ] || { nX: 0 },
-                            nMove = Math.min( 1, Math.max( -1, oStep.nX ) );
+                            nMove = Math.min( 1, Math.max( -1, uMovement.oDirection.nX ) );
                         sAnimation = aFall[nMove + 1];
                     }
                     const oFall = this.oMovement.after( this.oData.oAnimations[sAnimation].oMove, this.bReverse );

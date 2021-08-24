@@ -13,6 +13,10 @@ Données des FRAMES
 
 ```javascript
 GameData.oEntity.oBeam.oFrames = {
+    kiai: {
+        sPath: 'kiai.png'
+    },
+
     beam: {
         sPath: 'beam.png'
     },

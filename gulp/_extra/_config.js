@@ -614,7 +614,7 @@ Object.assign(
                 nHeight: 50 * 14
             },
             aFrames: [
-                ['stand_0', 'stand_1'],
+                ['stand_1', 'stand_0', 'stand_0_1', 'stand_0_2', 'stand_0_3'],
                 ['move_0', 'move_1', 'move_2', 'move_3'],
                 ['jump_0', 'jump_1', 'jump_2', 'jump_3', 'jump_4'],
                 ['guard_0', 'guard_1', 'guard_2'],
