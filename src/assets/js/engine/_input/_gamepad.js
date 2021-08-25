@@ -96,7 +96,12 @@ Object.assign(
                 }
             }
 
-            const oController = ControllerManager.create( 'Gamepad', oStore ? Controller.getDataStore(oStore).oButtons : oDefault, oGamepad.index );
+            const oButtons = oStore ? Controller.getDataStore(oStore).oButtons : {},
+                oController = ControllerManager.create(
+                    'Gamepad',
+                    Object.assign({}, oDefault, oButtons),
+                    oGamepad.index
+                );
             oController.nIndexStore = nIndexStore;
             return oController;
         },

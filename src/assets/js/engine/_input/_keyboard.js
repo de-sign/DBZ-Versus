@@ -32,8 +32,9 @@ Object.assign(
         },
 
         recover: function(sId, oDefault){
-            const oStore = Controller.getDataStore( StoreEngine.get(sId) );
-            return ControllerManager.create( 'Keyboard', oStore ? oStore.oButtons : oDefault );
+            const oStore = Controller.getDataStore( StoreEngine.get(sId) ),
+                oButtons = oStore ? oStore.oButtons : {};
+            return ControllerManager.create( 'Keyboard', Object.assign({}, oDefault, oButtons) );
         },
         /* ----- END METHODS ----- */
         /* ----- END SINGLETON ----- */

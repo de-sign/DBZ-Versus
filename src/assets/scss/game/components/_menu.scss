@@ -26,6 +26,7 @@
 
         &.--disable {
             color: $font-disable-color;
+            text-decoration: line-through;
         }
     }
 

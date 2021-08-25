@@ -52,7 +52,9 @@ Object.assign(
             if( oStore ){
                 const oButtons = {};
                 oStore.aOrder.forEach( sBtn => {
-                    oButtons[sBtn] = oStore.oButtons[sBtn];
+                    if( oStore.oButtons[sBtn] ){
+                        oButtons[sBtn] = oStore.oButtons[sBtn];
+                    }
                 } );
                 oStore.oButtons = oButtons;
             }

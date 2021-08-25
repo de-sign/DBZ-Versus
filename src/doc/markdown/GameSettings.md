@@ -320,7 +320,7 @@ GameSettings.nTimer = 99;
 Nombre de FRAME lors d'un HIT FREEZE 
 
 ```javascript
-GameSettings.nFreeze = 8;
+GameSettings.nFreeze = 7;
 ```
 
 #### GameSettings.nDie

@@ -260,7 +260,7 @@ Object.assign(
         /* ----- DETAILS Temps du TIMER ----- */
         nTimer: 99,
         /* ----- DETAILS Nombre de FRAME lors d'un HIT FREEZE ----- */
-        nFreeze: 8,
+        nFreeze: 7,
 
         // ENTITY
         /* ----- DETAILS Temps avant suppression d'un entité pour futur ROLLBACK ----- */

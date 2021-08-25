@@ -35,6 +35,11 @@ Object.assign(
                         A: () => {
                             let oMenuSelected = this.oMenu.getSelected();
                             switch( oMenuSelected.sId ){
+                                case 'TXT__Input_Reset_' + this.oController.sId:
+                                    sSFX = 'ADO__Cancel';
+                                    this.reset();
+                                    this.bReady = false;
+                                    break;
                                 case 'TXT__Input_Return_' + this.oController.sId:
                                     sSFX = 'ADO__Cancel';
                                     this.bReady = true;
@@ -50,6 +55,11 @@ Object.assign(
                             sSFX = 'ADO__Cancel';
                             this.oMenu.select(-1);
                             this.bReady = true;
+                        },
+                        C: () => {
+                            sSFX = 'ADO__Cancel';
+                            this.reset();
+                            this.bReady = false;
                         },
                         // Gestion déplacement
                         UP: () => {
@@ -135,6 +145,33 @@ Object.assign(
                 this.oWaitingButton = null;
             }
             return oBtn;
+        },
+
+        reset: function(){
+            let oBtns = null;
+            switch( this.oController.sType ){
+                case 'keyboard':
+                    oBtns = GameSettings.oController.aKeyboard[ this.oController.sId.split('_')[1] - 1 ];
+                    break;
+                case 'gamepad':
+                    oBtns = GameSettings.oController.oGamepad;
+                    break;
+            }
+            
+            // Reset BTN
+            this.oController.updateButtons(oBtns);
+            ControllerManager.updateController(this.oController);
+            this.oController.store();
+
+            // Refresh View
+            this.oMenu.oLayer.aChildElement.forEach( oMenu => {
+                const hBtn = oMenu.hElement.querySelector('.Input__Button_Name');
+                if( hBtn ){
+                    const sBtn = hBtn.innerHTML,
+                       sText = this.oController.oButtons[sBtn].sText;
+                    oMenu.aChildElement[0].setText(sText);
+                }
+            } );
         }
     }
 );
@@ -174,6 +211,10 @@ Object.assign(
             {
                 aButton: ['B'],
                 sText: 'Return'
+            },
+            {
+                aButton: ['C'],
+                sText: 'Reset'
             }
         ],
 
