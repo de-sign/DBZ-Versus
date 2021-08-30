@@ -14,6 +14,18 @@ GameData.oCharacter.FRZ = {
     aColor: [
         {
             sName: 'Furiza',
+            sColor: 'CTM_FRZ',
+            sColorName: 'Custom color',
+            sEntityColor: 'PRP'
+        },
+        {
+            sName: 'Kura',
+            sColor: 'CTM_KRA',
+            sColorName: 'Custom color',
+            sEntityColor: 'ORG'
+        },
+        {
+            sName: 'Furiza',
             sColor: 'LSW_FRZ',
             sColorName: 'Legendary Super Warrior color',
             sEntityColor: 'PRP'
@@ -999,6 +1011,7 @@ GameData.oCharacter.FRZ = {
     oCommands: {
         aGround: [
             {
+                aFilter: ['CTM_FRZ', 'LSW_FRZ', 'SWP_FRT'],
                 sCod: 'attack_236C',
                 sAnimation: 'attack_236C',
                 oList: {
@@ -1030,6 +1043,90 @@ GameData.oCharacter.FRZ = {
                         {
                             sType: 'Text',
                             sText: 'ボール',
+                            nFrameStart: 43,
+                            nLength: 36
+                        },
+                        {
+                            sType: 'Projectile',
+                            sSFX: 'ADO__Beam',
+                            sAnimation: 'death',
+                            nFrameStart: 13,
+                            oPosition: {
+                                nX: -24,
+                                nY: -230
+                            }
+                        }
+                    ]
+                },
+                oFreeze: {
+                    bInfo: true,
+                    nLength: 45
+                },
+                oHit: {
+                    oDamage: {
+                        nDamage: 300,
+                        nMinimumReduce: 40
+                    },
+                    oStun: {
+                        nStun: 36,
+                        sAnimation: 'hit_1',
+                        sImpact: 'explode_heavy',
+                        sText: 'ブーム'
+                    },
+                    oPushback: {
+                        nLength: 4,
+                        nX: -192
+                    }
+                },
+                oGuard: {
+                    oDamage: {
+                        nDamage: 0
+                    },
+                    oStun: {
+                        nStun: 36,
+                        sAnimation: 'defense_4',
+                        sImpact: 'explode_heavy',
+                        sText: 'ブーム'
+                    },
+                    oPushback: {
+                        nLength: 4,
+                        nX: -192
+                    }
+                }
+            },
+            {
+                aFilter: ['CTM_KRA'],
+                sCod: 'attack_236C',
+                sAnimation: 'attack_236C',
+                oList: {
+                    sName: 'Supanova',
+                    sGroup: 'ki'
+                },
+                oProperty: {
+                    bLaunch: true
+                },
+                oGatling: {
+                    nCost: 30,
+                    nLevel: 3,
+                    oManipulation: {
+                        nMaxLengthFrame: 15,
+                        aButtons: [
+                            { DN: false },
+                            { DF: false },
+                            { FW: false, C: true }
+                        ],
+                        bLast: false
+                    },
+                    aEntity: [
+                        {
+                            sType: 'Text',
+                            sText: 'スーパ',
+                            nFrameStart: 13,
+                            nLength: 30
+                        },
+                        {
+                            sType: 'Text',
+                            sText: 'ーノヴァ',
                             nFrameStart: 43,
                             nLength: 36
                         },

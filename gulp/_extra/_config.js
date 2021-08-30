@@ -392,7 +392,7 @@ Object.assign(
             FRZ: {
                 sType: 'oChar',
                 sChar: 'FRZ',
-                aColor: ['LSW_FRZ'/*, 'CTM_MKR'*/, 'SWP_FRT'],
+                aColor: ['CTM_FRZ', 'CTM_KRA', 'LSW_FRZ'/*, 'CTM_MKR'*/, 'SWP_FRT'],
                 aFrames: [
                     ['stand', 'blur', 'backward', 'forward'],
                     ['jump', 'fall', null, 'guard', 'reflect', 'burst'],
