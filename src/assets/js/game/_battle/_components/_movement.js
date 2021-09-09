@@ -33,8 +33,11 @@ Object.assign(
                     this.oDirection = oMove.oDirection;
                     this.bReverse = bReverse;
                 },
-                update: function(){
+                update: function(bReverse){
                     const bUpdate = GameTimer.prototype.update.call(this);
+                    if( this.nFreeze == 0 && this.bReverse == null ){
+                        this.bReverse = bReverse;
+                    }
                     this.oMove = bUpdate ? this.aStep[ this.nLength ? this.nTick - 1 : 0 ] : null;
                     return bUpdate;
                 }
@@ -53,9 +56,9 @@ function BattleMovementManager(){
 
 Object.assign(
     BattleMovementManager.prototype, {
-        update: function(){
+        update: function(bReverse){
             this.clean();
-            this.forEach( oMove => oMove.update() );
+            this.forEach( oMove => oMove.update(bReverse) );
         },
 
         create: function(oMove, bReverse){

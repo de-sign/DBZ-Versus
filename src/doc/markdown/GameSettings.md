@@ -132,8 +132,7 @@ GameSettings.oSide = {
         {
             sName: 'Left',
             fPosition: (nIndex, bReverse, oArea) => {
-                const oBoxArea = oArea.getBox(),
-                    nLeft = oArea.oPosition.nX + (oBoxArea.left - oBoxArea.originX),
+                const nLeft = oArea.oPosition.nX - oArea.oPosition.originX,
                     aValue = bReverse ?
                         [32, 88] :
                         [88, 32];
@@ -152,8 +151,7 @@ GameSettings.oSide = {
         {
             sName: 'Right',
             fPosition: (nIndex, bReverse, oArea) => {
-                const oBoxArea = oArea.getBox(),
-                    nRight = oArea.oPosition.nX + (oBoxArea.right - oBoxArea.originX),
+                const nRight = oArea.oPosition.nX + oArea.oPosition.width - oArea.oPosition.originX,
                     aValue = bReverse ?
                         [88, 32] :
                         [32, 88];
@@ -284,7 +282,7 @@ GameSettings.oAnimations = {
         aCanSetLength: ['hurt'],
         oMap: {
             // type: category
-            'action': null,
+            'action': 'counter',
             'dash': 'stack',
             'cancel': 'stack',
             'stand': 'movement',
@@ -323,9 +321,25 @@ Nombre de FRAME lors d'un HIT FREEZE
 GameSettings.nFreeze = 7;
 ```
 
-#### GameSettings.nDie
+#### GameSettings.oCounter
 
 Temps avant suppression d'un entité pour futur ROLLBACK 
+
+```javascript
+GameSettings.oCounter = {
+    nStun: 4,
+    oInfo: {
+        nLength: 20,
+        sText: 'Counter&nbsp;!',
+        nSlow: 2,
+        nZoom: 1.5
+    }
+};
+```
+
+#### GameSettings.nDie
+
+Information pour chaque entité :Nombre de point de viePosition lors d'un effet visuelPositionPointInformation de vérification des collisions
 
 ```javascript
 GameSettings.nDie = 1;
@@ -333,7 +347,7 @@ GameSettings.nDie = 1;
 
 #### GameSettings.oBattleElement
 
-Information pour chaque entité :Nombre de point de viePosition lors d'un effet visuelPositionPointInformation de vérification des collisions
+Parametrages des COMMAND par défaut 
 
 ```javascript
 GameSettings.oBattleElement = {
@@ -426,7 +440,7 @@ GameSettings.oBattleElement = {
 
 #### GameSettings.oKi
 
-Parametrages des COMMAND par défaut 
+Paramétrage de l'animation d'un personnage LUNCHER 
 
 ```javascript
 GameSettings.oKi = {
@@ -437,7 +451,7 @@ GameSettings.oKi = {
 
 #### GameSettings.oCommand
 
-Paramétrage de l'animation d'un personnage LUNCHER 
+Paramétrage de l'animation d'un personnage JUMP 
 
 ```javascript
 GameSettings.oCommand = {
@@ -445,8 +459,9 @@ GameSettings.oCommand = {
     oDamage: {
         nDamage: 25,
         // Percent !
-        nReduce: 5,
-        nMinimumReduce: 10
+        nScaling: 5, // Init
+        nProration: 5, // Reduce
+        nMinimumReduce: 10, // Minimum
     },
     /* ----- Paramétrage du gain de KI ----- */
     oKi: {
@@ -498,7 +513,7 @@ GameSettings.oCommand = {
 
 #### GameSettings.oLauncher
 
-Paramétrage de l'animation d'un personnage JUMP 
+Paramètrage de la distance de déplacement lors d'une relevé d'un personnage mis au sol 
 
 ```javascript
 GameSettings.oLauncher = {
@@ -514,8 +529,6 @@ GameSettings.oLauncher = {
 ```
 
 #### GameSettings.oJump
-
-Paramètrage de la distance de déplacement lors d'une relevé d'un personnage mis au sol 
 
 ```javascript
 GameSettings.oJump = {

@@ -1,5 +1,5 @@
 // Animations
-function GameAnimation(sName, sType, oFrameData, aStep){
+function GameAnimation(sName, sType, oFrameData, aStep, oData){
     GameTimer.call(this);
 
     this.sName = null;
@@ -8,8 +8,9 @@ function GameAnimation(sName, sType, oFrameData, aStep){
 
     this.aStep = [];
     this.oFrame = null;
+    this.oData = null;
 
-    this.init(sName, sType, oFrameData, aStep);
+    this.init(sName, sType, oFrameData, aStep, oData);
 }
 
 Object.assign(
@@ -25,12 +26,13 @@ Object.assign(
         prototype: Object.assign(
             Object.create(GameTimer.prototype), {
                 constructor: GameAnimation,
-                init: function(sName, sType, oFrameData, aStep){
-                    GameTimer.prototype.init.call(this, aStep.reduce( (nResult, oFrame) => nResult + (oFrame.nFrame || 0), 0));
+                init: function(sName, sType, oFrameData, aStep, oData){
+                    GameTimer.prototype.init.call(this, oData.nLength);
 
                     this.sName = sName;
                     this.oFrameData = oFrameData;
                     this.aStep = aStep;
+                    this.oData = oData;
                     this.sType = sType || GameAnimation.getType(this);
                     this.sCategory = GameAnimation.getCategory(this);
                 },
@@ -74,6 +76,20 @@ Object.assign(
                     if( nLength && this.canSetLength() ){
                         this.nLength = nLength;
                     }
+                },
+                getStep: function(){
+                    let sStep = null,
+                        nFrame = 0,
+                        aStep = ['nStartUp', 'nActive', 'nRecovery'];
+
+                    for( let nIndex = 0; nIndex < aStep.length; nIndex++ ){
+                        sStep = aStep[nIndex];
+                        nFrame += this.oData[sStep];
+                        if( this.nTick <= nFrame ){
+                            break;
+                        }
+                    }
+                    return sStep;
                 }
             }
         )

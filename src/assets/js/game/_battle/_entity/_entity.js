@@ -2,7 +2,8 @@
 /* ----- START CONSTRUCTOR ----- */
 function BattleEntity(/*oData, oPosition, bReverse, oParent, oCommandData*/) {
     /* ----- START PROPERTIES ----- */
-    this.aLink = [];
+    this.aEntity = [];
+    this.oLink = [];
     this.oCheck = null;
     this.oPositionPoint = null;
     this.oCommandData = null;
@@ -74,21 +75,31 @@ Object.assign(
                     return false;
                 },
 
-                add: function(oEntity){
-                    this.aLink.push(oEntity);
-                },
-                remove: function(oEntity){
-                    const nIndex = this.aLink.indexOf(oEntity);
-                    if( nIndex != -1 ){
-                        this.aLink.splice(nIndex, 1);
+                add: function(oEntity, oPosLink){
+                    this.aEntity.push(oEntity);
+                    if( oPosLink ){
+                        this.oLink[oEntity.sId] = {
+                            oEntity,
+                            oPosition: oPosLink
+                        };
                     }
                 },
-                hasLink: function(oLinkEntity){
-                    return this.aLink.indexOf(oLinkEntity) != -1;
+                remove: function(oEntity){
+                    const nIndexEntity = this.aEntity.indexOf(oEntity);
+
+                    if( nIndexEntity != -1 ){
+                        this.aEntity.splice(nIndexEntity, 1);
+                    }
+                    delete this.oLink[oEntity.sId];
+                },
+                hasLink: function(oEntity){
+                    return !!this.oLink[oEntity.sId];
                 },
                 killLink: function(){
-                    this.aLink.forEach( oLinkEntity => oLinkEntity.die() );
-                    this.aLink = [];
+                    for( let sId in this.oLink ){
+                        this.oLink[sId].oEntity.die();
+                    }
+                    this.oLink = {};
                 },
                 generateEntity: function(sType, uData, oEngine){
                     const aNewEntity = [];
@@ -182,9 +193,7 @@ Object.assign(
                             oAnimation: this.oAnimation,
                             oMovement: this.setMovement(
                                 oAnim.oMove,
-                                bReverse == null ?
-                                    this.bReverse :
-                                    bReverse
+                                bReverse
                             )
                         };
                         bUpdate && this.updateAnimation();
@@ -194,7 +203,7 @@ Object.assign(
                 },
                 updateAnimation: function(){
                     BattleElement.prototype.updateAnimation.call(this);
-                    this.oMovement.update();
+                    this.oMovement.update(this.bReverse);
                     this.move();
                 },
 
@@ -207,19 +216,24 @@ Object.assign(
                         bDivide && (oNewPushback.nLength /= 2);
                         this.oMovement.parallel(oNewPushback, bReverse);
                     }
-                    this.aLink.forEach( oLinkEntity => oLinkEntity.setPushback(oPushback, bReverse, bDivide) );
+                    
+                    for( let sId in this.oLink ){
+                        this.oLink[sId].oEntity.setPushback(oPushback, bReverse, bDivide);
+                    }
                 },
                 move: function(){
+                    const oPosition = Object.assign( {}, this.oLayer.oPosition );
                     this.oMovement.forEach( oMovement => {
                         if( oMovement.oMove ){
                             if( oMovement.oMove.nX ){
-                                this.oLayer.oPosition.nX += oMovement.oMove.nX * (oMovement.bReverse ? -1 : 1);
+                                oPosition.nX += oMovement.oMove.nX * (oMovement.bReverse ? -1 : 1);
                             }
                             if( oMovement.oMove.nY ){
-                                this.oLayer.oPosition.nY += oMovement.oMove.nY;
+                                oPosition.nY += oMovement.oMove.nY;
                             }
                         }
                     } );
+                    this.oLayer.setPosition(oPosition);
                 },
 
                 setFreeze: function(nFreeze){
@@ -231,7 +245,7 @@ Object.assign(
                     this.oMovement.unFreeze();
                 },
 
-                getBox: function(sBox){
+                getBox: function(sBox, bDisplay){
                     let aBox = this.oAnimation && this.oAnimation.oFrame[sBox];
                     if( aBox ){
                         Array.isArray(aBox) || ( aBox = [aBox] );
@@ -239,7 +253,11 @@ Object.assign(
                             return Object.assign(
                                 {},
                                 oBox,
-                                this.bReverse ? { nX: -(oBox.nWidth + oBox.nX - 4) } : {}
+                                !bDisplay && this.bReverse ?
+                                    {
+                                        nX: -(oBox.nWidth + oBox.nX - 4)
+                                    } :
+                                    {}
                             );
                         } );
                     }
@@ -251,8 +269,11 @@ Object.assign(
                 
                 takeHit: function(oEntity, oCommandData){
                     this.nLife -= oCommandData.oHit.oDamage.nDamage;
-                    oEntity.confirmHit(this, oCommandData, bGuard);
-                    return bGuard;
+                    oEntity.confirmHit(this, oCommandData, false);
+                    return {
+                        bGuard: false,
+                        bCounter: false
+                    };
                 },
                 confirmHit: function(oEntityHurt, oCommandData, bGuard){
                     this.aHit.push(oEntityHurt.sId);

@@ -591,7 +591,10 @@ GameData.oCharacter.BJT.oAnimations = {
     attack_A_0: [
         {
             nFrame: 2,
-            sFrame: 'stand_1'
+            sFrame: 'stand_1',
+            oStatus: {
+                bReverse: true
+            }
         },
         {
             nFrame: 2,
@@ -627,6 +630,9 @@ GameData.oCharacter.BJT.oAnimations = {
             {
                 nFrame: 2,
                 sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 2,
@@ -656,7 +662,10 @@ GameData.oCharacter.BJT.oAnimations = {
     attack_A_2: [
         {
             nFrame: 2,
-            sFrame: 'stand_1'
+            sFrame: 'stand_1',
+            oStatus: {
+                bReverse: true
+            }
         },
         {
             nFrame: 2,
@@ -692,7 +701,10 @@ GameData.oCharacter.BJT.oAnimations = {
         aFrames: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 4,
@@ -728,7 +740,10 @@ GameData.oCharacter.BJT.oAnimations = {
         aFrames: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 4,
@@ -769,7 +784,10 @@ GameData.oCharacter.BJT.oAnimations = {
     attack_2B: [
         {
             nFrame: 2,
-            sFrame: 'stand_1'
+            sFrame: 'stand_1',
+            oStatus: {
+                bReverse: true
+            }
         },
         {
             nFrame: 6,
@@ -816,7 +834,10 @@ GameData.oCharacter.BJT.oAnimations = {
     attack_C: [
         {
             nFrame: 2,
-            sFrame: 'stand_1'
+            sFrame: 'stand_1',
+            oStatus: {
+                bReverse: true
+            }
         },
         {
             nFrame: 8,
@@ -868,7 +889,8 @@ GameData.oCharacter.BJT.oAnimations = {
             nFrame: 2,
             sFrame: 'stand_1',
             oStatus: {
-                bInvul: true
+                bInvul: true,
+                bReverse: true
             }
         },
         {

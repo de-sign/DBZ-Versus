@@ -61,10 +61,10 @@ this.oMemory = {
 this.oGatling = null;
 ```
 
-### this.nHitting
+### this.oDamage
 
 ```javascript
-this.nHitting = 0;
+this.oDamage = null;
 ```
 
 ### this.nKi

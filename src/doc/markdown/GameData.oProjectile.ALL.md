@@ -163,7 +163,7 @@ GameData.oProjectile.ALL.oAnimations = {
         uMove: {
             nDelay: 30,
             nX: 16,
-            nY: 4
+            nY: 6
         },
         aFrames: [
             {

@@ -3,6 +3,13 @@
     <div class="Battle__Interface">
         <div class="Battle__Interface_Wrapper">
 
+            <div class="Battle__Blur --left">
+                <div id="LAY__Training_History_1" class="outputLayer Training__History"></div>
+            </div>
+            <div class="Battle__Blur --right">
+                <div id="LAY__Training_History_2" class="outputLayer Training__History"></div>
+            </div>
+
             <div class="Battle__HUDs">
                 <div id="TXT__Battle_Timer" class="outputText Battle__Timer">99</div>
                 <div id="LAY__Battle_HUD_" class="outputLayer Battle__HUD">
@@ -52,18 +59,13 @@
     </div>
 
     <div id="LAY__Battle_Area" class="outputLayer Battle__Area">
-        <div class="Battle__Area_Blur --left">
-            <div id="LAY__Training_History_1" class="outputLayer Training__History"></div>
-        </div>
-        <div class="Battle__Area_Blur --right">
-            <div id="LAY__Training_History_2" class="outputLayer Training__History"></div>
-        </div>
-
-        <div id="LAY__Battle_Entity_" class="outputLayer Battle__Entity">
-            <img id="SPT__Battle_Entity_Sprite_" class="outputSprite --change Battle__Entity_Sprite" />
-            <div id="LAY__Training_HurtBox_" class="outputLayer --change Training__Box Training__HurtBox"></div>
-            <div id="LAY__Training_HitBox_" class="outputLayer --change Training__Box Training__HitBox"></div>
-            <div id="LAY__Training_PositionBox_" class="outputLayer --change Training__Box Training__PositionBox"></div>
+        <div id="LAY__Battle_Area_Wrapper" class="outputLayer Battle__Area_Wrapper"></div>
+            <div id="LAY__Battle_Entity_" class="outputLayer Battle__Entity">
+                <img id="SPT__Battle_Entity_Sprite_" class="outputSprite --change Battle__Entity_Sprite" />
+                <div id="LAY__Training_HurtBox_" class="outputLayer --change Training__Box Training__HurtBox"></div>
+                <div id="LAY__Training_HitBox_" class="outputLayer --change Training__Box Training__HitBox"></div>
+                <div id="LAY__Training_PositionBox_" class="outputLayer --change Training__Box Training__PositionBox"></div>
+            </div>
         </div>
     </div>
 </section>

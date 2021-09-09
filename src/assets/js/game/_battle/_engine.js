@@ -158,7 +158,7 @@ Object.assign(
                                 oEffect.oParent,
                                 oEffect.oCommandData
                             );
-                            oEffect.bLink && oEffect.oParent.add(oEntity);
+                            oEffect.oParent.add(oEntity, oEffect.bLink ? oEffect.oPosition : null);
                             break;
 
                         // sAnimation, oPosition, bReverse, oParent
@@ -183,16 +183,24 @@ Object.assign(
         // ENTITY dans AREA : LEFT, RIGHT et DOWN
         stayInArea: function(oEntity){
             // Check
-            let oBoxEntity = oEntity.getRootParent().getBox('oPositionBox')[0],
-                nPriority = oEntity.oAnimation.sType == 'action' ? 2 :
-                    ( oEntity.canBeMoved() ? 0 : 1 ),
-                sMove = null;
+            const oParent = oEntity.getRootParent(),
+                oDelta = oParent.oLink[oEntity.sId] ?
+                    oParent.oLink[oEntity.sId].oPosition :
+                    { nX: 0, nY: 0 };
+            let oBoxEntity = oParent.getBox('oPositionBox')[0],
+                sMove = null,
+                nPriority = oEntity.oAnimation.sType == 'action' ?
+                    2 :
+                    (
+                        oEntity.canBeMoved() ?
+                            0 :
+                            1
+                    );
 
             if( oBoxEntity ){
                 
-                const oBoxArea = this.oArea.getBox(),
-                    nLeft = this.oArea.oPosition.nX + (oBoxArea.left - oBoxArea.originX),
-                    nRight = this.oArea.oPosition.nX + (oBoxArea.right - oBoxArea.originX);
+                const nLeft = this.oArea.oPosition.nX - this.oArea.oPosition.originX,
+                    nRight = this.oArea.oPosition.nX + this.oArea.oPosition.width - this.oArea.oPosition.originX;
 
                 // Trop à gauche
                 if( nLeft >= oEntity.oLayer.oPosition.nX + oBoxEntity.nX ){
@@ -207,25 +215,31 @@ Object.assign(
 
                 switch( sMove ){
                     case 'left':
-                        oEntity.oLayer.oPosition.nX = nLeft - oBoxEntity.nX;
+                        oEntity.oLayer.setPosition( {
+                            nX: nLeft - oBoxEntity.nX + oDelta.nX
+                        } );
                         break;
                     case 'right':
-                        oEntity.oLayer.oPosition.nX = nRight - ( oBoxEntity.nX + oBoxEntity.nWidth );
+                        oEntity.oLayer.setPosition( {
+                            nX: nRight - ( oBoxEntity.nX + oBoxEntity.nWidth ) + oDelta.nX
+                        } );
                         break;
                 }
 
                 // Trop en bas
                 if( oEntity.oCheck.bLaunch ){
-                    const nDown = this.oArea.oPosition.nY + (oBoxArea.bottom - oBoxArea.originY) - oEntity.oPositionPoint.nGapY;
+                    const nDown = this.oArea.oPosition.nY + (this.oArea.oPosition.height - this.oArea.oPosition.originY) - oEntity.oPositionPoint.nGapY;
                     if( nDown < oEntity.oLayer.oPosition.nY ){
                         oEntity.oStatus && ( oEntity.oStatus.bAerial = false );
                         if( oEntity.nLife > 0 ){
-                            oEntity.setStance( oEntity.nHitting ? 'launch_2' : 'move_0', true);
+                            oEntity.setStance( oEntity.oDamage.takeDamage() ? 'launch_2' : 'move_0', true);
                         } else {
                             oEntity.setStance('anim_death', true);
                         }
                         oBoxEntity = oEntity.getBox('oPositionBox')[0];
-                        oEntity.oLayer.oPosition.nY = nDown - ( oBoxEntity.nY + oBoxEntity.nHeight );
+                        oEntity.oLayer.setPosition( {
+                            nY: nDown - ( oBoxEntity.nY + oBoxEntity.nHeight ) + oDelta.nY
+                        } );
                     }
                 }
             }
@@ -266,27 +280,30 @@ Object.assign(
 
                             if( this.checkCollision(oBoxLeft, oBoxRight) ){
                                 const nRight = oLeft.oEntity.oLayer.oPosition.nX + ( oBoxLeft.nX + oBoxLeft.nWidth ),
-                                    nLeft = oLeft.oEntity.oLayer.oPosition.nX + oBoxRight.nX,
-                                    nDiff = nRight - nLeft;
+                                    nLeft = oLeft.oEntity.oLayer.oPosition.nX + oBoxRight.nX;
+                                let nDiff = Math.min(nRight - nLeft, oRight.oEntity.oPositionPoint.nGapX || Infinity),
+                                    nDemiDiff = Math.ceil(nDiff / 2);
 
                                 // Separation Egal
                                 if( oLeft.nPriority == oRight.nPriority ){
-                                    oLeft.oEntity.oLayer.oPosition.nX -= nDiff / 2;
-                                    oRight.oEntity.oLayer.oPosition.nX += nDiff / 2;
+                                    oLeft.oEntity.oLayer.setPosition( {
+                                        nX: oLeft.oEntity.oLayer.oPosition.nX - nDemiDiff
+                                    } );
+                                    oRight.oEntity.oLayer.setPosition( {
+                                        nX: oRight.oEntity.oLayer.oPosition.nX + nDemiDiff
+                                    } );
                                 }
                                 // Movement RIGHT
                                 else if( oLeft.nPriority > oRight.nPriority ) {
-                                    oRight.oEntity.oLayer.oPosition.nX +=
-                                        oRight.oEntity.oPositionPoint.nGapX && oRight.oEntity.oPositionPoint.nGapX < nDiff ?
-                                            Math.ceil(nDiff / 2) :
-                                            nDiff;
+                                    oRight.oEntity.oLayer.setPosition( {
+                                        nX: oRight.oEntity.oLayer.oPosition.nX + nDiff
+                                    } );
                                 }
                                 // Movement LEFT
                                 else {
-                                    oLeft.oEntity.oLayer.oPosition.nX -= 
-                                        oLeft.oEntity.oPositionPoint.nGapX && oLeft.oEntity.oPositionPoint.nGapX < nDiff ?
-                                            Math.ceil(nDiff / 2) :
-                                            nDiff;
+                                    oLeft.oEntity.oLayer.setPosition( {
+                                        nX: oLeft.oEntity.oLayer.oPosition.nX - nDiff
+                                    } );
                                 }
                             }
 
@@ -350,8 +367,8 @@ Object.assign(
             if( aHurt.length ){
                 aHurt.forEach( (oHurt, nIndex) => {
                     // Gestion Hurt
-                    const bGuard = oHurt.oEntityHurt.takeHit(oHurt.oEntityHit, oHurt.oCommandData, this),
-                        oPushback = oHurt.oCommandData[ bGuard ? 'oGuard' : 'oHit' ].oPushback;
+                    const oHit = oHurt.oEntityHurt.takeHit(oHurt.oEntityHit, oHurt.oCommandData, this),
+                        oPushback = oHurt.oCommandData[ oHit.bGuard ? 'oGuard' : 'oHit' ].oPushback;
 
                     // Gestion Pushback
                     if( oPushback && !oPushback.bEmpty ){
@@ -360,6 +377,20 @@ Object.assign(
                         } else {
                             this.pushbackEntity( oHurt.oEntityHurt, oPushback, !oHurt.oEntityHit.bReverse, false );
                         }
+                    }
+
+                    // Gestion counter
+                    if( oHit.bCounter ){
+                        this.oDisplay.oModule.oText.add(
+                            Object.assign(
+                                {
+                                    sImg: oHurt.oEntityHit.oData.oPath.sFace,
+                                    oFocus: oHurt.oEntityHit.oLayer.oPosition,
+                                    sDirection: oHurt.oEntityHit.nPlayer == '1' ? 'left' : 'right',
+                                },
+                                GameSettings.oCounter.oInfo
+                            )
+                        );
                     }
                 } );
                 

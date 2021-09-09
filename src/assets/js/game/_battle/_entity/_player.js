@@ -23,8 +23,8 @@ function BattlePlayer(nPlayer, sChar, sColor, sAnimation, oPosition, bReverse, o
         oMove: null
     };
     this.oGatling = null;
+    this.oDamage = null;
 
-    this.nHitting = 0;
     this.nKi = 0;
     /* ----- END PROPERTIES ----- */
 
@@ -42,6 +42,8 @@ Object.assign(
                 /* ----- START PROTOTYPE ----- */
                 /* ----- START METHODS ----- */
                 init: function(nPlayer, sChar, sColor, sAnimation, oPosition, bReverse, oSourceBuffer) {
+
+                    this.oDamage = new BattleDamage();
                     BattleCharacter.prototype.init.call(
                         this,
                         sChar,
@@ -215,7 +217,7 @@ Object.assign(
                     const oChanged = BattleCharacter.prototype.setAnimation.call(this, sAnimation, bUpdate, bReverse);
                     if( oChanged ){
                         if( !this.oAnimation.is('hurt') || this.oAnimation.sType == 'guard' ){
-                            this.nHitting = 0;
+                            this.oDamage.reset();
                         }
                     }
                     return oChanged;
@@ -244,7 +246,7 @@ Object.assign(
                                 this.setFall(true);
                             }
                             // Hit générant fall
-                            else if( this.nHitting == 1 ){
+                            else if( this.oDamage.firstHit() ){
                                 this.oMovement.set(oMove);
                                 const oFall = this.oMovement.after( this.oData.oAnimations.launch_0.oMove, this.bReverse );
                                 oFall.nTick = GameSettings.oLauncher.nFallLength;
@@ -307,7 +309,8 @@ Object.assign(
 
                 takeHit: function(oEntity, oCommandData, oEngine){
 
-                    let bLaunch = false;
+                    let bLaunch = false,
+                        bCounter = false;
                     const bGuard = !oCommandData.oProperty.bUnblockable && this.oStatus.bGuard,
                         sData = bGuard ? 'oGuard' : 'oHit',
                         oData = oCommandData[sData],
@@ -321,11 +324,14 @@ Object.assign(
                     }
                     else {
                         bLaunch = oCommandData.oProperty.bLaunch && !this.oStatus.bLaunch;
-                        if( oDamage.nDamage ){
-                            const nRatio = Math.max(oDamage.nMinimumReduce, 100 - (this.nHitting * GameSettings.oCommand.oDamage.nReduce));
-                            oDamage.nDamage = Math.floor(oDamage.nDamage * nRatio / 100);
+                        oDamage.nDamage = this.oDamage.update(oDamage);
+                        if(
+                            ( this.oAnimation.is('counter') || this.oAnimation.sType == 'dash' )
+                            && this.oAnimation.getStep() == 'nStartUp'
+                        ){
+                            bCounter = true;
+                            oStun.nStun += GameSettings.oCounter.nStun;
                         }
-                        this.nHitting ++;
                     }
 
                     this.nLife -= oDamage.nDamage;
@@ -339,7 +345,10 @@ Object.assign(
                     oEntity.confirmHit(this, oCommandData, bGuard);
                     this.generateEntity(bGuard ? 'guard' : 'hit', oStun, oEngine);
 
-                    return bGuard;
+                    return {
+                        bGuard,
+                        bCounter
+                    };;
                 },
                 confirmHit: function(oEntityHurt, oCommandData, bGuard){
                     BattleEntity.prototype.confirmHit.call(this, oEntityHurt, oCommandData, bGuard);

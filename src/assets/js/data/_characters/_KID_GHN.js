@@ -656,7 +656,10 @@ GameData.oCharacter.KID_GHN = {
         attack_A_0: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 2,
@@ -685,7 +688,10 @@ GameData.oCharacter.KID_GHN = {
         attack_A_1: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 2,
@@ -721,6 +727,9 @@ GameData.oCharacter.KID_GHN = {
                 {
                     nFrame: 2,
                     sFrame: 'stand_1',
+                    oStatus: {
+                        bReverse: true
+                    }
                 },
                 {
                     nFrame: 2,
@@ -750,7 +759,10 @@ GameData.oCharacter.KID_GHN = {
         attack_B: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 4,
@@ -785,7 +797,10 @@ GameData.oCharacter.KID_GHN = {
             aFrames: [
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1'
+                    sFrame: 'stand_1',
+                    oStatus: {
+                        bReverse: true
+                    }
                 },
                 {
                     nFrame: 6,
@@ -810,7 +825,6 @@ GameData.oCharacter.KID_GHN = {
                     sFrame: 'attack_5_1',
                     oStatus: {
                         bCancel: true,
-                        bReverse: true,
                         bThrough: true
                     }
                 },
@@ -818,16 +832,14 @@ GameData.oCharacter.KID_GHN = {
                     nFrame: 2,
                     sFrame: 'attack_5_5',
                     oStatus: {
-                        bCancel: true,
-                        bReverse: true
+                        bCancel: true
                     }
                 },
                 {
                     nFrame: 2,
                     sFrame: 'stand_1',
                     oStatus: {
-                        bCancel: true,
-                        bReverse: true
+                        bCancel: true
                     }
                 }
             ]
@@ -842,7 +854,10 @@ GameData.oCharacter.KID_GHN = {
             aFrames: [
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1'
+                    sFrame: 'stand_1',
+                    oStatus: {
+                        bReverse: true
+                    }
                 },
                 {
                     nFrame: 6,
@@ -867,7 +882,6 @@ GameData.oCharacter.KID_GHN = {
                     sFrame: 'attack_5_1',
                     oStatus: {
                         bCancel: true,
-                        bReverse: true,
                         bThrough: true
                     }
                 },
@@ -875,16 +889,14 @@ GameData.oCharacter.KID_GHN = {
                     nFrame: 2,
                     sFrame: 'attack_5_5',
                     oStatus: {
-                        bCancel: true,
-                        bReverse: true
+                        bCancel: true
                     }
                 },
                 {
                     nFrame: 2,
                     sFrame: 'stand_1',
                     oStatus: {
-                        bCancel: true,
-                        bReverse: true
+                        bCancel: true
                     }
                 }
             ]
@@ -893,7 +905,10 @@ GameData.oCharacter.KID_GHN = {
         attack_2B: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 6,
@@ -940,7 +955,10 @@ GameData.oCharacter.KID_GHN = {
         attack_C: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 20,
@@ -965,7 +983,8 @@ GameData.oCharacter.KID_GHN = {
                 nFrame: 2,
                 sFrame: 'stand_1',
                 oStatus: {
-                    bInvul: true
+                    bInvul: true,
+                    bReverse: true
                 }
             },
             {

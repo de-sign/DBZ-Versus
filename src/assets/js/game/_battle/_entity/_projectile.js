@@ -41,6 +41,10 @@ Object.assign(
                     this.nLife -= oCommandData.oHit.oDamage.nDamage;
                     oEntity.confirmHit(this, oCommandData, false, true);
                     this.generateEntity('hit', oCommandData, oEngine);
+                    return {
+                        bGuard: false,
+                        bCounter: false
+                    };
                 },
                 confirmHit: function(oEntityHurt, oCommandData, bGuard, bNotDestroy){
                     BattleEntity.prototype.confirmHit.call(this, oEntityHurt, oCommandData, bGuard);

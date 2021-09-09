@@ -11,6 +11,14 @@ _File source :_ [engine/_components/_timer.js](https://github.com/de-sign/DBZ-Ve
 
 Les propriétés suivantes sont purement technique et ne devrait être utilisé principalement que par le système
 
+#### TimerEngine.nFPS
+
+Nombre de FPS défini. 
+
+```javascript
+TimerEngine.nFPS = 60;
+```
+
 #### TimerEngine.nFramesToSkip
 
 Nombre de FRAMES à _éviter_ avant la mise à jour de la suivante afin de respecter le FPS défini. 

@@ -570,7 +570,10 @@ GameData.oCharacter.BJT = {
         attack_A_0: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 2,
@@ -606,6 +609,9 @@ GameData.oCharacter.BJT = {
                 {
                     nFrame: 2,
                     sFrame: 'stand_1',
+                    oStatus: {
+                        bReverse: true
+                    }
                 },
                 {
                     nFrame: 2,
@@ -635,7 +641,10 @@ GameData.oCharacter.BJT = {
         attack_A_2: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 2,
@@ -671,7 +680,10 @@ GameData.oCharacter.BJT = {
             aFrames: [
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1'
+                    sFrame: 'stand_1',
+                    oStatus: {
+                        bReverse: true
+                    }
                 },
                 {
                     nFrame: 4,
@@ -707,7 +719,10 @@ GameData.oCharacter.BJT = {
             aFrames: [
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1'
+                    sFrame: 'stand_1',
+                    oStatus: {
+                        bReverse: true
+                    }
                 },
                 {
                     nFrame: 4,
@@ -748,7 +763,10 @@ GameData.oCharacter.BJT = {
         attack_2B: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 6,
@@ -795,7 +813,10 @@ GameData.oCharacter.BJT = {
         attack_C: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 8,
@@ -847,7 +868,8 @@ GameData.oCharacter.BJT = {
                 nFrame: 2,
                 sFrame: 'stand_1',
                 oStatus: {
-                    bInvul: true
+                    bInvul: true,
+                    bReverse: true
                 }
             },
             {

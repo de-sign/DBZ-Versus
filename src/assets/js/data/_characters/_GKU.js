@@ -480,7 +480,10 @@ GameData.oCharacter.GKU = {
         attack_A_0: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 2,
@@ -509,7 +512,10 @@ GameData.oCharacter.GKU = {
         attack_A_1: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 2,
@@ -537,7 +543,10 @@ GameData.oCharacter.GKU = {
         attack_A_2: [
             {
                 sFrame: 'stand_1',
-                nFrame: 2
+                nFrame: 2,
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 sFrame: 'guard_0',
@@ -576,7 +585,10 @@ GameData.oCharacter.GKU = {
         attack_B: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 4,
@@ -611,7 +623,10 @@ GameData.oCharacter.GKU = {
             aFrames: [
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1'
+                    sFrame: 'stand_1',
+                    oStatus: {
+                        bReverse: true
+                    }
                 },
                 {
                     nFrame: 4,
@@ -652,7 +667,10 @@ GameData.oCharacter.GKU = {
         attack_2B: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 6,
@@ -699,7 +717,10 @@ GameData.oCharacter.GKU = {
         attack_C: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 20,
@@ -720,7 +741,10 @@ GameData.oCharacter.GKU = {
         attack_C: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 2,
@@ -758,7 +782,8 @@ GameData.oCharacter.GKU = {
                     nFrame: 2,
                     sFrame: 'stand_1',
                     oStatus: {
-                        bInvul: true
+                        bInvul: true,
+                        bReverse: true
                     }
                 },
                 {
@@ -927,7 +952,9 @@ GameData.oCharacter.GKU = {
                 },
                 oHit: {
                     oDamage: {
-                        nDamage: 0
+                        nDamage: 0,
+                        nScaling: 20,
+                        nProration: 20
                     },
                     oStun: {
                         nStun: 26,

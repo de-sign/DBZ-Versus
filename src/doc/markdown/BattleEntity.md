@@ -25,10 +25,16 @@ new BattleEntity(/*oData, oPosition, bReverse, oParent, oCommandData*/);
 ## Instance properties
 _Properties inherited :_ [BattleElement.prototype](BattleElement.md#instance-properties)
 
-### this.aLink
+### this.aEntity
 
 ```javascript
-this.aLink = [];
+this.aEntity = [];
+```
+
+### this.oLink
+
+```javascript
+this.oLink = [];
 ```
 
 ### this.oCheck
@@ -104,7 +110,7 @@ this.isState(sState);
 ### BattleEntity.prototype.add()
 
 ```javascript
-this.add(oEntity);
+this.add(oEntity, oPosLink);
 ```
 
 ### BattleEntity.prototype.remove()
@@ -116,7 +122,7 @@ this.remove(oEntity);
 ### BattleEntity.prototype.hasLink()
 
 ```javascript
-this.hasLink(oLinkEntity);
+this.hasLink(oEntity);
 ```
 
 ### BattleEntity.prototype.killLink()
@@ -176,7 +182,7 @@ this.unFreeze();
 ### BattleEntity.prototype.getBox()
 
 ```javascript
-this.getBox(sBox);
+this.getBox(sBox, bDisplay);
 ```
 
 ### BattleEntity.prototype.isInvulnerable()

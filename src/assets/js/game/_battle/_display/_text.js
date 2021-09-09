@@ -21,8 +21,12 @@ Object.assign(
             init: function(oScene, oOptions) {
                 this.oContext = oScene.oContext;
                 this.aPlayer = oScene.aPlayer;
+                
                 this.oImg = OutputManager.getElement('SPT__Battle_Info_Sprite');
                 this.oText = OutputManager.getElement('TXT__Battle_Info_Text');
+                
+                this.oView = OutputManager.getElement('LAY__Battle_Area');
+                this.oView.enableAutoPositioning();
             },
             update: function(){
                 if( this.oCurrent ){
@@ -48,6 +52,12 @@ Object.assign(
                         sImg: oOptions.sImg || null,
                         sText: oOptions.sText || '',
                         sDirection: oOptions.sDirection || 'center',
+                        nSlow: oOptions.nSlow || null,
+                        nZoom: oOptions.nZoom || 0,
+                        oFocus: oOptions.oFocus || {
+                            nX: 0,
+                            nY: 0
+                        },
                         bFreeze: oOptions.bFreeze || false,
                         fCallback: oOptions.fCallback || null
                     } );
@@ -55,7 +65,7 @@ Object.assign(
             },
             show: function(){
                 if( !this.oCurrent && this.aText.length ){
-                    const oCurrent = this.oCurrent = this.aText.shift();
+                    this.oCurrent = this.aText.shift();
                     // Image
                     if( this.oCurrent.sImg ){
                         this.oImg.setSource(this.oCurrent.sImg);
@@ -71,21 +81,43 @@ Object.assign(
                             oEntity.setFreeze(this.oCurrent.nLength);
                         } );
                     }
+                    // Slow
+                    if( this.oCurrent.nSlow ){
+                        this.oCurrent.nLastFPS = TimerEngine.nFPS;
+                        TimerEngine.setFPS( Math.floor(TimerEngine.nFPS / this.oCurrent.nSlow) );
+                    }
+                    // Zoom
+                    if( this.oCurrent.nZoom ){
+                        this.oView.setPosition( {
+                            scaleX: this.oCurrent.nZoom,
+                            scaleY: this.oCurrent.nZoom,
+                            originX: this.oCurrent.oFocus.nX + this.oView.oPosition.originX,
+                            originY: this.oCurrent.oFocus.nY + this.oView.oPosition.originY
+                        } );
+                    }
                     // Show
                     this.oContext.addTickUpdate( () => {
                         this.oContext.hElement.classList.remove('--info-left', '--info-center', '--info-right', '--info-blank');
-                        this.oContext.hElement.classList.add('--info', '--info-' + oCurrent.sDirection, oCurrent.sText ? '--info-text' : '--info-blank');
+                        this.oContext.hElement.classList.add('--info', '--info-' + this.oCurrent.sDirection, this.oCurrent.sText ? '--info-text' : '--info-blank');
                     } );
                 }
             },
             hide: function(bDestroy){
                 // Hide
                 if( this.oCurrent || bDestroy ){
-                    const fCallback = !bDestroy && this.oCurrent && this.oCurrent.fCallback;
+                    let fCallback = null,
+                        nFPS = null;
+
+                    if( this.oCurrent ){
+                        fCallback = !bDestroy && this.oCurrent.fCallback;
+                        nFPS = this.oCurrent.nLastFPS;
+                    }
                     this.oCurrent = null;
                     
                     this.oContext.addTickUpdate( () => {
                         this.oContext.hElement.classList.remove('--info');
+                        nFPS && TimerEngine.setFPS(nFPS);
+                        this.oView.resetPosition();
                         fCallback && fCallback();
                     } );
                 }

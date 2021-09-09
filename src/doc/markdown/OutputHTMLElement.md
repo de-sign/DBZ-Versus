@@ -87,10 +87,10 @@ this.createHTML(sTyp, oHCfg);
 this.autoCreateChildElement();
 ```
 
-### OutputHTMLElement.prototype.getBox()
+### OutputHTMLElement.prototype.calculatePositionBox()
 
 ```javascript
-this.getBox();
+this.calculatePositionBox();
 ```
 
 ### OutputHTMLElement.prototype.setPosition()
@@ -103,12 +103,6 @@ this.setPosition(oPos);
 
 ```javascript
 this.resetPosition();
-```
-
-### OutputHTMLElement.prototype.getCalculatedPosition()
-
-```javascript
-this.getCalculatedPosition();
 ```
 
 ### OutputHTMLElement.prototype.enableAutoPositioning()

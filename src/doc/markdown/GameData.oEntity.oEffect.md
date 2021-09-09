@@ -104,6 +104,12 @@ Données des animations
 ```javascript
 GameData.oEntity.oEffect.oAnimations = {
     explode_light: {
+        oData: {
+            nStartUp: 16,
+            nActive: 0,
+            nRecovery: 0,
+            nLength: 16
+        },
         aFrames: [
             {
                 sFrame: 'explode_light_1',
@@ -128,6 +134,12 @@ GameData.oEntity.oEffect.oAnimations = {
         ]
     },
     explode_heavy: {
+        oData: {
+            nStartUp: 24,
+            nActive: 0,
+            nRecovery: 0,
+            nLength: 24
+        },
         aFrames: [
             {
                 sFrame: 'explode_light_1',
@@ -160,6 +172,12 @@ GameData.oEntity.oEffect.oAnimations = {
         ]
     },
     impact_hit: {
+        oData: {
+            nStartUp: 10,
+            nActive: 0,
+            nRecovery: 0,
+            nLength: 10
+        },
         aFrames: [
             {
                 sFrame: 'impact_hit_1',
@@ -180,6 +198,12 @@ GameData.oEntity.oEffect.oAnimations = {
         ]
     },
     impact_guard: {
+        oData: {
+            nStartUp: 10,
+            nActive: 0,
+            nRecovery: 0,
+            nLength: 10
+        },
         aFrames: [
             {
                 sFrame: 'impact_guard_1',
@@ -201,6 +225,12 @@ GameData.oEntity.oEffect.oAnimations = {
     },
 
     cancel: {
+        oData: {
+            nStartUp: 18,
+            nActive: 0,
+            nRecovery: 0,
+            nLength: 18
+        },
         aFrames: [
             {
                 sFrame: 'cancel_1',

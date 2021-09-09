@@ -41,9 +41,14 @@ Object.assign(
                 },
                 update: function() {
                     if( this.bAutoPositioning ){
-                        this.setStyle({
-                            transform: 'translate(' + (this.oPosition.nX - this.oReferencePosition.nX) + 'px, ' + (this.oPosition.nY - this.oReferencePosition.nY) + 'px) rotate(' + (this.oPosition.nAngle - this.oReferencePosition.nAngle) + 'deg)'
-                        });
+                        this.setStyle( {
+                            transformOrigin: this.oPosition.originX + 'px ' + this.oPosition.originY + 'px',
+                            transform:
+                                'translate(' + this.oPosition.translateX + 'px, ' + this.oPosition.translateY + 'px) ' + 
+                                'rotate(' + this.oPosition.rotate + 'deg) ' +
+                                'scale(' + this.oPosition.scaleX + ', ' + this.oPosition.scaleY + ') ' +
+                                'skew(' + this.oPosition.skewX + 'deg, ' + this.oPosition.skewY + 'deg)'
+                        } );
                     }
                     OutputElement.prototype.update.call(this);
                 },
@@ -59,53 +64,89 @@ Object.assign(
                 },
                 autoCreateChildElement: function(){},
 
-                getBox: function(){
-                    const box = this.hElement.getBoundingClientRect(),
-                        origin = this.oStyle.transformOrigin.split(' ');
-                    let trans = this.oStyle.transform,
-                        angle = 0;
+                calculatePositionBox: function(){
 
-                    if( trans && trans != 'none' ){
-                        trans = trans.split('(')[1].split(')')[0].split(',');
-                        angle = Math.round(Math.atan2(trans[1], trans[0]) * (180 / Math.PI));
+                    // getBoundingClientRect without CSS transform
+                    let offsetTop = -window.pageYOffset,
+                        offsetLeft = -window.pageXOffset,
+                        hElement = this.hElement;
+
+                    while (hElement) {
+                        offsetTop += hElement.offsetTop;
+                        offsetLeft += hElement.offsetLeft;
+                        hElement = hElement.offsetParent;
                     }
 
-                    return Object.assign( box, {
-                        originX: box.left + parseFloat( origin[0] ),
-                        originY: box.top + parseFloat( origin[1] ),
-                        rotate: angle
-                    } );
+                    const oRect = {
+                        x: offsetLeft,
+                        y: offsetTop,
+                        height: this.hElement.offsetHeight,
+                        width: this.hElement.offsetWidth,
+                        top: offsetTop,
+                        bottom: offsetTop + this.hElement.offsetHeight,
+                        left: offsetLeft,
+                        right: offsetLeft + this.hElement.offsetWidth,
+                    };
+
+                    // transfom CSS
+                    const aOrigin = this.oStyle.transformOrigin.split(' '),
+                        oOrigin = {
+                            originX: parseFloat( aOrigin[0] ),
+                            originY: parseFloat( aOrigin[1] )
+                        };
+
+                    let sTransform = this.oStyle.transform,
+                        oTransform = {
+                            rotate: 0,
+                            scaleX: 1,
+                            scaleY: 1,
+                            skewX: 0,
+                            skewY: 0,
+                            translateX: 0,
+                            translateY: 0
+                        };
+
+                    if( sTransform && sTransform != 'none' ){
+                        let aMatrix = sTransform.split('(')[1].split(')')[0].split(',').map( nValue => parseFloat(nValue) ),
+                            nDenom = Math.pow(aMatrix[0], 2) + Math.pow(aMatrix[1], 2);
+                            
+                        oTransform = {
+                            rotate: Math.atan2(aMatrix[1], aMatrix[0]) / (Math.PI / 180),
+                            scaleX: Math.sqrt(nDenom),
+                            scaleY: (aMatrix[0] * aMatrix[3] - aMatrix[2] * aMatrix[1]) / Math.sqrt(nDenom),
+                            skewX: Math.atan2(aMatrix[0] * aMatrix[2] + aMatrix[1] * aMatrix[3], nDenom) / (Math.PI / 180),
+                            skewY: 0,
+                            translateX: aMatrix[4],
+                            translateY: aMatrix[5]
+                        };
+                    }
+
+                    // Fuse of all data
+                    return Object.assign(
+                        {
+                            nX: oRect.left + oOrigin.originX - OutputManager.oViewport.oOrigin.nX,
+                            nY: oRect.top + oOrigin.originY - OutputManager.oViewport.oOrigin.nY
+                        },
+                        oRect,
+                        oTransform,
+                        oOrigin
+                    );
                 },
+                // PROP translate calculé
                 setPosition: function(oPos){
                     oPos = Object.assign({}, this.oPosition, oPos);
-                    oPos.nDistance = Math.sqrt(oPos.nX * oPos.nX + oPos.nY * oPos.nY);
-                    oPos.nAngle %= 360;
+                    oPos.translateX = oPos.nX - this.oReferencePosition.nX + this.oReferencePosition.translateX;
+                    oPos.translateY = oPos.nY - this.oReferencePosition.nY + this.oReferencePosition.translateY;
                     return Object.assign(this.oPosition, oPos);
                 },
                 resetPosition: function(){
                     return Object.assign(this.oPosition, this.oReferencePosition);
                 },
-                getCalculatedPosition: function(){
-                    const box = this.getBox(),
-                        nX = box.originX - OutputManager.oViewport.oOrigin.nX,
-                        nY = box.originY - OutputManager.oViewport.oOrigin.nY;
-
-                    return {
-                        nX: nX,
-                        nY: nY,
-                        nDistance: Math.sqrt(nX * nX + nY * nY),
-                        nAngle: box.rotate
-                    };
-                },
                 enableAutoPositioning: function(){
+                    const oBox = this.calculatePositionBox();
                     this.bAutoPositioning = true;
-                    
-                    const lastTrans = this.oStyle.transform;
-                    this.hElement.style.transform = '';
-                    Object.assign(this.oReferencePosition, this.getCalculatedPosition());
-
-                    this.hElement.style.transform = lastTrans;
-                    Object.assign(this.oPosition, this.getCalculatedPosition());
+                    Object.assign(this.oReferencePosition, oBox);
+                    Object.assign(this.oPosition, oBox);
                 },
                 disableAutoPositioning: function(){
                     this.bAutoPositioning = false;

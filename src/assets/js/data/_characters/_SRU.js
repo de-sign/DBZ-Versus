@@ -486,7 +486,10 @@ GameData.oCharacter.SRU = {
         attack_A_0: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 2,
@@ -515,7 +518,10 @@ GameData.oCharacter.SRU = {
         attack_A_1: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 2,
@@ -550,7 +556,10 @@ GameData.oCharacter.SRU = {
             aFrames: [
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1'
+                    sFrame: 'stand_1',
+                    oStatus: {
+                        bReverse: true
+                    }
                 },
                 {
                     nFrame: 4,
@@ -587,7 +596,10 @@ GameData.oCharacter.SRU = {
             aFrames: [
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1'
+                    sFrame: 'stand_1',
+                    oStatus: {
+                        bReverse: true
+                    }
                 },
                 {
                     nFrame: 4,
@@ -636,7 +648,10 @@ GameData.oCharacter.SRU = {
             aFrames: [
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1'
+                    sFrame: 'stand_1',
+                    oStatus: {
+                        bReverse: true
+                    }
                 },
                 {
                     nFrame: 4,
@@ -677,7 +692,10 @@ GameData.oCharacter.SRU = {
         attack_2B: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 6,
@@ -725,7 +743,10 @@ GameData.oCharacter.SRU = {
         attack_C: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 10,
@@ -761,7 +782,8 @@ GameData.oCharacter.SRU = {
                 nFrame: 2,
                 sFrame: 'stand_1',
                 oStatus: {
-                    bInvul: true
+                    bInvul: true,
+                    bReverse: true
                 }
             },
             {

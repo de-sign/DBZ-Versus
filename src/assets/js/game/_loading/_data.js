@@ -140,7 +140,38 @@ Object.assign(
                     uAnim.oMove = this.generateMovement(uAnim.uMove);
                     delete uAnim.uMove;
                 }
+
+                if( oEntity.oAnimations[sAnim].aFrames ) {
+                    this.createStepAnimations(oEntity, sAnim);
+                }
             }
+        },
+
+        createStepAnimations: function(oEntity, sAnimation){
+            
+            // Gestion step
+            let nValue = 0;
+            const aCheckHitbox = [false, true, false],
+                aProp = ['nStartUp', 'nActive', 'nRecovery'],
+                oAnimation = oEntity.oAnimations[sAnimation];
+
+            oAnimation.oData = {
+                nLength: 0,
+                nStartUp: 0,
+                nActive: 0,
+                nRecovery: 0
+            };
+            oAnimation.aFrames.forEach( oFrame => {
+                oFrame = Object.assign( {}, oEntity.oFrames[oFrame.sFrame], oFrame);
+                if( aCheckHitbox[nValue] == !oFrame.aHitBox ){
+                    nValue++;
+                }
+                else if( !nValue && oFrame.oStatus && oFrame.oStatus.bCancel ){
+                    nValue = 2;
+                }
+                oAnimation.oData[ aProp[nValue] ] += oFrame.nFrame || 0;
+                oAnimation.oData.nLength += oFrame.nFrame || 0;
+            } );
         },
         
         createColor: function(sType, oEntity){
@@ -269,6 +300,8 @@ Object.assign(
                     aFrames: aFrames
                 }
             );
+            
+            this.createStepAnimations(oChar, 'launch_0');
         },
 
         createJump: function(oChar){
@@ -308,7 +341,8 @@ Object.assign(
                         aFrames: aFrames
                     }
                 );
-                oChar.oAnimations['move' + sType].nDelay = GameSettings.oJump.oMove.nDelay;
+            
+                this.createStepAnimations(oChar, 'move' + sType);
             }
         },
 
@@ -333,6 +367,8 @@ Object.assign(
                         aFrames
                     }
                 );
+            
+                this.createStepAnimations(oChar, 'launch' + sType);
             }
         },
 

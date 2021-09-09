@@ -158,13 +158,19 @@ Object.assign(
                 sBlank: '- + - + - (-)'
             },
             {
+                sType: 'entity',
+                sPattern: '<span class="--pattern">Type : Act. (Spawn frame)</span>',
+                sBlank: '- : - (-)'
+            },
+            {
                 sType: 'advantage',
                 sPattern: '<span class="--pattern">Advantage (Frame on hit)</span>',
                 sBlank: '- (-)'
             },
         ],
         aDataAnimation: ['action', 'dash', 'guard', 'hit', 'launch', 'down', 'recovery'],
-        aOffenseAnimation: ['action', 'dash'],
+        aHurtAnimation: ['guard', 'hit', 'launch', 'down', 'recovery'],
+        aFallAnimation: ['launch', 'down', 'recovery'],
 
         prototype: {
             init: function(oScene){
@@ -180,7 +186,13 @@ Object.assign(
                     this.aHistory.push( oHistory );
                     this.aData.push( {
                         oLayer: oData,
-                        oLast: {}
+                        oLast: {
+                            damages: {},
+                            frames: {},
+                            entity: {},
+                            advantage: {},
+                            oDamage: {}
+                        }
                     } );
                     this.aAnimation.push( {
                         oLayer: oAnim,
@@ -271,28 +283,28 @@ Object.assign(
                     BattleEntity.get().forEach( oEntity => {
                         if( !oEntity.isDead() ){
                             ['oPositionBox', 'aHurtBox', 'aHitBox'].forEach( sBox => {
-                                const aBox = oEntity.getBox(sBox),
-                                oLayer = OutputManager.getElement('LAY__Training_' + sBox.slice(1) + '_' + oEntity.sId),
-                                nMaxElement = Math.max( oLayer.hElement.children.length, aBox.length );
+                                const aBox = oEntity.getBox(sBox, true),
+                                    oLayer = OutputManager.getElement('LAY__Training_' + sBox.slice(1) + '_' + oEntity.sId),
+                                    nMaxElement = Math.max( oLayer.hElement.children.length, aBox.length );
                                 
                                 oLayer.addTickUpdate( () => {
                                     for( let nElement = 0; nElement < nMaxElement; nElement++ ){
                                         const oBox = aBox[nElement],
-                                        hElement = this.getBox(oLayer, nElement);
+                                            hElement = this.getBox(oLayer, nElement);
 
                                         Object.assign(
                                             hElement.style,
                                             oBox ? 
-                                            {
-                                                display: null,
-                                                left: ( oEntity.oPositionPoint.nX + oBox.nX ) + 'px',
-                                                top: ( oEntity.oPositionPoint.nY + oBox.nY ) + 'px',
-                                                width: oBox.nWidth + 'px',
-                                                height: oBox.nHeight + 'px'
-                                            } :
-                                            {
-                                                display: 'none'
-                                            }
+                                                {
+                                                    display: null,
+                                                    left: ( oEntity.oPositionPoint.nX + oBox.nX ) + 'px',
+                                                    top: ( oEntity.oPositionPoint.nY + oBox.nY ) + 'px',
+                                                    width: oBox.nWidth + 'px',
+                                                    height: oBox.nHeight + 'px'
+                                                } :
+                                                {
+                                                    display: 'none'
+                                                }
                                         );
                                     }
                                 } );
@@ -322,41 +334,59 @@ Object.assign(
             },
             showData: function(oPlayer, nIndex){
                 // Data
-                const oData = this.aData[nIndex],
+                const oShowData = this.aData[nIndex],
                     oOpponent = this.oScene.aPlayer[ nIndex == 1 ? 0 : 1 ],
+
+                    bAction = oPlayer.oAnimation.sType == 'action',
+
+                    oCommandData = oPlayer.getCommandData(),
                     bHit = oPlayer.aHit.indexOf( oOpponent.sId ) != -1,
+                    bHurt = TrainingEngineDisplay.aHurtAnimation.indexOf( oPlayer.oAnimation.sType ) != -1,
+                    // bFall = TrainingEngineDisplay.aFallAnimation.indexOf( oPlayer.oAnimation.sType ) != -1 || TrainingEngineDisplay.aFallAnimation.indexOf( oOpponent.oAnimation.sType ) != -1,
+
+                    nHitting = oOpponent.oDamage.nHitting,
+                    bChangeHitting = nHitting ? nHitting != oShowData.oLast.nHitting : true,
+
                     oNewData = {
-                        sType: TrainingEngineDisplay.aOffenseAnimation.indexOf( oPlayer.oAnimation.sType ) == -1 ?
-                            'defense' :
-                            'offense',
-                        oCommandData: oPlayer.getCommandData(),
-                        oAnimation: oPlayer.oAnimation,
-                        bHit: bHit,
-                        nHitting: oOpponent.nHitting,
-                        nLastHitting: oOpponent.nHitting ? oData.oLast.nHitting : null
+                        damages: {
+                            oCommandData,
+                            bHit,
+                            bRecovery: oPlayer.oAnimation.getStep() == 'nRecovery'
+                        },
+                        frames: {
+                            oAnimation: oPlayer.oAnimation
+                        },
+                        entity: {
+                            oAnimation: oPlayer.oAnimation,
+                            oEntity: oPlayer.aEntity.length ? oPlayer.aEntity[ oPlayer.aEntity.length - 1 ] : null
+                        },
+                        advantage: {
+                            oAnimation: oPlayer.oAnimation,
+                            bHit,
+                            bHurt,
+                            // nFrames: bFall ? oShowData.oLast.advantage.nFrames + 1 : 0
+                        }
                     };
 
-                if( this.compareLastData(oData, oNewData) ){
+                for( let nInfo = 0; nInfo < TrainingEngineDisplay.aDataInfo.length; nInfo++ ){
 
-                    for( let nInfo = 0; nInfo < TrainingEngineDisplay.aDataInfo.length; nInfo++ ){
+                    const oText = oShowData.oLayer.aChildElement[nInfo + 1],
+                        oInfo = TrainingEngineDisplay.aDataInfo[nInfo],
+                        oData = oNewData[oInfo.sType];
 
-                        const oText = oData.oLayer.aChildElement[nInfo + 1],
-                            oInfo = TrainingEngineDisplay.aDataInfo[nInfo];
+                    if( this.compareLastData(oShowData.oLast[oInfo.sType], oData) ){
 
                         switch( oInfo.sType ){
                             case 'damages':
-                                if( oNewData.sType == 'offense' && oNewData.oCommandData ){
-                                    const oDamage = (oNewData.oCommandData.oHit && oNewData.oCommandData.oHit.oDamage) || {};
-                                    if( oNewData.bHit ){
-                                        if( oNewData.nLastHitting ){
-                                            const nRatio = Math.max(oDamage.nMinimumReduce, 100 - ( (oOpponent.nHitting - 1) * GameSettings.oCommand.oDamage.nReduce)),
-                                                nBaseDamage = oDamage.nDamage || '-',
-                                                nDamage = nBaseDamage == '-' ? '-' : Math.floor(nBaseDamage * nRatio / 100);
-                                            oText.setText( nDamage + ' (' + nRatio + '%, ' + nBaseDamage + ')' );
-                                        }
+                                if( bAction ){
+                                    const oTakeDamage = oOpponent.oDamage.aHistory[ oOpponent.oDamage.aHistory.length - 1 ],
+                                        oDamage = oData.oCommandData.oHit && oData.oCommandData.oHit.oDamage;
+
+                                    if( oData.bHit ){
+                                        oText.setText( oTakeDamage.nDamage + ' (' + oTakeDamage.nScaling + '%, ' + oTakeDamage.nBase + ')' );
                                     }
-                                    else if( oNewData.nHitting != oNewData.nLastHitting ) {
-                                        oText.setText( '- (-%, ' + (oDamage.nDamage || '-') + ')' );
+                                    else if( bChangeHitting || oData.bRecovery ) {
+                                        oText.setText( '- (-%, ' + ( oDamage ? oDamage.nDamage : '-' ) + ')' );
                                     }
                                 } else {
                                     oText.setText(oInfo.sBlank);
@@ -364,48 +394,51 @@ Object.assign(
                                 break;
                                 
                             case 'frames':
-                                if( oNewData.sType == 'offense' && oNewData.oAnimation.sType != 'dash' ){
-                                    const aValue = [],
-                                        aCheckHitbox = [false, true, false];
-                                    let nValue = 0,
-                                        nFrames = 0;
-
-                                    oNewData.oAnimation.aStep.forEach( oStep => {
-                                        const oFrame = Object.assign( {}, oNewData.oAnimation.oFrameData[oStep.sFrame], oStep);
-                                        aCheckHitbox[nValue] == !!oFrame.aHitBox || (nValue++);
-                                        aValue[nValue] = (aValue[nValue] || 0) + oFrame.nFrame;
-                                        nFrames += oFrame.nFrame;
+                                if( !bHurt ){
+                                    const aText = [];
+                                    ['nStartUp', 'nActive', 'nRecovery'].forEach( sStep => {
+                                        aText.push( oData.oAnimation.oData[sStep] || '-' );
                                     } );
-                                    oText.setText( aValue.join(' + ') + ' (' + oNewData.oAnimation.nLength + ')' );
+                                    oText.setText( aText.join(' + ') + ' (' + oData.oAnimation.nLength + ')' );
                                 }
                                 else {
-                                    oText.setText( '- + - + - (' + oNewData.oAnimation.nLength + ')' );
+                                    oText.setText( oData.oAnimation.nLength + ' + - + - (' + oData.oAnimation.nLength + ')' );
+                                }
+                                break;
+                                
+                            case 'entity':
+                                if( oData.oEntity ){
+                                    oText.setText( oData.oEntity.sType + ' : ' + oData.oEntity.oAnimation.nLength + ' (' + ( oData.oAnimation.nTick - oData.oEntity.oAnimation.nTick + 1 ) + ')' );
+                                }
+                                else if( oData.oAnimation != oShowData.oLast[oInfo.sType].oAnimation ){
+                                    oText.setText(oInfo.sBlank);
                                 }
                                 break;
                                 
                             case 'advantage':
-                                if( oNewData.sType == 'defense' || oNewData.bHit || oNewData.nHitting != oNewData.nLastHitting ){
-                                    const oPlayerFrame = oPlayer.oAnimation.nLength - oPlayer.oAnimation.nTick + 1,
-                                        oOpponentFrame = ( oNewData.sType == 'defense' || oNewData.bHit ) && oOpponent.oAnimation.nLength ?
-                                            oOpponent.oAnimation.nLength - oOpponent.oAnimation.nTick + 1 :
-                                            0,
-                                        nText = oOpponentFrame - oPlayerFrame;
-                                    oText.setText( (nText < 0 ? nText : '+' + nText) + ' (' + ( oNewData.bHit ? oPlayer.oAnimation.nTick : '-' ) + ')' );
-                                }
+                                const oPlayerFrame = oPlayer.oAnimation.nLength - oPlayer.oAnimation.nTick + 1,
+                                    oOpponentFrame = ( oData.bHurt || bHit ) && oOpponent.oAnimation.nLength ?
+                                        oOpponent.oAnimation.nLength - oOpponent.oAnimation.nTick + 1 :
+                                        0,
+                                    nText = oOpponentFrame - oPlayerFrame;
+                                oText.setText( (nText < 0 ? nText : '+' + nText) + ' (' + ( bHit ? oPlayer.oAnimation.nTick : '-' ) + ')' );
                                 break;
                         }
+
+                        oShowData.oLast[oInfo.sType] = oData;
                     }
                 }
+
+                oShowData.oLast.nHitting = oOpponent.oDamage.nHitting;
             },
             compareLastData: function(oData, oNewData){
                 let bChange = false;
                 for( let sProp in oNewData ){
-                    if( oData.oLast[sProp] != oNewData[sProp] ){
+                    if( oData[sProp] != oNewData[sProp] ){
                         bChange = true;
                         break;
                     }
                 }
-                bChange && ( oData.oLast = oNewData );
                 return bChange;
             },
             showAnimation: function(oPlayer, nIndex){
@@ -466,7 +499,18 @@ Object.assign(
                 StoreEngine.update('TNG_Display', this.oParameters);
             },
             setFrameRate: function(nFrameRate){
-                TimerEngine.setFPS(nFrameRate || this.getFrameRate());
+                if( nFrameRate ){
+                    TimerEngine.setFPS(nFrameRate);
+                } else {
+                    const nFPS = this.getFrameRate(),
+                        oText = this.oScene.oDisplay.oModule.oText.oCurrent;
+                    if( oText && oText.nLastFPS ){
+                        TimerEngine.setFPS(nFPS / oText.nSlow);
+                        oText.nLastFPS = nFPS;
+                    } else {
+                        TimerEngine.setFPS(nFPS);
+                    }
+                }
             },
             getFrameRate: function(){
                 return TrainingEngineDisplay.aFrameRate[ this.oParameters.nFrameRate ];

@@ -29,6 +29,7 @@ Object.assign(
                 } );
 
                 this.aData.push( {
+                    nLastCombo: 0,
                     nLife: -1,
                     nLastLife: -1,
                     nKi: -1,
@@ -59,7 +60,8 @@ Object.assign(
                     oData = this.aData[nIndex];
 
                 // Update LIFE
-                const bResetLast = oPlayer.nHitting == 0 && oData.nLastLife != oData.nLife,
+                const bNewCombo = oData.nLastCombo != oPlayer.oDamage.nFrameStart,
+                    bResetLast = ( bNewCombo || oPlayer.oDamage.nHitting == 0 ) && oData.nLastLife != oData.nLife,
                     nLife = Math.max(0, oPlayer.nLife);
 
                 if( oData.nLife != oPlayer.nLife || bResetLast ){
@@ -91,11 +93,14 @@ Object.assign(
                 }
     
                 // Update Combo
-                if( oData.nHit != oPlayer.nHitting ){
-                    if( oData.nHit = oPlayer.nHitting ){
+                if( bNewCombo || oData.nHit != oPlayer.oDamage.nHitting ){
+                    oData.nLastCombo = oPlayer.oDamage.nFrameStart;
+                    oData.nHit = oPlayer.oDamage.nHitting;
+                    
+                    if( oPlayer.oDamage.nHitting ){
                         oElement.oCombo.setText(
-                            oData.nHit + ' hits !'
-                            + '<i>' + ( oData.nLastLife - this.aPlayer[nIndex].nLife ) + ' damages</i>'
+                            oPlayer.oDamage.nHitting + ' hits !'
+                            + '<i>' + oPlayer.oDamage.nDamage + ' damages</i>'
                         );
                         oElement.oCombo.addTickUpdate( () => {
                             oElement.oCombo.hElement.classList.add('--show');

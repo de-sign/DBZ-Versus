@@ -710,7 +710,10 @@ GameData.oCharacter.MJN_BUU = {
         attack_A_0: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 2,
@@ -739,7 +742,10 @@ GameData.oCharacter.MJN_BUU = {
         attack_A_1: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 2,
@@ -768,7 +774,10 @@ GameData.oCharacter.MJN_BUU = {
         attack_B: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 4,
@@ -802,7 +811,10 @@ GameData.oCharacter.MJN_BUU = {
             aFrames: [
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1'
+                    sFrame: 'stand_1',
+                    oStatus: {
+                        bReverse: true
+                    }
                 },
                 {
                     nFrame: 2,
@@ -883,7 +895,10 @@ GameData.oCharacter.MJN_BUU = {
         attack_2B: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 6,
@@ -930,7 +945,10 @@ GameData.oCharacter.MJN_BUU = {
         attack_C: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 20,
@@ -954,7 +972,8 @@ GameData.oCharacter.MJN_BUU = {
                 nFrame: 2,
                 sFrame: 'stand_1',
                 oStatus: {
-                    bInvul: true
+                    bInvul: true,
+                    bReverse: true
                 }
             },
             {

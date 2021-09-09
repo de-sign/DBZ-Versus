@@ -20,6 +20,7 @@
 //=include _battle/_inputbuffer/_engine.js
 //=include _battle/_inputbuffer/_local.js
 //=include _battle/_inputbuffer/_dummy.js
+//=include _battle/_components/_damage.js
 //=include _battle/_components/_gatling.js
 //=include _battle/_components/_movement.js
 //=include _battle/_entity/_element.js

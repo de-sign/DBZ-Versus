@@ -24,8 +24,9 @@ Object.assign(
                     Scene.prototype.init.call(this, 'CTX__Battle');
                     this.oContext.hElement.classList.add( oOptions.sContextClass );
 
-					this.oArea = OutputManager.getElement('LAY__Battle_Area');
+					this.oArea = OutputManager.getElement('LAY__Battle_Area_Wrapper');
                     this.oArea.enableAutoPositioning();
+
                     this.setBackground( SceneManager.oTransverseData.BTL__sStage );
                     OutputManager.getChannel('CHN__BGM').play('ADO__' + SceneManager.oTransverseData.BTL__sBGM, false, true);
 
@@ -66,7 +67,7 @@ Object.assign(
 
                 endBattle: function(oEndGame){},
                 setBackground: function(sCod){
-                    this.oContext.setStyle( {
+                    OutputManager.getElement('LAY__Battle_Area').setStyle( {
                         backgroundColor: GameData.oStage[sCod].sColor,
                         backgroundImage: 'url("' + GameData.oStage[sCod].oPath.sBackground + '")'
                     } );

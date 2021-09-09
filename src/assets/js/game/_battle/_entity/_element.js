@@ -139,7 +139,7 @@ Object.assign(
                 
                 this.oLayer = new OutputManager.OutputLayer(hLayer);
                 
-                const oArea = OutputManager.getElement('LAY__Battle_Area');
+                const oArea = OutputManager.getElement('LAY__Battle_Area_Wrapper');
                 oArea.add(this.oLayer);
                 oArea.update();
            
@@ -150,12 +150,11 @@ Object.assign(
             },
             moveLayer: function(oPosition){
                 const aRatio = this.oParent ? [-1, 1] : [1, -1],
-                    oPos = Object.assign(
-                        {},
-                        this.oParent ?
-                            this.oParent.oLayer.oPosition :
-                            this.oLayer.oPosition
-                    );
+                    oRefPos = this.oParent ? this.oParent.oLayer.oPosition : this.oLayer.oPosition,
+                    oPos = {
+                        nX: oRefPos.nX,
+                        nY: oRefPos.nY
+                    };
 
                 if( oPosition.nX ){
                     oPos.nX += oPosition.nX * aRatio[this.bReverse ? 0 : 1];
@@ -170,7 +169,7 @@ Object.assign(
                 let bRender = false;
                 if( !this.isDead() ){
                     bRender = true;
-                    this.oLayer.hElement.classList[ this.bReverse ? 'add' : 'remove' ]('--reverse');
+                    this.oLayer.setPosition( { scaleX: this.bReverse ? -1 : 1 } );
                     this.oAnimation.oFrame.nZIndex && this.oLayer.setStyle( { zIndex: this.oAnimation.oFrame.nZIndex } );
                     this.oSprite.setSource( this.oData.oPath.sFrames + '/' + this.oAnimation.oFrame.sPath );
                 }
@@ -197,7 +196,8 @@ Object.assign(
                         sAnimation,
                         oAnim.sType,
                         this.oData.oFrames,
-                        oAnim.aFrames
+                        oAnim.aFrames,
+                        oAnim.oData
                     );
                     bUpdate && this.updateAnimation();
                     bSet = true;

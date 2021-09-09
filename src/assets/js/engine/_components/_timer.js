@@ -17,6 +17,8 @@ Object.assign(
         DETAILS Les propriétés suivantes sont purement technique et ne devrait être utilisé principalement que par le système
         ----- */
 
+        /* ----- DETAILS Nombre de FPS défini. ----- */
+        nFPS: 60,
         /* ----- DETAILS Nombre de FRAMES à _éviter_ avant la mise à jour de la suivante afin de respecter le FPS défini. ----- */
         nFramesToSkip: 0,
         /* ----- DETAILS Nombre de FRAMES _évité_ depuis la dernière FRAME mise à jour afin de respecter le FPS défini. ----- */
@@ -107,7 +109,8 @@ Object.assign(
         Ne peux pas être supérieur à 60 FPS.
         ----- */
         setFPS: function(nFps) {
-            this.nFramesToSkip = parseInt(60 / Math.min(nFps, 60) - 1);
+            this.nFPS = Math.min(nFps, 60);
+            this.nFramesToSkip = parseInt(60 / this.nFPS - 1);
         },
         /* ----- END METHODS ----- */
         /* ----- END SINGLETON ----- */

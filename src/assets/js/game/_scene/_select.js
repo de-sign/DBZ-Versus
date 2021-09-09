@@ -94,15 +94,10 @@ Object.assign(
                 sText = 'Waiting ...';
             }
 
-            let sColor = '';
-            for( let i = 0; i < this.oCharacter.aColor.length; i++ ){
-                sColor += i == this.nColor ? ' 0 ' : ' - ';
-            }
-
             OutputManager.getElement('SPT__Select_Character_' + this.nPlayer)
                 .setSource( oCharColor.oPath.sPreview );
             OutputManager.getElement('TXT__Select_Character_' + this.nPlayer)
-                .setText( oCharColor.sName + '<i>' + oCharColor.sColorName + '<br/>' + sColor + '</i>' );
+                .setText( oCharColor.sName + '<i>' + ( this.nColor + 1 ) + '/' + this.oCharacter.aColor.length + ' - ' + oCharColor.sColorName + '</i>' );
             OutputManager.getElement('TXT__Select_Player_' + this.nPlayer)
                 .setText( sText );
         },

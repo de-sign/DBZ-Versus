@@ -47,7 +47,7 @@ Object.assign(
                         }
                     );
                     
-                    const oArea = OutputManager.getElement('LAY__Battle_Area');
+                    const oArea = OutputManager.getElement('LAY__Battle_Area_Wrapper');
                     oArea.add(this.oLayer);
                     oArea.update();
             

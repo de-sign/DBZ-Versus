@@ -674,7 +674,10 @@ GameData.oCharacter.FRZ = {
         attack_A_0: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 2,
@@ -709,7 +712,10 @@ GameData.oCharacter.FRZ = {
             aFrames: [
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1'
+                    sFrame: 'stand_1',
+                    oStatus: {
+                        bReverse: true
+                    }
                 },
                 {
                     nFrame: 2,
@@ -740,7 +746,10 @@ GameData.oCharacter.FRZ = {
         attack_B: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 4,
@@ -776,7 +785,10 @@ GameData.oCharacter.FRZ = {
             aFrames: [
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1'
+                    sFrame: 'stand_1',
+                    oStatus: {
+                        bReverse: true
+                    }
                 },
                 {
                     nFrame: 4,
@@ -812,7 +824,10 @@ GameData.oCharacter.FRZ = {
             aFrames: [
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1'
+                    sFrame: 'stand_1',
+                    oStatus: {
+                        bReverse: true
+                    }
                 },
                 {
                     nFrame: 4,
@@ -854,7 +869,10 @@ GameData.oCharacter.FRZ = {
         attack_2B_0: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 6,
@@ -937,7 +955,10 @@ GameData.oCharacter.FRZ = {
         attack_C: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 10,
@@ -973,7 +994,8 @@ GameData.oCharacter.FRZ = {
                 nFrame: 2,
                 sFrame: 'stand_1',
                 oStatus: {
-                    bInvul: true
+                    bInvul: true,
+                    bReverse: true
                 }
             },
             {

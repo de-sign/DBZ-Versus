@@ -102,11 +102,13 @@ Object.assign(
                 },
                 setAnimation: function(sAnimation, nLength){
                     if( !this.oAnimation || this.oAnimation.sName != sAnimation ){
+                        const oAnimation = this.oEngine.oList.oData.oAnimations[sAnimation];
                         this.oAnimation = new GameAnimation(
                             sAnimation,
-                            this.oEngine.oList.oData.oAnimations[sAnimation].sType,
+                            oAnimation.sType,
                             this.oEngine.oList.oData.oFrames,
-                            this.oEngine.oList.oData.oAnimations[sAnimation].aFrames
+                            oAnimation.aFrames,
+                            oAnimation.oData
                         );
                         nLength && (this.oAnimation.nLength = nLength);
                     }

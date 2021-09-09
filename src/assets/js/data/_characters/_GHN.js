@@ -690,7 +690,10 @@ GameData.oCharacter.GHN = {
             aFrames: [
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1'
+                    sFrame: 'stand_1',
+                    oStatus: {
+                        bReverse: true
+                    }
                 },
                 {
                     nFrame: 2,
@@ -731,7 +734,10 @@ GameData.oCharacter.GHN = {
         attack_A_0: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 2,
@@ -760,7 +766,10 @@ GameData.oCharacter.GHN = {
         attack_A_1: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 2,
@@ -789,7 +798,10 @@ GameData.oCharacter.GHN = {
         attack_B: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 4,
@@ -905,7 +917,10 @@ GameData.oCharacter.GHN = {
         attack_2B: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 6,
@@ -957,7 +972,10 @@ GameData.oCharacter.GHN = {
             aFrames: [
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1'
+                    sFrame: 'stand_1',
+                    oStatus: {
+                        bReverse: true
+                    }
                 },
                 {
                     nFrame: 4,
@@ -975,14 +993,14 @@ GameData.oCharacter.GHN = {
                     }
                 },
                 {
-                    nFrame: 6,
+                    nFrame: 8,
                     sFrame: 'attack_4_2',
                     oStatus: {
                         bAerialInvul: true
                     }
                 },
                 {
-                    nFrame: 6,
+                    nFrame: 4,
                     sFrame: 'attack_4_1',
                     oStatus: {
                         bAerialInvul: true,
@@ -1010,7 +1028,7 @@ GameData.oCharacter.GHN = {
                 nLength: 22,
                 nMove: 12,
                 nY: -120,
-                nX: 80
+                nX: 92
             },
             aFrames: [
                 {
@@ -1044,7 +1062,10 @@ GameData.oCharacter.GHN = {
         attack_C: [
             {
                 nFrame: 2,
-                sFrame: 'stand_1'
+                sFrame: 'stand_1',
+                oStatus: {
+                    bReverse: true
+                }
             },
             {
                 nFrame: 28,
@@ -1069,7 +1090,8 @@ GameData.oCharacter.GHN = {
                 nFrame: 2,
                 sFrame: 'stand_1',
                 oStatus: {
-                    bInvul: true
+                    bInvul: true,
+                    bReverse: true
                 }
             },
             {

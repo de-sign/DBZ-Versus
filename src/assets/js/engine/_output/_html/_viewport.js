@@ -27,17 +27,16 @@ Object.assign(
                 },
                 
                 setOrigin: function(oOgn) {
-                    let pos = null;
                     if( oOgn ){
-                        pos = oOgn;
+                        this.hElement.style.transformOrigin = oOgn.nX + 'px ' + oOgn.nY + 'px';
                     } else {
-                        const box = this.getBox();
-                        pos = {
-                            nX: box.originX,
-                            nY: box.originY
+                        const oRect = aOrigin = this.oStyle.transformOrigin.split(' ');
+                        oOgn = {
+                            nX: this.hElement.offsetLeft + parseFloat( aOrigin[0] ),
+                            nY: this.hElement.offsetTop + parseFloat( aOrigin[1] )
                         };
                     }
-                    return Object.assign(this.oOrigin, pos);
+                    return Object.assign(this.oOrigin, oOgn);
                 },
 
                 getContext: function(sId){

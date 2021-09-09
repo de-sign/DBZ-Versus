@@ -134,16 +134,10 @@ Object.assign(
                                 } );
                             }
                             else {
-                                TimerEngine.setFPS(30);
                                 this.oDisplay.show( {
-                                    sText: 'K.O. !'
+                                    sText: 'K.O. !',
+                                    nSlow: 2
                                 } );
-                                setTimeout(
-                                    () => {
-                                        TimerEngine.setFPS(60);
-                                    },
-                                    1000
-                                )
                             }
                         }
 

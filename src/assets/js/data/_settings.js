@@ -102,8 +102,7 @@ Object.assign(
                 {
                     sName: 'Left',
                     fPosition: (nIndex, bReverse, oArea) => {
-                        const oBoxArea = oArea.getBox(),
-                            nLeft = oArea.oPosition.nX + (oBoxArea.left - oBoxArea.originX),
+                        const nLeft = oArea.oPosition.nX - oArea.oPosition.originX,
                             aValue = bReverse ?
                                 [32, 88] :
                                 [88, 32];
@@ -122,8 +121,7 @@ Object.assign(
                 {
                     sName: 'Right',
                     fPosition: (nIndex, bReverse, oArea) => {
-                        const oBoxArea = oArea.getBox(),
-                            nRight = oArea.oPosition.nX + (oBoxArea.right - oBoxArea.originX),
+                        const nRight = oArea.oPosition.nX + oArea.oPosition.width - oArea.oPosition.originX,
                             aValue = bReverse ?
                                 [88, 32] :
                                 [32, 88];
@@ -233,7 +231,7 @@ Object.assign(
                 aCanSetLength: ['hurt'],
                 oMap: {
                     // type: category
-                    'action': null,
+                    'action': 'counter',
                     'dash': 'stack',
                     'cancel': 'stack',
                     'stand': 'movement',
@@ -261,6 +259,15 @@ Object.assign(
         nTimer: 99,
         /* ----- DETAILS Nombre de FRAME lors d'un HIT FREEZE ----- */
         nFreeze: 7,
+        oCounter: {
+            nStun: 4,
+            oInfo: {
+                nLength: 20,
+                sText: 'Counter&nbsp;!',
+                nSlow: 2,
+                nZoom: 1.5
+            }
+        },
 
         // ENTITY
         /* ----- DETAILS Temps avant suppression d'un entité pour futur ROLLBACK ----- */
@@ -371,8 +378,9 @@ Object.assign(
             oDamage: {
                 nDamage: 25,
                 // Percent !
-                nReduce: 5,
-                nMinimumReduce: 10
+                nScaling: 5, // Init
+                nProration: 5, // Reduce
+                nMinimumReduce: 10, // Minimum
             },
             /* ----- Paramétrage du gain de KI ----- */
             oKi: {

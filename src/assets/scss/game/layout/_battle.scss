@@ -1,9 +1,5 @@
 /* Battle */
 #CTX__Battle {
-    background-repeat: repeat-x;
-    background-position-x: center;
-    background-position-y: bottom;
-    padding-bottom: 256px;
 }
 
 .Battle__Interface {
@@ -13,6 +9,7 @@
     right: 0;
     bottom: 0;
     z-index: 1000;
+    overflow: hidden;
 
     .Battle__Interface_Wrapper {
         max-width: 1024px;
@@ -20,7 +17,46 @@
         padding: $space-large;
         position: relative;
         height: 100%;
-        overflow: hidden;
+    }
+}
+
+.Battle__Blur {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 88px;
+    z-index: 1000;
+
+    background-repeat: repeat-y;
+    background-position-x: right;
+    background-position-y: bottom;
+
+    &::before {
+        content: '';
+        position: absolute;
+        background-color: White;
+        width: 500px;
+        height: 100%;
+    }
+
+    &.--left {
+        background-image: url('../images/stages/effects/blur_left.png');
+    }
+
+    &.--left,
+    &.--left::before {
+        right: 100%;
+    }
+    
+    &.--right{
+        background-image: url('../images/stages/effects/blur_right.png');
+    }
+    
+    &.--right,
+    &.--right::before {
+        left: 100%;
+        text-align: right;
     }
 }
 
@@ -117,7 +153,6 @@
             & > * {
                 flex: 0 0 auto;
                 height: 20px;
-                min-width: 20px;
 
                 &.Battle__HUD_Bar_Life {
                     background-color: #00F040;
@@ -305,19 +340,21 @@
 }
 
 .Battle__Area {
-    max-width: 1024px;
+    max-width: 1200px;
     height: 100%;
     margin: 0 auto;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
+    padding: 0 88px 256px 88px;
+    background-repeat: repeat-x;
+    background-position-x: center;
+    background-position-y: bottom;
+
+    transition: transform 0.15s linear, transform-origin 0.15s linear;
     
     &::before {
         content: '';
         position: absolute;
         display: none;
-        bottom: -256px;
+        bottom: 0;
         top: 0;
         left: -88px;
         right: -88px;
@@ -328,44 +365,12 @@
         }
     }
 
-    &_Blur {
-        display: block;
-        position: absolute;
-        top: 0;
-        bottom: -256px;
-        width: 88px;
-        z-index: 1000;
-
-        background-repeat: repeat-y;
-        background-position-x: right;
-        background-position-y: bottom;
-
-        &::before {
-            content: '';
-            position: absolute;
-            background-color: White;
-            width: 500px;
-            height: 100%;
-        }
-
-        &.--left {
-            background-image: url('../images/stages/effects/blur_left.png');
-        }
-
-        &.--left,
-        &.--left::before {
-            right: 100%;
-        }
-        
-        &.--right{
-            background-image: url('../images/stages/effects/blur_right.png');
-        }
-        
-        &.--right,
-        &.--right::before {
-            left: 100%;
-            text-align: right;
-        }
+    &_Wrapper {
+        height: 100%;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
     }
 }
 
@@ -381,10 +386,6 @@
         top: 50%;
         transform-origin: 50% 50%;
         transform: translateY(-50%) !important;
-        
-        .--reverse & {
-            transform: scaleX(-1) translateY(-50%) !important;
-        }
     }
     
     #CTX__Battle:not(.--info) &.--freeze {
@@ -393,19 +394,11 @@
             .Battle__Entity_Sprite {
                 transform: translate(-4px, -50%) !important;
             }
-            
-            &.--reverse .Battle__Entity_Sprite {
-                transform: scaleX(-1) translate(-4px, -50%) !important;
-            }
         }
 
         &_impair {
             .Battle__Entity_Sprite {
                 transform: translate(4px, -50%) !important;
-            }
-            
-            &.--reverse .Battle__Entity_Sprite {
-                transform: scaleX(-1) translate(4px, -50%) !important;
             }
         }
     }
@@ -416,29 +409,17 @@
     width: 200px;
     height: 200px;
     transform-origin: 98px 182px;
-    
-    .Battle__Entity_Sprite {
-        transform-origin: 100px 100px;
-    }
 
     &.--float {
         &_up {
             .Battle__Entity_Sprite {
                 transform: translate(0, calc(-50% - 4px)) !important;
             }
-            
-            &.--reverse .Battle__Entity_Sprite {
-                transform: scaleX(-1) translate(0, calc(-50% - 4px)) !important;
-            }
         }
 
         &_down {
             .Battle__Entity_Sprite {
                 transform: translate(0, calc(-50% + 4px)) !important;
-            }
-            
-            &.--reverse .Battle__Entity_Sprite {
-                transform: scaleX(-1) translate(0, calc(-50% + 4px)) !important;
             }
         }
     }
@@ -456,10 +437,6 @@
     height: 300px;
     transform-origin: 98px 232px;
     z-index: 0;
-    
-    .Battle__Entity_Sprite {
-        transform-origin: 100px 150px;
-    }
 }
 
 .Battle__Effect {
