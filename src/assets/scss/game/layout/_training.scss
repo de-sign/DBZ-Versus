@@ -24,6 +24,7 @@
     & > .Training__Menu {
         display: none;
         min-width: 500px !important; 
+        animation: 0.25s ease-in 0s 1 DS-KF-Appear;
 
         &.--show {
             display: block;
@@ -53,28 +54,23 @@
 // Command List
 .Training__Menu_List {
     overflow: hidden;
-    align-items: center;
+    min-height: $height-large;
 
     &.--show {
         display: flex !important;
-    }
-
-    &_Name {
-        margin-left: -( 200px + $space-medium ) !important;
-        font-family: $font-design-family !important;
-        font-size: $font-size-medium !important;
     }
 
     &_Character {
         position: relative;
         display: none;
         background-color: rgba(255, 255, 255, 0.75);
+        margin-bottom: $space-medium !important;
 
         &.--show {
             display: block;
         }
 
-        .Menu__Title:not( .Training__Menu_List_Name ) {
+        .Menu__Title:not(:first-child) {
             padding-top: $space-medium;
         }
 
@@ -82,24 +78,10 @@
             min-width: $width-medium;
         }
     }
-
-    &_Sprite {
-        margin-left: $space-medium;
-        position: relative;
-        width: 200px;
-        height: 200px;
-
-        img {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%) !important;
-            transform-origin: 100px 100px;
-        }
-    }
     
-    &_Ki {
-        width: $width-small / 10;
-        margin: 0 0 0 $space-small !important;
+    &_Button {
+        width: $width-small / 3;
+        text-align: right;
     }
 
     .--cancel {

@@ -1003,6 +1003,7 @@ GameData.oEntity.oCharacter.oAnimations = {
             }
         ]
     },
+    
     move_66: {
         sType: 'dash',
         uMove: {
@@ -1103,6 +1104,136 @@ GameData.oEntity.oCharacter.oAnimations = {
     move_9: {
         // Extend via LOADING
         sType: 'jump'
+    },
+    move_j66: {
+        sType: 'dash',
+        uMove: {
+            nX: 12 * 14,
+            nLength: 14
+        },
+        aFrames: [
+            {
+                nFrame: 2,
+                sFrame: 'stand_1',
+                oPositionBox: {
+                    nX: -22,
+                    nY: -110,
+                    nWidth: 68,
+                    nHeight: 76
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'move_2',
+                oPositionBox: {
+                    nX: -22,
+                    nY: -110,
+                    nWidth: 68,
+                    nHeight: 76
+                }
+            },
+            {
+                nFrame: 7,
+                sFrame: 'move_1',
+                oPositionBox: {
+                    nX: -22,
+                    nY: -110,
+                    nWidth: 68,
+                    nHeight: 76
+                }
+            },
+            {
+                nFrame: 1,
+                sFrame: 'move_1',
+                oPositionBox: {
+                    nX: -22,
+                    nY: -110,
+                    nWidth: 68,
+                    nHeight: 76
+                },
+                oStatus: {
+                    bReverse: true
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'stand_1',
+                oPositionBox: {
+                    nX: -22,
+                    nY: -110,
+                    nWidth: 68,
+                    nHeight: 76
+                },
+                oStatus: {
+                    bCancel: true
+                }
+            }
+        ]
+    },
+    move_j44: {
+        sType: 'dash',
+        uMove: {
+            nX: -12 * 14,
+            nLength: 14
+        },
+        aFrames: [
+            {
+                nFrame: 2,
+                sFrame: 'stand_1',
+                oPositionBox: {
+                    nX: -22,
+                    nY: -110,
+                    nWidth: 68,
+                    nHeight: 76
+                }
+            },
+            {
+                nFrame: 8,
+                sFrame: 'move_2',
+                oPositionBox: {
+                    nX: -22,
+                    nY: -110,
+                    nWidth: 68,
+                    nHeight: 76
+                }
+            },
+            {
+                nFrame: 1,
+                sFrame: 'move_0',
+                oPositionBox: {
+                    nX: -22,
+                    nY: -110,
+                    nWidth: 68,
+                    nHeight: 76
+                }
+            },
+            {
+                nFrame: 1,
+                sFrame: 'move_0',
+                oPositionBox: {
+                    nX: -22,
+                    nY: -110,
+                    nWidth: 68,
+                    nHeight: 76
+                },
+                oStatus: {
+                    bReverse: true
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'stand_1',
+                oPositionBox: {
+                    nX: -22,
+                    nY: -110,
+                    nWidth: 68,
+                    nHeight: 76
+                },
+                oStatus: {
+                    bCancel: true
+                }
+            }
+        ]
     },
 
     // Hurt
@@ -1251,7 +1382,6 @@ GameData.oEntity.oCharacter.oAnimations = {
         ]
     },
     
-    
     launch_0: {
         // Extend via LOADING
         sType: 'hit'
@@ -1334,6 +1464,12 @@ GameData.oEntity.oCharacter.oAnimations = {
             {
                 nFrame: 2,
                 sFrame: 'stand_1',
+                oPositionBox: {
+                    nX: -22,
+                    nY: -110,
+                    nWidth: 68,
+                    nHeight: 76
+                },
                 oStatus: {
                     bReverse: true
                 }
@@ -1356,6 +1492,12 @@ GameData.oEntity.oCharacter.oAnimations = {
             {
                 nFrame: 2,
                 sFrame: 'stand_1',
+                oPositionBox: {
+                    nX: -22,
+                    nY: -110,
+                    nWidth: 68,
+                    nHeight: 76
+                },
                 oStatus: {
                     bCancel: true
                 }
@@ -1368,6 +1510,12 @@ GameData.oEntity.oCharacter.oAnimations = {
             {
                 nFrame: 2,
                 sFrame: 'stand_1',
+                oPositionBox: {
+                    nX: -22,
+                    nY: -110,
+                    nWidth: 68,
+                    nHeight: 76
+                },
                 oStatus: {
                     bReverse: true
                 }
@@ -1521,11 +1669,49 @@ GameData.oEntity.oCharacter.oAnimations = {
     ],
 
     // List
+    list_4: {
+        sType: 'animation',
+        aFrames: [
+            {
+                nFrame: 24,
+                sFrame: 'stand_0'
+            },
+            {
+                nFrame: 1,
+                sFrame: 'guard_0__2'
+            },
+            {
+                nFrame: 5,
+                sFrame: 'guard_0'
+            }
+        ]
+    },
+    list_5: {
+        sType: 'animation',
+        aFrames: [
+            {
+                sFrame: 'stand_0'
+            }
+        ]
+    },
     list_8: {
-        sType: 'jump',
+        sType: 'animation',
         aFrames: [
             {
                 sFrame: 'jump_2'
+            }
+        ]
+    },
+    list_hit_D: {
+        sType: 'animation',
+        aFrames: [
+            {
+                nFrame: 24,
+                sFrame: 'stand_0'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'hit_0__3'
             }
         ]
     },
@@ -1780,7 +1966,8 @@ GameData.oEntity.oCharacter.oCommands = {
             oList: {
                 sName: 'Reflect',
                 sInfo: 'On guard',
-                sGroup: 'defense'
+                sGroup: 'defense',
+                sStance: 'list_4'
             },
             oProperty: {
                 sCollisionBox: 'oPositionBox'
@@ -1815,10 +2002,17 @@ GameData.oEntity.oCharacter.oCommands = {
                     }
                 ]
             },
-            oFreeze: {
-                bInfo: false,
-                nLength: 14
-            },
+            aEffect: [
+                {
+                    sType: 'dark',
+                    nLength: 14
+                },
+                {
+                    sType: 'freeze',
+                    nLength: 14,
+                    bIgnore: true
+                }
+            ],
             oHit: {
                 oDamage: {
                     nDamage: 0
@@ -1860,7 +2054,8 @@ GameData.oEntity.oCharacter.oCommands = {
             oList: {
                 sName: 'Tech Throw',
                 sInfo: 'On throw',
-                sGroup: 'defense'
+                sGroup: 'defense',
+                sStance: 'list_hit_D'
             },
             oProperty: {
                 sCollisionBox: 'oPositionBox'
@@ -1894,10 +2089,17 @@ GameData.oEntity.oCharacter.oCommands = {
                     }
                 ]
             },
-            oFreeze: {
-                bInfo: false,
-                nLength: 14
-            },
+            aEffect: [
+                {
+                    sType: 'dark',
+                    nLength: 14
+                },
+                {
+                    sType: 'freeze',
+                    nLength: 14,
+                    bIgnore: true
+                }
+            ],
             oHit: {
                 oDamage: {
                     nDamage: 0
@@ -2177,16 +2379,23 @@ GameData.oEntity.oCharacter.oCommands = {
                     }
                 ]
             },
-            oFreeze: {
-                bInfo: false,
-                nLength: 30
-            }
+            aEffect: [
+                {
+                    sType: 'dark',
+                    nLength: 30
+                },
+                {
+                    sType: 'freeze',
+                    nLength: 30,
+                    bIgnore: true
+                }
+            ]
         }
     ],
     aAerial: [
         {
             sCod: 'move_jnn', // Same code B.Dash
-            sAnimation: 'move_66',
+            sAnimation: 'move_j66',
             oList: {
                 sName: 'Forward Air Dash',
                 bHidden: true
@@ -2217,7 +2426,7 @@ GameData.oEntity.oCharacter.oCommands = {
         },
         {
             sCod: 'move_jnn', // Same code F.Dash
-            sAnimation: 'move_44',
+            sAnimation: 'move_j44',
             oList: {
                 sName: 'Backward Air Dash',
                 bHidden: true
@@ -2240,7 +2449,8 @@ GameData.oEntity.oCharacter.oCommands = {
             sAnimation: 'attack_jB',
             oList: {
                 sName: 'Jump Heavy',
-                sGroup: 'aerial'
+                sGroup: 'aerial',
+                sStance: 'list_8'
             },
             oProperty: {},
             oGatling: {
@@ -2277,7 +2487,8 @@ GameData.oEntity.oCharacter.oCommands = {
             sAnimation: 'attack_jA',
             oList: {
                 sName: 'Jump Light',
-                sGroup: 'aerial'
+                sGroup: 'aerial',
+                sStance: 'list_8'
             },
             oProperty: {},
             oGatling: {

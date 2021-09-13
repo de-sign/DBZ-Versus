@@ -20,7 +20,6 @@ Object.assign(
                             this.createJump(oEntity);
                             this.createRecovery(oEntity);
                             this.createCommands(oEntity);
-                            this.createAnimationsList(oEntity);
                         }
                         this.createColor(sType, oEntity);
                     }
@@ -421,50 +420,6 @@ Object.assign(
                 } );
             }
             oChar.oCommands = oCommands;
-        },
-
-        createAnimationsList: function(oChar){
-            [
-                ...oChar.oCommands.aGround,
-                ...oChar.oCommands.aAerial
-            ]
-            .forEach( oCommand => {
-                if( !oCommand.oList.bHidden ){
-                    do {
-                        if( oCommand.oFollowUp ){
-                            // Creation de l'animation LIST pour les FOLLOWUP
-                            const aListFrames = [],
-                                aRefFrames = oChar.oAnimations[oCommand.sListAnimation || oCommand.sAnimation].aFrames,
-                                aCurFrames = oChar.oAnimations[oCommand.oFollowUp.sAnimation].aFrames;
-
-                            for(let nFrames = 0; nFrames < aRefFrames.length; nFrames++){
-                                const oFrame = Object.assign( {}, aRefFrames[nFrames] );
-                                aListFrames.push( oFrame );
-
-                                if( oFrame.oStatus && oFrame.oStatus.bCancel ){
-                                    delete oFrame.oStatus;
-                                    oFrame.nFrame = GameSettings.nFreeze;
-                                    break;
-                                }
-                            }
-                            aCurFrames.forEach( oFrame => {
-                                aListFrames.push( Object.assign( {}, oFrame ) );
-                            } );
-
-                            // Ajout de l'animation
-                            const sListAnimation = 'list_' + oCommand.oFollowUp.sAnimation;
-                            oChar.oAnimations[sListAnimation] = {
-                                aFrames: aListFrames
-                            };
-                            oCommand.oFollowUp.oList = {
-                                sAnimation: sListAnimation
-                            };
-                        }
-                        oCommand = oCommand.oFollowUp;
-                    }
-                    while( oCommand );
-                }
-            } );
         },
 
         // STAGE

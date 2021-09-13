@@ -165,14 +165,13 @@ Object.assign(
             }
             return bCanUse;
         },
-        needFreeze: function(){
-            let bFreeze = false;
-            if( this.oCurrent && this.oCurrent.oFreeze && !this.oCurrent.bFreeze ){
-                if( !this.oCurrent.oFreeze.nFrameStart || ( this.oCurrent.nFrameStart + this.oCurrent.oFreeze.nFrameStart <= TimerEngine.nFrames ) ){
-                    bFreeze = true;
-                }
+        getEffect: function(){
+            let aEffect = null;
+            if( this.oCurrent && this.oCurrent.aEffect ){
+                aEffect = this.oCurrent.aEffect;
+                this.oCurrent.aEffect = [];
             }
-            return bFreeze;
+            return aEffect;
         },
         isJumpCancellable: function(){
             return this.oCurrent && this.oCurrent.oGatling.bJumpCancellable && this.oCurrent.sHurt == 'bHit';

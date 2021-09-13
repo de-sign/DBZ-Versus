@@ -26,8 +26,6 @@ Object.assign(
 
 					this.oArea = OutputManager.getElement('LAY__Battle_Area_Wrapper');
                     this.oArea.enableAutoPositioning();
-
-                    this.setBackground( SceneManager.oTransverseData.BTL__sStage );
                     OutputManager.getChannel('CHN__BGM').play('ADO__' + SceneManager.oTransverseData.BTL__sBGM, false, true);
 
                     for( let nIndex = 0; nIndex < GameSettings.nPlayer; nIndex++ ){
@@ -52,11 +50,9 @@ Object.assign(
 				},
 				update: function(){
                     // Engine / Entity
-                    BattleElement.get().forEach( oEntity => oEntity.update(this.oEngine) );
                     const oEndGame = this.oEngine.update();
                     // Display
-                    BattleElement.get().forEach( oEntity => oEntity.render() );
-                    this.oDisplay.update();
+                    this.oDisplay.update(true);
                     // Check END
                     this.endBattle(oEndGame);
 				},
@@ -65,13 +61,7 @@ Object.assign(
                     this.oDisplay.destroy();
                 },
 
-                endBattle: function(oEndGame){},
-                setBackground: function(sCod){
-                    OutputManager.getElement('LAY__Battle_Area').setStyle( {
-                        backgroundColor: GameData.oStage[sCod].sColor,
-                        backgroundImage: 'url("' + GameData.oStage[sCod].oPath.sBackground + '")'
-                    } );
-                }
+                endBattle: function(oEndGame){}
             }
         )
     }

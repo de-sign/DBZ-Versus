@@ -179,7 +179,7 @@ GameSettings.oList = {
         aerial: 'Aerial attacks',
         ki: 'Ki attacks'
     },
-    aOrder: ['offense', 'normal', 'command', 'aerial', 'ki', 'defense']
+    aOrder: ['aerial', 'normal', 'command', 'ki', 'offense', 'defense']
 };
 ```
 
@@ -328,12 +328,25 @@ Temps avant suppression d'un entité pour futur ROLLBACK
 ```javascript
 GameSettings.oCounter = {
     nStun: 4,
-    oInfo: {
-        nLength: 20,
-        sText: 'Counter&nbsp;!',
-        nSlow: 2,
-        nZoom: 1.5
-    }
+    nFreeze: 7 * 3,
+    // Text
+    aText: [
+        // Length 40
+        { sText: 'CO', nLength: 1 },
+        { sText: 'coUN', nLength: 1 },
+        { sText: 'counTE', nLength: 1 },
+        { sText: 'counteR', nLength: 1 },
+        { sText: 'counter&nbsp;!', nLength: 17 + 10 /* x2 via Slow */ } 
+    ],
+    // Effect
+    aEffect: [
+        {
+            sType: 'slow',
+            nSlow: 2,
+            nDelay: 21,
+            nLength: 10,
+        }
+    ]
 };
 ```
 
@@ -396,7 +409,7 @@ GameSettings.oBattleElement = {
         bPreload: true,
         nLife: 0,
         oPositionPoint: {
-            nX: 98,
+            nX: 100,
             nY: 182,
             nGapX: 4 * 4,
             nGapY: 200 - 182 - 2

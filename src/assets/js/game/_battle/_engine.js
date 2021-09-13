@@ -15,6 +15,9 @@ Object.assign(
             this.oDisplay = oScene.oDisplay;
         },
         update: function(){
+            // Entity
+            BattleElement.get().forEach( oEntity => oEntity.update(this) );
+
             // Gestion Fin de partie
             const oEndGame = this.checkEnd(),
                 aEntity = BattleEntity.get().filter( oEntity => !oEntity.isDead() ),
@@ -50,8 +53,6 @@ Object.assign(
             if( !oEndGame.bEnd ){
                 // Gestion Hitbox
                 this.checkHit(aEntity, oCollapse);
-                // Gestion Super Freeze
-                this.commandFreeze();
             }
 
             return oEndGame;
@@ -171,6 +172,7 @@ Object.assign(
                             oEntity = new BattleText( oEffect.sText, oEffect.nLength, oEffect.oPosition, oEffect.oParent );
                             break;
                     }
+                    
                     if(oEntity){
                         oEntity.update();
                         aEntity.push(oEntity);
@@ -365,6 +367,7 @@ Object.assign(
             } );
 
             if( aHurt.length ){
+                let bCounter = false;
                 aHurt.forEach( (oHurt, nIndex) => {
                     // Gestion Hurt
                     const oHit = oHurt.oEntityHurt.takeHit(oHurt.oEntityHit, oHurt.oCommandData, this),
@@ -381,22 +384,27 @@ Object.assign(
 
                     // Gestion counter
                     if( oHit.bCounter ){
-                        this.oDisplay.oModule.oText.add(
-                            Object.assign(
-                                {
-                                    sImg: oHurt.oEntityHit.oData.oPath.sFace,
-                                    oFocus: oHurt.oEntityHit.oLayer.oPosition,
-                                    sDirection: oHurt.oEntityHit.nPlayer == '1' ? 'left' : 'right',
-                                },
-                                GameSettings.oCounter.oInfo
-                            )
+                        bCounter = true;
+                        // Effect
+                        this.oDisplay.addEffect.apply(
+                            this.oDisplay,
+                            GameSettings.oCounter.aEffect
+                        );
+                        // Text
+                        this.oDisplay.showText.apply(
+                            this.oDisplay,
+                            GameSettings.oCounter.aText.map( oText => {
+                                oText.sDirection = oHurt.oEntityHit.nPlayer == '1' ? 'left' : 'right';
+                                return oText;
+                            } )
                         );
                     }
                 } );
                 
                 // Gestion hit freeze
-                BattleElement.get().forEach( oEntity => {
-                    oEntity.setFreeze(GameSettings.nFreeze);
+                this.oDisplay.addEffect( {
+                    sType: 'freeze',
+                    nLength: bCounter ? GameSettings.oCounter.nFreeze : GameSettings.nFreeze
                 } );
             }
         },
@@ -405,37 +413,6 @@ Object.assign(
             // PUSHBACK du parent
             const oRootEntity = oEntity.isLinked() ? oEntity.getRootParent() : oEntity;
             oRootEntity.setPushback(oData, bReverse, bDivide);
-        },
-
-        commandFreeze: function(){
-            for( let nIndex = 0; nIndex < this.aPlayer.length; nIndex++ ){
-                const oPlayer = this.aPlayer[nIndex],
-                    oCommandData = oPlayer.getCommandData();
-
-                if( oPlayer.oGatling.needFreeze() ){
-                    oCommandData.bFreeze = true;
-
-                    // Freeze
-                    BattleElement.get().forEach( oEntity => {
-                        oEntity.sId != oPlayer.sId && oEntity.setFreeze(oCommandData.oFreeze.nLength);
-                    } );
-
-                    // Texte
-                    this.oDisplay.oModule.oText.add(
-                        oCommandData.oFreeze.bInfo ?
-                            {
-                                nLength: oCommandData.oFreeze.nLength,
-                                sImg: oPlayer.oData.oPath.sFace,
-                                sText: oCommandData.oList.sName + '&nbsp;!',
-                                sDirection: oPlayer.nPlayer == '1' ? 'left' : 'right',
-                            } :
-                            {
-                                nLength: oCommandData.oFreeze.nLength
-                            }
-                    );
-                    break;
-                }
-            }
         }
     }
 );

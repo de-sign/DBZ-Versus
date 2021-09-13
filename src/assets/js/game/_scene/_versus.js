@@ -48,18 +48,58 @@ Object.assign(
                     this.oMenu = new GameMenu('LAY__Battle_Menu');
 
                     // Texte début de match
-                    this.oDisplay.show(
+                    this.oDisplay.showText(
                         {
-                            sText: 'Ready ?',
+                            sText: 'R',
+                            nLength: 2
+                        },
+                        {
+                            sText: 'rE',
+                            nLength: 2
+                        },
+                        {
+                            sText: 'reA',
+                            nLength: 2
+                        },
+                        {
+                            sText: 'reaD',
+                            nLength: 2
+                        },
+                        {
+                            sText: 'readY',
+                            nLength: 2
+                        },
+                        {
+                            sText: 'ready&nbsp;?',
                             fCallback: () => {
-                                this.oDisplay.start();
+                                this.oDisplay.startTimer();
                                 this.aPlayer.forEach( (oPlayer, nIndex) => {
                                     oPlayer.oInputBuffer.init( new BattleInputSourceBufferLocal(SceneManager.oTransverseData.MNU__aController[nIndex]) );
                                 } );
                             }
                         },
                         {
-                            sText: 'Fight !',
+                            sText: 'F',
+                            nLength: 2
+                        },
+                        {
+                            sText: 'fI',
+                            nLength: 2
+                        },
+                        {
+                            sText: 'fiG',
+                            nLength: 2
+                        },
+                        {
+                            sText: 'figH',
+                            nLength: 2
+                        },
+                        {
+                            sText: 'fighT',
+                            nLength: 2
+                        },
+                        {
+                            sText: 'fight&nbsp;!',
                             nLength: 30
                         }
                     );
@@ -119,25 +159,66 @@ Object.assign(
                 endBattle: function(oEndGame){
                     if( oEndGame.bEnd && !this.isStep('Victory') ){
 
-                        this.oDisplay.pause();
+                        this.oDisplay.pauseTimer();
                         if( !this.isStep('SlowMotion') ){
                             this.nStep++;
                             this.aPlayer.forEach( oPlayer => oPlayer.oInputBuffer.destroy() );
 
                             if( oEndGame.bTimer ){
-                                this.oDisplay.show( {
-                                    sText: 'Time Up !',
-                                    nLength: 120,
-                                    fCallback: () => {
-                                        this.showEndBattle(oEndGame);
+                                this.oDisplay.showText(
+                                    {
+                                        sText: 'T',
+                                        nLenght: 2
+                                    },
+                                    {
+                                        sText: 'tI',
+                                        nLenght: 2
+                                    },
+                                    {
+                                        sText: 'tiM',
+                                        nLenght: 2
+                                    },
+                                    {
+                                        sText: 'timE',
+                                        nLenght: 2
+                                    },
+                                    {
+                                        sText: 'time&nbsp;U',
+                                        nLenght: 2
+                                    },
+                                    {
+                                        sText: 'time&nbsp;uP',
+                                        nLenght: 2
+                                    },
+                                    {
+                                        sText: 'time&nbsp;up&nbsp;!',
+                                        nLength: 120,
+                                        fCallback: () => {
+                                            this.showEndBattle(oEndGame);
+                                        }
                                     }
-                                } );
+                                );
                             }
                             else {
-                                this.oDisplay.show( {
-                                    sText: 'K.O. !',
-                                    nSlow: 2
+                                this.oDisplay.addEffect( {
+                                    sType: 'slow',
+                                    nSlow: 2,
+                                    nLength: 60
                                 } );
+                                this.oDisplay.showText(
+                                    {
+                                        sText: 'K.',
+                                        nLength: 10
+                                    },
+                                    {
+                                        sText: 'K.O.',
+                                        nLength: 10
+                                    },
+                                    {
+                                        sText: 'K.O.&nbsp;!',
+                                        nLength: 40
+                                    }
+                                );
                             }
                         }
 
@@ -173,7 +254,7 @@ Object.assign(
                         }
                     } );
 
-                    this.oDisplay.show( {
+                    this.oDisplay.showText( {
                         sText: sText,
                         nLength: 120,
                         fCallback: this.checkEndBattle(oEndGame.oPlayerWin)

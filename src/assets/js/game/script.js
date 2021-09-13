@@ -33,6 +33,7 @@
 //=include _battle/_entity/_player.js
 //=include _battle/_engine.js
 //=include _battle/_display/_hud.js
+//=include _battle/_display/_effect.js
 //=include _battle/_display/_text.js
 //=include _battle/_display/_timer.js
 //=include _battle/_display/_engine.js

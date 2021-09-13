@@ -340,7 +340,6 @@ Object.assign(
                     bAction = oPlayer.oAnimation.sType == 'action',
 
                     oCommandData = oPlayer.getCommandData(),
-                    bHit = oPlayer.aHit.indexOf( oOpponent.sId ) != -1,
                     bHurt = TrainingEngineDisplay.aHurtAnimation.indexOf( oPlayer.oAnimation.sType ) != -1,
                     // bFall = TrainingEngineDisplay.aFallAnimation.indexOf( oPlayer.oAnimation.sType ) != -1 || TrainingEngineDisplay.aFallAnimation.indexOf( oOpponent.oAnimation.sType ) != -1,
 
@@ -350,7 +349,7 @@ Object.assign(
                     oNewData = {
                         damages: {
                             oCommandData,
-                            bHit,
+                            bHit: oCommandData && oCommandData.sHurt == 'bHit',
                             bRecovery: oPlayer.oAnimation.getStep() == 'nRecovery'
                         },
                         frames: {
@@ -362,7 +361,7 @@ Object.assign(
                         },
                         advantage: {
                             oAnimation: oPlayer.oAnimation,
-                            bHit,
+                            bHit: oCommandData && !!oCommandData.sHurt,
                             bHurt,
                             // nFrames: bFall ? oShowData.oLast.advantage.nFrames + 1 : 0
                         }
@@ -417,11 +416,11 @@ Object.assign(
                                 
                             case 'advantage':
                                 const oPlayerFrame = oPlayer.oAnimation.nLength - oPlayer.oAnimation.nTick + 1,
-                                    oOpponentFrame = ( oData.bHurt || bHit ) && oOpponent.oAnimation.nLength ?
+                                    oOpponentFrame = ( oData.bHurt || oData.bHit ) && oOpponent.oAnimation.nLength ?
                                         oOpponent.oAnimation.nLength - oOpponent.oAnimation.nTick + 1 :
                                         0,
                                     nText = oOpponentFrame - oPlayerFrame;
-                                oText.setText( (nText < 0 ? nText : '+' + nText) + ' (' + ( bHit ? oPlayer.oAnimation.nTick : '-' ) + ')' );
+                                oText.setText( (nText < 0 ? nText : '+' + nText) + ' (' + ( oData.bHit ? oPlayer.oAnimation.nTick : '-' ) + ')' );
                                 break;
                         }
 

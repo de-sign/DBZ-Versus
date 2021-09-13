@@ -208,7 +208,7 @@ Object.assign(
                         oEntity.destroy();
                     }
                 } );
-                this.oScene.oDisplay.hide();
+                this.oScene.oDisplay.destroy();
 
                 const oGauges = this.oModule.oGauges.oEngine,
                     oRestart = this.oModule.oRestart.oEngine;
@@ -233,7 +233,7 @@ Object.assign(
                 this.oModule.oDummy.oEngine.switchSource(true);
                 this.restart();
                 
-                this.oScene.oDisplay.show( {
+                this.oScene.oDisplay.showText( {
                     nLength: 60 * 10,
                     sText: 'Recording ...',
                     fCallback: () => {
@@ -248,7 +248,7 @@ Object.assign(
                     this.oScene.bRecord = false;
                     this.oModule.oDummy.oEngine.saveRecord();
                     
-                    this.oScene.oDisplay.hide();
+                    this.oScene.oDisplay.hideText();
                     GameHelper.set(TrainingScene.oHelper.aBattle);
                 }
             }

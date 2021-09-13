@@ -114,7 +114,6 @@ Object.assign(
                 // Base 
                 this.createCommandWindows( {
                     sId: 'ALL',
-                    sName: 'Common commands',
                     aRows: aCommonRows
                 } );
 
@@ -132,7 +131,6 @@ Object.assign(
                         if( aCommands.length ){
                             this.createCommandWindows( {
                                 sId: oCharColor.sCod,
-                                sName: oCharColor.sName,
                                 aRows: aCommands,
                                 aExclude: aCommonRows.reduce( (aAccu, oRow) => {
                                     aAccu.push( oRow.sCod );
@@ -152,7 +150,6 @@ Object.assign(
                 const hLayer = this.oPattern.oList.hElement.cloneNode(true);
                 hLayer.id += oOptions.sId;
                 hLayer.classList.remove(OutputManager.oConfig.class.created);
-                hLayer.querySelector('.Training__Menu_List_Name').innerHTML = oOptions.sName;
                 [].forEach.call(
                     hLayer.querySelectorAll('.--change'),
                     hElement => {
@@ -237,9 +234,9 @@ Object.assign(
                         } );
                     }
                 } );
-                hCommand.querySelector('.Training__Menu_List_Button').innerHTML = sButtons;
+                hCommand.querySelector('.Training__Menu_List_Ki').innerHTML = oCommand.oGatling.nCost ? ( oCommand.oGatling.nCost / GameSettings.oKi.nBar ) + ' Ki' : '';
 
-                hCommand.querySelector('.Training__Menu_List_Ki').innerHTML = oCommand.nCost ? ( oCommand.nCost / GameSettings.oKi.nBar ) + ' Ki' : '';
+                hCommand.querySelector('.Training__Menu_List_Button').innerHTML = sButtons;
 
                 return new OutputManager.OutputLayer(hCommand);
             }

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet" viewBox="0 0 600 600" width="600" height="600">
-    <rect fill="#333" x="0" y="0" width="600" height="600" rx="25" ry="25" />
-    <path fill="#fff" d="M 100 137 L 289 194 L 100 262 Z"></path>
-    <path fill="#fff" d="M 100 287 L 500 137 L 500 287 L 300 462 Z"></path>
-</svg>

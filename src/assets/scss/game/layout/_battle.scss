@@ -244,13 +244,13 @@
     height: 150px;
     transition: opacity 1s ease;
     opacity: 0;
-
+  
     &::before {
         content: '';
         display: block;
         left: 25%;
         right: 25%;
-        bottom: -30px;
+        bottom: 0;
         height: 15px;
         background-color: #fff;
         border-bottom: 5px solid rgba(0, 0, 0, 0.25);
@@ -258,32 +258,34 @@
         position: absolute;
         z-index: -1;
 
-        .--info-blank &{
+        .--text-blank &{
             display: none;    
         }
     }
-
-    .--info & {
+  
+    .--text & {
         opacity: 1;
         transition: none;
     }
 
-    .--info-left & {
+    .--text-left & {
         justify-content: flex-start;
         text-align: left;
 
         &::before {
-            left: 0;
+            left: -150px;
+            right: 50%;
         }
     }
 
-    .--info-right & {
+    .--text-right & {
         justify-content: flex-start;
         text-align: right;
         flex-direction: row-reverse;
 
         &::before {
-            right: 0;
+            right: -150px;
+            left: 50%;
         }
     }
 
@@ -359,10 +361,11 @@
         left: -88px;
         right: -88px;
         background-color: rgba(0, 0, 0, 0.25);
-
-        .--info &{
-            display: block;
-        }
+    }
+    
+    #CTX__Battle.--text &:before,
+    &.--dark:before {
+        display: block;
     }
 
     &_Wrapper {
@@ -388,7 +391,7 @@
         transform: translateY(-50%) !important;
     }
     
-    #CTX__Battle:not(.--info) &.--freeze {
+    .Battle__Area:not(.--dark) &.--freeze {
 
         &_pair {
             .Battle__Entity_Sprite {
@@ -408,7 +411,7 @@
 .Battle__Player {
     width: 200px;
     height: 200px;
-    transform-origin: 98px 182px;
+    transform-origin: 100px 182px;
 
     &.--float {
         &_up {
@@ -435,7 +438,7 @@
 .Battle__Beam {
     width: 200px;
     height: 300px;
-    transform-origin: 98px 232px;
+    transform-origin: 100px 232px;
     z-index: 0;
 }
 
@@ -468,6 +471,7 @@
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.25);
+    animation: 0.25s ease-in 0s 1 DS-KF-Appear;
 
     .--menu & {
         display: flex;

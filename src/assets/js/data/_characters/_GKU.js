@@ -875,10 +875,26 @@ GameData.oCharacter.GKU = {
                         }
                     ]
                 },
-                oFreeze: {
-                    bInfo: true,
-                    nLength: 57
-                },
+                aEffect: [
+                    {
+                        sType: 'dark',
+                        nLength: 57
+                    },
+                    {
+                        sType: 'freeze',
+                        nLength: 57,
+                        bIgnore: true
+                    },
+                    {
+                        sType: 'zoom',
+                        nLength: 57,
+                        nZoom: 1.5,
+                        oPosition: {
+                            nX: -96,
+                            nY: -96
+                        }
+                    }
+                ],
                 oHit: {
                     oDamage: {
                         nDamage: 400,

@@ -1085,10 +1085,23 @@ GameData.oCharacter.MJN_BUU.oCommands = {
                     }
                 ]
             },
-            oFreeze: {
-                bInfo: true,
-                nLength: 45
-            },
+            aEffect: [
+                {
+                    sType: 'dark',
+                    nLength: 45
+                },
+                {
+                    sType: 'freeze',
+                    nLength: 45,
+                    bIgnore: true
+                },
+                {
+                    sType: 'zoom',
+                    nLength: 45,
+                    nZoom: 1.5,
+                    oPosition: true
+                }
+            ],
             oHit: {
                 oDamage: {
                     nDamage: 300,
@@ -1169,10 +1182,23 @@ GameData.oCharacter.MJN_BUU.oCommands = {
                     }
                 ]
             },
-            oFreeze: {
-                bInfo: true,
-                nLength: 45
-            },
+            aEffect: [
+                {
+                    sType: 'dark',
+                    nLength: 45
+                },
+                {
+                    sType: 'freeze',
+                    nLength: 45,
+                    bIgnore: true
+                },
+                {
+                    sType: 'zoom',
+                    nLength: 45,
+                    nZoom: 1.5,
+                    oPosition: true
+                }
+            ],
             oHit: {
                 oDamage: {
                     nDamage: 300,

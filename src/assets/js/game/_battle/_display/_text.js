@@ -24,9 +24,6 @@ Object.assign(
                 
                 this.oImg = OutputManager.getElement('SPT__Battle_Info_Sprite');
                 this.oText = OutputManager.getElement('TXT__Battle_Info_Text');
-                
-                this.oView = OutputManager.getElement('LAY__Battle_Area');
-                this.oView.enableAutoPositioning();
             },
             update: function(){
                 if( this.oCurrent ){
@@ -52,13 +49,6 @@ Object.assign(
                         sImg: oOptions.sImg || null,
                         sText: oOptions.sText || '',
                         sDirection: oOptions.sDirection || 'center',
-                        nSlow: oOptions.nSlow || null,
-                        nZoom: oOptions.nZoom || 0,
-                        oFocus: oOptions.oFocus || {
-                            nX: 0,
-                            nY: 0
-                        },
-                        bFreeze: oOptions.bFreeze || false,
                         fCallback: oOptions.fCallback || null
                     } );
                 } );
@@ -75,49 +65,24 @@ Object.assign(
                     }
                     // Text
                     this.oText.setText(this.oCurrent.sText);
-                    // Freeze
-                    if( this.oCurrent.bFreeze ){
-                        BattleElement.get().forEach( oEntity => {
-                            oEntity.setFreeze(this.oCurrent.nLength);
-                        } );
-                    }
-                    // Slow
-                    if( this.oCurrent.nSlow ){
-                        this.oCurrent.nLastFPS = TimerEngine.nFPS;
-                        TimerEngine.setFPS( Math.floor(TimerEngine.nFPS / this.oCurrent.nSlow) );
-                    }
-                    // Zoom
-                    if( this.oCurrent.nZoom ){
-                        this.oView.setPosition( {
-                            scaleX: this.oCurrent.nZoom,
-                            scaleY: this.oCurrent.nZoom,
-                            originX: this.oCurrent.oFocus.nX + this.oView.oPosition.originX,
-                            originY: this.oCurrent.oFocus.nY + this.oView.oPosition.originY
-                        } );
-                    }
                     // Show
                     this.oContext.addTickUpdate( () => {
-                        this.oContext.hElement.classList.remove('--info-left', '--info-center', '--info-right', '--info-blank');
-                        this.oContext.hElement.classList.add('--info', '--info-' + this.oCurrent.sDirection, this.oCurrent.sText ? '--info-text' : '--info-blank');
+                        this.oContext.hElement.classList.remove('--text-left', '--text-center', '--text-right');
+                        this.oContext.hElement.classList.add('--text', '--text-' + this.oCurrent.sDirection);
                     } );
                 }
             },
             hide: function(bDestroy){
                 // Hide
                 if( this.oCurrent || bDestroy ){
-                    let fCallback = null,
-                        nFPS = null;
-
+                    let fCallback = null;
                     if( this.oCurrent ){
                         fCallback = !bDestroy && this.oCurrent.fCallback;
-                        nFPS = this.oCurrent.nLastFPS;
                     }
                     this.oCurrent = null;
                     
                     this.oContext.addTickUpdate( () => {
-                        this.oContext.hElement.classList.remove('--info');
-                        nFPS && TimerEngine.setFPS(nFPS);
-                        this.oView.resetPosition();
+                        this.oContext.hElement.classList.remove('--text');
                         fCallback && fCallback();
                     } );
                 }
