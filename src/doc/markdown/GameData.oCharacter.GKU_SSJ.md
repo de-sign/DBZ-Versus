@@ -165,7 +165,47 @@ GameData.oCharacter.GKU_SSJ.oFrames = {
     attack_1_1: false,
     attack_1_2: false,
     attack_1_3: false,
-    attack_1_4: false,
+    attack_1_4: {
+        nZIndex: 30,
+        oPositionBox: {
+            nX: -22,
+            nY: -110,
+            nWidth: 68,
+            nHeight: 76
+        },
+        aHurtBox: [{
+            nX: -42,
+            nY: -114,
+            nWidth: 96,
+            nHeight: 72
+        },
+        {
+            nX: -10,
+            nY: -78,
+            nWidth: 64,
+            nHeight: 56
+        }]
+    },
+    attack_1_5: {
+        nZIndex: 30,
+        oPositionBox: {
+            nX: -22,
+            nY: -110,
+            nWidth: 68,
+            nHeight: 76
+        },
+        aHurtBox: [{
+            nX: -26,
+            nY: -138,
+            nWidth: 60,
+            nHeight: 84
+        }, {
+            nX: -18,
+            nY: -70,
+            nWidth: 64,
+            nHeight: 72
+        }]
+    },
 
     attack_2_0: {
         oPositionBox: {
@@ -961,6 +1001,51 @@ GameData.oCharacter.GKU_SSJ.oAnimations = {
             }
         }
     ],
+
+    attack_jB: {
+        sType: 'action',
+        aFrames: [
+            {
+                nFrame: 2,
+                sFrame: 'stand_1',
+                oPositionBox: {
+                    nX: -22,
+                    nY: -110,
+                    nWidth: 68,
+                    nHeight: 76
+                },
+                oStatus: {
+                    bReverse: true
+                }
+            },
+            {
+                nFrame: 4,
+                sFrame: 'attack_1_1'
+            },
+            {
+                nFrame: 2,
+                sFrame: 'attack_1_2'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'attack_1_3'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'attack_1_4',
+                oStatus: {
+                    bCancel: true
+                }
+            },
+            {
+                nFrame: 2,
+                sFrame: 'attack_1_5',
+                oStatus: {
+                    bCancel: true
+                }
+            }
+        ]
+    },
 
     /*
     attack_C: [

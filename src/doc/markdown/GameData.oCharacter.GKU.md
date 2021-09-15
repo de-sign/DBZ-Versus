@@ -418,12 +418,6 @@ GameData.oCharacter.GKU.oFrames = {
             nWidth: 68,
             nHeight: 144
         }],
-        aHitBox: {
-            nX: -90,
-            nY: -222,
-            nWidth: 196,
-            nHeight: 196
-        }
     },
 
     ki_0_0: {
@@ -981,14 +975,15 @@ GameData.oCharacter.GKU.oCommands = {
                         nFrameStart: 1
                     },
                     {
-                        sType: 'Projectile',
-                        sSFX: 'ADO__Projectile',
+                        sType: 'Beam',
+                        sSFX: 'ADO__Beam',
                         sAnimation: 'flash',
                         sColor: 'ORG',
-                        nFrameStart: 11,
+                        nFrameStart: 7,
+                        bLink: true,
                         oPosition: {
-                            nX: 8,
-                            nY: -64
+                            nX: -22,
+                            nY: -60
                         }
                     }
                 ]

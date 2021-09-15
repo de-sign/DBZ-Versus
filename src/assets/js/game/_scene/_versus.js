@@ -50,27 +50,7 @@ Object.assign(
                     // Texte début de match
                     this.oDisplay.showText(
                         {
-                            sText: 'R',
-                            nLength: 2
-                        },
-                        {
-                            sText: 'rE',
-                            nLength: 2
-                        },
-                        {
-                            sText: 'reA',
-                            nLength: 2
-                        },
-                        {
-                            sText: 'reaD',
-                            nLength: 2
-                        },
-                        {
-                            sText: 'readY',
-                            nLength: 2
-                        },
-                        {
-                            sText: 'ready&nbsp;?',
+                            sText: 'Ready ?',
                             fCallback: () => {
                                 this.oDisplay.startTimer();
                                 this.aPlayer.forEach( (oPlayer, nIndex) => {
@@ -79,27 +59,7 @@ Object.assign(
                             }
                         },
                         {
-                            sText: 'F',
-                            nLength: 2
-                        },
-                        {
-                            sText: 'fI',
-                            nLength: 2
-                        },
-                        {
-                            sText: 'fiG',
-                            nLength: 2
-                        },
-                        {
-                            sText: 'figH',
-                            nLength: 2
-                        },
-                        {
-                            sText: 'fighT',
-                            nLength: 2
-                        },
-                        {
-                            sText: 'fight&nbsp;!',
+                            sText: 'Fight !',
                             nLength: 30
                         }
                     );
@@ -167,31 +127,7 @@ Object.assign(
                             if( oEndGame.bTimer ){
                                 this.oDisplay.showText(
                                     {
-                                        sText: 'T',
-                                        nLenght: 2
-                                    },
-                                    {
-                                        sText: 'tI',
-                                        nLenght: 2
-                                    },
-                                    {
-                                        sText: 'tiM',
-                                        nLenght: 2
-                                    },
-                                    {
-                                        sText: 'timE',
-                                        nLenght: 2
-                                    },
-                                    {
-                                        sText: 'time&nbsp;U',
-                                        nLenght: 2
-                                    },
-                                    {
-                                        sText: 'time&nbsp;uP',
-                                        nLenght: 2
-                                    },
-                                    {
-                                        sText: 'time&nbsp;up&nbsp;!',
+                                        sText: 'Time up !',
                                         nLength: 120,
                                         fCallback: () => {
                                             this.showEndBattle(oEndGame);
@@ -205,20 +141,11 @@ Object.assign(
                                     nSlow: 2,
                                     nLength: 60
                                 } );
-                                this.oDisplay.showText(
-                                    {
-                                        sText: 'K.',
-                                        nLength: 10
-                                    },
-                                    {
-                                        sText: 'K.O.',
-                                        nLength: 10
-                                    },
-                                    {
-                                        sText: 'K.O.&nbsp;!',
-                                        nLength: 40
-                                    }
-                                );
+                                this.oDisplay.showText( {
+                                    sText: 'K.O. !',
+                                    nChar: 2,
+                                    nFrameStep: 10
+                                } );
                             }
                         }
 

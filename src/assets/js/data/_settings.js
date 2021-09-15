@@ -224,6 +224,7 @@ Object.assign(
             },
             oCategory: {
                 aAll: [
+                    'counter',
                     'stack',
                     'movement',
                     'hurt'
@@ -259,27 +260,26 @@ Object.assign(
         nTimer: 99,
         /* ----- DETAILS Nombre de FRAME lors d'un HIT FREEZE ----- */
         nFreeze: 7,
+        /* ----- DETAILS Parametrage lors d'un COUNTER ----- */
         oCounter: {
+            // ----- Bonus de HITSTUN -----
             nStun: 4,
+            // ----- Rallongement du HIT FREEZE -----
             nFreeze: 7 * 3,
-            // Text
-            aText: [
-                // Length 40
-                { sText: 'CO', nLength: 1 },
-                { sText: 'coUN', nLength: 1 },
-                { sText: 'counTE', nLength: 1 },
-                { sText: 'counteR', nLength: 1 },
-                { sText: 'counter&nbsp;!', nLength: 17 + 10 /* x2 via Slow */ } 
-            ],
-            // Effect
-            aEffect: [
-                {
-                    sType: 'slow',
-                    nSlow: 2,
-                    nDelay: 21,
-                    nLength: 10,
-                }
-            ]
+            // ----- Affichage du TEXT -----
+            oText: {
+                sText: 'Counter !',
+                nChar: 2,
+                nFrameStep: 1,
+                nLength: 21 + 10 // 10x2 via Slow => Length 41
+            },
+            // ----- Effect du COUNTER -----
+            aEffect: [ {
+                sType: 'slow',
+                nSlow: 2,
+                nDelay: 21,
+                nLength: 10,
+            } ]
         },
 
         // ENTITY

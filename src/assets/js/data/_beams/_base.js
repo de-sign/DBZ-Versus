@@ -13,6 +13,13 @@ GameData.oEntity.oBeam = {
             sPath: 'kiai.png'
         },
 
+        flash_0: {
+            sPath: 'flash_0.png'
+        },
+        flash_1: {
+            sPath: 'flash_1.png'
+        },
+
         beam: {
             sPath: 'beam.png'
         },

@@ -103,3 +103,7 @@ h1, h2, h3, h4, h5, h6 {
     0% { opacity: 0; }
     100% { opacity: 1; }
 }
+
+.outputContext {
+    animation: 0.25s ease-in 0s 1 DS-KF-Appear;
+}

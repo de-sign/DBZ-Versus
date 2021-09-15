@@ -1008,7 +1008,8 @@ GameData.oEntity.oCharacter.oAnimations = {
         sType: 'dash',
         uMove: {
             nX: 12 * 14,
-            nLength: 14
+            nLength: 14,
+            bParallel: true
         },
         aFrames: [
             {
@@ -1020,14 +1021,22 @@ GameData.oEntity.oCharacter.oAnimations = {
                 sFrame: 'move_2'
             },
             {
-                nFrame: 7,
+                nFrame: 4,
                 sFrame: 'move_1'
+            },
+            {
+                nFrame: 3,
+                sFrame: 'move_1',
+                oStatus: {
+                    bCancel: true
+                }
             },
             {
                 nFrame: 1,
                 sFrame: 'move_1',
                 oStatus: {
-                    bReverse: true
+                    bReverse: true,
+                    bCancel: true
                 }
             },
             {
@@ -1133,13 +1142,26 @@ GameData.oEntity.oCharacter.oAnimations = {
                 }
             },
             {
-                nFrame: 7,
+                nFrame: 4,
                 sFrame: 'move_1',
                 oPositionBox: {
                     nX: -22,
                     nY: -110,
                     nWidth: 68,
                     nHeight: 76
+                }
+            },
+            {
+                nFrame: 3,
+                sFrame: 'move_1',
+                oPositionBox: {
+                    nX: -22,
+                    nY: -110,
+                    nWidth: 68,
+                    nHeight: 76
+                },
+                oStatus: {
+                    bCancel: true
                 }
             },
             {
@@ -1152,7 +1174,8 @@ GameData.oEntity.oCharacter.oAnimations = {
                     nHeight: 76
                 },
                 oStatus: {
-                    bReverse: true
+                    bReverse: true,
+                    bCancel: true
                 }
             },
             {
@@ -1165,6 +1188,7 @@ GameData.oEntity.oCharacter.oAnimations = {
                     nHeight: 76
                 },
                 oStatus: {
+                    bReverse: true,
                     bCancel: true
                 }
             }
@@ -1446,7 +1470,7 @@ GameData.oEntity.oCharacter.oAnimations = {
             },
             {
                 sFrame: 'guard_2',
-                nFrame: 12
+                nFrame: 16
             },
             {
                 sFrame: 'stand_1',

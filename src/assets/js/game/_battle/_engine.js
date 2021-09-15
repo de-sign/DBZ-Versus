@@ -391,12 +391,11 @@ Object.assign(
                             GameSettings.oCounter.aEffect
                         );
                         // Text
-                        this.oDisplay.showText.apply(
-                            this.oDisplay,
-                            GameSettings.oCounter.aText.map( oText => {
-                                oText.sDirection = oHurt.oEntityHit.nPlayer == '1' ? 'left' : 'right';
-                                return oText;
-                            } )
+                        this.oDisplay.showText(
+                            Object.assign(
+                                { sDirection: oHurt.oEntityHit.nPlayer == '1' ? 'left' : 'right' },
+                                GameSettings.oCounter.oText
+                            )
                         );
                     }
                 } );

@@ -77,7 +77,7 @@ Object.assign(
                         this.nLength = nLength;
                     }
                 },
-                getStep: function(){
+                getStep: function(nDelta){
                     let sStep = null,
                         nFrame = 0,
                         aStep = ['nStartUp', 'nActive', 'nRecovery'];
@@ -85,7 +85,7 @@ Object.assign(
                     for( let nIndex = 0; nIndex < aStep.length; nIndex++ ){
                         sStep = aStep[nIndex];
                         nFrame += this.oData[sStep];
-                        if( this.nTick <= nFrame ){
+                        if( this.nTick <= nFrame + nDelta ){
                             break;
                         }
                     }

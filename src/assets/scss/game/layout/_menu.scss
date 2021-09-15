@@ -1,6 +1,8 @@
 /* Menu */
 #CTX__Menu {
 
+    animation: none;
+
     .DS-Information {
         animation: 2s ease-in 0s 1 DS-KF-Appear;
         height: $height-medium;

@@ -44,6 +44,7 @@ Object.assign(
                     nLength: uMove.length,
                     nDelay: 0,
                     bDivide: true,
+                    bParallel: false,
                     oDirection: {
                         nX: 0,
                         nY: 0
@@ -51,17 +52,21 @@ Object.assign(
                 };
             }
             else {
-                oMove = {
-                    bEmpty: uMove.bEmpty,
-                    aStep: uMove.aStep,
-                    nLength: uMove.nLength,
-                    nDelay: uMove.nDelay,
-                    bDivide: uMove.bDivide,
-                    oDirection: {
-                        nX: 0,
-                        nY: 0
-                    }
-                };
+                oMove = Object.assign(
+                    {
+                        bEmpty: false,
+                        aStep: null,
+                        nLength: 0,
+                        nDelay: 0,
+                        bDivide: true,
+                        bParallel: false,
+                        oDirection: {
+                            nX: 0,
+                            nY: 0
+                        }
+                    },
+                    uMove
+                );
 
                 if( !oMove.bEmpty && !oMove.aStep ){
                     

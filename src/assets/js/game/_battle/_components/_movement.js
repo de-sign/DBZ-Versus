@@ -81,6 +81,18 @@ Object.assign(
             this.forEach( oMove => oMove.unFreeze() );
         },
 
+        set: function(oMove, bReverse){
+            let oReturn = null;
+            if( oMove && oMove.bParallel ){
+                this.aParallel = [];
+                oReturn = this.parallel(oMove, bReverse);
+            }
+            else {
+                this.aCurrent = [];
+                oReturn = this.after(oMove, bReverse);
+            }
+            return oReturn;
+        },
         clean: function(){
             this.forEach( (oMove, sProp, aProp) => {
                 if( oMove.isEnd() ){
@@ -92,12 +104,8 @@ Object.assign(
             this.aCurrent = [];
             this.aParallel = [];
         },
-
+        
         // Current
-        set: function(oMove, bReverse){
-            this.aCurrent = [];
-            return this.after(oMove, bReverse);
-        },
         before: function(oMove, bReverse){
             let oReturn = null;
             if( oMove ){

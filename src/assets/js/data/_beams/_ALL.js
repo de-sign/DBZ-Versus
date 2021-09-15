@@ -42,6 +42,18 @@ GameData.oBeam.ALL = {
             }
         },
 
+        flash_0: {},
+        flash_1: {
+            aHitBox: [
+                {
+                    nX: -68,
+                    nY: -178,
+                    nWidth: 196,
+                    nHeight: 196
+                }
+            ]
+        },
+
         beam: {
             aHitBox:  {
                 nX: 30,
@@ -109,6 +121,21 @@ GameData.oBeam.ALL = {
                 nFrame: 8,
                 sFrame: 'kiai'
             }
+        ],
+
+        flash: [
+            {
+                nFrame: 2,
+                sFrame: 'flash_0'
+            },
+            {
+                nFrame: 6,
+                sFrame: 'flash_1'
+            },
+            {
+                nFrame: 2,
+                sFrame: 'flash_0'
+            },
         ],
 
         beam: [

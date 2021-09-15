@@ -191,7 +191,7 @@ Object.assign(
                                 sCommand: this.oAnimation.sType == 'down' ?
                                     'aRecovery' :
                                     sCommand,
-                                bStack: !this.oStatus.bCancel || bFreeze
+                                bStack: this.oAnimation.getStep(-1) != 'nRecovery' || bFreeze
                             } );
                         }
                     }

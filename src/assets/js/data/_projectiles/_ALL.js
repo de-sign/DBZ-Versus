@@ -210,17 +210,6 @@ GameData.oProjectile.ALL = {
                     nFrame: 90
                 }
             ]
-        },
-
-        flash: {
-            aFrames: [
-                {
-                    sFrame: 'ball_second',
-                    nFrame: 6,
-                    aHurtBox: null,
-                    aHitBox: null
-                }
-            ]
         }
     },
     /* ----- END PROPERTIES ----- */

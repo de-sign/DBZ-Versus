@@ -381,7 +381,7 @@ Object.assign(
                                     const oTakeDamage = oOpponent.oDamage.aHistory[ oOpponent.oDamage.aHistory.length - 1 ],
                                         oDamage = oData.oCommandData.oHit && oData.oCommandData.oHit.oDamage;
 
-                                    if( oData.bHit ){
+                                    if( oData.bHit && oTakeDamage ){
                                         oText.setText( oTakeDamage.nDamage + ' (' + oTakeDamage.nScaling + '%, ' + oTakeDamage.nBase + ')' );
                                     }
                                     else if( bChangeHitting || oData.bRecovery ) {

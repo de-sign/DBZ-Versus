@@ -275,6 +275,7 @@ GameSettings.oAnimations = {
     },
     oCategory: {
         aAll: [
+            'counter',
             'stack',
             'movement',
             'hurt'
@@ -323,36 +324,34 @@ GameSettings.nFreeze = 7;
 
 #### GameSettings.oCounter
 
-Temps avant suppression d'un entité pour futur ROLLBACK 
+Parametrage lors d'un COUNTER 
 
 ```javascript
 GameSettings.oCounter = {
+    // ----- Bonus de HITSTUN -----
     nStun: 4,
+    // ----- Rallongement du HIT FREEZE -----
     nFreeze: 7 * 3,
-    // Text
-    aText: [
-        // Length 40
-        { sText: 'CO', nLength: 1 },
-        { sText: 'coUN', nLength: 1 },
-        { sText: 'counTE', nLength: 1 },
-        { sText: 'counteR', nLength: 1 },
-        { sText: 'counter&nbsp;!', nLength: 17 + 10 /* x2 via Slow */ } 
-    ],
-    // Effect
-    aEffect: [
-        {
-            sType: 'slow',
-            nSlow: 2,
-            nDelay: 21,
-            nLength: 10,
-        }
-    ]
+    // ----- Affichage du TEXT -----
+    oText: {
+        sText: 'Counter !',
+        nChar: 2,
+        nFrameStep: 1,
+        nLength: 21 + 10 // 10x2 via Slow => Length 41
+    },
+    // ----- Effect du COUNTER -----
+    aEffect: [ {
+        sType: 'slow',
+        nSlow: 2,
+        nDelay: 21,
+        nLength: 10,
+    } ]
 };
 ```
 
 #### GameSettings.nDie
 
-Information pour chaque entité :Nombre de point de viePosition lors d'un effet visuelPositionPointInformation de vérification des collisions
+Temps avant suppression d'un entité pour futur ROLLBACK 
 
 ```javascript
 GameSettings.nDie = 1;
@@ -360,7 +359,7 @@ GameSettings.nDie = 1;
 
 #### GameSettings.oBattleElement
 
-Parametrages des COMMAND par défaut 
+Information pour chaque entité :Nombre de point de viePosition lors d'un effet visuelPositionPointInformation de vérification des collisions
 
 ```javascript
 GameSettings.oBattleElement = {
@@ -453,7 +452,7 @@ GameSettings.oBattleElement = {
 
 #### GameSettings.oKi
 
-Paramétrage de l'animation d'un personnage LUNCHER 
+Parametrages des COMMAND par défaut 
 
 ```javascript
 GameSettings.oKi = {
@@ -464,7 +463,7 @@ GameSettings.oKi = {
 
 #### GameSettings.oCommand
 
-Paramétrage de l'animation d'un personnage JUMP 
+Paramétrage de l'animation d'un personnage LUNCHER 
 
 ```javascript
 GameSettings.oCommand = {
@@ -526,7 +525,7 @@ GameSettings.oCommand = {
 
 #### GameSettings.oLauncher
 
-Paramètrage de la distance de déplacement lors d'une relevé d'un personnage mis au sol 
+Paramétrage de l'animation d'un personnage JUMP 
 
 ```javascript
 GameSettings.oLauncher = {
@@ -542,6 +541,8 @@ GameSettings.oLauncher = {
 ```
 
 #### GameSettings.oJump
+
+Paramètrage de la distance de déplacement lors d'une relevé d'un personnage mis au sol 
 
 ```javascript
 GameSettings.oJump = {
