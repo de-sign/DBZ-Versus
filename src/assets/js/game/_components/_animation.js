@@ -85,7 +85,7 @@ Object.assign(
                     for( let nIndex = 0; nIndex < aStep.length; nIndex++ ){
                         sStep = aStep[nIndex];
                         nFrame += this.oData[sStep];
-                        if( this.nTick <= nFrame + nDelta ){
+                        if( this.nTick <= nFrame + ( nDelta || 0 ) ){
                             break;
                         }
                     }

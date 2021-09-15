@@ -696,10 +696,7 @@ GameData.oCharacter.FRZ = {
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_1'
             }
         ],
         // 4, 4, 6
@@ -734,10 +731,7 @@ GameData.oCharacter.FRZ = {
                 },
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1',
-                    oStatus: {
-                        bCancel: true
-                    }
+                    sFrame: 'stand_1'
                 }
             ]
         },
@@ -768,10 +762,7 @@ GameData.oCharacter.FRZ = {
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_1'
             }
         ],
 
@@ -807,10 +798,7 @@ GameData.oCharacter.FRZ = {
                 },
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1',
-                    oStatus: {
-                        bCancel: true
-                    }
+                    sFrame: 'stand_1'
                 }
             ]
         },
@@ -850,17 +838,11 @@ GameData.oCharacter.FRZ = {
                 },
                 {
                     nFrame: 6,
-                    sFrame: 'move_1',
-                    oStatus: {
-                        bCancel: true
-                    }
+                    sFrame: 'move_1'
                 },
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1',
-                    oStatus: {
-                        bCancel: true
-                    }
+                    sFrame: 'stand_1'
                 }
             ]
         },
@@ -902,17 +884,11 @@ GameData.oCharacter.FRZ = {
             },
             {
                 nFrame: 6,
-                sFrame: 'attack_4_3',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'attack_4_3'
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_1'
             }
         ],
         // 10, 8, 12
@@ -944,10 +920,7 @@ GameData.oCharacter.FRZ = {
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_1'
             }
         ],
 
@@ -965,7 +938,11 @@ GameData.oCharacter.FRZ = {
                 sFrame: 'ki_0_0'
             },
             {
-                nFrame: 8,
+                nFrame: 4,
+                sFrame: 'ki_0_1'
+            },
+            {
+                nFrame: 4,
                 sFrame: 'ki_0_1',
                 oStatus: {
                     bCancel: true
@@ -973,17 +950,11 @@ GameData.oCharacter.FRZ = {
             },
             {
                 nFrame: 10,
-                sFrame: 'ki_0_0',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'ki_0_0'
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_1'
             }
         ],
 

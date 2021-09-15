@@ -733,10 +733,7 @@ GameData.oCharacter.GKU_SSJ = {
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_1'
             }
         ],
         // 4, 4, 6
@@ -765,10 +762,7 @@ GameData.oCharacter.GKU_SSJ = {
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_1'
             }
         ],
         // 6, 4, 8
@@ -797,10 +791,7 @@ GameData.oCharacter.GKU_SSJ = {
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_1'
             }
         ],
         // 6, 4, 8
@@ -834,10 +825,7 @@ GameData.oCharacter.GKU_SSJ = {
                 },
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1',
-                    oStatus: {
-                        bCancel: true
-                    }
+                    sFrame: 'stand_1'
                 }
             ]
         },
@@ -877,17 +865,11 @@ GameData.oCharacter.GKU_SSJ = {
                 },
                 {
                     nFrame: 6,
-                    sFrame: 'attack_5_3',
-                    oStatus: {
-                        bCancel: true
-                    }
+                    sFrame: 'attack_5_3'
                 },
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1',
-                    oStatus: {
-                        bCancel: true
-                    }
+                    sFrame: 'stand_1'
                 }
             ]
         },
@@ -928,45 +910,14 @@ GameData.oCharacter.GKU_SSJ = {
             },
             {
                 nFrame: 6,
-                sFrame: 'attack_4_3',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'attack_4_3'
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_1'
             }
         ],
-
-        /*
-        attack_C: [
-            {
-                nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bReverse: true
-                }
-            },
-            {
-                nFrame: 20,
-                sFrame: 'ki_0_0',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-        ],
-        */
+        
         attack_C: {
             sType: 'dash',
             uMove: {
@@ -1002,10 +953,7 @@ GameData.oCharacter.GKU_SSJ = {
                 },
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1',
-                    oStatus: {
-                        bCancel: true
-                    }
+                    sFrame: 'stand_1'
                 }
             ]
         },
@@ -1220,66 +1168,6 @@ GameData.oCharacter.GKU_SSJ = {
                     }
                 }
             },
-            /*
-            {
-                sCod: 'attack_C',
-                sAnimation: 'attack_C',
-                oList: {
-                    sName: 'Kikoha',
-                    sGroup: 'ki'
-                },
-                oProperty: {},
-                oGatling: {
-                    nCost: 10,
-                    nLevel: 2,
-                    oManipulation: {
-                        nMaxLengthFrame: 1,
-                        aButtons: [
-                            { C: true }
-                        ],
-                        bLast: true
-                    },
-                    aEntity: [
-                        {
-                            sType: 'Text',
-                            sText: '気功波',
-                            nLength: 40,
-                            nFrameStart: 1
-                        },
-                        {
-                            sType: 'Projectile',
-                            sSFX: 'ADO__Projectile',
-                            sAnimation: 'kikoha',
-                            nFrameStart: 10,
-                            oPosition: {
-                                nX: 58,
-                                nY: -28
-                            }
-                        }
-                    ]
-                },
-                oHit: {
-                    oDamage: {
-                        nDamage: 100
-                    },
-                    oStun: {
-                        nStun: 16,
-                        sAnimation: 'hit_0',
-                        sImpact: 'explode_light'
-                    }
-                },
-                oGuard: {
-                    oDamage: {
-                        nDamage: 0
-                    },
-                    oStun: {
-                        nStun: 12,
-                        sAnimation: 'defense_j4',
-                        sImpact: 'explode_light'
-                    }
-                }
-            },
-            */
             {
                 sCod: 'attack_C',
                 sAnimation: 'attack_C',

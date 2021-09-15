@@ -588,10 +588,7 @@ GameData.oCharacter.BUU = {
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_1'
             }
         ],
         // 4, 4, 6
@@ -620,10 +617,7 @@ GameData.oCharacter.BUU = {
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_1'
             }
         ],
         // 6, 4, 8
@@ -659,10 +653,7 @@ GameData.oCharacter.BUU = {
                 },
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1',
-                    oStatus: {
-                        bCancel: true
-                    }
+                    sFrame: 'stand_1'
                 }
             ]
         },
@@ -702,17 +693,11 @@ GameData.oCharacter.BUU = {
                 },
                 {
                     nFrame: 6,
-                    sFrame: 'attack_6_0',
-                    oStatus: {
-                        bCancel: true
-                    }
+                    sFrame: 'attack_6_0'
                 },
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1',
-                    oStatus: {
-                        bCancel: true
-                    }
+                    sFrame: 'stand_1'
                 }
             ]
         },
@@ -787,17 +772,11 @@ GameData.oCharacter.BUU = {
                 },
                 {
                     nFrame: 2,
-                    sFrame: 'attack_5_6',
-                    oStatus: {
-                        bCancel: true
-                    }
+                    sFrame: 'attack_5_6'
                 },
                 {
                     nFrame: 2,
-                    sFrame: 'stand_1',
-                    oStatus: {
-                        bCancel: true
-                    }
+                    sFrame: 'stand_1'
                 }
             ]
         },
@@ -838,17 +817,11 @@ GameData.oCharacter.BUU = {
             },
             {
                 nFrame: 6,
-                sFrame: 'attack_4_3',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'attack_4_3'
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_1'
             }
         ],
         
@@ -861,7 +834,11 @@ GameData.oCharacter.BUU = {
                 }
             },
             {
-                nFrame: 20,
+                nFrame: 8,
+                sFrame: 'ki_0_0'
+            },
+            {
+                nFrame: 12,
                 sFrame: 'ki_0_0',
                 oStatus: {
                     bCancel: true
@@ -869,10 +846,7 @@ GameData.oCharacter.BUU = {
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_1'
             },
         ],
         

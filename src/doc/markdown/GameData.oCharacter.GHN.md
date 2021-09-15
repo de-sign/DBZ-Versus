@@ -743,17 +743,11 @@ GameData.oCharacter.GHN.oAnimations = {
             },
             {
                 nFrame: 2,
-                sFrame: 'attack_0_3',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'attack_0_3'
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_1'
             }
         ]
     },
@@ -783,10 +777,7 @@ GameData.oCharacter.GHN.oAnimations = {
         },
         {
             nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'stand_1'
         }
     ],
     // 4, 4, 6
@@ -815,10 +806,7 @@ GameData.oCharacter.GHN.oAnimations = {
         },
         {
             nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'stand_1'
         }
     ],
     // 6, 4, 8
@@ -847,10 +835,7 @@ GameData.oCharacter.GHN.oAnimations = {
         },
         {
             nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'stand_1'
         }
     ],
     // 8, 6, 10
@@ -886,17 +871,11 @@ GameData.oCharacter.GHN.oAnimations = {
             },
             {
                 nFrame: 6,
-                sFrame: 'attack_5_0',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'attack_5_0'
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_0',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_0'
             }
         ]
     },
@@ -933,10 +912,7 @@ GameData.oCharacter.GHN.oAnimations = {
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_0',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_0'
             }
         ]
     },
@@ -977,17 +953,11 @@ GameData.oCharacter.GHN.oAnimations = {
         },
         {
             nFrame: 6,
-            sFrame: 'attack_4_3',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'attack_4_3'
         },
         {
             nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'stand_1'
         }
     ],
     attack_2B_0: {
@@ -1036,17 +1006,11 @@ GameData.oCharacter.GHN.oAnimations = {
             },
             {
                 nFrame: 6,
-                sFrame: 'attack_4_0',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'attack_4_0'
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_1'
             },
         ]
     },
@@ -1078,10 +1042,7 @@ GameData.oCharacter.GHN.oAnimations = {
             },
             {
                 nFrame: 6,
-                sFrame: 'attack_4_5',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'attack_4_5'
             }
         ]
     },
@@ -1095,7 +1056,11 @@ GameData.oCharacter.GHN.oAnimations = {
             }
         },
         {
-            nFrame: 28,
+            nFrame: 14,
+            sFrame: 'ki_0_0'
+        },
+        {
+            nFrame: 14,
             sFrame: 'ki_0_0',
             oStatus: {
                 bCancel: true
@@ -1103,10 +1068,7 @@ GameData.oCharacter.GHN.oAnimations = {
         },
         {
             nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'stand_1'
         },
     ],
 

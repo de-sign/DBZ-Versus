@@ -517,10 +517,7 @@ GameData.oCharacter.GKU.oAnimations = {
         },
         {
             nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'stand_1'
         }
     ],
     // 4, 4, 6
@@ -549,10 +546,7 @@ GameData.oCharacter.GKU.oAnimations = {
         },
         {
             nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'stand_1'
         }
     ],
     attack_A_2: [
@@ -590,10 +584,7 @@ GameData.oCharacter.GKU.oAnimations = {
         },
         {
             sFrame: 'stand_1',
-            nFrame: 2,
-            oStatus: {
-                bCancel: true
-            }
+            nFrame: 2
         }
     ],
     // 6, 4, 8
@@ -622,10 +613,7 @@ GameData.oCharacter.GKU.oAnimations = {
         },
         {
             nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'stand_1'
         }
     ],
     // 8, 6, 10
@@ -664,17 +652,11 @@ GameData.oCharacter.GKU.oAnimations = {
             },
             {
                 nFrame: 6,
-                sFrame: 'attack_5_3',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'attack_5_3'
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_1'
             }
         ]
     },
@@ -715,44 +697,14 @@ GameData.oCharacter.GKU.oAnimations = {
         },
         {
             nFrame: 6,
-            sFrame: 'attack_4_3',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'attack_4_3'
         },
         {
             nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'stand_1'
         }
     ],
-/*
-    attack_C: [
-        {
-            nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bReverse: true
-            }
-        },
-        {
-            nFrame: 20,
-            sFrame: 'ki_0_0',
-            oStatus: {
-                bCancel: true
-            }
-        },
-        {
-            nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
-        },
-    ],
-*/
+    
     attack_C: [
         {
             nFrame: 2,

@@ -613,10 +613,7 @@ GameData.oCharacter.BJT.oAnimations = {
         },
         {
             nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'stand_1'
         }
     ],
     // 4, 4, 6
@@ -651,10 +648,7 @@ GameData.oCharacter.BJT.oAnimations = {
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_1'
             }
         ]
     },
@@ -684,10 +678,7 @@ GameData.oCharacter.BJT.oAnimations = {
         },
         {
             nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'stand_1'
         }
     ],
 
@@ -723,10 +714,7 @@ GameData.oCharacter.BJT.oAnimations = {
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_1'
             }
         ]
     },
@@ -766,17 +754,11 @@ GameData.oCharacter.BJT.oAnimations = {
             },
             {
                 nFrame: 6,
-                sFrame: 'attack_5_3',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'attack_5_3'
             },
             {
                 nFrame: 2,
-                sFrame: 'stand_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'stand_1'
             }
         ]
     },
@@ -817,21 +799,15 @@ GameData.oCharacter.BJT.oAnimations = {
         },
         {
             nFrame: 6,
-            sFrame: 'attack_4_0',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'attack_4_0'
         },
         {
             nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'stand_1'
         }
     ],
     
-    attack_C: [
+    attack_C_0: [
         {
             nFrame: 2,
             sFrame: 'stand_1',
@@ -841,10 +817,7 @@ GameData.oCharacter.BJT.oAnimations = {
         },
         {
             nFrame: 8,
-            sFrame: 'ki_0_0',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'ki_0_0'
         },
         {
             nFrame: 2,
@@ -852,13 +825,16 @@ GameData.oCharacter.BJT.oAnimations = {
             oStatus: {
                 bCancel: true
             }
+        }
+    ],
+    attack_C_1: [
+        {
+            nFrame: 2,
+            sFrame: 'stand_1'
         },
         {
             nFrame: 8,
-            sFrame: 'ki_0_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'ki_0_1'
         },
         {
             nFrame: 2,
@@ -866,9 +842,19 @@ GameData.oCharacter.BJT.oAnimations = {
             oStatus: {
                 bCancel: true
             }
+        }
+    ],
+    attack_C_2: [
+        {
+            nFrame: 2,
+            sFrame: 'stand_1'
         },
         {
-            nFrame: 16,
+            nFrame: 8,
+            sFrame: 'ki_0_0'
+        },
+        {
+            nFrame: 8,
             sFrame: 'ki_0_0',
             oStatus: {
                 bCancel: true
@@ -876,10 +862,7 @@ GameData.oCharacter.BJT.oAnimations = {
         },
         {
             nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'stand_1'
         }
     ],
     // Final Flash / Garric Canon
@@ -1190,8 +1173,8 @@ GameData.oCharacter.BJT.oCommands = {
             }
         },
         {
-            sCod: 'attack_C',
-            sAnimation: 'attack_C',
+            sCod: 'attack_C_0',
+            sAnimation: 'attack_C_0',
             oList: {
                 sName: 'Renzoku Kikodan',
                 sGroup: 'ki'
@@ -1223,26 +1206,6 @@ GameData.oCharacter.BJT.oCommands = {
                             nX: 58,
                             nY: -24
                         }
-                    },
-                    {
-                        sType: 'Projectile',
-                        sSFX: 'ADO__Projectile',
-                        sAnimation: 'kikoha',
-                        nFrameStart: 16,
-                        oPosition: {
-                            nX: 58,
-                            nY: -32
-                        }
-                    },
-                    {
-                        sType: 'Projectile',
-                        sSFX: 'ADO__Projectile',
-                        sAnimation: 'kikoha',
-                        nFrameStart: 22,
-                        oPosition: {
-                            nX: 58,
-                            nY: -24
-                        }
                     }
                 ]
             },
@@ -1264,6 +1227,88 @@ GameData.oCharacter.BJT.oCommands = {
                     nStun: 12,
                     sAnimation: 'defense_j4',
                     sImpact: 'explode_light'
+                }
+            },
+            oFollowUp: {
+                sCod: 'attack_C_1',
+                sAnimation: 'attack_C_1',
+                oProperty: {},
+                oGatling: {
+                    nLevel: 2,
+                    oManipulation: {},
+                    aEntity: [
+                        {
+                            sType: 'Projectile',
+                            sSFX: 'ADO__Projectile',
+                            sAnimation: 'kikoha',
+                            nFrameStart: 10,
+                            oPosition: {
+                                nX: 58,
+                                nY: -32
+                            }
+                        }
+                    ]
+                },
+                oHit: {
+                    oDamage: {
+                        nDamage: 50
+                    },
+                    oStun: {
+                        nStun: 16,
+                        sAnimation: 'hit_0',
+                        sImpact: 'explode_light'
+                    }
+                },
+                oGuard: {
+                    oDamage: {
+                        nDamage: 0
+                    },
+                    oStun: {
+                        nStun: 12,
+                        sAnimation: 'defense_j4',
+                        sImpact: 'explode_light'
+                    }
+                },
+                oFollowUp: {
+                    sCod: 'attack_C_2',
+                    sAnimation: 'attack_C_2',
+                    oProperty: {},
+                    oGatling: {
+                        nLevel: 2,
+                        oManipulation: {},
+                        aEntity: [
+                            {
+                                sType: 'Projectile',
+                                sSFX: 'ADO__Projectile',
+                                sAnimation: 'kikoha',
+                                nFrameStart: 10,
+                                oPosition: {
+                                    nX: 58,
+                                    nY: -24
+                                }
+                            }
+                        ]
+                    },
+                    oHit: {
+                        oDamage: {
+                            nDamage: 50
+                        },
+                        oStun: {
+                            nStun: 16,
+                            sAnimation: 'hit_0',
+                            sImpact: 'explode_light'
+                        }
+                    },
+                    oGuard: {
+                        oDamage: {
+                            nDamage: 0
+                        },
+                        oStun: {
+                            nStun: 12,
+                            sAnimation: 'defense_j4',
+                            sImpact: 'explode_light'
+                        }
+                    }
                 }
             }
         },

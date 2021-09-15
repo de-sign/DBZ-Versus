@@ -753,10 +753,7 @@ GameData.oCharacter.MJN_BUU.oAnimations = {
         },
         {
             nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'stand_1'
         }
     ],
     // 4, 4, 6
@@ -785,10 +782,7 @@ GameData.oCharacter.MJN_BUU.oAnimations = {
         },
         {
             nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'stand_1'
         }
     ],
     // 6, 4, 8
@@ -817,10 +811,7 @@ GameData.oCharacter.MJN_BUU.oAnimations = {
         },
         {
             nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'stand_1'
         }
     ],
     // 8, 6, 10
@@ -892,24 +883,15 @@ GameData.oCharacter.MJN_BUU.oAnimations = {
         },
         {
             nFrame: 4,
-            sFrame: 'attack_6_3',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'attack_6_3'
         },
         {
             nFrame: 2,
-            sFrame: 'attack_6_4',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'attack_6_4'
         },
         {
             nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'stand_1'
         }
     ],
     // 10, 8, 12
@@ -949,17 +931,11 @@ GameData.oCharacter.MJN_BUU.oAnimations = {
         },
         {
             nFrame: 6,
-            sFrame: 'attack_4_3',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'attack_4_3'
         },
         {
             nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'stand_1'
         }
     ],
 
@@ -972,7 +948,11 @@ GameData.oCharacter.MJN_BUU.oAnimations = {
             }
         },
         {
-            nFrame: 20,
+            nFrame: 8,
+            sFrame: 'ki_0_0'
+        },
+        {
+            nFrame: 12,
             sFrame: 'ki_0_0',
             oStatus: {
                 bCancel: true
@@ -980,10 +960,7 @@ GameData.oCharacter.MJN_BUU.oAnimations = {
         },
         {
             nFrame: 2,
-            sFrame: 'stand_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'stand_1'
         },
     ],
 
