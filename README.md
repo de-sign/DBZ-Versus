@@ -49,14 +49,15 @@ __Stage__
 <br/>*N/A*
 
 __Battle__
-* Revoir logique de TEXT en ENDING
 * Gestion du ONLINE ROLLBACK ? ( avec ou sans INPUT DELAY ? )
 
 __Training__
 <br/>*N/A*
 
 __General__
-* HUD de KI avec ICON
+* Faire les MODES visible dans le menu
+    * How to play
+    * Challenges
 
 * Méchaniques de jeu
     * Attack :

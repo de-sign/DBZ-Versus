@@ -192,7 +192,7 @@ Object.assign(
                 checkEndBattle: function(oWinner){
                     let bMenu = false;
                     if( oWinner ){
-                        const nRoundWin = ++SceneManager.oTransverseData.BTL__aRound[ oWinner.nPlayer == 1 ? 0 : 1 ];
+                        const nRoundWin = ++SceneManager.oTransverseData.BTL__aRound[ oWinner.nPlayer % 2 ];
                         if( nRoundWin >= (StoreEngine.get('BTL__Rounds') || GameSettings.oRound.nDefault) ){
                             bMenu = true;
                         }

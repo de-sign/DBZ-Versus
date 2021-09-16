@@ -149,23 +149,28 @@ Object.assign(
         aDataInfo: [
             {
                 sType: 'damages',
-                sPattern: '<span class="--pattern">Real (Scaling %, Base)</span>',
-                sBlank: '- (-%, -)'
+                sPattern: '<span class="--pattern">Real ( Scaling %, Base )</span>',
+                sBlank: '- ( -%, - )'
+            },
+            {
+                sType: 'combo',
+                sPattern: '<span class="--pattern">Current ( Max. )</span>',
+                sBlank: '- ( - )'
             },
             {
                 sType: 'frames',
-                sPattern: '<span class="--pattern">S.Up + Act. + Rcv. (Tot.)</span>',
-                sBlank: '- + - + - (-)'
+                sPattern: '<span class="--pattern">S.Up + Act. + Rcv. ( Tot. )</span>',
+                sBlank: '- + - + - ( - )'
             },
             {
                 sType: 'entity',
-                sPattern: '<span class="--pattern">Type : Act. (Spawn frame)</span>',
-                sBlank: '- : - (-)'
+                sPattern: '<span class="--pattern">Type : Act. ( Spawn frame )</span>',
+                sBlank: '- : - ( - )'
             },
             {
                 sType: 'advantage',
-                sPattern: '<span class="--pattern">Advantage (Frame on hit)</span>',
-                sBlank: '- (-)'
+                sPattern: '<span class="--pattern">Advantage ( Frame on hit )</span>',
+                sBlank: '- ( - )'
             },
         ],
         aDataAnimation: ['action', 'dash', 'guard', 'hit', 'launch', 'down', 'recovery'],
@@ -188,10 +193,10 @@ Object.assign(
                         oLayer: oData,
                         oLast: {
                             damages: {},
+                            combo: {},
                             frames: {},
                             entity: {},
-                            advantage: {},
-                            oDamage: {}
+                            advantage: {}
                         }
                     } );
                     this.aAnimation.push( {
@@ -335,13 +340,12 @@ Object.assign(
             showData: function(oPlayer, nIndex){
                 // Data
                 const oShowData = this.aData[nIndex],
-                    oOpponent = this.oScene.aPlayer[ nIndex == 1 ? 0 : 1 ],
+                    oOpponent = this.oScene.aPlayer[ oPlayer.nPlayer % 2 ],
 
                     bAction = oPlayer.oAnimation.sType == 'action',
 
                     oCommandData = oPlayer.getCommandData(),
                     bHurt = TrainingEngineDisplay.aHurtAnimation.indexOf( oPlayer.oAnimation.sType ) != -1,
-                    // bFall = TrainingEngineDisplay.aFallAnimation.indexOf( oPlayer.oAnimation.sType ) != -1 || TrainingEngineDisplay.aFallAnimation.indexOf( oOpponent.oAnimation.sType ) != -1,
 
                     nHitting = oOpponent.oDamage.nHitting,
                     bChangeHitting = nHitting ? nHitting != oShowData.oLast.nHitting : true,
@@ -351,6 +355,9 @@ Object.assign(
                             oCommandData,
                             bHit: oCommandData && oCommandData.sHurt == 'bHit',
                             bRecovery: oPlayer.oAnimation.getStep() == 'nRecovery'
+                        },
+                        combo: {
+                            nDamage: oOpponent.oDamage.nDamage
                         },
                         frames: {
                             oAnimation: oPlayer.oAnimation
@@ -362,10 +369,11 @@ Object.assign(
                         advantage: {
                             oAnimation: oPlayer.oAnimation,
                             bHit: oCommandData && !!oCommandData.sHurt,
-                            bHurt,
-                            // nFrames: bFall ? oShowData.oLast.advantage.nFrames + 1 : 0
+                            bHurt
                         }
                     };
+                
+                oShowData.oLast.nMax = Math.max(oOpponent.oDamage.nDamage, oShowData.oLast.nMax || 0);
 
                 for( let nInfo = 0; nInfo < TrainingEngineDisplay.aDataInfo.length; nInfo++ ){
 
@@ -382,13 +390,22 @@ Object.assign(
                                         oDamage = oData.oCommandData.oHit && oData.oCommandData.oHit.oDamage;
 
                                     if( oData.bHit && oTakeDamage ){
-                                        oText.setText( oTakeDamage.nDamage + ' (' + oTakeDamage.nScaling + '%, ' + oTakeDamage.nBase + ')' );
+                                        oText.setText( oTakeDamage.nDamage + ' ( ' + oTakeDamage.nScaling + '%, ' + oTakeDamage.nBase + ' )' );
                                     }
                                     else if( bChangeHitting || oData.bRecovery ) {
-                                        oText.setText( '- (-%, ' + ( oDamage ? oDamage.nDamage : '-' ) + ')' );
+                                        oText.setText( '- ( -%, ' + ( oDamage ? oDamage.nDamage : '-' ) + ' )' );
                                     }
                                 } else {
                                     oText.setText(oInfo.sBlank);
+                                }
+                                break;
+                                
+                            case 'combo':
+                                if( oData.nDamage ){
+                                    oText.setText( oData.nDamage + ' ( ' + ( oShowData.oLast.nMax || '-' ) + ' )' );
+                                }
+                                else {
+                                    oText.setText( '- ( ' + ( oShowData.oLast.nMax || '-' ) + ' )' );
                                 }
                                 break;
                                 
@@ -398,16 +415,16 @@ Object.assign(
                                     ['nStartUp', 'nActive', 'nRecovery'].forEach( sStep => {
                                         aText.push( oData.oAnimation.oData[sStep] || '-' );
                                     } );
-                                    oText.setText( aText.join(' + ') + ' (' + oData.oAnimation.nLength + ')' );
+                                    oText.setText( aText.join(' + ') + ' ( ' + oData.oAnimation.nLength + ' )' );
                                 }
                                 else {
-                                    oText.setText( oData.oAnimation.nLength + ' + - + - (' + oData.oAnimation.nLength + ')' );
+                                    oText.setText( oData.oAnimation.nLength + ' + - + - ( ' + oData.oAnimation.nLength + ' )' );
                                 }
                                 break;
                                 
                             case 'entity':
                                 if( oData.oEntity ){
-                                    oText.setText( oData.oEntity.sType + ' : ' + oData.oEntity.oAnimation.nLength + ' (' + ( oData.oAnimation.nTick - oData.oEntity.oAnimation.nTick + 1 ) + ')' );
+                                    oText.setText( oData.oEntity.sType + ' : ' + oData.oEntity.oAnimation.nLength + ' ( ' + ( oData.oAnimation.nTick - oData.oEntity.oAnimation.nTick + 1 ) + ' )' );
                                 }
                                 else if( oData.oAnimation != oShowData.oLast[oInfo.sType].oAnimation ){
                                     oText.setText(oInfo.sBlank);
@@ -420,7 +437,7 @@ Object.assign(
                                         oOpponent.oAnimation.nLength - oOpponent.oAnimation.nTick + 1 :
                                         0,
                                     nText = oOpponentFrame - oPlayerFrame;
-                                oText.setText( (nText < 0 ? nText : '+' + nText) + ' (' + ( oData.bHit ? oPlayer.oAnimation.nTick : '-' ) + ')' );
+                                oText.setText( (nText < 0 ? nText : '+' + nText) + ' ( ' + ( oData.bHit ? oPlayer.oAnimation.nTick : '-' ) + ' )' );
                                 break;
                         }
 

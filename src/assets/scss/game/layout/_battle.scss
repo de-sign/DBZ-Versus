@@ -103,9 +103,13 @@
         }
 
         .Battle__HUD_Character_Ki {
-            flex-direction: row-reverse;
-            right: 90px;
+            flex-direction: row;
+            right: 50px;
             left: auto;
+
+            .Battle__HUD_Ki_Icon {
+                flex-direction: row-reverse;
+            }
         }
 
         .Battle__HUD_Character_Round {
@@ -146,9 +150,29 @@
             position: relative;
             z-index: 100;
             display: flex;
-            width: 400px;
+            width: $width-small;
             flex-direction: row-reverse;
             background-color: rgba(255, 255, 255, 0.5);
+            
+            &::before,
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                border: 1px solid rgba(0, 0, 0, 0.25);
+                width: 0;
+                top: 50%;
+                bottom: 0;
+                z-index: 1;
+            }
+
+            &::before {
+                left: 33%;
+            }
+
+            &::after {
+                right: 33%;
+            }
         
             & > * {
                 flex: 0 0 auto;
@@ -166,10 +190,10 @@
         &_Ki {
             position: absolute;
             bottom: 125px;
-            left: 90px;
-            width: 250px;
+            left: 50px;
+            width: $width-small;
             display: flex;
-            flex-direction: row;
+            flex-direction: row-reverse;
             border: 2px solid #333;
             background-color: rgba(255, 255, 255, 0.5);
 
@@ -182,7 +206,7 @@
                     0px 1px 0 $font-inverse-color;
                 padding: 5px;
                 position: absolute;
-                bottom: -25px;
+                bottom: -20px;
                 left: -25px;
                 min-width: 50px;
                 z-index: 100;
@@ -192,6 +216,49 @@
             .Battle__HUD_Ki_Bar {
                 height: 20px;
                 background-color: #6699FF;
+            }
+        
+            .Battle__HUD_Ki_Icon {
+                position: absolute;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+
+                span {
+                    display: inline-block;
+                    width: 20%;
+                    position: relative;
+                    
+                    &.Battle__HUD_Ki_Icon_Bar::before {
+                        content: '';
+                        display: block;
+                        position: absolute;
+                        border: 1px solid #333;
+                        left: calc(50% - 1px);
+                        width: 0;
+                        top: 2px;
+                        bottom: 2px;
+                    }
+                    
+                    img {
+                        opacity: 0.25;
+                        display: block;
+                        margin: 0 auto;
+                    }
+                }
+
+                &.--icon_1 .Battle__HUD_Ki_Icon_1 img,
+                &.--icon_2 .Battle__HUD_Ki_Icon_1 img,
+                &.--icon_2 .Battle__HUD_Ki_Icon_2 img,
+                &.--icon_3 .Battle__HUD_Ki_Icon_1 img,
+                &.--icon_3 .Battle__HUD_Ki_Icon_2 img,
+                &.--icon_3 .Battle__HUD_Ki_Icon_3 img {
+                    opacity: 1;
+                }
             }
         }
 

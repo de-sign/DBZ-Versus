@@ -93,6 +93,7 @@ function TrainingEngineGauges(oScene){
     this.oScene = null;
     
     this.aParam = [];
+    this.aLast = [];
     this.init(oScene);
 }
 
@@ -117,15 +118,32 @@ Object.assign(
             },
             update: function(){
                 this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
-                    const oParam = this.aParam[nIndex];
-                    if( oPlayer.oAnimation.is('movement') && oPlayer.oAnimation.nTick == 1 ){
-                        if( oPlayer.nLife <= 0 || ( oParam.bRegenLife && oPlayer.nLife < oParam.nLife ) ){
-                            this.setStat(nIndex, 'Life');
-                        }
-                        if( oParam.bRegenKi && oPlayer.nKi < oParam.nKi ){
+                    const oParam = this.aParam[nIndex],
+                        oOpponent = this.oScene.aPlayer[ oPlayer.nPlayer % 2 ];
+
+                    if(
+                        (
+                            oPlayer.nLife <= 0
+                            || (
+                                oParam.bRegenLife
+                                && oPlayer.nLife < oParam.nLife
+                            )
+                        )
+                        && oPlayer.oAnimation.is('movement') && oPlayer.oAnimation.nTick == 1
+                    ){
+                        this.setStat(nIndex, 'Life');
+                    }
+
+                    if( oParam.bRegenKi ){
+                        if(
+                            oPlayer.nKi < oParam.nKi
+                            && this.aLast[nIndex] != oOpponent.oDamage.nFrameStart
+                        ){
                             this.setStat(nIndex, 'Ki');
                         }
+                        this.aLast[nIndex] = oOpponent.oDamage.nFrameStart;
                     }
+                    
                 } );
             },
             destroy: function(){
@@ -139,7 +157,7 @@ Object.assign(
                 sStat = 'n' + sStat;
                 const oParam = this.aParam[nIndex],
                     oMinStat = {
-                        nLife: 10 * GameSettings.oBattleElement.Player.nLife / 100,
+                        nLife: 10 * GameSettings.oBattleElement.Player.nLife / 60,
                         nKi: 0
                     },
                     oMaxStat = {
@@ -147,7 +165,7 @@ Object.assign(
                         nKi: GameSettings.oKi.nMax
                     },
                     oRatio = {
-                        nLife: 10 * GameSettings.oBattleElement.Player.nLife / 100,
+                        nLife: 10 * GameSettings.oBattleElement.Player.nLife / 60,
                         nKi: GameSettings.oKi.nBar
                     };
 

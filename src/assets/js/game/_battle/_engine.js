@@ -26,7 +26,7 @@ Object.assign(
             // Gestion PositionBox / Area
             aEntity.forEach( (oEntity, nIndex) => {
                 if( oEntity.oCheck.bCollapse ){
-                    const oReferent = this.aPlayer[ oEntity.getRootParent().nPlayer == 1 ? 1 : 0 ];
+                    const oReferent = this.aPlayer[ oEntity.getRootParent().nPlayer % 2 ];
                     oCollapse[oEntity.sId] = {
                         nIndex,
                         oEntity,

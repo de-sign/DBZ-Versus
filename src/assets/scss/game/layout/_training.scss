@@ -183,6 +183,7 @@
 // Data
 .Training__Data {
     display: none;
+    margin: 0 -25px;
 
     .--bData & {
         display: flex;
@@ -198,7 +199,7 @@
         align-items: flex-start;
         text-align: left;
         line-height: 1em;
-        padding: 5px 20px !important;
+        padding: 5px 25px !important;
     
         & > *:first-child {
             flex: 0 0 auto;
@@ -218,7 +219,7 @@
     line-height: 5px;
     display: block;
     text-align: left;
-    padding: 5px 20px !important;
+    padding: 10px 25px !important;
 
     span {
         display: inline-block;
