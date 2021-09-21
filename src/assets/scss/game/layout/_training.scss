@@ -47,6 +47,11 @@
             color: DarkGray;
             min-width: 15px;
             margin-left: 25px;
+
+            &.--change {
+                font-weight: bold;
+                color: #333;
+            }
         }
     }
 }

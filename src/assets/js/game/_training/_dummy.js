@@ -25,6 +25,9 @@ Object.assign(
                                 case 'LAY__Training_Menu_Dummy_Record':
                                     sRedirection = 'record';
                                     break;
+                                case 'TXT__Training_Menu_Dummy_Reset':
+                                    this.oEngine.reset();
+                                    break;
                                 default:
                                     this.change(1);
                                     break;
@@ -32,6 +35,9 @@ Object.assign(
                         },
                         B: () => {
                             sRedirection = 'return';
+                        },
+                        C: () => {
+                            this.oEngine.reset();
                         },
                         // Gestion changement
                         LEFT: () => {
@@ -65,8 +71,12 @@ Object.assign(
                 },
                 display: function(){
                     Object.keys(this.oEngine.oParam).forEach( (sParam, nIndex) => {
+
                         const uParam = this.oEngine.oParam[sParam],
-                            oText = this.oLayer.aChildElement[nIndex].aChildElement[0];
+                            oText = this.oLayer.aChildElement[nIndex].aChildElement[0],
+                            bChange = uParam != TrainingEngineDummy.oDefault[sParam];
+
+                        oText.hElement.classList[ bChange ? 'add' : 'remove' ]('--change');
 
                         switch( sParam ){
                             case 'sController':
@@ -75,8 +85,8 @@ Object.assign(
                             case 'bTechThrow':
                                 oText.setText( uParam ? 'Yes' : 'No' );
                                 break;
-                            case 'sCounter':
-                                oText.setText( uParam ? this.oEngine.oCounter[uParam] : 'No counter' );
+                            case 'sReversal':
+                                oText.setText( uParam ? this.oEngine.oReversal[uParam] : 'No reversal' );
                                 break;
                             case 'aRecord':
                                 oText.setText( uParam ? 'Record found' : 'No record' );
@@ -102,7 +112,7 @@ function TrainingEngineDummy(oScene){
     };
 
     this.oParam = {};
-    this.oCounter = {
+    this.oReversal = {
         'record': 'Play record'
     };
 
@@ -112,10 +122,20 @@ function TrainingEngineDummy(oScene){
 Object.assign(
     TrainingEngineDummy, {
 
+        oDefault: {
+            sController: null,
+            nStance: 0,
+            nGuard: 0,
+            bTechThrow: false,
+            sReversal: null,
+            nRecovery: 0,
+            aRecord: null
+        },
+
         oParameter: {
             nStance: ['Stand', 'Play record', 'Jump', 'Forward Jump', 'Backward Jump'],
             nGuard: ['No guard', 'After 1st hit', 'Only 1st hit', 'All', 'Reflect', 'Random'],
-            nReversal: ['No reversal', 'Forward', 'Backward']
+            nRecovery: ['No recovery', 'Forward', 'Backward']
         },
 
         prototype: {
@@ -123,24 +143,12 @@ Object.assign(
             init: function(oScene){
                 this.oScene = oScene;
 
-                Object.assign(
-                    this.oParam,
-                    {
-                        sController: null,
-                        nStance: 0,
-                        nGuard: 0,
-                        bTechThrow: false,
-                        sCounter: null,
-                        nReversal: 0,
-                        aRecord: null
-                    },
-                    StoreEngine.get('TNG_Dummy') || {}
-                );
+                Object.assign( this.oParam, TrainingEngineDummy.oDefault, StoreEngine.get('TNG_Dummy') || {} );
 
                 this.oSourceBuffer.oPlayer = this.oScene.aPlayer[0].oInputBuffer.oSource;
                 this.oSourceBuffer.oDummy = new BattleInputSourceBufferDummy(this.oScene.aPlayer[1], this.oParam);
 
-                this.initCounter();
+                this.initReversal();
                 this.setSource(SceneManager.oTransverseData.MNU__aController[1]);
             },
             update: function(){},
@@ -172,15 +180,15 @@ Object.assign(
                         this.oParam.bTechThrow = !this.oParam.bTechThrow;
                         break;
 
-                    case 'Counter':
-                        const aCommand = [ null, ...Object.keys(this.oCounter) ];
-                        nIndex = aCommand.indexOf(this.oParam.sCounter) + nChange;
+                    case 'Reversal':
+                        const aCommand = [ null, ...Object.keys(this.oReversal) ];
+                        nIndex = aCommand.indexOf(this.oParam.sReversal) + nChange;
                         if( nIndex >= aCommand.length ){
                             nIndex = 0;
                         } else if( nIndex < 0 ){
                             nIndex = aCommand.length - 1;
                         }
-                        this.oParam.sCounter = aCommand[nIndex];
+                        this.oParam.sReversal = aCommand[nIndex];
                         break;
 
                     default:
@@ -197,17 +205,21 @@ Object.assign(
 
                 StoreEngine.update('TNG_Dummy', this.oParam);
             },
+            reset: function(){
+                Object.assign( this.oParam, TrainingEngineDummy.oDefault );
+                StoreEngine.update('TNG_Dummy', this.oParam);
+            },
 
-            initCounter: function(){
+            initReversal: function(){
                 const aCommands = this.oScene.aPlayer[1].oData.oCommands.aGround;
                 for( let nIndex = aCommands.length - 1; nIndex >= 0; nIndex-- ){
                     const oCommand = aCommands[nIndex];
                     if( oCommand.sAnimation != 'attack_2D' ){
-                        this.oCounter[oCommand.sCod] = oCommand.oList.sName;
+                        this.oReversal[oCommand.sCod] = oCommand.oList.sName;
                     }
                 }
-                if( !this.oCounter[ this.oParam.sCounter ] ){
-                    this.oParam.sCounter = null;
+                if( !this.oReversal[ this.oParam.sReversal ] ){
+                    this.oParam.sReversal = null;
                 }
             },
             setSource: function(oController){

@@ -12,20 +12,14 @@ __Game__
     * Ajout de paramétrage possible pour MENU et BATTLE
 
 * Améliorer menu en TRAINING
-    * Gestion pour RESET
-        * Visualiser qu'une option n'est pas celle par défaut
-        * Bouton pour RESET l'option survolée
-        * Choix pour RESET tout le menu
     * Ajouter l'option COUNTER dans le DUMMY
-        * REVERSAL devient RECOVERY
-        * COUNTER devient REVERSAL
         * COUNTER : NORMALY - FORCED - RANDOM
     * Faire un menu supplémentaire pour la gestion de REVERSAL ?
         * Après JUMP
         * Après HIT
         * Après BLOCK
         * Après RECOVERY
-    * Améliorer le RECORDING
+    * Améliorer le RECORDING ?
         * Faire plusieurs pistes
         * Revoir affichage
         * Bouton pour RECORD ?
@@ -69,7 +63,7 @@ __Display__
 
 * Faire des SPRITES de mouvement pour fluidifier l'animation
 
-* Faire des anumations de début et fin de match stylé !
+* Faire des animations de début et fin de match stylé !
 
 __Tools__
 * Faire une API ELECTRON ?

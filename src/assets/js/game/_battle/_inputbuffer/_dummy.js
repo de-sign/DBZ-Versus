@@ -6,7 +6,7 @@ function BattleInputSourceBufferDummy(oPlayer, oOptions){
 
     this.oOptions = null;
     this.oLastButtons = {};
-    this.oCounter = {};
+    this.oReversal = {};
     this.nFrameGuard = 0;
     this.oRecord = null;
 
@@ -18,15 +18,15 @@ Object.assign(
 
         oButtons: {
             nStance: [null, null, 'UP', 'UF', 'UB'],
-            nReversal: [null, 'FW', 'BW']
+            nRecovery: [null, 'FW', 'BW']
         },
         nDurationGuard: 30,
         aStep: [
             'step__Record',
-            'step__Counter',
+            'step__Reversal',
             'step__Guard',
-            'step__Reversal',
-            'step__Reversal',
+            'step__Recovery',
+            'step__Recovery',
             'step__TechThrow',
             'step__Stance'
         ],
@@ -39,7 +39,7 @@ Object.assign(
                     this.oOptions = oOptions;
 
                     this.oPlayer.oData.oCommands.aGround.forEach( oCommand => {
-                        this.oCounter[oCommand.sCod] || ( this.oCounter[oCommand.sCod] = oCommand.oGatling.oManipulation.aButtons );
+                        this.oReversal[oCommand.sCod] || ( this.oReversal[oCommand.sCod] = oCommand.oGatling.oManipulation.aButtons );
                     } );
                 },
                 update: function(bReverse, bForce){
@@ -120,7 +120,7 @@ Object.assign(
                     if( !bStart && this.oRecord ){
                         if(
                             this.oOptions.nStance == 1
-                            && this.oOptions.sCounter != 'record'
+                            && this.oOptions.sReversal != 'record'
                         ){
                             if( this.oPlayer.oAnimation.is('hurt') ){
                                 this.oRecord.bLock = true;
@@ -130,14 +130,14 @@ Object.assign(
                             this.oPlayer.oAnimation.is('hurt')
                             || (
                                 this.oRecord.isEnd()
-                                && this.oOptions.sCounter == 'record'
+                                && this.oOptions.sReversal == 'record'
                             )
                         ){
                             this.oRecord = null;
                         }
                     }
 
-                    // Record Stance / Counter
+                    // Record Stance / Reversal
                     if( this.oRecord && !this.oRecord.isEnd() ){
                         oStep = {
                             sType: 'oButtons',
@@ -152,12 +152,12 @@ Object.assign(
                     return oStep;
 
                 },
-                step__Counter: function(bReverse, bForce){
+                step__Reversal: function(bReverse, bForce){
                     let oStep = null;
 
-                    // Counter
+                    // Reversal
                     if(
-                        this.oOptions.sCounter
+                        this.oOptions.sReversal
                         && this.oPlayer.oAnimation.isEnd()
                         && !this.oPlayer.oStatus.bAerial
                         && (
@@ -165,11 +165,11 @@ Object.assign(
                             || this.oPlayer.oAnimation.sType == 'recovery'
                         )
                         && (
-                            this.oOptions.sCounter != 'record'
+                            this.oOptions.sReversal != 'record'
                             || this.oOptions.aRecord
                         )
                     ){
-                        if( this.oOptions.sCounter == 'record' ){
+                        if( this.oOptions.sReversal == 'record' ){
                             oStep = this.startPlayingRecord();
                         }
                         else {
@@ -178,7 +178,7 @@ Object.assign(
                                 uValue: []
                             };
 
-                            this.oCounter[ this.oOptions.sCounter ].forEach( (oManip, nIndex) => {
+                            this.oReversal[ this.oOptions.sReversal ].forEach( (oManip, nIndex) => {
                                 const nFrame = TimerEngine.nFrames - nIndex - 1,
                                     oManipButtons = {};
                                 
@@ -289,15 +289,15 @@ Object.assign(
 
                     return oStep;
                 },
-                step__Reversal: function(bReverse, bForce){
+                step__Recovery: function(bReverse, bForce){
                     let oStep = null;
 
-                    // Reversal
-                    if( this.oOptions.nReversal && this.oPlayer.oAnimation.sType == 'down' ){
-                        const aConfig = BattleInputSourceBufferDummy.oButtons.nReversal;
+                    // Recovery
+                    if( this.oOptions.nRecovery && this.oPlayer.oAnimation.sType == 'down' ){
+                        const aConfig = BattleInputSourceBufferDummy.oButtons.nRecovery;
                         oStep = {
                             sType: 'oButtons',
-                            uValue: { [aConfig[this.oOptions.nReversal]]: TimerEngine.nFrames }
+                            uValue: { [aConfig[this.oOptions.nRecovery]]: TimerEngine.nFrames }
                         };
                     }
 

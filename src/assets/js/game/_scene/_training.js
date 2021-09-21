@@ -42,6 +42,10 @@ Object.assign(
                     sText: 'Return'
                 },
                 {
+                    aButton: ['C'],
+                    sText: 'Reset'
+                },
+                {
                     aButton: ['START'],
                     sText: 'Close menu'
                 }

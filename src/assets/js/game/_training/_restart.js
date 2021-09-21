@@ -34,6 +34,9 @@ Object.assign(
                                 case 'TXT__Training_Menu_Restart_Restart':
                                     sRedirection = 'restart';
                                     break;
+                                case 'TXT__Training_Menu_Restart_Reset':
+                                    this.oEngine.reset();
+                                    break;
                                 default:
                                     this.change(1);
                                     break;
@@ -41,6 +44,9 @@ Object.assign(
                         },
                         B: () => {
                             sRedirection = 'return';
+                        },
+                        C: () => {
+                            this.oEngine.reset();
                         },
                         // Gestion changement
                         LEFT: () => {
@@ -70,12 +76,17 @@ Object.assign(
                 display: function(){
                     const oParam = this.oEngine.oParam;
                     for( let sType in this.oLayer){
+
+                        const oText = this.oLayer[sType].aChildElement[0],
+                            bChange = oParam[sType] != TrainingEngineRestart.oDefault[sType];
+
                         if( sType == 'nPosition' ) {
-                            this.oLayer[sType].aChildElement[0].setText( GameSettings.oSide.aSide[ oParam[sType] ].sName );
+                            oText.setText( GameSettings.oSide.aSide[ oParam[sType] ].sName );
                         }
                         else if( sType == 'nSide' ) {
-                            this.oLayer[sType].aChildElement[0].setText( oParam[sType] ? 'Reverse' : 'Normal' );
+                            oText.setText( oParam[sType] ? 'Reverse' : 'Normal' );
                         }
+                        oText.hElement.classList[ bChange ? 'add' : 'remove' ]('--change');
                     }
                 }
             }
@@ -94,19 +105,17 @@ function TrainingEngineRestart(oScene){
 Object.assign(
     TrainingEngineRestart, {
 
+        oDefault: {
+            nPosition: GameSettings.oSide.nDefault,
+            nSide: 0
+        },
+
         prototype: {
             constructor: TrainingEngineRestart,
             init: function(oScene){
                 this.oScene = oScene;
 
-                Object.assign(
-                    this.oParam,
-                    {
-                        nPosition: GameSettings.oSide.nDefault,
-                        nSide: 0
-                    },
-                    StoreEngine.get('TNG_Restart') || {}
-                );
+                Object.assign( this.oParam, TrainingEngineRestart.oDefault, StoreEngine.get('TNG_Restart') || {} );
 
                 this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                     this.setPosition(nIndex);
@@ -146,6 +155,11 @@ Object.assign(
                         this.oScene.oArea
                     )
                 );
+            },
+
+            reset: function(){
+                Object.assign( this.oParam, TrainingEngineRestart.oDefault);
+                StoreEngine.update('TNG_Restart', this.oParam);
             }
         }
     }

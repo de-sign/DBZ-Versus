@@ -16,7 +16,7 @@ Object.assign(
                         bHistory: OutputManager.getElement('LAY__Training_Menu_Display_Input'),
                         bBox: OutputManager.getElement('LAY__Training_Menu_Display_Box'),
 
-                        oFrameRate: OutputManager.getElement('LAY__Training_Menu_Display_Framerate')
+                        nFrameRate: OutputManager.getElement('LAY__Training_Menu_Display_Framerate')
                     };
                 },
                 /*
@@ -28,14 +28,23 @@ Object.assign(
                     this.oScene.oController.ifPressedNow( {
                         // Gestion validation
                         A: () => {
-                            if( this.oMenu.getSelected().sId == 'TXT__Training_Menu_Display_Return' ){
-                                sRedirection = 'return';
-                            } else {
-                                this.change(1);
+                            switch( this.oMenu.getSelected().sId ){
+                                case 'TXT__Training_Menu_Display_Return':
+                                    sRedirection = 'return';
+                                    break;
+                                case 'TXT__Training_Menu_Display_Reset':
+                                    this.oEngine.reset();
+                                    break;
+                                default:
+                                    this.change(1);
+                                    break;
                             }
                         },
                         B: () => {
                             sRedirection = 'return';
+                        },
+                        C: () => {
+                            this.oEngine.reset();
                         },
                         // Gestion changement
                         LEFT: () => {
@@ -75,10 +84,16 @@ Object.assign(
                 },
                 display: function(){
                     for( let sType in this.oLayer){
-                        if( sType == 'oFrameRate' ){
-                            this.oLayer[sType].aChildElement[0].setText( this.oEngine.getFrameRate() + 'fps' );
+
+                        const oText = this.oLayer[sType].aChildElement[0],
+                            bChange = this.oEngine.oParameters[sType] != TrainingEngineDisplay.oDefault[sType];
+
+                        oText.hElement.classList[ bChange ? 'add' : 'remove' ]('--change');
+
+                        if( sType == 'nFrameRate' ){
+                            oText.setText( this.oEngine.getFrameRate() + 'fps' );
                         } else {
-                            this.oLayer[sType].aChildElement[0].setText( this.oEngine.oParameters[sType] ? 'Show' : 'Hide' );
+                            oText.setText( this.oEngine.oParameters[sType] ? 'Show' : 'Hide' );
                         }
                     }
                 }
@@ -96,18 +111,20 @@ function TrainingEngineDisplay(oScene){
     this.aAnimation = [];
     this.aData = [];
 
-    this.oParameters = {
-        nFrameRate: 3,
-        bData: true,
-        bHistory: true,
-        bBox: true
-    };
+    this.oParameters = {};
 
     this.init(oScene);
 }
 
 Object.assign(
     TrainingEngineDisplay, {
+
+        oDefault: {
+            nFrameRate: 0,
+            bData: true,
+            bHistory: true,
+            bBox: true
+        },
 
         aShow: [ 'bData', 'bHistory', 'bBox' ],
         nHistory: 20,
@@ -144,7 +161,7 @@ Object.assign(
             }
         },
 
-        aFrameRate: [ 6, 15, 30, 60 ],
+        aFrameRate: [ 60, 30, 15, 6 ],
 
         aDataInfo: [
             {
@@ -186,7 +203,7 @@ Object.assign(
             init: function(oScene){
                 this.oScene = oScene;
 
-                Object.assign( this.oParameters, StoreEngine.get('TNG_Display') );
+                Object.assign( this.oParameters, TrainingEngineDisplay.oDefault, StoreEngine.get('TNG_Display') || {} );
 
                 oScene.aPlayer.forEach( oPlayer => {
                     const oHistory = OutputManager.getElement('LAY__Training_History_' + oPlayer.nPlayer),
@@ -219,12 +236,7 @@ Object.assign(
                     }
                 } );
 
-                TrainingEngineDisplay.aShow.forEach( sType => {
-                    if( this.oParameters[sType] ){
-                        this.show(sType);
-                    }
-                } );
-                this.setFrameRate();
+                this.refresh();
             },
             update: function(){
                 this.updateHistory();
@@ -519,6 +531,10 @@ Object.assign(
                     StoreEngine.update('TNG_Display', this.oParameters);
                 }
             },
+            refresh: function(){
+                TrainingEngineDisplay.aShow.forEach( sType => this[ this.oParameters[sType] ? 'show' : 'hide' ](sType) );
+                this.setFrameRate();
+            },
 
             // FrameRate
             changeFrame: function(nChange){
@@ -547,6 +563,12 @@ Object.assign(
             },
             getFrameRate: function(){
                 return TrainingEngineDisplay.aFrameRate[ this.oParameters.nFrameRate ];
+            },
+
+            reset: function(){
+                Object.assign( this.oParameters, TrainingEngineDisplay.oDefault );
+                StoreEngine.update('TNG_Display', this.oParameters);
+                this.refresh();
             }
         }
     }

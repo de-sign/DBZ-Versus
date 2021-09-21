@@ -30,14 +30,23 @@ Object.assign(
                     this.oScene.oController.ifPressedNow( {
                         // Gestion validation
                         A: () => {
-                            if( this.oMenu.getSelected().sId == 'TXT__Training_Menu_Gauges_Return' ){
-                                sRedirection = 'return';
-                            } else {
-                                this.change(1);
+                            switch( this.oMenu.getSelected().sId ){
+                                case 'TXT__Training_Menu_Gauges_Return':
+                                    sRedirection = 'return';
+                                    break;
+                                case 'TXT__Training_Menu_Gauges_Reset':
+                                    this.oEngine.reset();
+                                    break;
+                                default:
+                                    this.change(1);
+                                    break;
                             }
                         },
                         B: () => {
                             sRedirection = 'return';
+                        },
+                        C: () => {
+                            this.oEngine.reset();
                         },
                         // Gestion changement
                         LEFT: () => {
@@ -69,17 +78,23 @@ Object.assign(
                 },
                 display: function(){
                     this.aLayer.forEach( (oLayer, nIndex) => {
+
                         const oParam = this.oEngine.aParam[nIndex];
                         for( let sType in oLayer){
+
+                            const oText = oLayer[sType].aChildElement[0],
+                                bChange = oParam[sType] != TrainingEngineGauges.oDefault[sType];
+
                             if( sType.indexOf('bRegen') != -1 ){
-                                oLayer[sType].aChildElement[0].setText( oParam[sType] ? 'Yes' : 'No' );
+                                oText.setText( oParam[sType] ? 'Yes' : 'No' );
                             }
                             else if( sType == 'nKi' ) {
-                                oLayer[sType].aChildElement[0].setText( oParam[sType] / GameSettings.oKi.nBar );
+                                oText.setText( oParam[sType] / GameSettings.oKi.nBar );
                             }
                             else if( sType == 'nLife' ) {
-                                oLayer[sType].aChildElement[0].setText( oParam[sType] );
+                                oText.setText( oParam[sType] );
                             }
+                            oText.hElement.classList[ bChange ? 'add' : 'remove' ]('--change');
                         }
                     } );
                 }
@@ -100,18 +115,20 @@ function TrainingEngineGauges(oScene){
 Object.assign(
     TrainingEngineGauges, {
 
+        oDefault: {
+            nLife: GameSettings.oBattleElement.Player.nLife,
+            nKi: GameSettings.oKi.nMax,
+            bRegenLife: true,
+            bRegenKi: true
+        },
+
         prototype: {
             constructor: TrainingEngineGauges,
             init: function(oScene){
                 this.oScene = oScene;
 
                 this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
-                    this.aParam.push( StoreEngine.get('TNG_Gauges_' + nIndex) || {
-                        nLife: GameSettings.oBattleElement.Player.nLife,
-                        nKi: GameSettings.oKi.nMax,
-                        bRegenLife: true,
-                        bRegenKi: true
-                    } );
+                    this.aParam.push( Object.assign( {}, TrainingEngineGauges.oDefault, StoreEngine.get('TNG_Gauges_' + nIndex) ) );
                     this.setStat(nIndex, 'Life');
                     this.setStat(nIndex, 'Ki');
                 } );
@@ -193,6 +210,13 @@ Object.assign(
                 this.aParam[nIndex][sRegen] = !this.aParam[nIndex][sRegen];
 
                 StoreEngine.update('TNG_Gauges_' + nIndex, this.aParam[nIndex]);
+            },
+
+            reset: function(){
+                for( let nIndex = 0; nIndex < this.aParam.length; nIndex++ ){
+                    this.aParam[nIndex] = Object.assign( {}, TrainingEngineGauges.oDefault);
+                    StoreEngine.update('TNG_Gauges_' + nIndex, this.aParam[nIndex]);
+                }
             }
         }
     }
