@@ -163,6 +163,11 @@ Object.assign(
                 sBlank: '- + - + - ( - )'
             },
             {
+                sType: 'invulnerable',
+                sPattern: '<span class="--pattern">Type ( Frame start ~ end )</span>',
+                sBlank: '- ( - ~ - )'
+            },
+            {
                 sType: 'entity',
                 sPattern: '<span class="--pattern">Type : Act. ( Spawn frame )</span>',
                 sBlank: '- : - ( - )'
@@ -195,6 +200,9 @@ Object.assign(
                             damages: {},
                             combo: {},
                             frames: {},
+                            invulnerable: {
+                                oInvulnerable: true
+                            },
                             entity: {},
                             advantage: {}
                         }
@@ -362,6 +370,9 @@ Object.assign(
                         frames: {
                             oAnimation: oPlayer.oAnimation
                         },
+                        invulnerable: {
+                            oInvulnerable: oCommandData && oCommandData.oProperty.oInvulnerable
+                        },
                         entity: {
                             oAnimation: oPlayer.oAnimation,
                             oEntity: oPlayer.aEntity.length ? oPlayer.aEntity[ oPlayer.aEntity.length - 1 ] : null
@@ -422,6 +433,14 @@ Object.assign(
                                 }
                                 break;
                                 
+                            case 'invulnerable':
+                                if( oData.oInvulnerable ){
+                                    oText.setText( oData.oInvulnerable.sType + ' ( ' + oData.oInvulnerable.nStart + ' ~ ' + ( oData.oInvulnerable.nStart + oData.oInvulnerable.nLength - 1 ) + ' )' );
+                                } else {
+                                    oText.setText(oInfo.sBlank);
+                                }
+                                break;
+                                
                             case 'entity':
                                 if( oData.oEntity ){
                                     oText.setText( oData.oEntity.sType + ' : ' + oData.oEntity.oAnimation.nLength + ' ( ' + ( oData.oAnimation.nTick - oData.oEntity.oAnimation.nTick + 1 ) + ' )' );
@@ -471,10 +490,8 @@ Object.assign(
                     sClass = '--guard';
                 } else if( oPlayer.oAnimation.oFrame.aHitBox ){
                     sClass = '--damage';
-                } else if( oPlayer.isInvulnerable() ){
+                } else if( oPlayer.isInvulnerable(true) ){
                     sClass = '--invulnerable';
-                } else if( oPlayer.oStatus.bAerialInvul ){
-                    sClass = '--aerial-invulnerable';
                 }
                 oAnimation.oLayer.hElement.innerHTML += '<span class="' + sClass + '"></span>';
             },

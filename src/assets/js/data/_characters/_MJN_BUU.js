@@ -656,12 +656,6 @@ GameData.oCharacter.MJN_BUU = {
                 nY: -110,
                 nWidth: 72,
                 nHeight: 112
-            },
-            aHurtBox: {
-                nX: -34,
-                nY: -146,
-                nWidth: 68,
-                nHeight: 148
             }
         },
         ki_1_1: {
@@ -888,23 +882,16 @@ GameData.oCharacter.MJN_BUU = {
             },
             {
                 nFrame: 2,
-                sFrame: 'attack_4_1',
-                oStatus: {
-                    bAerialInvul: true
-                }
+                sFrame: 'attack_4_1'
             },
             {
                 nFrame: 8,
-                sFrame: 'attack_4_2',
-                oStatus: {
-                    bAerialInvul: true
-                }
+                sFrame: 'attack_4_2'
             },
             {
                 nFrame: 4,
                 sFrame: 'attack_4_1',
                 oStatus: {
-                    bAerialInvul: true,
                     bCancel: true
                 }
             },
@@ -997,7 +984,12 @@ GameData.oCharacter.MJN_BUU = {
                     sGroup: 'ki'
                 },
                 oProperty: {
-                    bLaunch: true
+                    bLaunch: true,
+                    oInvulnerable: {
+                        sType: 'All',
+                        nStart: 1,
+                        nLength: 46
+                    }
                 },
                 oGatling: {
                     nCost: 30,
@@ -1094,7 +1086,12 @@ GameData.oCharacter.MJN_BUU = {
                     sGroup: 'ki'
                 },
                 oProperty: {
-                    bLaunch: true
+                    bLaunch: true,
+                    oInvulnerable: {
+                        sType: 'All',
+                        nStart: 1,
+                        nLength: 46
+                    }
                 },
                 oGatling: {
                     nCost: 30,
@@ -1250,7 +1247,12 @@ GameData.oCharacter.MJN_BUU = {
                     sGroup: 'command'
                 },
                 oProperty: {
-                    bLaunch: true
+                    bLaunch: true,
+                    oInvulnerable: {
+                        sType: 'Aerial',
+                        nStart: 9,
+                        nLength: 14
+                    }
                 },
                 oGatling: {
                     nLevel: 1,

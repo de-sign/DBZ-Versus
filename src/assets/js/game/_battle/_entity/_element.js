@@ -3,6 +3,7 @@
 function BattleElement(/*oData, oPosition, bReverse, oParent*/) {
     /* ----- START PROPERTIES ----- */
     this.sId = '';
+    this.sType = '';
     this.oDeadTimer = null;
     this.oParent = null;
     

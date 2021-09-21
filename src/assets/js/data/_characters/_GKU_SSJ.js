@@ -888,23 +888,16 @@ GameData.oCharacter.GKU_SSJ = {
             },
             {
                 nFrame: 2,
-                sFrame: 'attack_4_1',
-                oStatus: {
-                    bAerialInvul: true
-                }
+                sFrame: 'attack_4_1'
             },
             {
                 nFrame: 8,
-                sFrame: 'attack_4_2',
-                oStatus: {
-                    bAerialInvul: true
-                }
+                sFrame: 'attack_4_2'
             },
             {
                 nFrame: 4,
                 sFrame: 'attack_4_1',
                 oStatus: {
-                    bAerialInvul: true,
                     bCancel: true
                 }
             },
@@ -1008,60 +1001,50 @@ GameData.oCharacter.GKU_SSJ = {
             {
                 nFrame: 8,
                 sFrame: 'move_2',
-                oPositionBox: null
+                oPositionBox: null,
+                oHurtBox: null
             },
             {
                 nFrame: 2,
                 sFrame: 'stand_1',
                 oPositionBox: null,
-                oStatus: {
-                    bInvul: true
-                }
+                oHurtBox: null
             },
             {
                 nFrame: 10,
                 sFrame: 'ki_1_0',
                 oPositionBox: null,
-                oStatus: {
-                    bInvul: true
-                }
+                oHurtBox: null
             },
             {
                 nFrame: 10,
                 sFrame: 'ki_1_1',
                 oPositionBox: null,
-                oStatus: {
-                    bInvul: true
-                }
+                oHurtBox: null
             },
             {
                 nFrame: 44,
                 sFrame: 'ki_1_2',
                 oPositionBox: null,
-                oStatus: {
-                    bInvul: true
-                }
+                oHurtBox: null
             },
             {
                 nFrame: 10,
                 sFrame: 'ki_1_1',
                 oPositionBox: null,
-                oStatus: {
-                    bInvul: true
-                }
+                oHurtBox: null
             },
             {
                 nFrame: 2,
                 sFrame: 'stand_1',
                 oPositionBox: null,
-                oStatus: {
-                    bInvul: true
-                }
+                oHurtBox: null
             },
             {
                 nFrame: 8,
                 sFrame: 'move_2',
-                oPositionBox: null
+                oPositionBox: null,
+                oHurtBox: null
             }
         ]
     },
@@ -1077,7 +1060,12 @@ GameData.oCharacter.GKU_SSJ = {
                     sAnimation: 'list_236C'
                 },
                 oProperty: {
-                    bLaunch: true
+                    bLaunch: true,
+                    oInvulnerable: {
+                        sType: 'All',
+                        nStart: 1,
+                        nLength: 46
+                    }
                 },
                 oGatling: {
                     nCost: 30,
@@ -1206,7 +1194,12 @@ GameData.oCharacter.GKU_SSJ = {
                     sGroup: 'command'
                 },
                 oProperty: {
-                    bLaunch: true
+                    bLaunch: true,
+                    oInvulnerable: {
+                        sType: 'Aerial',
+                        nStart: 9,
+                        nLength: 14
+                    }
                 },
                 oGatling: {
                     nLevel: 1,

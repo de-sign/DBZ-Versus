@@ -82,6 +82,12 @@ GameData.oEntity.oCharacter.oFrames = {
             nY: -110,
             nWidth: 60,
             nHeight: 112
+        },
+        aHurtBox: {
+            nX: -46,
+            nY: -130,
+            nWidth: 92,
+            nHeight: 132
         }
     },
     move_3: {
@@ -91,6 +97,12 @@ GameData.oEntity.oCharacter.oFrames = {
             nY: -110,
             nWidth: 60,
             nHeight: 112
+        },
+        aHurtBox: {
+            nX: -46,
+            nY: -130,
+            nWidth: 92,
+            nHeight: 132
         }
     },
 
@@ -859,12 +871,21 @@ GameData.oEntity.oCharacter.oFrames = {
     // Super
     ki_1_0: {
         nZIndex: 80,
-        oStatus: {
-            bInvul: true
+        aHurtBox: {
+            nX: -34,
+            nY: -146,
+            nWidth: 68,
+            nHeight: 148
         }
     },
     ki_1_1: {
-        nZIndex: 80
+        nZIndex: 80,
+        aHurtBox: {
+            nX: -34,
+            nY: -146,
+            nWidth: 68,
+            nHeight: 148
+        }
     },
     ki_1_2: {
         nZIndex: 80
@@ -2135,7 +2156,13 @@ GameData.oEntity.oCharacter.oCommands = {
                 sName: 'Forward Recovery',
                 bHidden: true
             },
-            oProperty: {},
+            oProperty: {
+                oInvulnerable: {
+                    sType: 'All',
+                    nStart: 1,
+                    nLength: 10
+                }
+            },
             oGatling: {
                 nLevel: 0,
                 oManipulation: {
@@ -2153,7 +2180,13 @@ GameData.oEntity.oCharacter.oCommands = {
                 sName: 'Backward Recovery',
                 bHidden: true
             },
-            oProperty: {},
+            oProperty: {
+                oInvulnerable: {
+                    sType: 'All',
+                    nStart: 1,
+                    nLength: 10
+                }
+            },
             oGatling: {
                 nLevel: 0,
                 oManipulation: {
@@ -2171,7 +2204,13 @@ GameData.oEntity.oCharacter.oCommands = {
                 sName: 'Recovery',
                 bHidden: true
             },
-            oProperty: {},
+            oProperty: {
+                oInvulnerable: {
+                    sType: 'All',
+                    nStart: 1,
+                    nLength: 10
+                }
+            },
             oGatling: {
                 nLevel: 0,
                 oManipulation: {
@@ -2208,7 +2247,13 @@ GameData.oEntity.oCharacter.oCommands = {
                 sName: 'Backward Dash',
                 bHidden: true
             },
-            oProperty: {},
+            oProperty: {
+                oInvulnerable: {
+                    sType: 'All',
+                    nStart: 1,
+                    nLength: 6
+                }
+            },
             oGatling: {
                 nLevel: 0,
                 oManipulation: {
@@ -2437,7 +2482,13 @@ GameData.oEntity.oCharacter.oCommands = {
                 sName: 'Backward Air Dash',
                 bHidden: true
             },
-            oProperty: {},
+            oProperty: {
+                oInvulnerable: {
+                    sType: 'All',
+                    nStart: 1,
+                    nLength: 6
+                }
+            },
             oGatling: {
                 nLevel: 3,
                 oManipulation: {

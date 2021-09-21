@@ -83,6 +83,12 @@ new BattleElement(/*oData, oPosition, bReverse, oParent*/);
 this.sId = '';
 ```
 
+### this.sType
+
+```javascript
+this.sType = '';
+```
+
 ### this.oDeadTimer
 
 ```javascript

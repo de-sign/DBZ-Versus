@@ -62,13 +62,7 @@ Object.assign(
         aFilter: [
             {
                 sSuffixe: '_0',
-                aFrames: ['stand_1', 'hit_2', 'hit_4', 'move_1', 'move_2', 'move_3', 'guard_0', 'guard_2'],
-                oData: {
-                    oStatus: {
-                        bInvul: true
-                    },
-                    aHurtBox: null
-                }
+                aFrames: ['stand_1', 'hit_2', 'hit_4', 'move_1', 'move_2', 'move_3', 'guard_0', 'guard_2']
             },
             {
                 sSuffixe: '_1',

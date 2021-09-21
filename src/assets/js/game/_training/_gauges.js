@@ -137,7 +137,10 @@ Object.assign(
                     if( oParam.bRegenKi ){
                         if(
                             oPlayer.nKi < oParam.nKi
-                            && this.aLast[nIndex] != oOpponent.oDamage.nFrameStart
+                            && (
+                                !oOpponent.oDamage.nFrameStart
+                                || this.aLast[nIndex] != oOpponent.oDamage.nFrameStart
+                            )
                         ){
                             this.setStat(nIndex, 'Ki');
                         }

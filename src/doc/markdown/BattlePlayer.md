@@ -28,12 +28,9 @@ this.nPlayer = null;
 ```javascript
 this.oStatus = {
         bReverse: false, // Possibilité de se retourner : stand, tp, etc
-        bThrough: false, // Possibilité de se retourner : stand, tp, etc
+        bThrough: false, // Possibilité de traverser
         bGuard: false, // Possibilité de guarder : backdash, block
         bThrow: false, // Possibilité de TechThrow : hit_throw
-        bInvul: false, // Impossibilité de prendre un coup : launch
-        bAerialInvul: false, // Impossibilité de prendre un coup aérien : launcher
-        bCancel: false, // Coup cancellable : ligth, etc
         bAerial: false, // Personnage en l'air : jump, launch, fall, etc
         bLaunch: false // Personnage en l'air via un coup : launch
     };
@@ -183,6 +180,12 @@ this.updateAnimation();
 
 ```javascript
 this.updateStatus(oForce);
+```
+
+### BattlePlayer.prototype.isInvulnerable()
+
+```javascript
+this.isInvulnerable(oEntityHit);
 ```
 
 ### BattlePlayer.prototype.takeHit()

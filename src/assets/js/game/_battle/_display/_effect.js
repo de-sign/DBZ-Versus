@@ -70,7 +70,7 @@ Object.assign(
                         case 'freeze':
                             break;
                         case 'slow':
-                            TimerEngine.setFPS(this.nLastFPS);
+                            this.nLastFPS && TimerEngine.setFPS(this.nLastFPS);
                             break;
                         case 'zoom':
                             this.oLayer.resetPosition();
@@ -107,7 +107,7 @@ Object.assign(
                 }
             }
         },
-        destroy:  function(){
+        destroy: function(){
             for( let sEffect in this.oEffect ){
                 this.oEffect[sEffect].destroy();
             }

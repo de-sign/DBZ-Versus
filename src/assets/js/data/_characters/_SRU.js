@@ -682,23 +682,16 @@ GameData.oCharacter.SRU = {
             },
             {
                 nFrame: 2,
-                sFrame: 'attack_4_1',
-                oStatus: {
-                    bAerialInvul: true
-                }
+                sFrame: 'attack_4_1'
             },
             {
                 nFrame: 8,
-                sFrame: 'attack_4_2',
-                oStatus: {
-                    bAerialInvul: true
-                }
+                sFrame: 'attack_4_2'
             },
             {
                 nFrame: 4,
                 sFrame: 'attack_4_1',
                 oStatus: {
-                    bAerialInvul: true,
                     bCancel: true
                 }
             },
@@ -804,7 +797,12 @@ GameData.oCharacter.SRU = {
                     sAnimation: 'list_236C'
                 },
                 oProperty: {
-                    bLaunch: true
+                    bLaunch: true,
+                    oInvulnerable: {
+                        sType: 'All',
+                        nStart: 1,
+                        nLength: 46
+                    }
                 },
                 oGatling: {
                     nCost: 30,
@@ -962,7 +960,12 @@ GameData.oCharacter.SRU = {
                     sGroup: 'command'
                 },
                 oProperty: {
-                    bLaunch: true
+                    bLaunch: true,
+                    oInvulnerable: {
+                        sType: 'Aerial',
+                        nStart: 9,
+                        nLength: 14
+                    }
                 },
                 oGatling: {
                     nLevel: 1,

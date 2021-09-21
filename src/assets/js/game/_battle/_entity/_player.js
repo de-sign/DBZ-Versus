@@ -6,12 +6,9 @@ function BattlePlayer(nPlayer, sChar, sColor, sAnimation, oPosition, bReverse, o
     
     this.oStatus = {
         bReverse: false, // Possibilité de se retourner : stand, tp, etc
-        bThrough: false, // Possibilité de se retourner : stand, tp, etc
+        bThrough: false, // Possibilité de traverser
         bGuard: false, // Possibilité de guarder : backdash, block
         bThrow: false, // Possibilité de TechThrow : hit_throw
-        bInvul: false, // Impossibilité de prendre un coup : launch
-        bAerialInvul: false, // Impossibilité de prendre un coup aérien : launcher
-        bCancel: false, // Coup cancellable : ligth, etc
         bAerial: false, // Personnage en l'air : jump, launch, fall, etc
         bLaunch: false // Personnage en l'air via un coup : launch
     };
@@ -294,17 +291,54 @@ Object.assign(
                     this.oStatus = Object.assign(
                         {
                             bReverse: false, // Possibilité de se retourner : stand, tp, etc
-                            bGuard: false, // Possibilité de guarder : backdash, block
+                            bThrough: false, // Possibilité de traverser
+
+                            bGuard: false, // Possibilité de garder : backward, block
                             bThrow: false, // Possibilité de TechThrow : hit_throw
-                            bInvul: false, // Impossibilité de prendre un coup : launch
-                            bAerialInvul: false, // Impossibilité de prendre un coup aérien : launcher
-                            bCancel: false, // Coup cancellable : ligth, etc
+
                             bAerial: this.oStatus.bAerial, // Personnage en l'air : jump, launch, fall, etc
                             bLaunch: this.oStatus.bLaunch // Personnage en l'air via un coup : launch
                         },
                         this.oAnimation.oFrame.oStatus,
                         oForce || {}
                     );
+                },
+
+                isInvulnerable: function(oEntityHit){
+                    let bInvul = BattleEntity.prototype.isInvulnerable.call(this);
+                    if( !bInvul ){
+                        const oData = this.getCommandData(),
+                            oInvul = oData && oData.oProperty.oInvulnerable;
+
+                        if( oInvul && this.oAnimation.nTick >= oInvul.nStart && this.oAnimation.nTick < ( oInvul.nStart + oInvul.nLength ) ){
+
+                            // Display TRAINING
+                            if( oEntityHit === true ){
+                                bInvul = true;
+                            }
+                            // Engine
+                            else {
+                                switch( oInvul.sType ){
+                                    case 'All':
+                                        bInvul = true;
+                                        break;
+                                    case 'Aerial':
+                                        bInvul = oEntityHit.oStatus && oEntityHit.oStatus.bAerial;
+                                        break;
+                                    case 'Physical':
+                                        bInvul = oEntityHit.sType == 'Character' || oEntityHit.sType == 'Player';
+                                        break;
+                                    case 'Ki':
+                                        bInvul = oEntityHit.sType == 'Projectile' || oEntityHit.sType == 'Beam';
+                                        break;
+                                    default:
+                                        bInvul = oEntityHit.sType == oInvul.sType;
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                    return bInvul;
                 },
 
                 takeHit: function(oEntity, oCommandData, oEngine){

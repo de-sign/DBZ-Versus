@@ -92,6 +92,9 @@ Object.assign(
                 const oText = this.oModule.oText;
                 oText.add.apply(oText, arguments);
             },
+            hideText: function(){
+                this.oModule.oText.hide();
+            },
 
             // Timer
             startTimer: function(){
