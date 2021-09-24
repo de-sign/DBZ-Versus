@@ -889,14 +889,7 @@ GameData.oEntity.oCharacter.oFrames = {
     },
     ki_1_2: {
         nZIndex: 80
-    },
-
-    // Command List
-    list_0: {},
-    list_1: {},
-    list_2: {},
-    list_3: {},
-    list_4: {}
+    }
 };
 ```
 
@@ -1695,124 +1688,6 @@ GameData.oEntity.oCharacter.oAnimations = {
         }
     ],
 
-    // List
-    list_4: {
-        sType: 'animation',
-        aFrames: [
-            {
-                nFrame: 24,
-                sFrame: 'stand_0'
-            },
-            {
-                nFrame: 1,
-                sFrame: 'guard_0__2'
-            },
-            {
-                nFrame: 5,
-                sFrame: 'guard_0'
-            }
-        ]
-    },
-    list_5: {
-        sType: 'animation',
-        aFrames: [
-            {
-                sFrame: 'stand_0'
-            }
-        ]
-    },
-    list_8: {
-        sType: 'animation',
-        aFrames: [
-            {
-                sFrame: 'jump_2'
-            }
-        ]
-    },
-    list_hit_D: {
-        sType: 'animation',
-        aFrames: [
-            {
-                nFrame: 24,
-                sFrame: 'stand_0'
-            },
-            {
-                nFrame: 6,
-                sFrame: 'hit_0__3'
-            }
-        ]
-    },
-    list_C: {
-        sType: 'animation',
-        aFrames: [
-            {
-                nFrame: 2,
-                sFrame: 'move_1'
-            },
-            {
-                nFrame: 10,
-                sFrame: 'ki_0_0'
-            },
-            {
-                nFrame: 8,
-                sFrame: 'list_4'
-            },
-            {
-                nFrame: 10,
-                sFrame: 'ki_0_0'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'move_1'
-            }
-        ]
-    },
-    list_236C: {
-        sType: 'animation',
-        aFrames: [
-            {
-                nFrame: 2,
-                sFrame: 'stand_1'
-            },
-            {
-                nFrame: 30,
-                sFrame: 'ki_1_0'
-            },
-            {
-                nFrame: 10,
-                sFrame: 'ki_1_1'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'list_0'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'list_1'
-            },
-            {
-                nFrame: 36,
-                sFrame: 'list_2'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'list_1'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'list_0'
-            },
-            {
-                nFrame: 20,
-                sFrame: 'ki_1_1'
-            },
-            {
-                nFrame: 2,
-                sFrame: 'stand_1'
-            }
-        ]
-    },
-
     // Animation
     anim_open: {
         sType: 'animation',
@@ -1993,8 +1868,7 @@ GameData.oEntity.oCharacter.oCommands = {
             oList: {
                 sName: 'Reflect',
                 sInfo: 'On guard',
-                sGroup: 'defense',
-                sStance: 'list_4'
+                sGroup: 'defense'
             },
             oProperty: {
                 sCollisionBox: 'oPositionBox'
@@ -2081,8 +1955,7 @@ GameData.oEntity.oCharacter.oCommands = {
             oList: {
                 sName: 'Tech Throw',
                 sInfo: 'On throw',
-                sGroup: 'defense',
-                sStance: 'list_hit_D'
+                sGroup: 'defense'
             },
             oProperty: {
                 sCollisionBox: 'oPositionBox'
@@ -2506,8 +2379,7 @@ GameData.oEntity.oCharacter.oCommands = {
             sAnimation: 'attack_jB',
             oList: {
                 sName: 'Jump Heavy',
-                sGroup: 'aerial',
-                sStance: 'list_8'
+                sGroup: 'aerial'
             },
             oProperty: {},
             oGatling: {
@@ -2544,8 +2416,7 @@ GameData.oEntity.oCharacter.oCommands = {
             sAnimation: 'attack_jA',
             oList: {
                 sName: 'Jump Light',
-                sGroup: 'aerial',
-                sStance: 'list_8'
+                sGroup: 'aerial'
             },
             oProperty: {},
             oGatling: {

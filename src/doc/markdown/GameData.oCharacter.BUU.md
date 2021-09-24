@@ -54,9 +54,6 @@ Données des FRAMES.
 ```javascript
 GameData.oCharacter.BUU.oFrames = {
 
-    list_0: false,
-    list_1: false,
-
     stand_0: {
         oPositionBox: {
             nX: -30,
@@ -913,42 +910,6 @@ GameData.oCharacter.BUU.oAnimations = {
             nFrame: 2,
             sFrame: 'stand_1'
         }
-    ],
-
-    // List
-    list_236C: [
-        {
-            nFrame: 2,
-            sFrame: 'stand_1'
-        },
-        {
-            nFrame: 30,
-            sFrame: 'ki_1_0'
-        },
-        {
-            nFrame: 10,
-            sFrame: 'ki_1_1'
-        },
-        {
-            nFrame: 2,
-            sFrame: 'list_0'
-        },
-        {
-            nFrame: 40,
-            sFrame: 'list_1'
-        },
-        {
-            nFrame: 2,
-            sFrame: 'list_2'
-        },
-        {
-            nFrame: 20,
-            sFrame: 'super_1'
-        },
-        {
-            nFrame: 2,
-            sFrame: 'stand_1'
-        },
     ]
 };
 ```
@@ -966,8 +927,7 @@ GameData.oCharacter.BUU.oCommands = {
             sAnimation: 'attack_236C',
             oList: {
                 sName: 'Cho Noryoku',
-                sGroup: 'ki',
-                sAnimation: 'list_236C'
+                sGroup: 'ki'
             },
             oProperty: {
                 bLaunch: true,
@@ -1070,8 +1030,7 @@ GameData.oCharacter.BUU.oCommands = {
             sAnimation: 'attack_236C',
             oList: {
                 sName: 'Cho Noryoku',
-                sGroup: 'ki',
-                sAnimation: 'list_236C'
+                sGroup: 'ki'
             },
             oProperty: {
                 bLaunch: true,

@@ -34,10 +34,6 @@ GameData.oCharacter.GKU_SSJ = {
     /* ----- DETAILS Données des FRAMES. ----- */
     oFrames: {
 
-        list_0: false,
-        list_1: false,
-        list_2: false,
-
         stand_0: {
             oPositionBox: {
                 nX: -30,
@@ -148,11 +144,104 @@ GameData.oCharacter.GKU_SSJ = {
         attack_0_2: false,
 
         attack_1_1: false,
-        attack_1_2: false,
-        attack_1_3: false,
-        attack_1_4: false,
+        attack_1_2: {
+            nZIndex: 30,
+            oPositionBox: {
+                nX: -22,
+                nY: -110,
+                nWidth: 68,
+                nHeight: 76
+            },
+            aHurtBox: [{
+                nX: -42,
+                nY: -114,
+                nWidth: 108,
+                nHeight: 72
+            },
+            {
+                nX: -10,
+                nY: -78,
+                nWidth: 64,
+                nHeight: 56
+            }]
+        },
+        attack_1_3: {
+            nZIndex: 30,
+            oPositionBox: {
+                nX: -22,
+                nY: -110,
+                nWidth: 68,
+                nHeight: 76
+            },
+            aHurtBox: [{
+                nX: -42,
+                nY: -114,
+                nWidth: 108,
+                nHeight: 72
+            },
+            {
+                nX: -10,
+                nY: -78,
+                nWidth: 64,
+                nHeight: 56
+            }],
+            aHitBox: [{
+                nX: -10,
+                nY: -78,
+                nWidth: 64,
+                nHeight: 56
+            }, 
+            {
+                nX: 38,
+                nY: -138,
+                nWidth: 28,
+                nHeight: 96
+            }]
+        },
+        attack_1_4: {
+            nZIndex: 30,
+            oPositionBox: {
+                nX: -22,
+                nY: -110,
+                nWidth: 68,
+                nHeight: 76
+            },
+            aHurtBox: [{
+                nX: -42,
+                nY: -114,
+                nWidth: 96,
+                nHeight: 72
+            },
+            {
+                nX: -10,
+                nY: -78,
+                nWidth: 64,
+                nHeight: 56
+            }]
+        },
+        attack_1_5: {
+            nZIndex: 30,
+            oPositionBox: {
+                nX: -22,
+                nY: -110,
+                nWidth: 68,
+                nHeight: 76
+            },
+            aHurtBox: [{
+                nX: -26,
+                nY: -138,
+                nWidth: 60,
+                nHeight: 84
+            }, {
+                nX: -18,
+                nY: -70,
+                nWidth: 64,
+                nHeight: 72
+            }]
+        },
 
         attack_2_0: {
+            nZIndex: 30,
             oPositionBox: {
                 nX: -30,
                 nY: -110,
@@ -177,6 +266,7 @@ GameData.oCharacter.GKU_SSJ = {
             }]
         },
         attack_2_1: {
+            nZIndex: 30,
             oPositionBox: {
                 nX: -30,
                 nY: -110,
@@ -207,6 +297,33 @@ GameData.oCharacter.GKU_SSJ = {
             }
         },
         attack_2_2: {
+            nZIndex: 30,
+            oPositionBox: {
+                nX: -30,
+                nY: -110,
+                nWidth: 64,
+                nHeight: 112
+            },
+            aHurtBox: [{
+                nX: -14,
+                nY: -134,
+                nWidth: 60,
+                nHeight: 60
+            }, {
+                nX: -30,
+                nY: -98,
+                nWidth: 56,
+                nHeight: 100
+            }, {
+                nX: 22,
+                nY: -98,
+                nWidth: 60,
+                nHeight: 32
+            }]
+        },
+
+        attack_2_3: {
+            nZIndex: 30,
             oPositionBox: {
                 nX: -30,
                 nY: -110,
@@ -230,7 +347,8 @@ GameData.oCharacter.GKU_SSJ = {
                 nHeight: 32
             }]
         },
-        attack_2_3: {
+        attack_2_4: {
+            nZIndex: 30,
             oPositionBox: {
                 nX: -30,
                 nY: -110,
@@ -259,6 +377,31 @@ GameData.oCharacter.GKU_SSJ = {
                 nWidth: 64,
                 nHeight: 32
             }
+        },
+        attack_2_5: {
+            nZIndex: 30,
+            oPositionBox: {
+                nX: -30,
+                nY: -110,
+                nWidth: 68,
+                nHeight: 112
+            },
+            aHurtBox: [{
+                nX: -14,
+                nY: -134,
+                nWidth: 60,
+                nHeight: 60
+            }, {
+                nX: -30,
+                nY: -98,
+                nWidth: 56,
+                nHeight: 100
+            }, {
+                nX: 22,
+                nY: -94,
+                nWidth: 64,
+                nHeight: 32
+            }]
         },
         
         attack_3_0: {
@@ -317,6 +460,31 @@ GameData.oCharacter.GKU_SSJ = {
         },
         attack_3_2: {
             oPositionBox: {
+                nX: -30,
+                nY: -110,
+                nWidth: 72,
+                nHeight: 112
+            },
+            aHurtBox: [{
+                nX: -34,
+                nY: -142,
+                nWidth: 60,
+                nHeight: 52
+            }, {
+                nX: -14,
+                nY: -110,
+                nWidth: 48,
+                nHeight: 112
+            }, {
+                nX: 30,
+                nY: -102,
+                nWidth: 76,
+                nHeight: 44
+            }]
+        },
+
+        attack_3_3: {
+            oPositionBox: {
                 nX: -26,
                 nY: -110,
                 nWidth: 60,
@@ -334,7 +502,7 @@ GameData.oCharacter.GKU_SSJ = {
                 nHeight: 100
             }]
         },
-        attack_3_3: {
+        attack_3_4: {
             oPositionBox: {
                 nX: -30,
                 nY: -110,
@@ -358,7 +526,7 @@ GameData.oCharacter.GKU_SSJ = {
                 nHeight: 64
             }]
         },
-        attack_3_4: {
+        attack_3_5: {
             oPositionBox: {
                 nX: -30,
                 nY: -110,
@@ -388,7 +556,7 @@ GameData.oCharacter.GKU_SSJ = {
                 nHeight: 64
             }]
         },
-        attack_3_5: {
+        attack_3_6: {
             oPositionBox: {
                 nX: -22,
                 nY: -110,
@@ -417,18 +585,48 @@ GameData.oCharacter.GKU_SSJ = {
                 nHeight: 112
             },
             aHurtBox: [{
-                nX: 22,
-                nY: -154,
-                nWidth: 44,
-                nHeight: 104
-            }, {
                 nX: -22,
                 nY: -138,
                 nWidth: 60,
                 nHeight: 124
+            }, {
+                nX: 38,
+                nY: -138,
+                nWidth: 48,
+                nHeight: 108
             }]
         },
         attack_4_2: {
+            oPositionBox: {
+                nX: -26,
+                nY: -110,
+                nWidth: 68,
+                nHeight: 112
+            },
+            aHurtBox: [{
+                nX: -22,
+                nY: -138,
+                nWidth: 60,
+                nHeight: 124
+            }, {
+                nX: 38,
+                nY: -138,
+                nWidth: 48,
+                nHeight: 108
+            }],
+            aHitBox: [{
+                nX: 38,
+                nY: -138,
+                nWidth: 48,
+                nHeight: 108
+            }, {
+                nX: 18,
+                nY: -154,
+                nWidth: 48,
+                nHeight: 44
+            }]
+        },
+        attack_4_3: {
             oPositionBox: {
                 nX: -26,
                 nY: -110,
@@ -445,15 +643,28 @@ GameData.oCharacter.GKU_SSJ = {
                 nY: -138,
                 nWidth: 60,
                 nHeight: 124
-            }],
-            aHitBox: {
-                nX: 22,
-                nY: -154,
-                nWidth: 44,
-                nHeight: 104
-            }
+            }]
         },
-        attack_4_3: false,
+        attack_4_4: {
+            nZIndex: 30,
+            oPositionBox: {
+                nX: -22,
+                nY: -110,
+                nWidth: 68,
+                nHeight: 112
+            },
+            aHurtBox: [{
+                nX: -26,
+                nY: -138,
+                nWidth: 60,
+                nHeight: 84
+            }, {
+                nX: -18,
+                nY: -70,
+                nWidth: 64,
+                nHeight: 72
+            }]
+        },
 
         attack_5_0: false,
         attack_5_1: {
@@ -510,7 +721,50 @@ GameData.oCharacter.GKU_SSJ = {
                 nHeight: 40
             }
         },
-        attack_5_3: false,
+        attack_5_3: {
+            oPositionBox: {
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
+            },
+            aHurtBox: [{
+                nX: 6,
+                nY: -126,
+                nWidth: 52,
+                nHeight: 60
+            }, {
+                nX: -6,
+                nY: -90,
+                nWidth: 100,
+                nHeight: 40
+            }, {
+                nX: -38,
+                nY: -54,
+                nWidth: 76,
+                nHeight: 56
+            }]
+        },
+        attack_5_4: {
+            nZIndex: 30,
+            oPositionBox: {
+                nX: -30,
+                nY: -110,
+                nWidth: 60,
+                nHeight: 112
+            },
+            aHurtBox: [{
+                nX: -6,
+                nY: -130,
+                nWidth: 60,
+                nHeight: 56
+            }, {
+                nX: -38,
+                nY: -98,
+                nWidth: 76,
+                nHeight: 100
+            }]
+        },
         
         ki_0_0: {
             oPositionBox: {
@@ -707,6 +961,48 @@ GameData.oCharacter.GKU_SSJ = {
         },
         */
         // Command
+        attack_jB: {
+            sType: 'action',
+            aFrames: [
+                {
+                    nFrame: 2,
+                    sFrame: 'stand_1',
+                    oPositionBox: {
+                        nX: -22,
+                        nY: -110,
+                        nWidth: 68,
+                        nHeight: 76
+                    },
+                    oStatus: {
+                        bReverse: true
+                    }
+                },
+                {
+                    nFrame: 4,
+                    sFrame: 'attack_1_1'
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'attack_1_2'
+                },
+                {
+                    nFrame: 6,
+                    sFrame: 'attack_1_3'
+                },
+                {
+                    nFrame: 4,
+                    sFrame: 'attack_1_4',
+                    oStatus: {
+                        bCancel: true
+                    }
+                },
+                {
+                    nFrame: 2,
+                    sFrame: 'attack_1_5'
+                }
+            ]
+        },
+
         // 4, 4, 6
         attack_A_0: [
             {
@@ -726,7 +1022,7 @@ GameData.oCharacter.GKU_SSJ = {
             },
             {
                 nFrame: 4,
-                sFrame: 'attack_2_0',
+                sFrame: 'attack_2_2',
                 oStatus: {
                     bCancel: true
                 }
@@ -747,15 +1043,15 @@ GameData.oCharacter.GKU_SSJ = {
             },
             {
                 nFrame: 2,
-                sFrame: 'attack_2_2'
-            },
-            {
-                nFrame: 4,
                 sFrame: 'attack_2_3'
             },
             {
                 nFrame: 4,
-                sFrame: 'attack_2_2',
+                sFrame: 'attack_2_4'
+            },
+            {
+                nFrame: 4,
+                sFrame: 'attack_2_5',
                 oStatus: {
                     bCancel: true
                 }
@@ -784,7 +1080,7 @@ GameData.oCharacter.GKU_SSJ = {
             },
             {
                 nFrame: 6,
-                sFrame: 'attack_3_0',
+                sFrame: 'attack_3_2',
                 oStatus: {
                     bCancel: true
                 }
@@ -810,15 +1106,15 @@ GameData.oCharacter.GKU_SSJ = {
                 },
                 {
                     nFrame: 4,
-                    sFrame: 'attack_3_2'
+                    sFrame: 'attack_3_3'
                 },
                 {
                     nFrame: 4,
-                    sFrame: 'attack_3_4'
+                    sFrame: 'attack_3_5'
                 },
                 {
                     nFrame: 6,
-                    sFrame: 'attack_3_3',
+                    sFrame: 'attack_3_4',
                     oStatus: {
                         bCancel: true
                     }
@@ -858,14 +1154,14 @@ GameData.oCharacter.GKU_SSJ = {
                 },
                 {
                     nFrame: 2,
-                    sFrame: 'attack_5_1',
+                    sFrame: 'attack_5_3',
                     oStatus: {
                         bCancel: true
                     }
                 },
                 {
                     nFrame: 6,
-                    sFrame: 'attack_5_3'
+                    sFrame: 'attack_5_4'
                 },
                 {
                     nFrame: 2,
@@ -896,14 +1192,14 @@ GameData.oCharacter.GKU_SSJ = {
             },
             {
                 nFrame: 4,
-                sFrame: 'attack_4_1',
+                sFrame: 'attack_4_3',
                 oStatus: {
                     bCancel: true
                 }
             },
             {
                 nFrame: 6,
-                sFrame: 'attack_4_3'
+                sFrame: 'attack_4_4'
             },
             {
                 nFrame: 2,
@@ -1056,8 +1352,7 @@ GameData.oCharacter.GKU_SSJ = {
                 sAnimation: 'attack_236C',
                 oList: {
                     sName: 'Cho Kamehameha',
-                    sGroup: 'ki',
-                    sAnimation: 'list_236C'
+                    sGroup: 'ki'
                 },
                 oProperty: {
                     bLaunch: true,

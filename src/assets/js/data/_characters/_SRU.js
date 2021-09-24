@@ -28,11 +28,6 @@ GameData.oCharacter.SRU = {
     /* ----- DETAILS Données des FRAMES. ----- */
     oFrames: {
 
-        list_0: false,
-        list_1: false,
-        list_2: false,
-        list_4: false,
-
         stand_0: {
             oPositionBox: {
                 nX: -30,
@@ -793,8 +788,7 @@ GameData.oCharacter.SRU = {
                 sAnimation: 'attack_236C',
                 oList: {
                     sName: 'Taiyokei Hakai K.',
-                    sGroup: 'ki',
-                    sAnimation: 'list_236C'
+                    sGroup: 'ki'
                 },
                 oProperty: {
                     bLaunch: true,
@@ -898,8 +892,7 @@ GameData.oCharacter.SRU = {
                 sAnimation: 'attack_C',
                 oList: {
                     sName: 'Desubīmu',
-                    sGroup: 'ki',
-                    sAnimation: 'list_C'
+                    sGroup: 'ki'
                 },
                 oProperty: {},
                 oGatling: {

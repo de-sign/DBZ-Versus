@@ -27,10 +27,6 @@ GameData.oCharacter.KID_GHN = {
     ],
     /* ----- DETAILS Données des FRAMES. ----- */
     oFrames: {
-
-        list_0: false,
-        list_1: false,
-        list_2: false,
         
         stand_0: {
             oPositionBox: {
@@ -995,8 +991,7 @@ GameData.oCharacter.KID_GHN = {
                 sAnimation: 'attack_236C',
                 oList: {
                     sName: 'Oyako Kamehameha',
-                    sGroup: 'ki',
-                    sAnimation: 'list_236C'
+                    sGroup: 'ki'
                 },
                 oProperty: {
                     bLaunch: true,
@@ -1113,8 +1108,7 @@ GameData.oCharacter.KID_GHN = {
                 sAnimation: 'attack_236C',
                 oList: {
                     sName: 'Masenko',
-                    sGroup: 'ki',
-                    sAnimation: 'list_236C'
+                    sGroup: 'ki'
                 },
                 oProperty: {
                     bLaunch: true

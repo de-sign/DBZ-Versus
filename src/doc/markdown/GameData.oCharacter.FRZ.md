@@ -63,8 +63,6 @@ Données des FRAMES.
 ```javascript
 GameData.oCharacter.FRZ.oFrames = {
 
-    list_4: false,
-
     stand_0: {
         oPositionBox: {
             nX: -30,
@@ -1227,8 +1225,7 @@ GameData.oCharacter.FRZ.oCommands = {
             sAnimation: 'attack_C',
             oList: {
                 sName: 'Desubimu',
-                sGroup: 'ki',
-                sAnimation: 'list_C'
+                sGroup: 'ki'
             },
             oProperty: {},
             oGatling: {

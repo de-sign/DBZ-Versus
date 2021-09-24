@@ -48,8 +48,6 @@ GameData.oCharacter.FRZ = {
     /* ----- DETAILS Données des FRAMES. ----- */
     oFrames: {
 
-        list_4: false,
-
         stand_0: {
             oPositionBox: {
                 nX: -30,
@@ -1200,8 +1198,7 @@ GameData.oCharacter.FRZ = {
                 sAnimation: 'attack_C',
                 oList: {
                     sName: 'Desubimu',
-                    sGroup: 'ki',
-                    sAnimation: 'list_C'
+                    sGroup: 'ki'
                 },
                 oProperty: {},
                 oGatling: {

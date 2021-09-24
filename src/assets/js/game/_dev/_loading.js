@@ -86,78 +86,75 @@ Object.assign(
 
                     Object.keys(oDefaultColor.oFrames).sort().forEach( sFrame => {
 
-                        if( sFrame.indexOf('list_') == -1 ){
+                        // Wrapper
+                        if( !sPrefixFrame || sFrame.indexOf(sPrefixFrame) != 0 ) {
+                            const aFrameName = sFrame.split('_');
+                            aFrameName.pop();
+                            sPrefixFrame = aFrameName.join('_');
 
-                            // Wrapper
-                            if( !sPrefixFrame || sFrame.indexOf(sPrefixFrame) != 0 ) {
-                                const aFrameName = sFrame.split('_');
-                                aFrameName.pop();
-                                sPrefixFrame = aFrameName.join('_');
+                            oLayerWrapper = new OutputManager.OutputLayer();
+                            oContent.add(oLayerWrapper);
+                            oContent.update();
+                        }
 
-                                oLayerWrapper = new OutputManager.OutputLayer();
-                                oContent.add(oLayerWrapper);
-                                oContent.update();
+                        const oFrame = oDefaultColor.oFrames[sFrame],
+                            sId = sChar + '_' + sFrame;
+
+                        // Clone du LAYER
+                        let hLayer = this.oPattern.oFrameEntity.hElement.cloneNode(true);
+                        hLayer.id += sId;
+                        hLayer.classList.add('--' + sFrame.split('_')[0]);
+                        hLayer.classList.remove(OutputManager.oConfig.class.created);
+                        [].forEach.call(
+                            hLayer.querySelectorAll('.--change'),
+                            hElement => {
+                                hElement.id += sId;
+                                hElement.classList.remove('--change', OutputManager.oConfig.class.created);
                             }
+                        );
 
-                            const oFrame = oDefaultColor.oFrames[sFrame],
-                                sId = sChar + '_' + sFrame;
-
-                            // Clone du LAYER
-                            let hLayer = this.oPattern.oFrameEntity.hElement.cloneNode(true);
-                            hLayer.id += sId;
-                            hLayer.classList.add('--' + sFrame.split('_')[0]);
-                            hLayer.classList.remove(OutputManager.oConfig.class.created);
-                            [].forEach.call(
-                                hLayer.querySelectorAll('.--change'),
-                                hElement => {
-                                    hElement.id += sId;
-                                    hElement.classList.remove('--change', OutputManager.oConfig.class.created);
-                                }
+                        const oLayer = new OutputManager.OutputLayer(hLayer);
+                        // Name
+                        oLayer.add( new OutputManager.OutputText(sFrame, { class: 'Dev__Frame_Entity_Name' }) );
+                        // Sprite
+                        oCharacter.aColor.forEach( oDataColor => {
+                            const oColor = oCharacter[oDataColor.sColor];
+                            oLayer.add(
+                                new OutputManager.OutputSprite(
+                                    oColor.oPath.sFrames + '/' + oFrame.sPath,
+                                    {
+                                        class: [
+                                            'Dev__Frame_Entity_Sprite',
+                                            '--color_' + oDataColor.sColor
+                                        ]
+                                    }
+                                ) 
                             );
+                        } );
+    
+                        // Ajout dans le context
+                        oLayerWrapper.add(oLayer);
+                        oLayerWrapper.update();
 
-                            const oLayer = new OutputManager.OutputLayer(hLayer);
-                            // Name
-                            oLayer.add( new OutputManager.OutputText(sFrame, { class: 'Dev__Frame_Entity_Name' }) );
-                            // Sprite
-                            oCharacter.aColor.forEach( oDataColor => {
-                                const oColor = oCharacter[oDataColor.sColor];
-                                oLayer.add(
-                                    new OutputManager.OutputSprite(
-                                        oColor.oPath.sFrames + '/' + oFrame.sPath,
-                                        {
-                                            class: [
-                                                'Dev__Frame_Entity_Sprite',
-                                                '--color_' + oDataColor.sColor
-                                            ]
-                                        }
-                                    ) 
+                        // Box
+                        ['oPositionBox', 'aHurtBox', 'aHitBox'].forEach( sBox => {
+                            const oLayer = OutputManager.getElement('LAY__Dev_Frame_Entity_' + sBox.slice(1) + '_' + sId);
+
+                            this.getBox(oFrame, sBox).forEach( oBox => {
+                                const hElement = document.createElement('div');
+                                    oLayer.hElement.appendChild(hElement);
+
+                                Object.assign(
+                                    hElement.style,
+                                    {
+                                        left: ( GameSettings.oBattleElement.Player.oPositionPoint.nX + oBox.nX ) + 'px',
+                                        top: ( GameSettings.oBattleElement.Player.oPositionPoint.nY + oBox.nY ) + 'px',
+                                        width: oBox.nWidth + 'px',
+                                        height: oBox.nHeight + 'px'
+                                    }
                                 );
                             } );
-        
-                            // Ajout dans le context
-                            oLayerWrapper.add(oLayer);
-                            oLayerWrapper.update();
-
-                            // Box
-                            ['oPositionBox', 'aHurtBox', 'aHitBox'].forEach( sBox => {
-                                const oLayer = OutputManager.getElement('LAY__Dev_Frame_Entity_' + sBox.slice(1) + '_' + sId);
-    
-                                this.getBox(oFrame, sBox).forEach( oBox => {
-                                    const hElement = document.createElement('div');
-                                        oLayer.hElement.appendChild(hElement);
-    
-                                    Object.assign(
-                                        hElement.style,
-                                        {
-                                            left: ( GameSettings.oBattleElement.Player.oPositionPoint.nX + oBox.nX ) + 'px',
-                                            top: ( GameSettings.oBattleElement.Player.oPositionPoint.nY + oBox.nY ) + 'px',
-                                            width: oBox.nWidth + 'px',
-                                            height: oBox.nHeight + 'px'
-                                        }
-                                    );
-                                } );
-                            } );
-                        }
+                        } );
                     } );
                 },
                 
