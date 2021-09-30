@@ -260,7 +260,7 @@ Object.assign(
 
             // Ajout de 10 FRAMES supplémentaire pour gérer le DOWN
             for( let nIndex = 1; nIndex <= GameSettings.oLauncher.nLength + 10; nIndex++ ){
-                const nParabolX = (nIndex - 1 - nDemiLength) / nDemiLength,
+                const nParabolX = (nIndex - nDemiLength) / nDemiLength,
                     nParabolY = -1 * (nParabolX * nParabolX - 1),
                     nTargetY = Math.round(nParabolY * GameSettings.oLauncher.oMove.nY),
                     nY = nTargetY - nLastY,
@@ -324,9 +324,16 @@ Object.assign(
                     nDemiLength = (GameSettings.oJump.nLength - 1) / 2,
                     nX = GameSettings.oJump.oMove.nX / GameSettings.oJump.nLength;
 
+                for( let nDelay = 1; nDelay < GameSettings.oJump.oMove.nDelay; nDelay++ ){
+                    aMove.push( {
+                        nX: 0,
+                        nY: 0
+                    } );
+                }
+
                 // Ajout de 10 FRAMES supplémentaire pour gérer le LANDING
                 for( let nIndex = 1; nIndex <= GameSettings.oJump.nLength + 10; nIndex++ ){
-                    const nParabolX = (nIndex - 1 - nDemiLength) / nDemiLength,
+                    const nParabolX = (nIndex - nDemiLength) / nDemiLength,
                         nParabolY = -1 * (nParabolX * nParabolX - 1),
                         nTargetY = Math.round(nParabolY * GameSettings.oJump.oMove.nY),
                         nY = nTargetY - nLastY;

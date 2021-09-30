@@ -7,6 +7,7 @@ function BattlePlayer(nPlayer, sChar, sColor, sAnimation, oPosition, bReverse, o
     this.oStatus = {
         bReverse: false, // Possibilité de se retourner : stand, tp, etc
         bThrough: false, // Possibilité de traverser
+        bCounter: false, // Possibilité de se faire counter
         bGuard: false, // Possibilité de guarder : backdash, block
         bThrow: false, // Possibilité de TechThrow : hit_throw
         bAerial: false, // Personnage en l'air : jump, launch, fall, etc
@@ -60,10 +61,12 @@ Object.assign(
 
                     // Si pas stun par Animation
                     const oCanCommand = this.canCommand(),
-                        bFreeze = this.oAnimation.isFreeze();
+                        bFreeze = this.oAnimation.isFreeze(),
+                        oStatus = {};
 
                     // Gestion MANIP
                     let oCommand = null;
+
                     if( oCanCommand.sCommand ){
                         oCommand = this.oGatling.update(this.nKi, oCanCommand);
                         oCommand && this.useCommand(oCommand);
@@ -93,19 +96,18 @@ Object.assign(
                                         case 'UB':
                                         case 'BW':
                                         case 'DB':
-                                            this.setAnimation('move_j4');
-                                            break;
-                                        default:
-                                            this.setAnimation('move_j5');
+                                            oStatus.bGuard = true;
                                             break;
                                     }
+                                    this.setAnimation('move_j5');
                                 }
                             }
                             else {
                                 // Gestion au sol
                                 switch( sDirection ){
                                     case 'DB':
-                                        this.setStance('move_1');
+                                        oStatus.bGuard = true;
+                                        this.setStance('move_5');
                                         break;
                                     case 'BW':
                                         this.setStance('move_4');
@@ -130,7 +132,9 @@ Object.assign(
                         }
                     }
 
-                    this.updateAnimation();
+                    oStatus.bCounter = this.isCounterState();
+                    this.updateAnimation(oStatus);
+
                     if( !this.oAnimation.isFreeze() ){
                         this.generateEntity('command', this.oGatling.getEntity(), oEngine);
                     }
@@ -139,7 +143,13 @@ Object.assign(
 
                 // Fonction ENGINE
                 canBeMoved: function(){
-                    return this.oAnimation.isEnd()
+                    return (
+                            this.oAnimation.isEnd()
+                            && (
+                                !this.oStatus.bAerial
+                                || !this.oAnimation.is('hurt')
+                            )
+                        )
                         || (
                             this.oAnimation.is('movement')
                             && !this.oAnimation.isFreeze()
@@ -168,6 +178,7 @@ Object.assign(
 
                     // Gestion MOVEMENT
                     if( this.canBeMoved() ){
+                        // BUG RECOVERY via bourrance
                         oCanCommand.sCommand = sCommand;
                     } else {
 
@@ -220,12 +231,12 @@ Object.assign(
                     return oChanged;
                 },
                 setStance: function(sMovement, bUpdate, bReverse){
-                    if( this.setAnimation(sMovement, bUpdate, bReverse) ){
-                        this.oGatling.reset();
-                    }
+                    const oChanged = this.setAnimation(sMovement, bUpdate, bReverse);
+                    oChanged && this.oGatling.reset();
+                    return oChanged;
                 },
                 setHurt: function(sHurt, nFramesLength, bReverse){
-                    this.setStance(sHurt, false, bReverse);
+                    const oChanged = this.setStance(sHurt, false, bReverse);
 
                     if( this.oAnimation.sName != 'launch_0' ){
                         this.oAnimation.setLength(nFramesLength);
@@ -256,6 +267,8 @@ Object.assign(
                     }
                     
                     this.updateAnimation();
+
+                    return oChanged;
                 },
                 setMovement: function(oMove, bReverse){
                     let oMovement = null;
@@ -283,9 +296,9 @@ Object.assign(
                     const oFall = this.oMovement.after( this.oData.oAnimations[sAnimation].oMove, this.bReverse );
                     oFall.nTick = GameSettings[sSetting].nFallLength;
                 },
-                updateAnimation: function(){
+                updateAnimation: function(oForce){
                     BattleEntity.prototype.updateAnimation.call(this);
-                    this.updateStatus();
+                    this.updateStatus(oForce);
                 },
                 updateStatus: function(oForce){
                     this.oStatus = Object.assign(
@@ -293,6 +306,7 @@ Object.assign(
                             bReverse: false, // Possibilité de se retourner : stand, tp, etc
                             bThrough: false, // Possibilité de traverser
 
+                            bCounter: false, // Possibilité de se faire counter
                             bGuard: false, // Possibilité de garder : backward, block
                             bThrow: false, // Possibilité de TechThrow : hit_throw
 
@@ -340,6 +354,33 @@ Object.assign(
                     }
                     return bInvul;
                 },
+                isCounterState: function(){
+                    let bResult = false;
+                    const oOptions = this.oInputBuffer.getOptions();
+
+                    if( oOptions && oOptions.nCounter ){
+                        if( !this.oDamage.takeDamage() ){
+                            switch( oOptions.nCounter ){
+                                case 1: // 'forced'
+                                    bResult = true;
+                                    break;
+                                case 2: // 'random'
+                                    bResult = Math.floor( Math.random() * 10 ) % 2;
+                                    break;
+                            }
+                        }
+                    }
+
+                    // Dummy NORMALY / Local
+                    else if(
+                        ( this.oAnimation.is('counter') || this.oAnimation.sType == 'dash' )
+                        && this.oAnimation.getStep(-1) != 'nRecovery'
+                    ){
+                        bResult = true;
+                    }
+
+                    return bResult;
+                },
 
                 takeHit: function(oEntity, oCommandData, oEngine){
 
@@ -359,10 +400,7 @@ Object.assign(
                     else {
                         bLaunch = oCommandData.oProperty.bLaunch && !this.oStatus.bLaunch;
                         oDamage.nDamage = this.oDamage.update(oDamage);
-                        if(
-                            ( this.oAnimation.is('counter') || this.oAnimation.sType == 'dash' )
-                            && this.oAnimation.getStep() == 'nStartUp'
-                        ){
+                        if( this.oStatus.bCounter && !oCommandData.oProperty.bCantCounter ){
                             bCounter = true;
                             oStun.nStun += GameSettings.oCounter.nStun;
                         }
@@ -382,7 +420,7 @@ Object.assign(
                     return {
                         bGuard,
                         bCounter
-                    };;
+                    };
                 },
                 confirmHit: function(oEntityHurt, oCommandData, bGuard){
                     BattleEntity.prototype.confirmHit.call(this, oEntityHurt, oCommandData, bGuard);

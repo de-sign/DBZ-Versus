@@ -427,7 +427,7 @@ Object.assign(
                                 if( oData.nDamage ){
                                     oText.setText( oData.nDamage + ' ( ' + ( oShowData.oLast.nMax || '-' ) + ' )' );
                                 }
-                                else {
+                                else if ( !oShowData.oLast.nMax ){
                                     oText.setText( '- ( ' + ( oShowData.oLast.nMax || '-' ) + ' )' );
                                 }
                                 break;

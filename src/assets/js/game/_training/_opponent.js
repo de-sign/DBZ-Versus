@@ -1,16 +1,16 @@
-/*  ----- TrainingMenu - Dummy ----- */
-function TrainingMenuDummy(){
+/*  ----- TrainingMenu - Opponent ----- */
+function TrainingMenuOpponent(){
     TrainingMenu.apply(this, arguments);
 }
 
 Object.assign(
-    TrainingMenuDummy, {
+    TrainingMenuOpponent, {
         prototype: Object.assign(
             Object.create(TrainingMenu.prototype), {
-                constructor: TrainingMenuDummy,
+                constructor: TrainingMenuOpponent,
                 init: function(){
                     TrainingMenu.prototype.init.apply(this, arguments);
-                    this.oLayer = OutputManager.getElement('LAY__Training_Menu_Dummy');
+                    this.oLayer = OutputManager.getElement('LAY__Training_Menu_Opponent');
                 },
                 controls: function(){
                     let sRedirection = null;
@@ -19,13 +19,10 @@ Object.assign(
                         // Gestion validation
                         A: () => {
                             switch(oMenuSelected.sId){
-                                case 'TXT__Training_Menu_Dummy_Return':
+                                case 'TXT__Training_Menu_Opponent_Return':
                                     sRedirection = 'return';
                                     break;
-                                case 'LAY__Training_Menu_Dummy_Record':
-                                    sRedirection = 'record';
-                                    break;
-                                case 'TXT__Training_Menu_Dummy_Reset':
+                                case 'TXT__Training_Menu_Opponent_Reset':
                                     this.oEngine.reset();
                                     break;
                                 default:
@@ -41,14 +38,10 @@ Object.assign(
                         },
                         // Gestion changement
                         LEFT: () => {
-                            if( oMenuSelected.sId != 'LAY__Training_Menu_Dummy_Record' ){
-                                this.change(-1);
-                            }
+                            this.change(-1);
                         },
                         RIGHT: () => {
-                            if( oMenuSelected.sId != 'LAY__Training_Menu_Dummy_Record' ){
-                                this.change(1);
-                            }
+                            this.change(1);
                         },
                         // Gestion déplacement
                         UP: () => {
@@ -74,25 +67,19 @@ Object.assign(
 
                         const uParam = this.oEngine.oParam[sParam],
                             oText = this.oLayer.aChildElement[nIndex].aChildElement[0],
-                            bChange = uParam != TrainingEngineDummy.oDefault[sParam];
+                            bChange = uParam != TrainingEngineOpponent.oDefault[sParam];
 
                         oText.hElement.classList[ bChange ? 'add' : 'remove' ]('--change');
 
                         switch( sParam ){
                             case 'sController':
-                                oText.setText( uParam ? GameEngine.oInput.getController(uParam).sName : 'Dummy' );
-                                break;
-                            case 'bTechThrow':
-                                oText.setText( uParam ? 'Yes' : 'No' );
+                                oText.setText( uParam ? GameEngine.oInput.getController(uParam).sName : 'Opponent' );
                                 break;
                             case 'sReversal':
                                 oText.setText( uParam ? this.oEngine.oReversal[uParam] : 'No reversal' );
                                 break;
-                            case 'aRecord':
-                                oText.setText( uParam ? 'Record found' : 'No record' );
-                                break;
                             default:
-                                oText.setText( TrainingEngineDummy.oParameter[sParam][uParam] );
+                                oText.setText( TrainingEngineOpponent.oParameter[sParam][uParam] );
                                 break;
                         }
                     } );
@@ -102,13 +89,13 @@ Object.assign(
     }
 );
 
-/* ----- TrainingEngineDummy ----- */
-function TrainingEngineDummy(oScene){
+/* ----- TrainingEngineOpponent ----- */
+function TrainingEngineOpponent(oScene){
     this.oScene = null;
     this.oSourceBuffer = {
         oPlayer: null,
         oLocal: new BattleInputSourceBufferLocal(null),
-        oDummy: null
+        oOpponent: null
     };
 
     this.oParam = {};
@@ -120,33 +107,35 @@ function TrainingEngineDummy(oScene){
 }
 
 Object.assign(
-    TrainingEngineDummy, {
+    TrainingEngineOpponent, {
 
         oDefault: {
             sController: null,
             nStance: 0,
+            nCounter: 0,
             nGuard: 0,
-            bTechThrow: false,
-            sReversal: null,
+            nTechThrow: 0,
             nRecovery: 0,
-            aRecord: null
+            sReversal: null
         },
 
         oParameter: {
-            nStance: ['Stand', 'Play record', 'Jump', 'Forward Jump', 'Backward Jump'],
+            nStance: ['Stand', 'Jump', 'Forward Jump', 'Backward Jump'],
+            nCounter: ['Normaly', 'Forced', 'Random'],
             nGuard: ['No guard', 'After 1st hit', 'Only 1st hit', 'All', 'Reflect', 'Random'],
-            nRecovery: ['No recovery', 'Forward', 'Backward']
+            nTechThrow: ['No tech throw', 'Tech throw', 'Random'],
+            nRecovery: ['No recovery', 'Forward', 'Backward', 'Random']
         },
 
         prototype: {
-            constructor: TrainingEngineDummy,
+            constructor: TrainingEngineOpponent,
             init: function(oScene){
                 this.oScene = oScene;
 
-                Object.assign( this.oParam, TrainingEngineDummy.oDefault, StoreEngine.get('TNG_Dummy') || {} );
+                Object.assign( this.oParam, TrainingEngineOpponent.oDefault, StoreEngine.get('TNG_Opponent') || {} );
 
                 this.oSourceBuffer.oPlayer = this.oScene.aPlayer[0].oInputBuffer.oSource;
-                this.oSourceBuffer.oDummy = new BattleInputSourceBufferDummy(this.oScene.aPlayer[1], this.oParam);
+                this.oSourceBuffer.oOpponent = new BattleInputSourceBufferDummy(this.oScene.aPlayer[1], this.oParam);
 
                 this.initReversal();
                 this.setSource(SceneManager.oTransverseData.MNU__aController[1]);
@@ -176,10 +165,6 @@ Object.assign(
                         this.setSource( GameEngine.oInput.getController(this.oParam.sController) );
                         break;
 
-                    case 'TechThrow':
-                        this.oParam.bTechThrow = !this.oParam.bTechThrow;
-                        break;
-
                     case 'Reversal':
                         const aCommand = [ null, ...Object.keys(this.oReversal) ];
                         nIndex = aCommand.indexOf(this.oParam.sReversal) + nChange;
@@ -194,20 +179,20 @@ Object.assign(
                     default:
                         sType = 'n' + sType;
                         this.oParam[sType] += nChange;
-                        if( this.oParam[sType] >= TrainingEngineDummy.oParameter[sType].length ){
+                        if( this.oParam[sType] >= TrainingEngineOpponent.oParameter[sType].length ){
                             this.oParam[sType] = 0;
                         }
                         else if( this.oParam[sType] < 0 ){
-                            this.oParam[sType] = TrainingEngineDummy.oParameter[sType].length - 1;
+                            this.oParam[sType] = TrainingEngineOpponent.oParameter[sType].length - 1;
                         }
                         break;
                 }
 
-                StoreEngine.update('TNG_Dummy', this.oParam);
+                StoreEngine.update('TNG_Opponent', this.oParam);
             },
             reset: function(){
-                Object.assign( this.oParam, TrainingEngineDummy.oDefault );
-                StoreEngine.update('TNG_Dummy', this.oParam);
+                Object.assign( this.oParam, TrainingEngineOpponent.oDefault );
+                StoreEngine.update('TNG_Opponent', this.oParam);
             },
 
             initReversal: function(){
@@ -228,9 +213,8 @@ Object.assign(
                     this.oSourceBuffer.oLocal.init(oController);
                     this.oScene.aPlayer[1].oInputBuffer.init(this.oSourceBuffer.oLocal);
                 } else {
-                    // TODO DUMMY
                     this.oParam.sController = null;
-                    this.oScene.aPlayer[1].oInputBuffer.init(this.oSourceBuffer.oDummy);
+                    this.oScene.aPlayer[1].oInputBuffer.init(this.oSourceBuffer.oOpponent);
                 }
             },
             switchSource: function(bStart){
@@ -244,36 +228,8 @@ Object.assign(
                 this.oScene.aPlayer[ oIndex[sIndex][1] ].oInputBuffer.init(
                     bStart ?
                         null :
-                        this.oSourceBuffer[ this.oParam.sController ? 'oLocal' : 'oDummy' ]
+                        this.oSourceBuffer[ this.oParam.sController ? 'oLocal' : 'oOpponent' ]
                 );
-            },
-
-            saveRecord: function(){
-                let nFrame = 0;
-                this.oParam.aRecord = [];
-                this.oScene.aPlayer[1].oInputBuffer.aHistory.forEach( (oHistory, nIndex) => {
-
-                    let oCopy = Object.assign( {}, oHistory );
-
-                    // Suppréssion du NEUTRAL superflux en début et fin
-                    if( nIndex == 0 || ( nIndex == this.oScene.aPlayer[1].oInputBuffer.aHistory.nLength - 1 ) ){
-                        const aBtn = Object.keys(oHistory.oButtons);
-                        if( aBtn.length == 1 && aBtn[0] == 'NT' ){
-                            oCopy = null;
-                        }
-                    }
-
-                    if( oCopy ){
-                        nFrame || ( nFrame = oHistory.nFrame );
-                        oCopy.nFrame -= nFrame - 1;
-                        for( let sBtn in oCopy.oButtons ){
-                            oCopy.oButtons[sBtn] = Math.max(0, oCopy.oButtons[sBtn] - nFrame);
-                        }
-                        this.oParam.aRecord.push(oCopy);
-                    }
-                } );
-                StoreEngine.update('TNG_Dummy', this.oParam);
-                this.switchSource();
             }
         }
     }

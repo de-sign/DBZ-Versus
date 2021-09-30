@@ -162,8 +162,8 @@
     }
     
     &.--guard .Training__HurtBox > * {
-        border-color: Plum;
-        background-color: rgba(Plum, 0.25);
+        border-color: Deepskyblue;
+        background-color: rgba(Deepskyblue, 0.25);
     }
     
     &.--launch .Training__HurtBox > *,
@@ -180,8 +180,8 @@
 
 .Battle__Player {
     .Training__PositionBox > * {
-        border-color: Deepskyblue;
-        background-color: rgba(Deepskyblue, 0.25);
+        border-color: Plum;
+        background-color: rgba(Plum, 0.25);
     }
 }
 
@@ -235,11 +235,12 @@
         box-shadow: 0 0 0 1px Black;
 
         &.--freeze {
-            background-color: deepskyblue;
+            box-shadow: none;
+            background-color: DarkGray;
         }
         
         &.--guard {
-            background-color: plum;
+            background-color: deepskyblue;
         }
 
         &.--damage {
@@ -248,10 +249,6 @@
 
         &.--invulnerable {
             background-color: White;
-        }
-
-        &.--aerial-invulnerable {
-            background-color: grey;
         }
 
         &.--hit,

@@ -931,18 +931,6 @@ GameData.oEntity.oCharacter = {
                 }
             ]
         },
-        move_1: {
-            sType: 'stand',
-            aFrames: [
-                {
-                    sFrame: 'stand_0',
-                    oStatus: {
-                        bReverse: true,
-                        bGuard: true
-                    }
-                }
-            ]
-        },
         // stand AERIAL
         move_j5: {
             sType: 'stand',
@@ -952,19 +940,6 @@ GameData.oEntity.oCharacter = {
                     oStatus: {
                         bReverse: true,
                         bAerial: true
-                    }
-                }
-            ]
-        },
-        move_j4: {
-            sType: 'stand',
-            aFrames: [
-                {
-                    sFrame: 'jump_2',
-                    oStatus: {
-                        bReverse: true,
-                        bAerial: true,
-                        bGuard: true
                     }
                 }
             ]
@@ -1863,7 +1838,8 @@ GameData.oEntity.oCharacter = {
                     sGroup: 'defense'
                 },
                 oProperty: {
-                    sCollisionBox: 'oPositionBox'
+                    sCollisionBox: 'oPositionBox',
+                    bCantCounter: true
                 },
                 oGatling: {
                     sCheck: 'bGuard',
@@ -1950,7 +1926,8 @@ GameData.oEntity.oCharacter = {
                     sGroup: 'defense'
                 },
                 oProperty: {
-                    sCollisionBox: 'oPositionBox'
+                    sCollisionBox: 'oPositionBox',
+                    bCantCounter: true
                 },
                 oGatling: {
                     sCheck: 'bThrow',
@@ -2141,7 +2118,8 @@ GameData.oEntity.oCharacter = {
                 oProperty: {
                     bUnblockable: true,
                     sOpponentCheck: 'bGround',
-                    sCollisionBox: 'oPositionBox'
+                    sCollisionBox: 'oPositionBox',
+                    bCantCounter: true
                 },
                 oGatling: {
                     oManipulation: {
@@ -2204,7 +2182,8 @@ GameData.oEntity.oCharacter = {
                 oProperty: {
                     bUnblockable: true,
                     sOpponentCheck: 'bGround',
-                    sCollisionBox: 'oPositionBox'
+                    sCollisionBox: 'oPositionBox',
+                    bCantCounter: true
                 },
                 oGatling: {
                     oManipulation: {

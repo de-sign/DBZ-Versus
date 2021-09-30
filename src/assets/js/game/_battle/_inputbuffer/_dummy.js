@@ -17,7 +17,7 @@ Object.assign(
     BattleInputSourceBufferDummy, {
 
         oButtons: {
-            nStance: [null, null, 'UP', 'UF', 'UB'],
+            nStance: [null, 'UP', 'UF', 'UB'],
             nRecovery: [null, 'FW', 'BW']
         },
         nDurationGuard: 30,
@@ -101,6 +101,9 @@ Object.assign(
                         }
                     }
                     return bChange;
+                },
+                getOptions: function(){
+                    return Object.assign( {}, this.oOptions );
                 },
 
                 startPlayingRecord: function(){
@@ -219,7 +222,7 @@ Object.assign(
                         this.nFrameGuard = TimerEngine.nFrames;
                     }
                         // Reflect
-                    else if ( this.oOptions.nGuard == 4 && this.oPlayer.oAnimation.sType == 'guard' ){
+                    else if ( this.oOptions.nGuard == 4 && this.oPlayer.oAnimation.sType == 'guard'&& this.oPlayer.oAnimation.isFirstTick() ){
                         oStep = {
                             sType: 'oButtons',
                             uValue: { D: TimerEngine.nFrames, NT: TimerEngine.nFrames }
@@ -293,11 +296,28 @@ Object.assign(
                     let oStep = null;
 
                     // Recovery
-                    if( this.oOptions.nRecovery && this.oPlayer.oAnimation.sType == 'down' ){
+                    if(
+                        this.oOptions.nRecovery
+                        && this.oPlayer.oAnimation.sType == 'down'
+                        && this.oPlayer.oAnimation.isFirstTick()
+                    ){
                         const aConfig = BattleInputSourceBufferDummy.oButtons.nRecovery;
+                        let sBtn = null;
+
+                        switch(this.oOptions.nRecovery){
+                            case 1:
+                            case 2:
+                                sBtn = aConfig[this.oOptions.nRecovery];
+                                break;
+                            case 3:
+                                const nRandomn = Math.floor( Math.random() * BattleInputSourceBufferDummy.oButtons.nRecovery.length + 1 );
+                                sBtn = aConfig[nRandomn];
+                                break;
+                        }
+
                         oStep = {
                             sType: 'oButtons',
-                            uValue: { [aConfig[this.oOptions.nRecovery]]: TimerEngine.nFrames }
+                            uValue: { [sBtn]: TimerEngine.nFrames }
                         };
                     }
 
@@ -307,11 +327,27 @@ Object.assign(
                     let oStep = null;
 
                     // Tech throw
-                    if( this.oOptions.bTechThrow && this.oPlayer.oAnimation.sName == 'hit_D' ){
-                        oStep = {
-                            sType: 'oButtons',
-                            uValue: { D: TimerEngine.nFrames, NT: TimerEngine.nFrames }
-                        };
+                    if(
+                        this.oOptions.nTechThrow
+                        && this.oPlayer.oAnimation.sName == 'hit_D'
+                        && this.oPlayer.oAnimation.isFirstTick()
+                    ){
+                        switch( this.oOptions.nTechThrow ){
+                            case 1:
+                                oStep = {
+                                    sType: 'oButtons',
+                                    uValue: { D: TimerEngine.nFrames, NT: TimerEngine.nFrames }
+                                };
+                                break;
+                            case 2:
+                                if( Math.floor( Math.random() * 10 ) % 2 ){
+                                    oStep = {
+                                        sType: 'oButtons',
+                                        uValue: { D: TimerEngine.nFrames, NT: TimerEngine.nFrames }
+                                    };
+                                }
+                                break;
+                        }
                     }
 
                     return oStep;
@@ -320,10 +356,7 @@ Object.assign(
                     let oStep = null;
 
                     // Stance
-                    if( this.oOptions.nStance == 1 && this.oOptions.aRecord ){
-                        oStep = this.startPlayingRecord();
-                    }
-                    else if( this.oOptions.nStance ){
+                    if( this.oOptions.nStance ){
                         const aConfig = BattleInputSourceBufferDummy.oButtons.nStance;
                         oStep = {
                             sType: 'oButtons',

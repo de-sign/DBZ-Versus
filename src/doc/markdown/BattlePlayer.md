@@ -29,6 +29,7 @@ this.nPlayer = null;
 this.oStatus = {
         bReverse: false, // Possibilité de se retourner : stand, tp, etc
         bThrough: false, // Possibilité de traverser
+        bCounter: false, // Possibilité de se faire counter
         bGuard: false, // Possibilité de guarder : backdash, block
         bThrow: false, // Possibilité de TechThrow : hit_throw
         bAerial: false, // Personnage en l'air : jump, launch, fall, etc
@@ -173,7 +174,7 @@ this.setFall(uMovement);
 ### BattlePlayer.prototype.updateAnimation()
 
 ```javascript
-this.updateAnimation();
+this.updateAnimation(oForce);
 ```
 
 ### BattlePlayer.prototype.updateStatus()
@@ -186,6 +187,12 @@ this.updateStatus(oForce);
 
 ```javascript
 this.isInvulnerable(oEntityHit);
+```
+
+### BattlePlayer.prototype.isCounterState()
+
+```javascript
+this.isCounterState();
 ```
 
 ### BattlePlayer.prototype.takeHit()

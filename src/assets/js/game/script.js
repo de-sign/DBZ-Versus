@@ -43,7 +43,8 @@
 //=include _training/_menu.js
 //=include _training/_settings.js
 //=include _training/_gauges.js
-//=include _training/_dummy.js
+//=include _training/_opponent.js
+//=include _training/_records.js
 //=include _training/_restart.js
 //=include _training/_display.js
 //=include _training/_list.js

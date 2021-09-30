@@ -62,7 +62,8 @@ Object.assign(
             'Principal',
             'Settings',
             'Gauges',
-            'Dummy',
+            'Opponent',
+            'Records',
             'Restart',
             'Display',
             'List'
@@ -230,7 +231,7 @@ Object.assign(
 
             startRecord: function(){
                 this.oScene.bRecord = true;
-                this.oModule.oDummy.oEngine.switchSource(true);
+                this.oModule.oOpponent.oEngine.switchSource(true);
                 this.restart();
                 
                 this.oScene.oDisplay.showText( {
@@ -246,7 +247,8 @@ Object.assign(
             stopRecord: function(){
                 if( this.oScene.bRecord ){
                     this.oScene.bRecord = false;
-                    this.oModule.oDummy.oEngine.saveRecord();
+                    this.oModule.oRecords.oEngine.saveRecord();
+                    this.oModule.oOpponent.oEngine.switchSource();
                     
                     this.oScene.oDisplay.hideText();
                     GameHelper.set(TrainingScene.oHelper.aBattle);

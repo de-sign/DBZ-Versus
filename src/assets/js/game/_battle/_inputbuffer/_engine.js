@@ -57,6 +57,9 @@ Object.assign(
             getDirection: function(){
                 return BattleInputBuffer.getDirection(this.nDirection, this.bReverse);
             },
+            getOptions: function(){
+                return this.oSource && this.oSource.getOptions();
+            },
             checkManipulation: function(nFrameCheck, oManip){
                 const nManipButtons = oManip.aButtons.length;
 
@@ -129,6 +132,7 @@ Object.assign(
         update: function(){ },
         destroy: function(){ },
 
-        reset: function(){ }
+        reset: function(){ },
+        getOptions: function(){ }
     }
 );

@@ -46,6 +46,9 @@ Object.assign(
         },
         isFreeze: function(){
             return this.nFreeze > 0;
+        },
+        isFirstTick: function(){
+            return !this.isFreeze() && this.nTick == 1;
         }
     }
 );
