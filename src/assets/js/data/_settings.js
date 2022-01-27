@@ -210,7 +210,7 @@ Object.assign(
                     'stand', 'movement', 'jump', 'landing',
                     'guard', 'hit', 'launch',
                     'down', 'recovery',
-                    'animation'
+                    'animation', 'restart'
                 ],
                 oMap: {
                     // frame: type
@@ -239,6 +239,7 @@ Object.assign(
                     'down': 'stack',
                     'recovery': null,
                     'animation': null,
+                    'restart': null,
                 }
             }
         },

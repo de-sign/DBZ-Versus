@@ -261,7 +261,7 @@ GameSettings.oAnimations = {
             'stand', 'movement', 'jump', 'landing',
             'guard', 'hit', 'launch',
             'down', 'recovery',
-            'animation'
+            'animation', 'restart'
         ],
         oMap: {
             // frame: type
@@ -290,6 +290,7 @@ GameSettings.oAnimations = {
             'down': 'stack',
             'recovery': null,
             'animation': null,
+            'restart': null,
         }
     }
 };

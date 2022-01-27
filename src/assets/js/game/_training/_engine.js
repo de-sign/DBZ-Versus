@@ -47,6 +47,7 @@ function TrainingEngine(oScene){
 
     this.aHelperController = [];
     this.oModule = {};
+    this.oDummyOptions = {};
     this.oMenu = {
         oLast: null,
         oCurrent: null,
@@ -64,6 +65,7 @@ Object.assign(
             'Gauges',
             'Opponent',
             'Records',
+            'Reversals',
             'Restart',
             'Display',
             'List'
@@ -222,7 +224,7 @@ Object.assign(
                     oGauges.setStat(nIndex, 'Ki');
 
                     // Perso
-                    oPlayer.setStance('move_5', true);
+                    oPlayer.setStance('restart', true);
                     oPlayer.oMovement.reset();
                     oPlayer.oInputBuffer.reset();
                     oRestart.setPosition(nIndex);

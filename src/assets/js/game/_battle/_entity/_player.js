@@ -358,9 +358,9 @@ Object.assign(
                     let bResult = false;
                     const oOptions = this.oInputBuffer.getOptions();
 
-                    if( oOptions && oOptions.nCounter ){
+                    if( oOptions && oOptions.oOpponent.nCounter ){
                         if( !this.oDamage.takeDamage() ){
-                            switch( oOptions.nCounter ){
+                            switch( oOptions.oOpponent.nCounter ){
                                 case 1: // 'forced'
                                     bResult = true;
                                     break;

@@ -7,7 +7,6 @@ Jeu de versus en 2D basé sur l'univers de __DragonBall__ utilisant les ASSETS d
 ## TODO
 __BUG__
 * Problème controller en Training
-* Problème Menu Dummy
 * Tracker MBUU BUG AERIAL
 
 __Game__
@@ -15,11 +14,6 @@ __Game__
     * Ajout de paramétrage possible pour MENU et BATTLE
 
 * Améliorer menu en TRAINING
-    * Faire un menu supplémentaire pour la gestion de REVERSAL ?
-        * Après RESTART
-        * Après HIT
-        * Après BLOCK
-        * Après RECOVERY
     * Améliorer le RECORDING ?
         * Revoir affichage
         * Bouton pour RECORD ?

@@ -46,6 +46,7 @@
 //=include _training/_opponent.js
 //=include _training/_records.js
 //=include _training/_restart.js
+//=include _training/_reversals.js
 //=include _training/_display.js
 //=include _training/_list.js
 //=include _scene/_training.js

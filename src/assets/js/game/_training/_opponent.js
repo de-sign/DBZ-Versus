@@ -63,9 +63,9 @@ Object.assign(
                     OutputManager.getChannel('CHN__SFX').play('ADO__Validate');
                 },
                 display: function(){
-                    Object.keys(this.oEngine.oParam).forEach( (sParam, nIndex) => {
+                    Object.keys(this.oEngine.oOpponent).forEach( (sParam, nIndex) => {
 
-                        const uParam = this.oEngine.oParam[sParam],
+                        const uParam = this.oEngine.oOpponent[sParam],
                             oText = this.oLayer.aChildElement[nIndex].aChildElement[0],
                             bChange = uParam != TrainingEngineOpponent.oDefault[sParam];
 
@@ -74,9 +74,6 @@ Object.assign(
                         switch( sParam ){
                             case 'sController':
                                 oText.setText( uParam ? GameEngine.oInput.getController(uParam).sName : 'Opponent' );
-                                break;
-                            case 'sReversal':
-                                oText.setText( uParam ? this.oEngine.oReversal[uParam] : 'No reversal' );
                                 break;
                             default:
                                 oText.setText( TrainingEngineOpponent.oParameter[sParam][uParam] );
@@ -98,10 +95,7 @@ function TrainingEngineOpponent(oScene){
         oOpponent: null
     };
 
-    this.oParam = {};
-    this.oReversal = {
-        'record': 'Play record'
-    };
+    this.oOpponent = {};
 
     this.init(oScene);
 }
@@ -115,8 +109,7 @@ Object.assign(
             nCounter: 0,
             nGuard: 0,
             nTechThrow: 0,
-            nRecovery: 0,
-            sReversal: null
+            nRecovery: 0
         },
 
         oParameter: {
@@ -131,19 +124,20 @@ Object.assign(
             constructor: TrainingEngineOpponent,
             init: function(oScene){
                 this.oScene = oScene;
-
-                Object.assign( this.oParam, TrainingEngineOpponent.oDefault, StoreEngine.get('TNG_Opponent') || {} );
-
-                this.oSourceBuffer.oPlayer = this.oScene.aPlayer[0].oInputBuffer.oSource;
-                this.oSourceBuffer.oOpponent = new BattleInputSourceBufferDummy(this.oScene.aPlayer[1], this.oParam);
-
-                this.initReversal();
-                this.setSource(SceneManager.oTransverseData.MNU__aController[1]);
+                Object.assign( this.oOpponent, TrainingEngineOpponent.oDefault, StoreEngine.get('TNG_Opponent') || {} );
             },
             update: function(){},
             destroy: function(){},
 
-            // onInit: function(){},
+            onInit: function(){
+                // Source
+                this.oSourceBuffer.oPlayer = this.oScene.aPlayer[0].oInputBuffer.oSource;
+                this.oSourceBuffer.oOpponent = new BattleInputSourceBufferDummy(this.oScene.aPlayer[1], this.oScene.oTraining.oDummyOptions);
+                this.setSource(SceneManager.oTransverseData.MNU__aController[1]);
+
+                // Dummy Options
+                this.oScene.oTraining.oDummyOptions.oOpponent = this.oOpponent;
+            },
             // onOpen: function(){},
             // onClose: function(){},
 
@@ -155,65 +149,42 @@ Object.assign(
                         const aController = [null, ...Object.keys(GameEngine.oInput.oController)]
                             .filter( sController => sController != SceneManager.oTransverseData.MNU__aController[0].sId );
 
-                        nIndex = aController.indexOf(this.oParam.sController) + nChange;
+                        nIndex = aController.indexOf(this.oOpponent.sController) + nChange;
                         if( nIndex >= aController.length ){
                             nIndex = 0;
                         } else if( nIndex < 0 ){
                             nIndex = aController.length - 1;
                         }
-                        this.oParam.sController = aController[nIndex];
-                        this.setSource( GameEngine.oInput.getController(this.oParam.sController) );
-                        break;
-
-                    case 'Reversal':
-                        const aCommand = [ null, ...Object.keys(this.oReversal) ];
-                        nIndex = aCommand.indexOf(this.oParam.sReversal) + nChange;
-                        if( nIndex >= aCommand.length ){
-                            nIndex = 0;
-                        } else if( nIndex < 0 ){
-                            nIndex = aCommand.length - 1;
-                        }
-                        this.oParam.sReversal = aCommand[nIndex];
+                        this.oOpponent.sController = aController[nIndex];
+                        this.setSource( GameEngine.oInput.getController(this.oOpponent.sController) );
                         break;
 
                     default:
                         sType = 'n' + sType;
-                        this.oParam[sType] += nChange;
-                        if( this.oParam[sType] >= TrainingEngineOpponent.oParameter[sType].length ){
-                            this.oParam[sType] = 0;
+                        this.oOpponent[sType] += nChange;
+                        if( this.oOpponent[sType] >= TrainingEngineOpponent.oParameter[sType].length ){
+                            this.oOpponent[sType] = 0;
                         }
-                        else if( this.oParam[sType] < 0 ){
-                            this.oParam[sType] = TrainingEngineOpponent.oParameter[sType].length - 1;
+                        else if( this.oOpponent[sType] < 0 ){
+                            this.oOpponent[sType] = TrainingEngineOpponent.oParameter[sType].length - 1;
                         }
                         break;
                 }
 
-                StoreEngine.update('TNG_Opponent', this.oParam);
+                StoreEngine.update('TNG_Opponent', this.oOpponent);
             },
             reset: function(){
-                Object.assign( this.oParam, TrainingEngineOpponent.oDefault );
-                StoreEngine.update('TNG_Opponent', this.oParam);
+                Object.assign( this.oOpponent, TrainingEngineOpponent.oDefault );
+                StoreEngine.update('TNG_Opponent', this.oOpponent);
             },
 
-            initReversal: function(){
-                const aCommands = this.oScene.aPlayer[1].oData.oCommands.aGround;
-                for( let nIndex = aCommands.length - 1; nIndex >= 0; nIndex-- ){
-                    const oCommand = aCommands[nIndex];
-                    if( oCommand.sAnimation != 'attack_2D' ){
-                        this.oReversal[oCommand.sCod] = oCommand.oList.sName;
-                    }
-                }
-                if( !this.oReversal[ this.oParam.sReversal ] ){
-                    this.oParam.sReversal = null;
-                }
-            },
             setSource: function(oController){
                 if( oController ){
-                    this.oParam.sController = oController.sId;
+                    this.oOpponent.sController = oController.sId;
                     this.oSourceBuffer.oLocal.init(oController);
                     this.oScene.aPlayer[1].oInputBuffer.init(this.oSourceBuffer.oLocal);
                 } else {
-                    this.oParam.sController = null;
+                    this.oOpponent.sController = null;
                     this.oScene.aPlayer[1].oInputBuffer.init(this.oSourceBuffer.oOpponent);
                 }
             },
@@ -228,7 +199,7 @@ Object.assign(
                 this.oScene.aPlayer[ oIndex[sIndex][1] ].oInputBuffer.init(
                     bStart ?
                         null :
-                        this.oSourceBuffer[ this.oParam.sController ? 'oLocal' : 'oOpponent' ]
+                        this.oSourceBuffer[ this.oOpponent.sController ? 'oLocal' : 'oOpponent' ]
                 );
             }
         }

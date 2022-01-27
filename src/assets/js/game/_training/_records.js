@@ -51,7 +51,7 @@ Object.assign(
                     return sRedirection;
                 },
                 display: function(){
-                    this.oEngine.aRecords.forEach( (aRecord, nIndex) => {
+                    Object.values(this.oEngine.oRecords).forEach( (aRecord, nIndex) => {
                         const oText = this.oMenu.oLayer.aChildElement[nIndex].aChildElement[0],
                             bChange = aRecord;
                         
@@ -68,35 +68,39 @@ Object.assign(
 function TrainingEngineRecords(oScene){
     this.oScene = null;
     this.nRecord = null;
-    this.aRecords = [null, null, null, null, null];
+    this.oRecords = {};
     this.init(oScene);
 }
 
 Object.assign(
     TrainingEngineRecords, {
 
+        oDefault: {
+            record_0: null,
+            record_1: null,
+            record_2: null,
+            record_3: null,
+            record_4: null
+        },
+
         prototype: {
             constructor: TrainingEngineRecords,
             init: function(oScene){
                 this.oScene = oScene;
-
-                const aRecords = StoreEngine.get('TNG_Records');
-                if( aRecords ){
-                    this.aRecords = aRecords;
-                } else {
-                    this.reset();
-                }
+                Object.assign( this.oRecords, TrainingEngineRecords.oDefault, StoreEngine.get('TNG_Records') || {});
             },
             update: function(){ },
             destroy: function(){ },
 
-            // onInit: function(){},
+            onInit: function(){
+                this.oScene.oTraining.oDummyOptions.oRecords = this.oRecords;
+            },
             // onOpen: function(){},
             // onClose: function(){},
 
             reset: function(){
-                this.aRecords = [null, null, null, null, null];
-                StoreEngine.update('TNG_Records', this.aRecords);
+                Object.assign( this.oRecords, TrainingEngineRecords.oDefault);
+                StoreEngine.update('TNG_Records', this.oRecords);
             },
 
             saveRecord: function(){
@@ -126,8 +130,8 @@ Object.assign(
                     }
                 } );
 
-                this.aRecords[ this.nRecord ] = aRecord;
-                StoreEngine.update('TNG_Records', this.aRecords);
+                this.oRecords[ 'record_' + this.nRecord ] = aRecord;
+                StoreEngine.update('TNG_Records', this.oRecords);
             }
         }
     }

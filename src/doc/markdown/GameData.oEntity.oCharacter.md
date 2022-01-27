@@ -899,6 +899,20 @@ Données des animations
 
 ```javascript
 GameData.oEntity.oCharacter.oAnimations = {
+    restart: {
+        sType: 'restart',
+        aFrames: [
+            {
+                sFrame: 'stand_0',
+                nFrame: 1,
+                oStatus: {
+                    bReverse: true,
+                    bAerial: false,
+                    bLaunch: false
+                }
+            }
+        ]
+    },
     // Stand
     move_0: {
         sType: 'landing',

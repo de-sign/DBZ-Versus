@@ -6,7 +6,7 @@ function BattleInputSourceBufferDummy(oPlayer, oOptions){
 
     this.oOptions = null;
     this.oLastButtons = {};
-    this.oReversal = {};
+    this.oReversals = {};
     this.nFrameGuard = 0;
     this.oRecord = null;
 
@@ -26,7 +26,6 @@ Object.assign(
             'step__Reversal',
             'step__Guard',
             'step__Recovery',
-            'step__Recovery',
             'step__TechThrow',
             'step__Stance'
         ],
@@ -39,7 +38,7 @@ Object.assign(
                     this.oOptions = oOptions;
 
                     this.oPlayer.oData.oCommands.aGround.forEach( oCommand => {
-                        this.oReversal[oCommand.sCod] || ( this.oReversal[oCommand.sCod] = oCommand.oGatling.oManipulation.aButtons );
+                        this.oReversals[oCommand.sCod] || ( this.oReversals[oCommand.sCod] = oCommand.oGatling.oManipulation.aButtons );
                     } );
                 },
                 update: function(bReverse, bForce){
@@ -105,43 +104,32 @@ Object.assign(
                 getOptions: function(){
                     return Object.assign( {}, this.oOptions );
                 },
-
-                startPlayingRecord: function(){
+                startPlayingRecord: function(sRecord){
                     let oStep = {};
 
-                    if( !this.oRecord || !this.oRecord.bLock ){
-                        this.oRecord = new BattleInputBufferRecord(this.oOptions.aRecord);
+                    if( this.oOptions.oRecords[sRecord] ){
+                        this.oRecord = new BattleInputBufferRecord(this.oOptions.oRecords[sRecord]);
                         oStep = this.step__Record(null, null, true);
                     }
 
                     return oStep;
                 },
-
                 step__Record: function(bReverse, bForce, bStart){
                     let oStep = null;
 
-                    if( !bStart && this.oRecord ){
-                        if(
-                            this.oOptions.nStance == 1
-                            && this.oOptions.sReversal != 'record'
-                        ){
-                            if( this.oPlayer.oAnimation.is('hurt') ){
-                                this.oRecord.bLock = true;
-                            }
-                        }
-                        else if(
+                    if(
+                        !bStart 
+                        && this.oRecord
+                        && (
                             this.oPlayer.oAnimation.is('hurt')
-                            || (
-                                this.oRecord.isEnd()
-                                && this.oOptions.sReversal == 'record'
-                            )
-                        ){
-                            this.oRecord = null;
-                        }
+                            || this.oRecord.isEnd()
+                        )
+                    ){
+                        this.oRecord = null;
                     }
 
-                    // Record Stance / Reversal
-                    if( this.oRecord && !this.oRecord.isEnd() ){
+                    // Record
+                    if( this.oRecord ){
                         oStep = {
                             sType: 'oButtons',
                             uValue: this.oRecord.update()
@@ -158,47 +146,55 @@ Object.assign(
                 step__Reversal: function(bReverse, bForce){
                     let oStep = null;
 
-                    // Reversal
-                    if(
-                        this.oOptions.sReversal
-                        && this.oPlayer.oAnimation.isEnd()
-                        && !this.oPlayer.oStatus.bAerial
-                        && (
-                            this.oPlayer.oAnimation.is('hurt')
-                            || this.oPlayer.oAnimation.sType == 'recovery'
-                        )
-                        && (
-                            this.oOptions.sReversal != 'record'
-                            || this.oOptions.aRecord
-                        )
-                    ){
-                        if( this.oOptions.sReversal == 'record' ){
-                            oStep = this.startPlayingRecord();
-                        }
-                        else {
-                            oStep = {
-                                sType: 'uReturn',
-                                uValue: []
-                            };
+                    const oType = {
+                        sRestart: 'restart',
+                        sBlock: 'guard',
+                        sHit: 'hit',
+                        sRecovery: 'recovery'
+                    };
 
-                            this.oReversal[ this.oOptions.sReversal ].forEach( (oManip, nIndex) => {
-                                const nFrame = TimerEngine.nFrames - nIndex - 1,
-                                    oManipButtons = {};
-                                
-                                let bDirection = false;
-                                for( let sBtn in oManip ){
-                                    bDirection || ( bDirection = BattleInputBuffer.oMapDirection.aNormal.indexOf(sBtn) != -1 );
-                                    oManipButtons[sBtn] = nFrame;
+                    // Reversal
+                    if(this.oPlayer.oAnimation.isEnd()
+                        && !this.oPlayer.oStatus.bAerial
+                    ){
+
+                        for( let sType in this.oOptions.oReversals ){
+                            if( this.oOptions.oReversals[sType] && this.oPlayer.oAnimation.sType == oType[sType] ){
+
+                                let sReversal = this.oOptions.oReversals[sType];
+
+                                if( sReversal.indexOf('record_') == 0 ){
+                                    oStep = this.startPlayingRecord(sReversal);
                                 }
-                                bDirection || ( oManipButtons.NT = nFrame );
+                                else {
     
-                                oStep.uValue.push( {
-                                    nFrame: nFrame,
-                                    nDirection: this.getDirection(bReverse, oManipButtons),
-                                    oButtons: oManipButtons,
-                                    bReverse: bReverse
-                                } );
-                            } );
+                                    oStep = {
+                                        sType: 'uReturn',
+                                        uValue: []
+                                    };
+    
+                                    this.oReversals[sReversal].forEach( (oManip, nIndex) => {
+                                        const nFrame = TimerEngine.nFrames - nIndex - 1,
+                                            oManipButtons = {};
+                                        
+                                        let bDirection = false;
+                                        for( let sBtn in oManip ){
+                                            bDirection || ( bDirection = BattleInputBuffer.oMapDirection.aNormal.indexOf(sBtn) != -1 );
+                                            oManipButtons[sBtn] = nFrame;
+                                        }
+                                        bDirection || ( oManipButtons.NT = nFrame );
+            
+                                        oStep.uValue.push( {
+                                            nFrame: nFrame,
+                                            nDirection: this.getDirection(bReverse, oManipButtons),
+                                            oButtons: oManipButtons,
+                                            bReverse: bReverse
+                                        } );
+                                    } );
+                                }
+
+                                break;
+                            }
                         }
                     }
 
@@ -209,7 +205,7 @@ Object.assign(
 
                     // Guard
                         // After 1st hit
-                    if ( this.oOptions.nGuard == 1 && this.oPlayer.oAnimation.isEnd() && this.oPlayer.oAnimation.sType == 'hit' ){
+                    if ( this.oOptions.oOpponent.nGuard == 1 && this.oPlayer.oAnimation.isEnd() && this.oPlayer.oAnimation.sType == 'hit' ){
                         oStep = {
                             sType: 'oButtons',
                             uValue: { DB: TimerEngine.nFrames }
@@ -217,12 +213,12 @@ Object.assign(
                         this.nFrameGuard = TimerEngine.nFrames;
                     }
                         // Only 1st hit
-                    else if( this.oOptions.nGuard == 2 && this.oPlayer.oAnimation.isEnd() && this.oPlayer.oAnimation.sType == 'guard' ){
+                    else if( this.oOptions.oOpponent.nGuard == 2 && this.oPlayer.oAnimation.isEnd() && this.oPlayer.oAnimation.sType == 'guard' ){
                         oStep = {};
                         this.nFrameGuard = TimerEngine.nFrames;
                     }
                         // Reflect
-                    else if ( this.oOptions.nGuard == 4 && this.oPlayer.oAnimation.sType == 'guard'&& this.oPlayer.oAnimation.isFirstTick() ){
+                    else if ( this.oOptions.oOpponent.nGuard == 4 && this.oPlayer.oAnimation.sType == 'guard' && this.oPlayer.oAnimation.isFirstTick() ){
                         oStep = {
                             sType: 'oButtons',
                             uValue: { D: TimerEngine.nFrames, NT: TimerEngine.nFrames }
@@ -230,7 +226,7 @@ Object.assign(
                     }
                         // Guard others
                     else if(
-                        this.oOptions.nGuard
+                        this.oOptions.oOpponent.nGuard
                         && (
                             this.oPlayer.oAnimation.isEnd()
                             || this.oPlayer.oAnimation.is('movement')
@@ -254,7 +250,7 @@ Object.assign(
                         }
 
                         if( bHitBox ){
-                            switch(this.oOptions.nGuard){
+                            switch(this.oOptions.oOpponent.nGuard){
                                 case 1:
                                     if( TimerEngine.nFrames - this.nFrameGuard <= BattleInputSourceBufferDummy.nDurationGuard ){
                                         oStep = {
@@ -297,17 +293,17 @@ Object.assign(
 
                     // Recovery
                     if(
-                        this.oOptions.nRecovery
+                        this.oOptions.oOpponent.nRecovery
                         && this.oPlayer.oAnimation.sType == 'down'
                         && this.oPlayer.oAnimation.isFirstTick()
                     ){
                         const aConfig = BattleInputSourceBufferDummy.oButtons.nRecovery;
                         let sBtn = null;
 
-                        switch(this.oOptions.nRecovery){
+                        switch(this.oOptions.oOpponent.nRecovery){
                             case 1:
                             case 2:
-                                sBtn = aConfig[this.oOptions.nRecovery];
+                                sBtn = aConfig[this.oOptions.oOpponent.nRecovery];
                                 break;
                             case 3:
                                 const nRandomn = Math.floor( Math.random() * BattleInputSourceBufferDummy.oButtons.nRecovery.length + 1 );
@@ -328,11 +324,11 @@ Object.assign(
 
                     // Tech throw
                     if(
-                        this.oOptions.nTechThrow
+                        this.oOptions.oOpponent.nTechThrow
                         && this.oPlayer.oAnimation.sName == 'hit_D'
                         && this.oPlayer.oAnimation.isFirstTick()
                     ){
-                        switch( this.oOptions.nTechThrow ){
+                        switch( this.oOptions.oOpponent.nTechThrow ){
                             case 1:
                                 oStep = {
                                     sType: 'oButtons',
@@ -356,11 +352,11 @@ Object.assign(
                     let oStep = null;
 
                     // Stance
-                    if( this.oOptions.nStance ){
+                    if( this.oOptions.oOpponent.nStance ){
                         const aConfig = BattleInputSourceBufferDummy.oButtons.nStance;
                         oStep = {
                             sType: 'oButtons',
-                            uValue: { [aConfig[this.oOptions.nStance]]: TimerEngine.nFrames }
+                            uValue: { [aConfig[this.oOptions.oOpponent.nStance]]: TimerEngine.nFrames }
                         };
                     }
 
