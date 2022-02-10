@@ -13,7 +13,7 @@ function BattleInputBuffer(oSource){
 Object.assign(
     BattleInputBuffer,
     {
-        nLengthHistory: 100,
+        nLengthHistory: 20,
         oMapDirection: {
             aNormal: ['DB', 'DN', 'DF', 'BW', 'NT', 'FW', 'UB', 'UP', 'UF'],
             aReverse: ['DF', 'DN', 'DB', 'FW', 'NT', 'BW', 'UF', 'UP', 'UB']
@@ -61,60 +61,80 @@ Object.assign(
                 return this.oSource && this.oSource.getOptions();
             },
             checkManipulation: function(nFrameCheck, oManip){
-                const nManipButtons = oManip.aButtons.length;
-
+                let bReturn = false;
+                for( let nIndex = 0; nIndex < oManip.aButtons.length; nIndex++ ){
+                    if( this.checkButtons(nFrameCheck, oManip.aButtons[nIndex], oManip.nMaxLengthFrame || 1, oManip.bStay) ){
+                        bReturn = true;
+                        break;
+                    }
+                }
+                return bReturn;
+            },
+            checkButtons: function(nFrameCheck, aManipButtons, nMaxLengthFrame, bStay){
+                const oUsed = {};
                 let nIndexHistory = this.aHistory.length,
-					nIndexButtons = nManipButtons - 1,
-					bFCheck = true,
-                    bNotCheck = false,
-					nButtonsCheck = 0, 
-					oHistory;
-
+					nIndexButtons = aManipButtons.length - 1,
+                    nFrameStart = nFrameCheck,
+                    bFirst = true,
+                    oHistory;
+                
+                // Pour chaque ligne dans INPUT BUFFER
                 while( oHistory = this.aHistory[--nIndexHistory] ){
 
-                    const oManipButtons = oManip.aButtons[nIndexButtons];
-                    let bButtonCheck = true;
+                    // Check si c'est bien le dernier bouton appuyé, sauf si contre indication (bStay)
+                    if ( !bStay && bFirst && nFrameCheck > oHistory.nFrame ){
+                        break;
+                    }
 
-                    if( oManipButtons ){
-                        for(let sButton in oManipButtons){
+                    else {
+
+                        let bButtonsCheck = true,
+                            oTempUsed = {};
+
+                        // Check si tous les boutons de la ligne de manip sont bien appuyés
+                        aManipButtons[nIndexButtons].split('+').forEach( sButton => {
+                            // Pour chaque boutons de la ligne de manip
+                            const bDirection = BattleInputBuffer.oMapDirection.aNormal.indexOf( sButton ) != -1,
+                                sKeyButton = sButton + '_' + oHistory.oButtons[sButton];
                             if(
-                                ( bFCheck && oManipButtons[sButton] && oHistory.oButtons[sButton] != oHistory.nFrame )
-                                ||
-                                ( !oManipButtons[sButton] && !oHistory.oButtons[sButton] )
+                                // Si boutons pas appuyé
+                                !oHistory.oButtons[sButton]
+                                // Ou déjà pris en compte
+                                || oUsed[sKeyButton]
+                                // Ou si pour la première ligne de manip, le bouton n'a pas été appuyé à cette FRAME, sauf si contre indication (bStay)
+                                || ( !bStay && !bDirection && bFirst && oHistory.oButtons[sButton] != oHistory.nFrame )
                             ){
-                                bButtonCheck = false;
-                                break;
+                                // Bouton qui n'est pas validé
+                                bButtonsCheck = false;
+                            } else {
+                                // Stock bouton temporairement used
+                                oTempUsed[sKeyButton] = true;
                             }
-                        }
-                    } else {
-                        bNotCheck = true;
-                    }
-
-                    if(bFCheck){
-                        if(bButtonCheck){
-                            if(oManipButtons){
-                                bNotCheck = false;
+                        } );
+    
+                        // Si boutons validés
+                        if( bButtonsCheck ){
+                            // Si première ligne de manip
+                            if( bFirst ){
+                                // Assignation frame de départ
+                                nFrameStart = oHistory.nFrame;
                             }
-                            bFCheck = false;
-                            nButtonsCheck++;
-                        } else if(!bNotCheck){
-                            break;
+                            // Stock boutons déjà used
+                            Object.assign(oUsed, oTempUsed);
+                            // Passage à la ligne de manip suivante
+                            nIndexButtons--;
+                            bFirst = false;
                         }
-                    }
-
-                    if( !oManipButtons || ( !bFCheck && !bButtonCheck ) ){
-                        bFCheck = true;
-                        nIndexButtons--;
-                        nIndexHistory++;
-                    } else {
-                        let nButtonDiff = nFrameCheck - oHistory.nFrame + 1;
-                        if(	nButtonDiff >= oManip.nMaxLengthFrame || nButtonsCheck == nManipButtons || ( !bNotCheck && !nIndexButtons ) ){
+    
+                        // Si la manip est OK ou que le temps de manip max est dépassé
+                        if( nIndexButtons < 0 || ( nFrameStart - oHistory.nFrame + 1 >= nMaxLengthFrame ) ){
                             break;
                         }
                     }
                 }
 
-                return nButtonsCheck == nManipButtons;
+                // Si la manip est OK
+                return nIndexButtons < 0;
             }
         }
     }

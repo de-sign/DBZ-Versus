@@ -163,14 +163,22 @@ Object.assign(
                 nLength: 0,
                 nStartUp: 0,
                 nActive: 0,
-                nRecovery: 0
+                nRecovery: 0,
+                nDelayCancel: 0
             };
             oAnimation.aFrames.forEach( oFrame => {
                 oFrame = Object.assign( {}, oEntity.oFrames[oFrame.sFrame], oFrame);
+                const bCancel = oFrame.oStatus && oFrame.oStatus.bCancel;
+                // Gestion via HITBOX pour COMMAND
                 if( aCheckHitbox[nValue] == !oFrame.aHitBox ){
                     nValue++;
                 }
-                else if( !nValue && oFrame.oStatus && oFrame.oStatus.bCancel ){
+                // Gestion DELAY via bCancel pour COMMAND ( 6A de BUU )
+                else if( nValue == 2 && bCancel ){
+                    oAnimation.oData.nDelayCancel || ( oAnimation.oData.nDelayCancel = oAnimation.oData[ aProp[nValue] ] );
+                }
+                // Getion via bCancel pour STACK
+                else if( !nValue && bCancel ){
                     nValue = 2;
                 }
                 oAnimation.oData[ aProp[nValue] ] += oFrame.nFrame || 0;
@@ -398,32 +406,64 @@ Object.assign(
                     // ROOT pour FOllOW
                     const sRoot = oCommand.sCod;
                     do {
+
+                        if( oCommand.nLevel != null ){
+                            const oDefault = GameSettings.aCommandLevel[1],
+                                oLevel = GameSettings.aCommandLevel[oCommand.nLevel];
+
+                            ['oHit', 'oGuard'].forEach( sProp => {
+                                const oProp = oCommand[sProp],
+                                    oPushback = oProp && oProp.oPushback,
+                                    oData = {};
+
+                                for( let sCat in oDefault[sProp] ){
+                                    oData[sCat] = Object.assign(
+                                        {},
+                                        oDefault[sProp][sCat],
+                                        oLevel[sProp][sCat] || {},
+                                        ( oProp && oProp[sCat] ) || {}
+                                    );
+                                }
+
+                                if( oPushback === false || ( oLevel[sProp].oPushback === false && !oPushback ) ){
+                                    oData.oPushback = null;
+                                }
+                                else {
+                                    oData.oPushback = this.generateMovement(
+                                        Object.assign(
+                                            {},
+                                            oLevel[sProp].oPushback,
+                                            oPushback || {}
+                                        )
+                                    );
+                                }
+
+                                oCommand[sProp] = oData;
+                            } );
+                        }
+
+                        // GATLING
+                        // GATLING CODE
+                        if( !oCommand.oGatling.sCancelCod ) {
+                            oCommand.oGatling.sCancelCod = oCommand.sCod;
+                        }
+
                         // GATLING ENTITY
                         if( oCommand.oGatling.aEntity && !Array.isArray(oCommand.oGatling.aEntity) ){
                             oCommand.oGatling.aEntity = [oCommand.oGatling.aEntity];
                         }
 
-                        // HIT et GUARD DATA
-                        ['oHit', 'oGuard'].forEach( sProp => {
-                            if( oCommand[sProp] ){
-                                const oPushback = oCommand[sProp].oPushback;
-                                oCommand[sProp] = {
-                                    oDamage: Object.assign( {}, GameSettings.oCommand.oDamage, oCommand[sProp].oDamage || {} ),
-                                    oKi: Object.assign( {}, GameSettings.oCommand.oKi[sProp], oCommand[sProp].oKi || {} ),
-                                    oStun: Object.assign( {}, GameSettings.oCommand.oStun[sProp], oCommand[sProp].oStun || {} ),
-                                    oPushback: null
-                                };
-                                if( oPushback !== false ){
-                                    oCommand[sProp].oPushback = oPushback ?
-                                        this.generateMovement(oPushback) :
-                                        Object.assign( {}, GameSettings.oCommand.oPushback );
-                                }
-                            }
-                        } );
-
                         // FOLLOWUP ROOT
                         if( oCommand.oFollowUp ){
                             oCommand.oFollowUp.sRoot = sRoot;
+                        }
+
+                        // Array BUTTONS
+                        const oManip = oCommand.oGatling.oManipulation;
+                        if( oManip && oManip.aButtons ){
+                            if( !Array.isArray(oManip.aButtons[0]) ){
+                                oManip.aButtons = [oManip.aButtons];
+                            }
                         }
 
                         oCommand = oCommand.oFollowUp;

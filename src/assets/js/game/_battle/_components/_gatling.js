@@ -4,7 +4,7 @@ function BattleGatling(oInputBuffer, oCommandData){
     this.oCommandData = null;
 
     this.oCurrent = null;
-    this.oNext = null;
+    this.nFrameCheck = 0;
     this.oUsed = {};
     this.aTimerEntity = [];
 
@@ -17,30 +17,26 @@ Object.assign(
             this.oInputBuffer = oInputBuffer;
             this.oCommandData = oCommandData;
         },
-        update: function(nKi, oCanAction){
-            let bFind = false,
-                oUse = null;
-            const aCommand = this.getCommands(oCanAction.sCommand);
+        update: function(oCanAction, oConditions){
 
-            for( let nIndex = 0; nIndex < aCommand.length; nIndex++ ){
-                const oCommand = aCommand[nIndex];
-                if( !oCommand.oGatling.sCheck || oCanAction[oCommand.oGatling.sCheck] ){
-                    if( this.canUseCommand(nKi, oCommand) ){
-                        if( oCanAction.bStack ){
-                            this.oNext = oCommand;
-                            bFind = true;
-                        } else {
+            let oUse = null;
+
+            if( oCanAction.bStack ){
+                this.nFrameCheck || ( this.nFrameCheck = TimerEngine.nFrames );
+            }
+            else {
+                const aCommand = this.getCommands(oCanAction.sCommand);
+                this.nFrameCheck = 0;
+
+                for( let nIndex = 0; nIndex < aCommand.length; nIndex++ ){
+                    const oCommand = aCommand[nIndex];
+                    if( !oCommand.oGatling.sCheck || oCanAction[oCommand.oGatling.sCheck] ){
+                        if( this.canUseCommand(oCommand, oConditions) ){
                             oUse = oCommand;
-                            bFind = true;
+                            break;
                         }
-                        break;
                     }
                 }
-            }
-
-            // Gestion Gatling Buffer
-            if( !bFind && this.oNext && !oCanAction.bStack ){
-                oUse = this.oNext;
             }
 
             return oUse;
@@ -48,17 +44,14 @@ Object.assign(
         },
         destroy: function(){},
 
-        reset: function(){
+        reset: function(bNotUsed){
             this.oCurrent = null;
-            this.oNext = null;
-            this.oUsed = {};
+            bNotUsed || ( this.oUsed = {} );
             this.aTimerEntity = [];
         },
         use: function(oCommand){
             if( oCommand.oGatling.bReset ){
                 this.reset();
-            } else {
-                this.oNext = null;
             }
             this.oCurrent = Object.assign(
                 {
@@ -79,14 +72,15 @@ Object.assign(
         },
 
         getCommands: function(sType){
-            let bLastNoManip = false,
-                bAddNoManip = true;
+            let bLastNoManip = false;
             const aCommand = [],
                 aCommandNoManip = [],
-                nFrameCheck = TimerEngine.nFrames;
+                nFrameCheck = this.nFrameCheck || TimerEngine.nFrames;
 
             for( let nIndex = 0; nIndex < this.oCommandData[sType].length; nIndex++ ){
                 let oCommand = this.oCommandData[sType][nIndex];
+
+                // Gestion FOLLOW UP
                 if( this.oCurrent && ( this.oCurrent.sRoot || this.oCurrent.sCod ) == oCommand.sCod ){
                     const oFollow = this.oCurrent.oFollowUp
                     if(
@@ -100,32 +94,33 @@ Object.assign(
                             )
                         )
                     ){
-                        oCommand = this.oCurrent.oFollowUp;
+                        oCommand = oFollow;
                     } else {
                         oCommand = null;
                     }
                 }
+
+                // Gestion COMMAND
                 if( oCommand ){
                     const oManip = oCommand.oGatling.oManipulation;
-                    if( !oManip.aButtons ){
-                        if( !this.oNext && !bLastNoManip ){
+                    if( !oManip || !oManip.aButtons ){
+                        if( !bLastNoManip ){
                             aCommandNoManip.push( Object.assign({}, oCommand) );
                             bLastNoManip = oManip && oManip.bLast;
                         }
                     }
                     else if(
-                        this.oInputBuffer.nFrameLastUpdate == nFrameCheck
+                        ( oManip.bStay || this.oInputBuffer.nFrameLastUpdate >= nFrameCheck )
                         && this.oInputBuffer.checkManipulation(nFrameCheck, oManip)
                     ){
                         aCommand.push( Object.assign({}, oCommand) );
                         if( oManip.bLast ){
-                            bAddNoManip = false;
                             break;
                         }
                     }
                 }
             }
-            bAddNoManip && [].push.apply(aCommand, aCommandNoManip);
+            [].push.apply(aCommand, aCommandNoManip);
             return aCommand;
         },
         getEntity: function(){
@@ -147,23 +142,15 @@ Object.assign(
             this.oCurrent && ( this.oCurrent.sHurt = bGuard ? 'bGuard' : 'bHit');
         },
 
-        canUseCommand: function(nKi, oCommand){
-            let bCanUse = false;
-            // Gestion KI
-            if( !oCommand.oGatling.nCost || nKi >= oCommand.oGatling.nCost ){
-                // Gestion GATLING
-                if( !this.oUsed[oCommand.sCod] ){
-                    // Gestion LEVEL
-                    if(
-                        !this.oCurrent // None
-                        || this.oCurrent.oGatling.bIgnoreLevel || oCommand.oGatling.bIgnoreLevel || this.oCurrent.oGatling.nLevel <= oCommand.oGatling.nLevel // Level
-                        || (this.oCurrent.sRoot || this.oCurrent.sCod ) == oCommand.sRoot // Follow Up 
-                    ) {
-                        bCanUse = true;
-                    }
-                }
-            }
-            return bCanUse;
+        canUseCommand: function(oCommand, oConditions){
+            return ( !this.oUsed[oCommand.sCod] ) // USED
+                && ( !oCommand.oGatling.nCost || oConditions.nCost >= oCommand.oGatling.nCost ) // KI
+                && (
+                    !this.oCurrent // First
+                    || ( this.oCurrent.oGatling.oCancel && this.oCurrent.oGatling.oCancel[ oCommand.oGatling.sCancelCod ] ) // Gatling
+                    || ( this.oCurrent.sRoot || this.oCurrent.sCod ) == oCommand.sRoot // Follow Up 
+                    || oConditions.aCategory.indexOf('stack') != -1 // Stack Animation
+                );
         },
         getEffect: function(){
             let aEffect = null;
@@ -172,9 +159,6 @@ Object.assign(
                 this.oCurrent.aEffect = [];
             }
             return aEffect;
-        },
-        isJumpCancellable: function(){
-            return this.oCurrent && this.oCurrent.oGatling.bJumpCancellable && this.oCurrent.sHurt == 'bHit';
         }
     }
 );

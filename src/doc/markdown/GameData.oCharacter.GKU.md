@@ -510,10 +510,7 @@ GameData.oCharacter.GKU.oAnimations = {
         },
         {
             nFrame: 4,
-            sFrame: 'attack_2_0',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'attack_2_0'
         },
         {
             nFrame: 2,
@@ -539,10 +536,7 @@ GameData.oCharacter.GKU.oAnimations = {
         },
         {
             nFrame: 4,
-            sFrame: 'attack_2_2',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'attack_2_2'
         },
         {
             nFrame: 2,
@@ -577,10 +571,7 @@ GameData.oCharacter.GKU.oAnimations = {
         },
         {
             sFrame: 'guard_2',
-            nFrame: 6,
-            oStatus: {
-                bCancel: true
-            }
+            nFrame: 6
         },
         {
             sFrame: 'stand_1',
@@ -606,10 +597,7 @@ GameData.oCharacter.GKU.oAnimations = {
         },
         {
             nFrame: 6,
-            sFrame: 'attack_3_0',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'attack_3_0'
         },
         {
             nFrame: 2,
@@ -645,10 +633,7 @@ GameData.oCharacter.GKU.oAnimations = {
             },
             {
                 nFrame: 2,
-                sFrame: 'attack_5_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'attack_5_1'
             },
             {
                 nFrame: 6,
@@ -683,10 +668,7 @@ GameData.oCharacter.GKU.oAnimations = {
         },
         {
             nFrame: 4,
-            sFrame: 'attack_4_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'attack_4_1'
         },
         {
             nFrame: 6,
@@ -801,6 +783,12 @@ GameData.oCharacter.GKU.oCommands = {
                 sName: 'Genki-dama',
                 sGroup: 'ki'
             },
+            nLevel: 6,
+            oHit: {
+                oDamage: {
+                    nDamage: 400
+                }
+            },
             oProperty: {
                 bLaunch: true,
                 oInvulnerable: {
@@ -810,14 +798,13 @@ GameData.oCharacter.GKU.oCommands = {
                 }
             },
             oGatling: {
+                sCancelCod: 'super',
                 nCost: 30,
-                nLevel: 3,
                 oManipulation: {
-                    nMaxLengthFrame: 15,
+                    nMaxLengthFrame: 12,
                     aButtons: [
-                        { DN: false },
-                        { DF: false },
-                        { FW: false, C: true }
+                        ['DN', 'DF', 'FW+C'],
+                        ['DN', 'DF', 'FW', 'C']
                     ],
                     bLast: false
                 },
@@ -865,38 +852,7 @@ GameData.oCharacter.GKU.oCommands = {
                         nY: -96
                     }
                 }
-            ],
-            oHit: {
-                oDamage: {
-                    nDamage: 400,
-                    nMinimumReduce: 40
-                },
-                oStun: {
-                    nStun: 36,
-                    sAnimation: 'hit_1',
-                    sImpact: 'explode_heavy',
-                    sText: 'ブーム'
-                },
-                oPushback: {
-                    nLength: 4,
-                    nX: -192
-                }
-            },
-            oGuard: {
-                oDamage: {
-                    nDamage: 0
-                },
-                oStun: {
-                    nStun: 36,
-                    sAnimation: 'defense_4',
-                    sImpact: 'explode_heavy',
-                    sText: 'ブーム'
-                },
-                oPushback: {
-                    nLength: 4,
-                    nX: -192
-                }
-            }
+            ]
         },
         {
             sCod: 'attack_C',
@@ -905,16 +861,32 @@ GameData.oCharacter.GKU.oCommands = {
                 sName: 'Taiyoken',
                 sGroup: 'ki'
             },
+            nLevel: 5,
+            oHit: {
+                oDamage: {
+                    nDamage: 0,
+                    nScaling: 20,
+                    nProration: 20
+                },
+                oStun: {
+                    sImpact: false,
+                    sText: null
+                },
+                oPushback: false
+            },
             oProperty: {},
             oGatling: {
+                sCancelCod: 'special',
+                oCancel: {
+                    cancel: true,
+                    attack: true,
+                    super: true
+                },
                 nCost: 10,
-                nLevel: 1,
                 bReset: true,
                 oManipulation: {
                     nMaxLengthFrame: 1,
-                    aButtons: [
-                        { C: true }
-                    ],
+                    aButtons: ['C'],
                     bLast: true
                 },
                 aEntity: [
@@ -937,26 +909,6 @@ GameData.oCharacter.GKU.oCommands = {
                         }
                     }
                 ]
-            },
-            oHit: {
-                oDamage: {
-                    nDamage: 0,
-                    nScaling: 20,
-                    nProration: 20
-                },
-                oStun: {
-                    nStun: 26,
-                    sAnimation: 'hit_0'
-                }
-            },
-            oGuard: {
-                oDamage: {
-                    nDamage: 0
-                },
-                oStun: {
-                    nStun: 16,
-                    sAnimation: 'defense_4'
-                }
             }
         },
         {
@@ -967,6 +919,7 @@ GameData.oCharacter.GKU.oCommands = {
                 sInfo: 'Aerial invulnerable',
                 sGroup: 'command'
             },
+            nLevel: 4,
             oProperty: {
                 bLaunch: true,
                 oInvulnerable: {
@@ -976,32 +929,19 @@ GameData.oCharacter.GKU.oCommands = {
                 }
             },
             oGatling: {
-                nLevel: 1,
+                sCancelCod: 'attack',
+                oCancel: {
+                    cancel: true,
+                    attack: true,
+                    special: true,
+                    super: true,
+                    jump: true
+                },
                 bJumpCancellable: true,
                 oManipulation: {
                     nMaxLengthFrame: 1,
-                    aButtons: [
-                        { DN: false, B: true }
-                    ],
+                    aButtons: ['DN+B'],
                     bLast: true
-                }
-            },
-            oHit: {
-                oDamage: {
-                    nDamage: 100
-                },
-                oStun: {
-                    nStun: 22,
-                    sAnimation: 'hit_2'
-                }
-            },
-            oGuard: {
-                oDamage: {
-                    nDamage: 0
-                },
-                oStun: {
-                    nStun: 12,
-                    sAnimation: 'defense_4'
                 }
             }
         },
@@ -1012,33 +952,20 @@ GameData.oCharacter.GKU.oCommands = {
                 sName: 'Tracker',
                 sGroup: 'command'
             },
+            nLevel: 3,
             oProperty: {},
             oGatling: {
-                nLevel: 1,
+                sCancelCod: 'attack',
+                oCancel: {
+                    cancel: true,
+                    attack: true,
+                    special: true,
+                    super: true
+                },
                 oManipulation: {
                     nMaxLengthFrame: 1,
-                    aButtons: [
-                        { FW: false, A: true }
-                    ],
+                    aButtons: ['FW+A'],
                     bLast: true
-                }
-            },
-            oHit: {
-                oDamage: {
-                    nDamage: 75
-                },
-                oStun: {
-                    nStun: 18,
-                    sAnimation: 'hit_1'
-                }
-            },
-            oGuard: {
-                oDamage: {
-                    nDamage: 0
-                },
-                oStun: {
-                    nStun: 12,
-                    sAnimation: 'defense_j4'
                 }
             }
         },
@@ -1049,33 +976,20 @@ GameData.oCharacter.GKU.oCommands = {
                 sName: 'Heavy',
                 sGroup: 'normal'
             },
+            nLevel: 2,
             oProperty: {},
             oGatling: {
-                nLevel: 1,
+                sCancelCod: 'attack',
+                oCancel: {
+                    cancel: true,
+                    attack: true,
+                    special: true,
+                    super: true
+                },
                 oManipulation: {
                     nMaxLengthFrame: 1,
-                    aButtons: [
-                        { B: true }
-                    ],
+                    aButtons: ['B'],
                     bLast: true
-                }
-            },
-            oHit: {
-                oDamage: {
-                    nDamage: 50
-                },
-                oStun: {
-                    nStun: 16,
-                    sAnimation: 'hit_1'
-                }
-            },
-            oGuard: {
-                oDamage: {
-                    nDamage: 0
-                },
-                oStun: {
-                    nStun: 10,
-                    sAnimation: 'defense_4'
                 }
             }
         },
@@ -1086,78 +1000,57 @@ GameData.oCharacter.GKU.oCommands = {
                 sName: 'Light',
                 sGroup: 'normal'
             },
+            nLevel: 1,
             oProperty: {},
             oGatling: {
-                nLevel: 1,
+                sCancelCod: 'attack',
+                oCancel: {
+                    cancel: true,
+                    attack: true,
+                    special: true,
+                    super: true
+                },
                 oManipulation: {
                     nMaxLengthFrame: 1,
-                    aButtons: [
-                        { A: true }
-                    ],
+                    aButtons: ['A'],
                     bLast: true
-                }
-            },
-            oHit: {
-                oDamage: {
-                    nDamage: 25
-                },
-                oStun: {
-                    nStun: 13,
-                    sAnimation: 'hit_0'
-                }
-            },
-            oGuard: {
-                oDamage: {
-                    nDamage: 0
-                },
-                oStun: {
-                    nStun: 12,
-                    sAnimation: 'defense_j4'
                 }
             },
             oFollowUp: {
                 sCod: 'attack_A_1',
                 sAnimation: 'attack_A_1',
+                nLevel: 1,
                 oProperty: {},
                 oGatling: {
-                    nLevel: 1,
+                    sCancelCod: 'attack',
+                    oCancel: {
+                        cancel: true,
+                        attack: true,
+                        special: true,
+                        super: true
+                    },
                     oManipulation: {
                         nMaxLengthFrame: 1,
-                        aButtons: [
-                            { A: true }
-                        ],
+                        aButtons: ['A'],
                         bLast: true
-                    }
-                },
-                oHit: {
-                    oDamage: {
-                        nDamage: 25
-                    },
-                    oStun: {
-                        nStun: 13,
-                        sAnimation: 'hit_0'
-                    }
-                },
-                oGuard: {
-                    oDamage: {
-                        nDamage: 0
-                    },
-                    oStun: {
-                        nStun: 12,
-                        sAnimation: 'defense_j4'
                     }
                 },
                 oFollowUp: {
                     sCod: 'attack_A_2',
                     sAnimation: 'attack_A_2',
+                    nLevel: 2,
                     oProperty: {},
                     oGatling: {
-                        nLevel: 1,
+                        sCancelCod: 'attack',
+                        oCancel: {
+                            cancel: true,
+                            attack: true,
+                            special: true,
+                            super: true
+                        },
                         oManipulation: {
                             nMaxLengthFrame: 1,
-                            aButtons: [
-                                { A: true }
-                            ],
+                            aButtons: ['A'],
                             bLast: true
                         },
                         aEntity: [
@@ -1180,25 +1073,6 @@ GameData.oCharacter.GKU.oCommands = {
                                 nFrameStart: 7
                             }
                         ]
-                    },
-                    oHit: {
-                        oDamage: {
-                            nDamage: 50
-                        },
-                        oStun: {
-                            nStun: 16,
-                            sAnimation: 'hit_1',
-                            sImpact: false
-                        }
-                    },
-                    oGuard: {
-                        oDamage: {
-                            nDamage: 0
-                        },
-                        oStun: {
-                            nStun: 10,
-                            sAnimation: 'defense_4'
-                        }
                     }
                 }
             }

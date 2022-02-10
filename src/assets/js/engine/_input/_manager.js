@@ -93,8 +93,7 @@ Object.assign(
             }
         },
         /* ----- DETAILS
-        Supprime le controlleur transmis de `ControllerManager.oController`.  
-        Si le controlleur est un clavier, modifie `ControllerManager.oKeyMap` en fonction du paramétrages des bouttons afin de ne plus mettre à jour ce dernier : [Controller.addEvent()](Controller.md)
+        TODO
         ----- */
         addEvent: function(oEvent) {
             const key = oEvent.code.toUpperCase();
@@ -119,8 +118,10 @@ Object.assign(
             return oCtrl;
         },
         updateController: function(oCtrl) {
-            this.removeController(oCtrl);
-            this.addController(oCtrl);
+            if( oCtrl.sType == 'keyboard' ){
+                this.removeController(oCtrl);
+                this.addController(oCtrl);
+            }
         },
         getController: function(sCod){
             return Controller.oInstance[sCod];

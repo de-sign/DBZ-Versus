@@ -104,7 +104,7 @@ ControllerManager.removeController(oCtrl);
 
 #### ControllerManager.addEvent()
 
-Supprime le controlleur transmis de `ControllerManager.oController`.  Si le controlleur est un clavier, modifie `ControllerManager.oKeyMap` en fonction du paramétrages des bouttons afin de ne plus mettre à jour ce dernier : [Controller.addEvent()](Controller.md)
+TODO
 
 ```javascript
 ControllerManager.addEvent(oEvent);

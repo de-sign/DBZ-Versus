@@ -367,11 +367,15 @@ Object.assign(
             } );
 
             if( aHurt.length ){
-                let bCounter = false;
+                let nFreeze = 0;
+
                 aHurt.forEach( (oHurt, nIndex) => {
                     // Gestion Hurt
                     const oHit = oHurt.oEntityHurt.takeHit(oHurt.oEntityHit, oHurt.oCommandData, this),
-                        oPushback = oHurt.oCommandData[ oHit.bGuard ? 'oGuard' : 'oHit' ].oPushback;
+                        oCommandData = oHurt.oCommandData[ oHit.bGuard ? 'oGuard' : 'oHit' ]
+                        oPushback = oCommandData.oPushback;
+
+                    nFreeze = oCommandData.oStun.nFreeze;
 
                     // Gestion Pushback
                     if( oPushback && !oPushback.bEmpty ){
@@ -384,7 +388,9 @@ Object.assign(
 
                     // Gestion counter
                     if( oHit.bCounter ){
-                        bCounter = true;
+                        // Hitstop
+                        nFreeze = GameSettings.oCounter.nFreeze;
+
                         // Effect
                         this.oDisplay.addEffect.apply(
                             this.oDisplay,
@@ -403,7 +409,7 @@ Object.assign(
                 // Gestion hit freeze
                 this.oDisplay.addEffect( {
                     sType: 'freeze',
-                    nLength: bCounter ? GameSettings.oCounter.nFreeze : GameSettings.nFreeze
+                    nLength: nFreeze
                 } );
             }
         },

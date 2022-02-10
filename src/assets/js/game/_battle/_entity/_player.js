@@ -61,46 +61,41 @@ Object.assign(
 
                     // Si pas stun par Animation
                     const oCanCommand = this.canCommand(),
-                        bFreeze = this.oAnimation.isFreeze(),
                         oStatus = {};
 
-                    // Gestion MANIP
+                    // Check MANIP
                     let oCommand = null;
-
                     if( oCanCommand.sCommand ){
-                        oCommand = this.oGatling.update(this.nKi, oCanCommand);
-                        oCommand && this.useCommand(oCommand);
+                        oCommand = this.oGatling.update(oCanCommand, {
+                            nCost: this.nKi,
+                            aCategory: this.oAnimation.is()
+                        } );
                     }
 
-                    if( !oCommand ){
-                        const sDirection = this.oInputBuffer.getDirection();
-                        
-                        // Gestion FALL / DIR / JUMPCANCEL
-                        if(
-                            this.canBeMoved()
-                            || (
-                                this.oGatling.isJumpCancellable()
-                                && !oCanCommand.bStack
-                                && sDirection[0] == 'U'
-                            )
-                        ){
+                    // Gestion MANIP
+                    if( oCommand ){
+                        this.useCommand(oCommand);
+                    }
+                    else {
+
+                        // Gestion FALL
+                        if( oCanCommand.bFall ){
+                            this.setStance('launch_1');
+                        }
+                        // Gestion DIR
+                        else if( oCanCommand.bMove ){
+                            const sDirection = this.oInputBuffer.getDirection();
+
                             if( this.oStatus.bAerial ){
-                                // Gestion de chute
-                                if( this.oAnimation.is('hurt') && this.oAnimation.sType != 'guard' ){
-                                    this.setStance('launch_1');
+                                switch( sDirection ){
+                                    // Guard AERIAL
+                                    case 'UB':
+                                    case 'BW':
+                                    case 'DB':
+                                        oStatus.bGuard = true;
+                                        break;
                                 }
-                                // Gestion en l'air
-                                else {
-                                    switch( sDirection ){
-                                        // Guard AERIAL
-                                        case 'UB':
-                                        case 'BW':
-                                        case 'DB':
-                                            oStatus.bGuard = true;
-                                            break;
-                                    }
-                                    this.setAnimation('move_j5');
-                                }
+                                this.setStance('move_j5');
                             }
                             else {
                                 // Gestion au sol
@@ -114,15 +109,6 @@ Object.assign(
                                         break;
                                     case 'FW':
                                         this.setStance('move_6');
-                                        break;
-                                    case 'UB':
-                                        this.setStance('move_7');
-                                        break;
-                                    case 'UP':
-                                        this.setStance('move_8');
-                                        break;
-                                    case 'UF':
-                                        this.setStance('move_9');
                                         break;
                                     default:
                                         this.setStance('move_5');
@@ -143,17 +129,14 @@ Object.assign(
 
                 // Fonction ENGINE
                 canBeMoved: function(){
-                    return (
-                            this.oAnimation.isEnd()
-                            && (
-                                !this.oStatus.bAerial
-                                || !this.oAnimation.is('hurt')
-                            )
-                        )
+                    return this.oAnimation.isEnd()
                         || (
                             this.oAnimation.is('movement')
                             && !this.oAnimation.isFreeze()
                         );
+                },
+                needFall: function(){
+                    return this.oStatus.bAerial && this.oAnimation.is('hit') && this.oAnimation.isEnd();
                 },
                 addKi: function(nKi){
                     this.nKi = Math.min(this.nKi + nKi, GameSettings.oKi.nMax);
@@ -169,39 +152,46 @@ Object.assign(
                 canCommand: function(){
 
                     const sCommand = this.oStatus.bAerial ? 'aAerial' : 'aGround',
+                        bFall = this.needFall(),
                         oCanCommand = {
                             sCommand: null,
+                            bMove: !bFall && this.canBeMoved(),
+                            bFall: bFall,
                             bStack: false,
                             bGuard: false,
                             bThrow: false
                         };
 
+                    
+                    // Gestion DOWN
+                    if ( this.oAnimation.is('down') ){
+                        Object.assign( oCanCommand, {
+                            sCommand: 'aRecovery',
+                            bStack: !oCanCommand.bMove
+                        } );
+                    }
                     // Gestion MOVEMENT
-                    if( this.canBeMoved() ){
-                        // BUG RECOVERY via bourrance
-                        oCanCommand.sCommand = sCommand;
-                    } else {
-
-                        const bFreeze = this.oAnimation.isFreeze();
-
-                        // Gestion HURT
-                        if( this.oAnimation.is('hurt') ){
-                            Object.assign( oCanCommand, {
-                                sCommand: 'aDefense',
-                                bStack: bFreeze,
-                                bGuard: this.oStatus.bGuard,
-                                bThrow: this.oStatus.bThrow
-                            } );
-                        }
-                        // Gestion STACK pour ACTION en HIT ou STACK
-                        else if( this.aHit.length || this.oAnimation.is('stack') ){
-                            Object.assign( oCanCommand, {
-                                sCommand: this.oAnimation.sType == 'down' ?
-                                    'aRecovery' :
-                                    sCommand,
-                                bStack: this.oAnimation.getStep(-1) != 'nRecovery' || bFreeze
-                            } );
-                        }
+                    else if( oCanCommand.bMove ){
+                        Object.assign( oCanCommand, {
+                            sCommand: sCommand,
+                            bStack: this.oAnimation.isFreeze()
+                        } );
+                    }
+                    // Gestion HURT
+                    else if( this.oAnimation.is('hurt') ){
+                        Object.assign( oCanCommand, {
+                            sCommand: 'aDefense',
+                            bStack: this.oAnimation.isFreeze(),
+                            bGuard: this.oStatus.bGuard,
+                            bThrow: this.oStatus.bThrow
+                        } );
+                    }
+                    // Gestion STACK pour ACTION en HIT ou STACK
+                    else if( this.aHit.length || this.oAnimation.is('stack') ){
+                        Object.assign( oCanCommand, {
+                            sCommand: sCommand,
+                            bStack: this.oAnimation.isFreeze() || this.oAnimation.getStep(-1, true) != 'nRecovery'
+                        } );
                     }
                     
                     return oCanCommand;
@@ -224,7 +214,7 @@ Object.assign(
                 setAnimation: function(sAnimation, bUpdate, bReverse){
                     const oChanged = BattleCharacter.prototype.setAnimation.call(this, sAnimation, bUpdate, bReverse);
                     if( oChanged ){
-                        if( !this.oAnimation.is('hurt') || this.oAnimation.sType == 'guard' ){
+                        if( !this.oAnimation.is('hit') ){
                             this.oDamage.reset();
                         }
                     }
@@ -232,7 +222,7 @@ Object.assign(
                 },
                 setStance: function(sMovement, bUpdate, bReverse){
                     const oChanged = this.setAnimation(sMovement, bUpdate, bReverse);
-                    oChanged && this.oGatling.reset();
+                    oChanged && this.oGatling.reset( this.oStatus.bAerial );
                     return oChanged;
                 },
                 setHurt: function(sHurt, nFramesLength, bReverse){
@@ -373,7 +363,7 @@ Object.assign(
 
                     // Dummy NORMALY / Local
                     else if(
-                        ( this.oAnimation.is('counter') || this.oAnimation.sType == 'dash' )
+                        ( this.oAnimation.is('counter') )
                         && this.oAnimation.getStep(-1) != 'nRecovery'
                     ){
                         bResult = true;

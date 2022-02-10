@@ -38,7 +38,11 @@ Object.assign(
                     this.oOptions = oOptions;
 
                     this.oPlayer.oData.oCommands.aGround.forEach( oCommand => {
-                        this.oReversals[oCommand.sCod] || ( this.oReversals[oCommand.sCod] = oCommand.oGatling.oManipulation.aButtons );
+                        if( !this.oReversals[oCommand.sCod] ){
+                            const oManip = oCommand.oGatling.oManipulation,
+                                aButtons = oManip && oManip.aButtons;
+                            aButtons && ( this.oReversals[oCommand.sCod] = aButtons[0] );
+                        }
                     } );
                 },
                 update: function(bReverse, bForce){
@@ -173,15 +177,15 @@ Object.assign(
                                         uValue: []
                                     };
     
-                                    this.oReversals[sReversal].forEach( (oManip, nIndex) => {
+                                    this.oReversals[sReversal].forEach( (sManipButtons, nIndex) => {
                                         const nFrame = TimerEngine.nFrames - nIndex - 1,
                                             oManipButtons = {};
                                         
                                         let bDirection = false;
-                                        for( let sBtn in oManip ){
+                                        sManipButtons.split('+').forEach( sBtn => {
                                             bDirection || ( bDirection = BattleInputBuffer.oMapDirection.aNormal.indexOf(sBtn) != -1 );
                                             oManipButtons[sBtn] = nFrame;
-                                        }
+                                        } );
                                         bDirection || ( oManipButtons.NT = nFrame );
             
                                         oStep.uValue.push( {

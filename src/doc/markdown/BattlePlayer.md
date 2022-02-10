@@ -99,6 +99,12 @@ this.// destroy();
 this.canBeMoved();
 ```
 
+### BattlePlayer.prototype.needFall()
+
+```javascript
+this.needFall();
+```
+
 ### BattlePlayer.prototype.addKi()
 
 ```javascript

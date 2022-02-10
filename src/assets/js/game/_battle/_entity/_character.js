@@ -67,7 +67,7 @@ Object.assign(
                 setAnimation: function(sAnimation, bUpdate, bReverse){
                     return BattleEntity.prototype.setAnimation.call(
                         this,
-                        GameAnimation.getCategory( this.oData.oAnimations[sAnimation] ) == 'hurt',
+                        GameAnimation.getCategory( this.oData.oAnimations[sAnimation] ).indexOf('hurt') != -1,
                         sAnimation,
                         bUpdate, 
                         bReverse

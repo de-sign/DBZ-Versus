@@ -20,7 +20,8 @@ Object.assign(
             return GameSettings.oAnimations.oType.oMap[oAnim.sName] || GameSettings.oAnimations.oType.sDefault;
         },
         getCategory: function(oAnim){
-            return GameSettings.oAnimations.oCategory.oMap[oAnim.sType];
+            const aCategory = GameSettings.oAnimations.oCategory.oMap[oAnim.sType];
+            return Array.isArray(aCategory) ? aCategory : [aCategory];
         },
 
         prototype: Object.assign(
@@ -34,7 +35,7 @@ Object.assign(
                     this.aStep = aStep;
                     this.oData = oData;
                     this.sType = sType || GameAnimation.getType(this);
-                    this.sCategory = GameAnimation.getCategory(this);
+                    this.aCategory = GameAnimation.getCategory(this);
                 },
                 update: function(){
                     const bUpdate = GameTimer.prototype.update.call(this);
@@ -66,18 +67,26 @@ Object.assign(
                 },
                 
                 is: function(sCategory){
-                    return this.sCategory == sCategory;
+                    return sCategory ? 
+                        this.aCategory.indexOf(sCategory) != -1 :
+                        this.aCategory;
                 },
                 
                 canSetLength: function(){
-                    return GameSettings.oAnimations.oCategory.aCanSetLength.indexOf(this.sCategory) != -1;
+                    let bReturn = false;
+                    this.aCategory.forEach( sCategory => {
+                        if( GameSettings.oAnimations.oCategory.aCanSetLength.indexOf(sCategory) != -1 ){
+                            bReturn = true;
+                        }
+                    } );
+                    return bReturn;
                 },
                 setLength: function(nLength){
                     if( nLength && this.canSetLength() ){
                         this.nLength = nLength;
                     }
                 },
-                getStep: function(nDelta){
+                getStep: function(nDelta, bAddDelay){
                     let sStep = null,
                         nFrame = 0,
                         aStep = ['nStartUp', 'nActive', 'nRecovery'];
@@ -85,7 +94,7 @@ Object.assign(
                     for( let nIndex = 0; nIndex < aStep.length; nIndex++ ){
                         sStep = aStep[nIndex];
                         nFrame += this.oData[sStep];
-                        if( this.nTick <= nFrame + ( nDelta || 0 ) ){
+                        if( this.nTick <= nFrame + ( nDelta || 0 ) + ( bAddDelay ? this.oData.nDelayCancel : 0 ) ){
                             break;
                         }
                     }

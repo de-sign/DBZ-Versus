@@ -504,7 +504,7 @@ Données des animations.
 ```javascript
 GameData.oCharacter.SRU.oAnimations = {
     // Command
-    // 4, 4, 6
+    // 4, 3, 7
     attack_A_0: [
         {
             nFrame: 2,
@@ -518,22 +518,19 @@ GameData.oCharacter.SRU.oAnimations = {
             sFrame: 'attack_2_0'
         },
         {
-            nFrame: 4,
+            nFrame: 3,
             sFrame: 'attack_2_1'
         },
         {
-            nFrame: 4,
-            sFrame: 'attack_2_0',
-            oStatus: {
-                bCancel: true
-            }
+            nFrame: 5,
+            sFrame: 'attack_2_0'
         },
         {
             nFrame: 2,
             sFrame: 'stand_1'
         }
     ],
-    // 4, 4, 6
+    // 4, 3, 7
     attack_A_1: [
         {
             nFrame: 2,
@@ -547,22 +544,19 @@ GameData.oCharacter.SRU.oAnimations = {
             sFrame: 'attack_2_2'
         },
         {
-            nFrame: 4,
+            nFrame: 3,
             sFrame: 'attack_2_3'
         },
         {
-            nFrame: 4,
-            sFrame: 'attack_2_2',
-            oStatus: {
-                bCancel: true
-            }
+            nFrame: 5,
+            sFrame: 'attack_2_2'
         },
         {
             nFrame: 2,
             sFrame: 'stand_1'
         }
     ],
-    // 6, 4, 8
+    // 6, 3, 11
     attack_B: {
         uMove: {
             nDelay: 2,
@@ -582,15 +576,12 @@ GameData.oCharacter.SRU.oAnimations = {
                 sFrame: 'attack_3_0'
             },
             {
-                nFrame: 4,
+                nFrame: 3,
                 sFrame: 'attack_3_1'
             },
             {
-                nFrame: 6,
-                sFrame: 'attack_3_0',
-                oStatus: {
-                    bCancel: true
-                }
+                nFrame: 9,
+                sFrame: 'attack_3_0'
             },
             {
                 nFrame: 2,
@@ -599,7 +590,7 @@ GameData.oCharacter.SRU.oAnimations = {
         ]
     },
 
-    // 8, 6, 10
+    // 9, 4, 13
     attack_2A: {
         uMove: {
             nDelay: 2,
@@ -615,26 +606,23 @@ GameData.oCharacter.SRU.oAnimations = {
                 }
             },
             {
-                nFrame: 4,
+                nFrame: 3,
                 sFrame: 'attack_5_0',
             },
             {
-                nFrame: 2,
+                nFrame: 4,
                 sFrame: 'attack_5_1',
             },
             {
-                nFrame: 6,
+                nFrame: 4,
                 sFrame: 'attack_5_2'
             },
             {
-                nFrame: 6,
-                sFrame: 'attack_5_1',
-                oStatus: {
-                    bCancel: true
-                }
+                nFrame: 8,
+                sFrame: 'attack_5_1'
             },
             {
-                nFrame: 2,
+                nFrame: 3,
                 sFrame: 'attack_5_0'
             },
             {
@@ -644,7 +632,7 @@ GameData.oCharacter.SRU.oAnimations = {
         ]
     },
 
-    // 8, 6, 10
+    // 9, 4, 15
     attack_6B: {
         
         uMove: {
@@ -661,26 +649,23 @@ GameData.oCharacter.SRU.oAnimations = {
                 }
             },
             {
-                nFrame: 4,
+                nFrame: 3,
                 sFrame: 'attack_6_0',
             },
             {
-                nFrame: 2,
+                nFrame: 4,
                 sFrame: 'attack_6_1',
             },
             {
-                nFrame: 6,
+                nFrame: 4,
                 sFrame: 'attack_6_2'
             },
             {
-                nFrame: 2,
-                sFrame: 'attack_6_1',
-                oStatus: {
-                    bCancel: true
-                }
+                nFrame: 10,
+                sFrame: 'attack_6_1'
             },
             {
-                nFrame: 6,
+                nFrame: 3,
                 sFrame: 'attack_6_3'
             },
             {
@@ -689,7 +674,7 @@ GameData.oCharacter.SRU.oAnimations = {
             }
         ]
     },
-    // 10, 8, 12
+    // 10, 6, 17
     attack_2B: [
         {
             nFrame: 2,
@@ -707,18 +692,15 @@ GameData.oCharacter.SRU.oAnimations = {
             sFrame: 'attack_4_1'
         },
         {
-            nFrame: 8,
+            nFrame: 6,
             sFrame: 'attack_4_2'
         },
         {
-            nFrame: 4,
-            sFrame: 'attack_4_1',
-            oStatus: {
-                bCancel: true
-            }
+            nFrame: 11,
+            sFrame: 'attack_4_1'
         },
         {
-            nFrame: 6,
+            nFrame: 4,
             sFrame: 'attack_4_3'
         },
         {
@@ -823,6 +805,7 @@ GameData.oCharacter.SRU.oCommands = {
                 sName: 'Taiyokei Hakai K.',
                 sGroup: 'ki'
             },
+            nLevel: 6,
             oProperty: {
                 bLaunch: true,
                 oInvulnerable: {
@@ -832,14 +815,13 @@ GameData.oCharacter.SRU.oCommands = {
                 }
             },
             oGatling: {
+                sCancelCod: 'super',
                 nCost: 30,
-                nLevel: 3,
                 oManipulation: {
-                    nMaxLengthFrame: 15,
+                    nMaxLengthFrame: 12,
                     aButtons: [
-                        { DN: false },
-                        { DF: false },
-                        { FW: false, C: true }
+                        ['DN', 'DF', 'FW+C'],
+                        ['DN', 'DF', 'FW', 'C']
                     ],
                     bLast: false
                 },
@@ -889,36 +871,7 @@ GameData.oCharacter.SRU.oCommands = {
                     nZoom: 1.5,
                     oPosition: true
                 }
-            ],
-            oHit: {
-                oDamage: {
-                    nDamage: 300,
-                    nMinimumReduce: 40
-                },
-                oStun: {
-                    nStun: 36,
-                    sAnimation: 'hit_1',
-                    sText: 'ブーム'
-                },
-                oPushback: {
-                    nLength: 4,
-                    nX: -192
-                }
-            },
-            oGuard: {
-                oDamage: {
-                    nDamage: 0
-                },
-                oStun: {
-                    nStun: 36,
-                    sAnimation: 'defense_4',
-                    sText: 'ブーム'
-                },
-                oPushback: {
-                    nLength: 4,
-                    nX: -192
-                }
-            }
+            ]
         },
         {
             sCod: 'attack_C',
@@ -927,15 +880,23 @@ GameData.oCharacter.SRU.oCommands = {
                 sName: 'Desubīmu',
                 sGroup: 'ki'
             },
+            nLevel: 5,
+            oHit: {
+                oStun: {
+                    sAnimation: 'hit_1'
+                }
+            },
             oProperty: {},
             oGatling: {
+                sCancelCod: 'special',
+                oCancel: {
+                    cancel: true,
+                    super: true
+                },
                 nCost: 10,
-                nLevel: 2,
                 oManipulation: {
                     nMaxLengthFrame: 1,
-                    aButtons: [
-                        { C: true }
-                    ],
+                    aButtons: ['C'],
                     bLast: true
                 },
                 aEntity: [
@@ -957,24 +918,6 @@ GameData.oCharacter.SRU.oCommands = {
                         }
                     }
                 ]
-            },
-            oHit: {
-                oDamage: {
-                    nDamage: 100
-                },
-                oStun: {
-                    nStun: 18,
-                    sAnimation: 'hit_1'
-                }
-            },
-            oGuard: {
-                oDamage: {
-                    nDamage: 0
-                },
-                oStun: {
-                    nStun: 12,
-                    sAnimation: 'defense_4'
-                }
             }
         },
         {
@@ -985,41 +928,28 @@ GameData.oCharacter.SRU.oCommands = {
                 sInfo: 'Aerial invulnerable',
                 sGroup: 'command'
             },
+            nLevel: 4,
             oProperty: {
                 bLaunch: true,
                 oInvulnerable: {
                     sType: 'Aerial',
-                    nStart: 9,
-                    nLength: 14
+                    nStart: 1,
+                    nLength: 16
                 }
             },
             oGatling: {
-                nLevel: 1,
-                bJumpCancellable: true,
+                sCancelCod: 'attack',
+                oCancel: {
+                    cancel: true,
+                    attack: true,
+                    special: true,
+                    super: true,
+                    jump: true
+                },
                 oManipulation: {
                     nMaxLengthFrame: 1,
-                    aButtons: [
-                        { DN: false, B: true }
-                    ],
+                    aButtons: ['DN+B'],
                     bLast: true
-                }
-            },
-            oHit: {
-                oDamage: {
-                    nDamage: 100
-                },
-                oStun: {
-                    nStun: 22,
-                    sAnimation: 'hit_2'
-                }
-            },
-            oGuard: {
-                oDamage: {
-                    nDamage: 0
-                },
-                oStun: {
-                    nStun: 12,
-                    sAnimation: 'defense_4'
                 }
             }
         },
@@ -1030,41 +960,20 @@ GameData.oCharacter.SRU.oCommands = {
                 sName: 'Shoulder dash',
                 sGroup: 'command'
             },
+            nLevel: 3,
             oProperty: {},
             oGatling: {
-                nLevel: 1,
+                sCancelCod: 'attack',
+                oCancel: {
+                    cancel: true,
+                    attack: true,
+                    special: true,
+                    super: true
+                },
                 oManipulation: {
                     nMaxLengthFrame: 1,
-                    aButtons: [
-                        { FW: false, B: true }
-                    ],
+                    aButtons: ['FW+B'],
                     bLast: true
-                }
-            },
-            oHit: {
-                oDamage: {
-                    nDamage: 75
-                },
-                oStun: {
-                    nStun: 24,
-                    sAnimation: 'hit_1'
-                },
-                oPushback: {
-                    nLength: 4,
-                    nX: -128
-                }
-            },
-            oGuard: {
-                oDamage: {
-                    nDamage: 0
-                },
-                oStun: {
-                    nStun: 12,
-                    sAnimation: 'defense_4'
-                },
-                oPushback: {
-                    nLength: 4,
-                    nX: -128
                 }
             }
         },
@@ -1075,33 +984,20 @@ GameData.oCharacter.SRU.oCommands = {
                 sName: 'Slide',
                 sGroup: 'command'
             },
+            nLevel: 3,
             oProperty: {},
             oGatling: {
-                nLevel: 1,
+                sCancelCod: 'attack',
+                oCancel: {
+                    cancel: true,
+                    attack: true,
+                    special: true,
+                    super: true
+                },
                 oManipulation: {
                     nMaxLengthFrame: 1,
-                    aButtons: [
-                        { DN: false, A: true }
-                    ],
+                    aButtons: ['DN+A'],
                     bLast: true
-                }
-            },
-            oHit: {
-                oDamage: {
-                    nDamage: 75
-                },
-                oStun: {
-                    nStun: 18,
-                    sAnimation: 'hit_1'
-                }
-            },
-            oGuard: {
-                oDamage: {
-                    nDamage: 0
-                },
-                oStun: {
-                    nStun: 12,
-                    sAnimation: 'defense_4'
                 }
             }
         },
@@ -1112,33 +1008,20 @@ GameData.oCharacter.SRU.oCommands = {
                 sName: 'Heavy',
                 sGroup: 'normal'
             },
+            nLevel: 2,
             oProperty: {},
             oGatling: {
-                nLevel: 1,
+                sCancelCod: 'attack',
+                oCancel: {
+                    cancel: true,
+                    attack: true,
+                    special: true,
+                    super: true
+                },
                 oManipulation: {
                     nMaxLengthFrame: 1,
-                    aButtons: [
-                        { B: true }
-                    ],
+                    aButtons: ['B'],
                     bLast: true
-                }
-            },
-            oHit: {
-                oDamage: {
-                    nDamage: 50
-                },
-                oStun: {
-                    nStun: 16,
-                    sAnimation: 'hit_1'
-                }
-            },
-            oGuard: {
-                oDamage: {
-                    nDamage: 0
-                },
-                oStun: {
-                    nStun: 10,
-                    sAnimation: 'defense_4'
                 }
             }
         },
@@ -1149,65 +1032,39 @@ GameData.oCharacter.SRU.oCommands = {
                 sName: 'Light',
                 sGroup: 'normal'
             },
+            nLevel: 1,
             oProperty: {},
             oGatling: {
-                nLevel: 1,
+                sCancelCod: 'attack',
+                oCancel: {
+                    cancel: true,
+                    attack: true,
+                    special: true,
+                    super: true
+                },
                 oManipulation: {
                     nMaxLengthFrame: 1,
-                    aButtons: [
-                        { A: true }
-                    ],
+                    aButtons: ['A'],
                     bLast: true
-                }
-            },
-            oHit: {
-                oDamage: {
-                    nDamage: 25
-                },
-                oStun: {
-                    nStun: 13,
-                    sAnimation: 'hit_0'
-                }
-            },
-            oGuard: {
-                oDamage: {
-                    nDamage: 0
-                },
-                oStun: {
-                    nStun: 12,
-                    sAnimation: 'defense_j4'
                 }
             },
             oFollowUp: {
                 sCod: 'attack_A_1',
                 sAnimation: 'attack_A_1',
+                nLevel: 1,
                 oProperty: {},
                 oGatling: {
-                    nLevel: 1,
+                    sCancelCod: 'attack',
+                    oCancel: {
+                        cancel: true,
+                        attack: true,
+                        special: true,
+                        super: true
+                    },
                     oManipulation: {
                         nMaxLengthFrame: 1,
-                        aButtons: [
-                            { A: true }
-                        ],
+                        aButtons: ['A'],
                         bLast: true
-                    }
-                },
-                oHit: {
-                    oDamage: {
-                        nDamage: 25
-                    },
-                    oStun: {
-                        nStun: 13,
-                        sAnimation: 'hit_0'
-                    }
-                },
-                oGuard: {
-                    oDamage: {
-                        nDamage: 0
-                    },
-                    oStun: {
-                        nStun: 12,
-                        sAnimation: 'defense_j4'
                     }
                 }
             }

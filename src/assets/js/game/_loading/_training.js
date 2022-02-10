@@ -223,10 +223,11 @@ Object.assign(
 
                 let sButtons = '';
                 aCommand.forEach( oStepCommand => {
-                    const aButtons = oStepCommand.oGatling.oManipulation.aButtons;
+                    const oManip = oStepCommand.oGatling.oManipulation,
+                        aButtons = oManip && oManip.aButtons && oManip.aButtons[0];
                     if( aButtons ){
-                        aButtons.forEach( oButton => {
-                            Object.keys(oButton).forEach( sBtn => {
+                        aButtons.forEach( sManipBtn => {
+                            sManipBtn.split('+').forEach( sBtn => {
                                 if( InitializeTraining.oSymbol[sBtn] ){
                                     sButtons += '<b class="Training__InputButton ' + ( ( oBtn[sBtn] ? '--btn' : '--dir' ) )  + '">' + InitializeTraining.oSymbol[sBtn] + '</b>';
                                 }

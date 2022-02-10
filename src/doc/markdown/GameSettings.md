@@ -184,7 +184,7 @@ Configuration des différents périphériques d'entrées
 ```javascript
 GameSettings.oController = {
     aOrderButtons: ['UP', 'DOWN', 'LEFT', 'RIGHT', 'A', 'B', 'C', 'D', 'START'],
-    nNeededButtons: 8,
+    nNeededButtons: 9,
     aKeyboard: [
         {
             UP: 'KeyW',
@@ -278,16 +278,16 @@ GameSettings.oAnimations = {
         oMap: {
             // type: category
             'action': 'counter',
-            'dash': 'stack',
+            'dash': ['counter', 'stack'],
             'cancel': 'stack',
             'stand': 'movement',
             'movement': 'movement',
             'jump': 'stack',
             'landing': 'stack',
-            'guard': 'hurt',
-            'hit': 'hurt',
-            'launch': 'hurt',
-            'down': 'stack',
+            'guard': ['hurt', 'guard'],
+            'hit': ['hurt', 'hit'],
+            'launch': ['hurt', 'hit'],
+            'down': 'down',
             'recovery': null,
             'animation': null,
             'restart': null,
@@ -309,14 +309,6 @@ Temps du TIMER
 GameSettings.nTimer = 99;
 ```
 
-#### GameSettings.nFreeze
-
-Nombre de FRAME lors d'un HIT FREEZE 
-
-```javascript
-GameSettings.nFreeze = 7;
-```
-
 #### GameSettings.oCounter
 
 Parametrage lors d'un COUNTER 
@@ -326,7 +318,7 @@ GameSettings.oCounter = {
     // ----- Bonus de HITSTUN -----
     nStun: 4,
     // ----- Rallongement du HIT FREEZE -----
-    nFreeze: 7 * 3,
+    nFreeze: 6 * 3,
     // ----- Affichage du TEXT -----
     oText: {
         sText: 'Counter !',
@@ -456,66 +448,259 @@ GameSettings.oKi = {
 };
 ```
 
-#### GameSettings.oCommand
+#### GameSettings.aCommandLevel
 
 Paramétrage de l'animation d'un personnage LUNCHER 
 
 ```javascript
-GameSettings.oCommand = {
-    /* ----- Parametrages des DAMAGES par défaut et du damage REDUCE ----- */
-    oDamage: {
-        nDamage: 25,
-        // Percent !
-        nScaling: 5, // Init
-        nProration: 5, // Reduce
-        nMinimumReduce: 10, // Minimum
-    },
-    /* ----- Paramétrage du gain de KI ----- */
-    oKi: {
-        nMax: 50,
-        nBar: 10,
+GameSettings.aCommandLevel = [
+    // Level 0 - Technical
+    {
         oHit: {
-            nGain: 2, // oAttack.nHit
-            nGive: 1 // oDefend.nHit
+            oDamage: {
+                nDamage: 0,
+                nScaling: 0,
+                nProration: 0,
+                nMinimumReduce: 0
+            },
+            oKi: {
+                nGain: 0,
+                nGive: 0
+            },
+            oStun: {
+                nFreeze: 7,
+                nStun: 0,
+                sAnimation: 'hit_0',
+                sImpact: false,
+                sText: null
+            },
+            oPushback: false
         },
         oGuard: {
-            nGain: 1, // oAttack.nGuard
-            nGive: 1 // oDefend.nGuard
+            oDamage: {
+                nDamage: 0
+            },
+            oKi: {
+                nGain: 0,
+                nGive: 0
+            },
+            oStun: {
+                nFreeze: 7,
+                nStun: 0,
+                sAnimation: 'defense_4',
+                sImpact: false,
+                sText: null
+            },
+            oPushback: false
         }
     },
-    /* ----- Paramétrage du stun ----- */
-    oStun: {
+    // Default / Level 1 - Light
+    {
         oHit: {
-            nStun: 12,
-            sAnimation: 'hit_0',
-            sImpact: 'impact_hit',
-            sText: 'パフ', // PAF
+            oDamage: {
+                nDamage: 25,
+                nScaling: 20,
+                nProration: 5,
+                nMinimumReduce: 10
+            },
+            oKi: {
+                nGain: 2,
+                nGive: 1
+            },
+            oStun: {
+                nFreeze: 7,
+                nStun: 12,
+                sAnimation: 'hit_0',
+                sImpact: 'impact_hit',
+                sText: 'パフ', // PAF
+            },
+            oPushback: {
+                nLength: 6,
+                nX: -24
+            }
         },
         oGuard: {
-            nStun: 6,
-            sAnimation: 'defense_4',
-            sImpact: 'impact_guard',
-            sText: 'バム', // BAM
+            oDamage: {
+                nDamage: 0
+            },
+            oKi: {
+                nGain: 1,
+                nGive: 1
+            },
+            oStun: {
+                nFreeze: 7,
+                nStun: 10,
+                sAnimation: 'defense_j4',
+                sImpact: 'impact_guard',
+                sText: 'バム', // BAM
+            },
+            oPushback: {
+                nLength: 6,
+                nX: -24
+            }
         }
     },
-    /* -----  PUSHBACK par défault appliqué lors d'un coup ----- */
-    oPushback: {
-        bEmpty: false,
-        aStep: [
-            { nX: -6 },
-            { nX: -6 },
-            { nX: -6 },
-            { nX: -6 }
-        ],
-        nLength: 4,
-        nDelay: 0,
-        bDivide: true,
-        oDirection: {
-            nX: -24,
-            nY: 0
+    // Level 2 - Heavy
+    {
+        oHit: {
+            oDamage: {
+                nDamage: 50,
+                nScaling: 10
+            },
+            oStun: {
+                nFreeze: 8,
+                nStun: 15,
+                sAnimation: 'hit_1'
+            },
+            oPushback: {
+                nLength: 8,
+                nX: -32
+            }
+        },
+        oGuard: {
+            oStun: {
+                nFreeze: 8,
+                nStun: 12,
+                sAnimation: 'defense_4'
+            },
+            oPushback: {
+                nLength: 8,
+                nX: -32
+            }
+        }
+    },
+    // Level 3 - Command Light
+    {
+        oHit: {
+            oDamage: {
+                nDamage: 75,
+                nScaling: 5
+            },
+            oStun: {
+                nFreeze: 9,
+                nStun: 18,
+                sAnimation: 'hit_1'
+            },
+            oPushback: {
+                nLength: 12,
+                nX: -48
+            }
+        },
+        oGuard: {
+            oStun: {
+                nFreeze: 9,
+                nStun: 14,
+                sAnimation: 'defense_4'
+            },
+            oPushback: {
+                nLength: 12,
+                nX: -48
+            }
+        }
+    },
+    // Level 4 - Command Heavy
+    {
+        oHit: {
+            oDamage: {
+                nDamage: 100,
+                nScaling: 5
+            },
+            oStun: {
+                nFreeze: 10,
+                nStun: 21,
+                sAnimation: 'hit_2'
+            },
+            oPushback: {
+                nLength: 12,
+                nX: -48
+            }
+        },
+        oGuard: {
+            oStun: {
+                nFreeze: 10,
+                nStun: 16,
+                sAnimation: 'defense_4'
+            },
+            oPushback: {
+                nLength: 12,
+                nX: -48
+            }
+        }
+    },
+    // Level 5 - Kikoha / Beam
+    {
+        oHit: {
+            oDamage: {
+                nDamage: 100,
+                nScaling: 5,
+                nProration: 5,
+                nMinimumReduce: 40
+            },
+            oStun: {
+                nFreeze: 12,
+                nStun: 21,
+                sAnimation: 'hit_0',
+                sImpact: 'explode_light',
+                sText: 'ブーム' // BOOM
+            },
+            oPushback: {
+                nLength: 12,
+                nX: -48
+            }
+        },
+        oGuard: {
+            oStun: {
+                nFreeze: 12,
+                nStun: 21,
+                sAnimation: 'defense_4',
+                sImpact: 'explode_light',
+                sText: 'ブーム' // BOOM
+            },
+            oPushback: {
+                nLength: 12,
+                nX: -48
+            }
+        }
+    },
+    // Level 6 - Super
+    {
+        oHit: {
+            oDamage: {
+                nDamage: 300,
+                nScaling: 5,
+                nProration: 5,
+                nMinimumReduce: 40
+            },
+            oStun: {
+                nFreeze: 14,
+                nStun: 36,
+                sAnimation: 'hit_1',
+                sImpact: 'explode_heavy',
+                sText: 'ブーム' // BOOM
+            },
+            oPushback: {
+                nLength: 8,
+                nX: -192
+            }
+        },
+        oGuard: {
+            oDamage: {
+                nDamage: 100
+            },
+            oStun: {
+                nFreeze: 14,
+                nStun: 36,
+                sAnimation: 'defense_4',
+                sImpact: 'explode_heavy',
+                sText: 'ブーム' // BAM
+            },
+            oPushback: {
+                nLength: 8,
+                nX: -192
+            }
         }
     }
-};
+];
 ```
 
 #### GameSettings.oLauncher

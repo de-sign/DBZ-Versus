@@ -6,11 +6,10 @@ Jeu de versus en 2D basé sur l'univers de __DragonBall__ utilisant les ASSETS d
 
 ## TODO
 __BUG__
-* Problème controller en Training
-* Tracker MBUU BUG AERIAL
+* Problème controller en Training ?
 
 __Game__
-* Gestion de LAYOUT / CONFIG pour un CONTROLLER ?
+* Gestion de LAYOUT / CONFIG pour un CONTROLLER
     * Ajout de paramétrage possible pour MENU et BATTLE
 
 * Améliorer menu en TRAINING
@@ -23,6 +22,16 @@ __Game__
     * Challenges
 
 __Engine__
+* Revoir gestion GUARD
+    * Pas dans les ANIMATIONS en cas de STAND / JUMP / MOVE
+    * Problème pas de GUARD en LANDING
+    * Gestion de proxymity GUARD
+
+* Revoir gestion MANIPULATION
+    * Gestion CANCEL frame 1 ?
+
+* Ajouter MOVEMENT avec accélération / décélération 
+
 * Gestion du ONLINE ROLLBACK
     * Avec ou sans INPUT DELAY ?
 
@@ -51,11 +60,13 @@ __Engine__
     * Proration
 
 __Display__
+* Taille des SPRITES *2
+
 * Faire des CUSTOM COLOR
 
 * Animation lors de STAND
 
-* Faire des SPRITES de mouvement pour fluidifier l'animation
+* Faire des SPRITES de mouvement pour fluidifier l'animation ?
 
 * Faire des animations de début et fin de match stylé !
 

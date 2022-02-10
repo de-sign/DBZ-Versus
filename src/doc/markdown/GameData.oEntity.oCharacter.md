@@ -941,8 +941,7 @@ GameData.oEntity.oCharacter.oAnimations = {
                 sFrame: 'stand_0',
                 oStatus: {
                     bReverse: true,
-                    bAerial: false,
-                    bLaunch: false
+                    bAerial: false
                 }
             }
         ]
@@ -965,7 +964,7 @@ GameData.oEntity.oCharacter.oAnimations = {
     move_6: {
         sType: 'movement',
         uMove: {
-            nX: 6
+            nX: 8
         },
         aFrames: [
             {
@@ -986,7 +985,7 @@ GameData.oEntity.oCharacter.oAnimations = {
     move_4: {
         sType: 'movement',
         uMove: {
-            nX: -6
+            nX: -8
         },
         aFrames: [
             {
@@ -1010,8 +1009,8 @@ GameData.oEntity.oCharacter.oAnimations = {
     move_66: {
         sType: 'dash',
         uMove: {
-            nX: 12 * 14,
-            nLength: 14,
+            nX: 16 * 12,
+            nLength: 12,
             bParallel: true
         },
         aFrames: [
@@ -1024,34 +1023,23 @@ GameData.oEntity.oCharacter.oAnimations = {
                 sFrame: 'move_2'
             },
             {
-                nFrame: 4,
+                nFrame: 6,
                 sFrame: 'move_1'
             },
             {
-                nFrame: 3,
-                sFrame: 'move_1',
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 1,
-                sFrame: 'move_1',
+                nFrame: 2,
+                sFrame: 'stand_1',
                 oStatus: {
                     bReverse: true
                 }
-            },
-            {
-                nFrame: 2,
-                sFrame: 'stand_1'
             }
         ]
     },
     move_44: {
         sType: 'dash',
         uMove: {
-            nX: -12 * 14,
-            nLength: 14
+            nX: -8 * 12,
+            nLength: 12
         },
         aFrames: [
             {
@@ -1059,25 +1047,18 @@ GameData.oEntity.oCharacter.oAnimations = {
                 sFrame: 'stand_1'
             },
             {
-                nFrame: 8,
+                nFrame: 6,
                 sFrame: 'move_2'
             },
             {
-                nFrame: 1,
+                nFrame: 2,
                 sFrame: 'move_0'
-            },
-            {
-                nFrame: 1,
-                sFrame: 'move_0',
-                oStatus: {
-                    bReverse: true
-                }
             },
             {
                 nFrame: 2,
                 sFrame: 'stand_1',
                 oStatus: {
-                    bCancel: true
+                    bReverse: true
                 }
             }
         ]
@@ -1141,39 +1122,13 @@ GameData.oEntity.oCharacter.oAnimations = {
                 }
             },
             {
-                nFrame: 4,
+                nFrame: 8,
                 sFrame: 'move_1',
                 oPositionBox: {
                     nX: -22,
                     nY: -110,
                     nWidth: 68,
                     nHeight: 76
-                }
-            },
-            {
-                nFrame: 3,
-                sFrame: 'move_1',
-                oPositionBox: {
-                    nX: -22,
-                    nY: -110,
-                    nWidth: 68,
-                    nHeight: 76
-                },
-                oStatus: {
-                    bCancel: true
-                }
-            },
-            {
-                nFrame: 1,
-                sFrame: 'move_1',
-                oPositionBox: {
-                    nX: -22,
-                    nY: -110,
-                    nWidth: 68,
-                    nHeight: 76
-                },
-                oStatus: {
-                    bReverse: true
                 }
             },
             {
@@ -1219,26 +1174,13 @@ GameData.oEntity.oCharacter.oAnimations = {
                 }
             },
             {
-                nFrame: 1,
+                nFrame: 2,
                 sFrame: 'move_0',
                 oPositionBox: {
                     nX: -22,
                     nY: -110,
                     nWidth: 68,
                     nHeight: 76
-                }
-            },
-            {
-                nFrame: 1,
-                sFrame: 'move_0',
-                oPositionBox: {
-                    nX: -22,
-                    nY: -110,
-                    nWidth: 68,
-                    nHeight: 76
-                },
-                oStatus: {
-                    bReverse: true
                 }
             },
             {
@@ -1251,7 +1193,7 @@ GameData.oEntity.oCharacter.oAnimations = {
                     nHeight: 76
                 },
                 oStatus: {
-                    bCancel: true
+                    bReverse: true
                 }
             }
         ]
@@ -1309,13 +1251,17 @@ GameData.oEntity.oCharacter.oAnimations = {
             },
             {
                 sFrame: 'guard_2__0',
-                nFrame: 6,
+                nFrame: 2,
                 aHitBox: {
                     nX: -1024,
                     nY: (-39 * 4) - 2,
                     nWidth: 2048,
                     nHeight: 40 * 4
                 }
+            },
+            {
+                sFrame: 'guard_2__0',
+                nFrame: 8
             },
             {
                 sFrame: 'stand_1__0',
@@ -1505,10 +1451,7 @@ GameData.oEntity.oCharacter.oAnimations = {
             },
             {
                 nFrame: 4,
-                sFrame: 'attack_0_1',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'attack_0_1'
             },
             {
                 nFrame: 2,
@@ -1552,10 +1495,7 @@ GameData.oEntity.oCharacter.oAnimations = {
             },
             {
                 nFrame: 4,
-                sFrame: 'attack_1_2',
-                oStatus: {
-                    bCancel: true
-                }
+                sFrame: 'attack_1_2'
             },
             {
                 nFrame: 2,
@@ -1581,20 +1521,13 @@ GameData.oEntity.oCharacter.oAnimations = {
                 sFrame: 'throw_1'
             },
             {
-                nFrame: 3,
+                nFrame: 4,
                 sFrame: 'throw_1',
                 aHitBox: {
                     nX: 22,
                     nY: -110,
                     nWidth: 32,
                     nHeight: 112
-                }
-            },
-            {
-                nFrame: 1,
-                sFrame: 'throw_1',
-                oStatus: {
-                    bCancel: true
                 }
             },
             {
@@ -1662,10 +1595,7 @@ GameData.oEntity.oCharacter.oAnimations = {
         },
         {
             nFrame: 4,
-            sFrame: 'attack_4_1',
-            oStatus: {
-                bCancel: true
-            }
+            sFrame: 'attack_4_1'
         },
         {
             nFrame: 6,
@@ -1859,6 +1789,27 @@ GameData.oEntity.oCharacter.oCommands = {
                 sInfo: 'On guard',
                 sGroup: 'defense'
             },
+            nLevel: 0,
+            oHit: {
+                oStun: {
+                    nStun: 36
+                },
+                oPushback: {
+                    nLength: 18,
+                    nX: -128,
+                    bDivide: false
+                }
+            },
+            oGuard: {
+                oStun: {
+                    nStun: 36
+                },
+                oPushback: {
+                    nLength: 18,
+                    nX: -128,
+                    bDivide: false
+                }
+            },
             oProperty: {
                 sCollisionBox: 'oPositionBox',
                 bCantCounter: true
@@ -1867,10 +1818,8 @@ GameData.oEntity.oCharacter.oCommands = {
                 sCheck: 'bGuard',
                 nCost: 10,
                 oManipulation: {
-                    nMaxLengthFrame: 2,
-                    aButtons: [
-                        { D: true }
-                    ]
+                    nMaxLengthFrame: 1,
+                    aButtons: ['D']
                 },
                 aEntity: [
                     {
@@ -1903,41 +1852,7 @@ GameData.oEntity.oCharacter.oCommands = {
                     nLength: 14,
                     bIgnore: true
                 }
-            ],
-            oHit: {
-                oDamage: {
-                    nDamage: 0
-                },
-                oKi: {
-                    nGain: 0,
-                    nGive: 0
-                },
-                oStun: {
-                    sImpact: false
-                },
-                oPushback: {
-                    nLength: 4,
-                    nX: -192,
-                    bDivide: false
-                }
-            },
-            oGuard: {
-                oDamage: {
-                    nDamage: 0
-                },
-                oKi: {
-                    nGain: 0,
-                    nGive: 0
-                },
-                oStun: {
-                    sImpact: false
-                },
-                oPushback: {
-                    nLength: 4,
-                    nX: -192,
-                    bDivide: false
-                }
-            }
+            ]
         },
         {
             sCod: 'defense_D',
@@ -1954,10 +1869,8 @@ GameData.oEntity.oCharacter.oCommands = {
             oGatling: {
                 sCheck: 'bThrow',
                 oManipulation: {
-                    nMaxLengthFrame: 2,
-                    aButtons: [
-                        { D: true }
-                    ]
+                    nMaxLengthFrame: 1,
+                    aButtons: ['D']
                 },
                 aEntity: [
                     {
@@ -1991,22 +1904,15 @@ GameData.oEntity.oCharacter.oCommands = {
                     bIgnore: true
                 }
             ],
+
+            nLevel: 0,
             oHit: {
-                oDamage: {
-                    nDamage: 0
-                },
-                oKi: {
-                    nGain: 0,
-                    nGive: 0
-                },
                 oStun: {
-                    nStun: 12,
-                    sAnimation: 'hit_0',
-                    sImpact: false
+                    nStun: 12
                 },
                 oPushback: {
-                    nLength: 4,
-                    nX: -98,
+                    nLength: 6,
+                    nX: -128,
                     bDivide: false
                 }
             }
@@ -2028,12 +1934,10 @@ GameData.oEntity.oCharacter.oCommands = {
                 }
             },
             oGatling: {
-                nLevel: 0,
                 oManipulation: {
-                    bLast: true,
-                    aButtons: [
-                        { FW: false }
-                    ]
+                    nMaxLengthFrame: 1,
+                    aButtons: ['FW'],
+                    bLast: true
                 }
             }
         },
@@ -2052,12 +1956,10 @@ GameData.oEntity.oCharacter.oCommands = {
                 }
             },
             oGatling: {
-                nLevel: 0,
                 oManipulation: {
-                    bLast: true,
-                    aButtons: [
-                        { BW: false }
-                    ]
+                    nMaxLengthFrame: 1,
+                    aButtons: ['BW'],
+                    bLast: true
                 }
             }
         },
@@ -2076,7 +1978,6 @@ GameData.oEntity.oCharacter.oCommands = {
                 }
             },
             oGatling: {
-                nLevel: 0,
                 oManipulation: {
                     bLast: true
                 }
@@ -2093,14 +1994,10 @@ GameData.oEntity.oCharacter.oCommands = {
             },
             oProperty: {},
             oGatling: {
-                nLevel: 0,
+                sCancelCod: 'dash',
                 oManipulation: {
-                    nMaxLengthFrame: 10,
-                    aButtons: [
-                        { FW: false },
-                        { NT: false },
-                        { FW: false }
-                    ]
+                    nMaxLengthFrame: 12,
+                    aButtons: ['NT', 'FW', 'NT', 'FW']
                 }
             }
         },
@@ -2119,14 +2016,61 @@ GameData.oEntity.oCharacter.oCommands = {
                 }
             },
             oGatling: {
-                nLevel: 0,
+                sCancelCod: 'dash',
                 oManipulation: {
-                    nMaxLengthFrame: 10,
-                    aButtons: [
-                        { BW: false },
-                        { NT: false },
-                        { BW: false }
-                    ]
+                    nMaxLengthFrame: 12,
+                    aButtons: ['NT', 'BW', 'NT', 'BW']
+                }
+            }
+        },
+        {
+            sCod: 'move_9',
+            sAnimation: 'move_9',
+            oList: {
+                sName: 'Forward Jump',
+                bHidden: true
+            },
+            oProperty: {},
+            oGatling: {
+                sCancelCod: 'jump',
+                oManipulation: {
+                    bStay: true,
+                    nMaxLengthFrame: 1,
+                    aButtons: ['UF']
+                }
+            }
+        },
+        {
+            sCod: 'move_7',
+            sAnimation: 'move_7',
+            oList: {
+                sName: 'Backward Jump',
+                bHidden: true
+            },
+            oProperty: {},
+            oGatling: {
+                sCancelCod: 'jump',
+                oManipulation: {
+                    bStay: true,
+                    nMaxLengthFrame: 1,
+                    aButtons: ['UB']
+                }
+            }
+        },
+        {
+            sCod: 'move_8',
+            sAnimation: 'move_8',
+            oList: {
+                sName: 'Neutral Jump',
+                bHidden: true
+            },
+            oProperty: {},
+            oGatling: {
+                sCancelCod: 'jump',
+                oManipulation: {
+                    bStay: true,
+                    nMaxLengthFrame: 1,
+                    aButtons: ['UP']
                 }
             }
         },
@@ -2144,29 +2088,19 @@ GameData.oEntity.oCharacter.oCommands = {
                 bCantCounter: true
             },
             oGatling: {
+                sCancelCod: 'throw',
                 oManipulation: {
-                    nMaxLengthFrame: 2,
-                    aButtons: [
-                        { FW: false, D: true }
-                    ],
+                    nMaxLengthFrame: 1,
+                    aButtons: ['FW+D'],
                     bLast: true
                 }
             },
+            nLevel: 0,
             oHit: {
-                oDamage: {
-                    nDamage: 0,
-                    nScaling: 0
-                },
-                oKi: {
-                    nGain: 0,
-                    nGive: 0
-                },
                 oStun: {
-                    nStun: 30,
-                    sAnimation: 'hit_D',
-                    sImpact: false
-                },
-                oPushback: false
+                    nStun: 36,
+                    sAnimation: 'hit_D'
+                }
             },
             oFollowUp: {
                 sCheck: true,
@@ -2176,20 +2110,22 @@ GameData.oEntity.oCharacter.oCommands = {
                     bLaunch: true
                 },
                 oGatling: {
-                    nLevel: 1,
-                    bJumpCancellable: true,
+                    sCancelCod: 'throw',
+                    oCancel: {
+                        cancel: true,
+                        attack: true,
+                        special: true,
+                        super: true,
+                        jump: true
+                    },
                     oManipulation: {
                         bLast: true
                     }
                 },
+                nLevel: 3,
                 oHit: {
                     oDamage: {
-                        nDamage: 100,
                         nScaling: 20
-                    },
-                    oStun: {
-                        nStun: 22,
-                        sAnimation: 'hit_2'
                     }
                 }
             }
@@ -2209,28 +2145,17 @@ GameData.oEntity.oCharacter.oCommands = {
             },
             oGatling: {
                 oManipulation: {
-                    nMaxLengthFrame: 2,
-                    aButtons: [
-                        { BW: false, D: true }
-                    ],
+                    nMaxLengthFrame: 1,
+                    aButtons: ['BW+D'],
                     bLast: true
                 }
             },
+            nLevel: 0,
             oHit: {
-                oDamage: {
-                    nDamage: 0,
-                    nScaling: 0
-                },
-                oKi: {
-                    nGain: 0,
-                    nGive: 0
-                },
                 oStun: {
-                    nStun: 30,
-                    sAnimation: 'hit_D',
-                    sImpact: false
-                },
-                oPushback: false
+                    nStun: 36,
+                    sAnimation: 'hit_D'
+                }
             },
             oFollowUp: {
                 sCheck: true,
@@ -2249,20 +2174,22 @@ GameData.oEntity.oCharacter.oCommands = {
                         bLaunch: true
                     },
                     oGatling: {
-                        nLevel: 1,
-                        bJumpCancellable: true,
+                        sCancelCod: 'throw',
+                        oCancel: {
+                            cancel: true,
+                            attack: true,
+                            special: true,
+                            super: true,
+                            jump: true
+                        },
                         oManipulation: {
                             bLast: true
                         }
                     },
+                    nLevel: 3,
                     oHit: {
                         oDamage: {
-                            nDamage: 100,
                             nScaling: 20
-                        },
-                        oStun: {
-                            nStun: 22,
-                            sAnimation: 'hit_2'
                         }
                     }
                 }
@@ -2277,14 +2204,12 @@ GameData.oEntity.oCharacter.oCommands = {
             },
             oProperty: {},
             oGatling: {
+                sCancelCod: 'cancel',
                 nCost: 20,
                 bReset: true,
-                bIgnoreLevel: true,
                 oManipulation: {
                     nMaxLengthFrame: 1,
-                    aButtons: [
-                        { DN: false, D: true }
-                    ],
+                    aButtons: ['DN+D'],
                     bLast: true
                 },
                 aEntity: [
@@ -2319,13 +2244,12 @@ GameData.oEntity.oCharacter.oCommands = {
             },
             oProperty: {},
             oGatling: {
-                nLevel: 3,
+                sCancelCod: 'dash',
                 oManipulation: {
-                    nMaxLengthFrame: 10,
+                    nMaxLengthFrame: 12,
                     aButtons: [
-                        { FW: false },
-                        { NT: false },
-                        { FW: false }
+                        ['NT', 'FW', 'NT', 'FW'],
+                        ['NT', 'UF', 'NT', 'FW']
                     ]
                 },
                 aEntity: [
@@ -2356,13 +2280,12 @@ GameData.oEntity.oCharacter.oCommands = {
                 }
             },
             oGatling: {
-                nLevel: 3,
+                sCancelCod: 'dash',
                 oManipulation: {
-                    nMaxLengthFrame: 10,
+                    nMaxLengthFrame: 12,
                     aButtons: [
-                        { BW: false },
-                        { NT: false },
-                        { BW: false }
+                        ['NT', 'BW', 'NT', 'BW'],
+                        ['NT', 'UB', 'NT', 'BW']
                     ]
                 }
             }
@@ -2374,33 +2297,32 @@ GameData.oEntity.oCharacter.oCommands = {
                 sName: 'Jump Heavy',
                 sGroup: 'aerial'
             },
-            oProperty: {},
-            oGatling: {
-                nLevel: 4,
-                oManipulation: {
-                    nMaxLengthFrame: 1,
-                    aButtons: [
-                        { B: true }
-                    ],
-                    bLast: true
-                }
-            },
+            
+            nLevel: 2,
             oHit: {
-                oDamage: {
-                    nDamage: 50
-                },
                 oStun: {
-                    nStun: 20,
-                    sAnimation: 'hit_1'
+                    nStun: 21
                 }
             },
             oGuard: {
-                oDamage: {
-                    nDamage: 0
-                },
                 oStun: {
-                    nStun: 16,
-                    sAnimation: 'defense_4'
+                    nStun: 16
+                }
+            },
+
+            oProperty: {},
+            oGatling: {
+                sCancelCod: 'attack',
+                oCancel: {
+                    cancel: true,
+                    attack: true,
+                    special: true,
+                    super: true
+                },
+                oManipulation: {
+                    nMaxLengthFrame: 1,
+                    aButtons: ['B'],
+                    bLast: true
                 }
             }
         },
@@ -2411,33 +2333,32 @@ GameData.oEntity.oCharacter.oCommands = {
                 sName: 'Jump Light',
                 sGroup: 'aerial'
             },
-            oProperty: {},
-            oGatling: {
-                nLevel: 4,
-                oManipulation: {
-                    nMaxLengthFrame: 1,
-                    aButtons: [
-                        { A: true }
-                    ],
-                    bLast: true
-                }
-            },
+            
+            nLevel: 1,
             oHit: {
-                oDamage: {
-                    nDamage: 25
-                },
                 oStun: {
-                    nStun: 16,
-                    sAnimation: 'hit_1'
+                    nStun: 18
                 }
             },
             oGuard: {
-                oDamage: {
-                    nDamage: 0
-                },
                 oStun: {
-                    nStun: 12,
-                    sAnimation: 'defense_j4'
+                    nStun: 14
+                }
+            },
+
+            oProperty: {},
+            oGatling: {
+                sCancelCod: 'attack',
+                oCancel: {
+                    cancel: true,
+                    attack: true,
+                    special: true,
+                    super: true
+                },
+                oManipulation: {
+                    nMaxLengthFrame: 1,
+                    aButtons: ['A'],
+                    bLast: true
                 }
             }
         }
