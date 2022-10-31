@@ -64,7 +64,7 @@ Object.assign(
             Object.create(Scene.prototype), {
                 constructor: StageScene,
 				init: function(){
-                    Scene.prototype.init.call(this, 'CTX__Stage');
+                    Scene.prototype.init.call(this, 'CTX__Stage', 'IPT__Menu');
                     OutputManager.getElement('TXT__Stage_Name').setText( SceneManager.oTransverseData.BTL__sType );
 
                     // Menu Init

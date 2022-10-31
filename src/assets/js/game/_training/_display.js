@@ -203,7 +203,7 @@ Object.assign(
             init: function(oScene){
                 this.oScene = oScene;
 
-                Object.assign( this.oParameters, TrainingEngineDisplay.oDefault, StoreEngine.get('TNG_Display') || {} );
+                Object.assign( this.oParameters, TrainingEngineDisplay.oDefault, StoreEngine.get('TNG__Display') || {} );
 
                 oScene.aPlayer.forEach( oPlayer => {
                     const oHistory = OutputManager.getElement('LAY__Training_History_' + oPlayer.nPlayer),
@@ -528,7 +528,7 @@ Object.assign(
             toogle: function(sType){
                 if( TrainingEngineDisplay.aShow.indexOf(sType) != -1 ){
                     this[ this.oParameters[sType] ? 'hide' : 'show' ](sType);
-                    StoreEngine.update('TNG_Display', this.oParameters);
+                    StoreEngine.update('TNG__Display', this.oParameters);
                 }
             },
             refresh: function(){
@@ -545,7 +545,7 @@ Object.assign(
                 else if( this.oParameters.nFrameRate < 0 ){
                     this.oParameters.nFrameRate = TrainingEngineDisplay.aFrameRate.length - 1;
                 }
-                StoreEngine.update('TNG_Display', this.oParameters);
+                StoreEngine.update('TNG__Display', this.oParameters);
             },
             setFrameRate: function(nFrameRate){
                 if( nFrameRate ){
@@ -567,7 +567,7 @@ Object.assign(
 
             reset: function(){
                 Object.assign( this.oParameters, TrainingEngineDisplay.oDefault );
-                StoreEngine.update('TNG_Display', this.oParameters);
+                StoreEngine.update('TNG__Display', this.oParameters);
                 this.refresh();
             }
         }

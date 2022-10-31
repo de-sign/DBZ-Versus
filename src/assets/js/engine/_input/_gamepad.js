@@ -1,11 +1,10 @@
 /* ----- START CLASS ----- */
 /* ----- START CONSTRUCTOR ----- */
-function GamepadController(oBtn, nIndex) {
+function GamepadController() {
     /* ----- START PROPERTIES ----- */
     this.sName = 'Gamepad #';
     this.sType = 'gamepad';
     this.oGamepad = null;
-    this.nIndex = -1;
     this.nIndexStore = -1;
     /* ----- END PROPERTIES ----- */
 
@@ -76,7 +75,7 @@ Object.assign(
         },
 
         recover: function(oGamepad, oDefault){
-            const aStore = StoreEngine.get(oGamepad.id) || [];
+            const aStore = StoreEngine.get( this.getId(oGamepad) ) || [];
             let oStore = null,
                 nIndexStore = 0;
                 
@@ -96,21 +95,17 @@ Object.assign(
                 }
             }
 
-            const oButtons = oStore ? Controller.getDataStore(oStore).oButtons : {},
-                oController = ControllerManager.create(
-                    'Gamepad',
-                    Object.assign({}, oDefault, oButtons),
-                    oGamepad.index
-                );
+            const oLayouts = oStore ? oStore.oLayouts : {},
+                oController = ControllerManager.create( 'Gamepad', oGamepad.index, Object.assign({}, oDefault, oLayouts) );
             oController.nIndexStore = nIndexStore;
             return oController;
         },
 
         getButtonText: function(sCode, oController) {
             sCode = sCode.toUpperCase();
+            const sId = this.getId(oController.oGamepad).toUpperCase();
+            
             let sText = null;
-            const sId = oController.oGamepad.id.toUpperCase();
-
             for( let sController in this.oButtonText ){
                 if( sController != 'oCommon' && sId.indexOf(sController) != -1 ){
                     const oButtonText = Object.assign({}, this.oButtonText.oCommon, this.oButtonText[sController]);
@@ -119,6 +114,10 @@ Object.assign(
                 }
             }
             return sText || sCode;
+        },
+
+        getId: function(oGamepad){
+            return 'IPT__' + oGamepad.id.replace(/[^\w\d\s]/g, '').replace(/\s/g, '_');
         },
         /* ----- END METHODS ----- */
         /* ----- END SINGLETON ----- */
@@ -130,10 +129,10 @@ Object.assign(
                 constructor: GamepadController,
                 /* ----- START PROTOTYPE ----- */
                 /* ----- START METHODS ----- */
-                init: function(oBtn, nIndex){
-                    this.oGamepad = navigator.getGamepads()[ this.nIndex = nIndex ];
+                init: function(nIndex, oBtn){
+                    this.oGamepad = navigator.getGamepads()[nIndex];
                     GamepadController.oIndexCreate[nIndex] = true;
-                    Controller.prototype.init.call(this, oBtn);
+                    Controller.prototype.init.call(this, nIndex, oBtn);
                 },
                 update: function() {
 
@@ -147,28 +146,36 @@ Object.assign(
                         || ( oLastGamepad == null && oGamepad != null )
                         || ( oGamepad && oLastGamepad && oGamepad.timestamp > oLastGamepad.timestamp )
                     ){
+
                         let bChange = oGamepad ? false : true;
+                        const oButtons = this.getButton();
                         
-                        for( let sBtn in this.oButtons ){
-                            const btn = this.oButtons[sBtn];
+                        for( let sButton in oButtons ){
+                            const oButton = oButtons[sButton];
+
                             // Axes
-                            if( btn.sKey.indexOf('AXE') == 0 ){
-                                const sIndex = btn.sKey.substring(3),
+                            if( oButton.sKey.indexOf('AXE') == 0 ){
+                                const sIndex = oButton.sKey.substring(3),
                                     nIndex = parseInt(sIndex),
                                     nRatio = sIndex[0] == '+' ? 1 : -1,
                                     nAxe = this.oGamepad ? this.oGamepad.axes[nIndex * nRatio] : 0;
                                 
-                                if( this.updateButton(sBtn, { pressed: nAxe * nRatio >= GamepadController.nAxePressed }) ){
+                                if(
+                                    this.updateButton( sButton, {
+                                        pressed: nAxe * nRatio >= GamepadController.nAxePressed,
+                                        value: nAxe * nRatio
+                                    } )
+                                ){
                                     bChange = true;
                                 }
                             }
 
                             // Buttons
-                            if( btn.sKey.indexOf('BUTTON') == 0 ){
-                                const nIndex = parseInt(btn.sKey.substring(6)),
-                                    oButton = this.oGamepad ? this.oGamepad.buttons[nIndex] : {};
+                            if( oButton.sKey.indexOf('BUTTON') == 0 ){
+                                const nIndex = parseInt(oButton.sKey.substring(6)),
+                                    oGpadButton = this.oGamepad ? this.oGamepad.buttons[nIndex] : {};
                                 
-                                if( this.updateButton(sBtn, oButton) ){
+                                if( this.updateButton(sButton, oGpadButton) ){
                                     bChange = true;
                                 }
                             }
@@ -181,19 +188,21 @@ Object.assign(
                     }
                 },
 
-                updateButton: function(sBtn, oButton){
+                updateButton: function(sButton, oButton){
                     let bChange = false;
-                    const btn = this.oButtons[sBtn];
-                    if ( oButton && btn.bPressed != oButton.pressed ) {
+                    const oLastButton = this.getButton(sButton);
+                    if ( oButton && oLastButton.bPressed != oButton.pressed ) {
                         if( !oButton.pressed ){
-                            btn.oLastPress = Object.assign({}, btn);
+                            delete oLastButton.oLastPress;
+                            oLastButton.oLastPress = Object.assign({}, oLastButton);
                         }
 
-                        Object.assign(btn, {
+                        Object.assign(oLastButton, {
                             oEvent: null,
                             nFrameChanged: TimerEngine.nFrames,
                             dTimestamp: TimerEngine.dUpdate,
-                            bPressed: oButton.pressed
+                            bPressed: oButton.pressed,
+                            nValue: oButton.value
                         } );
 
                         bChange = true;
@@ -202,16 +211,18 @@ Object.assign(
                 },
 
                 getAnyButtonsPressed: function(){
-                    const aButtons = [];
+                    const aButtons = [],
+                        oLayout = this.getLayout();
+
                     if( this.oGamepad ){
                         // Axes
                         this.oGamepad.axes.forEach( (nValue, nIndex) => {
                             if( Math.abs(nValue) >= GamepadController.nAxePressed ){
                                 const sKey = 'AXE' + ( nValue > 0 ? '+' : '-' ) + nIndex,
-                                    sBtn = this.oKeyMap[sKey];
+                                    sButton = oLayout.oKeyMap[sKey];
 
-                                aButtons.push( sBtn ?
-                                    this.oButtons[sBtn] :
+                                aButtons.push( sButton ?
+                                    oLayout.oButtons[sButton] :
                                     {
                                         sKey,
                                         sCod: null,
@@ -219,6 +230,7 @@ Object.assign(
                                         nFrameChanged: TimerEngine.nFrames,
                                         dTimestamp: TimerEngine.dUpdate,
                                         bPressed: true,
+                                        nValue: Math.abs(nValue),
                                         oLastPress: null
                                     }
                                 );
@@ -229,10 +241,10 @@ Object.assign(
                         this.oGamepad.buttons.forEach( (oButton, nIndex) => {
                             if( oButton.pressed ){
                                 const sKey = 'BUTTON' + nIndex,
-                                    sBtn = this.oKeyMap[sKey];
+                                    sButton = oLayout.oKeyMap[sKey];
 
-                                aButtons.push( sBtn ?
-                                    this.oButtons[sBtn] :
+                                aButtons.push( sButton ?
+                                    oLayout.oButtons[sButton] :
                                     {
                                         sKey,
                                         sCod: null,
@@ -240,6 +252,7 @@ Object.assign(
                                         nFrameChanged: TimerEngine.nFrames,
                                         dTimestamp: TimerEngine.dUpdate,
                                         bPressed: true,
+                                        nValue: oButton.value,
                                         oLastPress: null
                                     }
                                 );
@@ -250,9 +263,9 @@ Object.assign(
                 },
 
                 store: function() {
-                    const aStore = StoreEngine.get( this.oGamepad.id ) || [],
+                    const sId = GamepadController.getId(this.oGamepad),
+                        aStore = StoreEngine.get(sId) || [],
                         oData = Controller.createDataStore(this, {
-                            nIndex: this.nIndex,
                             nIndexStore: this.nIndexStore
                         } );
 
@@ -263,7 +276,7 @@ Object.assign(
                         aStore[this.nIndexStore] = oData;
                     }
 
-                    StoreEngine.update( this.oGamepad.id, aStore );
+                    StoreEngine.update( sId, aStore );
                 },
                 /* ----- END METHODS ----- */
                 /* ----- END PROTOTYPE ----- */

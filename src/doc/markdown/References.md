@@ -34,6 +34,7 @@ and enable the extension for the ```https://raw.githubusercontent.com``` origin 
         - [Controller](Controller.md)
             - [GamepadController](GamepadController.md)
             - [KeyboardController](KeyboardController.md)
+        - [ControllerLayout](ControllerLayout.md)
         - [ControllerManager](ControllerManager.md)
     - Output
         - [OutputElement](OutputElement.md)

@@ -12,6 +12,9 @@ Object.assign(
             this.oLayer = OutputManager.getElement('LAY__Setting');
 
             this.getPattern();
+            for( let sLayout in GameSettings.oController.oText ){
+                this.createLayout(sLayout);
+            }
             for( let sChannel in OutputManager.oAudio.oChannel ){
                 this.createChannel(sChannel);
             }
@@ -19,12 +22,18 @@ Object.assign(
         },
         
         getPattern: function(){
-            this.oPattern = OutputManager.getElement('LAY__Setting_Channel_');
-            this.oPattern && this.oLayer.delete( this.oPattern );
+            this.oPattern = {
+                oLayout: OutputManager.getElement('TXT__Setting_Input_'),
+                oChannel: OutputManager.getElement('LAY__Setting_Channel_')
+            };
+
+            for( let sPattern in this.oPattern ){
+                this.oPattern[sPattern] && this.oPattern[sPattern].oParentElement.delete( this.oPattern[sPattern] );
+            }
         },
         createChannel: function(sChannel){
             // Clone du LAYER
-            let hLayer = this.oPattern.hElement.cloneNode(true);
+            let hLayer = this.oPattern.oChannel.hElement.cloneNode(true);
             hLayer.id += sChannel;
             hLayer.classList.remove(OutputManager.oConfig.class.created);
             [].forEach.call(
@@ -39,6 +48,19 @@ Object.assign(
             const oLayer = new OutputManager.OutputLayer(hLayer);
             oLayer.__sChannel = sChannel;
             this.oLayer.add(oLayer, '.Setting__Output');
+            this.oLayer.update();
+        },
+        createLayout: function(sLayout){
+            // Clone du LAYER
+            let hText = this.oPattern.oLayout.hElement.cloneNode(true);
+            hText.id += sLayout;
+            hText.classList.remove(OutputManager.oConfig.class.created);
+            hText.innerHTML = GameSettings.oController.oText[sLayout].sText;
+
+            // Ajout dans le context
+            const oText = new OutputManager.OutputText(hText);
+            oText.__sLayout = sLayout;
+            this.oLayer.add(oText, '.Setting__Input');
             this.oLayer.update();
         },
         addReturn: function(){

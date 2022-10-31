@@ -115,7 +115,7 @@ Object.assign(
             init: function(oScene){
                 this.oScene = oScene;
 
-                Object.assign( this.oParam, TrainingEngineRestart.oDefault, StoreEngine.get('TNG_Restart') || {} );
+                Object.assign( this.oParam, TrainingEngineRestart.oDefault, StoreEngine.get('TNG__Restart') || {} );
 
                 this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
                     this.setPosition(nIndex);
@@ -142,7 +142,7 @@ Object.assign(
                     this.oParam[sType] = oMax[sType];
                 }
 
-                StoreEngine.update('TNG_Restart', this.oParam);
+                StoreEngine.update('TNG__Restart', this.oParam);
             },
             setPosition: function(nIndex){
                 const oPlayer = this.oScene.aPlayer[nIndex];
@@ -159,7 +159,7 @@ Object.assign(
 
             reset: function(){
                 Object.assign( this.oParam, TrainingEngineRestart.oDefault);
-                StoreEngine.update('TNG_Restart', this.oParam);
+                StoreEngine.update('TNG__Restart', this.oParam);
             }
         }
     }

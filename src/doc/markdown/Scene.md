@@ -46,7 +46,7 @@ Les méthodes suivantes sont purement technique et ne devrait être utilisé pri
 Utilise le context transmis si défini et récupère la FRAME de l'horloge interne :- [OutputViewport.useContext()](OutputViewport.md)- [TimerEngine.nFrames](TimerEngine.md)
 
 ```javascript
-this.init(sUseContext);
+this.init(sUseContext, sUseLayout);
 ```
 
 #### Scene.prototype.update()

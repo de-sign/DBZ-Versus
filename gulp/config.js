@@ -12,7 +12,8 @@ let env = (process.env.NODE_ENV || 'development').trim(),
         assets: 'src/assets',
         pages: 'src/pages',
         templates: 'src/pages/_templates',
-        data: 'src/data'
+        data: 'src/data',
+        buffer:'temp'
     },
     dest = {
         root: `${out[env]}`,
@@ -39,7 +40,9 @@ Object.assign(exports, {
             favicon: `${src.assets}/favicon`,
             fonts: `${src.assets}/fonts`,
             audios: `${src.assets}/audios`,
-            videos: `${src.assets}/videos`
+            videos: `${src.assets}/videos`,
+            
+            images_buffer: `${src.buffer}/images`,
         }),
         dest: Object.assign(dest, {
             html: `${dest.root}`,

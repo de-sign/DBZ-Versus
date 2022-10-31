@@ -124,7 +124,7 @@ Object.assign(
             constructor: TrainingEngineOpponent,
             init: function(oScene){
                 this.oScene = oScene;
-                Object.assign( this.oOpponent, TrainingEngineOpponent.oDefault, StoreEngine.get('TNG_Opponent') || {} );
+                Object.assign( this.oOpponent, TrainingEngineOpponent.oDefault, StoreEngine.get('TNG__Opponent') || {} );
             },
             update: function(){},
             destroy: function(){},
@@ -171,11 +171,11 @@ Object.assign(
                         break;
                 }
 
-                StoreEngine.update('TNG_Opponent', this.oOpponent);
+                StoreEngine.update('TNG__Opponent', this.oOpponent);
             },
             reset: function(){
                 Object.assign( this.oOpponent, TrainingEngineOpponent.oDefault );
-                StoreEngine.update('TNG_Opponent', this.oOpponent);
+                StoreEngine.update('TNG__Opponent', this.oOpponent);
             },
 
             setSource: function(oController){

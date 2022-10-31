@@ -21,7 +21,7 @@ Object.assign(
                         oLastData: BTL__sStage, sTypeBattle, aController, BTL__aCharacterSelected, BTL__aColor
                         oOptions: aSourceBuffer, sContextClass, sAnimation, nTimer
                     */
-                    Scene.prototype.init.call(this, 'CTX__Battle');
+                    Scene.prototype.init.call(this, 'CTX__Battle', 'IPT__Battle');
                     this.oContext.hElement.classList.add( oOptions.sContextClass );
 
 					this.oArea = OutputManager.getElement('LAY__Battle_Area_Wrapper');

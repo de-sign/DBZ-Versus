@@ -2,6 +2,7 @@
 //=include _components/_timer.js
 //=include _scene/_manager.js
 
+//=include _input/_layout.js
 //=include _input/_controller.js
 //=include _input/_keyboard.js
 //=include _input/_gamepad.js

@@ -3,8 +3,9 @@
 /* ----- START CONSTRUCTOR ----- */
 function Controller(){
     /* ----- START PROPERTIES ----- */
-    this.oButtons = {};
-    this.oKeyMap = {};
+    this.oLayouts = {};
+
+    this.nIndex = -1;
     this.nFrameChange = 0;
     this.dTimestampChange = 0;
     /* ----- END PROPERTIES ----- */
@@ -33,31 +34,21 @@ Object.assign(
             oStore = Object.assign( {
                 sType: oController.sType,
                 sId: oController.sId,
-                oButtons: {},
-                aOrder: []
+                nIndex: oController.nIndex,
+                oLayouts: {}
             }, oStore || {});
             
-            for( let sBtn in oController.oButtons ){
-                oStore.oButtons[sBtn] = {
-                    sKey: oController.oButtons[sBtn].sKey,
-                    sText: oController.oButtons[sBtn].sText
-                };
-                oStore.aOrder.push(sBtn);
+            for( let sLayout in oController.oLayouts ){
+                const oButtons = oController.getButton(false, sLayout);
+                for( let sButton in oButtons ){
+                    oStore.oLayouts[sLayout] || ( oStore.oLayouts[sLayout] = {} );
+                    oStore.oLayouts[sLayout][sButton] = {
+                        sKey: oButtons[sButton].sKey,
+                        sText: oButtons[sButton].sText
+                    };
+                }
             }
 
-            return oStore;
-        },
-
-        getDataStore: function(oStore){
-            if( oStore ){
-                const oButtons = {};
-                oStore.aOrder.forEach( sBtn => {
-                    if( oStore.oButtons[sBtn] ){
-                        oButtons[sBtn] = oStore.oButtons[sBtn];
-                    }
-                } );
-                oStore.oButtons = oButtons;
-            }
             return oStore;
         },
         /* ----- END METHODS ----- */
@@ -67,65 +58,56 @@ Object.assign(
             constructor: Controller,
             /* ----- START PROTOTYPE ----- */
             /* ----- START METHODS ----- */
-            init: function(oBtn){
+            init: function(nIndex, oLayouts){
                 this.sId = Controller.add(this);
-                this.addButtons(oBtn);
+                this.nIndex = nIndex;
+                for( let sLayout in oLayouts ){
+                    const oButtons = this.normalizeButtons(oLayouts[sLayout]);
+                    this.oLayouts[sLayout] = new ControllerLayout(oButtons);
+                }
             },
             update: function(){},
             destroy: function(){},
 
-            addButtons: function(oBtns) {
-                for (let b in oBtns) {
-                    const oBtn = Object.prototype.toString.call(oBtns[b]) === '[object Object]' ?
-                        oBtns[b] :
-                        {
-                            sKey: oBtns[b],
-                            sText: this.constructor.getButtonText(oBtns[b], this)
+            normalizeButtons: function(oButtons){
+                for( let sCod in oButtons ){
+                    if( Object.prototype.toString.call(oButtons[sCod]) !== '[object Object]' ){
+                        oButtons[sCod] = {
+                            sKey: oButtons[sCod],
+                            sText: this.constructor.getButtonText(oButtons[sCod], this)
                         };
-
-                    this.oButtons[b] = {
-                        sKey: oBtn.sKey.toUpperCase(),
-                        sCod: b,
-                        sText: oBtn.sText,
-                        nFrameChanged: null,
-                        dTimestamp: 0,
-                        bPressed: false,
-                        oLastPress: null
-                    };
-                    this.oKeyMap[oBtn.sKey.toUpperCase()] = b;
-                }
-            },
-            removeButtons: function(oBtns) {
-                for (let b in oBtns) {
-                    const oBtn = this.oButtons[b];
-                    if( oBtn ){
-                        delete this.oKeyMap[oBtn.sKey];
-                        delete this.oButtons[b];
                     }
                 }
-            },
-            updateButtons: function(oBtns){
-                this.removeButtons(oBtns);
-                this.addButtons(oBtns);
+                return oButtons;
             },
 
-            hasPressedNow: function(sBtn) {
-                const oBtn = this.oButtons[sBtn];
-                return oBtn ? oBtn.bPressed && oBtn.nFrameChanged == TimerEngine.nFrames : null;
+            getButton: function(sButton, sLayout){
+                const oLayout = this.getLayout(sLayout);
+                return sButton ? oLayout.oButtons[sButton] : oLayout.oButtons;
             },
-            isPressed: function(sBtn) {
-                return this.oButtons[sBtn] ? this.oButtons[sBtn].bPressed : null;
+            getLayout: function(sLayout){
+                return this.oLayouts[ sLayout || ControllerManager.sLayoutSelected ];
             },
-            getLastPress: function(sBtn){
-                return this.oButtons[sBtn] ? this.oButtons[sBtn].oLastPress : null;
+
+            hasPressedNow: function(sButton) {
+                const oButton = sButton ? this.getButton(sButton) : null;
+                return oButton ? oButton.bPressed && oButton.nFrameChanged == TimerEngine.nFrames : null;
+            },
+            isPressed: function(sButton) {
+                const oButton = sButton ? this.getButton(sButton) : null;
+                return oButton ? oButton.bPressed : null;
+            },
+            getLastPress: function(sButton){
+                const oButton = sButton ? this.getButton(sButton) : null;
+                return oButton ? oButton.oLastPress : null;
             },
 
             ifPressedNow: function(oCallback, bOnlyFirst = true){
                 let bFirstPressed = false;
-                for( let sBtn in oCallback ){
+                for( let sButton in oCallback ){
                     if( !bOnlyFirst || !bFirstPressed ){
-                        if( this.hasPressedNow(sBtn) ){
-                            oCallback[sBtn]( this.oButtons[sBtn] );
+                        if( this.hasPressedNow(sButton) ){
+                            oCallback[sButton]( this.getButton(sButton) );
                             bFirstPressed = true;
                         }
                     }
@@ -133,10 +115,10 @@ Object.assign(
             },
             ifPressed: function(oCallback, bOnlyFirst = true){
                 let bFirstPressed = false;
-                for( let sBtn in oCallback ){
+                for( let sButton in oCallback ){
                     if( !bOnlyFirst || !bFirstPressed ){
-                        if( this.isPressed(sBtn) ){
-                            oCallback[sBtn]( this.oButtons[sBtn] );
+                        if( this.isPressed(sButton) ){
+                            oCallback[sButton]( this.getButton(sButton) );
                             bFirstPressed = true;
                         }
                     }

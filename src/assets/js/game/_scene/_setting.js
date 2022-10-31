@@ -57,11 +57,10 @@ Object.assign(
                         A: () => {
                             sSFX = 'ADO__Validate';
                             SceneManager.oCurrent.oController = oController;
-                            const sMenuSelected = this.oMenu.getSelected().sId;
+                            const oSelected = this.oMenu.getSelected(),
+                                sMenuSelected = oSelected.sId;
+
                             switch( sMenuSelected ){
-                                case 'TXT__Setting_Input':
-                                    SceneManager.change( new InputScene() );
-                                    break;
                                 case 'TXT__Setting_Return':
                                     SceneManager.change( new MenuScene() );
                                     sSFX = 'ADO__Cancel';
@@ -70,7 +69,11 @@ Object.assign(
                                     this.change('round', 1) && (sSFX = 'ADO__Validate');
                                     break;
                                 default:
-                                    this.change('channel', 1) && (sSFX = 'ADO__Validate');
+                                    if( oSelected.__sLayout ){
+                                        SceneManager.change( new InputScene() );
+                                    } else {
+                                        this.change('channel', 1) && (sSFX = 'ADO__Validate');
+                                    }
                                     break;
                             }
                         },
@@ -162,7 +165,7 @@ Object.assign(
             Object.create(Scene.prototype), {
                 constructor: SettingScene,
 				init: function(){
-                    Scene.prototype.init.call(this, 'CTX__Setting');
+                    Scene.prototype.init.call(this, 'CTX__Setting', 'IPT__Menu');
                     this.oMenu = new SettingMenu(SceneManager.oTransverseData.STG__nIndex || 0);
 				},
 				update: function(){
@@ -170,6 +173,7 @@ Object.assign(
 				},
                 destroy: function(){
                     return {
+                        STG__sLayout: this.oMenu.oMenu.getSelected().__sLayout,
                         STG__nIndex: this.oMenu.destroy(),
                         STG__oController: this.oController
                     };

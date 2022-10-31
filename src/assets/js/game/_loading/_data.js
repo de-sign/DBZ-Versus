@@ -394,6 +394,7 @@ Object.assign(
         createCommands: function(oChar){
             const oCommands = {};
             for( let sType in this.oData.oCharacter.oCommands ){
+                
                 oCommands[sType] = [];
                 this.oData.oCharacter.oCommands[sType].forEach( oCommand => {
                     oCommands[sType].push( Object.assign({}, oCommand) );

@@ -126,7 +126,7 @@ function SelectScene(){
     this.oStatus = {};
 
     this.fCheckNewController = oController => {
-        if( !this.allPlayerActive() && SceneManager.oTransverseData.MNU__aController.indexOf(oController) == -1 ){
+        if( !this.allPlayerActive() && SceneManager.oTransverseData.MNU__aController.indexOf(oController) == -1 && oController.nFrameChange >= TimerEngine.nFrames ){
             this.oContext.addTickUpdate( () => {
                 const nIndex = SceneManager.oTransverseData.MNU__aController.indexOf(null);
                 SceneManager.oTransverseData.MNU__aController[nIndex] = oController;

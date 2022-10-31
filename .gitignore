@@ -68,6 +68,7 @@ package-lock.json
 build/
 test/
 dist/
+temp/
 
 # Templates build
 src/pages/_templates/*.njk

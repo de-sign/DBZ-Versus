@@ -11,7 +11,7 @@ const _serves       = require('./gulp/_serves')(config, _builds, _extra);
 Object.assign(
     exports,
     {
-        default: gulp.series(_builds.global, _serves.global, _extra.doc),
+        default: gulp.series(_builds.buffer, _serves.global, _extra.doc),
         build: _builds.global,
         templates: _builds.templates,
         scripts: _builds.scripts,

@@ -25,7 +25,7 @@ KeyboardController.getButtonText(sCode);
 ### KeyboardController.recover()
 
 ```javascript
-KeyboardController.recover(sId, oDefault);
+KeyboardController.recover(nIndex, oDefault);
 ```
 
 
@@ -35,7 +35,7 @@ KeyboardController is a child class of [Controller](Controller.md).
 ### KeyboardController()
 
 ```javascript
-new KeyboardController(oBtn);
+new KeyboardController();
 ```
 
 

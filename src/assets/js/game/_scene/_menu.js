@@ -23,7 +23,7 @@ Object.assign(
             Object.create(Scene.prototype), {
                 constructor: MenuScene,
 				init: function(){
-                    Scene.prototype.init.call(this, 'CTX__Menu');
+                    Scene.prototype.init.call(this, 'CTX__Menu', 'IPT__Menu');
 
                     this.nController = ControllerManager.nController;
 

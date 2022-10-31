@@ -17,10 +17,10 @@ Object.assign(
         KeyboardController: KeyboardController,
         /* ----- DETAILS La classe du controlleur manette : [GamepadController](GamepadController.md). ----- */
         GamepadController: GamepadController,
-        /* ----- DETAILS Objet technique permettant la mise à jour d'un controlleurs en fonction de la touche du clavier appuyé. ----- */
-        oKeyMap: {},
         /* ----- DETAILS Objet technique listant les écouteurs d'évènement du gestionnaire mis en place via les fonctions `ControllerManager.on()` et `ControllerManager.off()`. ----- */
         oListeners: {},
+        /* ----- DETAILS Nom de la configuration de bouttons utilisé par les Controller. ----- */
+        sLayoutSelected: null,
         /* ----- END PROPERTIES ----- */
 
         /* ----- START PROPERTIES ----- */
@@ -63,32 +63,17 @@ Object.assign(
         
         /* ----- DETAILS
         Ajoute le controlleur transmis dans `ControllerManager.oController`.  
-        Si le controlleur est un clavier, modifie `ControllerManager.oKeyMap` en fonction du paramétrages des bouttons afin de pouvoir mettre à jour ce dernier : [Controller.oKeyMap](Controller.md)
         ----- */
         addController: function(oCtrl) {
             this.oController[oCtrl.sId] = oCtrl;
-            if( oCtrl.sType == 'keyboard' ){
-                for (let b in oCtrl.oButtons) {
-                    const sKey = oCtrl.oButtons[b].sKey;
-                    this.oKeyMap[sKey] || ( this.oKeyMap[sKey] = [] );
-                    this.oKeyMap[sKey].push(oCtrl.sId);
-                }
-            }
             this.nController++;
         },
         /* ----- DETAILS
         Supprime le controlleur transmis de `ControllerManager.oController`.  
-        Si le controlleur est un clavier, modifie `ControllerManager.oKeyMap` en fonction du paramétrages des bouttons afin de ne plus mettre à jour ce dernier : [Controller.oKeyMap](Controller.md)
         ----- */
         removeController: function(oCtrl) {
             if( this.oController[oCtrl.sId] ){
                 delete this.oController[oCtrl.sId];
-                if( oCtrl.sType == 'keyboard' ){
-                    for (let sKey in this.oKeyMap) {
-                        let nIndex = this.oKeyMap[sKey].indexOf(oCtrl.sId);
-                        nIndex != -1 && this.oKeyMap[sKey].splice(nIndex, 1);
-                    }
-                }
                 this.nController--;
             }
         },
@@ -96,12 +81,12 @@ Object.assign(
         TODO
         ----- */
         addEvent: function(oEvent) {
-            const key = oEvent.code.toUpperCase();
-            if (this.oKeyMap[key]) {
-                this.oKeyMap[key].forEach((sId) => {
+            for( let sId in this.oController ){
+                const oCtrl = this.oController[sId];
+                if( oCtrl.sType == 'keyboard' ){
                     this.oController[sId].addEvent(oEvent);
                     this.trigger('addEvent', this.oController[sId], oEvent);
-                });
+                }
             }
         },
         /* ----- END METHODS ----- */
@@ -111,20 +96,17 @@ Object.assign(
         SUBCATEGORY Utilitary methods
         DETAILS Les méthodes suivantes sont destinées à être utilisé par le système ou par un développeur
         ----- */
-        create: function(sType, oBtn, nIndex) {
-            var oCtrl = new window[sType + 'Controller'](oBtn, nIndex);
+        create: function(sType, nIndex, oBtn) {
+            var oCtrl = new window[sType + 'Controller'](nIndex, oBtn);
             this.addController(oCtrl);
             this.trigger('create', oCtrl);
             return oCtrl;
         },
-        updateController: function(oCtrl) {
-            if( oCtrl.sType == 'keyboard' ){
-                this.removeController(oCtrl);
-                this.addController(oCtrl);
-            }
-        },
         getController: function(sCod){
             return Controller.oInstance[sCod];
+        },
+        setLayout: function(sLayout){
+            this.sLayoutSelected = sLayout;
         },
 
         on: function(uEvent, uCallback){

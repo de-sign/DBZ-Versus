@@ -49,6 +49,12 @@ GamepadController.recover(oGamepad, oDefault);
 GamepadController.getButtonText(sCode, oController);
 ```
 
+### GamepadController.getId()
+
+```javascript
+GamepadController.getId(oGamepad);
+```
+
 
 ## Constructor
 
@@ -56,7 +62,7 @@ GamepadController is a child class of [Controller](Controller.md).
 ### GamepadController()
 
 ```javascript
-new GamepadController(oBtn, nIndex);
+new GamepadController();
 ```
 
 
@@ -81,12 +87,6 @@ this.sType = 'gamepad';
 this.oGamepad = null;
 ```
 
-### this.nIndex
-
-```javascript
-this.nIndex = -1;
-```
-
 ### this.nIndexStore
 
 ```javascript
@@ -100,7 +100,7 @@ _Methods inherited :_ [Controller.prototype](Controller.md#instance-methods)
 ### GamepadController.prototype.init()
 
 ```javascript
-this.init(oBtn, nIndex);
+this.init(nIndex, oBtn);
 ```
 
 ### GamepadController.prototype.update()
@@ -112,7 +112,7 @@ this.update();
 ### GamepadController.prototype.updateButton()
 
 ```javascript
-this.updateButton(sBtn, oButton);
+this.updateButton(sButton, oButton);
 ```
 
 ### GamepadController.prototype.getAnyButtonsPressed()

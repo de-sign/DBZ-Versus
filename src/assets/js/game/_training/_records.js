@@ -87,7 +87,7 @@ Object.assign(
             constructor: TrainingEngineRecords,
             init: function(oScene){
                 this.oScene = oScene;
-                Object.assign( this.oRecords, TrainingEngineRecords.oDefault, StoreEngine.get('TNG_Records') || {});
+                Object.assign( this.oRecords, TrainingEngineRecords.oDefault, StoreEngine.get('TNG__Records') || {});
             },
             update: function(){ },
             destroy: function(){ },
@@ -100,7 +100,7 @@ Object.assign(
 
             reset: function(){
                 Object.assign( this.oRecords, TrainingEngineRecords.oDefault);
-                StoreEngine.update('TNG_Records', this.oRecords);
+                StoreEngine.update('TNG__Records', this.oRecords);
             },
 
             saveRecord: function(){
@@ -131,7 +131,7 @@ Object.assign(
                 } );
 
                 this.oRecords[ 'record_' + this.nRecord ] = aRecord;
-                StoreEngine.update('TNG_Records', this.oRecords);
+                StoreEngine.update('TNG__Records', this.oRecords);
             }
         }
     }

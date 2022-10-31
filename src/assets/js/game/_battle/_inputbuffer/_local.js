@@ -38,7 +38,7 @@ Object.assign(
                 getDirection: function(){
                     let nDirection = 5;
                     for (sBtn in BattleInputSourceBufferLocal.oButtonsDirection) {
-                        if ( this.oController.oButtons[sBtn].bPressed ) {
+                        if ( this.oController.getButton(sBtn).bPressed ) {
                             nDirection += BattleInputSourceBufferLocal.oButtonsDirection[sBtn];
                         }
                     }
@@ -46,14 +46,15 @@ Object.assign(
                 },
                 getButtonsPressed: function(nDirection, bReverse, bForce){
                     const oBtns = {},
-                        aFrameDir = [];
+                        aFrameDir = [],
+                        oButtons = this.oController.getButton();
 
                     // Gestion BTN
-                    for( let sBtn in this.oController.oButtons ){
+                    for( let sBtn in oButtons ){
                         if( BattleInputSourceBufferLocal.oButtonsDirection[sBtn] ){
-                            aFrameDir.push( this.oController.oButtons[sBtn].nFrameChanged );
-                        } else if( this.oController.oButtons[sBtn].bPressed ){
-                            oBtns[sBtn] = this.oController.oButtons[sBtn].nFrameChanged;
+                            aFrameDir.push( oButtons[sBtn].nFrameChanged );
+                        } else if( oButtons[sBtn].bPressed ){
+                            oBtns[sBtn] = oButtons[sBtn].nFrameChanged;
                         }
                     }
 

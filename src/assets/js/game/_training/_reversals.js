@@ -94,7 +94,7 @@ Object.assign(
             constructor: TrainingEngineReversals,
             init: function(oScene){
                 this.oScene = oScene;
-                Object.assign( this.oReversals, TrainingEngineReversals.oDefault, StoreEngine.get('TNG_Reversals') || {});
+                Object.assign( this.oReversals, TrainingEngineReversals.oDefault, StoreEngine.get('TNG__Reversals') || {});
                 this.initData();
 
                 for( let sType in this.oReversals ){
@@ -114,7 +114,7 @@ Object.assign(
 
             reset: function(){
                 Object.assign( this.oReversals, TrainingEngineReversals.oDefault);
-                StoreEngine.update('TNG_Reversals', this.oReversals);
+                StoreEngine.update('TNG__Reversals', this.oReversals);
             },
 
             initData: function(){
@@ -142,7 +142,7 @@ Object.assign(
                     nIndex = aCommand.length - 1;
                 }
                 this.oReversals[sProp] = aCommand[nIndex];
-                StoreEngine.update('TNG_Reversals', this.oReversals);
+                StoreEngine.update('TNG__Reversals', this.oReversals);
             }
         }
     }

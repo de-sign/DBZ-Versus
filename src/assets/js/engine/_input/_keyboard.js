@@ -1,6 +1,6 @@
 /* ----- START CLASS ----- */
 /* ----- START CONSTRUCTOR ----- */
-function KeyboardController(oBtn) {
+function KeyboardController() {
     /* ----- START PROPERTIES ----- */
     this.sName = 'Keyboard #';
     this.sType = 'keyboard';
@@ -31,10 +31,11 @@ Object.assign(
             return sText;
         },
 
-        recover: function(sId, oDefault){
-            const oStore = Controller.getDataStore( StoreEngine.get(sId) ),
-                oButtons = oStore ? oStore.oButtons : {};
-            return ControllerManager.create( 'Keyboard', Object.assign({}, oDefault, oButtons) );
+        recover: function(nIndex, oDefault){
+            const aStore = StoreEngine.get('IPT__Keyboard') || [],
+                oStore = aStore[nIndex],
+                oLayouts = oStore ? oStore.oLayouts : {};
+            return ControllerManager.create( 'Keyboard', nIndex, Object.assign({}, oDefault, oLayouts) );
         },
         /* ----- END METHODS ----- */
         /* ----- END SINGLETON ----- */
@@ -47,27 +48,29 @@ Object.assign(
                 /* ----- START PROTOTYPE ----- */
                 /* ----- START METHODS ----- */
                 update: function() {
-                    const pressTyp = {
+                    const oType = {
                         keydown: true,
                         keyup: false
                     };
 
                     let bChange = false;
-                    this.aEvents.forEach( oEvent => {
-                        const cod = this.oKeyMap[oEvent.code.toUpperCase()],
-                            btn = this.oButtons[cod],
-                            typ = pressTyp[oEvent.type];
+                    this.aEvents.forEach( oAddEvent => {
+                        const oEvent = oAddEvent.oEvent,
+                            oButton = this.getButton(oAddEvent.sCod),
+                            bType = oType[oEvent.type];
 
-                        if (btn != null && btn.bPressed != typ) {
-                            if( !typ ){
-                                btn.oLastPress = Object.assign({ }, btn);
+                        if (oButton != null && oButton.bPressed != bType) {
+                            if( !bType ){
+                                delete oButton.oLastPress;
+                                oButton.oLastPress = Object.assign({}, oButton);
                             }
                             
-                            Object.assign(btn, {
+                            Object.assign(oButton, {
                                 oEvent: oEvent,
                                 nFrameChanged: TimerEngine.nFrames,
                                 dTimestamp: TimerEngine.dUpdate,
-                                bPressed: typ
+                                bPressed: bType,
+                                nValue: 1.0
                             } );
                             bChange = true;
                         }
@@ -82,11 +85,19 @@ Object.assign(
                 },
 
                 addEvent: function(oEvent) {
-                    this.aEvents.push(oEvent);
+                    const oLayout = this.getLayout(),
+                        sCod = oLayout.oKeyMap[ oEvent.code.toUpperCase() ];
+                        
+                    sCod && this.aEvents.push( { sCod, oEvent } );
+                    return !!sCod;
                 },
                 store: function(){
-                    const oData = Controller.createDataStore(this);
-                    StoreEngine.update( this.sId, oData );
+                    const sId = 'IPT__Keyboard',
+                        aStore = StoreEngine.get(sId) || [],
+                        oData = Controller.createDataStore(this);
+
+                    aStore[this.nIndex] = oData;
+                    StoreEngine.update( sId, aStore );
                 },
                 /* ----- END METHODS ----- */
                 /* ----- END PROTOTYPE ----- */

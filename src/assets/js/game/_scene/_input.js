@@ -8,6 +8,8 @@ function InputController(oController, oPressed, bReady){
     this.oWaitingButton = null;
 
     this.bReady = false;
+    this.sLayout = null;
+    this.sId = null;
 
     this.init(oController, oPressed, bReady);
 }
@@ -18,8 +20,12 @@ Object.assign(
             this.oController = oController;
             this.oPressed = oPressed;
             this.bReady = bReady;
+            this.sLayout = SceneManager.oTransverseData.STG__sLayout;
+            this.sId = oController.sId + '_' + this.sLayout;
+
             this.oLayer = OutputManager.getElement('LAY__Input_Controller_' + oController.sId);
-            this.oMenu = new GameMenu('LAY__Input_Controller_' + oController.sId, bReady ? -1 : 0);
+            this.oMenu = new GameMenu('LAY__Input_Layout_' + this.sId, bReady ? -1 : 0);
+            this.oMenu.oLayer.hElement.classList.remove('--hide');
         },
         update: function() {
 
@@ -35,12 +41,12 @@ Object.assign(
                         A: () => {
                             let oMenuSelected = this.oMenu.getSelected();
                             switch( oMenuSelected.sId ){
-                                case 'TXT__Input_Reset_' + this.oController.sId:
+                                case 'TXT__Input_Reset_' + this.sId:
                                     sSFX = 'ADO__Cancel';
                                     this.reset();
                                     this.bReady = false;
                                     break;
-                                case 'TXT__Input_Return_' + this.oController.sId:
+                                case 'TXT__Input_Return_' + this.sId:
                                     sSFX = 'ADO__Cancel';
                                     this.bReady = true;
                                     break;
@@ -81,7 +87,7 @@ Object.assign(
             }
 
             this.oMenu.update();
-            OutputManager.getElement('TXT__Input_Return_' + this.oController.sId)
+            OutputManager.getElement('TXT__Input_Return_' + this.sId)
                 .setText(
                     bConnected ? 
                         ( this.bReady ? 'Ready&nbsp;!' : 'Return' ) :
@@ -89,6 +95,7 @@ Object.assign(
                 );
         },
         destroy: function() {
+            this.oMenu.oLayer.hElement.classList.add('--hide');
             this.oMenu.destroy();
         },
 
@@ -123,22 +130,23 @@ Object.assign(
             }
 
             if( oBtn ){
-                const sNewBtn = this.oWaitingButton.hElement.querySelector('.Input__Button_Name').innerHTML,
-                    sLastBtn = this.oController.oKeyMap[oBtn.sKey],
+                const oData = this.oWaitingButton.hElement.__oData,
+                    oLayout = this.oController.getLayout(oData.sLayout),
+                    sNewBtn = oData.sButton,
+                    sLastBtn = oLayout.oKeyMap[oBtn.sKey],
                     oBtns = {
                         [sNewBtn]: oBtn
                     };
                     
                 if( sNewBtn != sLastBtn ){
                     if( sLastBtn ){
-                        OutputManager.getElement('LAY__Input_Button_' + this.oController.sId + '_' + sLastBtn)
-                            .aChildElement[0].setText( this.oController.oButtons[sNewBtn].sText );
-                        oBtns[sLastBtn] = this.oController.oButtons[sNewBtn];
+                        OutputManager.getElement('LAY__Input_Button_' + this.sId + '_' + sLastBtn)
+                            .aChildElement[0].setText( this.oController.getButton(sNewBtn).sText );
+                        oBtns[sLastBtn] = this.oController.getButton(sNewBtn);
                     }
                 }
-                    
-                this.oController.updateButtons(oBtns);
-                ControllerManager.updateController(this.oController);
+
+                oLayout.updateButtons(oBtns);
                 this.oController.store();
 
                 this.oWaitingButton.aChildElement[0].setText(oBtn.sText);
@@ -148,37 +156,38 @@ Object.assign(
         },
 
         reset: function(){
-            let oBtns = null;
+            let oConfig = null;
             switch( this.oController.sType ){
                 case 'keyboard':
-                    oBtns = GameSettings.oController.aKeyboard[ this.oController.sId.split('_')[1] - 1 ];
+                    oConfig = GameSettings.oController.aKeyboard[ this.oController.nIndex ];
                     break;
                 case 'gamepad':
-                    oBtns = GameSettings.oController.oGamepad;
+                    oConfig = GameSettings.oController.oGamepad;
                     break;
             }
-            
-            // Reset BTN
-            this.oController.updateButtons(oBtns);
-            ControllerManager.updateController(this.oController);
-            this.oController.store();
 
-            // Refresh View
-            this.oMenu.oLayer.aChildElement.forEach( oMenu => {
-                const hBtn = oMenu.hElement.querySelector('.Input__Button_Name');
-                if( hBtn ){
-                    const sBtn = hBtn.innerHTML,
-                       sText = this.oController.oButtons[sBtn].sText;
-                    oMenu.aChildElement[0].setText(sText);
-                }
-            } );
+            if( oConfig ){
+                // Reset BTN
+                const oLayout = this.oController.getLayout(this.sLayout);
+                oLayout.updateButtons( this.oController.normalizeButtons( oConfig[this.sLayout] ) );
+                this.oController.store();
+                
+                // Refresh View
+                this.oMenu.oLayer.aChildElement.forEach( oMenu => {
+                    const oData = oMenu.hElement.__oData;
+                    if( oData ){
+                        const sButton = oData.sButton,
+                            sText = oLayout.oButtons[sButton].sText;
+                        oMenu.aChildElement[0].setText(sText);
+                    }
+                } );
+            }
         }
     }
 );
 
 /* Input */
 function InputScene(){
-    this.oContext = null;
     this.oLastPress = {
         nFrames: -1,
         sKey: null,
@@ -222,12 +231,22 @@ Object.assign(
             Object.create(Scene.prototype), {
                 constructor: InputScene,
 				init: function(){
-                    Scene.prototype.init.call(this, 'CTX__Input');
+                    Scene.prototype.init.call(this, 'CTX__Input', 'IPT__Menu');
+
+                    OutputManager.getElement('TXT__Input_Name').setText(
+                        GameSettings.oController.oText[ SceneManager.oTransverseData.STG__sLayout ].sText
+                    );
 
                     // Controller init
                     for( let sController in ControllerManager.oController ){
                         const oController = ControllerManager.getController(sController);
-                        this.aController.push( new InputController(oController, this.oLastPress, SceneManager.oTransverseData.STG__oController.sId != sController) );
+                        this.aController.push(
+                            new InputController(
+                                oController,
+                                this.oLastPress,
+                                SceneManager.oTransverseData.STG__oController.sId != sController
+                            )
+                        );
                     }
 
                     window.addEventListener('keydown', this.oLastPress.fKeyDown, false);

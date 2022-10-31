@@ -27,20 +27,20 @@ La classe du controlleur manette : [GamepadController](GamepadController.md).
 ControllerManager.GamepadController = GamepadController;
 ```
 
-#### ControllerManager.oKeyMap
-
-Objet technique permettant la mise à jour d'un controlleurs en fonction de la touche du clavier appuyé. 
-
-```javascript
-ControllerManager.oKeyMap = {};
-```
-
 #### ControllerManager.oListeners
 
 Objet technique listant les écouteurs d'évènement du gestionnaire mis en place via les fonctions `ControllerManager.on()` et `ControllerManager.off()`. 
 
 ```javascript
 ControllerManager.oListeners = {};
+```
+
+#### ControllerManager.sLayoutSelected
+
+Nom de la configuration de bouttons utilisé par les Controller. 
+
+```javascript
+ControllerManager.sLayoutSelected = null;
 ```
 
 
@@ -88,7 +88,7 @@ ControllerManager.update();
 
 #### ControllerManager.addController()
 
-Ajoute le controlleur transmis dans `ControllerManager.oController`.  Si le controlleur est un clavier, modifie `ControllerManager.oKeyMap` en fonction du paramétrages des bouttons afin de pouvoir mettre à jour ce dernier : [Controller.oKeyMap](Controller.md)
+Ajoute le controlleur transmis dans `ControllerManager.oController`.  
 
 ```javascript
 ControllerManager.addController(oCtrl);
@@ -96,7 +96,7 @@ ControllerManager.addController(oCtrl);
 
 #### ControllerManager.removeController()
 
-Supprime le controlleur transmis de `ControllerManager.oController`.  Si le controlleur est un clavier, modifie `ControllerManager.oKeyMap` en fonction du paramétrages des bouttons afin de ne plus mettre à jour ce dernier : [Controller.oKeyMap](Controller.md)
+Supprime le controlleur transmis de `ControllerManager.oController`.  
 
 ```javascript
 ControllerManager.removeController(oCtrl);
@@ -118,19 +118,19 @@ Les méthodes suivantes sont destinées à être utilisé par le système ou par
 #### ControllerManager.create()
 
 ```javascript
-ControllerManager.create(sType, oBtn, nIndex);
-```
-
-#### ControllerManager.updateController()
-
-```javascript
-ControllerManager.updateController(oCtrl);
+ControllerManager.create(sType, nIndex, oBtn);
 ```
 
 #### ControllerManager.getController()
 
 ```javascript
 ControllerManager.getController(sCod);
+```
+
+#### ControllerManager.setLayout()
+
+```javascript
+ControllerManager.setLayout(sLayout);
 ```
 
 #### ControllerManager.on()

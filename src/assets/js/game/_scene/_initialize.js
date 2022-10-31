@@ -81,21 +81,10 @@ Object.assign(
 
                 // Gamepad
                 stepInput_Gamepad: function(){
-                    window.addEventListener('gamepadconnected', oEvent => {
-                        if( !GamepadController.oIndexCreate[oEvent.gamepad.index] ){
-                            if( oEvent.gamepad.buttons.length >= GameSettings.oController.nNeededButtons ){
-                                const oGamepad = GamepadController.recover( oEvent.gamepad, GameSettings.oController.oGamepad );
-                                InitializeInput.createController(oGamepad.sId);
-                                InitializeSide.createController(oGamepad.sId);
-                            } else {
-	                            GameAlert.show( [
-                                    'Unable to set up new device detected :',
-                                    '"' + oEvent.gamepad.id + '" has ' + oEvent.gamepad.buttons.length + ' buttons and the game needs ' + GameSettings.oController.nNeededButtons + ' buttons at less.'
-                                ], true);
-                                GamepadController.oIndexCreate[oEvent.gamepad.index];
-                            }
-                        }
-                    }, false);
+                    ControllerManager.on('create', oGamepad => {
+                        InitializeInput.createController(oGamepad.sId);
+                        InitializeSide.createController(oGamepad.sId);
+                    } );
                 },
 
                 // Gestion AUDIO

@@ -161,6 +161,7 @@ Object.assign(
                     this.aHelperController = GameHelper.aController;
                     GameHelper.set(TrainingScene.oHelper.aMenu, this.oScene.oController);
                     OutputManager.getChannel('CHN__SFX').play('ADO__Validate');
+                    ControllerManager.setLayout('IPT__Menu');
                 }
 
                 this.oMenu.oLast = this.oMenu.oCurrent;
@@ -188,6 +189,7 @@ Object.assign(
                 } );
                 this.trigger('onClose');
                 GameHelper.set(TrainingScene.oHelper.aBattle, this.aHelperController);
+                ControllerManager.setLayout('IPT__Battle');
             },
             toggle: function(){
                 const bOpen = this.isOpen();

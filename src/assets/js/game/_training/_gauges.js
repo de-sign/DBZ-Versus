@@ -128,7 +128,7 @@ Object.assign(
                 this.oScene = oScene;
 
                 this.oScene.aPlayer.forEach( (oPlayer, nIndex) => {
-                    this.aParam.push( Object.assign( {}, TrainingEngineGauges.oDefault, StoreEngine.get('TNG_Gauges_' + nIndex) ) );
+                    this.aParam.push( Object.assign( {}, TrainingEngineGauges.oDefault, StoreEngine.get('TNG__Gauges_' + nIndex) ) );
                     this.setStat(nIndex, 'Life');
                     this.setStat(nIndex, 'Ki');
                 } );
@@ -197,7 +197,7 @@ Object.assign(
                     oParam[sStat] = oMaxStat[sStat];
                 }
 
-                StoreEngine.update('TNG_Gauges_' + nIndex, oParam);
+                StoreEngine.update('TNG__Gauges_' + nIndex, oParam);
             },
             setStat: function(nIndex, sStat){
                 const oParam = this.aParam[nIndex];
@@ -209,13 +209,13 @@ Object.assign(
                 sRegen = 'bRegen' + sRegen;
                 this.aParam[nIndex][sRegen] = !this.aParam[nIndex][sRegen];
 
-                StoreEngine.update('TNG_Gauges_' + nIndex, this.aParam[nIndex]);
+                StoreEngine.update('TNG__Gauges_' + nIndex, this.aParam[nIndex]);
             },
 
             reset: function(){
                 for( let nIndex = 0; nIndex < this.aParam.length; nIndex++ ){
                     this.aParam[nIndex] = Object.assign( {}, TrainingEngineGauges.oDefault);
-                    StoreEngine.update('TNG_Gauges_' + nIndex, this.aParam[nIndex]);
+                    StoreEngine.update('TNG__Gauges_' + nIndex, this.aParam[nIndex]);
                 }
             }
         }

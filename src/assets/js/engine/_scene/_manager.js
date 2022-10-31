@@ -108,8 +108,9 @@ Object.assign(
             - [OutputViewport.useContext()](OutputViewport.md)
             - [TimerEngine.nFrames](TimerEngine.md)
             ----- */
-            init: function(sUseContext) {
+            init: function(sUseContext, sUseLayout) {
                 sUseContext && ( this.oContext = OutputManager.oViewport.useContext(sUseContext) );
+                sUseLayout && ControllerManager.setLayout(sUseLayout);
                 this.nFrameCreated = TimerEngine.nFrames;
             },
             /* ----- DETAILS Fonction de mise à jour de la scène, vouée à être surcharger. ----- */

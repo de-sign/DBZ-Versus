@@ -183,48 +183,106 @@ Configuration des différents périphériques d'entrées
 
 ```javascript
 GameSettings.oController = {
-    aOrderButtons: ['UP', 'DOWN', 'LEFT', 'RIGHT', 'A', 'B', 'C', 'D', 'START'],
     nNeededButtons: 9,
+    oText: {
+        IPT__Menu: {
+            sText: 'Menu configuration',
+            aButtons: [
+                { sText: 'Up', sCod: 'UP' },
+                { sText: 'Down', sCod: 'DOWN' },
+                { sText: 'Left', sCod: 'LEFT' },
+                { sText: 'Right', sCod: 'RIGHT' },
+                { sText: 'Validate', sCod: 'A' },
+                { sText: 'Return', sCod: 'B' },
+                { sText: 'Option', sCod: 'C' },
+                { sText: 'Quit', sCod: 'START' }
+            ]
+        },
+        IPT__Battle: {
+            sText: 'Battle configuration',
+            aButtons: [
+                { sText: 'Up', sCod: 'UP' },
+                { sText: 'Down', sCod: 'DOWN' },
+                { sText: 'Left', sCod: 'LEFT' },
+                { sText: 'Right', sCod: 'RIGHT' },
+                { sText: 'Light', sCod: 'A' },
+                { sText: 'Heavy', sCod: 'B' },
+                { sText: 'Ki', sCod: 'C' },
+                { sText: 'System', sCod: 'D' },
+                { sText: 'Menu', sCod: 'START' }
+            ]
+        }
+    },
     aKeyboard: [
         {
-            UP: 'KeyW',
-            DOWN: 'KeyS',
-            LEFT: 'KeyA',
-            RIGHT: 'KeyD',
-            A: 'KeyU',
-            B: 'KeyI',
-            C: 'KeyO',
-            D: 'KeyJ',
-            START: 'Enter'
+            IPT__Menu: {
+                UP: 'KeyW',
+                DOWN: 'KeyS',
+                LEFT: 'KeyA',
+                RIGHT: 'KeyD',
+                A: 'KeyU',
+                B: 'KeyI',
+                C: 'KeyO',
+                START: 'Enter'
+            },
+            IPT__Battle: {
+                UP: 'KeyW',
+                DOWN: 'KeyS',
+                LEFT: 'KeyA',
+                RIGHT: 'KeyD',
+                A: 'KeyU',
+                B: 'KeyI',
+                C: 'KeyO',
+                D: 'KeyJ',
+                START: 'Enter'
+            }
         },
         {
-            UP: 'ArrowUp',
-            DOWN: 'ArrowDown',
-            LEFT: 'ArrowLeft',
-            RIGHT: 'ArrowRight',
-            A: 'Numpad1',
-            B: 'Numpad2',
-            C: 'Numpad3',
-            D: 'Numpad0',
-            START: 'Numpad5'
+            IPT__Menu: {
+                UP: 'ArrowUp',
+                DOWN: 'ArrowDown',
+                LEFT: 'ArrowLeft',
+                RIGHT: 'ArrowRight',
+                A: 'Numpad1',
+                B: 'Numpad2',
+                C: 'Numpad3',
+                START: 'Numpad5'
+            },
+            IPT__Battle: {
+                UP: 'ArrowUp',
+                DOWN: 'ArrowDown',
+                LEFT: 'ArrowLeft',
+                RIGHT: 'ArrowRight',
+                A: 'Numpad1',
+                B: 'Numpad2',
+                C: 'Numpad3',
+                D: 'Numpad0',
+                START: 'Numpad5'
+            }
         }
     ],
     oGamepad: {
-        /*
-        UP: 'Axe-1',
-        DOWN: 'Axe+1',
-        LEFT: 'Axe-0',
-        RIGHT: 'Axe+0',
-        */
-        UP: 'Button12',
-        DOWN: 'Button13',
-        LEFT: 'Button14',
-        RIGHT: 'Button15',
-        A: 'Button2',
-        B: 'Button3',
-        C: 'Button1',
-        D: 'Button0',
-        START: 'Button9'
+        IPT__Menu: {
+            UP: 'Button12',
+            DOWN: 'Button13',
+            LEFT: 'Button14',
+            RIGHT: 'Button15',
+            A: 'Button0',
+            B: 'Button1',
+            C: 'Button2',
+            START: 'Button9'
+        },
+        IPT__Battle: {
+            UP: 'Button12',
+            DOWN: 'Button13',
+            LEFT: 'Button14',
+            RIGHT: 'Button15',
+            A: 'Button2',
+            B: 'Button3',
+            C: 'Button1',
+            D: 'Button0',
+            START: 'Button9'
+        }
     },
 };
 ```

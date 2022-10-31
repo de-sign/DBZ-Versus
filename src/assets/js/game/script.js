@@ -65,16 +65,41 @@
 window.addEventListener('load', oEvent => {
 	// Component
 	StoreEngine.init();
-	// Input
-	for( let nPlayer = 0; nPlayer < GameSettings.nPlayer; nPlayer++ ){
-		KeyboardController.recover('IC_' + ( nPlayer + 1 ), GameSettings.oController.aKeyboard[nPlayer]);
+
+	// Patch
+	const nVersion = StoreEngine.get('SYS') ? StoreEngine.get('SYS').nVersion : 0;
+	if( nVersion < 20221031 ){
+		localStorage.clear();
+		StoreEngine.update('SYS', { nVersion: 20221031 } );
 	}
+
+	// Input
+	ControllerManager.setLayout('IPT__Menu');
+	for( let nPlayer = 0; nPlayer < GameSettings.nPlayer; nPlayer++ ){
+		KeyboardController.recover(nPlayer, GameSettings.oController.aKeyboard[nPlayer]);
+	}
+	window.addEventListener('gamepadconnected', oEvent => {
+		if( !GamepadController.oIndexCreate[oEvent.gamepad.index] ){
+			if( oEvent.gamepad.buttons.length >= GameSettings.oController.nNeededButtons ){
+				GamepadController.recover( oEvent.gamepad, GameSettings.oController.oGamepad );
+			} else {
+				GameAlert.show( [
+					'Unable to set up new device detected :',
+					'"' + oEvent.gamepad.id + '" has ' + oEvent.gamepad.buttons.length + ' buttons and the game needs ' + GameSettings.oController.nNeededButtons + ' buttons at less.'
+				], true);
+				GamepadController.oIndexCreate[oEvent.gamepad.index];
+			}
+		}
+	}, false);
+
 	// Output
 	for( let sChannel in GameSettings.oAudio.oChannel ){
 		OutputManager.oAudio.add( new OutputManager.OutputChannel('CHN__' + sChannel, GameSettings.oAudio.oChannel[sChannel]) );
 	}
+
 	// Scene
 	SceneManager.set( new window[ GameSettings.sStartScene ]() );
+
 	// Start
 	GameEngine.start();
 	GameAlert.init();

@@ -31,12 +31,6 @@ Controller.add(oKCtrl);
 Controller.createDataStore(oController, oStore);
 ```
 
-### Controller.getDataStore()
-
-```javascript
-Controller.getDataStore(oStore);
-```
-
 
 ## Constructor
 ### Controller()
@@ -47,16 +41,16 @@ new Controller();
 
 
 ## Instance properties
-### this.oButtons
+### this.oLayouts
 
 ```javascript
-this.oButtons = {};
+this.oLayouts = {};
 ```
 
-### this.oKeyMap
+### this.nIndex
 
 ```javascript
-this.oKeyMap = {};
+this.nIndex = -1;
 ```
 
 ### this.nFrameChange
@@ -76,7 +70,7 @@ this.dTimestampChange = 0;
 ### Controller.prototype.init()
 
 ```javascript
-this.init(oBtn);
+this.init(nIndex, oLayouts);
 ```
 
 ### Controller.prototype.update()
@@ -91,40 +85,40 @@ this.update();
 this.destroy();
 ```
 
-### Controller.prototype.addButtons()
+### Controller.prototype.normalizeButtons()
 
 ```javascript
-this.addButtons(oBtns);
+this.normalizeButtons(oButtons);
 ```
 
-### Controller.prototype.removeButtons()
+### Controller.prototype.getButton()
 
 ```javascript
-this.removeButtons(oBtns);
+this.getButton(sButton, sLayout);
 ```
 
-### Controller.prototype.updateButtons()
+### Controller.prototype.getLayout()
 
 ```javascript
-this.updateButtons(oBtns);
+this.getLayout(sLayout);
 ```
 
 ### Controller.prototype.hasPressedNow()
 
 ```javascript
-this.hasPressedNow(sBtn);
+this.hasPressedNow(sButton);
 ```
 
 ### Controller.prototype.isPressed()
 
 ```javascript
-this.isPressed(sBtn);
+this.isPressed(sButton);
 ```
 
 ### Controller.prototype.getLastPress()
 
 ```javascript
-this.getLastPress(sBtn);
+this.getLastPress(sButton);
 ```
 
 ### Controller.prototype.ifPressedNow()

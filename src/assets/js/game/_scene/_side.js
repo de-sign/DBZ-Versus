@@ -176,7 +176,7 @@ Object.assign(
             Object.create(Scene.prototype), {
                 constructor: SideScene,
 				init: function(){
-                    Scene.prototype.init.call(this, 'CTX__Side');
+                    Scene.prototype.init.call(this, 'CTX__Side', 'IPT__Menu');
 
                     OutputManager.getElement('TXT__Side_Name').setText( SceneManager.oTransverseData.BTL__sType );
 
